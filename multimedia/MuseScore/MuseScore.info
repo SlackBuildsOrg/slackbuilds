@@ -1,4 +1,4 @@
-PRGNAM="mscore"
+PRGNAM="MuseScore"
 VERSION="2.0.3"
 HOMEPAGE="http://www.musescore.org/"
 DOWNLOAD="https://github.com/musescore/MuseScore/archive/v2.0.3/v2.0.3.tar.gz"

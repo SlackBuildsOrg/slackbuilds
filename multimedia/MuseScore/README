@@ -11,10 +11,5 @@ notation program. Its features include:
 
 Requires:
 
-* qt5
-* qt5-webkit
-* jack-audio-connection-kit or jack2
-* portaudio
-* portmidi
-* lame
+* jack-audio-connection-kit OR jack2
 

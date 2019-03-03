@@ -3,7 +3,7 @@
 # Maintained by Klaatu at member.fsf dot org
 
 PRGNAM=MuseScore
-VERSION=${VERSION:-3.0.3}
+VERSION=${VERSION:-3.0.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 

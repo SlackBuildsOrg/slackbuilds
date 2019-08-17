@@ -1,0 +1,16 @@
+OpenSMTPD extras - backends for OpenSMTPD tables
+
+Allows using different backends for OpenSMTPD tables,
+including SQLite, MySQL, PostgreSQL, LDAP.
+
+Each backend can be activated or deactivated by setting the relevant env var to yes or no.
+By default, MySQL, LDAP and SQLite backend are built, since they are pretty straightforward to use,
+and everything is available on a stock slackware installation.
+
+MYSQL=yes
+LDAP=yes
+SQLITE=yes
+PYTHON=no
+SOCKETMAP=no
+POSTGRES=no   # requires potgresql
+REDIS=no      # requires hiredis and redis

@@ -24,7 +24,7 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=openresolv
-VERSION=${VERSION:-3.9.0}
+VERSION=${VERSION:-3.9.2}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 
@@ -96,7 +96,7 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp README $PKG/usr/doc/$PRGNAM-$VERSION
+cp README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 if [ "${OPENVPN}" = "yes" ]; then

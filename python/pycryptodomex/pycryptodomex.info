@@ -1,4 +1,4 @@
-PRGNAM="pycryptodome"
+PRGNAM="pycryptodomex"
 VERSION="3.9.4"
 HOMEPAGE="https://github.com/Legrandin/pycryptodome"
 DOWNLOAD="https://github.com/Legrandin/pycryptodome/archive/v3.9.4x/pycryptodome-3.9.4x.tar.gz"

@@ -1,5 +1,5 @@
-SQLite Database Browser is a freeware, public domain, open source visual
-tool used to create, design and edit database files compatible with
-SQLite. It is meant to be used for users and developers that want to
-create databases, edit and search data using a familiar spreadsheet-like
-interface, without the need to learn complicated SQL commands.
+A high quality, visual, open source tool to create, design, and edit database files compatible with SQLite.
+
+DB4S uses a familiar spreadsheet-like interface, so you don't have to learn complicated SQL commands.
+
+In September 2014, this project was officially renamed "DB Browser for SQLite", or DB4S, to avoid confusion with an existing application called “Database Browser”. However, the website, Github repository, and executable retain the shortened "sqlitebrowser" name.

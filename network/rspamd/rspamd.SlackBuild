@@ -2,7 +2,7 @@
 
 # Slackware build script for Rspamd
 
-# Copyright 2018-2020 Ebben Aries <e@dscp.org>
+# Copyright 2018-2021 Ebben Aries <slackbuilds@dscp.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rspamd
-VERSION=${VERSION:-2.6}
+VERSION=${VERSION:-2.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
@@ -113,10 +113,6 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 mkdir -p $PKG/var/log/rspamd
 chown rspamd:rspamd $PKG/var/log/rspamd
 chmod 0755 $PKG/var/log/rspamd
-
-mkdir -p $PKG/var/run/rspamd
-chown rspamd:rspamd $PKG/var/run/rspamd
-chmod 0750 $PKG/var/run/rspamd
 
 mkdir -p $PKG/var/lib/rspamd
 chown rspamd:rspamd $PKG/var/lib/rspamd

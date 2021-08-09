@@ -1,0 +1,15 @@
+diff -Naur '-x.*.s?p' '-x*~' pdfpc-4.5.0.orig/src/classes/action/movie.vala pdfpc-4.5.0/src/classes/action/movie.vala
+--- pdfpc-4.5.0.orig/src/classes/action/movie.vala	2020-12-20 14:22:12.000000000 +0000
++++ pdfpc-4.5.0/src/classes/action/movie.vala	2021-08-09 18:16:38.092791467 +0100
+@@ -548,7 +548,11 @@
+          */
+         public void on_prepare(Gst.Element overlay, Gst.Caps caps) {
+             var info = new Gst.Video.Info();
++#if VALA_0_52
++            Gst.Video.info_from_caps(out info, caps);
++#else
+             info.from_caps(caps);
++#endif
+             this.video_w = info.width;
+             this.video_h = info.height;
+             this.scalex = (double) this.video_w/rect.width;

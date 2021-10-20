@@ -2,4 +2,10 @@ PyLyrics is a python module to get Lyrics of songs from
 lyrics.wikia.com. It has support for getting albums of a singer and 
 songs from an album from which lyrics can be accessed.
 
+Note:
+python3-beautifulsoup4 applied in orther to temporary solve issue with
+BeautifulSoup4 slackbuild if you're on python3.10.
+Although it's not recommended, you can install it dirty way with pip3
+too.
+
 By ~red

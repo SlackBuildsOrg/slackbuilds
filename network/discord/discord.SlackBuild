@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=discord
-VERSION=${VERSION:-0.0.15}
+VERSION=${VERSION:-0.0.16}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,12 +80,21 @@ find -L . \
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+mkdir -p $PKG/opt
+mv $PKG/usr/share/discord $PKG/opt/
+
+rm -f $PKG/usr/share/pixmaps/$PRGNAM.png
+mv $PKG/opt/discord/$PRGNAM.png $PKG/usr/share/pixmaps/
+
+rm -f $PKG/opt/discord/$PRGNAM.desktop $PKG/usr/share/applications/$PRGNAM.desktop
+cp $CWD/$PRGNAM.desktop $PKG/usr/share/applications/
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 mv $PKG/usr/share/doc/discord/copyright $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 # Don't need these:
-rm -rf $PKG/usr/share/doc $PKG/usr/share/lintian
+rm -fR $PKG/usr/share/doc $PKG/usr/share/lintian
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

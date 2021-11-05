@@ -1,0 +1,50 @@
+diff --git a/usr/bin/firefox-dev b/usr/bin/firefox-dev
+index 84d4910..c907e8f 100755
+--- a/usr/bin/firefox-dev
++++ b/usr/bin/firefox-dev
+@@ -1,2 +1,2 @@
+ #!/bin/sh
+-exec /usr/lib/firefox-developer-edition/firefox "$@"
++exec /usr/lib64/firefox-dev/firefox "$@"
+diff --git a/usr/lib64/firefox-dev/application.ini b/usr/lib64/firefox-dev/application.ini
+index 257ace0..9d7d4ec 100644
+--- a/usr/lib64/firefox-dev/application.ini
++++ b/usr/lib64/firefox-dev/application.ini
+@@ -4,7 +4,7 @@
+ [App]
+ Vendor=Mozilla
+ Name=Firefox
+-RemotingName=firefoxdeveloperedition
++RemotingName=firefox-dev
+ CodeName=Firefox Developer Edition
+ Version=95.0
+ BuildID=20211103122512
+diff --git a/usr/share/applications/firefox-dev.desktop b/usr/share/applications/firefox-dev.desktop
+index de6e279..c0cb81b 100644
+--- a/usr/share/applications/firefox-dev.desktop
++++ b/usr/share/applications/firefox-dev.desktop
+@@ -112,7 +112,7 @@ Keywords[uk]=Internet;WWW;Browser;Web;Explorer;Інтернет;мережа;п
+ Keywords[vi]=Internet;WWW;Browser;Web;Explorer;Trình duyệt;Trang web
+ Keywords[zh_CN]=Internet;WWW;Browser;Web;Explorer;网页;浏览;上网;火狐;Firefox;ff;互联网;网站;
+ Keywords[zh_TW]=Internet;WWW;Browser;Web;Explorer;網際網路;網路;瀏覽器;上網;網頁;火狐
+-Exec=/usr/lib/firefox-developer-edition/firefox %u
+-Icon=firefox-developer-edition
++Exec=/usr/lib64/firefox-dev/firefox %u
++Icon=firefox-dev
+ Terminal=false
+ X-MultipleArgs=false
+@@ -229,7 +229,7 @@ Name[wo]=Palanteer bu bees
+ Name[xh]=Ifestile entsha
+ Name[zh_CN]=新建窗口
+ Name[zh_TW]=開新視窗
+-Exec=/usr/lib/firefox-developer-edition/firefox --new-window %u
++Exec=/usr/lib64/firefox-dev/firefox --new-window %u
+ 
+ [Desktop Action new-private-window]
+ Name=New Private Window
+@@ -337,4 +337,4 @@ Name[wo]=Panlanteeru biir bu bees
+ Name[xh]=Ifestile yangasese entsha
+ Name[zh_CN]=新建隐私浏览窗口
+ Name[zh_TW]=新增隱私視窗
+-Exec=/usr/lib/firefox-developer-edition/firefox --private-window %u
++Exec=/usr/lib64/firefox-dev/firefox --private-window %u

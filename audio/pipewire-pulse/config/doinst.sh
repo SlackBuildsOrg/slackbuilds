@@ -41,9 +41,10 @@ if [ -f "system.pa" ]; then
 fi )
 
 ( cd /etc/xdg/autostart
-rm -f pipewire*.desktop )
+  rm -f pipewire*.desktop .pulseaudio.desktop.old )
 
 config etc/pulse/client.conf.new
 config etc/pulse/daemon.conf.new
 config etc/pulse/default.pa.new
 config etc/pulse/system.pa.new
+config etc/xdg/autostart/pulseaudio.desktop.new

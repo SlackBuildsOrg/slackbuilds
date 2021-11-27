@@ -30,7 +30,7 @@ VERSION=${VERSION:-1.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-PIPEWIRE=${PIPEWIRE:-enable}
+PULSEAUDIO=${PULSEAUDIO:-disable}
 
 # Automatically determine the architecture we're building on:
 if [ -z "$ARCH" ]; then
@@ -79,14 +79,14 @@ mkdir -p etc/pulse etc/xdg/autostart
 
 mkdir -p install
 cat $CWD/slack-desc > install/slack-desc
-if [ "$PIPEWIRE" = "disable" ]; then
+if [ "$PULSEAUDIO" = "enable" ]; then
     cat $CWD/config/doinst.sh > install/doinst.sh
     cp -a "$CWD/config/client.conf" etc/pulse/client.conf.new
     cp -a "$CWD/config/daemon.conf" etc/pulse/daemon.conf.new
     cp -a "$CWD/config/default.pa" etc/pulse/default.pa.new
     cp -a "$CWD/config/system.pa" etc/pulse/system.pa.new
     cp -a "$CWD/config/pulseaudio.desktop" etc/xdg/autostart/pulseaudio.desktop.new
-elif [ "$PIPEWIRE" = "enable" ]; then
+elif [ "$PULSEAUDIO" = "disable" ]; then
     cat $CWD/doinst.sh > install/doinst.sh
     cp -a "$CWD/config/pipewire-media-session.desktop" etc/xdg/autostart/pipewire-media-session.desktop.new
     cp -a "$CWD/config/pipewire-pulse.desktop" etc/xdg/autostart/pipewire-pulse.desktop.new

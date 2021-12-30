@@ -11,5 +11,5 @@ Optional dependencies, after installation, are scipy and pygsl (to
 improve python scripting).
 
 Note:
-I have a #TODO in scidavis.SlackBuild: to avoid using qwtplot3d (qt5 
+I have a #TODO in scidavis.SlackBuild: to avoid using qwtplot3d (qt5
 version) installed in the system

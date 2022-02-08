@@ -5,6 +5,8 @@
 # Copyright 2015 Beni Keller, Schwyz, Switzerland
 # All rights reserved.
 #
+# Modified 2022 for Horizon 8 and Slackware 15.0 by /me
+#
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
 #
@@ -22,47 +24,38 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cd $(dirname $0) ; CWD=$(pwd)
-
 PRGNAM=vmware-horizon-client
-VERSION=${VERSION:-3.4.0}
-BUILD=${BUILD:-1}
+BUILD1=${BUILD1:-2111}
+VERSION=${VERSION:-8.4.0}
+BUILD2=${BUILD2:-18957622}
 TAG=${TAG:-_SBo}
-PKGTYPE=${PKGTYPE:-tgz}
-ARCH=i486
-_BUILD=2769709
+ARCH=x64
 
 # Install PCOIP component
-PCOIP=${PCOIP:-YES}
+# PCOIP=${PCOIP:-YES}
+# /me: I cannot test other components, hence leaving them out
+# feel free to add them back if you need them and can test
+#
 # Install USB-redirection component
 # This is deactivated by default because
 # It's not working with the current version of libcrypto.
-USB=${USB:-NO}
+# USB=${USB:-NO}
 # Install Smartcard component
-SMARTCRD=${SMARTCRD:-YES}
+# SMARTCRD=${SMARTCRD:-NO}
 # Install Real Time Audio and Video component
-RTAV=${RTAV:-YES}
+# RTAV=${RTAV:-NO}
 
-echo $PCOIP
-break
-
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
-if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
-  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
-  exit 0
-fi
-
+CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-BUNDLE=$CWD/VMware-Horizon-Client-$VERSION-$_BUILD.x86.bundle
+BUNDLE=$CWD/VMware-Horizon-Client-$BUILD1-$VERSION-$BUILD2.$ARCH.bundle
 # All the components we support with this SlackBuild. The
 # 'virtual-printing' support is excluded because I have no
 # way to test whether it's working.
-COMPONENTS="client pcoip usb smartcard rtav"
+# hosted-apps is required as it contains libcrtbora
+COMPONENTS="client pcoip hosted-apps" # rtav  usb smartcard 
 
 set -e 
 
@@ -73,9 +66,6 @@ rm -rf $PRGNAM-$VERSION
 
 # We use the Gentoo eclass to extract components from the bundle.
 # These are the settings needed for these functions.
-
-
-
 
 export T="$CWD"
 
@@ -90,7 +80,18 @@ source "$CWD/vmware-bundle.eclass"
 
 # Extracting the components from the bundle
 for COMPONENT in $COMPONENTS; do
-    extract_bundle_component $BUNDLE "vmware-horizon-$COMPONENT" "$CWD/extract/vmware-horizon-$COMPONENT"
+    vmware-bundle_extract-bundle-component $BUNDLE "vmware-horizon-$COMPONENT" "$CWD/extract"
+done
+
+# crtbora depends on this stuff and these particular versions
+# libatkmm-1.6.so.1 libcairomm-1.0.so.1 libgdkmm-3.0.so.1 libgiomm-2.4.so.1 libglibmm-2.4.so.1 libgtkmm-3.0.so.1 libpangomm-1.4.so.1 
+#
+# the client depends on openssl 1.0.2
+# libcurl.so.4 libcrypto.so.1.0.2 libssl.so.1.0.2
+#
+# these libraries already exist in Slackware 15
+for LIB in libXss.so.1 libffi.so.6 libpcre.so.1 libpng16.so.16 libsigc-2.0.so.0 libz.so.1  ; do
+  rm "${CWD}"/extract/lib/vmware/${LIB}
 done
 
 cd $CWD/extract
@@ -103,68 +104,39 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 
-# Dirty hack copied from Arch PKGBUILD
+# copied from Arch PKGBUILD
 # https://aur.archlinux.org/packages/vm/vmware-horizon-client
 # Helps linking to the correct version of the OpenSSL libs
 for FILE in $(find "$CWD/extract/" -type f); do
 	# executables and libraries only
-	file --mime "${FILE}" | egrep -q "(application/x-(executable|sharedlib)|text/x-shellscript)" || continue
+	file --mime "${FILE}" | egrep -q "(application/x-(pie-executable|executable|sharedlib))" || continue
+
+	# link against libudev.so.1;
+	# the client depends on openssl 1.0.2, won't work
+	#  with openssl 1.1 installed in slack 15
+	# --replace-needed libssl.so.1.0.2 libssl.so.1.1 \
+	# --replace-needed libcrypto.so.1.0.2 libcrypto.so.1.1 \
+	patchelf --replace-needed libudev.so.0 libudev.so.1 \
+		 "${FILE}"
+done
+
+for FILE in $(find "$CWD/extract/" -type f); do
+	# executables, libraries and shell scripts
+	file --mime "${FILE}" | egrep -q "(application/x-(pie-executable|executable|sharedlib)|text/x-shellscript)" || continue
 
 	# make executable
 	chmod +x "${FILE}"
-
-	# link against libudev.so.1
-	#sed -i -e 's/libudev.so.0/libudev.so.1/' "${FILE}"
-
-	# even openssl 1.0.1.x has library file names ending in .so.1.0.0
-	sed -i -e 's/libssl.so.1.0.1/libssl.so.1.0.0/' \
-		-e 's/libcrypto.so.1.0.1/libcrypto.so.1.0.0/' \
-		"${FILE}"
 done
-# Delete these libraries. We'll recreate these files later as links
-rm "$CWD"/extract/vmware-horizon-pcoip/pcoip/lib/vmware/lib{crypto,ssl}.so.1.0.1
-
-# We install the client without the other components
-# Since it's a binary distribution we just copy the files
-cd $CWD/extract/vmware-horizon-client
 
 mkdir -p "$PKG/usr/"
+for DIR in bin lib share ; do cp -a ${DIR}/ "$PKG/usr/" ; done
+
 mkdir -p "$PKG/usr/doc/"
-
-cp -a bin/ "$PKG/usr/"
-cp -a lib/ "$PKG/usr/"
-cp -a share/ "$PKG/usr/"
 cp -a doc/ "$PKG/usr/doc/$PRGNAM-$VERSION/"
-cp -a debug/ "$PKG/usr/doc/$PRGNAM-$VERSION/"
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-# We install the components
-if [ "$PCOIP" == "YES" ]; then
-    cd ../vmware-horizon-pcoip
-    cp -a pcoip/lib/* "$PKG/usr/lib/"
-    cp -a pcoip/bin/* "$PKG/usr/bin/"
-    # We create the symbolic links for the libraries
-    ln -sf ../../lib/libcrypto.so.1.0.0 "$PKG/usr/lib/vmware/libcrypto.so.1.0.0"
-    ln -sf ../../lib/libssl.so.1.0.0 "$PKG/usr/lib/vmware/libssl.so.1.0.0"
-fi
-
-if [ "$USB" == "YES" ]; then
-    cd ../vmware-horizon-usb
-    cp -a bin/* "$PKG/usr/bin/"
-fi
-
-if [ "$SMARTCRD" == "YES" ]; then
-    cd ../vmware-horizon-smartcard
-    cp -a lib/* "$PKG/usr/lib/"
-fi
-
-if [ "$RTAV" == "YES" ]; then
-    cd ../vmware-horizon-rtav
-    cp -a lib/* "$PKG/usr/lib/"
-fi
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD2$TAG.${PKGTYPE:-tgz}

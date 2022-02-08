@@ -111,23 +111,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-
-# copied from Arch PKGBUILD
-# https://aur.archlinux.org/packages/vm/vmware-horizon-client
-# Helps linking to the correct version of the OpenSSL libs
-for FILE in $(find "$CWD/extract/" -type f); do
-	# executables and libraries only
-	file --mime "${FILE}" | egrep -q "(application/x-(pie-executable|executable|sharedlib))" || continue
-
-	# link against libudev.so.1;
-	# the client depends on openssl 1.0.2, won't work
-	#  with openssl 1.1 installed in slack 15
-	# --replace-needed libssl.so.1.0.2 libssl.so.1.1 \
-	# --replace-needed libcrypto.so.1.0.2 libcrypto.so.1.1 \
-	patchelf --replace-needed libudev.so.0 libudev.so.1 \
-		 "${FILE}"
-done
-
 for FILE in $(find "$CWD/extract/" -type f); do
 	# executables, libraries and shell scripts
 	file --mime "${FILE}" | egrep -q "(application/x-(pie-executable|executable|sharedlib)|text/x-shellscript)" || continue
@@ -138,6 +121,11 @@ done
 
 mkdir -p "$PKG/usr/"
 for DIR in bin lib share ; do cp -a ${DIR}/ "$PKG/usr/" ; done
+
+# this is recommended by the vendor
+# https://docs.vmware.com/en/VMware-Horizon-Client-for-Linux/2111/rn/vmware-horizon-client-for-linux-2111-release-notes/index.html#whats-new
+# it is also cleaner than patching the binary
+ln -sf ../../lib64/libudev.so "${PKG}"/usr/lib/vmware/libudev.so.0
 
 mkdir -p "$PKG/usr/doc/"
 cp -a doc/ "$PKG/usr/doc/$PRGNAM-$VERSION/"

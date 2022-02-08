@@ -5,8 +5,6 @@
 # Copyright 2015 Beni Keller, Schwyz, Switzerland
 # All rights reserved.
 #
-# Modified 2022 for Horizon 8 and Slackware 15.0 by /me
-#
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
 #
@@ -24,11 +22,14 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+cd $(dirname $0) ; CWD=$(pwd)
+
 PRGNAM=vmware-horizon-client
 BUILD1=${BUILD1:-2111}
 VERSION=${VERSION:-8.4.0}
 BUILD2=${BUILD2:-18957622}
 TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
 ARCH=x64
 
 # Install PCOIP component
@@ -53,7 +54,6 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   exit 0
 fi
 
-CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}

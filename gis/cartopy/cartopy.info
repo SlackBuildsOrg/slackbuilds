@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/source/C/Cartopy/Cartopy-0.20.
 MD5SUM="d4b1b1b4f5adb99ce56917b9150ccecd"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="gdal python3-matplotlib pyproj pyshp scipy3 Shapely"
+REQUIRES="gdal python3-matplotlib pyproj pyshp scipy3 shapely"
 MAINTAINER="ArTourter"
 EMAIL="artourter@gmail.com"

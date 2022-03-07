@@ -1,10 +1,34 @@
 PRGNAM="Type1_to_OTF"
 VERSION="1.0"
 HOMEPAGE="https://github.com/duncan-roe/Type1_to_OTF"
-DOWNLOAD="https://github.com/duncan-roe/Type1_to_OTF/archive/v1.0/Type1_to_OTF-1.0.tar.gz"
-MD5SUM="33708ff7ff9342f4308c104e4f8ee342"
+DOWNLOAD="https://github.com/duncan-roe/Type1_to_OTF/archive/v1.0/Type1_to_OTF-1.0.tar.gz \
+          https://files.pythonhosted.org/packages/7f/51/f2d13086c997f7c7c39b9e11817dc122ca6cf19f7b67a337c372ecae3f7c/fs-2.4.15.tar.gz \
+          https://files.pythonhosted.org/packages/e8/25/ad6b67e7c1e00798ceac95f0cb3abfb82f83f6373e553caf4976855c534f/fontPens-0.2.4.zip \
+          https://files.pythonhosted.org/packages/b0/d6/a2b248adc2f26a97752bec3719bd5d33a788890b5546bff0839baeba1b4e/ufoProcessor-1.9.0.zip \
+          https://files.pythonhosted.org/packages/c0/20/7e6f631db2ba598ebaa6afd05188aa1557f6ff9af3f47fd963e0bd7ed79b/pyclipper-1.3.0.post2.tar.gz \
+          https://files.pythonhosted.org/packages/91/25/ba6f370e18359292f05ca4df93642eb7d1c424721ef61f61b8610a63d0c5/zopfli-0.2.1.zip \
+          https://files.pythonhosted.org/packages/c1/c1/ac14625612911d92d7989a9491106b9594ccb09f76d7321e19a3b3e36666/fontParts-0.10.3.zip \
+          https://files.pythonhosted.org/packages/44/02/d1ddbbc5698db8ad2a0d1f8a23d52305e66166b6fea5ada5e146dd3a709a/MutatorMath-3.0.1.zip \
+          https://files.pythonhosted.org/packages/57/d9/9eae7bc4ba3a38ab7426522fb08e12df54aec27595d7bcd1bc0670aec873/booleanOperations-0.9.0.zip \
+          https://files.pythonhosted.org/packages/c0/69/1ce8ecc807061e15901ea792d962d7f698aa0ce5259e8f680f86d0ec4213/defcon-0.10.0.zip \
+          https://files.pythonhosted.org/packages/b8/4a/fe75a801004b26e7be7d8949410b19193f935c1ffbdd1f701f6f3dc4f806/fontMath-0.9.1.zip \
+          https://files.pythonhosted.org/packages/91/74/014da6e9280844cec6a73a04e069d95740e5520fd9477afbf31208d0e2f4/psautohint-2.4.0.tar.gz \
+          https://files.pythonhosted.org/packages/46/23/5eadf42d61b32310c735d0d5e219073f39c18f7bca5c2143363e914927dd/ufonormalizer-0.6.1.zip"
+MD5SUM="33708ff7ff9342f4308c104e4f8ee342 \
+        a83a339af4e862e770247d79c1e01f5f \
+        ba666ed73e00da7ba2c84600b4bdeca0 \
+        77f3e1d71d4780241707338441b0722a \
+        ac53748592d18d8c8b63b5bd65a2ab28 \
+        505ea595d86b8a7fec55620c839a4859 \
+        4ea7eb9b5b588e8bd72cae68070993a3 \
+        47f9053cf0d9275e0e840dbf446269e2 \
+        a5bbdb108b0fc58a6f7effcc27c51285 \
+        2038619e953ea0ed6f7e7d1ee9c9da12 \
+        2edc7a58cf90f73503fa661e47002e01 \
+        f626eb26eb635903b1f32f6c1dcf77e5 \
+        51f58faa5ef13fd2fca4aa041c29a290"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="afdko"
+REQUIRES="afdko pip2tgz pytz unicodedata2 fonttools tqdm"
 MAINTAINER="Duncan Roe"
 EMAIL="duncan_roe@optusnet.com.au"

@@ -26,9 +26,24 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Type1_to_OTF
 VERSION=${VERSION:-1.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+# Ensure ARCH isn't in the environment (for pip2tgz)
+unset ARCH
+
+# Check pip2tgz is new enough
+pip2tgz --help | grep -q version ||
+  { echo "pip2tgz: version < 0.8" >&2; exit 1; }
+export PKGPFX=python3-
+
+# get the arch that pip will use
+case "$( uname -m )" in
+  i?86) PIPARCH=i586 ;;
+  arm*) PIPARCH=arm ;;
+     *) PIPARCH=$( uname -m ) ;;
+esac
 
 ARCH=noarch
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
@@ -42,8 +57,26 @@ fi
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+KEEP_DEPS=${KEEP_DEPS:-no}
+newdeps=
 
 set -e
+
+# Install dependencies that aren't in SBo
+#    !!! head -n must stay up to date with number of DOWNLOAD entries in .info
+for i in $(tail -n+5 $PRGNAM.info | head -n12 | rev | cut -f1 -d/ |
+           sed -e 's/^\\ //' -e 's/^"//' | rev)
+do
+  # Build package
+  pip2tgz $i
+
+  # Install SlackBuild
+  j=$(echo $i | rev)
+  [ $(echo $j | cut -f1 -d.) = piz ] && k=2 || k=3
+  j=$(echo $j | cut -f$k- -d. | rev)
+  newdeps="$newdeps $PKGPFX$(echo $j|cut -f1 -d-)"
+  upgradepkg --install-new $OUTPUT/$PKGPFX$j-$PIPARCH-1_pip3_SBo.tgz
+done
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -65,6 +98,8 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+[ $KEEP_DEPS != no ] || removepkg $newdeps
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

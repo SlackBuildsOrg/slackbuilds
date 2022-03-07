@@ -9,3 +9,9 @@ The only fonts not converted are ones that Libreoffice can't render
 (e.g. dingbats), or that Libreoffice already offers (e.g. luxi mono).
 Some italic variants are not converted, but Libreoffice can synthesize
 and display them anyway.
+
+Dependencies: Type1_to_OTF depends on a number of packages not in SBo.
+These get built using pip2tgz and installed. At the end of the build, they are
+uninstalled again. To keep these deps, run the build as
+
+KEEP_DEPS=yes ./Type1_to_OTF.SlackBuild

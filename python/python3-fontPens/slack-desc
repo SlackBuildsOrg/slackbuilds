@@ -5,15 +5,15 @@
 # You must make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':' except on otherwise blank lines.
 
-        |-----handy-ruler------------------------------------------------------|
-fontPens: fontPens (pen protocol)
-fontPens:
-fontPens: A collection of classes implementing the pen protocol for
-fontPens: manipulating glyphs.
-fontPens:
-fontPens:
-fontPens:
-fontPens:
-fontPens:
-fontPens:
-fontPens:
+                |-----handy-ruler------------------------------------------------------|
+python3-fontPens: python3-fontPens (pen protocol)
+python3-fontPens:
+python3-fontPens: A collection of classes implementing the pen protocol for
+python3-fontPens: manipulating glyphs.
+python3-fontPens:
+python3-fontPens:
+python3-fontPens:
+python3-fontPens:
+python3-fontPens:
+python3-fontPens:
+python3-fontPens:

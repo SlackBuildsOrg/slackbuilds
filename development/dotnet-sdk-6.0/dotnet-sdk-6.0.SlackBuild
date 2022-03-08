@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Slackware build script for Type1_to_OTF
-
-# Copyright 2017 Duncan Roe, Melbourne, Australia
+# Slackware build script for dotnet-sdk-6.0.
+#
+# Copyright 2019 Reza Talebi, Shahin Shahr, Iran.
+# Adapted by Vasily Sora for dotnet-sdk-6.0 Copyright 2022
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,13 +25,24 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=Type1_to_OTF
-VERSION=${VERSION:-1.0}
+PRGNAM=dotnet-sdk-6.0
+SRCNAM=dotnet-sdk
+VERSION=${VERSION:-6.0.200}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-ARCH=noarch
+if [ -z "$ARCH" ]; then
+  ARCH=$( uname -m )
+fi
+
+if [ "$ARCH" = "x86_64" ]; then
+  ARCHITECTURE="x64"
+else
+  echo "Package for $ARCH architecture is not available."
+  exit 1
+fi
+
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
 # the name of the created package would be, and then exit. This information
 # could be useful to other scripts.
@@ -48,23 +60,21 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
-chown -R root:root .
+rm -rf $PRGNAM-${VERSION}-${BUILD}
+mkdir -p $PRGNAM-${VERSION}-${BUILD}
+cd $PKG
+mkdir -p usr/share/dotnet
+tar -zxf $CWD/$SRCNAM-${VERSION}-linux-${ARCHITECTURE}.tar.gz -C usr/share/dotnet
+chown -R root:root usr/share/dotnet
 
-cp /usr/share/fonts/Type1/*.pf{a,b} .
-./makeotf.sh
-mkdir -p $PKG/usr/share/fonts/OTF
-mv *.otf $PKG/usr/share/fonts/OTF
+mkdir -p usr/bin
+ln -s /usr/share/dotnet/dotnet usr/bin/dotnet
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

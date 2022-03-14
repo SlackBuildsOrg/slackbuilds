@@ -1,5 +1,14 @@
 RStudio is a cross-platform IDE for the R statistical computing
 environment. It is available in desktop and server versions.
-This is the Linux desktop version.
+This builds the Linux desktop version.
 
-This script repackages the Debian package provided by RStudio.
+RStudio currently only supports 64-bit systems. 
+
+The last supported version of RStudio for 32-bit systems is 1.1.463.
+A rstudio-desktop-legacy SlackBuild for 32-bit systems is available.
+
+Troubleshooting tip: 
+If you experience a linker error involving
+/usr/lib/libQt5WebEngine.so.5.15.3, you may be using a multilib system.
+In that case, I would suggest uninstalling qt5-compat32 before building
+RStudio, then reinstalling qt5-compat32 after installing RStudio.

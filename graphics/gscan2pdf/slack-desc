@@ -14,6 +14,6 @@ gscan2pdf:
 gscan2pdf: -> Scan one or several pages in with File/Scan,
 gscan2pdf: -> Create PDF of selected pages with File/Save.
 gscan2pdf:
-gscan2pdf:
+gscan2pdf: Optional packages for use: unpaper, pdftk
 gscan2pdf:
 gscan2pdf:

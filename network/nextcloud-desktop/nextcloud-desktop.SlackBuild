@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nextcloud-desktop
 SRCNAM=desktop
-VERSION=${VERSION:-3.4.3}
+VERSION=${VERSION:-3.4.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,7 +75,8 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
 
-tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+# handle tarball with a truncated name
+tar xvf $CWD/v$VERSION.tar.gz || tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 
 mv $SRCNAM-$VERSION $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
@@ -102,15 +103,18 @@ cp -a {CONTRIBUTING.md,COPYING,COPYING.documentation,README.md} \
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 # put the manual in the right place skipping uneeded files
+# we'll work around sphinx by converting the rst files to man pages
 mkdir -p $PKG/usr/man/man1
-cp $TMP/$PRGNAM-$VERSION/man/nextcloud* $PKG/usr/man/man1/
+rst2man --no-file-insertion -r 5 \
+        $TMP/$PRGNAM-$VERSION/man/nextcloud.1.rst $PKG/usr/man/man1/nextcloud.1
+rst2man --no-file-insertion -r 5 \
+        $TMP/$PRGNAM-$VERSION/man/nextcloudcmd.1.rst $PKG/usr/man/man1/nextcloudcmd.1
 
 find $PKG/usr/man/man1 -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man/man1 -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}

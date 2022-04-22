@@ -1,12 +1,12 @@
 PRGNAM="LibreOffice"
-VERSION="7.2.4.1"
+VERSION="7.3.2.2"
 HOMEPAGE="https://www.libreoffice.org"
-DOWNLOAD="https://download.documentfoundation.org/libreoffice/src/7.2.4/libreoffice-7.2.4.1.tar.xz \
-          https://sourceforge.net/projects/slackbuildsdirectlinks/files/LibreOffice/libreoffice-7.2.4.1-srcs.tar.xz"
-MD5SUM="7dd2f4ff615d7f53ba6e89fa4fadf989 \
-        8a674ddfcf2e29676c4f03c9bdef3f19"
+DOWNLOAD="https://download.documentfoundation.org/libreoffice/src/7.3.2/libreoffice-7.3.2.2.tar.xz \
+          https://sourceforge.net/projects/slackbuildsdirectlinks/files/LibreOffice/libreoffice-7.3.2.2-srcs.tar.xz"
+MD5SUM="4a6c3d37e9ce238143606238df9a280d \
+        aa3ef11cf5a5d280e1fb5e4ed73eb791"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="jdk11 apache-ant perl-Archive-Zip"
+REQUIRES="zulu-openjdk11 apache-ant perl-Archive-Zip"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

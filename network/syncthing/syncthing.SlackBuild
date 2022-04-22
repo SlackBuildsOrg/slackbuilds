@@ -1,5 +1,7 @@
 #!/bin/bash
+
 # Slackware build script for syncthing
+
 # Copyright 2015 Lionel Young, United States
 # Copyright 2016 Sebastian Arcus, United Kingdom
 # All rights reserved.
@@ -24,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=syncthing
-VERSION=${VERSION:-1.14.0}
+VERSION=${VERSION:-1.19.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

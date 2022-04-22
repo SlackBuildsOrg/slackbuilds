@@ -6,12 +6,12 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
         |-----handy-ruler------------------------------------------------------|
-cheetah3: Cheetah3 (Python3 template engine and code-generation tool)
+cheetah3: cheetah3 (Python3 template engine and code-generation tool)
 cheetah3:
 cheetah3: Cheetah3 is a free and open source template engine and code-
 cheetah3: generation tool written in Python. Cheetah can be used unto itself,
 cheetah3: or incorporated with other technologies and stacks regardless of
-cheetah3: whether they’re written in Python or not.
+cheetah3: whether they're written in Python or not.
 cheetah3:
 cheetah3: Homepage: http://www.cheetahtemplate.org/
 cheetah3:

@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pstoedit
-VERSION=${VERSION:-3.75}
+VERSION=${VERSION:-3.77}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -87,6 +87,7 @@ CXXFLAGS="$SLKCFLAGS -std=c++14" \
   --sysconfdir=/etc \
   --localstatedir=/var \
   --mandir=/usr/man \
+  --without-swf \
   --build=$ARCH-slackware-linux
 
 make
@@ -104,6 +105,8 @@ cp -a $TMP/$PRGNAM-$VERSION/examples/*.ps $PKG/usr/share/$PRGNAM-$VERSION/exampl
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a readme.install $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+rm -rf $PKG/usr/lib*/*.la
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

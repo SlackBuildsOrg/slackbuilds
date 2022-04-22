@@ -26,12 +26,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vcmi
-VERSION=${VERSION:-0.99_gite219e1f}
+VERSION=${VERSION:-0.99_git20220314}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-COMMIT="e219e1febf8defac6d89065a11fdf807a0217142"
+COMMIT="5080f262353de46753988e17d2570797bc3c6545"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

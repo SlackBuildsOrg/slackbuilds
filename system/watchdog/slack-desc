@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+watchdog: watchdog (the userspace daemon for watchdog support)
+watchdog:
+watchdog: watchdog is a daemon that periodically pokes a hardware chip,
+watchdog: and if it fails to do so (presumaby because the system got stuck),
+watchdog: the chip would reboot the system. A somehow working software
+watchdog: emulation of this chip, called "softdog" also exists in Linux.
+watchdog: A reboot can be triggered by some other criteria too.
+watchdog:
+watchdog:
+watchdog:
+watchdog:

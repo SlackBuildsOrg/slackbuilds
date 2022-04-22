@@ -8,7 +8,7 @@ To enable the webservice pass WEBSERVICE=yes to the script. This will
 require gsoap as optional dependency.
 
 If you want to build the java bindings, pass JAVA=yes to the script.
-This will require jdk as optional dependency.
+This will require zulu-openjdk8 as optional dependency.
 
 On x86_64, this by default builds without software virtualization. This
 means you need hardware virtualization in order to run 32bit guests on
@@ -20,3 +20,6 @@ stock x86_64 system. This switch has no effect on x86 systems.
 If you want to attach VirtualBox to a VDE network you will need vde2.
 
 See README.SLACKWARE for some setup notes.
+
+Note to 32-bit users: VirtualBox no longer supports 32-bit x86, as of
+version 6.0.

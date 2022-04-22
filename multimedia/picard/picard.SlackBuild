@@ -2,9 +2,8 @@
 
 # Slackware build script for Picard
 
-# Copyright 2019-2021 Pouria Rezaei <Pouria.rz@outlook.com>
 # Copyright 2014-2015 Marcel Saegebarth <marc@mos6581.de>
-# Copyright 2018  Jeremy Hansen <jebrhansen+SBo -at- gmail.com>
+# Copyright 2018-2022  Jeremy Hansen <jebrhansen+SBo -at- gmail.com>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -29,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=picard
-VERSION=${VERSION:-2.7.1}
+VERSION=${VERSION:-2.7.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,8 +72,8 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+rm -rf $PRGNAM-release-$VERSION
+tar xvf $CWD/$PRGNAM-release-$VERSION.tar.gz
 cd $PRGNAM-release-$VERSION
 chown -R root:root .
 find -L . \

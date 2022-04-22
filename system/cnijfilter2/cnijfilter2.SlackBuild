@@ -22,34 +22,28 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20220301 bkw: Modified by SlackBuilds.org, BUILD=2:
+# - strip binaries.
+# - relative symlinks.
+# - remove INSTALL from doc dir.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cnijfilter2
-VERSION=${VERSION:-6.20.1}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-6.30.1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 SRCNAM=$PRGNAM-source
-SRCVERSION=6.20-1
+SRCVERSION=6.30-1
 
-MARCH=$( uname -m )
 if [ -z "$ARCH" ]; then
-  case "$MARCH" in
-    i?86) export ARCH=i586 
-          export SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-          export LIBDIRSUFFIX=""
-          BITS="i686";;
-    x86_64) export ARCH=x86_64
-            export SLKCFLAGS="-O2 -fPIC"
-            export LIBDIRSUFFIX="64"
-            BITS="x86_64" ;;
-    aarch64) export ARCH=aarch64
-             export SLKCFLAGS="-O2 -fPIC"
-             export LIBDIRSUFFIX="64"
-             BITS="aarch64" ;;
-    *) echo "Package for $MARCH architecture is not available."
-       exit 1 ;;
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    aarch64) ARCH=aarch64 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
   esac
 fi
 
@@ -64,6 +58,31 @@ fi
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+  BITS="i686"
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+  BITS="i686"
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+  BITS="x86_64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+  BITS="aarch64"
+else
+  echo "Package for $ARCH architecture is not available."
+  exit 1
+fi
+
+export ARCH
+export SLKCFLAGS
+export LIBDIRSUFFIX
 
 set -e
 
@@ -130,6 +149,10 @@ mkdir -p $PKG/usr/lib${LIBDIRSUFFIX}/bjlib2
 install -c -o lp -g lp -m 644 com/ini/cnnet.ini $PKG/usr/lib${LIBDIRSUFFIX}/bjlib2/
 install -c -m 755 com/libs_bin_${BITS}/*.so.* $PKG/usr/lib${LIBDIRSUFFIX}/
 
+# 20220409 bkw: this bit of template was missing.
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
 # Run ldconfig in the build script so that /usr/lib{64}/libcn*.so
 # are tracked by doinst.sh
 if [ -x /sbin/ldconfig ]; then
@@ -139,9 +162,10 @@ fi
 mkdir -p $PKG/usr/share/ppd/cnijfilter2 $PKG/usr/share/cups/model
 cp -a ppd/*.ppd $PKG/usr/share/ppd/cnijfilter2
 
+# 20220409 bkw: made these relative symlinks.
 PPD_FILES=$( cd $PKG/usr/share/ppd/cnijfilter2 ; ls *.ppd )
 for f in $PPD_FILES; do
-  ln -fs /usr/share/ppd/cnijfilter2/${f} $PKG/usr/share/cups/model/${f}
+  ln -fs ../../ppd/cnijfilter2/${f} $PKG/usr/share/cups/model/${f}
 done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/lproptions
@@ -152,7 +176,7 @@ cat ppd/NEWS > $PKG/usr/doc/$PRGNAM-$VERSION/NEWS
 for dir in $common_pkg; do
   mkdir $PKG/usr/doc/$PRGNAM-$VERSION/$dir
   pushd $dir
-    for file in AUTHORS COPYING ChangeLog INSTALL LICENSE* NEWS README; do
+    for file in AUTHORS COPYING ChangeLog LICENSE* NEWS README; do
       [ -f $file ] && cp -a $file $PKG/usr/doc/$PRGNAM-$VERSION/$dir
     done
   popd

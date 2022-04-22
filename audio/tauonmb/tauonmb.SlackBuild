@@ -2,7 +2,7 @@
 
 # Slackware build script for Tauon Music Box
 
-# Copyright 2019-2021 Pouria Rezaei <Pouria.rz@outlook.com>
+# Copyright 2019-2022 Pouria Rezaei <Pouria.rz@outlook.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tauonmb
-VERSION=${VERSION:-6.8.0}
+VERSION=${VERSION:-7.1.3}
 SRCNAM=TauonMusicBox
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -70,18 +70,20 @@ find -L . \
 
 # Build phazor
 gcc src/phazor/kissfft/kiss_fftr.c src/phazor/kissfft/kiss_fft.c src/phazor/phazor.c \
-  `pkg-config --cflags --libs samplerate libpulse-simple opusfile vorbisfile libmpg123 flac libopenmpt` \
-  -shared -o libphazor.so -fPIC -Wall -O3 # -Wextra
+    `pkg-config --cflags --libs samplerate libpulse-simple opusfile vorbisfile libmpg123 flac libopenmpt` \
+    -shared -o libphazor.so -fPIC -Wall -O3 # -Wextra
 mkdir -p lib
 mv libphazor.so lib/libphazor.so
 
 # Compile translator
-python3 compile-translations.py install --root=$PKG
-rm -fR compile* mac.spec requirements.txt snapcraft.yaml src update-translations.py
+python3 compile-translations.py
+rm -fR locale/*/*/tauon.po compile* mac.spec requirements.txt \
+       snapcraft.yaml src update-translations.py
 
 mkdir -p $PKG/opt/tauon-music-box $PKG/usr/bin
 mv * $PKG/opt/tauon-music-box
-install -m 0755 $PKG/opt/tauon-music-box/extra/$PRGNAM.sh $PKG/opt/tauon-music-box/$PRGNAM.sh
+install -m 0755 $PKG/opt/tauon-music-box/extra/$PRGNAM.sh \
+                $PKG/opt/tauon-music-box/$PRGNAM.sh
 ln -s /opt/tauon-music-box/$PRGNAM.sh $PKG/usr/bin/tauon
 
 cd $PKG/opt/tauon-music-box

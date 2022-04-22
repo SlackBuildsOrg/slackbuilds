@@ -29,6 +29,7 @@
 # This is based on the original SlackBuild from /extra/kde-compat in
 # Slackware 13.1
 
+# 20220318 bkw: fix 32-bit build.
 # 20211120 bkw: BUILD=2, install the profile scripts non-executable.
 # 20200226 bkw: quit spamming /root, no change to package
 # 20180209 bkw: fix download link, pkgs.fedoraproject.org is now toast.
@@ -54,7 +55,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=qt3
 VERSION=${VERSION:-3.3.8b}
-BUILD=${BUILD:-5}
+BUILD=${BUILD:-6}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -129,6 +130,9 @@ find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
 export CCACHE_DIR=${CCACHE_DIR:-$HOME/.ccache}
 export HOME=$( pwd )
 
+# 20220318 bkw: for some reason, "-I /usr/include/tirpc" is needed
+# on 32-bit, but not on 64-bit (but it does no harm there).
+
 # And here's what we are currently using.
 # The "yes" agrees to the GPL, so don't run this script if you don't agree.  :-)
 echo "yes" | \
@@ -157,7 +161,8 @@ CXXFLAGS="$SLKCFLAGS" \
   -plugin-style-platinum \
   -plugin-style-sgi \
   -plugin-style-windows \
-  -enable-opengl
+  -enable-opengl \
+  -I /usr/include/tirpc
 
 # Set QTDIR...
 QTDIR=$PKG/opt/kde3/lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION
@@ -231,6 +236,8 @@ cd -
 # This much documentation isn't needed for the compat qt3 package -- look in the
 # source if you need it.
 rm -rf $PKG/opt/kde3/lib${LIBDIRSUFFIX}/qt3/doc
+
+rm -f $PKG/usr/lib*/*.la
 
 mkdir -p $PKG/install
 cat $CWD/doinst.sh | sed -e "s|/lib|/lib${LIBDIRSUFFIX}|" \

@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
           |-----handy-ruler------------------------------------------------------|
-rejoystick: rejoystick (translates joystick keypresses to keyboard)
+rejoystick: rejoystick (translates joystick movement/buttons to keystrokes)
 rejoystick:
-rejoystick: Rejoystick is a program that maps keypresses on your
-rejoystick: gamepad/joypad/joystick to keypresses on a keyboard when you
+rejoystick: Rejoystick is a program that maps movement and button presses on
+rejoystick: your gamepad/joypad/joystick to keypresses on a keyboard when you
 rejoystick: are running X. Since it uses SDL to communicate with the gamepad
-rejoystick: device, it can work on every platform that provides SDL and an
-rejoystick: X environment. (Though it is yet to be tested on Cygwin e.g.)
+rejoystick: device, it can work on every platform that provides SDL and an X
+rejoystick: environment. (Though it is yet to be tested on Cygwin e.g.)
 rejoystick:
-rejoystick: Homepage: http://rejoystick.sourceforge.net/
+rejoystick:
 rejoystick:
 rejoystick:

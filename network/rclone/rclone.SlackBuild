@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2019-2021 Andrew Payne <phalange@komputermatrix.com>
+# Copyright 2019-2022 Andrew Payne <phalange@komputermatrix.com>
 # Copyright 2017-2018 Rodrigo Gimenez <estrod[at]zoho[dot]com>
 # All rights reserved.
 #
@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rclone
-VERSION=${VERSION:-1.54.1}
+VERSION=${VERSION:-1.58.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -55,6 +55,7 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
 fi
 
 TMP=${TMP:-/tmp/SBo}
+CWD=$(pwd)
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 mkdir -p $TMP $PKG $OUTPUT
@@ -87,4 +88,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}

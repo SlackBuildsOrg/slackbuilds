@@ -24,15 +24,18 @@
 
 # Modified by the SlackBuilds.org Project
 
+# 20220301 bkw: Modified by SlackBuilds.org, BUILD=2:
+# - strip pg_config binary (install-strip misses that one).
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=postgresql
-VERSION=${VERSION:-10.17}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-14.2}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-PG_VERSION=${PG_VERSION:-10.17}
+PG_VERSION=${PG_VERSION:-14}
 PG_PORT=${PG_PORT:-5432}
 PG_UID=${PG_UID:-209}
 PG_GID=${PG_GID:-209}
@@ -130,6 +133,9 @@ make
 make install-strip DESTDIR=$PKG
 make install-docs DESTDIR=$PKG
 
+# 20220414 bkw: this one binary wasn't getting stripped...
+strip $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/$PG_VERSION/bin/pg_config
+
 # create symlinks to shared library for other programs to link against
 ( cd $PKG/usr/lib${LIBDIRSUFFIX}
   for i in $(ls $PRGNAM/$PG_VERSION/lib/lib*.so*) ; do ln -sf $i ; done
@@ -142,7 +148,7 @@ make install-docs DESTDIR=$PKG
 )
 
 # Some interesting additional modules:
-#   https://www.postgresql.org/docs/10/contrib.html
+#   https://www.postgresql.org/docs/14/contrib.html
 #
 # adminpack - helper extension for pgAdmin
 # pgcrypto - extension for some business applications

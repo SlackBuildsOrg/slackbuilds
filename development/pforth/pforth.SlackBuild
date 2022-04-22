@@ -1,31 +1,31 @@
 #!/bin/bash
 
 # Slackware build script for pforth
+# https://github.com/philburk/pforth
 
 # Written by Zbigniew Baniewski, <Zbigniew [dot] Baniewski [at] gmail [dot] com>
 # Modified by Willy Sudiarto Raharjo <willysr@slackware-id.org>
 
+# 20220318 bkw: Modified by SlackBuilds.org: fix build on 32-bit.
+# WARNING: the fix silences some compiler warnings that look like
+# they might actually cause problems. YMMV.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pforth
-VERSION=${VERSION:-v27}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-20220221_6aa1010}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-SRCVERSION=${VERSION}_20101121
-
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i486 ;;
+    i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -35,8 +35,8 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i486" ]; then
-  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
@@ -54,40 +54,32 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf ${PRGNAM}_$VERSION __MACOSX
-unzip "$CWD/${PRGNAM}_${SRCVERSION}.zip"
-cd ${PRGNAM}_${VERSION}/build/unix
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.?z
+cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-# pforth.dic into "share"
-sed -i "s/pforth.dic/\/usr\/share\/pforth\/${VERSION}\/pforth.dic/g" ../../csrc/pf_main.c
+# 20220318 bkw: hate -Werror. but, see WARNING above...
+sed -i '/-Werror/d' csrc/CMakeLists.txt
 
-patch -p0 < $CWD/pforth-build.patch
-
-make all \
-  -j1 \
-  DESTDIR=$PKG \
-  CC="cc -fgnu89-inline" \
-  CFLAGS="$SLKCFLAGS" \
-  CXXFLAGS="$SLKCFLAGS"
-
-find $PKG/usr/bin | xargs file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" cmake .
+make VERBOSE=1
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a ../../*.txt $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a *.txt $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/usr/bin $PKG/usr/share/pforth/${VERSION}
-strip pforth pforth_standalone
-cp -a pforth $PKG/usr/bin/pforth
-cp -a pforth.dic $PKG/usr/share/pforth/${VERSION}/pforth.dic
-cp -a pforth_standalone  $PKG/usr/bin/pforth_standalone
+( cd fth
+  strip pforth pforth_standalone
+  install -m 0755 pforth $PKG/usr/bin/pforth
+  install -m 0644 pforth.dic $PKG/usr/share/pforth/${VERSION}/pforth.dic
+  install -m 0755 pforth_standalone $PKG/usr/bin/pforth_standalone )
 ( cd $PKG/usr/bin ; ln -s pforth_standalone pfs )
 
 mkdir -p $PKG/install

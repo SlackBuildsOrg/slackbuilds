@@ -2,7 +2,7 @@
 
 # Slackware build script for Rogue
 
-# Copyright 2013, David Melik, Spokane, WA, USA
+# Copyright 2022, David Melik, Spokane, WA, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,10 +22,12 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20220221 bkw: Modified by SlackBuilds.org: fix build on 15.0.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rogue
-VERSION=${VERSION:-5.4.4}
+VERSION=${VERSION:-5.4.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -70,17 +69,14 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM$VERSION
-tar xvf $CWD/$PRGNAM$VERSION-src.tar.gz
+tar xvf $CWD/$PRGNAM$VERSION-ISRUN-2021-03-09.tar.gz
 cd $PRGNAM$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
- -exec chmod 755 {} \; -o \
+ -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
- -exec chmod 644 {} \;
-
-# Patching for ncurses include statement
-patch -p1 < $CWD/ncurses.patch
+ -exec chmod 644 {} \+
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -89,6 +85,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --prefix=/usr \
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
+  --with-program-name=rogue \
+  --enable-lockfile \
   --enable-scorefile=/var/games/rogue/rogue54.scr \
   --build=$ARCH-slackware-linux
 
@@ -109,6 +107,8 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE.TXT $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

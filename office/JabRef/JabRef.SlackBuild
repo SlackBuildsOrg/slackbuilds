@@ -27,10 +27,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=JabRef
-VERSION=${VERSION:-5.2}
+VERSION=${VERSION:-5.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+DEBBUILD=${DEBBUILD:-1}
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
 # the name of the created package would be, and then exit. This information
@@ -52,7 +53,7 @@ set -e
 rm -rf "$PKG"
 mkdir -p "$TMP" "$PKG" "$OUTPUT"
 cd "$PKG"
-ar p "$CWD"/${PRGNAM,,}_"$VERSION"-"$BUILD"_"$DEBARCH".deb data.tar.xz | tar xJv
+ar p "$CWD"/${PRGNAM,,}_"$VERSION"-"$DEBBUILD"_"$DEBARCH".deb data.tar.xz | tar xJv
 
 # permissions
 chown -R root:root .
@@ -74,8 +75,10 @@ install -D -m 0644 opt/${PRGNAM,,}/lib/${PRGNAM,,}-$PRGNAM.desktop -t "$PKG"/usr
 install -D -m 0644 opt/${PRGNAM,,}/lib/$PRGNAM.png -t "$PKG"/usr/share/pixmaps
 # docs
 install -D -m 0644 opt/${PRGNAM,,}/share/doc/* "$CWD"/$PRGNAM.SlackBuild -t "$PKG"/usr/doc/$PRGNAM-"$VERSION"
-# package files
-install -D -m 0644 "$CWD"/slack-desc "$CWD"/doinst.sh -t "$PKG"/install
 
-cd "$PKG"
-/sbin/makepkg -l y -c n "$OUTPUT"/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

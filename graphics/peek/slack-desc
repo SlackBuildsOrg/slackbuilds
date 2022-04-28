@@ -1,0 +1,21 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+peek: peek (an animated GIF recorder)
+peek:
+peek: Peek makes it easy to create short screencasts of a screen area. It
+peek: was built for the specific use case of recording screen areas, e.g.
+peek: for easily showing UI features of your own apps or for showing a
+peek: bug in bug reports. With Peek, you simply place the Peek window over
+peek: the area you want to record and press "Record". Peek is optimized
+peek: for generating animated GIFs, but you can also directly record to
+peek: WebM or MP4 if you prefer.
+peek:
+peek: Homepage: https://github.com/phw/peek
+peek:
+peek:

@@ -1,7 +1,7 @@
 PRGNAM="REDasm"
 VERSION="3.0.0.beta5"
 HOMEPAGE="https://redasm.io/"
-DOWNLOAD="Unsupported"
+DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://github.com/kermitdafrog8/REDasm/releases/download/v3.0.0.beta5/REDasm-3.0.0.beta5.tar.gz \
 https://github.com/kermitdafrog8/REDasm/releases/download/v3.0.0.beta5/json-3.10.5.tar.gz \

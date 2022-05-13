@@ -1,0 +1,11 @@
+build2: build2 is a cross-platform build toolchain for C/C++.  
+build2:  
+build2: build2 is a hierarchy of tools consisting of a general-purpose build 
+build2: system, package manager, and project manager. It is primarily aimed at 
+build2: C/C++ projects as well as mixed-language projects.  
+build2: 
+build2: 
+build2: 
+build2: 
+build2: 
+build2: Home page: https://build2.org/  

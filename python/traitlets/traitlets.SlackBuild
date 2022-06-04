@@ -88,12 +88,12 @@ here = os.path.abspath(os.path.dirname(__file__))
 pjoin = os.path.join
 packages = []
 for d, _, _ in os.walk(pjoin(here, 'traitlets')):
-   if os.path.exists(pjoin(d, '__init__.py')):
-      packages.append(d[len(here)+1:].replace(os.path.sep, '.'))
+    if os.path.exists(pjoin(d, '__init__.py')):
+        packages.append(d[len(here)+1:].replace(os.path.sep, '.'))
 setup(name='${PRGNAM}',
-      version='${VERSION}',
-      packages=packages,
-      package_data={'': ['*']},  
+    version='${VERSION}',
+    packages=packages,
+    package_data={'': ['*']},  
 )
 EOF
 

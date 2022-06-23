@@ -18,5 +18,5 @@ MD5SUM="a668854505eff3ca5ed9f33e3ac91c80 \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="zulu-openjdk11 libass flatbuffers fmt rapidjson spdlog tinyxml gtest"
-MAINTAINER="Larry Hajali"
-EMAIL="larryhaja[at]gmail[dot]com"
+MAINTAINER="Jeremy Hansen"
+EMAIL="jebrhansen+SBo@gmail.com"

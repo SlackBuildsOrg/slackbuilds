@@ -15,20 +15,9 @@ Then run `/sbin/lilo` to update the boot loader.
 Don't forget to re-run `/sbin/lilo` if you upgrade this package.
 
 
-GRUB 2 users:  Append something like this to your /etc/grub.d/40_custom:
+GRUB 2 users:  Should be added automatically.
 
-  menuentry 'memtest86+' {
-      linux16 (hd0,1)/boot/memtest86+.bin
-  }
-
-Then run `grub-mkconfig -o /boot/grub/grub.cfg` to update the boot menu.
-
-
-GRUB Legacy users:  Append something like this to your
-/boot/grub/menu.lst:
-
-  title memtest86+
-      kernel (hd0,0)/boot/memtest86+.bin
-
+/etc/grub.d/60_memtest86+* scripts have been added so you just need
+to run /usr/sbin/grub-mkconfig.
 
 See /usr/doc/memtest86+-$VERSION/README for more info.

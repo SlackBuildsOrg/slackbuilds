@@ -25,13 +25,19 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=memtest86+
-VERSION=${VERSION:-5.01}
-BUILD=${BUILD:-2}
+SRCNAM=memtest86plus
+VERSION=${VERSION:-6.00}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-# i486 only.  Modify the Makefile at your own risk :-)
-ARCH=i486
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
 # the name of the created package would be, and then exit. This information
@@ -45,62 +51,53 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM-$VERSION
 OUTPUT=${OUTPUT:-/tmp}
 
-DOCS="FAQ README* changelog"
+DOCS="LICENSE README*"
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  echo "ARCH not supported."
+  exit 1
+fi
 
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
 chown -R root:root .
-chmod -R u+w,go-w,a+rX-st .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Upstream is dead.  Lots of patches courtesy of Debian and Gentoo.
-# If these get out-of-hand, consider switching to coreboot's fork:
-# https://review.coreboot.org/cgit/memtest86plus.git/
+BUILDDIR=${BUILDDIR:-build64}
+if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
+  BUILDDIR=build32
+fi
 
-# https://sources.debian.org/patches/memtest86+/5.01-3/
-# Last 3 are covered or made unnecessary by Gentoo's patches.
-# Multiboot is disabled due to it being experimental and
-# possibly not working correctly:  https://bugs.debian.org/568176
-# Note that we aren't installing the multiboot image (memtest_shared).
-# Note that patches multiboot and memtest86+-5.01-hardcoded_cc.patch conflict.
-patch -p1 < $CWD/patches/doc-serialconsole
-#patch -p1 < $CWD/patches/multiboot
-#patch -p1 < $CWD/patches/memtest86+-5.01-O0.patch
-#patch -p1 < $CWD/patches/memtest86+-5.01-array-size.patch
-#patch -p1 < $CWD/patches/gcc-5
-
-# https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-apps/memtest86+/files
-patch -p1 < $CWD/patches/memtest86+-5.01-gcc-473.patch
-patch -p1 < $CWD/patches/memtest86+-5.01-hardcoded_cc.patch
-patch -p1 < $CWD/patches/memtest86+-5.01-no-scp.patch
-patch -p1 < $CWD/patches/memtest86+-5.01-io-extern-inline.patch
-patch -p1 < $CWD/patches/memtest86+-5.01-reboot-def.patch
-patch -p1 < $CWD/patches/memtest86+-5.01-no-clean.patch
-patch -p1 < $CWD/patches/memtest86+-5.01-no-C-headers.patch
-patch -p1 < $CWD/patches/memtest86+-5.01-test-random-cflags.patch
-
-# More CFLAGS/CPPFLAGS cleanup, inspired by the previous patch.
-patch -p1 < $CWD/patches/makefile.diff
-
-# https://bugs.debian.org/795421
-patch -p1 < $CWD/patches/memtest86+-test-7-smp.patch
-
-# https://bugs.debian.org/629506
-patch -p1 < $CWD/patches/bug_629506_message_15.mbox
-
-# https://bugzilla.opensuse.org/show_bug.cgi?id=1185272
-patch -p1 < $CWD/patches/discard-note_gnu_property.patch
-
+cd $BUILDDIR
 make
-install -D -m 0755 memtest $PKG/boot/$PRGNAM-$VERSION
-install -D -m 0644 memtest.bin $PKG/boot/$PRGNAM-$VERSION.bin
-ln -s $PRGNAM-$VERSION $PKG/boot/$PRGNAM
-ln -s $PRGNAM-$VERSION.bin $PKG/boot/$PRGNAM.bin
+
+install -D -m 0644 memtest.bin $PKG/boot/$PRGNAM.bin
+install -D -m 0755 "$CWD/60_memtest86+" "$PKG/etc/grub.d/60_memtest86+"
+install -D -m 0644 memtest.efi $PKG/boot/$PRGNAM.efi
+install -D -m 0755 "$CWD/60_memtest86+-efi" "$PKG/etc/grub.d/60_memtest86+-efi"
+cd ..
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION

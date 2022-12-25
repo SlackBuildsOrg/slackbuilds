@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description. Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in. You must
+# make exactly 11 lines for the formatting to be correct. It's also
+# customary to leave one space after the ':'.
+
+                        |-----handy-ruler------------------------------------------------------|
+kernel-modules-xanmod-rt: kernel-modules-xanmod-rt (Linux kernel modules)
+kernel-modules-xanmod-rt:
+kernel-modules-xanmod-rt: Kernel modules are pieces of code that can be loaded and unloaded into
+kernel-modules-xanmod-rt: the kernel upon demand. They extend the functionality of the kernel
+kernel-modules-xanmod-rt: without the need to reboot the system. These modules provide support
+kernel-modules-xanmod-rt: for hardware such as USB devices, RAID controllers, network
+kernel-modules-xanmod-rt: interfaces, and display devices, or add other additional capabilities
+kernel-modules-xanmod-rt: to the kernel.
+kernel-modules-xanmod-rt:
+kernel-modules-xanmod-rt:
+kernel-modules-xanmod-rt:

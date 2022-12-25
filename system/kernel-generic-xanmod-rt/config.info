@@ -1,0 +1,94 @@
+#!/bin/bash
+
+#   Slackware Studio
+#   Copyright (C) 2022  Martin Bångens
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+##############################################################################################################################
+## You can run this or apply this manually
+## This was written for Slackware 15
+## Be careful and examine each command 
+##############################################################################################################################
+## This will make wine able to use a lower virtual memory address
+## for some servers this this can be a security risk. But for a normal
+## desktop user that want to runs wine plugins, its a bit silly.
+## 
+## /etc/sysctl.d/mmap_restriction_override.conf
+#
+# vm.mmap_min_addr = 65536
+#
+## Set default SCALING_GOVERNOR to performance
+## You can do this in both
+##
+## /etc/default/cpufreq (this file override the other)
+## /etc/rc.d/rc.cpufreq
+#
+# SCALING_GOVERNOR=performance
+#
+## You know about this one :) its a standard for Linux music producers
+##
+## /etc/security/limits.d/audio.conf
+#
+# @audio - memlock unlimited
+# @audio - rtprio 95
+# @audio - nofile 1048576
+#
+## Make pulseaudio lock memory
+##
+## /etc/pulse/daemon.conf
+#
+# ; lock-memory = yes
+#
+## This is important for real time audio software to be able to use
+## timers and have permission to access them
+##
+## /etc/udev/rules.d/40-timer-permissions.rules
+#
+# KERNEL=="rtc0", GROUP="audio"
+# KERNEL=="hpet", GROUP="audio"
+#
+## Make sure some default kernel parameters are set more real-time friendly
+##
+## /etc/sysctl.d/daw.conf
+#
+# dev.hpet.max-user-freq = 3072
+# fs.inotify.max_user_watches = 524288
+# vm.swappiness = 10
+#
+## Xorg have a Max clients allowed that seems to only change by a flag
+## when Xserver starts. It defaults to 256, Yes sometimes it can be
+## a problem if you have a lot of plugins in a big project. Some DAW's
+## will lets plugins run in containers and deactivate them when not used
+## by any track. Yes it seems ridiculous, this should be set to 1024.
+##
+## /etc/x11/xdm/Xservers
+#
+# :0 local /usr/bin/X :0 -maxclients 1024
+#
+## /etc/sddm.conf
+#
+# ServerArguments=-nolisten tcp -maxclients 1024
+#
+##############################################################################################################################
+echo "vm.mmap_min_addr = 65536"  >> /etc/sysctl.d/mmap_restriction_override.conf
+sed -i 's/SCALING_GOVERNOR=ondemand/SCALING_GOVERNOR=performance/g' /etc/rc.d/rc.cpufreq
+echo -e "@audio - memlock unlimited\n@audio - rtprio 95\n@audio - nofile 1048576" >> /etc/security/limits.d/audio.conf
+sed -i 's/; lock-memory = no/; lock-memory = yes/g' /etc/pulse/daemon.conf
+echo -e "KERNEL==\"rtc0\", GROUP=\"audio\"\nKERNEL==\"hpet\", GROUP=\"audio\"" >> /etc/udev/rules.d/40-timer-permissions.rules
+echo -e "dev.hpet.max-user-freq = 3072\nfs.inotify.max_user_watches = 524288\nvm.swappiness = 10" >> /etc/sysctl.d/daw.conf
+sed -i 's|:0 local /usr/bin/X :0|:0 local /usr/bin/X :0 -maxclients 1024|g' /etc/X11/xdm/Xservers
+sed -i 's|ServerArguments=-nolisten tcp|ServerArguments=-nolisten tcp -maxclients 1024|g' /etc/sddm.conf
+
+echo "reboot the computer"

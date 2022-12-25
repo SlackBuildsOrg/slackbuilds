@@ -1,0 +1,119 @@
+#!/bin/bash
+
+# Slackware build script for kernel-generic-xanmod-rt
+
+# Copyright 2022 Martin Bångens Sweden
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=kernel-generic-xanmod-rt
+VERSION=${VERSION:-5.15.55}
+RT=${RT:-rt48}
+KERNEL=${KERNEL:-xanmod1}
+NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+cd /usr/src/linux-$VERSION-$RT-$KERNEL 2> /dev/null
+if [ $? != 1 ]; then
+  VERSION=$(grep "^VERSION = " Makefile | rev | cut -f 1 -d ' ' | rev).$(grep "^PATCHLEVEL = " Makefile | rev | cut -f 1 -d ' ' | rev).$(grep "^SUBLEVEL = " Makefile | rev | cut -f 1 -d ' ' | rev)$(grep "^EXTRAVERSION = " Makefile | rev | cut -f 1 -d ' ' | rev)
+  RT=$(cat localversion-rt 2> /dev/null | sed s/-//g)
+  KERNEL=$(cat localversion-xanmod 2> /dev/null | sed s/-//g)
+else
+  if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+    echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+    exit 0
+  fi
+  echo "You seem to be missing the source in /usr/src"
+  exit 1
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ $ARCH != "x86_64" ]; then
+  echo "There is only config file for x86_64 FIXME"
+  exit 1
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+
+cd $TMP
+
+rm -rf linux-$VERSION-$RT-$KERNEL
+tar xvf $CWD/linux-$VERSION-$RT-$KERNEL.tar.gz
+cd linux-$VERSION-$RT-$KERNEL
+
+if [ `ls -1 /usr/src/linux-$VERSION-$RT-$KERNEL/*.patch.xz 2>/dev/null | wc -l` != 0 ]; then
+  for i in /usr/src/linux-$VERSION-$RT-$KERNEL/*.patch.xz; do
+    xzcat $i | patch -p1 --verbose --backup --suffix=.orig || exit 1
+  done
+fi
+if [ `ls -1 /usr/src/linux-$VERSION-$RT-$KERNEL/*.patch 2>/dev/null | wc -l` != 0 ]; then
+  for i in /usr/src/linux-$VERSION-$RT-$KERNEL/*.patch; do
+    cat $i | patch -p1 --verbose --backup --suffix=.orig || exit 1
+  done
+fi
+
+cp -v /usr/src/linux-$VERSION-$RT-$KERNEL/.config .config || exit 1
+
+make clean
+make prepare
+make oldconfig
+make $NUMJOBS bzImage || make bzImage || exit 2
+
+echo ""
+
+mkdir -p $PKG/boot
+cp -v System.map $PKG/boot/System.map-generic-xanmod-rt-$VERSION-$RT || exit 3
+cp -v .config $PKG/boot/config-generic-xanmod-rt-$VERSION-$RT || exit 3
+cp -v arch/x86/boot/bzImage $PKG/boot/vmlinuz-generic-xanmod-rt-$VERSION-$RT || exit 3
+
+ln -srv $PKG/boot/System.map-generic-xanmod-rt-$VERSION-$RT $PKG/boot/System.map-generic-xanmod-rt
+ln -srv $PKG/boot/config-generic-xanmod-rt-$VERSION-$RT $PKG/boot/config-generic-xanmod-rt
+ln -srv $PKG/boot/vmlinuz-generic-xanmod-rt-$VERSION-$RT $PKG/boot/vmlinuz-generic-xanmod-rt
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

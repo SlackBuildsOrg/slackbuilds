@@ -1,0 +1,26 @@
+Xanmod 5.15 real-time kernel
+
+This kernel unlock some serious performance improvements
+and was originally configure for audio production on Slackware
+and for better use of wine-tkg.
+
+Don't forget to configure you're boot manager.
+The noefi kernel option can be used when you don't need
+efivars for it can mess with the kernel.
+
+Path to kernels to boot from:
+
+/boot/vmlinuz-generic
+/boot/vmlinuz-huge
+/boot/vmlinuz-generic-xanmod-rt
+
+Don't forget you're mkinitrd command and to update you're boot loader!
+
+Initrd command:
+/usr/share/mkinitrd/mkinitrd_command_generator.sh -k 5.15.?-rt?-xanmod1
+
+If you have Intel processor you must load microcode early!
+Add -P /boot/intel-ucode.cpio to the generated mkinitrd command!
+
+There is a file with configuration tips for using this kernel
+called config.info

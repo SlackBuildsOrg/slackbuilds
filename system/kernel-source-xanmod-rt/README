@@ -1,0 +1,33 @@
+The kernel-source-xanmod-rt pakage is a copy of the xanmod-rt
+source code installed in /usr/src/ without touching the
+linux symbolic link in /usr/src. If you apply patches after
+you installed kernel-source-xanmod, you need to copy them into
+the source directory, the other package scripts will only read
+the config file and look patches there and apply them on this
+packages tar. This way you can also build the kernel manually
+and try out changes and configurations before you save them,
+keeping manually building and packaging the kernel separated
+and simple with all options available. Point to you config file
+and patch directory with a leading "/", if you don't it will be
+relative to /tmp/SBo/package-kernel-source-xanmod-rt/usr/src/linux../
+that is probably not what you want.
+
+PATCH_DIR=/full/path/to/the/directory/patches
+CONFIG=/full/path/to/kernel/config/file
+
+This are the packages will be based on the config and
+patches found in /usr/src/linux-5.15.*-rt*-xanmod1
+provided by this package. Patches need to be in the format
+.patch or .patch.xz
+
+kernel-generic-xanmod-rt
+kernel-headers-xanmod-rt
+kernel-modules-xanmod-rt
+
+Everything is set to be verbose. Analyse the output
+to see how the patching went and from where the config
+was copied.
+
+Pleas give feedback, if you see something in kernel config or in the
+script that you think could be better. E-mail me or open pull request
+on git against this packages.

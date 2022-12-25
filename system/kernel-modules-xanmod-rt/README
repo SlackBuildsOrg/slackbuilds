@@ -1,0 +1,48 @@
+This is the modules package you need for kernel-generic-xanmod-rt
+
+Note: The current proprietary NVIDIA, VirtualBox,
+VMware Workstation / Player and some other
+dkms modules builds do not officially support THIS RT kernel
+
+For building VirtualBox with generic or huge:
+Make sure you specify you're other kernel when building
+the virtualbox-kernel like
+KERNEL=5.15.80 ./virtualbox-kernel.SlackBuild
+
+If you get errors like on this kernel:
+
+failed to execute '/usr/share/virtualbox/VBoxCreateUSBNode.sh'
+'/usr/share/virtualbox/VBoxCreateUSBNode.sh 189 0 09 vboxusers'
+: No such file or directory
+
+You probably have a udev configuration from vbox in initrd
+when it loads usb drivers and you don't need to worry about it.
+
+If you want to fix this you could run commands similar to these:
+
+mv /lib/udev/rules.d/10-virtualbox.rules /root
+/etc/rc.d/rc.udev reload
+mkinitrd ## YOURE OPTIONS ##
+mv /root/10-virtualbox.rules /lib/udev/rules.d
+/etc/rc.d/rc.udev reload
+lilo
+
+# /etc/rc.d/rc.local
+# Avoid virtualbox startup service for xanmod1
+
+if echo $(uname -a) | grep xanmod1 > /dev/null; then
+    chmod -x /etc/rc.d/rc.vbox*
+else
+    chmod +x /etc/rc.d/rc.vbox*
+fi
+
+if [ -x /etc/rc.d/rc.vboxdrv ]; then
+  /etc/rc.d/rc.vboxdrv start
+fi
+
+sbopkg might suggest updates for modules not supported by xanmod-rt
+They wont be selected by default and you can just ignore those.
+
+Don't use NVIDIA's drivers with this kernel, nouveau works great
+for just desktop applications and you get the nice frame buffer, if you
+have nvidia give up gaming new games with this kernel.

@@ -1,0 +1,18 @@
+This is the headers for the kernel-generic-xanmod-rt package
+
+You only need this for wine fsync and winesync.
+
+ALL OTHER SOFTWARE EXCEPT WINE SHOULD BE BUILD WITH SLACKWARE'S
+DEFAULT HEADERS! NOT DOING SO COULD DAMAGE YOU SLACKWARE INSTALLATION!
+
+Don't forget to remove kernel-headers installed from slackware.com
+before you install. If you forget, uninstall all headers packages
+and reinstall from slackware.com
+
+Use the package in this order
+
+removepkg kernel-headers
+then install kernel-headers-xanmod-rt
+then build wine-tkg
+then removepkg kernel-headers-xanmod-rt
+then reinstall kernel-headers

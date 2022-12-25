@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description. Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in. You must
+# make exactly 11 lines for the formatting to be correct. It's also
+# customary to leave one space after the ':'.
+
+                        |-----handy-ruler------------------------------------------------------|
+kernel-generic-xanmod-rt: kernel-generic-xanmod-rt (Audio focused 64-bit Xanmod Linux kernel)
+kernel-generic-xanmod-rt:
+kernel-generic-xanmod-rt: This is a rt Linux kernel with modified a generic config file and
+kernel-generic-xanmod-rt: built-in support for most disk controllers. To use filesystems,
+kernel-generic-xanmod-rt: or to load support for a SCSI or other controller, then you'll
+kernel-generic-xanmod-rt: need to load one or more kernel modules using an initial ramdisk,
+kernel-generic-xanmod-rt: or initrd. For more information about creating an initrd, see the
+kernel-generic-xanmod-rt: README.initrd file in the /boot directory.
+kernel-generic-xanmod-rt:
+kernel-generic-xanmod-rt: SMP is "Symmetric multiprocessing", or multiple CPU/core support.
+kernel-generic-xanmod-rt: PREEMPT_RT is Fully Preemptible Real-Time Kernel. (Patched kernel)

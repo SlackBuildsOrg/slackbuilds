@@ -1,0 +1,128 @@
+#!/bin/bash
+
+# Slackware build script for kernel-source-xanmod-rt
+
+# Copyright 2022 Martin Bångens Sweden
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=kernel-source-xanmod-rt
+VERSION=${VERSION:-5.15.55}
+RT=${RT:-rt48}
+KERNEL=${KERNEL:-xanmod1}
+NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-noarch-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+if [ $ARCH != "x86_64" ]; then
+  echo "There is only config file for x86_64 FIXME"
+  exit 1
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG/usr/src $OUTPUT
+
+cd $PKG/usr/src
+
+rm -rf linux-$VERSION-$RT-$KERNEL
+tar xvf $CWD/linux-$VERSION-$RT-$KERNEL.tar.gz
+cd linux-$VERSION-$RT-$KERNEL
+
+# If we find .patch.xz or .patch files apply then and save them in the source dir
+if [ -d "$PATCH_DIR" ]; then
+  if [ `ls -1 $PATCH_DIR/*.patch.xz 2>/dev/null | wc -l` != 0 ]; then
+    for i in $PATCH_DIR/*.patch.xz; do
+      xzcat $i | patch -p1 --verbose --backup --suffix=.orig || exit 1
+      cp $i $PKG/usr/src/linux-$VERSION-$RT-$KERNEL
+    done
+  fi
+  if [ `ls -1 $PATCH_DIR/*.patch 2>/dev/null | wc -l` != 0 ]; then
+    for i in $PATCH_DIR/*.patch; do
+      cat $i | patch -p1 --verbose --backup --suffix=.orig || exit 1
+      cp $i $PKG/usr/src/linux-$VERSION-$RT-$KERNEL
+    done
+  fi
+
+  # Sync version of applied patches
+  VERSION=$(grep "^VERSION = " Makefile | rev | cut -f 1 -d ' ' | rev).$(grep "^PATCHLEVEL = " Makefile | rev | cut -f 1 -d ' ' | rev).$(grep "^SUBLEVEL = " Makefile | rev | cut -f 1 -d ' ' | rev)$(grep "^EXTRAVERSION = " Makefile | rev | cut -f 1 -d ' ' | rev)
+  RT=$(cat localversion-rt 2> /dev/null | sed s/-//g)
+  KERNEL=$(cat localversion-xanmod 2> /dev/null | sed s/-//g)
+
+fi
+
+# If we specify a config file then do some check to see that is looks like a config file
+if [ -f "$CONFIG" ]; then
+  if [ "$(sed '3q;d' $CONFIG | awk '{print $5;}')" != "Configuration" ]; then
+    echo "Specified CONFIG file don't look right"
+    exit 1
+  else
+    cp -v $CONFIG .config || exit 1
+  fi
+else
+  cp -v $CWD/config .config || exit 1
+fi
+
+chown -R root:root .
+find . \
+ \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
+ -exec chmod 755 {} \+ -o \
+ \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
+ -exec chmod 644 {} \+
+
+# We should build the kernel so that out of tree module builds will work
+make oldconfig
+make $NUMJOBS || exit 2
+make $NUMJOBS modules || exit 3
+make clean
+make prepare
+find . -name "*Image" -exec rm "{}" \+
+rm -f .config.old .version
+find . -name "*.cmd" -exec rm -f "{}" \+ 
+rm .*.d
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-noarch-$BUILD$TAG.$PKGTYPE

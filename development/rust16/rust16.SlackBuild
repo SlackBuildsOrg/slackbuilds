@@ -67,14 +67,20 @@ else
   LIBDIRSUFFIX=""
 fi
 
+if [ "$ARCH" = "arm" ]; then
+  TRIPLET="$ARCH-unknown-linux-gnueabihf"
+else
+  TRIPLET="$ARCH-unknown-linux-gnu"
+fi
+
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION-unknown-linux-gnu
-tar xvf $CWD/$SRCNAM-$VERSION-$ARCH-unknown-linux-gnu.tar.gz
-cd $SRCNAM-$VERSION-$ARCH-unknown-linux-gnu
+rm -rf $SRCNAM-$VERSION-$TRIPLET
+tar xvf $CWD/$SRCNAM-$VERSION-$TRIPLET.tar.gz
+cd $SRCNAM-$VERSION-$TRIPLET
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -90,7 +96,7 @@ find -L . \
 clippy-preview,\
 rls-preview,\
 llvm-tools-preview,\
-rust-analysis-$ARCH-unknown-linux-gnu,\
+rust-analysis-$TRIPLET,\
 rust-analyzer-preview,\
 rust-demangler-preview,\
 rustfmt-preview

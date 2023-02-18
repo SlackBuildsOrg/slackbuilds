@@ -1,8 +1,10 @@
 PRGNAM="rust16"
 VERSION="1.65.0"
 HOMEPAGE="https://rust-lang.org"
-DOWNLOAD="https://static.rust-lang.org/dist/2022-11-03/rust-1.65.0-i686-unknown-linux-gnu.tar.gz"
-MD5SUM="cd5a051af8290ee760e0f7b38b45f559"
+DOWNLOAD="https://static.rust-lang.org/dist/2022-11-03/rust-1.65.0-i686-unknown-linux-gnu.tar.gz \
+          https://static.rust-lang.org/dist/2022-11-03/rust-1.65.0-arm-unknown-linux-gnueabihf.tar.gz"
+MD5SUM="cd5a051af8290ee760e0f7b38b45f559 \
+        f932380a483abec7a4b7888fdab4df12"
 DOWNLOAD_x86_64="https://static.rust-lang.org/dist/2022-11-03/rust-1.65.0-x86_64-unknown-linux-gnu.tar.gz"
 MD5SUM_x86_64="51d6eb460e982f01290a90a53d7dfbf9"
 REQUIRES=""

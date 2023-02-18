@@ -7,4 +7,4 @@ DOWNLOAD_x86_64="https://gitlab.com/api/v4/projects/24386000/packages/generic/li
 MD5SUM_x86_64="497c3f3ba79510be20c58c4d187c442d"
 REQUIRES=""
 MAINTAINER="Ivan Kovmir"
-EMAIL="ikovmir@uninstance.cc"
+EMAIL="i@kovmir.eu"

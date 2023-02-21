@@ -29,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=winetricks
-VERSION=${VERSION:-20220411}
+VERSION=${VERSION:-20230212}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -20,7 +20,5 @@ Library features
  * Tested on x64, x86 and ARM
 
 POXY_DOCS=YES option will generate html development documentation
-but you need to install pyton3 program poxy with this command:
-pip install poxy # with root
-and build with this:
-POXY_DOCS=YES ./tomlplusplus.SlackBuild
+Slackware 15.0 have to build meson from current, you can downgrade
+after the build. Location slackware/slackware64-current/source/d/meson/

@@ -25,7 +25,7 @@ setup(name='pyCRAC',
 	description='Python NextGen sequencing data processing software',
 	author='Sander Granneman',
 	author_email='sgrannem@staffmail.ed.ac.uk',
-	url='http://sandergranneman.bio.ed.ac.uk/Granneman_Lab/pyCRAC_software.html',
+	url='https://git.ecdf.ed.ac.uk/sgrannem',
 	packages=['pyCRAC','pyCRAC.Parsers','pyCRAC.Classes','pyCRAC.Methods'],
 	install_requires=['numpy >= 1.5.1', 'cython >=0.19', 'pysam >= 0.6','six >= 1.9.0'],
 	scripts=[

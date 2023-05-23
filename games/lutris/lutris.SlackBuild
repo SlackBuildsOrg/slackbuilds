@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lutris
-VERSION=${VERSION:-0.5.12}
+VERSION=${VERSION:-0.5.13}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -46,7 +46,7 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
 fi
 
 TMP=${TMP:-/tmp/SBo}
-PKG=${PKG:-$TMP/package-$PRGNAM}
+PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 DOCS="AUTHORS LICENSE README.rst"

@@ -3,7 +3,7 @@
 # Slackware build script for python3-pytest
 
 # Copyright 2018 Serban Udrea <S.Udrea@gsi.de>
-# Copyright 2022-2023 Isaac Yu <isaacyu1@isaacyu1.com>
+# Copyright 2022-2023 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 # Based on the pytest SlackBuild by Dimitris Zlatanidis Orestiada, Greece
 #
@@ -28,8 +28,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-pytest
 SRCNAM=pytest
-VERSION=${VERSION:-7.1.3}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-7.3.1}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

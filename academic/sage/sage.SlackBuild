@@ -3,7 +3,7 @@
 # Slackware build script for sage
 # Written by Jack Maddox <jack@auburn.edu>
 # Currently maintained by Christopher L Duston <christopher.duston@protonmail.com>
-# Last update Jan 2022.
+# Last update June 2023.
 #
 # All rights reserved.
 #
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sage
-VERSION=${VERSION:-9.4}
+VERSION=${VERSION:-10.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -132,12 +132,15 @@ if [ "${INSTALLSCRIPTS:-no}" = "yes" ]; then
 fi
 
 sed "s%SAGEROOT%${SAGEROOT}%" $CWD/$PRGNAM-notebook.desktop > $PKG/usr/share/applications/$PRGNAM-notebook.desktop
-cp src/doc/common/themes/sage/static/sageicon.png $PKG/usr/share/pixmaps/
+#cp src/doc/common/themes/sage/static/sageicon.png $PKG/usr/share/pixmaps/
 
 # Put a line here which *actually* adds sage to the path
+# Gotta source that .sh script, that works fine (see README)
+
 
 # install sagetex to a location that is accessible to the system TeX installation
-cp -a local/share/texmf $PKG/usr/share
+cp -a local/var/lib/sage/venv-python3.9/share/texmf $PKG/usr/share
+
 
 cp -a COPYING.txt README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

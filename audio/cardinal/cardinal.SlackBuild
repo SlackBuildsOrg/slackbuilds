@@ -70,6 +70,8 @@ else
   echo "Unknown ARCH"
   exit 1
 fi
+chown -R root:root .
+
 mkdir -p $PKG/usr/$LIBDIR/clap
 mkdir -p $PKG/usr/$LIBDIR/lv2
 mkdir -p $PKG/usr/$LIBDIR/vst

@@ -1,8 +1,10 @@
 PRGNAM="cutter"
 VERSION="v2.3.0"
 HOMEPAGE="https://cutter.re/"
-DOWNLOAD="https://github.com/rizinorg/cutter/archive/v2.3.0/cutter-2.3.0.tar.gz"
-MD5SUM="97afcc9e806dcf71e1131aa6ee71b4ea"
+DOWNLOAD="https://github.com/rizinorg/cutter/archive/v2.3.0/cutter-2.3.0.tar.gz
+          https://github.com/kermitdafrog8/Slackbuild/blob/main/development/cutter/cutter-translations.tar.gz"
+MD5SUM="97afcc9e806dcf71e1131aa6ee71b4ea
+        7cc48d3878d1562ebfb28a35bf5545d6"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="rizin Sphinx"

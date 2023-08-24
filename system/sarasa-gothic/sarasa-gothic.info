@@ -1,6 +1,6 @@
 PRGNAM="sarasa-gothic"
 VERSION="0.41.7"
-HOMEPAGE="https://github.con/be5invis/Sarasa-Gothic"
+HOMEPAGE="https://github.com/be5invis/Sarasa-Gothic"
 DOWNLOAD="https://github.com/be5invis/Sarasa-Gothic/releases/download/v0.41.7/sarasa-gothic-ttc-0.41.7.7z"
 MD5SUM="95e381561b08b675361df4a4cdd46171"
 DOWNLOAD_x86_64=""

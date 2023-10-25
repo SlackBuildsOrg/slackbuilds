@@ -69,7 +69,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$DIST_VER
-tar xvf $CWD/$PRGNAM-$DIST_VER.tar.gz || tar xvf $CWD/(v)$DIST_VER.tar.gz
+tar xvf $CWD/$PRGNAM-$DIST_VER.tar.gz
 cd $PRGNAM-$DIST_VER
 chown -R root:root .
 find -L . \

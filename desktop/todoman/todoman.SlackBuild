@@ -83,11 +83,11 @@ find -L . \
 # Requires python/python3-setuptools-opt build-time dependency
 export PYTHONPATH=/opt/python3.9/site-packages/
 
+patch -i $CWD/cli.py.patch $PRGNAM/cli.py
+patch -i $CWD/widgets.py.patch $PRGNAM/widgets.py
+
 python3 -m build --no-isolation
 python3 -m installer -d "$PKG" dist/*.whl
-
-patch -i $CWD/cli.py.patch $PKG/todoman/cli.py
-patch -i $CWD/widgets.py.patch $PKG/todoman/widgets.py
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

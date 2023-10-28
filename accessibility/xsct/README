@@ -1,0 +1,13 @@
+xsct (X11 set color temperature)
+
+xsct is a UNIX tool which allows you to set the color temperature of
+your screen. It is simpler than Redshift and f.lux. Based on code 
+published by Ted Unangst in the public domain.
+
+Minor modifications were made in order to get sct to:
+* iterate over all screens of the default display and change the color
+  temperature
+* free the Display structure
+* fix memleaks
+* clean up code
+* return EXIT_SUCCESS

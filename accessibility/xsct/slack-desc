@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+    |-----handy-ruler------------------------------------------------------|
+xsct: xsct (X11 set color temperature)
+xsct:
+xsct: xsct is a UNIX tool which allows you to set the color temperature of
+xsct: your screen. It is based on code published by Ted Unangst in the
+xsct: public domain.
+xsct:
+xsct:
+xsct:
+xsct:
+xsct: https://github.com/faf0/sct
+xsct:

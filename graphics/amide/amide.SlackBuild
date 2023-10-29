@@ -104,8 +104,8 @@ CXXFLAGS="$SLKCFLAGS" \
 # workaround GTK+-2.0 ABI issue
 sed -i '$a\#define g_warning printf' amide_config.h;
 
-make
-make install DESTDIR=$PKG
+make -j1
+make -j1 install DESTDIR=$PKG
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 

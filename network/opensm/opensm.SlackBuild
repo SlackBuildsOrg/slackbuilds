@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=opensm
-VERSION=${VERSION:-3.3.22}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-3.3.24}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -66,13 +66,17 @@ fi
 
 METIS=${METIS:-no}
 WITH_METIS=
-if [ "$METIS" != no ]; then
+if [ "`echo $METIS | tr 'a-z' 'A-Z'`" = YES ]; then
   for inc_dir in /usr/include/metis /usr/include/suitesparse; do
     if [ -e $inc_dir/metis.h ]; then
       WITH_METIS="--with-metis --with-metis-includes=$inc_dir"
       break
     fi
   done
+  if [ -z "$WITH_METIS" ]; then
+    echo "Error: metis enabled but headers not found."
+    exit 1
+  fi
 fi
 
 set -e

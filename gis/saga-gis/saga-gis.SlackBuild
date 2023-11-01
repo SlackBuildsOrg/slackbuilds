@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=saga-gis
-VERSION=${VERSION:-9.1.2}
+VERSION=${VERSION:-9.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -53,16 +53,12 @@ OUTPUT=${OUTPUT:-/tmp}
 # issues with -O2 causing build failures
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS=""
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -90,7 +86,7 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
-cd $SRCNAM-$VERSION
+cd $SRCNAM-$VERSION/saga-gis
 
 chown -R root:root .
 find -L . \
@@ -98,7 +94,6 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-cd saga-gis
 
 mkdir -p build
 cd build
@@ -123,7 +118,7 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 mv $PKG/usr/share/metainfo $PKG/usr/share/appdata
 
 # fix some bad perms in doc files that have to install
-chmod 644 readme.md src/*.txt
+chmod 644 readme.md src/*.txt 
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a readme.md src/gpl.txt src/lgpl.txt  $PKG/usr/doc/$PRGNAM-$VERSION

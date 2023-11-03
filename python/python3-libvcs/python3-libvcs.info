@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/0b/f1/cb5036ca31ab281b20de3bce
 MD5SUM="ad11b3a3735d885b59e4d18a934c170b"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-build"
+REQUIRES="python3-poetry-core"
 MAINTAINER="Dimitris Zlatanidis"
 EMAIL="dslackw@gmail.com"

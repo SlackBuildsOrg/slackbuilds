@@ -1,0 +1,12 @@
+       |-----handy-ruler------------------------------------------------------|
+appname: doublecmd-qt5 (Double-panel File Manager)
+appname: 
+appname: Double Commander is a free cross-platform open source file manager 
+appname: with two panels side by side (or one above the other). This is the Qt
+appname: version of the program.
+appname: 
+appname: Since it is written in Pascal, lazarus, fpc, and qt5pas packages must
+appname: be installed before building.
+appname: 
+appname: 
+appname: 

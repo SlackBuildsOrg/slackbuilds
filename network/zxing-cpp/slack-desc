@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
          |-----handy-ruler------------------------------------------------------|
-decorator: decorator (decorator module for Python)
-decorator:
-decorator: The aim of the decorator module it to simplify the usage of
-decorator: decorators for the average programmer, and to popularize decorators
-decorator: usage giving examples of useful decorators, such as memoize, tracing,
-decorator: redirecting_stdout, locked, etcetera.
-decorator:
-decorator: https://pypi.python.org/pypi/decorator
-decorator:
-decorator:
-decorator:
+zxing-cpp: zxing-cpp (barcode image processing library)
+zxing-cpp:
+zxing-cpp: ZXing-C++ ("zebra crossing") is an open-source, multi-format
+zxing-cpp: linear/matrix barcode image processing library implemented in C++.
+zxing-cpp: It can both read and write barcodes in a number of formats.
+zxing-cpp:
+zxing-cpp: Homepage: https://github.com/zxing-cpp/zxing-cpp
+zxing-cpp:
+zxing-cpp:
+zxing-cpp:
+zxing-cpp:

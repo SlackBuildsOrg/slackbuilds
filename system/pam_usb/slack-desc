@@ -1,0 +1,12 @@
+       |-----handy-ruler------------------------------------------------------|
+appname: pam_usb (Hardware Auth via Memory Sticks)
+appname: 
+appname: This is a PAM module for Linux authentication using USB memory sticks,
+appname: SD cards, external SSD etc. Simply speaking, it lets you log onto
+appname: your Linux user without typing password if the pre-configured memory
+appname: stick is detected.
+appname: 
+appname: See https://github.com/mcdope/pam_usb for configuration instruction.
+appname: 
+appname: 
+appname: 

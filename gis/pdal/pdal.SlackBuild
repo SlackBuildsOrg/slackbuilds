@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=pdal
 SRCNAM=PDAL
 VERSION=${VERSION:-2.6.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -47,10 +47,13 @@ fi
 if [ "${E57:-yes}" = "yes" ]; then
  BUILDE57="" ; [ -d /usr/include/xercesc ] && BUILDE57="-DBUILD_PLUGIN_E57=ON"
 fi
+if [ "${DRACO:-yes}" = "yes" ]; then
+ BUILDDRACO="" ; [ -x /usr/bin/draco_decoder-1.5.6 ] && BUILDDRACO="-DBUILD_PLUGIN_DRACO=ON"
+fi
 
 # *************************************************************************
 
-# Users that have a standard installation of proprietary MatLAB would enable
+# Users that have a standard installation of proprietary MatLAB would enable 
 # the build of Matlab plugin. This is disabled by default
 BUILDMATLAB="" ; [ "${MATLAB:-no}" = "yes" ] && \
                   BUILDMATLAB="-DBUILD_PLUGIN_MATLAB=ON"
@@ -106,13 +109,13 @@ find -L . \
 patch -p0 << 'EOF'
 --- ./cmake/unwind.cmake
 +++ ./cmake/unwind.cmake
-@@ -4,5 +4,5 @@
-
+@@ -4,5 +4,5 @@ 
+ 
  set(FPHSA_NAME_MISMATCHED 1) # Suppress warnings, see https://cmake.org/cmake/help/v3.17/module/FindPackageHandleStandardArgs.html
 -find_package(Libunwind QUIET)
 +find_package(Libunwind QUIET NO_MODULE)
  set(FPHSA_NAME_MISMATCHED 0)
-
+ 
 
 EOF
 
@@ -132,6 +135,7 @@ cd build
     -DWITH_TESTS=FALSE \
     $BUILDICEBRIDGE \
     $BUILDE57 \
+    $BUILDDRACO \
     $BUILDOSG \
     $BUILDHDF \
     $BUILDMATLAB \
@@ -142,8 +146,8 @@ cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-# Remove empty directories and fix permissions (issues found by sbopkglint)
+  
+# Remove empty directories and fix permissions (issues found by sbopkglint) 
 rmdir $PKG/usr/include/pdal/filters/private/csf
 rmdir $PKG/usr/include/pdal/filters/private/miniball
 chmod 644 $PKG/usr/include/pdal/*.hpp

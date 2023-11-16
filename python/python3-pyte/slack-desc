@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+            |-----handy-ruler------------------------------------------------------|
+python3-pyte: python3-pyte (Simple VTXXX-compatible linux terminal emulator)
+python3-pyte:
+python3-pyte: pyte an in memory VTXXX-compatible terminal emulator. XXX stands for
+python3-pyte: a series of video terminals, developed by DEC between 1970 and 1995.
+python3-pyte: The first, and probably the most famous one, was VT100 terminal,
+python3-pyte: which is now a de-facto standard for all virtual terminal emulators.
+python3-pyte: pyte follows the suit.
+python3-pyte:
+python3-pyte: https://github.com/selectel/pyte
+python3-pyte:
+python3-pyte:

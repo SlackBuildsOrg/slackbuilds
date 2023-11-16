@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+           |-----handy-ruler------------------------------------------------------|
+libqrencode: libqrencode (QR Code data encoding library)
+libqrencode:
+libqrencode: Libqrencode is a fast and compact library for encoding data in a QR
+libqrencode: Code, a 2D symbology that can be scanned by handy terminals such as
+libqrencode: a smartphone. The capacity of QR Code is up to 7000 digits or 4000
+libqrencode: characters and has high robustness.
+libqrencode:
+libqrencode: Homepage: https://fukuchi.org/works/qrencode/ 
+libqrencode:
+libqrencode:
+libqrencode:

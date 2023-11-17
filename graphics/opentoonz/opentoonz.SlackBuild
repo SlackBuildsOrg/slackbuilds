@@ -105,8 +105,13 @@ cd build
   make install/strip DESTDIR=$PKG
 cd ..
 
+if [ -n "${LIBDIRSUFFIX}" ] ; then
+  mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}
+  sed -i "s,/lib/,/lib${LIBDIRSUFFIX}/,g" $PKG/usr/bin/opentoonz
+fi
+
 # Add executability to the .so library files
-chmod +x $PKG/usr/lib/opentoonz/*.so
+chmod +x $PKG/usr/lib${LIBDIRSUFFIX}/opentoonz/*.so
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

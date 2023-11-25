@@ -9,6 +9,6 @@ MD5SUM="a6f2a09a3114841ea020b23de6db9081 \
 488fe73c0a221bdab7c74f21720dbe41"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="GeoIP graphviz rrdtool redis hiredis"
+REQUIRES="GeoIP graphviz rrdtool redis hiredis zeromq libmaxminddb"
 MAINTAINER="Lockywolf"
 EMAIL="for_sbo.ntopng_2023-11-20@lockywolf.net"

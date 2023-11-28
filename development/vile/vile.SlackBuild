@@ -25,6 +25,10 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #
+# 2023-11-26
+#   - upgrade upstream version to 9.8y
+#   - switched source URL from dead FTP to active HTTPS path
+#
 # 2022-10-22
 #   - upgrade upstream version to 9.8w
 #
@@ -33,7 +37,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vile
-VERSION=${VERSION:-9.8w}
+VERSION=${VERSION:-9.8y}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

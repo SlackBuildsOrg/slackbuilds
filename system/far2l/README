@@ -1,0 +1,11 @@
+Linux port of FAR v2 
+
+For python plugins support, use PYTHON=yes
+
+Optional dependencies:
+wxGTK3 - GUI version, use WX=yes
+xerces-c - Syntax highlight, use COLORER=yes
+libuchardet - Detecting encoding, use UCD=yes
+libnfs - NetRocks plugin
+
+REQUIRES=""

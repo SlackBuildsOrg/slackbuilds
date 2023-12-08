@@ -36,7 +36,7 @@ system. These are the following
 
 The build install as optional dependencies - autodetected - also
 hdf5 and netcdf. If they are installed, the support of PDAL and/or
-Draco can be disabled also by setting to "no" the environment variable
+Draco can be disabled also by setting to "no" the environment variable 
    PDAL=no [DRACO=no] ./qgis.SlackBuild
  
 2. PYTHON BINDINGS AND DEPENDENCIES
@@ -75,7 +75,7 @@ systems with old drivers/graphic cards. If you want to prevent this
 pass to the slackbuild the environment variable
 
    OPENCL=no ./qgis.SlackBuild
-
+   
 It has reported that QGIS shows runtime warnings about 'osgeo' unless
 the Python GDAL library is installed. If you encounter this issue you
 can solve by installing via pip the Python GDAL library as simple user

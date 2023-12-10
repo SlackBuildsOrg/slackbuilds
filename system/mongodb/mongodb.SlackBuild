@@ -127,10 +127,10 @@ JOBS="${JOBS:-$(( $( nproc ) - 1 ))}"
 
 if [ "$ARCH" = "x86_64" ]; then
   PREFIX=${PKG}/usr CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" LDFLAGS="-L /lib$LIBDIRSUFFIX -L/usr/lib$LIBDIRSUFFIX" \
-    ./buildscripts/scons.py "${scons_opts[@]}" --jobs="$JOBS" install-core
+    ./buildscripts/scons.py "${scons_opts[@]}" --force-jobs --jobs="$JOBS" install-core
 else
   PREFIX=${PKG}/usr CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" LDFLAGS="-L /lib$LIBDIRSUFFIX -L/usr/lib$LIBDIRSUFFIX" \
-    ./buildscripts/scons.py "${scons_opts[@]}" --jobs="$JOBS" --wiredtiger=off install-core
+    ./buildscripts/scons.py "${scons_opts[@]}" --force-jobs --jobs="$JOBS" --wiredtiger=off install-core
 fi
 
 # manual install

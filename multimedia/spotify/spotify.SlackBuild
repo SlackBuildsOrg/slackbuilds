@@ -4,6 +4,7 @@
 #
 # Copyright 2017 Dhaby Xiloj <slack.dhabyx@gmail.com>
 # Copyright 2022-2023  Edinaldo P. Silva, Rio de Janeiro, Brazil
+# Copyright 2023 Reza Talebi, Shahin Shahr, Iran.
 #
 # Based on Ryan's SlackBuild:
 # Ryan P.C. McQuen | Everett, WA | ryanpcmcquen@member.fsf.org
@@ -30,8 +31,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=spotify
 SRCNAM=spotify-client
-VERSION=${VERSION:-1.2.22.982}
-RELVER=${RELVER:-g794acc0a}
+VERSION=${VERSION:-1.2.26.1187}
+RELVER=${RELVER:-g36b715a1}
 VERSION32=${VERSION32:-1.0.72.117}
 RELVER32=${RELVER32:-g6bd7cc73-35}
 BUILD=${BUILD:-1}

@@ -41,8 +41,8 @@ PKGTYPE=${PKGTYPE:-tgz}
 
 # Modified since Spotify has diferent versions for each architecture
 case "$(uname -m)" in
-    i?86) VERSION=${VERSION32}; RELVER=${RELVER32}; DEBARCH="_i386" ; LIBDIRSUFFIX="" ; ARCH=i586 ;;
-  x86_64) DEBARCH="_amd64" ; LIBDIRSUFFIX="64" ; ARCH=x86_64 ;;
+    i?86) VERSION=${VERSION32}; RELVER=${RELVER32}; DEBARCH="_i386" ; ARCH=i586 ;;
+  x86_64) DEBARCH="_amd64" ; ARCH=x86_64 ;;
        *) echo "Package for $(uname -m) architecture is not available." ; exit 1 ;;
 esac
 

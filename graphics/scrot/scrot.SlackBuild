@@ -1,4 +1,4 @@
-#!/bin/bash -e
+ù#!/bin/bash -e
 
 # Slackware build script for scrot
 
@@ -84,6 +84,7 @@ CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --mandir=/usr/man \
   --disable-static \
   --build=$ARCH-slackware-linux
 

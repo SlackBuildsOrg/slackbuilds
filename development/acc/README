@@ -1,3 +1,5 @@
-Linux version of the ACC script compiler. Command-line utility only; requires terminal to run. 
+Linux version of the ACC script compiler.
+
+Command-line utility only; requires terminal to run. 
 
 ACC is an Action Code script compiler for use with GZDoom and Hexen.

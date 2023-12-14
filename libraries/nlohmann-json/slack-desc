@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+nlohmann-json: nlohmann-json (JSON for Modern C++)
+nlohmann-json:
+nlohmann-json: The library supports:
+nlohmann-json: - BSON (Binary JSON)
+nlohmann-json: - CBOR (Concise Binary Object Representation)
+nlohmann-json: - MessagePack
+nlohmann-json: - UBJSON (Universal Binary nlohmann-json: JSON Specification)
+nlohmann-json: - BJData (Binary JData)
+nlohmann-json:
+nlohmann-json: Homepage: https://github.com/nlohmann/json/
+nlohmann-json:

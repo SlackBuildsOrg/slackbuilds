@@ -1,0 +1,21 @@
+Bcachefs is an advanced new filesystem for Linux, with an emphasis on 
+reliability and robustness and the complete set of features one would 
+expect from a modern filesystem.
+
+-    Copy on write (COW) - like zfs or btrfs
+-    Full data and metadata checksumming
+-    Multiple devices
+-    Replication
+-    Erasure coding (not stable)
+-    Caching, data placement
+-    Compression
+-    Encryption
+-    Snapshots
+-    Nocow mode
+-    Reflink
+-    Extended attributes, ACLs, quotas
+-    Scalable - has been tested to 100+ TB, expected to scale far 
+     higher (testers wanted!)
+-    High performance, low tail latency
+-    Already working and stable, with a small community of users
+

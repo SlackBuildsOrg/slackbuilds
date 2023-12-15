@@ -1,0 +1,8 @@
+There are myriads of JSON libraries out there, and each may even have
+its reason to exist. Our class had these design goals:
+
+- Intuitive syntax
+- Trivial integration
+- Serious testing
+- Memory efficiency
+- Speed

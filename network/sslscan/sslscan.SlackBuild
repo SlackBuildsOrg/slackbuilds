@@ -36,8 +36,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sslscan
-VERSION=${VERSION:-2.0.16}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-2.1.2}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -83,7 +83,7 @@ sed -i "s/^GIT_VERSION = .*$/GIT_VERSION = $VERSION/" Makefile
 STATIC=${STATIC:-yes}
 
 if [ "$STATIC" = "yes" ] ; then
-  OPENSSLVERSION=${OPENSSLVERSION:-3f499b24f3bcd66db022074f7e8b4f6ee266a3ae}
+  OPENSSLVERSION=${OPENSSLVERSION:-c3cc0f1386b0544383a61244a4beeb762b67498f}
   tar xf "$CWD/openssl-$OPENSSLVERSION.tar.gz"
   mv "openssl-$OPENSSLVERSION" openssl
 fi
@@ -100,9 +100,9 @@ mkdir -p $PKG/usr/bin $PKG/usr/man/man1
 sed -i "s|share/man|man|" Makefile
 
 if [ "$STATIC" = "yes" ] ; then
-  CLFAGS=$SLKCFLAGS make -j1 static
+  CLFAGS=$SLKCFLAGS make static
 else
-  CLFAGS=$SLKCFLAGS make -j1
+  CLFAGS=$SLKCFLAGS make
 fi
 
 make install DESTDIR=$PKG
@@ -114,7 +114,7 @@ find $PKG/usr/man -type f -exec chmod 0644 {} \;
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a Changelog INSTALL LICENSE README.md TODO $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a Changelog LICENSE README.md TODO $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

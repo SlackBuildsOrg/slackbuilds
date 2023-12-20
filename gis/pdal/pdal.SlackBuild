@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pdal
 SRCNAM=PDAL
-VERSION=${VERSION:-2.5.6}
+VERSION=${VERSION:-2.6.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -35,8 +35,6 @@ PKGTYPE=${PKGTYPE:-tgz}
 # *************************************************************************
 
 # Build of these plugin is enabled by default since they require netcdf and hdf5
-BUILDI3S="-DBUILD_PLUGIN_I3S=ON" ; \
-          [ "${I3S:-yes}" = "no" ] && BUILDI3S=""
 BUILDICEBRIDGE="-DBUILD_PLUGIN_ICEBRIDGE=ON" ; \
           [ "${ICEBRIDGE:-yes}" = "no" ] && BUILDICEBRIDGE=""
 BUILDHDF="-DBUILD_PLUGIN_HDF=ON" ; \
@@ -49,10 +47,13 @@ fi
 if [ "${E57:-yes}" = "yes" ]; then
  BUILDE57="" ; [ -d /usr/include/xercesc ] && BUILDE57="-DBUILD_PLUGIN_E57=ON"
 fi
+if [ "${DRACO:-yes}" = "yes" ]; then
+ BUILDDRACO="" ; [ -x /usr/bin/draco_decoder-1.5.6 ] && BUILDDRACO="-DBUILD_PLUGIN_DRACO=ON"
+fi
 
 # *************************************************************************
 
-# Users that have a standard installation of proprietary MatLAB would enable 
+# Users that have a standard installation of proprietary MatLAB would enable
 # the build of Matlab plugin. This is disabled by default
 BUILDMATLAB="" ; [ "${MATLAB:-no}" = "yes" ] && \
                   BUILDMATLAB="-DBUILD_PLUGIN_MATLAB=ON"
@@ -115,9 +116,11 @@ cd build
     -DBUILD_PGPOINTCLOUD_TESTS=OFF \
     -DBUILD_PLUGIN_PGPOINTCLOUD=ON \
     -DWITH_COMPLETION=ON \
-    $BUILDI3S \
+    -DWITH_BACKTRACE=OFF \
+    -DWITH_TESTS=FALSE \
     $BUILDICEBRIDGE \
     $BUILDE57 \
+    $BUILDDRACO \
     $BUILDOSG \
     $BUILDHDF \
     $BUILDMATLAB \
@@ -128,6 +131,18 @@ cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# Remove empty directories and fix permissions (issues found by sbopkglint)
+rmdir $PKG/usr/include/pdal/filters/private/csf
+rmdir $PKG/usr/include/pdal/filters/private/miniball
+chmod 644 $PKG/usr/include/pdal/*.hpp
+chmod 644 $PKG/usr/include/pdal/*/*.hpp
+chmod 644 $PKG/usr/include/pdal/*/*/*.hpp
+chmod 644 $PKG/usr/include/pdal/*/*/*/*.hpp
+
+# Fix path of bash-completion
+mv $PKG/usr/share/share/* $PKG/usr/share
+rmdir $PKG/usr/share/share
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

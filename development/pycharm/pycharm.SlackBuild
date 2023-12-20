@@ -26,8 +26,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pycharm
 EDITION=community
-VERSION=${VERSION:-2023.2.1}
-BUILD_VERSION=${BUILD_VERSION:-232.9559.58}
+VERSION=${VERSION:-2023.3.1.233.11799.298}
+SRCVER=$( echo $VERSION | cut -c1-8 )
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -65,9 +65,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$EDITION-$VERSION
-tar xvf $CWD/$PRGNAM-$EDITION-$VERSION.tar.gz
-cd $PRGNAM-$EDITION-$VERSION
+rm -rf $PRGNAM-$EDITION-$SRCVER
+tar xvf $CWD/$PRGNAM-$EDITION-$SRCVER.tar.gz
+cd $PRGNAM-$EDITION-$SRCVER
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -78,9 +78,6 @@ find -L . \
 # Install data
 mkdir -p $PKG/opt/$PRGNAM
 cp -rf * $PKG/opt/$PRGNAM
-
-# Remove unused
-rm -rf $PKG/opt/$PRGNAM/lib/libpty/win $PKG/opt/$PRGNAM/lib/libpty/macosx
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -108,4 +105,4 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION.$BUILD_VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

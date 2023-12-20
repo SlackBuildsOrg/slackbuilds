@@ -1,12 +1,12 @@
 PRGNAM="nwg-bar"
-VERSION="0.1.3"
+VERSION="0.1.5"
 HOMEPAGE="https://github.com/nwg-piotr/nwg-bar/"
-DOWNLOAD="https://github.com/nwg-piotr/nwg-bar/archive/refs/tags/v0.1.3.tar.gz \
-          https://slackware.lngn.net/pub/source/nwg-bar/nwg-bar-vendor-0.1.3.tar.gz"
-MD5SUM="825b2e9c106558b73dd6689e0a6ab80d \
-        aaf8f2adadd3ddd35230a7c0ad77c7dc"
+DOWNLOAD="https://github.com/nwg-piotr/nwg-bar/archive/refs/tags/v0.1.5.tar.gz \
+          https://slackware.lngn.net/pub/source/nwg-bar/nwg-bar-vendor-0.1.5.tar.gz"
+MD5SUM="389b0e7b37bb52c790042006f494e2fb \
+        a25438e731fb217ddd6bb07831ffa981"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="gtk-layer-shell"
+REQUIRES="gtk-layer-shell google-go-lang"
 MAINTAINER="Jay Lanagan"
 EMAIL="j@lngn.net"

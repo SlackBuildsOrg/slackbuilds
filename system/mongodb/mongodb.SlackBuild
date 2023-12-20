@@ -3,6 +3,7 @@
 # Slackware build script for MongoDB
 
 # Copyright 2015 Miguel De Anda <miguel@thedeanda.com>
+# Copyright 2023 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,11 +27,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM="mongodb"
-VERSION=${VERSION:-5.0.4}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-7.0.4}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-MAKEJOBS=${MAKEJOBS:-1}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -40,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -93,7 +90,7 @@ cd $SRC_FLDR
 rm -fR src/third_party/{boost,pcre-*,snappy-*,yaml-cpp,zlib-*}
 # remove compass
 rm -fR src/mongo/installer/compass
-chown -R root.root .
+chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
@@ -103,24 +100,37 @@ find -L . \
 # thanks gentoo, also for these patches
 for i in $CWD/patches/* ; do patch -p1 < $i ; done
 
+sed -i "s|GCC 11.3|GCC 11.2|g" SConstruct
+sed -i "s|__GNUC_MINOR__ < 3|__GNUC_MINOR__ < 2|g" SConstruct
+
 scons_opts=(
   --disable-warnings-as-errors
   --use-system-boost
-  --use-system-pcre
+  --use-system-pcre2
   --use-system-snappy
   --use-system-yaml
   --use-system-zlib
   --use-system-zstd
   --use-sasl-client
+  --use-system-libbson
+  --use-system-mongo-c
   --ssl
 )
 
+# Thanks to Lockywolf
+# scons can use multiple jobs. For convenience, read MAKEFLAGS from the environment, if set
+JOBS="$( echo $MAKEFLAGS | sed 's,.*-j *\([0-9][0-9]*\)*.*,\1,' )"
+# or if no MAKEFLAGS, use the number of cores minus 1
+JOBS="${JOBS:-$(( $( nproc ) - 1 ))}"
+# or 1, if we really have one core
+[ "$JOBS" = "0" ] && JOBS=1
+
 if [ "$ARCH" = "x86_64" ]; then
   PREFIX=${PKG}/usr CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" LDFLAGS="-L /lib$LIBDIRSUFFIX -L/usr/lib$LIBDIRSUFFIX" \
-    ./buildscripts/scons.py "${scons_opts[@]}" --jobs="$MAKEJOBS" install-core
+    ./buildscripts/scons.py "${scons_opts[@]}" --force-jobs --jobs="$JOBS" install-core
 else
   PREFIX=${PKG}/usr CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" LDFLAGS="-L /lib$LIBDIRSUFFIX -L/usr/lib$LIBDIRSUFFIX" \
-    ./buildscripts/scons.py "${scons_opts[@]}" --jobs="$MAKEJOBS" --wiredtiger=off install-core
+    ./buildscripts/scons.py "${scons_opts[@]}" --force-jobs --jobs="$JOBS" --wiredtiger=off install-core
 fi
 
 # manual install
@@ -137,6 +147,7 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 
 mkdir -p ${PKG}/usr/doc/${PRGNAM}-${VERSION}
 cp distsrc/* ${PKG}/usr/doc/${PRGNAM}-${VERSION}
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/etc/{logrotate,rc}.d
 cat $CWD/files/mongodb.conf > $PKG/etc/mongodb.conf.new
@@ -146,7 +157,7 @@ cat $CWD/files/rc.mongodb > $PKG/etc/rc.d/rc.mongodb.new
 
 mkdir -p $PKG/var/{lib,log}/mongodb
 chmod 750 $PKG/var/{lib,log}/mongodb
-chown mongo.mongo $PKG/var/{lib,log}/mongodb
+chown mongo:mongo $PKG/var/{lib,log}/mongodb
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

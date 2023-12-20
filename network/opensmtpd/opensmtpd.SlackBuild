@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=opensmtpd
-VERSION=${VERSION:-7.3.0p2}
+VERSION=${VERSION:-7.4.0p1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -112,7 +112,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --with-path-socket=/var/run \
   --mandir=/usr/man \
-  --with-mantype=doc \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --without-rpath \
   --with-path-mbox=/var/spool/mail \
@@ -178,7 +177,7 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CHANGES.md INSTALL LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CHANGES.md LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/README             > $PKG/usr/doc/$PRGNAM-$VERSION/README.slackware
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

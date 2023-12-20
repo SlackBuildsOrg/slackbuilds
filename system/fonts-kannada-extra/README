@@ -1,0 +1,25 @@
+Kannada is spoken in the Indian state of Karnataka by
+about 44 million people. This is an extra collection of
+Kannada fonts for Slackware Linux
+
+The fonts are from
+Debian
+Google
+NLCI
+GITHUB
+
+The Homepages and download urls are in URL.md file.
+The list of the fonts included are in FONTS.md file.
+The fonts are from google can be installed using the
+program fnt which is available in SBo
+
+To install woff fonts run the slackbuild as
+WEBFONTS=YES ./fonts-kannada-extra.SlackBuild
+
+To install Google fonts run the slackbuild as
+GOOGLEFONTS=YES ./fonts-kannada-extra.SlackBuild
+
+NOTE:
+If you install google fonts that comes with
+this package it will conflict with google-fonts
+package in SBo.

@@ -1,0 +1,52 @@
+﻿Installing and Maintaining an updated Firefox Standard on Slackware
+is now made easier with this small program, "firefox-standard-the-latest".
+It is a simple python script that checks what is the latest
+version available and updates it on your Slackware box.
+
+It identifies a new version by parsing the web-page at
+https://www.whatismybrowser.com/guides/the-latest-version/firefox
+and comparing with the firefox version number currently installed.
+Firefox is then downloaded directly from Mozilla, packed into
+a Slackware package using makepkg, and installed.
+
+You can run this script manually or automatically with the
+provided cron.hourly script. The cron script will attempt to
+identify which user to notify, otherwise you can edit it and set
+the variable USERNAME=’your username’
+
+In order to avoid excessive hits on whatismybrowser.com actual
+checks are limited to "once a day", but you can bypass this with the
+arguments "install", "upgrade" or "update". These all mean then
+same and imply a download from Mozilla and perform an install or
+an upgrade, if one is required of course.
+Normally it is asked if you want to install the new version, but
+providing the argument "silent" will just update with no
+human intervention.
+The argument "gui" allows you to manually install or upgrade
+the browser.
+
+Note 1: This program runs in the background.  To collect your input,
+dialogs appear and disappear. Don't be alarmed and wait for the
+program to end.
+
+Note 2: This program installs the Firefox **Standard** not the **ESR**
+Release that is part stock Slackware. Both releases can be installed
+at the same time on the same machine.
+
+
+Workflows:
+
+1. Every day the program checks if a new browser is available
+   and notifies you through a pop-up window. This is default behavior.
+
+2. You can start the program manually using the icon available
+   in the desktop menu to trigger the download, check and
+   install/upgrade the browse if required.
+
+3. From the command line, if you don't have yet Firefox Standar installed
+   you can do so by simply by running:
+   /opt/firefox-standard-the-latest/firefox-standard-the-latest.py install
+
+4. From the command line, you can force a Firefox download and
+   upgrade if required, without any pop-up window, with:
+   /opt/firefox-standard-the-latest/firefox-standard-the-latest.py silent upgrade

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                           |-----handy-ruler------------------------------------------------------|
+firefox-standard-the-latest: firefox-standard-the-latest (Firefox Standard Updater Script)
+firefox-standard-the-latest:
+firefox-standard-the-latest: Maintaining an updated Firefox Standard Rel. on Slackware is now made
+firefox-standard-the-latest: easier with this small program, "firefox-standard-the-latest", a simple
+firefox-standard-the-latest: python script that will install and keep checking afterwards what is
+firefox-standard-the-latest: the latest version available so your Slackware box is kept safer.
+firefox-standard-the-latest:
+firefox-standard-the-latest:
+firefox-standard-the-latest:
+firefox-standard-the-latest:
+firefox-standard-the-latest:

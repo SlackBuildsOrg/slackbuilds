@@ -1,0 +1,11 @@
+ssh-audit (SSH security configuration auditing tool)
+
+ssh-audit is a tool for SSH server and client configuration auditing.
+Key features:
+- SSH1 and SSH2 protocol server support
+- Analyze SSH version compatibility based on algorithm information
+- Audit key exchange, host key, encryption and message authentication
+  algorithms, and output info (available since, removed/disabled,
+  unsafe/weak/legacy)
+- Provide recommendations for hardening configuration
+Homepage: https://github.com/jtesta/ssh-audit

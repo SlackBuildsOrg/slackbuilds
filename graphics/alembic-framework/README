@@ -13,5 +13,5 @@ HDF5 is an optional dependency autodetected with the support enabled by
 default if found in your system. You can disable it passing to the
 script an environment variable as following:
    HDF5=no ./alembic-framework.Slackbuild
-
+   
 alembic-framework is an optional dependency for Blender autodetected.

@@ -2,7 +2,7 @@
 
 # Start/stop/restart wildfly.
 
-# Copyright 2017 Giorgio Peron <giorgio.peron@gmail.com>, Belluno, Italy
+# Copyright 2023 Giorgio Peron <giorgio.peron@gmail.com>, Belluno, Italy
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -49,7 +49,7 @@ if [ -n "$WILDFLY_CONSOLE" -a ! -d "$WILDFLY_CONSOLE" ]; then
   # ensure the file exists
   touch $WILDFLY_CONSOLE
   if [ "$WILDFLYUS" != "RUNASIS" ]; then
-    chown -R $WILDFLYUS.$WILDFLYUS $WILDFLY_CONSOLE
+    chown -R $WILDFLYUS:$WILDFLYUS $WILDFLY_CONSOLE
   fi
 fi
 
@@ -66,7 +66,7 @@ if [ -n "$WILDFLY_DOMAIN_CONSOLE" -a ! -d "$WILDFLY_DOMAIN_CONSOLE" ]; then
   # ensure the file exists
   touch $WILDFLY_DOMAIN_CONSOLE
   if [ "$WILDFLYUS" != "RUNASIS" ]; then
-    chown -R $WILDFLYUS.$WILDFLYUS $WILDFLY_DOMAIN_CONSOLE
+    chown -R $WILDFLYUS:$WILDFLYUS $WILDFLY_DOMAIN_CONSOLE
   fi
 fi
 

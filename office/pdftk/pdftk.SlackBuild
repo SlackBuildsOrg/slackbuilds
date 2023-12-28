@@ -66,9 +66,11 @@ mkdir -p $PKG/usr/bin
 cp $CWD/$PRGNAM.sh $PKG/usr/bin/$PRGNAM
 chmod +x $PKG/usr/bin/$PRGNAM
 
-# Man file (taken from https://gitlab.com/pdftk-java/pdftk/-/blob/master/pdftk.1)
+# Man file
+# Typo fix taken from https://gitlab.com/pdftk-java/pdftk/-/blob/master/pdftk.1
 mkdir -p $PKG/usr/man/man1
 cp $CWD/$PRGNAM.1 $PKG/usr/man/man1
+sed -i '198s/fB1\\\\-/fB1\\\-/' $PKG/usr/man/man1/pdftk.1
 gzip -9 $PKG/usr/man/man1/$PRGNAM.1
 
 # Only pdftk.SlackBuild is copied to /usr/doc/pdftk-$VERSION

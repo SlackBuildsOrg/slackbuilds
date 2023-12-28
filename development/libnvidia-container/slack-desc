@@ -6,7 +6,7 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
                    |-----handy-ruler------------------------------------------------------|
-libnvidia-container: libnvidia-container
+libnvidia-container: libnvidia-container (NVIDIA container runtime library)
 libnvidia-container:
 libnvidia-container: Provides a library and a simple CLI utility to automatically
 libnvidia-container: configure GNU/Linux containers leveraging NVIDIA hardware.

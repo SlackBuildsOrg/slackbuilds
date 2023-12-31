@@ -2,7 +2,7 @@
 
 # Slackware build script for libfreeaptx
 
-# Copyright 2023 thnkman
+# Copyright 2023 thnkman <thnkman@proton.me>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,6 +23,8 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cd $(dirname $0) ; CWD=$(pwd)
+
+set -e
 
 PRGNAM=libfreeaptx
 VERSION=${VERSION:-0.1.1}
@@ -61,8 +63,6 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e
-
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -84,8 +84,8 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 CFLAGS="$SLKCFLAGS"
-make || exit
-make install DESTDIR=$PKG || exit
+make
+make install DESTDIR=$PKG
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 

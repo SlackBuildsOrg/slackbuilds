@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Slackware build script for dnscrypt-proxy
 
@@ -23,9 +23,9 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-set -e
-
 cd $(dirname $0) ; CWD=$(pwd)
+
+set -e
 
 PRGNAM=dnscrypt-proxy
 VERSION=${VERSION:-2.1.5}
@@ -73,7 +73,13 @@ rm -rf $PKG
 mkdir -p $TMP/$PRGNAM-$VERSION $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-linux_$ARCH-$VERSION.tar.gz --transform="s/linux-$ARCH/$PRGNAM-$VERSION/"
+
+if [ $ARCH == i586 ]; then
+	tar xvf $CWD/$PRGNAM-linux_i386-$VERSION.tar.gz --transform="s/linux-i386/$PRGNAM-$VERSION/"
+elif [ $ARCH == x86_64 ]; then
+	tar xvf $CWD/$PRGNAM-linux_x86_64-$VERSION.tar.gz --transform="s/linux-x86_64/$PRGNAM-$VERSION/"
+fi
+
 cd $PRGNAM-$VERSION
 chown -R root:root .
 

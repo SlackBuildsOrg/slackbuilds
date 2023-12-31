@@ -67,7 +67,6 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-mv -v $CWD/v2.0.3.tar.gz $CWD/$PRGNAM-$VERSION.tar.gz
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 
@@ -94,10 +93,9 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 mkdir -p $PKG/{install,usr/doc/$PRGNAM-$VERSION}
 
-find . $CWD -type f \( -name "NOTICE" \) -exec cp {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name "$PRGNAM.SlackBuild" \) -exec cp {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name "README" \) -exec cp {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name "slack-desc" \) -exec cp -v {} $PKG/install/ \;
+cp -t $PKG/usr/doc/$PRGNAM-$VERSION/ \
+    NOTICE $CWD/$PRGNAM.SlackBuild $CWD/README && \
+    cp $CWD/slack-desc $PKG/install/ 
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

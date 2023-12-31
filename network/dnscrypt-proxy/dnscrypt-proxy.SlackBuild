@@ -40,7 +40,7 @@ DNSCRYPT_GID=${TOR_GID:-293}
 
 if [ -z "$ARCH" ]; then
     case "$( uname -m )" in
-    i?86) ARCH=i386 ;;
+    i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
     esac

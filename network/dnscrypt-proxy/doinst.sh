@@ -1,27 +1,9 @@
-config() {
-  NEW="$1"
-  OLD="$(dirname $NEW)/$(basename $NEW .new)"
-  # If there's no config file by that name, mv it over:
-  if [ ! -r $OLD ]; then
-    mv $NEW $OLD
-  elif [ "$(cat $OLD | md5sum)" = "$(cat $NEW | md5sum)" ]; then
-    # toss the redundant copy
-    rm $NEW
-  fi
-  # Otherwise, we leave the .new copy for the admin to consider...
-}
+#!/bin/bash
 
-preserve_perms() {
-  NEW="$1"
-  OLD="$(dirname $NEW)/$(basename $NEW .new)"
-  if [ -e $OLD ]; then
-    cp -a $OLD ${NEW}.incoming
-    cat $NEW > ${NEW}.incoming
-    mv ${NEW}.incoming $NEW
-  fi
-  config $NEW
-}
+# dnscrypt-proxy writes files to /etc/$PRGNAM after dropping
+# privilege. This ensure $DNSCRYPT_USER can write files
+# to its config directory, without having to change default
+# owner:group in slackware /etc
 
-preserve_perms etc/rc.d/rc.dnscrypt-proxy.new
-config etc/default/dnscrypt-proxy.new
-config etc/dnscrypt-proxy/dnscrypt-proxy.toml.new
+DNSCRYPT_USER=$(cat /usr/doc/dnscrypt-proxy-2.1.5/dnscrypt-proxy.SlackBuild | grep -oP '\${DNSCRYPT_USER:-\K[^}]*' )
+setfacl -m u:$DNSCRYPT_USER:rwx /etc/dnscrypt-proxy

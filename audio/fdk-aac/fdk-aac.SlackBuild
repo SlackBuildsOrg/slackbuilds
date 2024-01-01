@@ -93,9 +93,9 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 mkdir -p $PKG/{install,usr/doc/$PRGNAM-$VERSION}
 
-cp -t $PKG/usr/doc/$PRGNAM-$VERSION/ \
-    NOTICE $CWD/$PRGNAM.SlackBuild $CWD/README && \
-    cp $CWD/slack-desc $PKG/install/ 
+install -D -m 0644 NOTICE $CWD/README $CWD/$PRGNAM.SlackBuild \
+    $PKG/usr/doc/$PRGNAM-$VERSION/
+install -D -m 0644 $CWD/slack-desc $PKG/install/
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

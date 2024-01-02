@@ -96,17 +96,14 @@ mkdir -p $PKG/usr/{bin,doc/$PRGNAM-$VERSION} \
 
 find . $CWD -mindepth 1 -type f \( -name '*.txt' -o -name '*.toml' -o -name '*.pem' \) -exec cp -a {} $PKG/etc/$PRGNAM/ \; -o \
     \( -name 'LICENSE' \) -exec cp -a {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name 'README.Slackware' \) -exec cp -a {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name "$PRGNAM.SlackBuild" \) -exec cp -a {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
+    \( -name 'README.Slackware' \) -exec cp {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
+    \( -name "$PRGNAM.SlackBuild" \) -exec cp {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
     \( -name "$PRGNAM" \) -exec cp -a {} $PKG/usr/bin/ \; -o \
-    \( -name "$PRGNAM.toml" \) -exec cp -a {} $PKG/etc/$PRGNAM/ \; -o \
-    \( -name "rc.$PRGNAM" \) -exec cp -a {} $PKG/etc/rc.d/ \; -o \
-    \( -name 'slack-desc' \) -exec cp -a {} $PKG/install/ \;
+    \( -name "$PRGNAM.toml" \) -exec cp {} $PKG/etc/$PRGNAM/ \; -o \
+    \( -name "rc.$PRGNAM" \) -exec cp {} $PKG/etc/rc.d/ \; -o \
+    \( -name 'slack-desc' \) -exec cp {} $PKG/install/ \;
 
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
-
-chown $DNSCRYPT_USER:$DNSCRYPT_GROUP $PKG/var/{log,run}/$PRGNAM \
-    $PKG/etc/$PRGNAM/*
 
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

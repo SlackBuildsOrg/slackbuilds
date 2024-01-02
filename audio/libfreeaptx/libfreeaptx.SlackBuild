@@ -24,6 +24,8 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
+set -e
+
 PRGNAM=libfreeaptx
 VERSION=${VERSION:-0.1.1}
 BUILD=${BUILD:-1}
@@ -61,8 +63,6 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e
-
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -84,8 +84,8 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 CFLAGS="$SLKCFLAGS"
-make || exit
-make install DESTDIR=$PKG || exit
+make
+make install DESTDIR=$PKG
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 

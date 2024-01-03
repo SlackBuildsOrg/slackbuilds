@@ -97,11 +97,13 @@ mkdir -p $PKG/usr/{bin,doc/$PRGNAM-$VERSION} \
     $PKG/var/{log,run}/$PRGNAM \
     $PKG/install
 
-install -D -m 0644 LICENSE $CWD/README.Slackware $CWD/$PRGNAM.SlackBuild \
-    $PKG/usr/doc/$PRGNAM-$VERSION/
-install -D -m 0644 $PRGNAM $PKG/usr/bin/ 
-install -D -m 0644 $CWD/$PRGNAM.toml $PKG/etc/$PRGNAM/
-install -D -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/
+cp -a *.txt $PKG/etc/$PRGNAM/
+install -D -m 0644 LICENSE $PKG/usr/doc/$PRGNAM-$VERSION/LICENSE
+install -D -m 0755 $PRGNAM $PKG/usr/bin/$PRGNAM
+install -D -m 0644 $CWD/$PRGNAM.toml $PKG/etc/$PRGNAM/$PRGNAM.toml
+install -D -m 0644 $CWD/README.Slackware $PKG/usr/doc/$PRGNAM-$VERSION/README.Slackware
+install -D -m 0644 $CWD/$PRGNAM.SlackBuild $PKG/usr/doc/$PRGNAM-$VERSION/README.Slackware
+install -D -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/rc.$PRGNAM
 
 sed -i "s/DNSCRYPT_USER=.*$/DNSCRYPT_USER=$(sed -n 's/DNSCRYPT_USER=\${DNSCRYPT_USER:-\([^}]*\)}/\1/p' $CWD/$PRGNAM.SlackBuild)/" $CWD/doinst.sh
 sed -i "s/DNSCRYPT_GROUP=.*$/DNSCRYPT_GROUP=$(sed -n 's/DNSCRYPT_GROUP=\${DNSCRYPT_GROUP:-\([^}]*\)}/\1/p' $CWD/$PRGNAM.SlackBuild)/" $CWD/doinst.sh

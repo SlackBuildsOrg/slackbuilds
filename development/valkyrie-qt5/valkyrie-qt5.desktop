@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Valkyrie (Qt5 version)
+Comment=Qt5-based GUI for Valgrind
+Exec=valkyrie-qt5
+Icon=valkyrie-qt5
+Categories=Development
+Terminal=false
+Type=Application

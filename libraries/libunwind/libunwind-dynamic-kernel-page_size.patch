@@ -1,0 +1,372 @@
+From: e85b65cec757ef589f28957d0c6c21c498a03bdf Thu Mar 10 00:00:00 2022
+From: Daniel Moody <daniel.moody@mongodb.com>
+Date: Thu, Mar 10 2022 00:00:00 -0600
+Subject: [PATCH] Updated to determine kernel PAGE_SIZE dynamically.
+GitHub: https://github.com/libunwind/libunwind/commit/e85b65c
+
+---
+ include/libunwind_i.h |  9 +++++++++
+ src/aarch64/Ginit.c   | 19 ++++++++-----------
+ src/arm/Ginit.c       | 13 ++-----------
+ src/mi/init.c         | 28 ++++++++++++++++++++++++++--
+ src/riscv/Ginit.c     | 22 ++++++++--------------
+ src/s390x/Ginit.c     | 25 ++++++++++---------------
+ src/x86/Ginit.c       | 13 ++-----------
+ src/x86_64/Ginit.c    | 18 +++++-------------
+ 8 files changed, 70 insertions(+), 77 deletions(-)
+
+diff -rupN orig/include/libunwind_i.h new/include/libunwind_i.h
+--- orig/include/libunwind_i.h	2021-12-01 00:46:39.000000000 +0000
++++ new/include/libunwind_i.h	2023-12-23 19:08:26.743999769 +0000
+@@ -55,6 +55,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DE
+ #include <string.h>
+ #include <unistd.h>
+ #include <sys/mman.h>
++#include <errno.h>
++#include <stdio.h>
+ 
+ #if defined(HAVE_ELF_H)
+ # include <elf.h>
+@@ -288,6 +290,13 @@ print_error (const char *string)
+   return write (2, string, strlen (string));
+ }
+ 
++HIDDEN extern long unw_page_size;
++
++static inline unw_word_t uwn_page_start(unw_word_t addr)
++{
++  return addr & ~(unw_page_size - 1);
++}
++
+ #define mi_init         UNWI_ARCH_OBJ(mi_init)
+ 
+ extern void mi_init (void);     /* machine-independent initializations */
+diff -rupN orig/src/aarch64/Ginit.c new/src/aarch64/Ginit.c
+--- orig/src/aarch64/Ginit.c	2021-11-30 17:12:31.000000000 +0000
++++ new/src/aarch64/Ginit.c	2023-12-23 19:08:52.163999754 +0000
+@@ -84,9 +84,6 @@ get_dyn_info_list_addr (unw_addr_space_t
+   return 0;
+ }
+ 
+-#define PAGE_SIZE 4096
+-#define PAGE_START(a)   ((a) & ~(PAGE_SIZE-1))
+-
+ static int mem_validate_pipe[2] = {-1, -1};
+ 
+ #ifdef HAVE_PIPE2
+@@ -195,14 +192,18 @@ tdep_init_mem_validate (void)
+ {
+   open_pipe ();
+ 
+-#ifdef HAVE_MINCORE
+-  unsigned char present = 1;
+-  unw_word_t addr = PAGE_START((unw_word_t)&present);
+-  unsigned char mvec[1];
+-  int ret;
+-  while ((ret = mincore ((void*)addr, PAGE_SIZE, (unsigned char *)mvec)) == -1 &&
+-         errno == EAGAIN) {}
+-  if (ret == 0)
++ #ifdef HAVE_MINCORE
++   unsigned char present = 1;
++   size_t len = unw_page_size;
++   unw_word_t addr = uwn_page_start((unw_word_t)&present);
++   unsigned char mvec[1];
++   int ret;
++
++   while ((ret = mincore((void *)addr, len, (unsigned char *)mvec)) == -1 &&
++          errno == EAGAIN)
++   {
++   }
++   if (ret == 0)
+     {
+       Debug(1, "using mincore to validate memory\n");
+       mem_validate_func = mincore_validate;
+@@ -292,18 +293,13 @@ cache_valid_mem(unw_word_t addr)
+ 
+ static int
+ validate_mem (unw_word_t addr)
+-{
+-  size_t len;
+-
+-  if (PAGE_START(addr + sizeof (unw_word_t) - 1) == PAGE_START(addr))
+-    len = PAGE_SIZE;
+-  else
+-    len = PAGE_SIZE * 2;
+-
+-  addr = PAGE_START(addr);
+-
+-  if (addr == 0)
+-    return -1;
++ {
++   size_t len;
++   len = unw_page_size;
++   addr = uwn_page_start(addr);
++ 
++   if (addr == 0)
++     return -1;
+ 
+   if (is_cached_valid_mem(addr))
+     return 0;
+diff -rupN orig/src/arm/Ginit.c new/src/arm/Ginit.c
+--- orig/src/arm/Ginit.c	2020-11-10 16:14:18.000000000 +0000
++++ new/src/arm/Ginit.c	2023-12-23 19:09:15.715999740 +0000
+@@ -71,9 +71,6 @@ get_dyn_info_list_addr (unw_addr_space_t
+   return 0;
+ }
+ 
+-#define PAGE_SIZE 4096
+-#define PAGE_START(a)	((a) & ~(PAGE_SIZE-1))
+-
+ /* Cache of already validated addresses */
+ #define NLGA 4
+ static unw_word_t last_good_addr[NLGA];
+@@ -83,14 +80,8 @@ static int
+ validate_mem (unw_word_t addr)
+ {
+   int i, victim;
+-  size_t len;
+-
+-  if (PAGE_START(addr + sizeof (unw_word_t) - 1) == PAGE_START(addr))
+-    len = PAGE_SIZE;
+-  else
+-    len = PAGE_SIZE * 2;
+-
+-  addr = PAGE_START(addr);
++  size_t len = unw_page_size;
++  addr = uwn_page_start(addr);
+ 
+   if (addr == 0)
+     return -1;
+diff -rupN orig/src/mi/init.c new/src/mi/init.c
+--- orig/src/mi/init.c	2018-12-20 18:09:57.000000000 +0000
++++ new/src/mi/init.c	2023-12-23 19:10:04.515999711 +0000
+@@ -39,6 +39,30 @@ static const char rcsid[] UNUSED =
+ long unwi_debug_level;
+ 
+ #endif /* UNW_DEBUG */
++long unw_page_size;
++static void
++unw_init_page_size ()
++{
++  errno = 0;
++  long result = sysconf (_SC_PAGESIZE);
++  if (result == -1)
++    {
++      if (errno != 0)
++        {
++          print_error ("Failed to get _SC_PAGESIZE: ");
++          print_error (strerror(errno));
++          print_error ("\n");
++        }
++        else
++          print_error ("Failed to get _SC_PAGESIZE, errno was not set.\n");
++
++      unw_page_size = 4096;
++    }
++  else
++    {
++      unw_page_size = result;
++    }
++}
+ 
+ HIDDEN void
+ mi_init (void)
+@@ -56,5 +80,6 @@ mi_init (void)
+     }
+ #endif
+ 
+-  assert (sizeof (struct cursor) <= sizeof (unw_cursor_t));
++  unw_init_page_size();
++  assert(sizeof(struct cursor) <= sizeof(unw_cursor_t));
+ }
+diff -rupN orig/src/riscv/Ginit.c new/src/riscv/Ginit.c
+--- orig/src/riscv/Ginit.c	2021-11-26 16:58:55.000000000 +0000
++++ new/src/riscv/Ginit.c	2023-12-23 19:10:30.559999695 +0000
+@@ -97,9 +97,6 @@ get_dyn_info_list_addr (unw_addr_space_t
+ 
+ // Memory validation routines are from aarch64
+ 
+-#define PAGE_SIZE 4096
+-#define PAGE_START(a)   ((a) & ~(PAGE_SIZE-1))
+-
+ static int mem_validate_pipe[2] = {-1, -1};
+ 
+ #ifdef HAVE_PIPE2
+@@ -210,11 +207,15 @@ tdep_init_mem_validate (void)
+ 
+ #ifdef HAVE_MINCORE
+   unsigned char present = 1;
+-  unw_word_t addr = PAGE_START((unw_word_t)&present);
++  size_t len = unw_page_size;
++  unw_word_t addr = uwn_page_start((unw_word_t)&present);
+   unsigned char mvec[1];
+   int ret;
+-  while ((ret = mincore ((void*)addr, PAGE_SIZE, (unsigned char *)mvec)) == -1 &&
+-         errno == EAGAIN) {}
++
++  while ((ret = mincore((void *)addr, len, (unsigned char *)mvec)) == -1 &&
++        errno == EAGAIN)
++  {
++  }
+   if (ret == 0)
+     {
+       Debug(1, "using mincore to validate memory\n");
+@@ -306,14 +307,8 @@ cache_valid_mem(unw_word_t addr)
+ static int
+ validate_mem (unw_word_t addr)
+ {
+-  size_t len;
+-
+-  if (PAGE_START(addr + sizeof (unw_word_t) - 1) == PAGE_START(addr))
+-    len = PAGE_SIZE;
+-  else
+-    len = PAGE_SIZE * 2;
+-
+-  addr = PAGE_START(addr);
++  size_t len = unw_page_size;
++  addr = uwn_page_start(addr);
+ 
+   if (addr == 0)
+     return -1;
+diff -rupN orig/src/s390x/Ginit.c new/src/s390x/Ginit.c
+--- orig/src/s390x/Ginit.c	2020-11-10 16:14:18.000000000 +0000
++++ new/src/s390x/Ginit.c	2023-12-23 19:10:48.207999685 +0000
+@@ -27,6 +27,7 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER L
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.  */
+ 
++#include "libunwind_i.h"
+ #ifdef HAVE_CONFIG_H
+ #include <config.h>
+ #endif
+@@ -93,9 +94,6 @@ get_dyn_info_list_addr (unw_addr_space_t
+   return 0;
+ }
+ 
+-#define PAGE_SIZE 4096
+-#define PAGE_START(a)   ((a) & ~(PAGE_SIZE-1))
+-
+ static int mem_validate_pipe[2] = {-1, -1};
+ 
+ static inline void
+@@ -163,7 +161,7 @@ static int mincore_validate (void *addr,
+       return -1;
+     }
+ 
+-  for (i = 0; i < (len + PAGE_SIZE - 1) / PAGE_SIZE; i++)
++  for (i = 0; i < (len + unw_page_size - 1) / unw_page_size; i++)
+     {
+       if (!(mvec[i] & 1)) return -1;
+     }
+@@ -183,11 +181,15 @@ tdep_init_mem_validate (void)
+ 
+ #ifdef HAVE_MINCORE
+   unsigned char present = 1;
+-  unw_word_t addr = PAGE_START((unw_word_t)&present);
++  size_t len = unw_page_size;
++  unw_word_t addr = uwn_page_start((unw_word_t)&present);
+   unsigned char mvec[1];
+   int ret;
+-  while ((ret = mincore ((void*)addr, PAGE_SIZE, mvec)) == -1 &&
+-         errno == EAGAIN) {}
++
++  while ((ret = mincore((void *)addr, len, mvec)) == -1 &&
++         errno == EAGAIN)
++  {
++  }
+   if (ret == 0 && (mvec[0] & 1))
+     {
+       Debug(1, "using mincore to validate memory\n");
+@@ -210,14 +212,8 @@ static int
+ validate_mem (unw_word_t addr)
+ {
+   int i, victim;
+-  size_t len;
+-
+-  if (PAGE_START(addr + sizeof (unw_word_t) - 1) == PAGE_START(addr))
+-    len = PAGE_SIZE;
+-  else
+-    len = PAGE_SIZE * 2;
+-
+-  addr = PAGE_START(addr);
++  size_t len = unw_page_size;
++  addr = uwn_page_start(addr);
+ 
+   if (addr == 0)
+     return -1;
+diff -rupN orig/src/x86/Ginit.c new/src/x86/Ginit.c
+--- orig/src/x86/Ginit.c	2020-11-10 16:14:18.000000000 +0000
++++ new/src/x86/Ginit.c	2023-12-23 19:11:03.367999676 +0000
+@@ -74,9 +74,6 @@ get_dyn_info_list_addr (unw_addr_space_t
+   return 0;
+ }
+ 
+-#define PAGE_SIZE 4096
+-#define PAGE_START(a)   ((a) & ~(PAGE_SIZE-1))
+-
+ /* Cache of already validated addresses */
+ #define NLGA 4
+ static unw_word_t last_good_addr[NLGA];
+@@ -89,14 +86,8 @@ validate_mem (unw_word_t addr)
+ #ifdef HAVE_MINCORE
+   unsigned char mvec[2]; /* Unaligned access may cross page boundary */
+ #endif
+-  size_t len;
+-
+-  if (PAGE_START(addr + sizeof (unw_word_t) - 1) == PAGE_START(addr))
+-    len = PAGE_SIZE;
+-  else
+-    len = PAGE_SIZE * 2;
+-
+-  addr = PAGE_START(addr);
++  size_t len = unw_page_size;
++  addr = uwn_page_start(addr);
+ 
+   if (addr == 0)
+     return -1;
+diff -rupN orig/src/x86_64/Ginit.c new/src/x86_64/Ginit.c
+--- orig/src/x86_64/Ginit.c	2021-11-26 16:58:55.000000000 +0000
++++ new/src/x86_64/Ginit.c	2023-12-23 19:12:23.543999628 +0000
+@@ -73,9 +73,6 @@ get_dyn_info_list_addr (unw_addr_space_t
+   return 0;
+ }
+ 
+-#define PAGE_SIZE 4096
+-#define PAGE_START(a)   ((a) & ~(PAGE_SIZE-1))
+-
+ static int mem_validate_pipe[2] = {-1, -1};
+ 
+ #ifdef HAVE_PIPE2
+@@ -191,10 +188,11 @@ tdep_init_mem_validate (void)
+ 
+ #ifdef HAVE_MINCORE
+   unsigned char present = 1;
+-  unw_word_t addr = PAGE_START((unw_word_t)&present);
++  size_t len = unw_page_size;
++  unw_word_t addr = uwn_page_start((unw_word_t)&present);
+   unsigned char mvec[1];
+   int ret;
+-  while ((ret = mincore ((void*)addr, PAGE_SIZE, (unsigned char *)mvec)) == -1 &&
++  while ((ret = mincore ((void*)addr, len, (unsigned char *)mvec)) == -1 &&
+          errno == EAGAIN) {}
+   if (ret == 0)
+     {
+@@ -287,14 +285,8 @@ cache_valid_mem(unw_word_t addr)
+ static int
+ validate_mem (unw_word_t addr)
+ {
+-  size_t len;
+-
+-  if (PAGE_START(addr + sizeof (unw_word_t) - 1) == PAGE_START(addr))
+-    len = PAGE_SIZE;
+-  else
+-    len = PAGE_SIZE * 2;
+-
+-  addr = PAGE_START(addr);
++  size_t len = unw_page_size;
++  addr = uwn_page_start(addr);
+ 
+   if (addr == 0)
+     return -1;
+
+

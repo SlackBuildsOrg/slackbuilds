@@ -1,0 +1,42 @@
+libunwind (C programming interface to determine the call-chain)
+
+A portable and efficient C programming interface to determine the
+call-chain of a program. The API additionally provides a means to
+manipulate the preserved state of each call-frame and to resume
+xecution at any point in the call-chain. Source has been patched
+to handle dynamic kernel PAGE_SIZE.
+
+libunwind project homepage: http://www.nongnu.org/libunwind
+
+---
+
+Notes:
+The linbunwind.SlackBuild script includes a patch to update the source 
+to determine kernel PAGE_SIZE dynamically. By default, libunwind will 
+only accommodate a PAGE_SIZE of 4kB (which has been a default Linux 
+standard since the i386 era). AArch64 operating systems are starting to 
+feature a larger kernel PAGE_SIZE than 4kB. Slackware64 already uses a 
+dynamic kernel PAGE_SIZE. Running this script will patch the linbunwind 
+source on-the-fly.
+
+Proviso:
+If a system is running a larger kernel PAGE_SIZE than 4kB then libunwind
+will fail if it is not patched. libunwind is required to load the Wayland 
+window system's server display protocol.
+
+Wayland Project:
+Wayland is developed by a group of volunteers initially led by Kristian 
+Høgsberg as a free and open-source community-driven project with an aim 
+to replace the X Window System with a secure and simpler windowing system 
+for Linux and other Unix-like operating systems.
+
+Wayland Project homepage: https://wayland.freedesktop.org/
+
+Patch file details:
+Filename: libunwind-dynamic-kernel-page_size.patch
+From: e85b65cec757ef589f28957d0c6c21c498a03bdf Thu Mar 10 00:00:00 2022
+From: Daniel Moody <daniel.moody@mongodb.com>
+Date: Thu, Mar 10 2022 00:00:00 -0600
+Subject: [PATCH] Updated to determine kernel PAGE_SIZE dynamically.
+GitHub: https://github.com/libunwind/libunwind/commit/e85b65c
+

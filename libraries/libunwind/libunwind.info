@@ -1,0 +1,12 @@
+PRGNAM="libunwind"
+VERSION="1.6.2"
+HOMEPAGE="http://www.nongnu.org/libunwind/"
+DOWNLOAD="http://download.savannah.nongnu.org/releases/libunwind/libunwind-1.6.2.tar.gz"
+MD5SUM="f625b6a98ac1976116c71708a73dc44a"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="exaga"
+EMAIL="sarpi.project@penthux.net"
+
+

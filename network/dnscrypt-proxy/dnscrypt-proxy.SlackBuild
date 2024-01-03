@@ -74,16 +74,19 @@ mkdir -p $TMP/$PRGNAM-$VERSION $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
 
-if [ $ARCH == i586 ]; then
+if [[ $ARCH == i?86 ]]; then
     tar xvf $CWD/$PRGNAM-linux_i386-$VERSION.tar.gz --transform="s/linux-i386/$PRGNAM-$VERSION/"
-elif [ $ARCH == x86_64 ]; then
+elif [[ $ARCH == x86_64 ]]; then
     tar xvf $CWD/$PRGNAM-linux_x86_64-$VERSION.tar.gz --transform="s/linux-x86_64/$PRGNAM-$VERSION/"
+else
+    echo "Architecture not supported"
+    exit 1
 fi
 
 cd $PRGNAM-$VERSION
 chown -R root:root .
 
-find -L . $CWD \
+find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
@@ -94,16 +97,17 @@ mkdir -p $PKG/usr/{bin,doc/$PRGNAM-$VERSION} \
     $PKG/var/{log,run}/$PRGNAM \
     $PKG/install
 
-find . $CWD -mindepth 1 -type f \( -name '*.txt' -o -name '*.toml' -o -name '*.pem' \) -exec cp -a {} $PKG/etc/$PRGNAM/ \; -o \
-    \( -name 'LICENSE' \) -exec cp -a {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name 'README.Slackware' \) -exec cp {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name "$PRGNAM.SlackBuild" \) -exec cp {} $PKG/usr/doc/$PRGNAM-$VERSION/ \; -o \
-    \( -name "$PRGNAM" \) -exec cp -a {} $PKG/usr/bin/ \; -o \
-    \( -name "$PRGNAM.toml" \) -exec cp {} $PKG/etc/$PRGNAM/ \; -o \
-    \( -name "rc.$PRGNAM" \) -exec cp {} $PKG/etc/rc.d/ \; -o \
-    \( -name 'slack-desc' \) -exec cp {} $PKG/install/ \;
+install -D -m 0644 LICENSE $CWD/README.Slackware $CWD/$PRGNAM.SlackBuild \
+    $PKG/usr/doc/$PRGNAM-$VERSION/
+install -D -m 0644 $PRGNAM $PKG/usr/bin/ 
+install -D -m 0644 $CWD/$PRGNAM.toml $PKG/etc/$PRGNAM/
+install -D -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/
+
+sed -i "s/DNSCRYPT_USER=.*$/DNSCRYPT_USER=$(sed -n 's/DNSCRYPT_USER=\${DNSCRYPT_USER:-\([^}]*\)}/\1/p' $CWD/$PRGNAM.SlackBuild)/" $CWD/doinst.sh
+sed -i "s/DNSCRYPT_GROUP=.*$/DNSCRYPT_GROUP=$(sed -n 's/DNSCRYPT_GROUP=\${DNSCRYPT_GROUP:-\([^}]*\)}/\1/p' $CWD/$PRGNAM.SlackBuild)/" $CWD/doinst.sh
 
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

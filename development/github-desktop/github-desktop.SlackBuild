@@ -70,7 +70,7 @@ set -eu
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $PKG
-ar x $CWD/${SRCNAM}-linux-$DEBARCH-${VERSION}-linux2.deb data.tar.xz
+ar x $CWD/${SRCNAM}-linux-$DEBARCH-${VERSION}-linux3.deb data.tar.xz
 tar xvf $PKG/data.tar.xz
 rm $PKG/data.tar.xz
 

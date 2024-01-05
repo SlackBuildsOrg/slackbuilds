@@ -1,27 +1,18 @@
-config() {
-  NEW="$1"
-  OLD="$(dirname $NEW)/$(basename $NEW .new)"
-  # If there's no config file by that name, mv it over:
-  if [ ! -r $OLD ]; then
-    mv $NEW $OLD
-  elif [ "$(cat $OLD | md5sum)" = "$(cat $NEW | md5sum)" ]; then
-    # toss the redundant copy
-    rm $NEW
-  fi
-  # Otherwise, we leave the .new copy for the admin to consider...
-}
+#!/bin/bash
 
-preserve_perms() {
-  NEW="$1"
-  OLD="$(dirname $NEW)/$(basename $NEW .new)"
-  if [ -e $OLD ]; then
-    cp -a $OLD ${NEW}.incoming
-    cat $NEW > ${NEW}.incoming
-    mv ${NEW}.incoming $NEW
-  fi
-  config $NEW
-}
+# dnscrypt-proxy writes files to its data directories after
+# dropping privileges. This ensures $DNSCRYPT_USER can write
+# files to these directories, without having to change default
+# root:root in slackware.
+#
+# This is a workaround, might not be a elegant solution.
 
-preserve_perms etc/rc.d/rc.dnscrypt-proxy.new
-config etc/default/dnscrypt-proxy.new
-config etc/dnscrypt-proxy/dnscrypt-proxy.toml.new
+PRGNAM=dnscrypt-proxy
+DNSCRYPT_USER=dnscrypt
+DNSCRYPT_GROUP=dnscrypt
+
+chown $DNSCRYPT_USER:$DNSCRYPT_GROUP /etc/$PRGNAM/*
+
+setfacl -m u:$DNSCRYPT_USER:rwx /etc/$PRGNAM
+setfacl -m u:$DNSCRYPT_USER:rwx /var/run/$PRGNAM
+setfacl -m u:$DNSCRYPT_USER:rwx /var/log/$PRGNAM

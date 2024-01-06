@@ -106,12 +106,17 @@ install -D -m 0644 $CWD/$PRGNAM.SlackBuild $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM
 install -D -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/rc.$PRGNAM
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 sed -i "s/DNSCRYPT_UID=.*$/DNSCRYPT_UID=$DNSCRYPT_UID/" $CWD/doinst.sh
 sed -i "s/DNSCRYPT_GID=.*$/DNSCRYPT_GID=$DNSCRYPT_GID/" $CWD/doinst.sh
 =======
 sed -i "s/DNSCRYPT_USER=.*$/DNSCRYPT_USER=$(sed -n 's/DNSCRYPT_USER=\${DNSCRYPT_USER:-\([^}]*\)}/\1/p' $CWD/$PRGNAM.SlackBuild)/" $CWD/doinst.sh
 sed -i "s/DNSCRYPT_GROUP=.*$/DNSCRYPT_GROUP=$(sed -n 's/DNSCRYPT_GROUP=\${DNSCRYPT_GROUP:-\([^}]*\)}/\1/p' $CWD/$PRGNAM.SlackBuild)/" $CWD/doinst.sh
 >>>>>>> 8cc6fa4773 (network/dnscrypt-proxy)
+=======
+sed -i "s/DNSCRYPT_UID=.*$/DNSCRYPT_UID=$DNSCRYPT_UID/" $CWD/doinst.sh
+sed -i "s/DNSCRYPT_GID=.*$/DNSCRYPT_GID=$DNSCRYPT_GID/" $CWD/doinst.sh
+>>>>>>> a80e57600d (network/dnscrypt-proxy)
 
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 cat $CWD/slack-desc > $PKG/install/slack-desc

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+FreeRDP: FreeRDP (Remote Desktop Protocol)
+FreeRDP:
+FreeRDP: FreeRDP is a free implementation of the Remote Desktop Protocol
+FreeRDP: (RDP), released under the Apache license. Enjoy the freedom of
+FreeRDP: using your software wherever you want, the way you want it, in
+FreeRDP: a world where interoperability can finally liberate your computing
+FreeRDP: experience.
+FreeRDP:
+FreeRDP:
+FreeRDP: Homepage:  https://www.freerdp.com
+FreeRDP:

@@ -1,0 +1,12 @@
+Newsraft (feed reader)
+Newsraft is a minimalistic feed reader with ncurses interface.
+
+It was inspired by Newsboat and is written in pure C99,
+different from Newsboat, which is written C++11 and Rust.
+
+Features
+  Parallel downloads
+  Section-based feeds grouping
+  Opening links in any program
+  Automatic updates for feeds and sections
+  Interactive interface for viewing news content

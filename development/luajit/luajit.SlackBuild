@@ -1,10 +1,9 @@
 #!/bin/bash
 
 # Slackware build script for luajit
-
-# Copyright 2018 Erik Falor <ewfalor@gmail.com>, Logan, Utah, USA
+# Erik Falor | Logan, UT, USA | ewfalor@gmail.com | January 2024
 # All rights reserved.
-#
+
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
 #
@@ -25,8 +24,9 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=luajit
-VERSION=${VERSION:-2.0.5}
-BUILD=${BUILD:-2}
+COMMIT=${COMMIT:-c525bcb9024510cad9e170e12b6209aedb330f83}
+VERSION=${VERSION:-2.1.1703358377}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -69,9 +69,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf LuaJIT-$VERSION
-tar zxvf $CWD/LuaJIT-$VERSION.tar.gz
-cd LuaJIT-$VERSION
+rm -rf LuaJIT-$COMMIT
+tar zxvf $CWD/LuaJIT-$COMMIT.tar.gz
+cd LuaJIT-$COMMIT
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \

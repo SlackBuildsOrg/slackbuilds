@@ -1,0 +1,38 @@
+#!/bin/sh
+# Start/stop/restart ZeroTierOne daemon.
+
+# Start:
+ZeroTierOne_start() {
+  CMDLINE="/usr/sbin/zerotier-one -d"
+  echo -n "Starting ZeroTierOne daemon:  $CMDLINE"
+  $CMDLINE
+  echo
+}
+
+# Stop:
+ZeroTierOne_stop() {
+  echo -n "Stopping ZeroTierOne daemon..."
+  killall -q zerotier-one
+  echo
+}
+
+# Restart:
+ZeroTierOne_restart() {
+  ZeroTierOne_stop
+  sleep 1
+  ZeroTierOne_start
+}
+
+case "$1" in
+'start')
+  ZeroTierOne_start
+  ;;
+'stop')
+  ZeroTierOne_stop
+  ;;
+'restart')
+  ZeroTierOne_restart
+  ;;
+*)
+  echo "usage $0 start|stop|restart"
+esac

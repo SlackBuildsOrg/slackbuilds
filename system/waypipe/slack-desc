@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
        |-----handy-ruler------------------------------------------------------|
-isodate: isodate (An ISO 8601 date/time/duration parser and formater)
-isodate:
-isodate: This module implements ISO 8601 date, time and duration parsing.
-isodate: The implementation follows ISO8601:2004 standard, and implements
-isodate: only date/time representations mentioned in the standard.
-isodate:
-isodate: Homepage: https://pypi.python.org/pypi/isodate
-isodate:
-isodate:
-isodate:
-isodate:
+waypipe: waypipe (Network transparency with Wayland)
+waypipe:
+waypipe: waypipe is a proxy for Wayland[0] clients. It forwards Wayland
+waypipe: messages and serializes changes to shared memory buffers over a
+waypipe: single socket. This makes application forwarding similar to
+waypipe: ssh -X [1] feasible.
+waypipe:
+waypipe:
+waypipe:
+waypipe:
+waypipe:

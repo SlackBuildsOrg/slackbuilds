@@ -96,12 +96,9 @@ pkg-config --exists lua5.2 && ! pkg-config --exists lua && LUA=ON
 
 # 20210214 bkw: prevent the build from writing to /root/, without
 # breaking ccache if it's in use.
-mkdir -p tmphome
+mkdir -p tmphome/.local/share/pioneer
 export CCACHE_DIR=${CCACHE_DIR:-$HOME/.ccache}
 export HOME=$( pwd )/tmphome
-
-# Remove the harmless (but annoying) model compilation message.
-patch -p0 < $CWD/message.diff
 
 OSNAME="$(awk -F= '/^ID=/{print $2}' /etc/os-release)"
 OSVER="$(awk -F= '/^VERSION_ID=/{print $2}' /etc/os-release)"

@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=virtualxt
-VERSION=${VERSION:-0.11}
+VERSION=${VERSION:-0.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,7 +73,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf virtualxt-$VERSION
-unzip $CWD/virtualxt-$VERSION.zip
+unzip $CWD/v$VERSION.zip
 cd virtualxt-$VERSION
 chown -R root:root .
 find -L . \
@@ -98,8 +98,8 @@ fi
 make sdl2-frontend modules
 
 install -D -m 0755 build/bin/virtualxt $PKG/usr/bin/virtualxt
-mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/virtualxt
-install -D -m 0755 build/bin/libvxt.so $PKG/usr/lib$LIBDIRSUFFIX/virtualxt/libvxt.so
+mkdir -p $PKG/usr/lib64/virtualxt
+install -D -m 0755 build/bin/libvxt.so $PKG/usr/lib64/virtualxt/libvxt.so
 
 # Install BIOS, disk images, and modules
 DSTDIR=$PKG/usr/share/$PRGNAM

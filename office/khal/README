@@ -15,5 +15,5 @@ in .bashrc
 in .zshrc
 . /usr/doc/khal-*/khal-complete.zsh
 
-in .fishrc
-. /usr/doc/khal-*/khal-complete.fish
+save the following file in ~/.config/fish/completions/khal.fish
+/usr/doc/khal-*/khal-complete.fish

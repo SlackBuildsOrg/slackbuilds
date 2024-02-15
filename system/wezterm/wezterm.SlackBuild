@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=wezterm
-VERSION=${VERSION:-20240203-110809-5046fc22}
+VERSION=${VERSION:-20240203_110809_5046fc22}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,7 +77,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+tar xvf $CWD/$PRGNAM-${VERSION//_/-}.tar.gz
+mv $PRGNAM-${VERSION//_/-} $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 tar xvf $CWD/harfbuzz-8.3.0.tar.gz -C deps/harfbuzz/harfbuzz --strip-components=1
 tar xvf $CWD/zlib-1.2.11.tar.gz -C deps/freetype/zlib --strip-components=1
@@ -199,4 +200,4 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-${VERSION//-/_}-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

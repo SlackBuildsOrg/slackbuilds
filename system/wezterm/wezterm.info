@@ -1,5 +1,5 @@
 PRGNAM="wezterm"
-VERSION="20240203-110809-5046fc22"
+VERSION="20240203_110809_5046fc22"
 HOMEPAGE="https://wezfurlong.org/wezterm"
 DOWNLOAD="https://github.com/wez/wezterm/archive/refs/tags/20240203-110809-5046fc22/wezterm-20240203-110809-5046fc22.tar.gz \
           https://github.com/harfbuzz/harfbuzz/archive/refs/tags/8.3.0/harfbuzz-8.3.0.tar.gz \

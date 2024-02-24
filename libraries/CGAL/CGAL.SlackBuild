@@ -29,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=CGAL
-VERSION=${VERSION:-4.13}
+VERSION=${VERSION:-5.6}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,6 +92,7 @@ cd build
     -DCMAKE_BUILD_TYPE=Release ..
   make
   make install/strip DESTDIR=$PKG
+
 cd ..
 
 gzip -9 $PKG/usr/man/man*/*
@@ -104,7 +105,7 @@ rm -rf $PKG/usr/share/
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   AUTHORS CHANGES.md README VERSION \
-  LICENSE LICENSE.FREE_USE LICENSE.GPL LICENSE.LGPL LICENSE.BSL \
+  LICENSE LICENSE.GPL LICENSE.LGPL LICENSE.BSL \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

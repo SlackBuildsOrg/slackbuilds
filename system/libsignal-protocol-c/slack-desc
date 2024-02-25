@@ -6,13 +6,13 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
                     |-----handy-ruler------------------------------------------------------|
-libsignal-protocol-c: libsignal-protocol-c (Forward Secrecy Protocol)
+libsignal-protocol-c: libsignal-protocol-c (Signal's forward secrecy protocol in C)
 libsignal-protocol-c:
 libsignal-protocol-c: This is a ratcheting forward secrecy protocol that works in
 libsignal-protocol-c: synchronous and asynchronous messaging environments.
 libsignal-protocol-c:
-libsignal-protocol-c:
-libsignal-protocol-c:
+libsignal-protocol-c: Homepage: https://signal.org/
+libsignal-protocol-c: Code: https://github.com/signalapp/libsignal-protocol-c
 libsignal-protocol-c:
 libsignal-protocol-c:
 libsignal-protocol-c:

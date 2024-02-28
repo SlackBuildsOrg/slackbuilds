@@ -1,1 +1,44 @@
 Thorium (The fastest browser on Earth)
+---------------------------------------
+
+Here's how to install Thorium on Slackware.
+
+1. First, go to the Thorium releases section on github:
+
+https://github.com/Alex313031/thorium/releases
+
+2. Choose between AVX, AVX2 or SSE3
+  $ lscpu | egrep --color=always -o 'avx|avx2|sse3'
+  avx
+  avx2
+
+In this case, my processor has support for avx and avx2. So I can go for
+the AVX2 version.
+
+Click the download button for the desired .deb package:
+
+    < >  {_AVX, _AVX2, _SSE3}.deb (for Debian/Ubuntu)
+
+3. Define `$ export CAP_EXT=AVX2`, be aware you have to choose
+   one of these three cpu capabilities, i.e. CAP_EXT=AVX2
+
+4. Then, with the thorium-browser_121.0.6167.204_${CAP_EXT}.deb package
+in the same directory as the thorium-browser.SlackBuild script, run the
+script as root to convert the .deb to a Slackware .txz:
+
+./thorium-browser.SlackBuild
+
+This will produce a Slackware compatible .txz package.  The exact
+version number in the package filename will depend on the version
+of Thorium found in the .deb package, but it will be something
+like: thorium-browser-121.0.6167.204_${CAP_EXT}-x86_64-1.txz
+
+You'll find the output package in the /tmp directory.
+
+
+5. Then, install the package (again as root):
+
+upgradepkg --install-new /tmp/thorium-browser-121.0.6167.204_${CAP_EXT}-x86_64-1.txz
+
+
+Enjoy!  :-)

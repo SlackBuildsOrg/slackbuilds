@@ -109,8 +109,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-app-defaults=/etc/X11/app-defaults \
   --build=$ARCH-slackware-linux
 
-make
-make DESTDIR=$PKG docdir=/usr/doc/$PRGNAM-$VERSION install install-doc
+make DESTDIR=$PKG docdir=/usr/doc/$PRGNAM-$VERSION -j1 install install-doc
 # 20220318 bkw: binaries already stripped.
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;

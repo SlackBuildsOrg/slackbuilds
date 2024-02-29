@@ -104,8 +104,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man \
   --build=$ARCH-slackware-linux
 
-make
-make DESTDIR=$PKG docdir=/usr/doc/$PRGNAM-$VERSION install install-doc
+make DESTDIR=$PKG docdir=/usr/doc/$PRGNAM-$VERSION -j1 install install-doc
 
 mkdir -p $PKG/usr/share/pixmaps
 cp icons/*.{xpm,png} $PKG/usr/share/pixmaps

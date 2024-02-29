@@ -110,3 +110,7 @@ Upgraded to the latest git commit 31b79e3.
 
 Added -pie and -zdefs hardening flags to linker.
 Bumped the build no.
+
+27/02/2024:
+
+Updated to version 1.6.3

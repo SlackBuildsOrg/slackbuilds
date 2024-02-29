@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Slackware build script for thorium-browser
+# Slackware build script for <appname>
 
 # Copyright 2023  Martin Rodriguez, Guadalajara Mexico
 # All rights reserved.
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=thorium-browser
-VERSION=${VERSION:-117.0.5938.157}
+VERSION=${VERSION:-121.0.6167.204}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,8 +38,30 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
+if [ -z $CAP_EXT ]; then
+  cat << EOF
+
+Missing CAP_EXT environment variable. You have to decide between AVX, AVX2 or SSE3.
+Consider the following command in order to check if your processor has support
+for any of them:
+
+  $ lscpu | egrep --color=always -o 'avx|avx2|sse3'
+  avx
+  avx2
+  $ export CAP_EXT=AVX2  # export CAP_EXT environment variable
+
+Don't forget to download the right .deb package according with the $CAP_EXT
+environment variable. Then try running this script again.
+
+EOF
+  exit 1
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
-  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  echo "$PRGNAM-${VERSION}_$CAP_EXT-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
 fi
 
@@ -47,51 +69,68 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-case "$ARCH" in
-  x86_64) DEBARCH="amd64" ;;
-  *) echo "Package for $ARCH architecture is not available." ; exit 1 ;;
-esac
-
 set -e
+
+if ! /bin/ls ${PRGNAM}*.deb 1> /dev/null 2> /dev/null ; then
+  cat << EOF
+
+This is a script to repackage a Debian/Ubuntu Thorium .deb package
+for Slackware.  Run this script in the same directory as one of these
+binary packages:
+
+  ${PRGNAM}_${VERSION}_AVX.deb  (for 64-bit x86_64 with avx support)
+  ${PRGNAM}_${VERSION}_AVX2.deb  (for 64-bit x86_64 with avx2 support)
+  ${PRGNAM}_${VERSION}_SSE3.deb  (for 64-bit x86_64 with sse3 support)
+
+This will create a Slackware .$PKGTYPE package.  Install it with
+installpkg or use upgradepkg to upgrade from a previous version.
+
+EOF
+  exit 1
+fi
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
+
 cd $PKG
-ar p $CWD/${PRGNAM}_${VERSION}_${DEBARCH}.deb data.tar.xz | tar xJv || exit 1
+ar p $CWD/${PRGNAM}_${VERSION}_$CAP_EXT.deb data.tar.xz | tar xJv || exit 1
+cd ..
+
 chown -R root:root .
-chmod -R u+w,go+r-w,a-s .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # Make sure top-level perms are correct:
 chmod 0755 .
+
 # This needs to be setuid root:
-chmod 4711 opt/chromium.org/thorium/chrome-sandbox
+chmod 4711 $PKG/opt/chromium.org/thorium/chrome-sandbox
+
 # The cron job is for Debian/Ubuntu only:
-rm -rf etc
+rm -rf $PKG/etc
 
-# Link to the standard Mozilla library names:
-sed -i 's,libnss3.so.1d,libnss3.so\x00\x00\x00,g;
-        s,libnssutil3.so.1d,libnssutil3.so\x00\x00\x00,g;
-        s,libsmime3.so.1d,libsmime3.so\x00\x00\x00,g;
-        s,libssl3.so.1d,libssl3.so\x00\x00\x00,g;
-        s,libplds4.so.0d,libplds4.so\x00\x00\x00,g;
-        s,libplc4.so.0d,libplc4.so\x00\x00\x00,g;
-        s,libnspr4.so.0d,libnspr4.so\x00\x00\x00,g;' opt/chromium.org/thorium/thorium
+# Strip binaries and libraries
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-# --mandir=/usr/man:
 mv $PKG/usr/share/man $PKG/usr/man
 
 # Install a .desktop launcher:
 sed -i -e "s#Icon=thorium-browser#Icon=/opt/chromium.org/thorium/product_logo_256.png#" \
   $PKG/usr/share/applications/thorium-browser.desktop
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-mv $PKG/usr/share/doc/$PRGNAM/* $PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKG/usr/doc/$PRGNAM-${VERSION}_$CAP_EXT
+mv $PKG/usr/share/doc/$PRGNAM/* $PKG/usr/doc/$PRGNAM-${VERSION}_$CAP_EXT
 rm -rf $PKG/usr/share/doc
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-${VERSION}_$CAP_EXT/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
+# Make the package
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-${VERSION}_$CAP_EXT-$ARCH-$BUILD$TAG.$PKGTYPE

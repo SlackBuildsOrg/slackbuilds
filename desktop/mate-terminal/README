@@ -1,2 +1,5 @@
 Mate Terminal is the official terminal emulator for
 the MATE Desktop.
+
+Optional dependency for help files:
+yelp

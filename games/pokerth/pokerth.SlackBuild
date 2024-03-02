@@ -30,7 +30,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pokerth
 VERSION=${VERSION:-20230322_181f05f}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -42,9 +42,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -83,11 +80,17 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+patch -p1 < $CWD/patches/pokerth-1.1.2.2023.patch
+
 ( cd src/third_party/websocketpp
   patch -p1 < $CWD/patches/pokerth-1.1.2-boost-1.70-websocket-fix1.patch
-  patch -p1 < $CWD/patches/pokerth-1.1.2-boost-1.70-websocket-fix2.patch  )
+  patch -p1 < $CWD/patches/pokerth-1.1.2-boost-1.70-websocket-fix2.patch
+)
 
-qmake-qt5 QMAKE_CFLAGS_ISYSTEM= -spec linux-g++ pokerth.pro
+protoc -I=$TMP/$PRGNAM-$VERSION --cpp_out=$TMP/$PRGNAM-$VERSION/src/third_party/protobuf/ $TMP/$PRGNAM-$VERSION/pokerth.proto $TMP/$PRGNAM-$VERSION/chatcleaner.proto
+qmake-qt5 DEFINES+="BOOST_BIND_GLOBAL_PLACEHOLDERS" QMAKE_CFLAGS_ISYSTEM= -spec linux-g++ pokerth.pro
+
+CMAKE_CXX_FLAGS="$SLKCFLAGS -Wl,--copy-dt-needed-entries" \
 make
 mkdir -p $PKG/usr/bin
 install -s -D -m 0755 bin/pokerth_server $PKG/usr/bin

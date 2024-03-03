@@ -1,0 +1,29 @@
+From 07fe99a52000f0339f52e478d798f7482f463403 Mon Sep 17 00:00:00 2001
+From: Yardena Cohen <yardenack@gmail.com>
+Date: Wed, 5 Jul 2023 14:56:20 -0700
+Subject: [PATCH] support new protoc versioning
+
+https://github.com/OpenLightingProject/ola/issues/1867
+https://protobuf.dev/support/version-support/
+---
+ configure.ac | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 3e9e809af..c00a0e630 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -847,10 +847,10 @@ AM_CONDITIONAL([FOUND_FLAKE8], [test "x$flake8" = xyes])
+ #####################################################
+ 
+ # LIBRARY: protobuf
+-# We require 2.4.0 for the java libs
++# We require 24.0 for the java libs
+ AS_IF([test "x$build_java_libs" = xyes],
+-      [PROTOBUF_SUPPORT([2.4.0])],
+-      [PROTOBUF_SUPPORT([2.3.0])])
++      [PROTOBUF_SUPPORT([4.24.0])],
++      [PROTOBUF_SUPPORT([25.0])])
+ # Version 3.7 and above of protoc require some additional includes
+ AC_CHECK_HEADERS([google/protobuf/io/strtod.h google/protobuf/stubs/logging.h \
+                   google/protobuf/stubs/stl_util.h])

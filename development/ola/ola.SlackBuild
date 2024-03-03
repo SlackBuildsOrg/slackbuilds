@@ -5,7 +5,7 @@
 # Written by Georg Nagel (g.schlmm [at] gmail [dot] com)
 
 # 20220217 bkw: Modified by SlackBuilds.org:
-# - updated for v0.10.8. needed for protobuf3 (because the old
+# - updated for v0.10.9. needed for protobuf3 (because the old
 #   protobuf is going away). also it's better to ship a release
 #   than a git commit from ~4 years ago.
 # - don't ship static libraries.
@@ -15,7 +15,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ola
-VERSION=${VERSION:-0.10.8}
+VERSION=${VERSION:-0.10.9}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,13 +75,16 @@ BUILD_HTTP="--disable-http"
 BUILD_PYTHON="--enable-python-libs"
 [ "$WITH_PYTHON" != "yes" ] && BUILD_PYTHON=""
 
-autoreconf -fiv
+# https://github.com/OpenLightingProject/ola/issues/1867
+patch -p1 < $CWD/ola-protobuf.patch
 
-SLKCFLAGS+=" -Wno-error"
+patch -p1 < $CWD/1875.patch
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-CPPFLAGS="$CPPFLAGS" \
+autoreconf -i
+
+PYTHON="python3" \
+libprotobuf_CFLAGS="-I/usr/include/google/protobuf/ -I/usr/include/absl/" \
+libprotobuf_LIBS="-L/usr/lib${LIBDIRSUFFIX}" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
@@ -92,7 +95,12 @@ CPPFLAGS="$CPPFLAGS" \
   --build=$ARCH-slackware-linux \
   --disable-static \
   --enable-shared \
-  $BUILD_HTTP $BUILD_PYTHON
+  --disable-unittests \
+  --disable-examples \
+  --disable-fatal-warnings \
+  --with-protoc=protoc \
+  --disable-python-libs \
+  $BUILD_HTTP
 
 make
 

@@ -8,4 +8,4 @@ If you wish patches:
   Create 'patches' directory and add patches files on it. Declare
   variable PATCHES to yes (PATCHES=yes) before run SlackBuild script.
 
-Optional dependencie: - farbfeld (include images).
+Optional dependency: - farbfeld (include images).

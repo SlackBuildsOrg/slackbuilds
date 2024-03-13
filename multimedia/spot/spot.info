@@ -799,6 +799,6 @@ MD5SUM="8507b3b613a8c4cfccf7e206256fc655 \
         34437d4130faec448d42eca071d0e6fd"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="libadwaita blueprint-compiler"
+REQUIRES="libadwaita blueprint-compiler rust16"
 MAINTAINER="Julian Grinblat"
 EMAIL="julian@dotcore.co.il"

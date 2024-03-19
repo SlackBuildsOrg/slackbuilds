@@ -1,0 +1,118 @@
+CBMC
+
+About CBMC
+
+CBMC is a Bounded Model Checker for C and C++ programs.
+It supports C89, C99, most of C11/C17 and most compiler extensions
+provided by gcc, clang, and Visual Studio. A variant of CBMC that
+analyses Java bytecode is available as JBMC.
+[To enable, set "-DWITH_JBMC=OFF" in the SlackBuild to "ON".]
+
+CBMC verifies memory safety (which includes array bounds checks
+and checks for the safe use of pointers), checks for exceptions,
+checks for various variants of undefined behavior, and
+user-specified assertions. Furthermore, it can check C and C++ for
+I/O equivalence with other languages, such as Verilog. The
+verification is performed by unwinding the loops in the program
+and passing the resulting equation to a decision procedure.
+
+CBMC is available for most flavours of Linux (pre-packaged on
+Debian, Ubuntu and Fedora), Windows and MacOS X. You should also
+read the CBMC license (BSD 4-clause). For questions about CBMC,
+contact Daniel Kroening.
+
+CBMC comes with a built-in solver for bit-vector formulas that is
+based on MiniSat. As an alternative, CBMC has featured support for
+external SMT solvers since version 3.3. The solvers we recommend
+are (in no particular order) Boolector, CVC5 and Z3. Note that
+these solvers need to be installed separately and have different
+licensing conditions.
+
+CBMC News
+
+I did a website refresh. It's got dark mode!
+
+CBMC Documentation
+
+-   The CPROVER Manual contains a tutorial from a user's point of
+    view and describes what properties are checked.
+
+-   A set of slides on CBMC: PDF, 2x3 handouts.
+    The sources are available here.
+
+-   The primary reference for CBMC is A Tool for Checking ANSI-C
+    Programs (ca. 1900 citations).
+
+We also have a list of interesting applications of CBMC.
+
+CBMC Download
+
+We are maintaining CBMC for x86 Linux, Windows and MacOS.
+
++--------------------------------+--------------------------------+
+| Windows                        | Download                       |
+|                                | cbmc-5.95.1-win64.msi, and     |
+|                                | then double-click to install.  |
+|                                | This is an x64 binary for the  |
+|                                | command line (there is no      |
+|                                | GUI). You will need to run     |
+|                                | CBMC from the Visual Studio    |
+|                                | Command Prompt.                |
+|                                |                                |
+|                                | We recommend you install the   |
+|                                | free Visual Studio Community.  |
++--------------------------------+--------------------------------+
+| Debian                         | While Debian and Ubuntu do     |
+| Ubuntu                         | have a cbmc package, this is   |
+|                                | currently at version 5.12,     |
+|                                | which is more than a decade    |
+|                                | old. Download one of the       |
+|                                | following binary packages:     |
+|                                | 64-bit Ubuntu 20.04/x64:       |
+|                                | ubun                           |
+|                                | tu-20.04-cbmc-5.95.1-Linux.deb |
+|                                | 64-bit Ubuntu 22.04/x64:       |
+|                                | ubun                           |
+|                                | tu-22.04-cbmc-5.95.1-Linux.deb |
+|                                | Do                             |
+|                                |     dpkg -i ubun               |
+|                                | tu-20.04-cbmc-5.95.1-Linux.deb |
+|                                | to install.                    |
++--------------------------------+--------------------------------+
+| Fedora                         | On Fedora 18 or newer, you can |
+|                                | do                             |
+|                                |     yum install cbmc           |
+|                                | This will give you version     |
+|                                | 5.50.                          |
++--------------------------------+--------------------------------+
+| MacOS                          | To get a recent version of     |
+|                                | CBMC, consider using Homebrew, |
+|                                | and then do                    |
+|                                |     brew install cbmc          |
+|                                |                                |
+|                                | This is a command-line tool    |
+|                                | only, there is no GUI. You     |
+|                                | need to have the Command Line  |
+|                                | Tools for Xcode, which can be  |
+|                                | downloaded by running the      |
+|                                | Xcode application or from      |
+|                                | here.                          |
++--------------------------------+--------------------------------+
+| Source Code                    | Source code is available here. |
++--------------------------------+--------------------------------+
+
+If you need a Model Checker for Verilog or SMV files, consider
+EBMC. For Java, use JBMC.
+
+This research was sponsored by the Semiconductor Research
+Corporation (SRC) under contract no. 99-TJ-684, the National
+Science Foundation (NSF) under grant no. CCR-9803774, the Office
+of Naval Research (ONR), the Naval Research Laboratory (NRL) under
+contract no. N00014-01-1-0796, and by the Defense Advanced
+Research Projects Agency, and the Army Research Office (ARO) under
+contract no. DAAD19-01-1-0485, and the General Motors
+Collaborative Research Lab at CMU. The views and conclusions
+contained in this document are those of the author and should not
+be interpreted as representing the official policies, either
+expressed or implied, of SRC, NSF, ONR, NRL, DOD, ARO, or the U.S.
+government.

@@ -27,6 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=z88dk
 VERSION=${VERSION:-2.3}
+ZSDCC_REV=14210
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -70,6 +71,7 @@ cd $TMP
 rm -rf $PRGNAM
 tar xf $CWD/$PRGNAM-src-$VERSION.tgz
 cd $PRGNAM
+ln $CWD/zsdcc_r${ZSDCC_REV}_src.tar.gz .
 
 # Upstream permissions are bad. Please don't replace with "find . -L
 # ..." boilerplate.
@@ -106,7 +108,10 @@ export PREFIX=/usr
 # z80 native libraries.
 sed -i '/^\$MAKE *-e/aexport MAKEFLAGS="-j1"' build.sh
 
-./build.sh -i $PREFIX
+export BUILD_SDCC=1
+# The following should skip attempting the SVN fetch of zsdcc,
+# and also skip the HTTP fetch as the appropriate tarball is present
+export BUILD_SDCC_HTTP=1
 make install DESTDIR=$PKG/
 
 # strip strips everything but chokes on the perl script.

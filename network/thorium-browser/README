@@ -1,1 +1,35 @@
 Thorium (The fastest browser on Earth)
+---------------------------------------
+
+Here's how to install Thorium on Slackware.
+
+1. First, go to the Thorium releases section on github:
+
+https://github.com/Alex313031/thorium/releases
+
+2. Click the download button for the desired .deb package:
+
+    < >  thorium-browser_*amd64.deb (for Debian/Ubuntu)
+
+3. Then, with the thorium-browser_122.0.6261.132_amd64.deb
+package in the same directory as the thorium-browser.SlackBuild
+script, run the script as root to convert the .deb to a Slackware
+.txz:
+
+./thorium-browser.SlackBuild
+
+This will produce a Slackware compatible .txz package.  The exact
+version number in the package filename will depend on the version
+of Thorium found in the .deb package, but it will be something
+like: thorium-browser-122.0.6261.132-x86_64-1_SBo.txz
+
+You'll find the output package in the /tmp directory.
+
+
+4. Then, install the package (again as root):
+
+$ PKGNAME=/tmp/thorium-browser-122.0.6261.132-x86_64-1_SBo.txz
+$ upgradepkg --install-new $PKGNAME
+
+
+Enjoy!  :-)

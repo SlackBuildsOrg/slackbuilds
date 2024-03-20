@@ -73,6 +73,6 @@ MD5SUM_x86_64="79b0534b20053714b1bf43095bed8471 \
                7255f1628e93263ea1a8a32d24fb53e5 \
                dfe6365eb952305901c892c19f5ce5f4 \
                04e1c5a631beff62d8bbffaf63fd81e8"
-REQUIRES=""
+REQUIRES="qt6"
 MAINTAINER="Nathaniel Russell"
 EMAIL="naterussell83@gmail.com"

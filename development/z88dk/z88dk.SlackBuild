@@ -112,6 +112,7 @@ export BUILD_SDCC=1
 # The following should skip attempting the SVN fetch of zsdcc,
 # and also skip the HTTP fetch as the appropriate tarball is present
 export BUILD_SDCC_HTTP=1
+./build.sh -i $PREFIX
 make install DESTDIR=$PKG/
 
 # strip strips everything but chokes on the perl script.

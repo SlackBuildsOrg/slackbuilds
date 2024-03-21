@@ -113,7 +113,7 @@ sed -i '/ipaddress.*/d' pyproject.toml
 sed -i '/win-inet-pton.*/d' pyproject.toml
 
 # Remove unnecessary validators version requirement
-sed -i 's|validators.*|validators|' pyproject.toml
+sed -i 's|validators.*|validators = "\*"|' pyproject.toml
 
 python3 -m build --wheel --no-isolation
 python3 -m installer --destdir=$PKG dist/*.whl

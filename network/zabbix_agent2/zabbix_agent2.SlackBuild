@@ -147,7 +147,7 @@ sed -e "s,# PidFile=/tmp/zabbix_agent2.pid,PidFile=/var/run/$PRGNAM/zabbix_agent
     -e "s,Include=./zabbix_agent2.d/plugins.d/\*.conf,Include=/etc/$PRGSHORT/zabbix_agent2.d/plugins.d/*.conf," \
     $PKG/etc/$PRGSHORT/$PRGNAM.conf > $PKG/etc/$PRGSHORT/$PRGNAM.conf.new
 # remove uneeded old agent conf
-rm -rf $PKG/etc/$PKGSHORT/zabbix_agentd.* $PKG/etc/$PKGSHORT/$PRGNAM.d/ $PKG/etc/$PKGSHORT/$PRGNAM.conf
+rm -rf $PKG/etc/$PRGSHORT/zabbix_agentd.* $PKG/etc/$PRGSHORT/$PRGNAM.d/ $PKG/etc/$PRGSHORT/$PRGNAM.conf
 
 # Init script
 mkdir -p $PKG/etc/rc.d

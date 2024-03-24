@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=ITK
 SRCNAM=InsightToolkit
 VERSION=${VERSION:-4.13.2}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -111,6 +111,7 @@ cd build
     -DITK_USE_SYSTEM_ZLIB=ON \
     -DModule_ITKIOMINC=ON \
     -DModule_ITKIOTransformMINC=ON \
+    -DITK_USE_SYSTEM_GOOGLETEST=OFF \    
     -DCMAKE_BUILD_TYPE=Release ..
   make install DESTDIR=$PKG
 cd ..

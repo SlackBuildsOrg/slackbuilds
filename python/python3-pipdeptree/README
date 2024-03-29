@@ -1,0 +1,13 @@
+python3-pipdeptree (Show dependency trees of python packages)
+
+pipdeptree is a command line utility for displaying the installed
+python packages in form of a dependency tree. It works for packages
+installed globally on a machine as well as in a virtualenv. Since pip
+freeze shows all dependencies as a flat list, finding out which are
+the top level packages and which packages do they depend on requires
+some effort.
+
+It's also tedious to resolve conflicting dependencies that could have
+been installed because older version of pip didn't have true dependency
+resolution. pipdeptree can help here by identifying conflicting
+dependencies installed in the environment.

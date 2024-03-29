@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                  |-----handy-ruler------------------------------------------------------|
+python3-pipdeptree: python3-pipdeptree (Show dependency trees of python packages)
+python3-pipdeptree:
+python3-pipdeptree: pipdeptree is a command line utility for displaying the installed
+python3-pipdeptree: python packages in form of a dependency tree. It works for packages
+python3-pipdeptree: installed globally on a machine as well as in a virtualenv. Since pip
+python3-pipdeptree: freeze shows all dependencies as a flat list, finding out which are
+python3-pipdeptree: the top level packages and which packages do they depend on requires
+python3-pipdeptree: some effort.
+python3-pipdeptree:
+python3-pipdeptree: HOMEPAGE: https://github.com/tox-dev/pipdeptree/tree/main
+python3-pipdeptree:

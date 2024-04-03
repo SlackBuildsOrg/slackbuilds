@@ -1,0 +1,6 @@
+NVIDIA CUDA plugin for XMRig miner
+
+This requires cudatoolkit.
+https://slackbuilds.org/repository/15.0/development/cudatoolkit
+
+If you are using cudatoolkit12, specify CUDAVERSION=12 .

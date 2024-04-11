@@ -11,6 +11,13 @@ config() {
   # Otherwise, we leave the .new copy for the admin to consider...
 }
 
+if [ -x /usr/bin/update-desktop-database ]; then
+  /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
+fi 
+
+config etc/prte-default-hostfile.new
+config etc/prte-mca-params.conf.new 
+config etc/prte.conf.new 
 config etc/pmix-mca-params.conf.new
 config etc/openmpi-default-hostfile.new
 config etc/openmpi-mca-params.conf.new

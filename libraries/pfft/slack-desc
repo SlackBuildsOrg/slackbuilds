@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+    |-----handy-ruler------------------------------------------------------|
+pfft: pfft (Parallel fast Fourier transforms)
+pfft:
+pfft: PFFT is a software library based on FFTW3 for computing massively
+pfft: parallel, fast Fourier transformations on distributed memory
+pfft: architectures.
+pfft: PFFT can be understood as a generalization of FFTW-MPI
+pfft: to multidimensional data decomposition.
+pfft:
+pfft: Home page: https://github.com/mpip/pfft
+pfft:
+pfft:

@@ -1,0 +1,15 @@
+PFFT (Parallel Fast Fourier Transform) is a software library for
+computing massively parallel, fast Fourier transformations on
+distributed memory architectures. PFFT can be understood as a
+generalization of FFTW-MPI to multidimensional data decomposition.
+
+This library requires an implementation of fftw supporting the
+MPI-2 implementation (unsupported by the fftw package of the
+Slackware distributions). If you want to build and install PFFT,
+you have to replace the Slackware fftw with the alternative fftw-mpi
+package available in this repository. The package openmpi is also
+required dependency of PFFT, but it should be already in your system
+since it is required for fftw-mpi.
+
+At the moment the support to MPICH in place of Open MPI has not been
+tested yet.

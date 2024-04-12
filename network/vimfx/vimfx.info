@@ -1,0 +1,18 @@
+PRGNAM="vimfx"
+VERSION="0.27.0"
+HOMEPAGE="https://github.com/akhodakivskiy/VimFx"
+DOWNLOAD="https://github.com/akhodakivskiy/VimFx/releases/download/v0.27.0/VimFx.xpi \
+          https://raw.githubusercontent.com/akhodakivskiy/VimFx/master/README.md \
+          https://raw.githubusercontent.com/akhodakivskiy/VimFx/master/CHANGELOG.md \
+          https://raw.githubusercontent.com/akhodakivskiy/VimFx/master/PEOPLE.md \
+          https://git.gir.st/LegacyFox.git/snapshot/v3.3.tar.gz"
+MD5SUM="93a06e1c49d73b28336f1298e790df6d \
+        237b1aac5c13b65297d7a19cd29ddb6b \
+        43bd7b526126fc459abebc05a2d24f11 \
+        34b9e545905fa6d00e2421a6c1a81a5a \
+        3e2e2fc0c42d6f008706e74754d01731"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Alexander Verbovetsky"
+EMAIL="alik@ejik.org"

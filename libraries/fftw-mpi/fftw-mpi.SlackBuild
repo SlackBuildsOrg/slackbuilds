@@ -1,0 +1,248 @@
+#!/bin/bash
+
+# Slackware build script for fftw-mpi
+
+# Copyright 2017, 2018, 2023  Patrick J. Volkerding, Sebeka, Minnesota, USA
+# Adapted by Giancarlo Dessi, Cagliari, IT
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# Slackware build script for fftw
+# Written by Kyle Guinn <elyk03@gmail.com>
+# Adapted by Giancarlo Dessi for fftw-mpi
+# that includes the support to openmpi
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=fftw-mpi
+SRCNAM=fftw
+VERSION=${VERSION:-3.3.10}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) export ARCH=i586 ;;
+    arm*) export ARCH=arm ;;
+       *) export ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+# Check if a fftw package released by Slackware if installed
+if pkg-config --exists fftw3; then
+   if [ ! -f /usr/include/fftw3-mpi.h ]; then
+      echo "************************ WARNING ***********************"
+      echo " Another fftw is found in your system!                  "
+      echo " It appears to be the one installed from the fftw       "
+      echo " package released with the official Slackware           "
+      echo " "
+      echo " fftw-mpi cannot coexist with other fftw installed,     "
+      echo " please remove fftw before running this script.         "
+      echo " # removepkg fftw                                       "
+      echo "********************************************************"
+      exit 1
+   fi
+fi
+
+TMP=${TMP:-/tmp/SBo}	
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+  SIMD="--enable-sse2 --enable-avx"
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+  SIMD="--enable-sse2 --enable-avx"
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+  SIMD="--enable-sse2 --enable-avx"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+  SIMD=""
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# fix cflags
+sed -i "s|-mtune=native|$SLKCFLAGS|" configure
+
+# compile libfftw3
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --infodir=/usr/info \
+    --docdir=/usr/doc/fftw-mpi-$VERSION \
+    --enable-shared \
+    --disable-static \
+    --enable-threads \
+    --enable-openmp \
+    --enable-mpi \
+    $SIMD \
+    --build=$ARCH-slackware-linux
+
+make
+make install-strip DESTDIR=$PKG
+make clean
+
+# compile libfftw3f
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --infodir=/usr/info \
+    --docdir=/usr/doc/fftw-$VERSION \
+    --enable-shared \
+    --disable-static \
+    --enable-threads \
+    --enable-openmp \
+    --enable-float \
+    --enable-mpi \
+    $SIMD \
+    --build=$ARCH-slackware-linux
+
+make
+make install-strip DESTDIR=$PKG
+make clean
+
+# compile libfftw3l
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --infodir=/usr/info \
+    --docdir=/usr/doc/fftw-$VERSION \
+    --enable-shared \
+    --disable-static \
+    --enable-threads \
+    --enable-openmp \
+    --enable-mpi \
+    --enable-long-double \
+    --build=$ARCH-slackware-linux
+
+make
+make install-strip DESTDIR=$PKG
+make clean
+
+# compile libfftw3q
+./configure \
+    --prefix=/usr \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --infodir=/usr/info \
+    --docdir=/usr/doc/fftw-$VERSION \
+    --enable-shared \
+    --disable-static \
+    --enable-threads \
+    --enable-quad-precision \
+    --build=$ARCH-slackware-linux
+
+make
+make install-strip DESTDIR=$PKG
+make clean
+
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+
+  cmake \
+    -DCMAKE_C_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DLIB_SUFFIX="$LIBDIRSUFFIX" \
+    -DDOC_INSTALL_DIR="doc" \
+    -DMAN_INSTALL_DIR=/usr/man \
+    -DENABLE_OPENMP=ON \
+    -DENABLE_MPI=ON \
+    -DENABLE_FORTRAN=ON \
+    -DENABLE_THREADS=ON \
+    -DENABLE_FLOAT=ON \
+    -DENABLE_LONG_DOUBLE=ON \
+    -DENABLE_QUAD_PRECISION=ON \
+    -DENABLE_SSE=ON \
+    -DENABLE_SSE2=ON \
+    -DENABLE_AVX=ON \
+    -DENABLE_AVX2=ON \
+    .
+
+mkdir -p $PKG/usr/doc/$SRCNAM-$VERSION
+if [ ! -d $PKG/usr/lib${LIBDIRSUFFIX}/cmake/fftw3 ]; then
+  mkdir -p $PKG/usr/lib${LIBDIRSUFFIX}/cmake/fftw3
+fi
+for file in FFTW3*cmake ; do
+  if [ ! -r $PKG/usr/lib${LIBDIRSUFFIX}/cmake/fftw3/$file ]; then
+    echo "Copying cmake file $file:"
+    cp -a --verbose $file $PKG/usr/lib${LIBDIRSUFFIX}/cmake/fftw3
+  fi
+done
+
+( cd $PKG/usr/man
+    find . -type f -exec gzip -9 {} \+
+    for i in $(find . -type l); do \
+        ln -s $(readlink $i).gz $i.gz; \
+        rm $i; \
+    done
+)
+
+rm -f $PKG/usr/info/dir
+gzip -9 $PKG/usr/info/*.info*
+
+mv $PKG/usr/doc/$SRCNAM-$VERSION $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  AUTHORS CONVENTIONS COPY* NEWS README* TODO doc/html \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat $CWD/douninst.sh > $PKG/install/douninst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

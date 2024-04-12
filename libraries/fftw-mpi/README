@@ -1,0 +1,26 @@
+FFTW (Fastest Fourier Transform in the West) is a free collection of
+fast C routines for computing the Discrete Fourier Transform (DFT) in
+one or more dimensions. It includes complex, real, symmetric, and
+parallel transforms, and can handle arbitrary array sizes efficiently.
+FFTW is typically faster than other publicly-available FFT
+implementations, and is even competitive with vendor-tuned libraries.
+
+fftw-mpi is an extended version of the fftw package released with the
+official Slackware because includes the support to MPI-2 implementation
+given by Open MPI, not available in the Slackware distributions.
+
+Warning
+Do not update fftw with fftw-mpi of viceversa using pkgtool!
+
+fftw-mpi is an alternative to the Slackware fftw, so these packages can
+not coexist and cannot be managed with the commands of pkgtool. Make
+sure to remove the Slackware fftw package installed before build or
+install fftw-mpi. If launched, the slackbuild script looks for any
+system fftw and will stop if this does not appear installed from
+fftw-mpi slackbuild.
+Vice versa, make sure to remove fftw-mpi before install the fftw
+package released by the official Slackware repositories.
+
+After installing fftw-mpi you have also to add fftw in the blacklist of
+slackpkg because the command slackpkg install-new does not recognize
+fftw-mpi as alternative to fftw.

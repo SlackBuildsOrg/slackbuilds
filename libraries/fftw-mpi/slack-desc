@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description. Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in. You must
+# make exactly 11 lines for the formatting to be correct. It's also
+# customary to leave one space after the ':'.
+
+        |-----handy-ruler------------------------------------------------------|
+fftw-mpi: fftw-mpi (Fastest Fourier Transform in the West)
+fftw-mpi:
+fftw-mpi: FFTW is a free collection of fast C routines for computing the
+fftw-mpi: Discrete Fourier Transform in one or more dimensions. It includes
+fftw-mpi: complex, real, symmetric, and parallel transforms, and can handle
+fftw-mpi: arbitrary array sizes efficiently. 
+fftw-mpi: This package includes the support to MPI-2 implementation and is an
+fftw-mpi: alternative to the fftw package released with the official Slackware.
+fftw-mpi:
+fftw-mpi: Homepage: http://www.fftw.org/
+fftw-mpi:

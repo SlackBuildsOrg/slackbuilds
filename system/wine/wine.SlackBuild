@@ -28,7 +28,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=wine
 VERSION=${VERSION:-9.0}
-BUILD=${BUILD:-2}
+ARCHS="i386,x86_64"
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -78,6 +79,15 @@ case "$ARCH" in
   ;;
 esac
 
+MULTILIB=${MULTILIB@L}
+if [[ "$ARCH" != "x86_64" && "$MULTILIB" = "yes" ]]; then
+  echo "Cannot build for multilib on non-64bit systems."
+  exit 1
+else
+  ARCHS="x86_64"
+  WINE32="yes"
+fi
+
 set -e
 
 rm -rf $PKG
@@ -115,7 +125,7 @@ if [ "$WINE64" = "yes" ]; then
      --sysconfdir=/etc \
      --mandir=/usr/man \
      --enable-win64 \
-     --enable-archs="i386,x86_64" \
+     --enable-archs=$ARCHS \
      --with-x \
      --with-gnutls \
      --${do_opengl}-opengl \

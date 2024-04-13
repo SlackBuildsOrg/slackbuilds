@@ -152,7 +152,7 @@ if [ "$WINE64" = "yes" ]; then
     --disable-tests \
     --build=$BUILD_ARCH
   make depend
-  make -j24
+  make
   make install DESTDIR=$PKG
   cd ..
 fi
@@ -180,7 +180,7 @@ if [ "$WINE32" = "yes" ]; then
     --disable-tests \
     --build=$BUILD_ARCH
   make depend
-  make -j24
+  make
   make install DESTDIR=$PKG
   cd ..
 fi

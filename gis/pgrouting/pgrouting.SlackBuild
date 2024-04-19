@@ -28,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pgrouting
-VERSION=${VERSION:-3.6.1}
+VERSION=${VERSION:-3.6.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,10 +79,10 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Prevent cmake warnings in current
+# Prevent cmake warnings in current 
 if [ -d /usr/share/cmake-3.28 ]; then
    CMAKE_POLICY="-DCMAKE_POLICY_DEFAULT_CMP0148=OLD "
-   sed -i ./CMakeLists.txt -e "s/VERSION 3.2 FATAL_ERROR/VERSION 3.5 FATAL_ERROR/g"
+   sed -i ./CMakeLists.txt -e "s/VERSION 3.2 FATAL_ERROR/VERSION 3.5 FATAL_ERROR/g" 
 else
    CMAKE_POLICY=""
 fi
@@ -97,7 +97,7 @@ cd build
     $CMAKE_POLICY \
     -DCMAKE_BUILD_TYPE=Release ..
 
-  make all doc
+  make -j 10 all doc
   make install DESTDIR=$PKG
 cd ..
 

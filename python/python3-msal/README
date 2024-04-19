@@ -1,4 +1,4 @@
-python-msal (Microsoft Authentication Library (MSAL) for Python)
+python3-msal (Microsoft Authentication Library (MSAL) for Python)
 
 The Microsoft Authentication Library for Python enables applications
 to integrate with the Microsoft identity platform. It allows you

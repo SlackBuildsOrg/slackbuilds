@@ -28,6 +28,9 @@ PRGNAM=openvino
 VERSION=${VERSION:-2024.0.0}
 VERSION_PROTOBUF=3.21.12
 VERSION_FLATBUFFERS=24.3.25
+VERSION_ONNX=1.16.0
+COMMIT_ONEDNN=26633ae49edd4353a29b7170d9fcef6b2d79f4b3
+COMMIT_MLAS=d1bc25ec4660cddd87804fcf03b2411b5dfb2e94
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -99,12 +102,41 @@ rmdir flatbuffers
 tar vxf $CWD/flatbuffers-$VERSION_FLATBUFFERS.tar.gz
 ln -s flatbuffers-$VERSION_FLATBUFFERS flatbuffers
 )
+# onnx frontend
+(
+cd thirdparty/onnx/
+rmdir onnx
+tar vxf $CWD/onnx-$VERSION_ONNX.tar.gz
+ln -s onnx-$VERSION_ONNX onnx
+)
+# mlas for cpu inference device
+(
+cd src/plugins/intel_cpu/thirdparty
+rmdir mlas
+tar vxf $CWD/mlas-$COMMIT_MLAS.tar.gz
+ln -s mlas-$COMMIT_MLAS mlas
+)
+# oneDNN for cpu inference device
+(
+cd src/plugins/intel_cpu/thirdparty
+rmdir onednn
+tar vxf $CWD/oneDNN-$COMMIT_ONEDNN.tar.gz
+ln -s oneDNN-$COMMIT_ONEDNN onednn
+)
+
+# For convenience, read MAKEFLAGS from the environment, if set
+JOBS="$(echo "$MAKEFLAGS" | sed 's,.*-j *\([0-9][0-9]*\)*.*,\1,')"
+# or if no MAKEFLAGS, use the number of cores minus 1
+JOBS="${JOBS:-$(( $( nproc ) - 1 ))}"
+# or 1, if we really have one core
+[ "$JOBS" = "0" ] && JOBS=1
 
 mkdir -p build
 cd build
   unshare -n cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_STANDARD=17 \
     -DLIB_SUFFIX=${LIBDIRSUFFIX} \
     -DCMAKE_INSTALL_PREFIX=/usr/share/openvino \
     -DENABLE_SYSTEM_PUGIXML=ON \
@@ -116,12 +148,12 @@ cd build
     -DENABLE_JS=OFF \
     -DENABLE_SSE42=OFF \
     -DENABLE_SAMPLES=OFF \
-    -DENABLE_INTEL_CPU=OFF \
+    -DENABLE_INTEL_CPU=ON \
     -DENABLE_INTEL_GPU=OFF \
-    -DENABLE_OV_ONNX_FRONTEND=OFF \
+    -DENABLE_OV_ONNX_FRONTEND=ON \
     -Wno-dev \
     -DCMAKE_BUILD_TYPE=Release ..
-  cmake --build .
+  cmake --build . --parallel "$JOBS"
   make install/strip DESTDIR=$PKG
 cd ..
 

@@ -31,7 +31,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=0ad
 VERSION=${VERSION:-0.0.26}
 RELEASE=${RELEASE:-alpha}
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-4}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 TMP=${TMP:-/tmp/SBo}
@@ -46,9 +46,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -112,6 +109,9 @@ sed -i 's|-isystem |-I|' build/premake/premake5/{src/tools/gcc.lua,tests/tools/t
 # build/workspaces/update-workspaces.sh
 #   have a root check, let's disable it.
 patch -p1 < $CWD/disable-root-check.patch
+
+zcat $CWD/d2426312.patch | patch -p1
+cp $CWD/mozjs_virtualenv.patch libraries/source/spidermonkey
 
 build/workspaces/update-workspaces.sh \
   --without-pch \

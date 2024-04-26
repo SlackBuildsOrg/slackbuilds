@@ -1,0 +1,20 @@
+PRGNAM="openvino-plugins-ai-audacity"
+VERSION="3.5.1"
+HOMEPAGE="https://github.com/intel/openvino-plugins-ai-audacity/"
+DOWNLOAD="https://github.com/intel/openvino-plugins-ai-audacity/archive/v3.5.1-R2/openvino-plugins-ai-audacity-3.5.1.tar.gz \
+          https://github.com/audacity/audacity/releases/download/Audacity-3.4.2/audacity-sources-3.4.2.tar.gz \
+          https://huggingface.co/Intel/demucs-openvino/resolve/main/htdemucs_v4.xml \
+          https://huggingface.co/Intel/demucs-openvino/resolve/main/htdemucs_v4.bin \
+          https://huggingface.co/Intel/deepfilternet-openvino/resolve/main/deepfilternet2.zip \
+          https://huggingface.co/Intel/deepfilternet-openvino/resolve/main/deepfilternet3.zip"
+MD5SUM="3a8159867cf264afc280ab836ef848f9 \
+        f8f96e980b5a880e5be4cd066662b290 \
+        aa7fcbb6980d83683902ac48c53116be \
+        1d1fbf4673bd956b3c13879555fa0ad2 \
+        c17382730bdef35c325df210a1ff3d4b \
+        dfaca36bb422a37a299e4f328e1b6843"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="audacity whisper.cpp stablediffusion-pipelines-cpp"
+MAINTAINER="Johannes Schoepfer"
+EMAIL="slackbuilds@schoepfer.info"

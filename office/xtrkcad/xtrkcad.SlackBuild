@@ -85,7 +85,8 @@ cd build
     -DCMAKE_BUILD_TYPE=Release \
     -DXTRKCAD_USE_GETTEXT=ON \
     -DXTRKCAD_USE_GTK=ON ..
-  make
+  # Remove DBUS access from make to avoid parallel inkscape crashing
+  DBUS_SESSION_BUS_ADDRESS="" make
   make install DESTDIR=$PKG
 cd ..
 

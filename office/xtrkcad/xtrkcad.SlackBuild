@@ -76,6 +76,10 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Remove libzip.a bundled with xtrkcad to make cmake find the system version
+# Required for supporting platforms other than x86_64
+rm -rf app/tools/lib
+
 mkdir -p build
 cd build
   cmake \

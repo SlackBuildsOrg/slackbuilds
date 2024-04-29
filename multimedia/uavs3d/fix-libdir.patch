@@ -1,0 +1,16 @@
+--- CMakeLists.txt	2023-02-23 08:04:14.000000000 +0530
++++ CMakeListsn.txt	2024-04-28 14:24:52.316646470 +0530
+@@ -109,7 +109,13 @@
+ find_package(Threads REQUIRED)
+ set(prefix "${CMAKE_INSTALL_PREFIX}")
+ set(includedir "include")
++if(${CMAKE_SIZEOF_VOID_P} EQUAL 4)
+ set(libdir "lib")
++elseif(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
++set(libdir "lib64")
++else()
++message(FATAL_ERROR " Compiling for wrong architecture in Slackware GNU/Linux \n")
++endif()
+ set(pc_file "${CONFIG_DIR}/${LIBNAME}.pc")
+ 
+ set(CMAKE_INSTALL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/${includedir}")

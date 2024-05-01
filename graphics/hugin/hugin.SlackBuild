@@ -79,7 +79,7 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION
 
-patch -p0 <$CWD/boost-1.85.0-patch
+zcat $CWD/boost-1.85.0-patch | patch -p0
 
 chown -R root:root .
 find -L . \

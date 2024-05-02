@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=waybar
 SRCNAM=Waybar
-VERSION=${VERSION:-0.9.20}
+VERSION=${VERSION:-0.10.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -98,7 +98,7 @@ cd build
     -Dsystemd=disabled \
     -Ddbusmenu-gtk=auto \
     -Dmpd=auto \
-    -Dgtk-layer-shell=auto \
+    -Dcpp_std=c++20 \
     -Drfkill=auto \
     -Dsndio=disabled \
     -Dtests=disabled \

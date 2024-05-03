@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+qpdf-opt: qpdf-opt (qpdf installed to /opt)
+qpdf-opt:
+qpdf-opt: QPDF is a program and C++ library for structural, content-preserving
+qpdf-opt: transformations on PDF files.
+qpdf-opt:
+qpdf-opt: This script installs qpdf to /opt and can be installed alongside the
+qpdf-opt: stock qpdf. Its purpose is to provide an updated version of qpdf.
+qpdf-opt:
+qpdf-opt:
+qpdf-opt: Homepage: https://github.com/qpdf/qpdf
+qpdf-opt:

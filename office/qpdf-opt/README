@@ -1,0 +1,8 @@
+QPDF is a program and C++ library for structural, content-preserving
+transformations on PDF files.
+
+This script installs qpdf to /opt and can be installed alongside the
+stock qpdf. Its purpose is to provide an updated version of qpdf.
+
+The executables are added to the PATH by placing the files qpdf-opt.sh
+and qpdf-opt.csh in /etc/profile.d.

@@ -93,6 +93,9 @@ export SDL2_CONFIG="/usr/bin/sdl2-config"
 mkdir -p cargoh
 export CARGO_HOME="$TMP/$PRGNAM-$VERSION-$RELEASE/cargoh"
 
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
+
 #add patches for fmt>9.1.0 ie. 10.1.1
 sed -i 's/, header.GetType()/, static_cast<int>(header.GetType())/g' source/network/NetMessage.cpp
 sed -i 's/, arrayType/, static_cast<int>(arrayType)/g' source/simulation2/serialization/BinarySerializer.cpp
@@ -113,7 +116,8 @@ sed -i 's|-isystem |-I|' build/premake/premake5/{src/tools/gcc.lua,tests/tools/t
 #   have a root check, let's disable it.
 patch -p1 < $CWD/disable-root-check.patch
 
-build/workspaces/update-workspaces.sh \
+cp $CWD/mozjs_virtualenv.patch libraries/source/spidermonkey
+SETUPTOOLS_USE_DISTUTILS=stdlib build/workspaces/update-workspaces.sh \
   --without-pch \
   --bindir=/usr/games \
   --datadir=/usr/share/games/0ad \

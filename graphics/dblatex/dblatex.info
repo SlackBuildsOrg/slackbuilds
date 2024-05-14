@@ -5,6 +5,6 @@ DOWNLOAD="https://sourceforge.net/projects/dblatex/files/dblatex/dblatex-0.3.12/
 MD5SUM="550adafd078432ff144b57d90c647714"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-wheel python3-build"
+REQUIRES="python3-wheel python3-build texlive-extra"
 MAINTAINER="Vincent Batts"
 EMAIL="vbatts@hashbangbash.com"

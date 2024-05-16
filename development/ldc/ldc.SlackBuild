@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ldc
-SRCNAM=ldc-1.30.0-src
-VERSION=${VERSION:-1.30.0}
+SRCNAM=ldc-1.38.0-src
+VERSION=${VERSION:-1.38.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,6 +78,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+export CC=clang
+export CXX=clang++
 mkdir -p build
 cd build
   cmake -GNinja \

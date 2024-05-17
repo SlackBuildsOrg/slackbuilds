@@ -1,0 +1,11 @@
+tflint is a Terraform linter focused on linting Terraform config files.
+It can detect various errors, style issues, and security problems in
+terraform code
+
+TFLint is a framework and each feature is provided by plugins,
+the key features are as follows:
+
+* Find possible errors (like invalid instance types) for Major and some
+  minor Cloud providers.
+* Warn about deprecated syntax, unused declarations.
+* Enforce best practices, naming conventions.

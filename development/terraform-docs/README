@@ -1,0 +1,5 @@
+terraform-docs is a tool that generates documentation from Terraform
+modules in various output formats such as Markdown, JSON, and YAML.
+It automatically extracts input and output variables, provider
+requirements, and module dependencies, providing structured
+documentation for Terraform configurations.

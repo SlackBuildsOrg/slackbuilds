@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+              |-----handy-ruler------------------------------------------------------|
+terraform-docs: terraform-docs (Generate documentation for Terraform modules)
+terraform-docs:
+terraform-docs: terraform-docs is a tool that generates structured documentation
+terraform-docs: from Terraform modules in Markdown, JSON, or YAML format,
+terraform-docs: automatically extracting input and output variables, provider
+terraform-docs: requirements, and module dependencies.
+terraform-docs:
+terraform-docs:
+terraform-docs:
+terraform-docs: Website: https://github.com/terraform-docs/terraform-docs
+terraform-docs:

@@ -1,0 +1,12 @@
+tfsec is a static analysis tool for terraform code to spot potential
+misconfigurations and or security issues.
+
+Checks for misconfigurations across all major cloud providers.
+Hundreds of built-in rules.
+Scans modules (local and remote)
+Evaluates HCL expressions as well as literal values
+Evaluates Terraform functions e.g. concat()
+Evaluates relationships between Terraform resources
+Applies (and embellishes) user-defined Rego policies
+Supports multiple output formats:
+  lovely (default), JSON, SARIF, CSV, CheckStyle, JUnit, text, Gif.

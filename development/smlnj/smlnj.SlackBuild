@@ -76,6 +76,8 @@ tar xvf $CWD/config.tgz
 # Confuses install.sh
 unset SMLNJ_HOME
 
+patch $TMP/$PRGNAM/config/_arch-n-opsys < $CWD/_arch-n-opsys.patch
+
 config/install.sh
 
 mkdir -p "$PKG/usr/lib/smlnj"

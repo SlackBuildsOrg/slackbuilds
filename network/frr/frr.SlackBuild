@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=frr
-VERSION=${VERSION:-9.0.2}
+VERSION=${VERSION:-10.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -103,12 +103,11 @@ CXXFLAGS="$SLKCFLAGS" \
   --prefix=/usr \
   --sbindir=/usr/sbin \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc/frr \
-  --localstatedir=/var/lib/frr \
+  --sysconfdir=/etc/ \
+  --localstatedir=/run \
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --infodir=/usr/info \
-  --enable-exampledir=/usr/doc/$PRGNAM-$VERSION/examples \
   --enable-snmp=agentx \
   --enable-multipath=256 \
   --enable-user=frr \
@@ -123,7 +122,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-watchfrr \
   --disable-doc \
   --disable-doc-html \
-  --disable-systemd \
   --disable-static \
   --without-libpam \
   --build=$ARCH-slackware-linux

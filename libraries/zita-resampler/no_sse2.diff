@@ -1,0 +1,11 @@
+--- zita-resampler-1.11.2/source/Makefile.orig	2023-09-15 00:30:12.653563885 +0300
++++ zita-resampler-1.11.2/source/Makefile	2023-09-15 00:30:37.761564292 +0300
+@@ -31,7 +31,7 @@
+ DISTDIR = zita-resampler-$(VERSION)
+ 
+ CPPFLAGS += -I. -D_REENTRANT -D_POSIX_PTHREAD_SEMANTICS
+-CPPFLAGS += -DENABLE_SSE2
++#CPPFLAGS += -DENABLE_SSE2
+ #CPPFLAGS += -DENABLE_NEON  
+ CXXFLAGS += -Wall -fPIC -O2 -ffast-math
+ CXXFLAGS += -march=native

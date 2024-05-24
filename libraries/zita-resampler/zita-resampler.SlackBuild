@@ -6,9 +6,11 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=zita-resampler
 VERSION=${VERSION:-1.11.2}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+SSE2=${SSE2:-yes}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -64,6 +66,15 @@ sed -e '/native/d' \
       -e 's/ldconfig/& -N $(DESTDIR)\/$(LIBDIR)/' \
       -i source/Makefile
 sed -e 's|\ $(BINDIR)|\ $(DESTDIR)$(BINDIR)|' apps/Makefile
+
+# Some very old CPU's does not have SSE2.
+if [ "$ARCH" = "i586" ] && [ "$SSE2" == "no" ];then
+	cat $CWD/no_sse2.diff | patch -p1 || exit 0
+fi
+
+if [ "$ARCH" = "i586" ] && [ "$SSE2" == "yes" ];then
+	cat $CWD/msse2.diff | patch -p1 || exit 0
+fi
 
 make -C source
 ln -sv lib$PRGNAM.so.$VERSION source/lib$PRGNAM.so

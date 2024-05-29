@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Solaar
-VERSION=${VERSION:-1.1.11}
+VERSION=${VERSION:-1.1.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -68,12 +68,16 @@ find -L . \
 
 python3 setup.py install --root=$PKG
 
-mv $PKG/usr/lib $PKG/
+# 20240429 46and2: make sure to only move the udev dir to $PKG/lib/
+#   and remove $PKG/usr/lib if empty.
+mkdir $PKG/lib
+mv $PKG/usr/lib/udev $PKG/lib/
+rmdir --ignore-fail-on-non-empty $PKG/usr/lib
 sed -i 's/#MODE="0660", GROUP="plugdev"/MODE="0660", GROUP="plugdev"/g' $PKG/lib/udev/rules.d/42-logitech-unify-permissions.rules
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  COPYING COPYRIGHT ChangeLog.md README.md Release_Notes.md docs \
+  COPYRIGHT CHANGELOG.md LICENSE.txt README.md Release_Notes.md docs \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

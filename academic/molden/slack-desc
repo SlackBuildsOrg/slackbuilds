@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+   |-----handy-ruler------------------------------------------------------|
+f2c: Molden pre- and post processing of molecular and electronic structure
+f2c:
+f2c: by G.Schaftenaar, Theoretical & Computational Chemistry group
+f2c:
+f2c: Molden is a package for displaying Molecular Density from the Ab
+f2c: Initio packages GAMESS-UK, GAMESS-US, GAUSSIAN, ADF, and the Semi-
+f2c: Empirical packages Mopac/Ampac, it also supports a number of other
+f2c: programs via the Molden Format. Molden reads all the required input
+f2c: information from the GAMESS / GAUSSIAN outputfile. Molden is capable
+f2c: of displaying Molecular Orbitals, the electron density and the
+f2c: Molecular minus atomic density.

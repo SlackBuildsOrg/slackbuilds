@@ -1,5 +1,5 @@
 PRGNAM="netcat-openbsd"
-VERSION="7.4_1"
+VERSION="7.4_2"
 HOMEPAGE="https://github.com/duncan-roe/netcat-openbsd"
 DOWNLOAD="https://github.com/duncan-roe/netcat-openbsd/archive/refs/tags/7.4-2/netcat-openbsd-7.4-2.tar.gz"
 MD5SUM="5e1ac7719ee022a2d548b16f0e1b4a2c"

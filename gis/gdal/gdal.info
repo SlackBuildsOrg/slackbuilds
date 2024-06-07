@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/OSGeo/gdal/releases/download/v3.8.5/gdal-3.8.5.tar.
 MD5SUM="1e192b50698c11c8a3c5c223343cb86d"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="xerces-c libkml netcdf libspatialite podofo libgeotiff"
+REQUIRES="xerces-c libkml netcdf libspatialite podofo libgeotiff protobuf3"
 MAINTAINER="ArTourter"
 EMAIL="artourter@gmail.com"

@@ -77,12 +77,12 @@ mv "$TMP/$PRGNAM-$VERSION-linux-swt-$BINARCH" "$PKG/opt/$PRGNAM"
 
 #link to /usr
 
-ln -s "$PKG/opt/$PRGNAM/$PRGNAM.sh" "$PKG/usr/bin/$PRGNAM"
+ln -sf "/opt/$PRGNAM/$PRGNAM.sh" "$PKG/usr/bin/$PRGNAM"
 
-ln -s "$PKG/opt/$PRGNAM/share/applications/tuxguitar.desktop" \
+ln -sf "/opt/$PRGNAM/share/applications/tuxguitar.desktop" \
         "$PKG/usr/share/applications/tuxguitar.desktop"
 
-ln -s "$PKG/opt/$PRGNAM/share/pixmaps/tuxguitar.xpm" \
+ln -sf "/opt/$PRGNAM/share/pixmaps/tuxguitar.xpm" \
         "$PKG/usr/share/pixmaps/tuxguitar.xpm"
 
 find $PKG/opt/$PRGNAM/share/man -type f -exec gzip -9 {} \;

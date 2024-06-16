@@ -5,3 +5,4 @@ at buildtime if the environment is present.
 
 Optional autodetected dependencies:
 OpenBLAS || blas
+python3-numpy

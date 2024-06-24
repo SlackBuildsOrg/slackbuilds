@@ -1,0 +1,366 @@
+#!/bin/bash
+# GCC package build script (written by volkerdi@slackware.com)
+#
+# Copyright 2003-2004  Slackware Linux, Inc., Concord, California, USA
+# Copyright 2005-2018  Patrick J. Volkerding, Sebeka, MN, USA
+# Copyright 2024       Martin Bångens
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+# Modified 2011 by Eric Hameleers <alien at slackware.com> for OpenJDK.
+# Modified 2017, 2018 by Eric Hameleers <alien at slackware.com> for gcc5.
+# Modified 2024, by Martin Bångens <alien at slackware.com> for gcc13.
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=gcc13
+VERSION=${VERSION:-13.3.0}
+MAJVER=$(echo ${VERSION} |cut -d. -f1)
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$(uname -m)" in
+    i?86) ARCH=i586 ;;
+    arm*) readelf /usr/bin/file -A | \
+            egrep -q "Tag_CPU.*[4,5]" && ARCH=arm || ARCH=armv7hl ;;
+    *) ARCH=$(uname -m) ;;
+  esac
+  export ARCH
+fi
+
+if [ "$ARCH" = "x86_64" ]; then
+  if [ -f /usr/lib/libc.a ]; then
+    # If we find a 32bit C library on 64bit Slackware, assume multilib:
+    GCC_ARCHOPTS="--enable-multilib"
+    MULTILIB="YES"
+  else
+    GCC_ARCHOPTS="--disable-multilib"
+    MULTILIB="NO"
+  fi
+else
+  GCC_ARCHOPTS="--with-arch=$ARCH"
+  MULTILIB="NO"
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  if [ ${MULTILIB} = "YES" ]; then
+    echo "$PRGNAM-${VERSION}_multilib-$ARCH-$BUILD$TAG.$PKGTYPE"
+  else
+    echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  fi
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+###sbolint off
+if [ "$ARCH" = "i386" ]; then
+  SLKCFLAGS="-O2 -march=i386 -mcpu=i686"
+  SLKLDFLAGS=""
+  LIBDIRSUFFIX=""
+  LIB_ARCH=i386
+elif [ "$ARCH" = "i486" ]; then
+  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+  SLKLDFLAGS=""
+  LIBDIRSUFFIX=""
+  LIB_ARCH=i386
+###sbolint on
+elif [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  SLKLDFLAGS=""
+  LIBDIRSUFFIX=""
+  LIB_ARCH=i386
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686"
+  SLKLDFLAGS=""
+  LIBDIRSUFFIX=""
+  LIB_ARCH=i386
+elif [ "$ARCH" = "s390" ]; then
+  SLKCFLAGS="-O2"
+  SLKLDFLAGS=""
+  LIBDIRSUFFIX=""
+  LIB_ARCH=s390
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  SLKLDFLAGS="-L/usr/lib64"
+  LIBDIRSUFFIX="64"
+  LIB_ARCH=amd64
+elif [ "$ARCH" = "armv7hl" ]; then
+  SLKCFLAGS="-O3 -march=armv7-a -mfpu=vfpv3-d16"
+  SLKLDFLAGS=""
+  LIBDIRSUFFIX=""
+  LIB_ARCH=armv7hl
+else
+  SLKCFLAGS="-O2"
+  SLKLDFLAGS=""
+  LIBDIRSUFFIX=""
+  LIB_ARCH=$ARCH
+fi
+
+# What do we want to build
+LANGS=${LANGS:-'c,c++'}
+
+echo "Building these compilers: $LANGS"
+
+set -e
+
+case "$ARCH" in
+    arm*) TARGET=$ARCH-slackware-linux-gnueabi ;;
+    *)    TARGET=$ARCH-slackware-linux ;;
+esac
+
+# Clear the build locations:
+rm -fr $TMP/gcc-$VERSION $TMP/gcc.build.lnx $TMP/package-$PRGNAM
+
+# Insert package description and install script:
+mkdir -p $PKG/install
+if [ ${MULTILIB} = "YES" ]; then
+  SLDESC="  The compilers support multilib."
+else
+  SLDESC=""
+fi
+cat $CWD/slack-desc | sed -e "s/@MULTILIB@/${SLDESC}/" \
+  > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+# Unpack the gcc sources:
+cd $TMP
+tar xvf $CWD/gcc-$VERSION.tar.?z || exit 1
+
+cd gcc-$VERSION
+# Smite the fixincludes:
+sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+# Fix perms/owners
+chown -R root:root .
+find . -perm 777 -exec chmod 755 {} \+
+find . -perm 775 -exec chmod 755 {} \+
+find . -perm 754 -exec chmod 755 {} \+
+find . -perm 664 -exec chmod 644 {} \+
+
+#### docomuntation part #####
+
+if [ ${MULTILIB} = "YES" ]; then
+  PKGDOCS="$PKG/usr/doc/${PRGNAM}-${VERSION}_multilib"
+else
+  PKGDOCS="$PKG/usr/doc/${PRGNAM}-${VERSION}"
+fi
+
+mkdir -p $PKGDOCS
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOCS/$PRGNAM.SlackBuild
+cp -a \
+  COPYING* ChangeLog* \
+  LAST_UPDATED MAINTAINERS NEWS \
+  README* \
+  $PKGDOCS
+
+# We will keep part of these, but they are really big...
+if [ -r ChangeLog ]; then
+  cat ChangeLog | head -n 1000 > $PKGDOCS/ChangeLog
+  touch -r ChangeLog $PKGDOCS/ChangeLog
+fi
+if [ -r NEWS ]; then
+  cat NEWS | head -n 1000 > $PKGDOCS/NEWS
+  touch -r NEWS $PKGDOCS/NEWS
+fi
+
+mkdir -p $PKGDOCS/gcc
+cd $TMP/gcc-$VERSION/gcc
+cp -a \
+  ABOUT* COPYING* DATESTAMP LANG* ONEWS README* \
+  $PKGDOCS/gcc
+
+mkdir -p $PKGDOCS/libffi
+cd $TMP/gcc-$VERSION/libffi
+  cp -a \
+  ChangeLog.libgcj ChangeLog.v1 \
+  LICENSE* README* \
+$PKGDOCS/libffi
+
+if [ -r ChangeLog ]; then
+  cat ChangeLog | head -n 1000 > $PKGDOCS/libffi/ChangeLog
+  touch -r ChangeLog $PKGDOCS/libffi/ChangeLog
+fi
+
+mkdir -p $PKGDOCS/libgomp
+cd $TMP/gcc-$VERSION/libgomp
+if [ -r ChangeLog ]; then
+  cat ChangeLog | head -n 1000 > $PKGDOCS/libgomp/ChangeLog
+  touch -r ChangeLog $PKGDOCS/libgomp/ChangeLog
+fi
+  
+mkdir -p $PKGDOCS/libstdc++-v3
+cd $TMP/gcc-${VERSION}/libstdc++-v3
+cp -a \
+  README* \
+  doc/html/faq.html \
+  $PKGDOCS/libstdc++-v3
+if [ -r ChangeLog ]; then
+  cat ChangeLog | head -n 1000 > $PKGDOCS/libstdc++-v3/ChangeLog
+  touch -r ChangeLog $PKGDOCS/libstdc++-v3/ChangeLog
+fi
+
+# build gcc
+mkdir $TMP/gcc.build.lnx;
+cd $TMP/gcc.build.lnx;
+
+LDFLAGS="$SLKLDFLAGS" \
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  ../gcc-$VERSION/configure \
+  --prefix=/usr \
+  --libdir=/usr/lib$LIBDIRSUFFIX \
+  --mandir=/usr/man \
+  --infodir=/usr/info \
+  --enable-shared \
+  --enable-bootstrap \
+  --enable-languages=${LANGS} \
+  --enable-threads=posix \
+  --enable-checking=release \
+  --enable-objc-gc \
+  --with-system-zlib \
+  --enable-libstdcxx-dual-abi \
+  --with-default-libstdcxx-abi=new \
+  --disable-libstdcxx-pch \
+  --disable-libunwind-exceptions \
+  --enable-__cxa_atexit \
+  --enable-libssp \
+  --enable-gnu-unique-object \
+  --enable-plugin \
+  --enable-lto \
+  --disable-install-libiberty \
+  --disable-werror \
+  --with-gnu-ld \
+  --with-isl \
+  --verbose \
+  --with-arch-directory=$LIB_ARCH \
+  --program-suffix=-${MAJVER} \
+  --enable-version-specific-runtime-libs \
+  $GCC_ARCHOPTS \
+  --target=${TARGET} \
+  --build=${TARGET} \
+  --host=${TARGET}
+
+# Start the build:
+
+# Include all debugging info (for now):
+make -j$(nproc) bootstrap
+make -j$(nproc) info
+make -j$(nproc) install DESTDIR=$PKG
+
+# Be sure the "specs" file is installed.
+if [ ! -r $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/specs ]; then
+  cat stage1-gcc/specs > $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/specs
+fi
+
+if [ ${MULTILIB} = "NO" ]; then
+  # Make our 64bit gcc look for 32bit gcc binaries in ./32 subdirectory:
+  # (only needed if gcc was compiled with disable-multilib)
+  if [ "$ARCH" = "x86_64" ]; then
+    sed -i 's#;.\(:../lib !m64 m32;\)$#;32\1#' \
+      $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/specs
+  fi
+fi
+
+make -i install-info DESTDIR=$PKG
+
+# Move potentially conflicting stuff to version specific subdirectory:
+if [ -d $PKG/usr/lib${LIBDIRSUFFIX} ]; then
+  mv $PKG/usr/lib${LIBDIRSUFFIX}/lib* $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/
+fi
+if [ -d $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/lib${LIBDIRSUFFIX}/ ]; then
+  mv $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/lib${LIBDIRSUFFIX}/lib* \
+    $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/
+  rmdir $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/lib${LIBDIRSUFFIX}
+fi
+
+chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/libgcc_s.so.1
+ 
+if [ ${MULTILIB} = "YES" ]; then
+  if [ -d $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/lib ]; then
+    mv $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/lib/lib* \
+      $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/32/
+    rmdir $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/lib
+  fi
+  chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/32/libgcc_s.so.1
+fi
+
+# Rename and compress the info pages
+INFO_DIR=$PKG/usr/info
+if [ -d $INFO_DIR ]; then
+  cd $INFO_DIR
+  rm -f dir
+  for eachinfo in *.info*; do
+    mv $eachinfo $(basename $eachinfo .info)-${MAJVER}.info
+  done
+  gzip -9 *.info*
+fi
+
+cd $PKG/usr/bin
+ln -sf g++-${MAJVER} c++-${MAJVER}
+ln -sf gcc-${MAJVER} cc-${MAJVER}
+cat $CWD/c89.sh > c89-${MAJVER}
+cat $CWD/c99.sh > c99-${MAJVER}
+chmod 755 c89-${MAJVER} c99-${MAJVER}
+
+cd $PKG/usr/man
+rm -fr $PKG/usr/man/man7  # Part of the core system gcc package
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+cd man1
+ln -sf g++-${MAJVER}.1.gz c++-${MAJVER}.1.gz
+ln -sf gcc-${MAJVER}.1.gz cc-${MAJVER}.1.gz
+
+# Add profile scripts (non-executable by default) to make it easier
+# to set the environment for compiling with gcc13:
+mkdir -p $PKG/etc/profile.d
+cat $CWD/profile.d/gcc13.sh > $PKG/etc/profile.d/gcc13.sh
+cat $CWD/profile.d/gcc13.csh > $PKG/etc/profile.d/gcc13.csh
+chmod 644  $PKG/etc/profile.d/*
+
+# Filter all .la files (thanks much to Mark Post for the sed script):
+cd $PKG
+for file in $(find . -type f -name "*.la") ; do
+  cat $file | sed -e 's%-L'${TMP}'[[:graph:]]* % %g' > $TMP/tmp-la-file
+  cat $TMP/tmp-la-file > $file
+done
+rm $TMP/tmp-la-file
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# Remove localizations overlapping with Slackware's gcc
+rm -rf $PKG/usr/share/locale
+
+rmdir $PKG/usr/include
+
+if [ ${MULTILIB} = "YES" ]; then
+  PKGVER="${VERSION}_multilib"
+else
+  PKGVER="${VERSION}"
+fi
+
+cd $PKG
+/sbin/makepkg -l y -c n "$OUTPUT/${PRGNAM}-${PKGVER}-$ARCH-$BUILD$TAG.$PKGTYPE"

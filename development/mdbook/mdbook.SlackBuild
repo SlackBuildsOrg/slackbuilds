@@ -88,17 +88,16 @@ cd $SRCNAM-$VERSION
 # build offline
 # configuration tells cargo to use the configured directory
 # for dependencies intead of downloading from crates.io
-mkdir .cargo
+mkdir vendor .cargo
 cat <<EOF >> .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
+  [source.crates-io]
+  replace-with = "vendored-sources"
 
-[source.vendored-sources]
-directory = "vendor"
+  [source.vendored-sources]
+  directory = "vendor"
 EOF
 
 # deps and versions come from Cargo.lock
-mkdir vendor
 (
   cd vendor
 
@@ -131,8 +130,10 @@ mkdir vendor
 
       printf "}\n"
     } > $dep-$ver/.cargo-checksum.json
-  done
+  done 
 )
+
+mkdir -p $PKG/usr/bin
 
 chown -R root:root .
 find -L . \
@@ -141,10 +142,20 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-cargo build --frozen --offline --release $CARGOTARGET
+CARGO_HOME=.cargo \
+PATH="/opt/rust16/bin:$PATH" \
+LD_LIBRARY_PATH="/opt/rust16/lib$LIBDIRSUFFIX" \
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+cargo build --offline --release $CARGOTARGET
+PATH="/opt/rust16/bin:$PATH" \
+LD_LIBRARY_PATH="/opt/rust16/lib$LIBDIRSUFFIX" \
+cargo install --offline --no-track --root "${PKG}/usr" --path="."
 
-mkdir -p $PKG/usr/bin
-find target -name $PRGNAM -exec install -s -m 755 {} $PKG/usr/bin/$PRGNAM \;
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a *.md LICENSE $PKG/usr/doc/$PRGNAM-$VERSION/

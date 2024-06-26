@@ -1,6 +1,6 @@
 PRGNAM="ipython"
 VERSION="8.18.1"
-HOMEPAGE="http://ipython.org"
+HOMEPAGE="https://ipython.org/"
 DOWNLOAD="https://files.pythonhosted.org/packages/source/i/ipython/ipython-8.18.1.tar.gz"
 MD5SUM="b56b71635168357dc94ac384b0a78f0c"
 DOWNLOAD_x86_64=""

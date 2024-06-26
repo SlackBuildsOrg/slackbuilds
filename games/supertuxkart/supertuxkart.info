@@ -1,6 +1,6 @@
 PRGNAM="supertuxkart"
 VERSION="1.4"
-HOMEPAGE="http://supertuxkart.sourceforge.net/"
+HOMEPAGE="https://supertuxkart.net/Main_Page"
 DOWNLOAD="http://sourceforge.net/projects/supertuxkart/files/SuperTuxKart/1.4/SuperTuxKart-1.4-src.tar.xz"
 MD5SUM="c87a67ea6d5b52d464fe3d112db20263"
 DOWNLOAD_x86_64=""

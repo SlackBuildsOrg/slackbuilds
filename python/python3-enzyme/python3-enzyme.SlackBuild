@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-enzyme
-VERSION=${VERSION:-0.5.1}
+VERSION=${VERSION:-0.5.2}
 SRCNAM=${SRCNAM:-enzyme}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

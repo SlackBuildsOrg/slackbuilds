@@ -1,6 +1,6 @@
 PRGNAM="onevpl"
 VERSION="2.10.2"
-HOMEPAGE="https://www.intel.com/content/www/us/en/developer/tools/oneapi/onevpl.html"
+HOMEPAGE="https://www.intel.com/content/www/us/en/developer/tools/vpl/overview.html"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://github.com/oneapi-src/oneVPL/archive/refs/tags/v2.10.2/libvpl-2.10.2.tar.gz"

@@ -1,6 +1,6 @@
 PRGNAM="gbrainy"
 VERSION="2.4.6"
-HOMEPAGE="http://live.gnome.org/gbrainy"
+HOMEPAGE="https://wiki.gnome.org/action/show/Apps/gbrainy"
 DOWNLOAD="http://gent.softcatala.org/jmas/gbrainy/gbrainy-2.4.6.tar.gz"
 MD5SUM="db8bbc91708e892752fc7a0caf588b46"
 DOWNLOAD_x86_64=""

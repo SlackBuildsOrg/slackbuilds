@@ -1,6 +1,6 @@
 PRGNAM="pymediainfo"
 VERSION="6.1.0"
-HOMEPAGE="https://pypi.python.org/pypi/pymediainfo/"
+HOMEPAGE="https://pymediainfo.readthedocs.org/"
 DOWNLOAD="https://github.com/sbraz/pymediainfo/archive/refs/tags/v6.1.0/pymediainfo-6.1.0.tar.gz"
 MD5SUM="c920fb5c7d52728f4510b69cf3253c9d"
 DOWNLOAD_x86_64=""

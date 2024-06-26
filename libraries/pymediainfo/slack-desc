@@ -10,7 +10,7 @@ pymediainfo: pymediainfo (A Python wrapper for the mediainfo command line tool)
 pymediainfo:
 pymediainfo: A Python wrapper for the mediainfo command line tool
 pymediainfo:
-pymediainfo: Homepage: https://pypi.python.org/pypi/pymediainfo
+pymediainfo: Homepage: https://pymediainfo.readthedocs.org/
 pymediainfo:
 pymediainfo:
 pymediainfo:

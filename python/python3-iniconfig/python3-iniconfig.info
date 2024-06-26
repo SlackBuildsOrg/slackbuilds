@@ -1,6 +1,6 @@
 PRGNAM="python3-iniconfig"
 VERSION="2.0.0"
-HOMEPAGE="https://github.com/RonnyPfannschmidt/iniconfig"
+HOMEPAGE="https://github.com/pytest-dev/iniconfig"
 DOWNLOAD="https://files.pythonhosted.org/packages/source/i/iniconfig/iniconfig-2.0.0.tar.gz"
 MD5SUM="3c030b3f51dcc3aca585de05635600e4"
 DOWNLOAD_x86_64=""

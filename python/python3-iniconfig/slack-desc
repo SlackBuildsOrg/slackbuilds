@@ -10,7 +10,7 @@ python3-iniconfig: python3-iniconfig (ini file parsing)
 python3-iniconfig:
 python3-iniconfig: iniconfig is a small and simple INI-file parser module.
 python3-iniconfig:
-python3-iniconfig:
+python3-iniconfig: HOMEPAGE: https://github.com/pytest-dev/iniconfig
 python3-iniconfig:
 python3-iniconfig:
 python3-iniconfig:

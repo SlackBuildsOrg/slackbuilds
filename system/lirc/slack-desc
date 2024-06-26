@@ -11,7 +11,7 @@ lirc:
 lirc: LIRC is a package that allows you to decode and send infra-red
 lirc: signals of many (but not all) commonly used remote controls.
 lirc:
-lirc: Homepage: http://www.lirc.org
+lirc: Homepage: https://www.lirc.org
 lirc:
 lirc:
 lirc:

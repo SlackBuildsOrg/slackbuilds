@@ -1,6 +1,6 @@
 PRGNAM="blender"
 VERSION="4.1.1"
-HOMEPAGE="http://blender.org"
+HOMEPAGE="https://www.blender.org/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://ftp.nluug.nl/pub/graphics/blender/release/Blender4.1/blender-4.1.1-linux-x64.tar.xz"

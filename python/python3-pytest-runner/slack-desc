@@ -11,7 +11,7 @@ python3-pytest-runner:
 python3-pytest-runner: Setup scripts can use pytest-runner to add setup.py test support for
 python3-pytest-runner: pytest runner.
 python3-pytest-runner:
-python3-pytest-runner: https://pypi.python.org/pypi/pytest-runner
+python3-pytest-runner: https://pypi.org/project/pytest-runner/
 python3-pytest-runner:
 python3-pytest-runner:
 python3-pytest-runner:

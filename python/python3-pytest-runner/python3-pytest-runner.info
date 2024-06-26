@@ -1,6 +1,6 @@
 PRGNAM="python3-pytest-runner"
 VERSION="6.0.1"
-HOMEPAGE="https://pypi.python.org/pypi/pytest-runner"
+HOMEPAGE="https://pypi.org/project/pytest-runner/"
 DOWNLOAD="https://pypi.python.org/packages/source/p/pytest-runner/pytest-runner-6.0.1.tar.gz"
 MD5SUM="bd11f67561d7c4db8cf7e96b13ab469f"
 DOWNLOAD_x86_64=""

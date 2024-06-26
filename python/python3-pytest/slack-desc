@@ -11,7 +11,7 @@ python3-pytest:
 python3-pytest: A mature full-featured Python testing tool.
 python3-pytest: Helps you write better programs
 python3-pytest:
-python3-pytest: Homepage: http://pytest.org
+python3-pytest: Homepage: https://docs.pytest.org/
 python3-pytest:
 python3-pytest: This is installed with python3 and will coexist with pytest.
 python3-pytest:

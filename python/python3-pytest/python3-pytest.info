@@ -1,6 +1,6 @@
 PRGNAM="python3-pytest"
 VERSION="8.2.2"
-HOMEPAGE="http://pytest.org"
+HOMEPAGE="https://docs.pytest.org/"
 DOWNLOAD="https://files.pythonhosted.org/packages/source/p/pytest/pytest-8.2.2.tar.gz"
 MD5SUM="dec12d9b6f5e2bd7d22aadc500d0ae89"
 DOWNLOAD_x86_64=""

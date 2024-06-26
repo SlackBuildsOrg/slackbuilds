@@ -15,5 +15,5 @@ python3-scipy: popular operating systems, are quick to install, and are free of
 python3-scipy: charge. NumPy and SciPy are easy to use, but powerful enough to be
 python3-scipy: depended upon by some of the world's leading scientists and engineers.
 python3-scipy:
-python3-scipy: https://www.scipy.org/
+python3-scipy: HOMEPAGE: https://scipy.org/
 python3-scipy:

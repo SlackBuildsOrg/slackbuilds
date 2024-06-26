@@ -14,6 +14,6 @@ python3-tornado: Tornado can scale to tens of thousands of open connections, mak
 python3-tornado: ideal for long polling, WebSockets, and other applications that
 python3-tornado: require a long-lived connection to each user.
 python3-tornado:
-python3-tornado: Homepage: http://www.tornadoweb.org
+python3-tornado: Homepage: https://www.tornadoweb.org/
 python3-tornado:
 python3-tornado:

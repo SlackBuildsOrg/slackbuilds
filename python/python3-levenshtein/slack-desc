@@ -11,7 +11,7 @@ python3-levenshtein:
 python3-levenshtein: The Levenshtein Python C extension module contains functions for
 python3-levenshtein: fast computation of Levenshtein distance and string similarity.
 python3-levenshtein:
-python3-levenshtein: HOMEPAGE: https://rapidfuzz.github.io/Levenshtein
+python3-levenshtein: HOMEPAGE: https://rapidfuzz.github.io/Levenshtein/
 python3-levenshtein:
 python3-levenshtein:
 python3-levenshtein:

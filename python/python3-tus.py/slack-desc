@@ -10,7 +10,7 @@ python3-tus.py: python3-tus.py (tus (resumable file upload protocol) client in p
 python3-tus.py:
 python3-tus.py: tus (resumable file upload protocol) client
 python3-tus.py:
-python3-tus.py: HOMEPAGE: https://github.com/cenk/tus.py
+python3-tus.py: HOMEPAGE: https://github.com/cenkalti/tus.py
 python3-tus.py:
 python3-tus.py:
 python3-tus.py:

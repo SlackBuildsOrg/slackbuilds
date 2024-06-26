@@ -25,7 +25,7 @@
 cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=limine
-VERSION=${VERSION:-7.0.2}
+VERSION=${VERSION:-7.7.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -97,7 +97,7 @@ cat "$SRC/CONFIG.md"     > "$PKG/usr/doc/$NAMVER/CONFIG.md"
 cat "$SRC/COPYING"       > "$PKG/usr/share/$NAMVER/LICENSE"
 cat "$SRC/PHILOSOPHY.md" > "$PKG/usr/share/$NAMVER/PHILOSOPHY.md"
 cat "$SRC/PROTOCOL.md"   > "$PKG/usr/share/$NAMVER/PROTOCOL.md"
-cat "$SRC/README.md"     > "$PKG/usr/doc/$NAMVER/repository-README.md"
+cat "$SRC/ChangeLog"     > "$PKG/usr/share/$NAMVER/ChangeLog"
 
 cd "$PKG"
 /sbin/makepkg -l y -c n "$OUTPUT/$NAMVER-$ARCH-$BUILD$TAG.$PKGTYPE"

@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rpy2
-VERSION=${VERSION:-3.5.15}
+VERSION=${VERSION:-3.5.16}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -100,7 +100,8 @@ echo "LD_LIBRARY_PATH set to ${LD_LIBRARY_PATH}"
 
 # replace deprecated `python3 setup.py build install --root=$PKG`
 # thanks to fourtysixandtwo
-export PYTHONPATH=/opt/python3.9/site-packages/
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages/
 
 python3 -m build --no-isolation
 python3 -m installer -d "$PKG" dist/*.whl

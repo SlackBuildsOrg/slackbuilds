@@ -27,8 +27,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=kbfs
 SRCNAM=keybase
-VERSION=${VERSION:-6.2.4_20240101011938}
-COMMITVER=ae7e4a1c15
+VERSION=${VERSION:-6.2.8_20240306193933}
+COMMITVER=e38523abbe
 SRCVER=$(echo $VERSION | tr _ - )
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -49,7 +49,7 @@ fi
 
 if [ "${ARCH}" = "i586" ]
 then
-  VERSION="6.0.2-20220610191041"
+  VERSION="6.0.2_20220610191041"
   COMMITVER=a459abf326
   SRCVER=$(echo $VERSION | tr _ - )
 fi

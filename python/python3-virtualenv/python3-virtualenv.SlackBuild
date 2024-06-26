@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-virtualenv
 SRCNAM=virtualenv
-VERSION=${VERSION:-20.25.1}
+VERSION=${VERSION:-20.26.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -49,18 +49,6 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" ]; then
-  LIBDIRSUFFIX="64"
-elif [ "$ARCH" = "aarch64" ]; then
-  LIBDIRSUFFIX="64"
-else
-  LIBDIRSUFFIX=""
-fi
-
 set -eu
 
 rm -rf $PKG
@@ -76,16 +64,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Fix version detection
 export SETUPTOOLS_SCM_PRETEND_VERSION=$VERSION
+
+# Use newer python packages in /opt/
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
 python3 -m build --wheel --no-isolation
 python3 -m installer --destdir "$PKG" dist/*.whl
-
-# Fix version importing when using setuptools_scm<7
-# Thanks to dofuuz
-# https://github.com/dofuuz/python-soxr/issues/21
-sed -i 's/version =/__version__ = &/' $PKG/usr/lib$LIBDIRSUFFIX/python3.9/site-packages/$SRCNAM/version.py
-sed -i 's/version_tuple/__&__ = &/' $PKG/usr/lib$LIBDIRSUFFIX/python3.9/site-packages/$SRCNAM/version.py
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION

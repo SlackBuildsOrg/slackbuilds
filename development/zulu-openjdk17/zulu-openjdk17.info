@@ -1,14 +1,14 @@
 PRGNAM="zulu-openjdk17"
-VERSION="17.0.9"
+VERSION="17.0.11"
 HOMEPAGE="https://www.azul.com/downloads/"
-DOWNLOAD="https://cdn.azul.com/zulu-embedded/bin/zulu17.46.19-ca-jdk17.0.9-linux_aarch32hf.tar.gz \
-          https://cdn.azul.com/zulu/bin/zulu17.46.19-ca-jdk17.0.9-linux_i686.tar.gz"
-MD5SUM="411a5ad1485f9a3871c98f2e38771e4f \
-        14eaee33c69188deb08d57435ab10e40"
-DOWNLOAD_x86_64="https://cdn.azul.com/zulu/bin/zulu17.46.19-ca-jdk17.0.9-linux_x64.tar.gz \
-                 https://cdn.azul.com/zulu/bin/zulu17.46.19-ca-jdk17.0.9-linux_aarch64.tar.gz"
-MD5SUM_x86_64="c7f82825e5bad4adcbb86aa974f5306f \
-               4e35a0c4c0bb16cd6d7d149765818f15"
+DOWNLOAD="https://cdn.azul.com/zulu-embedded/bin/zulu17.50.19-ca-jdk17.0.11-c2-linux_aarch32hf.tar.gz \
+          https://cdn.azul.com/zulu/bin/zulu17.50.19-ca-jdk17.0.11-linux_i686.tar.gz"
+MD5SUM="33834000861b9b7d35d444013f6f4b49 \
+        8c5595b5cfc4d536233782d3ae0ae5a6"
+DOWNLOAD_x86_64="https://cdn.azul.com/zulu/bin/zulu17.50.19-ca-jdk17.0.11-linux_x64.tar.gz \
+                 https://cdn.azul.com/zulu/bin/zulu17.50.19-ca-jdk17.0.11-linux_aarch64.tar.gz"
+MD5SUM_x86_64="6497ded4396d535611ec401d785d440e \
+               1d5a9cd2a7831ed7311194722b431269"
 REQUIRES=""
 MAINTAINER="Andrew Clemons"
 EMAIL="andrew.clemons@gmail.com"

@@ -1,14 +1,14 @@
 PRGNAM="zulu-openjdk11"
-VERSION="11.0.21"
+VERSION="11.0.23"
 HOMEPAGE="https://www.azul.com/downloads/"
-DOWNLOAD="https://cdn.azul.com/zulu-embedded/bin/zulu11.68.17-ca-jdk11.0.21-linux_aarch32hf.tar.gz \
-          https://cdn.azul.com/zulu/bin/zulu11.68.17-ca-jdk11.0.21-linux_i686.tar.gz"
-MD5SUM="a0ed388151169dd23834fc4844ea4f14 \
-        a2f2744f353b00fe9092fabc1d93a2bd"
-DOWNLOAD_x86_64="https://cdn.azul.com/zulu/bin/zulu11.68.17-ca-jdk11.0.21-linux_x64.tar.gz \
-                 https://cdn.azul.com/zulu/bin/zulu11.68.17-ca-jdk11.0.21-linux_aarch64.tar.gz"
-MD5SUM_x86_64="3990d497e78307feb15e7116e29de276 \
-               d95970b69ef6d74fcc851b1eb4d59a82"
+DOWNLOAD="https://cdn.azul.com/zulu-embedded/bin/zulu11.72.19-ca-jdk11.0.23-linux_aarch32hf.tar.gz \
+          https://cdn.azul.com/zulu/bin/zulu11.72.19-ca-jdk11.0.23-linux_i686.tar.gz"
+MD5SUM="8988df911432ea252228794eed260e72 \
+        925213d21f8cfc238ff35e312826f810"
+DOWNLOAD_x86_64="https://cdn.azul.com/zulu/bin/zulu11.72.19-ca-jdk11.0.23-linux_x64.tar.gz \
+                 https://cdn.azul.com/zulu/bin/zulu11.72.19-ca-jdk11.0.23-linux_aarch64.tar.gz"
+MD5SUM_x86_64="d8983bdc4fb7bd394e6dd73618e9c288 \
+               c6db59e3068d00a2711fe893277d5cb4"
 REQUIRES=""
 MAINTAINER="Andrew Clemons"
 EMAIL="andrew.clemons@gmail.com"

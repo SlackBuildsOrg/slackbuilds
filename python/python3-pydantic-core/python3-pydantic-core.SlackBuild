@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-pydantic-core
 SRCNAM=pydantic_core
-VERSION=${VERSION:-2.16.3}
+VERSION=${VERSION:-2.19.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -102,7 +102,8 @@ else
   export LD_LIBRARY_PATH="/opt/rust16/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
 fi
 
-export PYTHONPATH=/opt/python3.9/site-packages/
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages/
 
 python3 -m build --no-isolation
 python3 -m installer -d "$PKG" dist/*.whl

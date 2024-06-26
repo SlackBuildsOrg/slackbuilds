@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=locust
-VERSION=${VERSION:-2.24.0}
+VERSION=${VERSION:-2.29.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,7 +78,8 @@ find -L . \
 
 # Since dependency python3-pyzmq uses a newer version of setuptools via
 # python3-setuptools-opt, we need to adjust PYTHONPATH to use it here too.
-export PYTHONPATH=/opt/python3.9/site-packages/
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages/
 
 python3 -m build --wheel --no-isolation
 
@@ -88,7 +89,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a README LICENSE PKG-INFO $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE PKG-INFO $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

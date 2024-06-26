@@ -1,0 +1,7 @@
+Deep neural networks built on a tape-based autograd system.
+
+CUDA(nvidia GPU) support is untested, but might be picked up
+at buildtime if the environment is present.
+
+Optional autodetected dependencies:
+OpenBLAS || blas

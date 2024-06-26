@@ -1,10 +1,10 @@
 PRGNAM="cargo-vendor-filterer"
-VERSION="0.5.12"
+VERSION="0.5.14"
 HOMEPAGE="https://github.com/coreos/cargo-vendor-filterer"
-DOWNLOAD="https://github.com/coreos/cargo-vendor-filterer/archive/v0.5.12/cargo-vendor-filterer-0.5.12.tar.gz \
-          https://slackware.uk/~fourtysixandtwo/src/cargo-vendor-filterer-vendored-sources-0.5.12-2.tar.xz"
-MD5SUM="c0add10b6eea99e1d97b77554e558c3b \
-        47bde15ffe20ce449d7b595b89f920d7"
+DOWNLOAD="https://github.com/coreos/cargo-vendor-filterer/archive/v0.5.14/cargo-vendor-filterer-0.5.14.tar.gz \
+          https://slackware.uk/~fourtysixandtwo/src/cargo-vendor-filterer-vendored-sources-0.5.14-1.tar.xz"
+MD5SUM="f5b9df9adc3c9d05c5ad62529fe354f7 \
+        ca7986322b63d02809d7acb48fca3f2c"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="rust16"

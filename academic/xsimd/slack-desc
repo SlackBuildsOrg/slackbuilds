@@ -14,6 +14,6 @@ xsimd: the same arithmetic operators as for single values. It also provides
 xsimd: accelerated implementation of common mathematical functions operating
 xsimd: on batches.
 xsimd:
-xsimd:
+xsimd: HOMEPAGE: https://github.com/xtensor-stack/xsimd
 xsimd:
 xsimd:

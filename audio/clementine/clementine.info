@@ -1,6 +1,6 @@
 PRGNAM="clementine"
 VERSION="1.4.0rc2"
-HOMEPAGE="http://www.clementine-player.org"
+HOMEPAGE="https://www.clementine-player.org"
 DOWNLOAD="https://github.com/clementine-player/Clementine/archive/refs/tags/1.4.0rc2/Clementine-1.4.0rc2.tar.gz"
 MD5SUM="9a13e3e5e200d3b2f5db35adecef274b"
 DOWNLOAD_x86_64=""

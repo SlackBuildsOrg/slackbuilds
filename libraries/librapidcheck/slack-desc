@@ -8,12 +8,12 @@
              |-----handy-ruler------------------------------------------------------|
 librapidcheck: librapidcheck (QuickCheck clone for C++)
 librapidcheck:
-librapidcheck: RapidCheck is a C++ framework for property based testing inspired
-librapidcheck: by QuickCheck. In this testing, you define properties your code
-librapidcheck: should always satisfy given certain conditions. RapidCheck
-librapidcheck: generates random test data to find cases where the property fails.
-librapidcheck: If it finds a failure, it minimizes the input to the smallest
-librapidcheck: failing case and displays it as a counterexample.
+librapidcheck: RapidCheck is a C++ framework for property based testing inspired by
+librapidcheck: QuickCheck. In this testing, you define properties your code should
+librapidcheck: always satisfy given certain conditions. RapidCheck generates random
+librapidcheck: test data to find cases where the property fails.
+librapidcheck: If it finds a failure, it minimizes the input to the smallest failing
+librapidcheck: case and displays it as a counterexample.
 librapidcheck:
 librapidcheck: Homepage: https://github.com/emil-e/rapidcheck
 librapidcheck:

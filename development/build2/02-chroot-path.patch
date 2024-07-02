@@ -1,0 +1,32 @@
+--- build.sh	2024-06-18 13:42:24.000000000 +0200
++++ build.sh.new	2024-07-01 16:39:54.468952606 +0200
+@@ -613,7 +613,8 @@
+ config.cc.loptions="${link_ops# }" \
+ config.bin.lib=shared \
+ config.bin.rpath="$conf_rpath" \
+-config.install.root="$idir" \
++config.install.root="/usr" \
++config.install.chroot="$idir" \
+ config.install.sudo="$conf_sudo" \
+ $conf_exe_affixes \
+ $private \
+@@ -676,7 +677,8 @@
+ config.bin.lib=shared \
+ config.bin.suffix="$stage_suffix" \
+ config.bin.rpath="$conf_rpath_stage" \
+-config.install.root="$idir" \
++config.install.root="/usr" \
++config.install.chroot="$idir" \
+ config.install.data_root=root/stage \
+ config.install.sudo="$conf_sudo"
+ 
+@@ -703,7 +705,8 @@
+ config.cc.loptions="${link_ops# }" \
+ config.bin.lib=shared \
+ config.bin.rpath="$conf_rpath" \
+-config.install.root="$idir" \
++config.install.root="/usr" \
++config.install.chroot="$idir" \
+ config.install.sudo="$conf_sudo" \
+ $conf_exe_affixes \
+ $private

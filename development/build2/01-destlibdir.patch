@@ -1,42 +1,23 @@
---- build.sh	2022-10-10 12:08:46.456483133 +0200
-+++ build.sh.new	2022-10-10 12:08:01.796222720 +0200
-@@ -512,12 +512,12 @@
-     ;;
-   *)
+--- build.sh	2024-06-18 13:42:24.000000000 +0200
++++ build.sh.new	2024-07-01 16:56:24.473977153 +0200
+@@ -523,10 +523,10 @@
      if test -n "$private"; then
--      conf_rpath="$idir/lib/build2"
-+      conf_rpath="$idir/lib64/build2"
+       conf_rpath="$idir/lib/build2"
      else
 -      conf_rpath="$idir/lib"
 +      conf_rpath="$idir/lib64"
      fi
  
 -    conf_rpath_stage="$idir/lib"
-+    conf_rpath_stage="$idir/lib64"
++    conf_rpath_stage="/usr/lib64"
  
      if test -n "$sudo"; then
        conf_sudo="$sudo"
-@@ -602,6 +602,7 @@
- config.bin.rpath="$conf_rpath" \
- config.install.root="$idir" \
- config.install.sudo="$conf_sudo" \
-+config.install.lib="$conf_rpath" \
- $conf_exe_affixes \
- $private \
- $system_imports
-@@ -666,6 +667,7 @@
- config.install.root="$idir" \
- config.install.data_root=root/stage \
- config.install.sudo="$conf_sudo" \
-+config.install.lib="$conf_rpath" \
- $system_imports
+@@ -607,6 +607,7 @@
+ if test "$local" = true; then
  
- run build2/build2/b-boot $verbose $jobs install: build2/ bpkg/
-@@ -692,6 +694,7 @@
- config.bin.rpath="$conf_rpath" \
- config.install.root="$idir" \
- config.install.sudo="$conf_sudo" \
-+config.install.lib="$conf_rpath" \
- $conf_exe_affixes \
- $private
- 
+   run build2/build2/b-boot $verbose configure \
++config.install.lib="/usr/lib64" \
+ config.config.hermetic=true \
+ config.cxx="$cxx" \
+ config.cc.coptions="${compile_ops# }" \

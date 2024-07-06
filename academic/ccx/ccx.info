@@ -1,0 +1,18 @@
+PRGNAM="ccx"
+VERSION="2.21"
+HOMEPAGE="http://www.dhondt.de/"
+DOWNLOAD="http://www.dhondt.de/ccx_2.21.src.tar.bz2 \
+          http://www.dhondt.de/ccx_2.21.test.tar.bz2 \
+          http://www.dhondt.de/ccx_2.21.pdf \
+          https://github.com/ccx-third-party/sbo/releases/download/15.0/ccx-arpack.tgz \
+          https://github.com/ccx-third-party/sbo/releases/download/15.0/ccx-spooles.tgz"
+MD5SUM="44b1b11a7101ee8b4dbb83a4ddffe60f \
+        d2086cd316b1ca3708d96382c8fffc72 \
+        69988b09c193de4a371d3a1a96c6c6d5 \
+        8bca5246ebf477e2f71848e549f6d6da \
+        801c9f34982e721ae4a1ef27ba13fcf9"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Lorenzo Trevisan"
+EMAIL="lorenzo.trevisan@gmail.com"

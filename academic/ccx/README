@@ -1,0 +1,13 @@
+CalculiX CrunchiX (ccx) is a free software 3D finite element (FEM) solver
+by Guido Dhondt of the MTU Aero Engines GmbH (Muenich, Germany).
+The solver is able to do linear and non-linear calculations.
+Static, dynamic and thermal solutions are available.
+CalculiX upstream package include the default CalculiX GraphiX (cgx)
+pre and post-processor.
+Because the solver makes use of the ABAQUS input format it is also
+possible to use commercial pre-processors as well.
+CalculiX CrunchiX supports the multithreaded (MT) solve option of the
+spooles sparse solver. This option is enabled at compile time. By default,
+the single-threaded solver is used. This can be changed by setting the
+OMP_NUM_THREADS environment variable (e.g. export OMP_NUM_THREADS="$(nproc)"
+at bash prompt).

@@ -1,5 +1,5 @@
 diff --git a/doc/manual/local.mk b/doc/manual/local.mk
-index 9f2b562..ac36cb7 100644
+index abdfd6a..dea46f3 100644
 --- a/doc/manual/local.mk
 +++ b/doc/manual/local.mk
 @@ -32,7 +32,7 @@ dummy-env = env -i \
@@ -11,7 +11,7 @@ index 9f2b562..ac36cb7 100644
  
  # re-implement mdBook's include directive to make it usable for terminal output and for proper @docroot@ substitution
  define process-includes
-@@ -96,46 +96,46 @@ $(d)/src/SUMMARY.md: $(d)/src/SUMMARY.md.in $(d)/src/command-ref/new-cli $(d)/sr
+@@ -96,52 +96,52 @@ $(d)/src/SUMMARY.md: $(d)/src/SUMMARY.md.in $(d)/src/command-ref/new-cli $(d)/sr
  	@cp $< $@
  	@$(call process-includes,$@,$@)
  
@@ -57,28 +57,35 @@ index 9f2b562..ac36cb7 100644
 +	$(trace-gen) $(dummy-env) NIX_PATH=nix/corepkgs=corepkgs $(nix_DIR)/nix __dump-xp-features > $@.tmp
  	@mv $@.tmp $@
  
--$(d)/src/language/builtins.md: $(d)/builtins.json $(d)/generate-builtins.nix $(d)/src/language/builtins-prefix.md $(bindir)/nix
-+$(d)/src/language/builtins.md: $(d)/builtins.json $(d)/generate-builtins.nix $(d)/src/language/builtins-prefix.md $(nix_DIR)/nix
+-$(d)/src/language/builtins.md: $(d)/language.json $(d)/generate-builtins.nix $(d)/src/language/builtins-prefix.md $(bindir)/nix
++$(d)/src/language/builtins.md: $(d)/language.json $(d)/generate-builtins.nix $(d)/src/language/builtins-prefix.md $(nix_DIR)/nix
  	@cat doc/manual/src/language/builtins-prefix.md > $@.tmp
- 	$(trace-gen) $(nix-eval) --expr 'import doc/manual/generate-builtins.nix (builtins.fromJSON (builtins.readFile $<))' >> $@.tmp;
+ 	$(trace-gen) $(nix-eval) --expr 'import doc/manual/generate-builtins.nix (builtins.fromJSON (builtins.readFile $<)).builtins' >> $@.tmp;
  	@cat doc/manual/src/language/builtins-suffix.md >> $@.tmp
  	@mv $@.tmp $@
  
--$(d)/builtins.json: $(bindir)/nix
--	$(trace-gen) $(dummy-env) NIX_PATH=nix/corepkgs=corepkgs $(bindir)/nix __dump-builtins > $@.tmp
-+$(d)/builtins.json: $(nix_DIR)/nix
-+	$(trace-gen) $(dummy-env) NIX_PATH=nix/corepkgs=corepkgs $(nix_DIR)/nix __dump-builtins > $@.tmp
+-$(d)/src/language/builtin-constants.md: $(d)/language.json $(d)/generate-builtin-constants.nix $(d)/src/language/builtin-constants-prefix.md $(bindir)/nix
++$(d)/src/language/builtin-constants.md: $(d)/language.json $(d)/generate-builtin-constants.nix $(d)/src/language/builtin-constants-prefix.md $(nix_DIR)/nix
+ 	@cat doc/manual/src/language/builtin-constants-prefix.md > $@.tmp
+ 	$(trace-gen) $(nix-eval) --expr 'import doc/manual/generate-builtin-constants.nix (builtins.fromJSON (builtins.readFile $<)).constants' >> $@.tmp;
+ 	@cat doc/manual/src/language/builtin-constants-suffix.md >> $@.tmp
+ 	@mv $@.tmp $@
+ 
+-$(d)/language.json: $(bindir)/nix
+-	$(trace-gen) $(dummy-env) NIX_PATH=nix/corepkgs=corepkgs $(bindir)/nix __dump-language > $@.tmp
++$(d)/language.json: $(nix_DIR)/nix
++	$(trace-gen) $(dummy-env) NIX_PATH=nix/corepkgs=corepkgs $(nix_DIR)/nix __dump-language > $@.tmp
  	@mv $@.tmp $@
  
  # Generate the HTML manual.
 diff --git a/doc/manual/local.mk b/doc/manual/local.mk
-index b4b7283..f3577f2 100644
+index dea46f3..422d531 100644
 --- a/doc/manual/local.mk
 +++ b/doc/manual/local.mk
-@@ -168,22 +168,22 @@ doc/manual/generated/man1/nix3-manpages: $(d)/src/command-ref/new-cli
+@@ -174,22 +174,22 @@ doc/manual/generated/man1/nix3-manpages: $(d)/src/command-ref/new-cli
  	@touch $@
  
- $(docdir)/manual/index.html: $(MANUAL_SRCS) $(d)/book.toml $(d)/anchors.jq $(d)/custom.css $(d)/src/SUMMARY.md $(d)/src/command-ref/new-cli $(d)/src/contributing/experimental-feature-descriptions.md $(d)/src/command-ref/conf-file.md $(d)/src/language/builtins.md
+ $(docdir)/manual/index.html: $(MANUAL_SRCS) $(d)/book.toml $(d)/anchors.jq $(d)/custom.css $(d)/src/SUMMARY.md $(d)/src/command-ref/new-cli $(d)/src/contributing/experimental-feature-descriptions.md $(d)/src/command-ref/conf-file.md $(d)/src/language/builtins.md $(d)/src/language/builtin-constants.md
 -	$(trace-gen) \
 -		tmp="$$(mktemp -d)"; \
 -		cp -r doc/manual "$$tmp"; \
@@ -116,10 +123,10 @@ index b4b7283..f3577f2 100644
  
  endif
 diff --git a/Makefile b/Makefile
-index d6b4947..aead461 100644
+index 31b54b9..0be7929 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -42,6 +42,8 @@ else
+@@ -45,6 +45,8 @@ else
    GLOBAL_CXXFLAGS += -O0 -U_FORTIFY_SOURCE
  endif
  
@@ -129,10 +136,10 @@ index d6b4947..aead461 100644
  
  GLOBAL_CXXFLAGS += -g -Wall -include config.h -std=c++2a -I src
 diff --git a/src/libstore/sqlite.cc b/src/libstore/sqlite.cc
-index df334c2..c42f8e6 100644
+index 7c8decb..3f36374 100644
 --- a/src/libstore/sqlite.cc
 +++ b/src/libstore/sqlite.cc
-@@ -24,7 +24,7 @@ SQLiteError::SQLiteError(const char *path, const char *errMsg, int errNo, int ex
+@@ -25,7 +25,7 @@ SQLiteError::SQLiteError(const char *path, const char *errMsg, int errNo, int ex
  {
      int err = sqlite3_errcode(db);
      int exterr = sqlite3_extended_errcode(db);
@@ -151,3 +158,17 @@ index 331a5ea..c56848a 100644
  
 -libexpr-tests_LDFLAGS := $(GTEST_LIBS) -lgmock
 +libexpr-tests_LDFLAGS := -lrapidcheck $(GTEST_LIBS) -lgmock
+diff --git a/configure.ac b/configure.ac
+index 6d78237..b1bb516 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -341,7 +341,8 @@ AC_CHECK_FUNCS([strsignal posix_fallocate sysconf])
+ AC_ARG_WITH(sandbox-shell, AS_HELP_STRING([--with-sandbox-shell=PATH],[path of a statically-linked shell to use as /bin/sh in sandboxes]),
+   sandbox_shell=$withval)
+ AC_SUBST(sandbox_shell)
+-if test ${cross_compiling:-no} = no && ! test -z ${sandbox_shell+x}; then
++if test ${cross_compiling:-no} = no && test -n "${sandbox_shell}" &&
++  test -z "${sandbox_shell%%*busybox*}"; then
+   AC_MSG_CHECKING([whether sandbox-shell has the standalone feature])
+   # busybox shell sometimes allows executing other busybox applets,
+   # even if they are not in the path, breaking our sandbox

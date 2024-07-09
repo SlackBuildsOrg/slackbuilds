@@ -63,7 +63,8 @@ python3 setup.py install --root=$PKG
 
 #mv $PKG/usr/share/man $PKG/usr/man
 #gzip -9 -c $PKG/usr/man/man1/$PRGNAM.1 > $PKG/usr/man/man1/$PRGNAM.1.gz
-gzip -9 -c $CWD/$PRGNAM.1.gz > $PKG/usr/man/man1/$PRGNAM.1.gz
+mkdir -p $PKG/usr/man/man1/
+gzip -9 -c $PRGNAM.1.gz > $PKG/usr/man/man1/$PRGNAM.1.gz
 rm -fR $PKG/usr/share/man
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done

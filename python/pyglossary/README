@@ -1,0 +1,14 @@
+A tool for converting dictionary files aka glossaries.
+
+It support many formats: .csv .dtxt .epub .ifo .po .xdxf .xml .zim [...]
+ See README.md for details about read and write.
+
+NOTE: 4.6.1 is the latest version supported for Slackware since
+the version of pyglossary greater than 4.6.1 use (>=) python-3.10.x
+
+Slackware (15.0) use python-3.9.x, as pyglossary-4.6.1 requires
+minimally.
+
+For full capability of software - install the optional dependencies:
+ lxml beautifulsoup4 pyicu pyyaml marisa-trie libzim python-lzo
+ html5lib

@@ -96,6 +96,7 @@ cp qdvdauthor.png $PKG/usr/share/pixmaps
 mkdir -p $PKG/usr/share/applications
 cp qdvdauthor.desktop $PKG/usr/share/applications
 
+rm -rf $PKG/usr/share/doc
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   CHANGELOG COPYING README TODO \

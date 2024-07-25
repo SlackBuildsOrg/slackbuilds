@@ -9,4 +9,4 @@ contains this runtime too.
 
 NOTE: This release has reached end of life, meaning it is no longer
 supported. It is recommended to move to a supported release, such as
-.NET 8.0. 
+.NET 8.0.

@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=containerd
-VERSION=${VERSION:-1.7.14}
+VERSION=${VERSION:-1.7.20}
 GITHASH=${GITHASH:-dcf2847247e18caba8dce86522029642f60fe96b}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

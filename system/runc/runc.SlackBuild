@@ -28,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=runc
-VERSION=${VERSION:-1.1.12}
+VERSION=${VERSION:-1.1.13}
 GITHASH=${GITHASH:-51d5e94601ceffbbd85688df1c928ecccbfa4685}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

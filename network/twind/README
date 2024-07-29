@@ -1,0 +1,60 @@
+twind is a simple daemon serving static files over the gemini protocol.
+
+It is intended to have as few knobs as possible and has no support for
+a configuration file.
+
+twind is named after the latin word for gemini - twins.
+
+Features:
+ * Serving static gemini files
+ * Virtual hosts
+ * MIME handling
+ * IPv4 and IPv6 support
+
+It doesn't support CGI handling and probably never will. There are more
+advanced gemini servers out there if you look for fancy stuff.
+
+---
+
+twind needs a dedicated user called '_twind' and directory to run.
+User will be created with SlackBuild script automatically: 'make user'
+
+By default, the user ID for _twind when created is set to 4000. You can
+change this if wish declaring variable 'TWIND_ID' for what you need:
+
+ TWIND_ID=(UID) ./twind.SlackBuild
+
+Or forget above and do this manually:
+
+ # useradd -d /var/twind -s /sbin/nologin -u 4000 _twind
+
+Nota bene: 'TWIND_ID' is useless if you created the user manually.
+
+twind can create auto-signed TLS certificate if you wish, just declare
+hostname on 'TWIND_HN' variable:
+
+ TWIND_HN=(DOMAIN) ./twind.SlackBuild
+
+Is possible the use of both in same time:
+
+ TWIND_ID=1234 TWIND_HN=slackware.wine ./twind.SlackBuild
+
+For undo the action of user creation (e.g. case you uninstalled twind):
+
+ # userdel -r _twind
+
+---
+
+SECURITY CONCERN
+ twind needs root permissions to start and will drop its privileges as
+ soon as possible. It will also chroot to /var/twind
+
+README.md on doc folder has all informations or look out on Github.
+
+NOTE of maintainer: Makefile was adapted because the original is
+"turbid"
+
+All respect for the creator of twind, it is a good and simple Gemini
+Server.
+
+Enjoy ;-)

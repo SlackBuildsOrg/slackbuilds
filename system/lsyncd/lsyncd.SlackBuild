@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lsyncd
-VERSION=${VERSION:-2.2.3}
+VERSION=${VERSION:-2.3.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,8 +92,9 @@ make
 make install DESTDIR=$PKG
 
 # man is installed to /usr/man/lsyncd.1.gz, move it to /usr/man/man1/
-mkdir $PKG/usr/man/man1
-mv $PKG/usr/man/lsyncd.1 $PKG/usr/man/man1
+mkdir -p $PKG/usr/man/man1
+mv $PKG/man1/lsyncd.1 $PKG/usr/man/man1
+rmdir $PKG/man1
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -103,6 +104,7 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a COPYING ChangeLog $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/usr/doc/examples $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

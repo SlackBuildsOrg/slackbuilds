@@ -1,0 +1,98 @@
+#!/bin/bash
+#
+#          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#                   Version 2, December 2004
+#
+# Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+#
+# Everyone is permitted to copy and distribute verbatim or modified
+# copies of this license document, and changing it is allowed as long
+# as the name is changed.
+#
+#          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+#  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+#
+#
+# 0. You just DO WHAT THE FUCK YOU WANT TO.
+#
+# SlackBuild script for senpai
+# =============================
+# By:          r1w1s1@disroot.org
+# For:         senpai
+# Descr:       Your everyday IRC student
+# URL:         https://git.sr.ht/~delthas/senpai
+# Changelog:
+# v0.03.0:     01/August/2024 by r1w1s1 - Initial build.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=senpai
+VERSION=${VERSION:-0.3.0}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+ARCH=${ARCH:-x86_64}
+
+TMP=${TMP:-/tmp/SBo}
+PKG=${TMP}/package-${PRGNAM}
+PKGTYPE=${PKGTYPE:-tgz}
+OUTPUT=${OUTPUT:-/tmp}
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+# Clean up any previous build artifacts
+rm -rf "$PKG"
+mkdir -p "$TMP" "$PKG" "$OUTPUT"
+cd "$TMP"
+
+# Download and extract the source code
+rm -rf "${PRGNAM}-${VERSION}"
+wget -O "${PRGNAM}-${VERSION}.tar.gz" "https://git.sr.ht/~delthas/senpai/archive/v${VERSION}.tar.gz"
+tar xvf "${PRGNAM}-${VERSION}.tar.gz"
+cd "${PRGNAM}-v${VERSION}"
+
+# Compile the source
+mkdir -p "$TMP/go-cache" "$TMP/go-tmpdir" "$TMP/go"
+export GOCACHE="${GOCACHE:-"$TMP/go-cache"}"
+export GOTMPDIR="${GOTMPDIR:-"$TMP/go-tmpdir"}"
+export GOMODCACHE="${GOMODCACHE:-"$TMP/go"}"
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=1
+export SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-$(date +%s)}"
+
+make PREFIX=/usr || exit 1
+
+# Install the compiled binaries to the package directory
+make install PREFIX=/usr DESTDIR="$PKG" || exit 1
+
+# Copy documentation
+mkdir -p "$PKG/usr/doc/${PRGNAM}-${VERSION}"
+cp -a README.md LICENSE \
+    "$PKG/usr/doc/${PRGNAM}-${VERSION}"
+
+# Compress man pages and fix symlinks
+find "$PKG/usr/share/man" -type f -exec gzip -9 {} \;
+for i in $(find "$PKG/usr/share/man" -type l); do
+  ln -s "$(readlink "$i").gz" "$i.gz"
+  rm "$i"
+done
+
+# Copy the SlackBuild script into the package documentation
+cat "$CWD/${PRGNAM}.SlackBuild" > "$PKG/usr/doc/${PRGNAM}-${VERSION}/${PRGNAM}.SlackBuild"
+
+# Copy the slack-desc file
+mkdir -p "$PKG/install"
+cat "$CWD/slack-desc" > "$PKG/install/slack-desc"
+
+# Create the package
+cd "$PKG"
+/sbin/makepkg -l y -c n "$OUTPUT/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}"
+
+# Generate MD5 checksum
+cd "$OUTPUT"
+md5sum "${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}" > "${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}.md5"
+

@@ -1,15 +1,10 @@
 #!/bin/bash
 
-# ELECTRS writes files to its data directories after
-# dropping privileges. This ensures $ELECTRS_USER can write
-# files to these directories, without having to change default
-# root:root in slackware.
-#
-# This is a workaround, might not be a elegant solution.
+# Setting up permissions for elects's data directories.
 
-PRGNAM=ELECTRS
-ELECTRS_UID=293
-ELECTRS_GID=293
+PRGNAM=electrs
+ELECTRS_UID=386
+ELECTRS_GID=386
 
 chown $ELECTRS_UID:$ELECTRS_GID etc/$PRGNAM/*
 

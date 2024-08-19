@@ -5,15 +5,15 @@
 # You must make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':' except on otherwise blank lines.
 
-              |-----handy-ruler------------------------------------------------------|
-dnscrypt-proxy: electrs - An efficient re-implementation of Electrum Server in Rust 
-dnscrypt-proxy:
-dnscrypt-proxy: 
-dnscrypt-proxy: 
-dnscrypt-proxy: 
-dnscrypt-proxy: 
-dnscrypt-proxy:
-dnscrypt-proxy:
-dnscrypt-proxy:
-dnscrypt-proxy:
-dnscrypt-proxy: https://github.com/romanz/electrs
+       |-----handy-ruler------------------------------------------------------|
+electrs: An efficient re-implementation of Electrum Server in Rust
+electrs:
+electrs: 
+electrs: 
+electrs: 
+electrs: 
+electrs:
+electrs:
+electrs:
+electrs:
+electrs: https://github.com/romanz/electrs

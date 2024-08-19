@@ -30,10 +30,10 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-ELECTRS_USER=${ELECTRS_USER:-ELECTRS}
-ELECTRS_UID=${ELECTRS_UID:-293}
-ELECTRS_GROUP=${ELECTRS_GROUP:-ELECTRS}
-ELECTRS_GID=${ELECTRS_GID:-293}
+ELECTRS_USER=${ELECTRS_USER:-electrs}
+ELECTRS_UID=${ELECTRS_UID:-386}
+ELECTRS_GROUP=${ELECTRS_GROUP:-electrs}
+ELECTRS_GID=${ELECTRS_GID:-386}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -59,8 +59,19 @@ bailout() {
   echo -e    "Something like this should suffice for most systems: "
   echo -e    "# groupadd -g $ELECTRS_GID $ELECTRS_GROUP "
   echo -e    "# useradd -u $ELECTRS_UID -g $ELECTRS_GID -c \"ELECTRS-proxy\" -d /dev/null -s /bin/false $ELECTRS_USER \n"
-  exit 1
-  echo -e "Do you want the script to setup user/group for you?"
+
+# Ask user if the user/group should be created
+read -p "Should the script create the 'electrs' user and group? (Y/n): " confirm
+
+if 	[[ $confirm == [yY] || $confirm == [yY][eE][sS] ]]
+then
+	echo -e "\nCreating $ELECTRS_USER user and $ELECTRS_GROUP group with UID:$ELECTRS_UID and GID: $ELECTRS_GID\n"
+	groupadd -g $ELECTRS_GID $ELECTRS_GROUP
+	useradd -u $ELECTRS_UID -g $ELECTRS_GID -c "electrs - electrum server" -d /var/run/electrs -s /bin/false $ELECTRS_USER
+else
+	echo -e "Aborting..."
+exit 1
+fi
 }
 
 if ! grep -q "^$ELECTRS_USER:" /etc/passwd > /dev/null 2>&1 ; then

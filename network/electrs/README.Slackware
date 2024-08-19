@@ -12,19 +12,17 @@ In order to use the default configuration you should create a
     useradd -u 293 -g 293 -c "electrs" -d /run/electrs -s /bin/false electrs
 
 To start electrs automatically at system start, add the following
-to:
-    
-    /etc/rc.d/rc.local:
+to /etc/rc.d/rc.local:
 
     if [ -x /etc/rc.d/rc.electrs ]; then
         /etc/rc.d/rc.electrs start
     fi
 
 To properly stop electrs on system shutdown, add the following
-to:
-
-    /etc/rc.d/rc.local_shutdown:
+to: /etc/rc.d/rc.local_shutdown:
 
     if [ -x /etc/rc.d/rc.electrs ]; then
         /etc/rc.d/rc.electrs stop
     fi
+
+More information can be found at https://github.com/romanz/electrs/tree/master/doc

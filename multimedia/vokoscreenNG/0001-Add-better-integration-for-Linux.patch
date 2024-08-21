@@ -80,10 +80,10 @@ diff --git a/src/vokoscreenNG.pro b/src/vokoscreenNG.pro
 index d43ed30..7bf3d5a 100644
 --- vokoscreenNG-4.0.0-pristene/src/vokoscreenNG.pro	2024-01-01 15:49:40.000000000 -0700
 +++ vokoscreenNG-4.0.0/src/vokoscreenNG.pro	2024-01-02 22:18:58.149334295 -0700
-@@ -207,3 +207,28 @@
+@@ -219,3 +219,28 @@
  
- # Container
- include(container/container.pri)
+ # spezialProgressBarAudio
+ include(spezialProgressBarAudio/spezialProgressBarAudio.pri)
 +
 +unix:!macx {
 +  isEmpty(PREFIX) {

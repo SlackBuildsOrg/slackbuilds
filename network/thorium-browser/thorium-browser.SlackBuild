@@ -59,7 +59,9 @@ mkdir -p $TMP $PKG $OUTPUT
 
 cd $PKG
 ar p $CWD/${PRGNAM}_${VERSION}_$DEBARCH.deb data.tar.xz | tar xJv || exit 1
-cd ..
+
+# This is probably not a good idea?
+#cd ..
 
 chown -R root:root .
 find -L . \

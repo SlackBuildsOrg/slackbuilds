@@ -1,6 +1,8 @@
-mbed TLS is a light-weight open source cryptographic and SSL/TLS
-library written in C. mbed TLS makes it easy for developers to include
-cryptographic and SSL/TLS capabilities in their (embedded)
-applications with as little hassle as possible.
+mbedtls (An open source, portable, easy to use TLS library)
 
-NOTE: this project was formerly know as PolarSSL.
+Mbed TLS is a C library that implements cryptographic primitives,
+X.509 certificate manipulation and the SSL/TLS and DTLS protocols. Its
+small code footprint makes it suitable for embedded systems.
+
+Mbed TLS includes a reference implementation of the PSA Cryptography
+API. This is currently a preview for evaluation purposes only.

@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
        |-----handy-ruler------------------------------------------------------|
-mbedtls: mbedtls (Light-weight cryptographic and SSL/TLS library)
+mbedtls: mbedtls (An open source, portable, easy to use TLS library)
 mbedtls:
-mbedtls: mbed TLS is a light-weight open source cryptographic and SSL/TLS
-mbedtls: library written in C. mbed TLS makes it easy for developers to include
-mbedtls: cryptographic and SSL/TLS capabilities in their (embedded)
-mbedtls: applications with as little hassle as possible.
+mbedtls: Mbed TLS is a C library that implements cryptographic primitives,
+mbedtls: X.509 certificate manipulation and the SSL/TLS and DTLS protocols. Its
+mbedtls: small code footprint makes it suitable for embedded systems.
 mbedtls:
-mbedtls: https://tls.mbed.org/
+mbedtls: Mbed TLS includes a reference implementation of the PSA Cryptography
+mbedtls: API. This is currently a preview for evaluation purposes only.
 mbedtls:
-mbedtls: NOTE: this project was formerly know as PolarSSL.
+mbedtls: HOMEPAGE: https://www.trustedfirmware.org/projects/mbed-tls/
 mbedtls:

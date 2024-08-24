@@ -1,10 +1,12 @@
 PRGNAM="mbedtls"
-VERSION="2.16.8"
-HOMEPAGE="https://tls.mbed.org"
-DOWNLOAD="https://github.com/ARMmbed/mbedtls/archive/mbedtls-2.16.8/mbedtls-mbedtls-2.16.8.tar.gz"
-MD5SUM="d44a5245c8bd39f84976fec4d4e635ca"
+VERSION="3.6.0"
+HOMEPAGE="https://www.trustedfirmware.org/projects/mbed-tls/"
+DOWNLOAD="https://github.com/Mbed-TLS/mbedtls/archive/refs/tags/v3.6.0/mbedtls-3.6.0.tar.gz \
+          https://github.com/Mbed-TLS/mbedtls-framework/archive/94599c0/mbedtls-framework-94599c0e3b5036e086446a51a3f79640f70f22f6.tar.gz"
+MD5SUM="b152273e8774292c9ed5eb4dea8b25e3 \
+        1e2584827cf29d71eb90b4050fdb4cc1"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""
-MAINTAINER="Hunter Sezen"
-EMAIL="orbea@riseup.net"
+MAINTAINER="Jeremy Hansen"
+EMAIL="jebrhansen+SBo@gmail.com"

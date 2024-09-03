@@ -1,0 +1,8 @@
+mako (A lightweight notification daemon for Wayland)
+
+mako implements the FreeDesktop Notifications Specification.
+
+mako will run automatically when a notification is emitted. This happens
+via D-Bus activation, so you don't really need to explicitly start it up
+(this also allows delaying its startup time and speed up system
+startup).

@@ -1,0 +1,13 @@
+--- a/Makefile	2024-09-01 10:44:00.401073254 -0700
++++ b/Makefile	2024-09-01 10:44:27.642368725 -0700
+@@ -1,8 +1,8 @@
+ SCANNER := wayland-scanner
+ 
+-PREFIX=/usr/local
++PREFIX=/usr
+ BINDIR=$(PREFIX)/bin
+-MANDIR=$(PREFIX)/share/man
++MANDIR=$(PREFIX)/man
+ 
+ CFLAGS+=-Wall -Werror -Wextra -Wpedantic -Wno-unused-parameter -Wconversion -Wformat-security -Wformat -Wsign-conversion -Wfloat-conversion -Wunused-result
+ LIBS=-lwayland-client

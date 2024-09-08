@@ -3,7 +3,7 @@
 # Slackware build script for rustup
 
 # Copyright 2017-2021 Andrew Clemons, Wellington New Zealand
-# Copyright 2023 Andrew Clemons, Tokyo Japan
+# Copyright 2023-2024 Andrew Clemons, Tokyo Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rustup
-VERSION=${VERSION:-1.26.0}
+VERSION=${VERSION:-1.27.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -152,21 +152,22 @@ cargo build --offline --release --features no-self-update $CARGOTARGET
 
 mkdir -p $PKG/usr/bin/
 
-find target -name rustup-init -exec install -m 755 {} $PKG/usr/bin/rustup \;
+find target -name rustup-init -exec install -m 755 {} $PKG/usr/bin/rustup-init \;
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+ln -s $PKG/usr/bin/rustup-init rustup # so we can generate completions
+
 mkdir -p $PKG/usr/share/bash-completion/completions
-$PKG/usr/bin/rustup completions bash > $PKG/usr/share/bash-completion/completions/rustup
+./rustup completions bash > $PKG/usr/share/bash-completion/completions/rustup
 
 mkdir -p $PKG/usr/share/zsh/site-functions
-$PKG/usr/bin/rustup completions zsh > $PKG/usr/share/zsh/site-functions/_rustup
-
+./rustup completions zsh > $PKG/usr/share/zsh/site-functions/_rustup
 chmod 0644 $PKG/usr/share/zsh/site-functions/_rustup $PKG/usr/share/bash-completion/completions/rustup
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CHANGELOG.md CONTRIBUTING.md LICENSE-APACHE LICENSE-MIT README.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CHANGELOG.md LICENSE-APACHE LICENSE-MIT README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

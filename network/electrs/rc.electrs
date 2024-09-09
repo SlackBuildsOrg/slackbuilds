@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # rc.electrs - Initscript for electrs - Electrum Server in Rust
 #

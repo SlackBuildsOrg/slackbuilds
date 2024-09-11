@@ -99,7 +99,6 @@ install -D -m 0755 $PRGNAM $PKG/usr/bin/$PRGNAM
 install -D -m 0644 $CWD/$PRGNAM.toml $PKG/etc/$PRGNAM/$PRGNAM.toml
 install -D -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/rc.$PRGNAM
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   LICENSE \
   $PKG/usr/doc/$PRGNAM-$VERSION

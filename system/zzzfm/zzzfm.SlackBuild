@@ -2,7 +2,7 @@
 # Slackware build script for zzzfm based on slackbuild for spacefm
 
 # Copyright 2012  Binh Nguyen <binhvng@gmail.com>
-# Copyright 2014-2017 Ryan P.C. McQuen | Everett, WA | ryanpcmcquen@member.fsf.org
+# Copyright 2014-2017 Ryan P.C. McQuen
 # Copyright 2017 Andreas Guldstrand
 # Copyright 2022 Andrew Tkalia <anddt@ukr.net>
 # All rights reserved.

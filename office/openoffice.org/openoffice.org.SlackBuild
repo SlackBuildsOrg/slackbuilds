@@ -7,7 +7,7 @@
 # Copyright 2018-2019 Donald Cooley South Haven, Indiana USA
 # With help from Ekin Akoglu to fix missing menu icons and script cleanup,
 # and a diff from Dominik Drobek to remove unnecessary RPM cruft.
-# Ryan P.C. McQuen | Everett, WA | ryanpcmcquen@member.fsf.org
+# Ryan P.C. McQuen
 # Copyright 2023 Juan M. Lasca <juanmlasca@gmail.com>
 # Copyright 2024 Dimitris Zlatanidis Orestiada, Greece
 
@@ -165,7 +165,7 @@ if [ "$SUBMENU" = "YES" ]; then
   # Use a separate "OpenOffice" menu entry within "Office"
   mkdir -p $PKG/etc/xdg/menus/applications-merged
   cp $CWD/submenus/openoffice.menu $PKG/etc/xdg/menus/applications-merged
-  
+
   # Menu directory structure
   mkdir -p $PKG/usr/share/desktop-directories
   cp $CWD/submenus/openoffice.directory $PKG/usr/share/desktop-directories

@@ -1,7 +1,7 @@
 PRGNAM="nwg-shell"
 VERSION="0.5.38"
 HOMEPAGE="https://nwg-piotr.github.io/nwg-shell/"
-DOWNLOAD="https://github.com/nwg-piotr/nwg-shell/archive/v0.5.38/nwg-shell-v0.5.38.tar.gz"
+DOWNLOAD="https://github.com/nwg-piotr/nwg-shell/archive/v0.5.38/nwg-shell-0.5.38.tar.gz"
 MD5SUM="668a7a3de5523f733a646d0c4d458326"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=MuseScore
-VERSION=${VERSION:-4.3.2}
+VERSION=${VERSION:-4.4.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,21 +80,21 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
 mkdir b
-cd b
-cmake .. \
+cmake -S . -B b \
+    -DCMAKE_PREFIX_PATH="/opt/Qt/6.2.4/gcc_64/lib/cmake" \
     -DCMAKE_INSTALL_PREFIX=/opt/MuseScore \
     -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS_RELEASE="$SLKCFLAGS" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_MODULE_LINKER_FLAGS_RELEASE="-pthread" \
-    -DQMAKE=/usr/lib"${LIBDIRSUFFIX}"/qt5/bin/qmake \
-    -DQT_QMAKE_EXECUTABLE=/usr/lib"${LIBDIRSUFFIX}"/qt5/bin/qmake \
-    -DMUSESCORE_BUILD_MODE=release
+    -DQMAKE=/opt/Qt/6.2.4/gcc_64/bin/qmake \
+    -DQT_QMAKE_EXECUTABLE=/opt/Qt/6.2.4/gcc_64/bin/qmake
 
+cmake --build b -j 4
+cd b
 make install \
   DESTDIR=$PKG \
   UPDATE_CACHE=FALSE
-
 cd ..
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

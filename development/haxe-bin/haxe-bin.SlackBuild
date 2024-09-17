@@ -30,7 +30,7 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-COMMIT_VER=${PRGNAM%-bin}_20240304101237_dc1a43d
+COMMIT_VER=$(tar --list -f ${PRGNAM%-bin}-${VERSION}-linux64.tar.gz | head -n 1 | sed -e "s_/__")
 
 ARCH="$(uname -m)"
 if [ "$ARCH" != "x86_64" ]; then

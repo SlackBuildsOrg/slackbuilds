@@ -1,0 +1,49 @@
+SiriKali
+
+A Qt/C++ GUI front end to cryfs,gocryptfs,securefs,ecryptfs and encfs
+
+SiriKali works on Linux, macOS and Microsoft Windows Operating Systems
+
+SiriKali is a Qt/C++ GUI application that manages ecryptfs, cryfs,
+ encfs, gocryptfs, fscrypt and securefs based encrypted folders. 
+These projects are compared here. SiriKali can also connect to ssh 
+servers using sshfs.
+
+Supported Backends on Linux:
+Fscrypt, Securefs, Ecryptfs, Cryfs, Encfs, Gocryptfs and Sshfs.
+
+Supported Backends on Microsoft Windows:
+Cryfs, Securefs, Encfs and Sshfs.
+
+Users of Securefs should inform SiriKali of where Securefs binary is 
+located on the system by setting the path at:
+ Menu->Settings->Editable Options->Set Executables Search Path.
+
+Supported Backends on macOS:
+Securefs, Cryfs, Encfs and Gocryptfs.
+
+Building SiriKali on macOS is currently a bit involving process and the
+ steps are documented here.
+Using SiriKali to connect to ssh server using sshfs:
+
+Steps to setup SiriKali to connect to an ssh server are documented here.
+
+Encrypted container folders have an advantage over encrypted container
+ files like the ones that are created by zuluCrypt,
+TrueCrypt,VeraCrypt among other projects that use file based encrypted 
+containers.
+
+Advantages are:
+The encrypted container folder can freely grow and shrink as files are
+ added,removed,grow or shrink. File based encrypted 
+containers are limited to the size of the container and the size is set
+ when the container is created and does not change to 
+reflect the amount of data the container is hosting.
+
+Disadvantages are:
+
+The encrypted container folder does not hide the space usage of its
+ contents and an adversary can derive meaning from 
+space usage of the encrypted container folder. File based container
+ hides the space utilization of the volume and the only 
+thing an adversary can see is the fixed size of the container.

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                                |-----handy-ruler------------------------------------------------------|
+qt-6.2.4-libraries-for-musescore: qt-6.2.4-libraries-for-musescore (Qt 6.2.4 Libraries for MuseScore)
+qt-6.2.4-libraries-for-musescore:
+qt-6.2.4-libraries-for-musescore: These are the required libraries to build musescore as made
+qt-6.2.4-libraries-for-musescore: available by the Qt project, required to build MuseScore versions
+qt-6.2.4-libraries-for-musescore: 4.4.0 and above.
+qt-6.2.4-libraries-for-musescore:
+qt-6.2.4-libraries-for-musescore: Consider instead installing the qt-installer-script SlackBuild.
+qt-6.2.4-libraries-for-musescore: See the README file.
+qt-6.2.4-libraries-for-musescore:
+qt-6.2.4-libraries-for-musescore: Homepage at:
+qt-6.2.4-libraries-for-musescore: https://github.com/antonioleal/qt-6.2.4-libraries-for-musescore

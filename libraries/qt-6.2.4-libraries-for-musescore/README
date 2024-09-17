@@ -1,0 +1,35 @@
+qt-6.2.4-libraries-for-musescore (Qt 6.2.4 Libraries for MuseScore)
+
+These are the required libraries to build musescore as made
+available by the Qt project, required to build MuseScore versions
+4.4.0 and above.
+
+Please consider as alternative installing these through
+qt-installer-script Slackbuild and afterwards either:
+
+a) do a manual install of Qt, selecting the libraries described in:
+https://github.com/musescore/MuseScore/wiki/Install-Qt-and-Qt-Creator
+
+    basically you'll need to select these components:
+    - "Desktop gcc 64-bit"
+    - "Qt 5 Compatibility Module"
+    - From Additional Libraries:
+        "Qt Network Authorization"
+        "Qt State Machines"
+    - From Developer and Designer Tools:
+        "Qt Creator"
+        "CMake"
+        "Ninja"
+
+OR b)
+    do an unattended installation using
+    the "qt-6.2.4-libraries-for-musescore.sh" script provided
+    with the "qt-installer-script" SlackBuild.
+
+Note:
+The "qt-installer-script" and this package and should not be
+installed at the same time if Qt 6.2.4 is needed,
+as they write to the same folders in /opt/Qt/6.2.4
+
+Homepage at:
+https://github.com/antonioleal/qt-6.2.4-libraries-for-musescore

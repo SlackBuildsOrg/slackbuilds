@@ -1,5 +1,5 @@
 PRGNAM="alsamodularsynth"
-VERSION="2.2.0"
+VERSION="2.2.1"
 HOMEPAGE="http://alsamodular.sourceforge.net/"
 DOWNLOAD="https://sourceforge.net/projects/alsamodular/files/alsamodular/2.2.1/ams-2.2.1.tar.xz"
 MD5SUM="cfd04fec0bdc03fb185026e142446ce5"

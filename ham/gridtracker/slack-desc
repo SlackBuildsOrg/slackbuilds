@@ -10,7 +10,7 @@ gridtracker: gridtracker (An Amateur Radio Companion)
 gridtracker:
 gridtracker: GridTracker listens to traffic from WSJT-X/JTDX, displays it on a map,
 gridtracker: and has a sophisticated alerting and filtering system for finding and
-gridtracker: working interesting stations. It also will upload QSO records to
+gridtracker: working interesting stations. It also will upload QSO records to 
 gridtracker: multiple logging frameworks including Logbook of the World.
 gridtracker:
 gridtracker: Homepage: https://gridtracker.org/

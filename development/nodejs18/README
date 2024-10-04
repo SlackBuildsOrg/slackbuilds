@@ -1,0 +1,59 @@
+Node.js 18.x (LTS) is a JavaScript runtime environment.
+
+Node.js 18.x (LTS) uses a model of event-driven,
+non-blocking I/O that makes it efficient.  The npm
+JavaScript package manager is included.
+
+This is a Long Term Support version, and will only
+be updated with bug and security fixes.
+
+NOTE: The nodejs18 SlackBuild conflicts with the
+      nodejs SlackBuild.  Also, make sure to upgrade
+      libuv to latest version, libuv before v1.44.0
+      are incompatible with Node.js 18.x.
+
+                        ---
+
+
+RELEASE CHANGE LOG:
+
+2024-07-08: Notable Changes in v18.20.4:
+
+    * CVE-2024-36138 - Bypass incomplete fix of
+      CVE-2024-27980 (High)
+
+    * CVE-2024-22020 - Bypass network import
+      restriction via data URL (Medium)
+
+2024-05-21: Notable Changes in v18.20.3:
+
+    * This release fixes a regression introduced in
+      Node.js 18.19.0 where http.server.close() was
+      incorrectly closing idle connections.
+
+    * A fix has also been included for compiling
+      Node.js from source with newer versions of
+      Clang.
+
+    * The list of keys used to sign releases has
+      been synchronized with the current list from
+      the main branch.
+
+2024-04-10: Noteable Changes in v18.20.2:
+
+    * CVE-2024-27980 - Command injection via args
+      parameter of child_process.spawn without shell
+      option enabled on Windows
+
+2024-04-03: Noteable Changes in v18.20.1:
+
+    * CVE-2024-27983 - Assertion failed in
+      node::http2::Http2Session::~Http2Session()
+      leads to HTTP/2 server crash- (High)
+
+    * CVE-2024-27982 - HTTP Request Smuggling via
+      Content Length Obfuscation - (Medium)
+
+    * llhttp version 9.2.1
+
+    * undici version 5.28.4

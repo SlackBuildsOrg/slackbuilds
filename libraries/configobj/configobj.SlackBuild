@@ -6,6 +6,7 @@
 
 # Modified by B. Watson <urchlay@slackware.uk>
 
+# 20241004 bkw: update for v5.0.9; add 'note to self'.
 # 20230520 bkw: python => python2 (no other changes).
 # 20230510 bkw: update for v5.0.8
 # 20200811 bkw: add missing "six" dep, pointed out by jc_anatole
@@ -16,10 +17,14 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# Note to self: this really should be in python/, not libraries/,
+# and it should likely be broken into separate python2- and python3-
+# builds (assuming the python2- one is even needed?)
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=configobj
-VERSION=${VERSION:-5.0.8}
+VERSION=${VERSION:-5.0.9}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -53,17 +58,18 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
+        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 
 python2 setup.py install --root=$PKG
 
 which python3 &> /dev/null && python3 setup.py install --root=$PKG
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-[ -d docs ] && cp -a docs/* $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/README > $PKG/usr/doc/$PRGNAM-$VERSION/README
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+[ -d docs ] && cp -a docs/* $PKGDOC
+cat $CWD/README > $PKGDOC/README
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

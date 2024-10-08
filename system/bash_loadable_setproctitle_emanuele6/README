@@ -1,0 +1,14 @@
+setproctitle is a loadable bash builtin which uses an
+unclear method to set process title of a running bash script
+
+You need to load it first:
+enable -f /usr/lib64/bash/setproctitle setproctitle
+
+Then you can set the process title, visible in pgrep,
+pstree, ps, and similar programs, like this:
+
+setproctitle my-script
+
+This might come in handy when hunting for rogue processes,
+doing service restarting based on pgrep, and similar
+unclear but often useful techniques.

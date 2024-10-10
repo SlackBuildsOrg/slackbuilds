@@ -1,0 +1,16 @@
+image: chris/slackware64-compilation:15.0
+
+before_script: 
+  - uname -a
+  - bash --version
+  - date
+
+build:
+  only:
+    - master
+  script: bash -e build.sh $CI_PROJECT_NAME
+
+upload:
+  only:
+    - tags
+  script: bash -e build.sh $CI_PROJECT_NAME upload

@@ -1,10 +1,8 @@
 #!/bin/bash
-#
-# Slackware build script for microsoft-edge.
-#
-# Copyright 2021  Reza Talebi, Shahin Shahr, Iran.
-# Copyright 2023 Andrew Payne <phalange@komputermatrix.com>
-# Copyright 2024  Reza Talebi, Shahin Shahr, Iran.
+
+# Slackware build script for sshamble
+
+# Copyright 2024 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,11 +24,9 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=microsoft-edge
-BRANCH=stable
-VERSION=${VERSION:-129.0.2792.89}
+PRGNAM=sshamble
+VERSION=${VERSION:-0.0.5}
 BUILD=${BUILD:-1}
-DEBBUILD=${DEBBUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -42,11 +38,8 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
-  echo "$PRGNAM-$BRANCH_$VERSION_$ARCH-$BUILD$TAG.$PKGTYPE"
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
 fi
 
@@ -54,34 +47,14 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "x86_64" ]; then
-  BIT="amd64"
-else
-  echo "$ARCH is not supported."
-  exit 1
-fi
-
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-${VERSION}
-mkdir -p $PRGNAM-${VERSION}
-ar xv $CWD/$PRGNAM-$BRANCH"_"${VERSION}-${DEBBUILD}_${BIT}.deb --output $PRGNAM-$VERSION
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
-
-rm {control.tar.xz,debian-binary,_gpgorigin}
-
-xz -d data.tar.xz
-tar xvf data.tar
-
-# remove what won't work
-rm -rf etc
-rm -rf usr/share/gnome-control-center
-rm -rf usr/share/menu
-rm -rf usr/bin
-
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -89,24 +62,21 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p $PKG/{usr/bin,usr/share,opt}
-  cp -a opt/ $PKG/
-  ln -s /opt/microsoft/msedge/$PRGNAM $PKG/usr/bin/$PRGNAM-$BRANCH
-  cp -a usr/share/man $PKG/usr/
-  cp -a usr/share/{appdata,applications} $PKG/usr/share/
+go generate ./...
+go build -o sshamble
 
-# move icon into place
-mkdir -p $PKG/usr/share/pixmaps
-cp -a opt/microsoft/msedge/product_logo_32.xpm \
-   $PKG/usr/share/pixmaps/microsoft-edge.xpm
+mkdir -p $PKG/usr/bin
+cp sshamble $PKG/usr/bin
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a *.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-cp -a usr/share/doc/microsoft-edge-stable/* $PKG/usr/doc/$PRGNAM-$VERSION/
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

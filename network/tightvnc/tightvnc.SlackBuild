@@ -1,0 +1,132 @@
+#!/bin/sh
+# Copyright 2024 m0z
+# All rights reserved.
+#
+#   Permission to use, copy, modify, and distribute this software for
+#   any purpose with or without fee is hereby granted, provided that
+#   the above copyright notice and this permission notice appear in all
+#   copies.
+#
+#   THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+#   WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#   MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+#   IN NO EVENT SHALL THE AUTHORS AND COPYRIGHT HOLDERS AND THEIR
+#   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+#   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+#   USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+#   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+#   OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+#   OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+#   SUCH DAMAGE.
+# -----------------------------------------------------------------------------
+#
+# Slackware SlackBuild script 
+# ===========================
+# By:        m0z
+# For:       tightvnc
+# Descr:     remote control software
+# URL:       http://www.tightvnc.com/
+# -----------------------------------------------------------------------------
+
+# Set initial variables:
+
+PRGNAM=tightvnc
+VERSION=${VERSION:-1.3.10}
+ARCH=${ARCH:-x86_64}
+BUILD=${BUILD:-3}
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-${PRGNAM}
+OUTPUT=${OUTPUT:-/tmp}
+
+rm -rf $PKG
+mkdir -p $OUTPUT $TMP $PKG
+
+case "$ARCH" in
+  i486)   SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+          SLKLDFLAGS=""; LIBDIRSUFFIX=""
+          ;;
+  s390)   SLKCFLAGS="-O2"
+          SLKLDFLAGS=""; LIBDIRSUFFIX=""
+          ;;
+  x86_64) SLKCFLAGS="-O2 -fPIC"
+          SLKLDFLAGS="-L/usr/lib64"; LIBDIRSUFFIX="64"
+          ;;
+esac
+
+# Explode the package framework:
+cd $PKG
+  explodepkg $CWD/_$PRGNAM.tar.gz
+cd -
+
+cd $TMP
+rm -rf vnc_unixsrc
+tar xvf $CWD/${PRGNAM}-${VERSION}_unixsrc.tar.?z* || exit 1
+cd vnc_unixsrc || exit 1
+
+# Make sure ownerships and permissions are sane:
+chown -R root:root .
+find . \
+  \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
+  -exec chmod 755 {} \; -o \
+  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
+  -exec chmod 644 {} \;
+
+# Make vncserver use sane pathnames and executable permissions:
+zcat $CWD/tightvnc.paths-and-perms.diff.gz | patch -p1 --verbose || exit 1
+patch -p0 < $CWD/Xvnc_cfb.patch || exit 1
+tar -zxvf $CWD/cfbi.patch.tar.gz || exit 1
+
+# Use xinit's Xclients script to start the session:
+cat vnc-xclients.patch | sed -e 's/Red Hat /Slackware /' | patch || exit 1
+
+xmkmf -a
+make CDEBUGFLAGS="$SLKCFLAGS" World || exit 1
+
+cd Xvnc
+  LDFLAGS="$SLKLDFLAGS -Wl,--copy-dt-needed-entries" \
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  ./configure
+  make EXTRA_LIBRARIES="-lnsl -lwrap -lnss_nis" CDEBUGFLAGS="$SLKCFLAGS" \
+    EXTRA_DEFINES="-DUSE_LIBWRAP=1" || exit 1
+cd -  # end 'cd Xvnc'
+
+# Manually install files:
+mkdir -p $PKG/usr/bin $PKG/usr/man/man1
+./vncinstall $PKG/usr/bin $PKG/usr/man
+
+mkdir -p $PKG/usr/share/tightvnc
+cp -aR classes $PKG/usr/share/tightvnc/
+
+mkdir $PKG/etc
+cp -a tightvncserver.conf $PKG/etc/tightvncserver.conf.new
+
+# Add documentation:
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  LICENCE.TXT README WhatsNew ChangeLog \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/install/README.1st $PKG/usr/doc/$PRGNAM-$VERSION
+
+# Compress the man page(s):
+if [ -d $PKG/usr/man ]; then
+  find $PKG/usr/man -type f -name "*.?" -exec gzip -9f {} \;
+  for i in $(find $PKG/usr/man -type l -name "*.?") ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+fi
+
+# Strip binaries:
+find $PKG | xargs file | grep -e "executable" -e "shared object" \
+  | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null
+
+# Add a package description:
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+zcat $CWD/doinst.sh.gz > $PKG/install/doinst.sh
+
+# Build the package:
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}.txz
+

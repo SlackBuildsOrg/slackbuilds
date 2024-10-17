@@ -1,0 +1,61 @@
+--- Xvnc/config/cf/Imake.tmpl.old	2009-03-04 22:38:33.000000000 -0800
++++ Xvnc/config/cf/Imake.tmpl	2024-10-11 23:03:15.948884394 -0700
+@@ -598,7 +598,7 @@
+ #if HasLargeTmp || SystemV4
+ #define ArCmd ArCmdBase cq
+ #else
+-#define ArCmd ArCmdBase clq
++#define ArCmd ArCmdBase cq
+ #endif
+ #endif
+ #ifndef ArAddCmd
+--- Xvnc/programs/Xserver/cfb/cfb.h.old	2024-10-12 05:59:47.389151102 -0700
++++ Xvnc/programs/Xserver/cfb/cfb.h	2024-10-12 10:39:11.659738039 -0700
+@@ -29,6 +29,9 @@
+ 
+ ********************************************************/
+ 
++#ifndef _CFB_H_
++#define _CFB_H_
++
+ #include "X.h"
+ #include "pixmap.h"
+ #include "region.h"
+@@ -48,8 +51,20 @@
+    pixmap.devKind = width_of_pixmap_in_bytes
+ */
+ 
++#include "cfbi.h"
++
++#define cfbGCPrivateIndex cfbGCPrivateIndex_T(CFB_BITWIDTH)
++#define cfbGCPrivateIndex_T(x) cfbGCPrivateIndex_TT(x)
++#define cfbGCPrivateIndex_TT(x) cfbGCPrivateIndex##x
+ extern int  cfbGCPrivateIndex;
++#define cfbWindowPrivateIndex cfbWindowPrivateIndex_T(CFB_BITWIDTH)
++#define cfbWindowPrivateIndex_T(x) cfbWindowPrivateIndex_TT(x)
++#define cfbWindowPrivateIndex_TT(x) cfbWindowPrivateIndex##x
+ extern int  cfbWindowPrivateIndex;
++#define cfbPuntCopyPlane cfbPuntCopyPlane_T(CFB_BITWIDTH)
++#define cfbPuntCopyPlane_T(x) cfbPuntCopyPlane_TT(x)
++#define cfbPuntCopyPlane_TT(x) cfbPuntCopyPlane##x
++
+ 
+ /* private field of GC */
+ typedef struct {
+@@ -1505,3 +1520,5 @@
+ #define intToX(i)	((int) ((short) (i)))
+ #define intToY(i)	(GetHighWord(i))
+ #endif
++
++#endif  /* _CFB_H_ */
+--- tightvnc.spec.old	2024-10-15 21:35:20.516295021 -0700
++++ tightvnc.spec	2024-10-15 21:36:02.184294275 -0700
+@@ -47,7 +47,7 @@
+ make CDEBUGFLAGS="$RPM_OPT_FLAGS" World
+ cd Xvnc
+ ./configure
+-make EXTRA_LIBRARIES="-lwrap -lnss_nis" CDEBUGFLAGS="$RPM_OPT_FLAGS" \
++make EXTRA_LIBRARIES="-lnsl -lwrap -lnss_nis" CDEBUGFLAGS="$RPM_OPT_FLAGS" \
+      EXTRA_DEFINES="-DUSE_LIBWRAP=1"
+ 
+ %install

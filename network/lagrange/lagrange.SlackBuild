@@ -26,10 +26,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lagrange
-VERSION=${VERSION:-1.17.6}
+VERSION=${VERSION:-1.18.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
-PKGTYPE=${PKGTYPE:-tgz}
+PKGTYPE=${PKGTYPE:-txz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

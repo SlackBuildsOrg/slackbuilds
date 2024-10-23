@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# SlackBuild build script for python-watchdog
+# SlackBuild build script for python3-watchdog
 
 # Copyright (c) 2000-2020 Prof. Horstmann <wmh (at) eipg.fr>
 # Copyright 2023-2024 Isaac Yu <isaacyu@protonmail.com>
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-watchdog
-VERSION=${VERSION:-5.0.2}
+VERSION=${VERSION:-5.0.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

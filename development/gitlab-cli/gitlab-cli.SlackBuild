@@ -26,24 +26,28 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gitlab-cli
 DEBNAM=glab
-DEBARCH=amd64
-VERSION=${VERSION:-1.48.0}
+VERSION=${VERSION:-1.46.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i586
-        DEBARCH="386"
-        ;;
-    arm*) ARCH=arm
-        DEBARCH="$( uname -m )"
-        ;;
-       *) ARCH=$( uname -m )
-        DEBARCH="amd64"
-        ;;
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
   esac
+fi
+
+if [ "$ARCH" = "arm" ] && [ -z "$DEBARCH" ]; then
+    echo "Download .deb package at:"
+    echo -n "https://gitlab.com/gitlab-org/cli/-/releases/"
+    echo "v"$VERSION"/downloads/glab_"$VERSION"_Linux_"$( uname -m )".deb"
+    echo "and call SlackBuild doing: DEBARCH="$( uname -m )" $0"
+elif [ "$ARCH" = "i586" ]; then
+    DEBARCH="i386"
+elif [ "$ARCH" = "x86_64" ]; then
+    DEBARCH="x86_64"
 fi
 
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
@@ -61,7 +65,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 
 cd $PKG
-ar p $CWD/${DEBNAM}_${VERSION}_linux_${DEBARCH}.deb data.tar.gz | tar xzv
+ar p $CWD/${DEBNAM}_${VERSION}_Linux_${DEBARCH}.deb data.tar.gz | tar xzv
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

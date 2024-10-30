@@ -9,12 +9,12 @@
 # Based on http://slackbuilds.org/template.SlackBuild
 
 # Modified by Mario Preksavec <mario@slackware.hr>
-# Updated by Emmanuel N. Millan
+# Updated by Emmanuel N. Millan 2024
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ipmitool
-VERSION=${VERSION:-1.8.18}
+VERSION=${VERSION:-1.8.19}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -55,12 +55,19 @@ fi
 
 set -e
 
+
+cp ${PRGNAM^^}_${VERSION//./_}.tar.gz ${PRGNAM}-${VERSION}.tar.gz
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
+echo "${PRGNAM^^}_${VERSION//./_}.tar.gz"
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+rm -rf $CWD/$PRGNAM-$VERSION.tar.gz
+mv $PRGNAM ${PRGNAM}-${VERSION}
 cd $PRGNAM-$VERSION
+sed "s|http://www.iana.org/assignments/enterprise-numbers|https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers|" -i Makefile.am
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -68,15 +75,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Apply a lot of patches (thanks, fedora!)
-for i in $CWD/patches/* ; do patch -p1 < $i ; done
-aclocal
-libtoolize --automake --copy
-autoheader
-automake --foreign --add-missing --copy
-aclocal
-autoconf
-automake --foreign
+./bootstrap
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \

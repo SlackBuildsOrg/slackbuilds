@@ -93,7 +93,7 @@ cd src
     -e "s|-O3$|$SLKCFLAGS|" \
     Makefile
 
-  make
+  make -j1
   make install DESTDIR=$PKG
 cd -
 

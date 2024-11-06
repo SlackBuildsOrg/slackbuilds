@@ -1,0 +1,8 @@
+jpm -- the janet package manager.
+
+Janet is a programming language for system scripting, 
+expressive automation, and extending programs written 
+in C or C++ with user scripting capabilities.
+
+This package requires the Janet language to install
+and provides jpm, the Janet package manager.

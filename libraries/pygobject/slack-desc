@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+pygobject: pygobject (Python bindings for GObject libraries)
+pygobject:
+pygobject: PyGObject is a Python package which provides bindings for GObject
+pygobject: based libraries such as GTK, GStreamer, WebKitGTK, GLib, GIO, etc.
+pygobject:
+pygobject: PyGObject uses GLib, GObject, GIRepository, libffi and other
+pygobject: libraries to access the C library (libgtk-4.so).
+pygobject:
+pygobject:
+pygobject: Homepage: https://pygobject.gnome.org/index.html
+pygobject:

@@ -1,0 +1,13 @@
+pygobject -- Python bindings for GObject. 
+
+PyGObject is a Python package which provides bindings
+for GObject based libraries such as GTK, GStreamer, 
+WebKitGTK, GLib, GIO and many more.
+
+PyGObject uses GLib, GObject, GIRepository, libffi 
+and other libraries to access the C library 
+(libgtk-4.so) in combination with the additional 
+metadata from the accompanying typelib file 
+(Gtk-4.0.typelib) and dynamically provides a Python 
+interface based on that information.
+

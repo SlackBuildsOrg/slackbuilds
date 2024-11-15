@@ -81,8 +81,6 @@ for res in 16 22 24 32 48 64 128 256 512; do
 "$PKG/usr/share/icons/hicolor/${res}x${res}/apps/$SRCNAM.png"
 done
 
-# docs.
-gzip -dc $PKG/usr/share/doc/$SRCNAM/changelog.gz > $PKG/usr/doc/$PRGNAM-$VERSION/ChangeLog
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 # remove dirs.

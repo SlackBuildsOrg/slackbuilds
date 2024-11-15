@@ -1,3 +1,14 @@
+# Patched by Peter Christy <pete.christy.uk@gmail.com>
+
+# update configuration and shared library cache for linker to find .so files
+echo "/usr/lib64/nordvpn" > /etc/ld.so.conf.d/nordvpn.conf
+# NOTE: We found some really strange behavior with `ldconfig` cache refresh here.
+# On .deb systems, using just `ldconfig` causes the nordvpnd daemon to fail on
+# the first start with error that .so are missing. On restart, it's working again.
+# Adding ANY flag to `ldconfig` (even the one we added on our own which does
+# literally nothing) fixes the issue.
+ldconfig -v > /dev/null 2>&1
+
 if [ -x /usr/bin/update-desktop-database ]; then
   /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
 fi

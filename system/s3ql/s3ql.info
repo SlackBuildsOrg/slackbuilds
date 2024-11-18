@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/s3ql/s3ql/releases/download/s3ql-5.2.3/s3ql-5.2.3.t
 MD5SUM="b0b2397681fa1bb1a91c49eeb6cb78f3"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-dugong python3-defusedxml python3-pycrypto llfuse apsw"
+REQUIRES="python3-dugong python3-defusedxml python3-pycrypto llfuse apsw pyfuse3 python3-trio"
 MAINTAINER="Sean Hinchee"
 EMAIL="henesy.dev@gmail.com"

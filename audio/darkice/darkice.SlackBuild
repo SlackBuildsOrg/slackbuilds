@@ -2,6 +2,7 @@
 
 # Slackware build script for "darkice".
 
+# Copyright 2024 Sean Hinchee
 # Copyright 2014-2015 Marcel Saegebarth <marc@mos6581.de>
 # All rights reserved.
 #
@@ -27,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=darkice
-VERSION=${VERSION:-1.2}
+VERSION=${VERSION:-1.5}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -98,7 +99,7 @@ cat rc.$PRGNAM > $PKG/etc/rc.d/rc.$PRGNAM.new
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  AUTHORS COPYING ChangeLog FAQ INSTALL INSTALL.lame INSTALL.vorbis NEWS \
+  AUTHORS COPYING ChangeLog FAQ NEWS \
   README TODO $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

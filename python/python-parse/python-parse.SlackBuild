@@ -2,6 +2,7 @@
 
 # SlackBuild script for "python-parse".
 
+# Copyright 2024 Sean Hinchee
 # Copyright 2014-2015 Marcel Saegebarth <marc@mos6581.de>
 # All rights reserved.
 #
@@ -28,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python-parse
 SRCNAM=parse
-VERSION=${VERSION:-1.6.6}
+VERSION=${VERSION:-1.19.0}
 BUILD=${BUILD:-4}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -82,11 +83,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-python setup.py install --root=$PKG
-
-if $(python3 -c 'import sys' 2>/dev/null); then
-  python3 setup.py install --root=$PKG
-fi
+# newer releases need newer setuptools 
+python3 setup.py install --root=$PKG
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a README.rst $PKG/usr/doc/$PRGNAM-$VERSION

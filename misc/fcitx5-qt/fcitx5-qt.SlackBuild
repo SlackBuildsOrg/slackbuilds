@@ -23,8 +23,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fcitx5-qt
-VERSION=${VERSION:-5.1.5}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-5.1.8}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -65,7 +65,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.*
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -82,8 +82,8 @@ cd build
     -DCMAKE_INSTALL_PREFIX="/usr" \
     -DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
     -DENABLE_QT4=Off \
-    -DENABLE_QT6=Off \
-    -DENABLE_QT6_WAYLAND_WORKAROUND=Off ..
+    -DENABLE_QT6=On \
+    -DENABLE_QT6_WAYLAND_WORKAROUND=On ..
   make
   make install/strip DESTDIR=$PKG
 cd ..

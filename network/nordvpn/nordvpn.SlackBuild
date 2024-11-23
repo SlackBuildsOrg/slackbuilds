@@ -58,10 +58,12 @@ set -e
 
 if [ "$ARCH" = "i586" ]; then
   DEBARCH="i386"
+  LIB_DIR="lib"
 elif [ "$ARCH" = "i686" ]; then
   DEBARCH="i386"
 elif [ "$ARCH" = "x86_64" ]; then
   DEBARCH="amd64"
+  LIB_DIR="lib64"
 else
   echo "Package for $ARCH architecture is not available."
   exit 1
@@ -91,10 +93,11 @@ cd $PKG
 ar p $CWD/${PRGNAM}_${VERSION}_${DEBARCH}.deb data.tar.gz | tar zxv
 
 # nordvpn-3.19.x appears to need additional libraries:
-mkdir -p usr/lib64/nordvpn
-cp usr/lib/nordvpn/*.so usr/lib64/nordvpn/
+mkdir -p usr/$LIB_DIR/nordvpn
+cp usr/lib/nordvpn/*.so usr/$LIB_DIR/nordvpn/
+
 # Remove libsqlite3 so as not to interfere with Slackware's native version:
-rm usr/lib64/nordvpn/libsqlite3.so
+rm usr/$LIB_DIR/nordvpn/libsqlite3.so
 
 rm -fR etc usr/lib
 

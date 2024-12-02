@@ -1,0 +1,14 @@
+WebKitGTK+ is a full-featured port of the WebKit rendering engine,
+suitable for projects requiring any kind of web integration, from
+hybrid HTML/CSS applications to full-fledged web browsers.
+
+It offers WebKit's full functionality and is useful in a wide range
+of systems from desktop computers to embedded systems like phones,
+tablets, and televisions.
+
+NOTE:
+This package builds the 6.0 WebKit API. If you need 4.0 WebKit API,
+use webkit2gtk. If you need 4.1 WebKit API,
+use webkit2gtk4.1. Don't install all of them at the same time!!
+Unless you use this "-DENABLE_WEBDRIVER=OFF \" in the 4.0 API SB
+and the 4.1 API SB.

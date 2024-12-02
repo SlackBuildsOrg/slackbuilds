@@ -1,0 +1,16 @@
+PRGNAM="webkitgtk6.0"
+VERSION="2.46.4"
+HOMEPAGE="https://www.webkitgtk.org/"
+DOWNLOAD="https://www.webkitgtk.org/releases/webkitgtk-2.46.4.tar.xz \
+	  https://gitlab.gnome.org/GNOME/vala/-/raw/0.56.17/vapi/webkitgtk-6.0.vapi \
+	  https://gitlab.gnome.org/GNOME/vala/-/raw/0.56.17/vapi/webkitgtk-web-extension-6.0.vapi \
+	  https://gitlab.gnome.org/GNOME/vala/-/raw/0.56.17/vapi/javascriptcoregtk-6.0.vapi"
+MD5SUM="97f2468a917bfd31c36753430b5a2494 \
+	564ba6e587ed5acf88467566cd972ab1 \
+	54509fb9a89dbbea61b0b3026451ded0 \
+        dfbf475a30ad735eede65e48ef8cdd2d"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="bubblewrap geoclue2 wpebackend-fdo xdg-dbus-proxy libsoup3 unifdef"
+MAINTAINER="Nathaniel Russell"
+EMAIL="naterussell83@gmail.com"

@@ -30,7 +30,7 @@ SRCNAM=webkitgtk
 VERSION=${VERSION:-2.46.4}
 TAG=${TAG:-_SBo}
 BUILD=${BUILD:-1}
-PKGTYPE=${PKGTYPE:-txz}
+PKGTYPE=${PKGTYPE:-tgz}
 VALADIR="usr/share/"$( ls /usr/share/|grep "vala-"|awk -F"/" '{print $1}' )"/vapi"
 
 TMP=${TMP:-/tmp/SBo}

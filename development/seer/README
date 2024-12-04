@@ -1,0 +1,5 @@
+The aim is a simple, yet pleasing gui to gdb.
+It includes a console, assembly view, memory visualizer, graphical
+array visualizer, struct visualizer, image visualizer.
+
+https://github.com/epasveer/seer

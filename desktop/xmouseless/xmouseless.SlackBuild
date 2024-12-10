@@ -72,8 +72,8 @@ chown -R root:root .
 chmod 644 *
 
 sed -i \
- 's/^CFLAGS.*=/CFLAGS +=/ ; s/$(PREFIX)/$(DESTDIR)$(PREFIX)/' \
-Makefile
+ 's/^CFLAGS.*=/CFLAGS +=/ ; s/$(PREFIX)/$(DESTDIR)$(PREFIX)/g' \
+ Makefile
 
 [ -e "$CWD/config.h" ] && cp -f $CWD/config.h config.h
 

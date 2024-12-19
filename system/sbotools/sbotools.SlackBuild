@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sbotools
-VERSION=${VERSION:-3.1}
+VERSION=${VERSION:-3.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,7 +73,7 @@ find -L . \
 )
 
 SCRIPTS="check clean config find install remove snap upgrade"
-MANS="man1 man5"
+MANS="man1 man3 man5"
 
 mkdir -p $PKG/usr/sbin \
          $PKG/usr/share/zsh/site-functions \

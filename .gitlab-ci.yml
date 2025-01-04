@@ -1,18 +1,18 @@
 variables:
   FF_DISABLE_UMASK_FOR_DOCKER_EXECUTOR: "true"
   # renovate: datasource=gitlab-releases depName=gitlab-org/cli
-  GLAB_VERSION: 1.50.0
+  GLAB_VERSION: 1.51.0
   # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
-  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.3-15.0@sha256:2e4113df24234bf103cf9e665aa450dd235b8fb8c55cfa59938abf329731a931
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.3-15.0@sha256:75a5d705957ef4e5ae69dbe403abea8b79f3d99da07ba646176268179e1122a8
 
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 default:
-  image: docker:27.3.1@sha256:6ca9a6811085e2cf769cbac04bc47daf66629102990391caab7cf37426e939da
+  image: docker:27.4.1@sha256:d33ffba5909705d375ef1a99bb69fe6e21d80482134283226b119acf18bb08b4
   services:
-    - docker:27.3.1-dind@sha256:6ca9a6811085e2cf769cbac04bc47daf66629102990391caab7cf37426e939da
+    - docker:27.4.1-dind@sha256:d33ffba5909705d375ef1a99bb69fe6e21d80482134283226b119acf18bb08b4
 
 pr-checks:
   script: |
@@ -21,8 +21,8 @@ pr-checks:
 
     apk add git
 
-    wget --quiet "https://gitlab.com/gitlab-org/cli/-/releases/v$GLAB_VERSION/downloads/glab_""$GLAB_VERSION""_Linux_x86_64.tar.gz"
-    tar -xf "glab_""$GLAB_VERSION""_Linux_x86_64.tar.gz" bin/glab
+    wget --quiet "https://gitlab.com/gitlab-org/cli/-/releases/v$GLAB_VERSION/downloads/glab_""$GLAB_VERSION""_linux_amd64.tar.gz"
+    tar -xf "glab_""$GLAB_VERSION""_linux_amd64.tar.gz" bin/glab
     chmod 0755 bin/glab
     mv bin/glab /usr/local/bin
     rm -rf bin

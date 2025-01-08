@@ -24,6 +24,7 @@ de for German
 it for Italian
 pt for Portugese
 ja for Japanese (guide only, no help - defaults to C)
+zh for Chinese (guide only, no help - defaults to C)
 NOTE: the Russian translation has been dropped
 
 Note: This script builds the internal guides in all available

@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnucash-docs
-VERSION=${VERSION:-4.11}
+VERSION=${VERSION:-5.10}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -72,42 +72,63 @@ mkdir -p build
 cd build
   cmake \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_DATADIR=/usr \
     $WITHMOBI \
     -DCMAKE_BUILD_TYPE=Release ..
   make
+  make install DESTDIR=$PKG
+
   if [ "${HTML:-no}" = "yes" ]; then
-    make $DOCLANG-gnucash-guide-html || make C-gnucash-guide-html
-    make $DOCLANG-gnucash-help-html || make C-gnucash-help-html
+    make html
   fi
   if [ "$MOBI" = "yes" ]; then
-    make $DOCLANG-gnucash-guide-mobi || make C-gnucash-guide-mobi
-    make $DOCLANG-gnucash-help-mobi || make C-gnucash-help-mobi
+    make mobi
   elif [ "${EPUB:-no}" = "yes" ]; then
-    make $DOCLANG-gnucash-guide-epub || make C-gnucash-guide-epub
-    make $DOCLANG-gnucash-help-epub || make C-gnucash-help-epub
+    make epub
   fi
   if [ "${PDF:-no}" = "yes" ]; then
-    make $DOCLANG-gnucash-guide-pdf || make C-gnucash-guide-pdf
-    make $DOCLANG-gnucash-help-pdf || make C-gnucash-help-pdf
+    make pdf
   fi
-
-  make install DESTDIR=$PKG
 
 # Move the files to where they belong:
   mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-  cp -Rv share/doc/$DOCLANG/* $PKG/usr/doc/$PRGNAM-$VERSION
-  cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+  cp share/$PRGNAM/* $PKG/usr/doc/$PRGNAM-$VERSION
+  if [ "$HTML" = "yes" ]; then
+    cp -Rv share/doc/$DOCLANG/* $PKG/usr/doc/$PRGNAM-$VERSION
 # There is no help system for Japanese, so:
-  if [ "$DOCLANG" = "ja" ]; then
-    cp -Rv share/doc/C/gnucash-help* $PKG/usr/doc/$PRGNAM-$VERSION
+    if [ "$DOCLANG" = "ja" -o "$DOCLANG" = "zh" ]; then
+      cp -Rv share/doc/C/gnucash-help* $PKG/usr/doc/$PRGNAM-$VERSION
+    fi
+# Correct bad perms to satisfy sbopkglint:
+#    if [ "$HTML" = "yes" ]; then
+#      chmod -x $PKG/usr/doc/$PRGNAM-$VERSION/gnucash-{guide,help}/{figures,stylesheet}/*
+#    fi
   fi
-  mv $PKG/usr/share/$PRGNAM/* $PKG/usr/doc/$PRGNAM-$VERSION
-# get rid of unused folders:
-  rm -rf $PKG/usr/share/{$PRGNAM,doc}
+  if [ "$PDF" = "yes" ]; then
+    cp -Rv share/doc/$DOCLANG/* $PKG/usr/doc/$PRGNAM-$VERSION
+# There is no help system for Japanese, so:
+    if [ "$DOCLANG" = "ja" -o "$DOCLANG" = "zh" ]; then
+      cp -Rv share/doc/C/gnucash-help* $PKG/usr/doc/$PRGNAM-$VERSION
+    fi
+  fi
+  if [ "$EPUB" = "yes" ]; then
+    cp -Rv share/doc/$DOCLANG/* $PKG/usr/doc/$PRGNAM-$VERSION
+# There is no help system for Japanese, so:
+    if [ "$DOCLANG" = "ja" -o "$DOCLANG" = "zh" ]; then
+      cp -Rv share/doc/C/gnucash-help* $PKG/usr/doc/$PRGNAM-$VERSION
+    fi
+  fi
+  if [ "$MOBI" = "yes" ]; then
+    cp -Rv share/doc/$DOCLANG/* $PKG/usr/doc/$PRGNAM-$VERSION
+# There is no help system for Japanese, so:
+    if [ "$DOCLANG" = "ja" -o "$DOCLANG" = "zh" ]; then
+      cp -Rv share/doc/C/gnucash-help* $PKG/usr/doc/$PRGNAM-$VERSION
+    fi
+  fi
+  cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 cd ..
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

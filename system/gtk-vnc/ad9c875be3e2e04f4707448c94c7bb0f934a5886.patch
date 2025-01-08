@@ -1,0 +1,44 @@
+From ad9c875be3e2e04f4707448c94c7bb0f934a5886 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Date: Mon, 6 Jan 2025 10:50:31 +0000
+Subject: [PATCH] Fix sig of mpz_urandomb in dhtest
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+While the API docs declare the 2nd parameter as 'gmp_randstate_t', the
+header files declare it as 'gmp_randstate_ptr'. Either way this does not
+matter for the test suite from a functional POV as the param is not
+used. We just need to avoid triggering the compiler warnings:
+
+[59/119] Compiling C object src/dhtest.p/dhtest.c.o
+../src/dhtest.c:45:48: warning: argument 2 of type ‘__gmp_randstate_struct[1]’ with mismatched bound [-Warray-parameter=]
+   45 | void mpz_urandomb(mpz_ptr mpi, gmp_randstate_t rng G_GNUC_UNUSED, mp_bitcnt_t bits)
+In file included from /usr/include/gmp.h:59,
+                 from ../src/dhpriv.h:24,
+                 from ../src/dhtest.c:23:
+/usr/include/gmp-x86_64.h:1114:44: note: previously declared as ‘gmp_randstate_ptr’ {aka ‘__gmp_randstate_struct *’}
+ 1114 | __GMP_DECLSPEC void mpz_urandomb (mpz_ptr, gmp_randstate_ptr, mp_bitcnt_t);
+      |                                            ^~~~~~~~~~~~~~~~~
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ src/dhtest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/dhtest.c b/src/dhtest.c
+index 3d7512b..a18145e 100644
+--- a/src/dhtest.c
++++ b/src/dhtest.c
+@@ -42,7 +42,7 @@ struct DHTestData {
+ };
+ 
+ /* Mock this to make test repeatable */
+-void mpz_urandomb(mpz_ptr mpi, gmp_randstate_t rng G_GNUC_UNUSED, mp_bitcnt_t bits)
++void mpz_urandomb(mpz_ptr mpi, gmp_randstate_ptr rng G_GNUC_UNUSED, mp_bitcnt_t bits)
+ {
+     size_t len = bits / 8;
+     guchar *data = g_new0(guchar, len);
+-- 
+GitLab
+

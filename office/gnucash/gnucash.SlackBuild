@@ -26,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnucash
-VERSION=${VERSION:-4.11}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-5.10}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -119,31 +119,24 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-if $(pkg-config --exists webkit2gtk-4.1); then
-  #use webkit2gtk4.1 instead of webkit2gtk if present.
-  sed -i 's/webkit2gtk-4.0/webkit2gtk-4.1/g' CMakeLists.txt
-  sed -i 's/WebKit2Gtk4/WebKit2Gtk4.1/g' CMakeLists.txt
-fi
-
 mkdir -p build
 cd build
   cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_C_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIBDIR=/usr/lib${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_DATADIR=/usr \
     -DSYSCONFDIR=/etc \
     -DCOMPILE_GSCHEMAS=OFF \
     $DBIARGS \
     $W_PYTHON \
     $OFXBANKING \
     $AQBANKING \
-    -GNinja \
-    -DGNUCASH_BUILD_ID="$VERSION $( date -I ) by $PACKAGER" \
-    -DCMAKE_BUILD_TYPE=release ..
+    -DGNUCASH_BUILD_ID="$VERSION `date -I` by $PACKAGER" \
+    -DCMAKE_BUILD_TYPE=Release ..
 
-  "${NINJA:=ninja}"
-  DESTDIR="$PKG" $NINJA install
+  make
+  make install DESTDIR=$PKG
 cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

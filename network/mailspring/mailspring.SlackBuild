@@ -82,6 +82,9 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
     fi
   done
 
+# Remove an unnecessary rpath
+patchelf --remove-rpath "${PKG}/usr/share/mailspring/resources/app.asar.unpacked/mailsync.bin"
+
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 

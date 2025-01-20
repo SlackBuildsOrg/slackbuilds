@@ -1,0 +1,10 @@
+synochat is the Synology Chat Client desktop software.
+
+Synology Chat is a service which runs on Synology NAS systems.
+Communicate easily and securely with an all-in-one, license-free, and
+private cloud messaging service.
+
+The SlackBuild script downloads the .deb direct from Synology,
+extracts and installs it.
+
+https://www.synology.com/dsm/feature/chat

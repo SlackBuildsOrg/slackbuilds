@@ -1,0 +1,7 @@
+hardened_malloc aims to prevent many common memory
+vulnerabilities, such as buffer overflows, double frees,
+and use-after-frees. It is designed to improve security
+without significant performance penalties.
+
+Homepage: https://github.com/GrapheneOS/hardened_malloc
+

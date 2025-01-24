@@ -1,0 +1,16 @@
+hardened_malloc aims to prevent many common memory
+vulnerabilities, such as buffer overflows, double frees,
+and use-after-frees. It is designed to improve security
+without significant performance penalties.
+
+can be integrated into applications in various
+ways, including:
+
+Directly: By linking applications with the hardened_malloc
+          library.
+
+With tools like firejail: To isolate and restrict the
+memory access of dillo browser within a sandboxed environment.
+
+Example:
+firejail --env=LD_PRELOAD=/path/to/libhardened_malloc.so dillo

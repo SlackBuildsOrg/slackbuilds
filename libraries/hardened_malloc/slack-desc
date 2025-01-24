@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+               |-----handy-ruler------------------------------------------------------|
+hardened_malloc: hardened_malloc (memory allocator providing enhanced security.)
+hardened_malloc:
+hardened_malloc: hardened_malloc aims to prevent many common memory
+hardened_malloc: vulnerabilities, such as buffer overflows, double frees,
+hardened_malloc: and use-after-frees. It is designed to improve security
+hardened_malloc: without significant performance penalties.
+hardened_malloc:
+hardened_malloc:
+hardened_malloc:
+hardened_malloc: Homepage: https://github.com/GrapheneOS/hardened_malloc
+hardened_malloc:

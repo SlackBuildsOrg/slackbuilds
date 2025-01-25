@@ -2,7 +2,7 @@
 
 # Slackware build script for jdk23
 
-# Copyright 2024 Ebben Aries <slackbuilds@dscp.org>
+# Copyright 2025 Ebben Aries <slackbuilds@dscp.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,6 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jdk23
 VERSION=${VERSION:-23.0.1}
-SRCVER=${SRCVER:-23}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -65,8 +64,8 @@ mkdir -p $TMP $OUTPUT \
          $PKG/{install,etc/profile.d,usr/{lib${LIBDIRSUFFIX},doc/$PRGNAM-$VERSION}}
 
 cd $PKG/usr/lib${LIBDIRSUFFIX}
-tar -xvf $CWD/jdk-$SRCVER?linux*.tar.gz
-mv $(tar -tf $CWD/jdk-$SRCVER?linux*.tar.gz | head -1 | cut -d/ -f1) $PRGNAM-$VERSION
+tar -xvf $CWD/jdk-${VERSION}_linux-x64_bin.tar.gz
+mv $(tar -tf $CWD/jdk-${VERSION}_linux-x64_bin.tar.gz | head -1 | cut -d/ -f1) $PRGNAM-$VERSION
 
 chown -R root:root $PRGNAM-$VERSION
 find -L $PRGNAM-$VERSION \

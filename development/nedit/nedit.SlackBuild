@@ -24,12 +24,21 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# SlackBuild script for nedit
+# =============================
+# By:          r1w1s1
+# For:         nedit
+# Descr:       NEdit (text editor with GUI)
+# URL:         https://sourceforge.net/projects/nedit/
+# Changelog:
+# v5.7:        28/January/2025 by r1w1s1 - Update/Fix build
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nedit
-VERSION=${VERSION:-5.6a}
+VERSION=${VERSION:-5.7}
 NUMVER=$(echo $VERSION | tr -d '[:alpha:]')
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -82,16 +91,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Apply patch to make compilation possible
-patch -p1 < $CWD/nedit.patch
+sed -i 's|"/bin/csh"|"/bin/sh"|' source/preferences.c
 
-make CFLAGS="${SLKCFLAGS} -DBUILD_UNTESTED_NEDIT" linux
+make CFLAGS="${SLKCFLAGS} -DBUILD_UNTESTED_NEDIT" linux docs
 
 mkdir -p $PKG/usr/bin $PKG/usr/man/man1
 install -m 755 source/nedit $PKG/usr/bin/nedit
 install -m 755 source/nc $PKG/usr/bin/ncl
 install -m 644 doc/nedit.man $PKG/usr/man/man1/nedit.1
-install -m 644 doc/ncl.man $PKG/usr/man/man1/ncl.1
+install -m 644 doc/nc.man $PKG/usr/man/man1/ncl.1
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

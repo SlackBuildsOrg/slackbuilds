@@ -26,17 +26,18 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rustdesk-opt
 SRCNAM=rustdesk
-VERSION=${VERSION:-1.3.6}
+VERSION=${VERSION:-1.3.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
-  case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
-    arm*) ARCH=arm ;;
-       *) ARCH=$( uname -m ) ;;
-  esac
+  ARCH=$( uname -m )
+fi
+
+if [ "$ARCH" != "x86_64" ]; then
+  echo "This package works only on x86_64 architecture."
+  exit 1
 fi
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
@@ -51,15 +52,7 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" ]; then
-  LIBDIRSUFFIX="64"
-else
-  LIBDIRSUFFIX=""
-fi
+LIBDIRSUFFIX="64"
 
 set -e
 
@@ -87,9 +80,23 @@ cd $TMP
 rm -rf vcpkg-2023.04.15
 tar -xvzf $CWD/vcpkg-2023.04.15.tar.gz
 
-./vcpkg-2023.04.15/bootstrap-vcpkg.sh --disableMetrics
+if [ -e $CWD/vcpkg-2023.04.15-deps.tar.gz ] && [ -e $CWD/vcpkg-glibc ]; then
+  cd vcpkg-2023.04.15
+  touch vcpkg.disable-metrics
+  tar -xvzf $CWD/vcpkg-2023.04.15-deps.tar.gz
+  cp -a $CWD/vcpkg-glibc vcpkg
+  chmod +x vcpkg
+  cd ..
+
+  VCPKG_DL="--no-downloads"
+else
+  ./vcpkg-2023.04.15/bootstrap-vcpkg.sh --disableMetrics
+
+  VCPKG_DL=""
+fi
+
 export VCPKG_ROOT=$TMP/vcpkg-2023.04.15
-./vcpkg-2023.04.15/vcpkg --disable-metrics install libvpx libyuv opus aom
+./vcpkg-2023.04.15/vcpkg --disable-metrics $VCPKG_DL install libvpx libyuv opus aom
 
 # rustdesk
 
@@ -101,12 +108,26 @@ else
   export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
 fi
 
-rm -rf $SRCNAM-$VERSION
+rm -rf $SRCNAM-$VERSION cargo-rustdesk
 tar -xvzf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
 mkdir -p target/release
 cp $CWD/libsciter-gtk.so target/release/
 chmod 755 target/release/libsciter-gtk.so
+
+if [ -e $CWD/rustdesk-1.3.7-deps.tar.gz ]; then
+  tar -xvzf $CWD/rustdesk-1.3.7-deps.tar.gz
+elif [ -e .gitmodules ]; then
+  cd libs
+  for url in `cat ../.gitmodules | grep "url =" | sed "s/url =//"`
+  do
+    git clone $url
+  done
+  cd ..
+fi
+
+export CARGO_HOME=$TMP/$SRCNAM-$VERSION/.cargo
+
 VCPKG_ROOT=$VCPKG_ROOT cargo build --release
 
 mkdir -p $PKG/opt/rustdesk

@@ -1,0 +1,6 @@
+Joplin is an open source note-taking app. Capture your thoughts
+and securely access them from any device.
+
+This script builds a Slackware package using the official binary.
+The download is an AppImage which is placed in /opt
+however source is also available on github.

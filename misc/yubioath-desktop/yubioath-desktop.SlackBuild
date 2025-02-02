@@ -39,7 +39,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-if [ "x86_64" != "${ARCH}" ]; then
+if [ "x86_64" != "${ARCH}" ]; then  
   echo
   echo "*************************************************************"
   echo "It seems you are not running a x86_64 system. Yubico"

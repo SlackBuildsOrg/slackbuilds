@@ -112,11 +112,22 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+nprocr=$(nproc)
+
+if [ -n $nprocr  ]; then
+    njobs="-j$nprocr"
+else
+    nv="$(expr $(nproc) + 1)"
+    njobs="-j$nv"
+fi
+
+echo "numjobs:$njobs"
+
 qmake-qt5 "QT += x11extras" \
 QMAKE_CXXFLAGS\ +=\ "$SLKCFLAGS" \
 QMAKE_CFLAGS\ +=\ "$SLKCFLAGS" \
 Qt5Pas.pro
-make
+make $njobs
 make INSTALL_ROOT=$PKG install
 
 rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la

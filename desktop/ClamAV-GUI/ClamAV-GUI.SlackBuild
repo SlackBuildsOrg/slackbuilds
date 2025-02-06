@@ -26,11 +26,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ClamAV-GUI
-VERSION=${VERSION:-20241118_646660d}
+VERSION=${VERSION:-20250206_11ba095}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-COMMIT=${COMMIT:-646660d8dd3267646154f47c12846ecbd8749f97}
+COMMIT=${COMMIT:-11ba095a751c709d5d41c84d1b20e8f8b4e9aae5}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -70,7 +70,7 @@ cd $TMP
 rm -rf $PRGNAM-$COMMIT
 tar xvfz $CWD/$PRGNAM-$COMMIT.tar.gz
 
-cd $PRGNAM-$COMMIT
+cd clamav-gui-$COMMIT
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

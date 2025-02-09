@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=notepadqq
 VERSION=${VERSION:-20241111_632be8b}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 TARBALL=${TARBALL:-632be8bf8a54934865dab587be761154fd59bfca}
@@ -87,7 +87,9 @@ CXXFLAGS="$SLKCFLAGS" \
 make
 make install DESTDIR=$PKG INSTALL_ROOT=$PKG
 
-#patch $PKG/usr/share/applications/notepadqq.desktop $CWD/notepadqq.desktop.patch
+# clean-up sbopkglint complaints
+sed -e "s/Categories=Development;Utility;TextEditor;/Categories=Development;/" -i $PKG/usr/share/applications/notepadqq.desktop
+sed -e "s/OnlyShowIn=Unity;//" -i $PKG/usr/share/applications/notepadqq.desktop
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

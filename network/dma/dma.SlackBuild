@@ -19,11 +19,20 @@
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# SlackBuild script for DragonFly DMA MTA
+# =======================================
+# By:          r1w1s1 (https://fosstodon.org/@r1w1s1)
+# For:         DragonFly DMA MTA
+# Descr:       DragonFly Mail Agent (DMA) - a lightweight MTA for local and remote mail delivery
+# URL:         https://github.com/corecode/dma
+# Changelog:
+# v0.14:       10/feb/2025 by r1w1s1 - update to version 0.14
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dma
-VERSION=${VERSION:-0.13}
+VERSION=${VERSION:-0.14}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

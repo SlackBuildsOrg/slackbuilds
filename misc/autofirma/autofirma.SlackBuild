@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Slackware build script for udsclient3
+
+# Copyright 2025 Eduardo Domínguez Vázquez Spain
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=autofirma			# replace with name of program
+VERSION=${VERSION:-1.8.3}	# replace with version of program
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}		# the "_SBo" is required
+PKGTYPE=${PKGTYPE:-txz}
+
+# Automatically determine the architecture we're building on:
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+# Unless $ARCH is already set, use uname -m for all other archs:
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}		# For consistency's sake, use this
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}		# Drop the package in /tmp
+
+if [ "$ARCH" != "x86_64" ]; then
+  echo "This package only runs on x86_64 systems. Exiting"
+  exit 1
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+#tar --one-top-level=$PRGNAM-$VERSION -xvf $CWD/$PRGNAM-$VERSION.tar.gz
+#mkdir -p $PKG/usr/share/applications
+#mkdir -p $PKG/usr/lib/UDSClient/uds
+#cp -r $PRGNAM-$VERSION/usr/lib/UDSClient/* $PKG/usr/lib/UDSClient
+#cp -r $PRGNAM-$VERSION/usr/share/applications/* $PKG/usr/share/applications/
+mkdir -p $PRGNAM-$VERSION
+cp $CWD/AutoFirma_Linux_Fedora.zip $PRGNAM-$VERSION
+cd $PRGNAM-$VERSION
+unzip AutoFirma_Linux_Fedora.zip
+rpm2tgz $PRGNAM-$VERSION-$BUILD.noarch_FEDORA.rpm
+tar --one-top-level=$PKG -zxf $PRGNAM-$VERSION-$BUILD.noarch_FEDORA.tgz
+
+#find -L . \
+# \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+#  -o -perm 511 \) -exec chmod 755 {} \; -o \
+# \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+#  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# Copy the slack-desc (and a custom doinst.sh if necessary) into ./install
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat $CWD/douninst.sh > $PKG/install/douninst.sh
+
+# Make the package; be sure to leave it in $OUTPUT
+# If package symlinks need to be created during install *before*
+# your custom contents of doinst.sh runs, then add the -p switch to
+# the makepkg command below -- see makepkg(8) for details
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

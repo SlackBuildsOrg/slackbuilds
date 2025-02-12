@@ -1,0 +1,37 @@
+schemesh
+
+Fusion between a Unix shell and a Lisp REPL
+
+Schemesh is an interactive shell scriptable in Lisp.
+
+It is primarily intended as a user-friendly Unix login shell,
+replacing bash, zsh, pdksh etc.
+
+As such, it supports interactive line editing, autocompletion, history
+and the familiar Unix shell syntax: it can start commands, including
+redirections, pipelines, job concatenation with ; && ||, groups
+surrounded by { }, subshells surrounded by [ ], and manage
+foreground/background jobs.
+
+For more complex tasks, it seamlessly integrates a full Lisp REPL
+backed by Chez Scheme.
+
+Schemesh can be used as:
+
+a replacement for traditional interactive Unix shell, as for example
+bash/zsh/pdksh etc.
+
+a Unix shell scriptable in Chez Scheme.
+
+a Scheme REPL with additional syntax and functions to start, redirect
+and manage Unix processes.
+
+a Scheme library for starting, redirecting and managing Unix
+processes.
+
+For scripting and serious programming, schemesh completely replaces
+the slow, clumsy and error-prone scripting language of a traditional
+shell (yes, the author has opinions) with a full-featured Lisp REPL,
+backed by the fast and open-source Chez Scheme compiler that generates
+highly optimized native code.
+

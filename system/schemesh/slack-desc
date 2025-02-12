@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+schemesh: schemesh (A Unix shell and Lisp REPL, fused together)
+schemesh:
+schemesh: Schemesh is an interactive shell scriptable in Lisp.
+schemesh:
+schemesh: It is primarily intended as a user-friendly Unix login shell,
+schemesh: replacing bash, zsh, pdksh etc.
+schemesh: It supports interactive line editing, autocompletion, history and
+schemesh: the familiar Unix shell syntax.
+schemesh:
+schemesh:
+schemesh:

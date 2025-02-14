@@ -1,7 +1,7 @@
 Incremental is a small library that versions your Python projects.
 
-Beware, since 24.7 release, this packages interferes with some*
-other builds, which were fine with stock setuptools.
-You can either remove python3-incremental before building, or
+Beware, since 24.7 release, this packages interferes with stock
+python builds, hence it has been moved to /opt.
+Tu use it :
 export PYTHONPATH=/opt/python$PYVER/site-packages
 with PYVER set to your python3 version.

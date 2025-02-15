@@ -3,7 +3,7 @@
 # Slackware build script for pioneer
 
 # Copyright 2015-2019 Hunter Sezen California, USA
-# Copyright 2023-2024 K. Eugene Carlson Tsukuba, JP
+# Copyright 2023-2025 K. Eugene Carlson Tsukuba, JP
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -35,7 +35,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pioneer
-VERSION=${VERSION:-20240710}
+VERSION=${VERSION:-20250203}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,6 +79,10 @@ chown -R root:root .
 find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
         \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 
+# 20250208 KEC: Post-release patches.
+patch -p0 < $CWD/equipment.diff
+patch -p0 < $CWD/hyperdrive.diff
+
 if [ "${DEBUG:=0}" != 0 ]; then
   RELEASE=Debug
   SLKCFLAGS="$(printf %s "$SLKCFLAGS" | sed 's/-O2/-O0/')"
@@ -112,9 +116,11 @@ cd build
     -DPROJECT_VERSION_INFO="$INFOSTRING" \
     -DCMAKE_BUILD_TYPE=$RELEASE ..
   make
-  make install/strip DESTDIR=$PKG
+  make install DESTDIR=$PKG
   make -C . build-data install DESTDIR=$PKG
 cd ..
+
+strip $PKG/usr/games/*
 
 # Clean up the data directory, put icons and files where they are
 # supposed to be and install an SVG icon.

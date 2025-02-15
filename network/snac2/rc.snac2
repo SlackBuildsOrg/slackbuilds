@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # start/stop/restart snac2
-#
+# 
 # execute this script in /etc/rc.d/rc.local
 
 usage () {
@@ -35,5 +35,5 @@ case "$1" in
     snac2_stop; sleep 3 ; snac2_start "$2"
   ;;
   *)
-  usage
+  usage 
 esac

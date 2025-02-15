@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=snac2
-VERSION=${VERSION:-2.70}
+VERSION=${VERSION:-2.72}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -89,7 +89,7 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 
 mkdir -p $PKG/{var/lib/$PRGNAM,etc/rc.d/}
 chown apache $PKG/var/lib/$PRGNAM
-install -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/rc.$PRGNAM.new
+install -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

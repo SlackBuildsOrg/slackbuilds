@@ -1,0 +1,5 @@
+This is a dummy SlackBuild script which can be used to verify the
+correctness of the functionality of build tools like sbopkg by running
+printenv in the .SlackBuild script and showing its results on the
+buildlog and also storing them in a file in a newly generated
+sbodummy-package.

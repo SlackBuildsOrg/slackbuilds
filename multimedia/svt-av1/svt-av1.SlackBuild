@@ -2,7 +2,7 @@
 
 # Slackware build script for SVT-AV1
 
-# Copyright 2022-2024 Vijay Marcel
+# Copyright 2022-2025 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -34,16 +34,16 @@
 # 14/08/2024: Updated to version 2.1.2
 # 04/09/2024: Updated to version 2.2.1
 # 20/11/2024: Updated to version 2.3.0
-
+# 26/02/2025: updated to version 3.0.0
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=svt-av1
-VERSION=${VERSION:-2.3.0}
+VERSION=${VERSION:-3.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-DIR=${DIR:-SVT-AV1-v2.3.0}
+DIR=${DIR:-SVT-AV1-v3.0.0}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

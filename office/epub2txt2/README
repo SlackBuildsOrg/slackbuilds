@@ -1,0 +1,6 @@
+epub2txt2 Extract text from EPUB documents
+Note: exec command is epub2txt
+Usage:
+epub2txt -h
+
+

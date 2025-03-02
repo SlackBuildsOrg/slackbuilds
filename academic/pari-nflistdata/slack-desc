@@ -5,8 +5,8 @@
 # You must make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':' except on otherwise blank lines.
 
-               |-----handy-ruler------------------------------------------------------|
-pari-nflistdata: pari-nflistdata (pari packages)
+               |-----handy-ruler----------------------------------------------|
+pari-nflistdata: pari-nflistdata (Small discriminant fields data for PARI/GP)
 pari-nflistdata:
 pari-nflistdata: Needed by nflist to list fields of small discriminant
 pari-nflistdata: (currently needed by the single Galois groups A5 and

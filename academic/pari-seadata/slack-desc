@@ -5,8 +5,8 @@
 # You must make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':' except on otherwise blank lines.
 
-            |-----handy-ruler------------------------------------------------------|
-pari-seadata: pari-seadata (pari packages)
+            |-----handy-ruler-------------------------------------------------|
+pari-seadata: pari-seadata
 pari-seadata:
 pari-seadata: Needed by ellap and ellcard for large primes. Require PARI/GP
 pari-seadata: 2.4.3 and up. These polynomials were extracted from the

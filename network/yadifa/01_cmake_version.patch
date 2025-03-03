@@ -1,0 +1,1785 @@
+diff -ruNp yadifa-3.0.1-11664/CMakeLists.txt yadifa-3.0.1-11664.new/CMakeLists.txt
+--- yadifa-3.0.1-11664/CMakeLists.txt	2025-02-14 17:51:57.000000000 +0300
++++ yadifa-3.0.1-11664.new/CMakeLists.txt	2025-03-02 13:21:30.801936683 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ include(${CMAKE_SOURCE_DIR}/cmake/CheckCHeaders.cmake)
+ include(${CMAKE_SOURCE_DIR}/cmake/CheckCompilerFlags.cmake)
+diff -ruNp yadifa-3.0.1-11664/bin/yadifa/CMakeLists.txt yadifa-3.0.1-11664.new/bin/yadifa/CMakeLists.txt
+--- yadifa-3.0.1-11664/bin/yadifa/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/bin/yadifa/CMakeLists.txt	2025-03-02 13:21:30.798936529 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ project(yadifa LANGUAGES C)
+ 
+diff -ruNp yadifa-3.0.1-11664/doc/CMakeLists.txt yadifa-3.0.1-11664.new/doc/CMakeLists.txt
+--- yadifa-3.0.1-11664/doc/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/doc/CMakeLists.txt	2025-03-02 13:21:30.805936887 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ ################################################################################
+ #
+diff -ruNp yadifa-3.0.1-11664/etc/CMakeLists.txt yadifa-3.0.1-11664.new/etc/CMakeLists.txt
+--- yadifa-3.0.1-11664/etc/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/etc/CMakeLists.txt	2025-03-02 13:21:30.807936989 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ ################################################################################
+ #
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/CMakeLists.txt	2025-02-14 17:51:57.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/CMakeLists.txt	2025-03-02 13:21:31.137953870 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ include(${CMAKE_SOURCE_DIR}/cmake/EURidToolbox.cmake)
+ 
+ project(dnscore LANGUAGES C)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/acl-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/acl-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/acl-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/acl-test/CMakeLists.txt	2025-03-02 13:21:30.810937143 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/alarm-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/alarm-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/alarm-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/alarm-test/CMakeLists.txt	2025-03-02 13:21:30.814937347 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/async-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/async-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/async-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/async-test/CMakeLists.txt	2025-03-02 13:21:30.818937552 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/basexx-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/basexx-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/basexx-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/basexx-test/CMakeLists.txt	2025-03-02 13:21:30.822937757 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/basic_priority_queue-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/basic_priority_queue-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/basic_priority_queue-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/basic_priority_queue-test/CMakeLists.txt	2025-03-02 13:21:30.825937910 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/buffer_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/buffer_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/buffer_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/buffer_input_stream-test/CMakeLists.txt	2025-03-02 13:21:30.828938064 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/buffer_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/buffer_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/buffer_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/buffer_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.831938217 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/buffered_file-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/buffered_file-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/buffered_file-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/buffered_file-test/CMakeLists.txt	2025-03-02 13:21:30.833938319 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/bytearray_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/bytearray_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/bytearray_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/bytearray_input_stream-test/CMakeLists.txt	2025-03-02 13:21:30.837938524 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/bytearray_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/bytearray_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/bytearray_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/bytearray_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.840938677 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/bytezarray_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/bytezarray_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/bytezarray_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/bytezarray_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.843938831 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/cache-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/cache-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/cache-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/cache-test/CMakeLists.txt	2025-03-02 13:21:30.846938984 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/checked_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/checked_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/checked_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/checked_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.849939138 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/chroot-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/chroot-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/chroot-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/chroot-test/CMakeLists.txt	2025-03-02 13:21:30.852939291 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/concat_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/concat_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/concat_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/concat_input_stream-test/CMakeLists.txt	2025-03-02 13:21:30.855939445 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/config-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/config-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/config-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/config-test/CMakeLists.txt	2025-03-02 13:21:30.859939649 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/config_key-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/config_key-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/config_key-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/config_key-test/CMakeLists.txt	2025-03-02 13:21:30.862939803 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/config_logger-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/config_logger-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/config_logger-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/config_logger-test/CMakeLists.txt	2025-03-02 13:21:30.864939905 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/counter_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/counter_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/counter_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/counter_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.869940161 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/crc32-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/crc32-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/crc32-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/crc32-test/CMakeLists.txt	2025-03-02 13:21:30.871940263 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/crypto-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/crypto-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/crypto-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/crypto-test/CMakeLists.txt	2025-03-02 13:21:30.874940417 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/digest-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/digest-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/digest-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/digest-test/CMakeLists.txt	2025-03-02 13:21:30.877940570 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dns_message-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_message-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dns_message-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_message-test/CMakeLists.txt	2025-03-02 13:21:30.882940826 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dns_packet_reader-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_packet_reader-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dns_packet_reader-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_packet_reader-test/CMakeLists.txt	2025-03-02 13:21:30.885940979 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dns_packet_writer-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_packet_writer-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dns_packet_writer-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_packet_writer-test/CMakeLists.txt	2025-03-02 13:21:30.889941184 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dns_resource_record-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_resource_record-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dns_resource_record-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dns_resource_record-test/CMakeLists.txt	2025-03-02 13:21:30.892941337 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dnscore-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dnscore-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dnscore-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dnscore-test/CMakeLists.txt	2025-03-02 13:21:30.895941491 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dnscore_extension-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dnscore_extension-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dnscore_extension-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dnscore_extension-test/CMakeLists.txt	2025-03-02 13:21:30.899941695 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dnsformat-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dnsformat-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dnsformat-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dnsformat-test/CMakeLists.txt	2025-03-02 13:21:30.902941849 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dnskey-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dnskey-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dnskey-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dnskey-test/CMakeLists.txt	2025-03-02 13:21:30.905942002 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c keys.c settings.h)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/dnsname-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/dnsname-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/dnsname-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/dnsname-test/CMakeLists.txt	2025-03-02 13:21:30.908942156 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/empty_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/empty_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/empty_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/empty_input_stream-test/CMakeLists.txt	2025-03-02 13:21:30.911942309 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/error_state-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/error_state-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/error_state-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/error_state-test/CMakeLists.txt	2025-03-02 13:21:30.914942463 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/fdtools-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/fdtools-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/fdtools-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/fdtools-test/CMakeLists.txt	2025-03-02 13:21:30.917942616 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/file_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/file_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/file_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/file_input_stream-test/CMakeLists.txt	2025-03-02 13:21:30.920942770 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/file_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/file_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/file_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/file_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.923942923 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/file_pool-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/file_pool-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/file_pool-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/file_pool-test/CMakeLists.txt	2025-03-02 13:21:30.926943077 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/filesystem_file-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/filesystem_file-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/filesystem_file-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/filesystem_file-test/CMakeLists.txt	2025-03-02 13:21:30.930943281 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/format-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/format-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/format-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/format-test/CMakeLists.txt	2025-03-02 13:21:30.933943435 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/hash-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/hash-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/hash-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/hash-test/CMakeLists.txt	2025-03-02 13:21:30.935943537 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/hmac_evp-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/hmac_evp-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/hmac_evp-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/hmac_evp-test/CMakeLists.txt	2025-03-02 13:21:30.937943639 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/host_address-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/host_address-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/host_address-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/host_address-test/CMakeLists.txt	2025-03-02 13:21:30.939943742 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/http_chunk_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/http_chunk_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/http_chunk_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/http_chunk_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.943943946 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/input_stream-test/CMakeLists.txt	2025-03-02 13:21:30.946944100 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/json-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/json-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/json-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/json-test/CMakeLists.txt	2025-03-02 13:21:30.949944253 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/limited_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/limited_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/limited_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/limited_input_stream-test/CMakeLists.txt	2025-03-02 13:21:30.952944407 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/list_dl-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/list_dl-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/list_dl-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/list_dl-test/CMakeLists.txt	2025-03-02 13:21:30.955944560 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/list_dl_nodata-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/list_dl_nodata-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/list_dl_nodata-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/list_dl_nodata-test/CMakeLists.txt	2025-03-02 13:21:30.958944714 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/list_sl-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/list_sl-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/list_sl-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/list_sl-test/CMakeLists.txt	2025-03-02 13:21:30.961944867 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/list_sl_debug-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/list_sl_debug-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/list_sl_debug-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/list_sl_debug-test/CMakeLists.txt	2025-03-02 13:21:30.965945072 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/logger-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/logger-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/logger-test/CMakeLists.txt	2025-02-14 17:51:57.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/logger-test/CMakeLists.txt	2025-03-02 13:21:30.967945174 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/mapped_file-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/mapped_file-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/mapped_file-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/mapped_file-test/CMakeLists.txt	2025-03-02 13:21:30.971945379 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/message_dnsupdate-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/message_dnsupdate-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/message_dnsupdate-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/message_dnsupdate-test/CMakeLists.txt	2025-03-02 13:21:30.974945532 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/mt_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/mt_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/mt_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/mt_output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.979945788 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/mutex-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/mutex-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/mutex-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/mutex-test/CMakeLists.txt	2025-03-02 13:21:30.982945941 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/network-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/network-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/network-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/network-test/CMakeLists.txt	2025-03-02 13:21:30.986946146 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/nsec3_hash-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/nsec3_hash-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/nsec3_hash-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/nsec3_hash-test/CMakeLists.txt	2025-03-02 13:21:30.990946351 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/output_stream-test/CMakeLists.txt	2025-03-02 13:21:30.993946504 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/pace-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/pace-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/pace-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/pace-test/CMakeLists.txt	2025-03-02 13:21:30.998946760 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/parser-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/parser-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/parser-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/parser-test/CMakeLists.txt	2025-03-02 13:21:31.000946862 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/parsing-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/parsing-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/parsing-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/parsing-test/CMakeLists.txt	2025-03-02 13:21:31.005947118 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/pid-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/pid-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/pid-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/pid-test/CMakeLists.txt	2025-03-02 13:21:31.009947322 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/pipe_steam-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/pipe_steam-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/pipe_steam-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/pipe_steam-test/CMakeLists.txt	2025-03-02 13:21:31.013947527 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/pool-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/pool-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/pool-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/pool-test/CMakeLists.txt	2025-03-02 13:21:31.017947732 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/popen_output_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/popen_output_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/popen_output_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/popen_output_stream-test/CMakeLists.txt	2025-03-02 13:21:31.019947834 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/process-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/process-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/process-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/process-test/CMakeLists.txt	2025-03-02 13:21:31.023948039 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treemap-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treemap-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treemap-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treemap-test/CMakeLists.txt	2025-03-02 13:21:31.025948141 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treemap_debug-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treemap_debug-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treemap_debug-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treemap_debug-test/CMakeLists.txt	2025-03-02 13:21:31.028948294 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treeset-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treeset-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treeset-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treeset-test/CMakeLists.txt	2025-03-02 13:21:31.032948499 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treeset_debug-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treeset_debug-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/ptr_treeset_debug-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_treeset_debug-test/CMakeLists.txt	2025-03-02 13:21:31.035948652 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/ptr_vector-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_vector-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/ptr_vector-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/ptr_vector-test/CMakeLists.txt	2025-03-02 13:21:31.039948857 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/pushback_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/pushback_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/pushback_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/pushback_input_stream-test/CMakeLists.txt	2025-03-02 13:21:31.041948959 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/random-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/random-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/random-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/random-test/CMakeLists.txt	2025-03-02 13:21:31.044949113 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/rest_server-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/rest_server-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/rest_server-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/rest_server-test/CMakeLists.txt	2025-03-02 13:21:31.046949215 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/rewind_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/rewind_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/rewind_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/rewind_input_stream-test/CMakeLists.txt	2025-03-02 13:21:31.049949369 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/rfc-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/rfc-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/rfc-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/rfc-test/CMakeLists.txt	2025-03-02 13:21:31.053949573 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/serial-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/serial-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/serial-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/serial-test/CMakeLists.txt	2025-03-02 13:21:31.056949727 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/service-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/service-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/service-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/service-test/CMakeLists.txt	2025-03-02 13:21:31.060949931 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/shared_circular_buffer-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/shared_circular_buffer-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/shared_circular_buffer-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/shared_circular_buffer-test/CMakeLists.txt	2025-03-02 13:21:31.063950085 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/shared_heap-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/shared_heap-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/shared_heap-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/shared_heap-test/CMakeLists.txt	2025-03-02 13:21:31.065950187 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/signal-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/signal-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/signal-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/signal-test/CMakeLists.txt	2025-03-02 13:21:31.067950289 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/skeleton-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/skeleton-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/skeleton-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/skeleton-test/CMakeLists.txt	2025-03-02 13:21:31.070950443 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/sys_get_cpu_count-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/sys_get_cpu_count-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/sys_get_cpu_count-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/sys_get_cpu_count-test/CMakeLists.txt	2025-03-02 13:21:31.074950647 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/thread-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/thread-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/thread-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/thread-test/CMakeLists.txt	2025-03-02 13:21:31.078950852 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/threaded_dll_cw-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_dll_cw-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/threaded_dll_cw-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_dll_cw-test/CMakeLists.txt	2025-03-02 13:21:31.082951057 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/threaded_qsl_cw-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_qsl_cw-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/threaded_qsl_cw-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_qsl_cw-test/CMakeLists.txt	2025-03-02 13:21:31.084951159 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/threaded_ringbuffer_cw-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_ringbuffer_cw-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/threaded_ringbuffer_cw-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_ringbuffer_cw-test/CMakeLists.txt	2025-03-02 13:21:31.087951313 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/threaded_slg-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_slg-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/threaded_slg-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/threaded_slg-test/CMakeLists.txt	2025-03-02 13:21:31.090951466 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/timeformat-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/timeformat-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/timeformat-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/timeformat-test/CMakeLists.txt	2025-03-02 13:21:31.095951722 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/timems-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/timems-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/timems-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/timems-test/CMakeLists.txt	2025-03-02 13:21:31.098951875 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/tools-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/tools-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/tools-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/tools-test/CMakeLists.txt	2025-03-02 13:21:31.102952080 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/tsig-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/tsig-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/tsig-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/tsig-test/CMakeLists.txt	2025-03-02 13:21:31.106952284 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/typebitmap-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/typebitmap-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/typebitmap-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/typebitmap-test/CMakeLists.txt	2025-03-02 13:21:31.108952387 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/u64_treemap-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/u64_treemap-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/u64_treemap-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/u64_treemap-test/CMakeLists.txt	2025-03-02 13:21:31.112952591 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/uri-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/uri-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/uri-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/uri-test/CMakeLists.txt	2025-03-02 13:21:31.115952745 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/utf8-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/utf8-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/utf8-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/utf8-test/CMakeLists.txt	2025-03-02 13:21:31.120953000 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/xfr_input_stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/xfr_input_stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/xfr_input_stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/xfr_input_stream-test/CMakeLists.txt	2025-03-02 13:21:31.122953103 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/zalloc-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/zalloc-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/zalloc-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/zalloc-test/CMakeLists.txt	2025-03-02 13:21:31.126953307 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/zone_reader_axfr-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/zone_reader_axfr-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/zone_reader_axfr-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/zone_reader_axfr-test/CMakeLists.txt	2025-03-02 13:21:31.129953461 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnscore/tests/zone_reader_text-test/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnscore/tests/zone_reader_text-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnscore/tests/zone_reader_text-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnscore/tests/zone_reader_text-test/CMakeLists.txt	2025-03-02 13:21:31.133953665 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ cmake_path(GET CMAKE_CURRENT_SOURCE_DIR FILENAME NAME)
+ set(SOURCE_FILES main.c)
+diff -ruNp yadifa-3.0.1-11664/lib/dnsdb/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnsdb/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnsdb/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnsdb/CMakeLists.txt	2025-03-02 13:21:31.139953972 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ project(dnsdb LANGUAGES C)
+ 
+ include(${CMAKE_SOURCE_DIR}/cmake/EURidToolbox.cmake)
+diff -ruNp yadifa-3.0.1-11664/lib/dnslg/CMakeLists.txt yadifa-3.0.1-11664.new/lib/dnslg/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/dnslg/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/dnslg/CMakeLists.txt	2025-03-02 13:21:31.143954177 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ project(dnslg LANGUAGES C)
+ set(CMAKE_C_STANDARD 11)
+diff -ruNp yadifa-3.0.1-11664/lib/glibchooks/CMakeLists.txt yadifa-3.0.1-11664.new/lib/glibchooks/CMakeLists.txt
+--- yadifa-3.0.1-11664/lib/glibchooks/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/lib/glibchooks/CMakeLists.txt	2025-03-02 13:21:31.145954279 +0300
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ project(glibchooks LANGUAGES C)
+ 
+ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
+diff -ruNp yadifa-3.0.1-11664/sbin/yadifad/CMakeLists.txt yadifa-3.0.1-11664.new/sbin/yadifad/CMakeLists.txt
+--- yadifa-3.0.1-11664/sbin/yadifad/CMakeLists.txt	2025-02-14 17:51:57.000000000 +0300
++++ yadifa-3.0.1-11664.new/sbin/yadifad/CMakeLists.txt	2025-03-02 13:21:31.148954433 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ project(yadifad LANGUAGES C)
+ 
+diff -ruNp yadifa-3.0.1-11664/sbin/yakeyrolld/CMakeLists.txt yadifa-3.0.1-11664.new/sbin/yakeyrolld/CMakeLists.txt
+--- yadifa-3.0.1-11664/sbin/yakeyrolld/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/sbin/yakeyrolld/CMakeLists.txt	2025-03-02 13:21:31.150954535 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/circular-file-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/circular-file-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/circular-file-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/circular-file-test/CMakeLists.txt	2025-03-02 13:21:31.153954688 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/cjf-scan/CMakeLists.txt yadifa-3.0.1-11664.new/tests/cjf-scan/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/cjf-scan/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/cjf-scan/CMakeLists.txt	2025-03-02 13:21:31.155954791 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/cmdline-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/cmdline-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/cmdline-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/cmdline-test/CMakeLists.txt	2025-03-02 13:21:31.157954893 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/collection-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/collection-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/collection-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/collection-test/CMakeLists.txt	2025-03-02 13:21:31.160955047 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/daemonised-logger-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/daemonised-logger-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/daemonised-logger-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/daemonised-logger-test/CMakeLists.txt	2025-03-02 13:21:31.162955149 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/dns-message-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/dns-message-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/dns-message-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/dns-message-test/CMakeLists.txt	2025-03-02 13:21:31.166955354 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/dnssec-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/dnssec-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/dnssec-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/dnssec-test/CMakeLists.txt	2025-03-02 13:21:31.169955507 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/dsfromkey-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/dsfromkey-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/dsfromkey-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/dsfromkey-test/CMakeLists.txt	2025-03-02 13:21:31.171955609 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/ethbenchprobe/CMakeLists.txt yadifa-3.0.1-11664.new/tests/ethbenchprobe/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/ethbenchprobe/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/ethbenchprobe/CMakeLists.txt	2025-03-02 13:21:31.175955814 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/file-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/file-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/file-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/file-test/CMakeLists.txt	2025-03-02 13:21:31.179956019 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/freebsd12-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/freebsd12-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/freebsd12-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/freebsd12-test/CMakeLists.txt	2025-03-02 13:21:31.181956121 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/hmac-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/hmac-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/hmac-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/hmac-test/CMakeLists.txt	2025-03-02 13:21:31.185956325 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/ipc-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/ipc-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/ipc-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/ipc-test/CMakeLists.txt	2025-03-02 13:21:31.187956428 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/journal-from-ixfr/CMakeLists.txt yadifa-3.0.1-11664.new/tests/journal-from-ixfr/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/journal-from-ixfr/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/journal-from-ixfr/CMakeLists.txt	2025-03-02 13:21:31.191956632 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/journal-fusion/CMakeLists.txt yadifa-3.0.1-11664.new/tests/journal-fusion/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/journal-fusion/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/journal-fusion/CMakeLists.txt	2025-03-02 13:21:31.194956786 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/journal-speed-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/journal-speed-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/journal-speed-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/journal-speed-test/CMakeLists.txt	2025-03-02 13:21:31.197956939 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/keygen-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/keygen-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/keygen-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/keygen-test/CMakeLists.txt	2025-03-02 13:21:31.199957042 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/limiter-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/limiter-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/limiter-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/limiter-test/CMakeLists.txt	2025-03-02 13:21:31.201957144 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/message-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/message-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/message-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/message-test/CMakeLists.txt	2025-03-02 13:21:31.204957298 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/network-interfaces-forall-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/network-interfaces-forall-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/network-interfaces-forall-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/network-interfaces-forall-test/CMakeLists.txt	2025-03-02 13:21:31.206957400 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/notify-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/notify-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/notify-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/notify-test/CMakeLists.txt	2025-03-02 13:21:31.208957502 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/nsec3-answer/CMakeLists.txt yadifa-3.0.1-11664.new/tests/nsec3-answer/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/nsec3-answer/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/nsec3-answer/CMakeLists.txt	2025-03-02 13:21:31.210957604 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/nsec3-hash/CMakeLists.txt yadifa-3.0.1-11664.new/tests/nsec3-hash/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/nsec3-hash/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/nsec3-hash/CMakeLists.txt	2025-03-02 13:21:31.213957758 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/pid-file-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/pid-file-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/pid-file-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/pid-file-test/CMakeLists.txt	2025-03-02 13:21:31.216957911 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/protocol-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/protocol-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/protocol-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/protocol-test/CMakeLists.txt	2025-03-02 13:21:31.218958014 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/query-hammer-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/query-hammer-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/query-hammer-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/query-hammer-test/CMakeLists.txt	2025-03-02 13:21:31.220958116 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/rndc-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/rndc-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/rndc-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/rndc-test/CMakeLists.txt	2025-03-02 13:21:31.223958269 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/rrsig-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/rrsig-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/rrsig-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/rrsig-test/CMakeLists.txt	2025-03-02 13:21:31.225958372 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/shared-circular-buffer-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/shared-circular-buffer-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/shared-circular-buffer-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/shared-circular-buffer-test/CMakeLists.txt	2025-03-02 13:21:31.227958474 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/shared-heap-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/shared-heap-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/shared-heap-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/shared-heap-test/CMakeLists.txt	2025-03-02 13:21:31.230958627 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/simple-http-server-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/simple-http-server-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/simple-http-server-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/simple-http-server-test/CMakeLists.txt	2025-03-02 13:21:31.233958781 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/skeleton/CMakeLists.txt yadifa-3.0.1-11664.new/tests/skeleton/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/skeleton/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/skeleton/CMakeLists.txt	2025-03-02 13:21:31.236958934 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/stream-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/stream-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/stream-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/stream-test/CMakeLists.txt	2025-03-02 13:21:31.238959037 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/tag-gen/CMakeLists.txt yadifa-3.0.1-11664.new/tests/tag-gen/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/tag-gen/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/tag-gen/CMakeLists.txt	2025-03-02 13:21:31.240959139 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/threaded-queue/CMakeLists.txt yadifa-3.0.1-11664.new/tests/threaded-queue/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/threaded-queue/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/threaded-queue/CMakeLists.txt	2025-03-02 13:21:31.243959292 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/udp-echo-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/udp-echo-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/udp-echo-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/udp-echo-test/CMakeLists.txt	2025-03-02 13:21:31.245959395 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/update-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/update-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/update-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/update-test/CMakeLists.txt	2025-03-02 13:21:31.247959497 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/tests/zone-save-test/CMakeLists.txt yadifa-3.0.1-11664.new/tests/zone-save-test/CMakeLists.txt
+--- yadifa-3.0.1-11664/tests/zone-save-test/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/tests/zone-save-test/CMakeLists.txt	2025-03-02 13:21:31.249959599 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ # include(${CMAKE_SOURCE_DIR}/cmake/FindYADIFA.cmake)
+ 
+diff -ruNp yadifa-3.0.1-11664/var/CMakeLists.txt yadifa-3.0.1-11664.new/var/CMakeLists.txt
+--- yadifa-3.0.1-11664/var/CMakeLists.txt	2025-02-14 16:50:04.000000000 +0300
++++ yadifa-3.0.1-11664.new/var/CMakeLists.txt	2025-03-02 13:21:31.252959753 +0300
+@@ -30,7 +30,7 @@
+ #
+ ################################################################################
+ 
+-cmake_minimum_required(VERSION 3.22)
++cmake_minimum_required(VERSION 3.21)
+ 
+ message("var will be installed in ${CMAKE_INSTALL_FULL_LOCALSTATEDIR}/var")
+ 

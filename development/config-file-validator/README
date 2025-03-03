@@ -1,0 +1,4 @@
+The config-file-validator only performs syntax validation.
+
+Usage:
+validator [OPTIONS] [search_path]

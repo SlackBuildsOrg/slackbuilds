@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                     |-----handy-ruler------------------------------------------------------|
+kaccounts-integration: kaccounts-integration (administer web accounts)
+kaccounts-integration:
+kaccounts-integration: Small system to administer web accounts
+kaccounts-integration: for the sites and services across the KDE desktop
+kaccounts-integration:
+kaccounts-integration:
+kaccounts-integration:
+kaccounts-integration:
+kaccounts-integration:
+kaccounts-integration:
+kaccounts-integration:

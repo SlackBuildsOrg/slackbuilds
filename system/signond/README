@@ -1,0 +1,8 @@
+signond
+This is a special version of signond which support plasma5 and plasma6 for Slackware*.
+This package is the main dependency of a packages set:
+libaccounts-glib
+libaccounts-qt
+accounts-qml-module
+signon-ui
+signon-plugin-oauth2

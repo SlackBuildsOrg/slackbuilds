@@ -1,0 +1,3 @@
+Notes:
+1. This is a patched version.
+Scipt install a custom file in /usr/share/accounts/providers/kde/google.provider

@@ -14,6 +14,6 @@ FreeImage: JPEG, TIFF and others needed by today's multimedia applications.
 FreeImage: FreeImage is easy to use, fast, and multithreading safe.
 FreeImage: FreeImagePlus is a C++ wrapper for FreeImage.
 FreeImage:
-FreeImage: Homepage: http://freeimage.sourceforge.net/
+FreeImage: Homepage: https://github.com/danoli3/FreeImage/
 FreeImage:
 FreeImage:

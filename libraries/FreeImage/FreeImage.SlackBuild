@@ -7,7 +7,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=FreeImage
-VERSION=${VERSION:-3.18.0}
+VERSION=${VERSION:-3.19.10}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -22,9 +22,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -53,9 +50,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM
-unzip $CWD/${PRGNAM}$(echo $VERSION | tr -d .)
-cd $PRGNAM
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -63,16 +60,13 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-patch -p1 < $CWD/gcc-version-fix-includes.patch
-patch -p1 < $CWD/cross_platform_byteswap_fix.patch
-
-CFLAGS="$SLKCFLAGS -fexceptions -fvisibility=hidden -DNO_LCMS" \
+CFLAGS="$SLKCFLAGS -fexceptions -fvisibility=hidden -DNO_LCMS -Wno-implicit-function-declaration" \
 CXXFLAGS="$SLKCFLAGS -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -std=c++14" \
 make INSTALLDIR=$PKG/usr/lib${LIBDIRSUFFIX} DESTDIR=$PKG
 make install INSTALLDIR=$PKG/usr/lib${LIBDIRSUFFIX} DESTDIR=$PKG
 
-CFLAGS="$SLKCFLAGS -fexceptions -fvisibility=hidden -DNO_LCMS" \
-CXXFLAGS="$SLKCFLAGS -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy" \
+CFLAGS="$SLKCFLAGS -fexceptions -fvisibility=hidden -DNO_LCMS -Wno-implicit-function-declaration" \
+CXXFLAGS="$SLKCFLAGS -fexceptions -fvisibility=hidden -Wno-ctor-dtor-privacy -std=c++14" \
 make -f Makefile.fip INSTALLDIR=$PKG/usr/lib${LIBDIRSUFFIX} DESTDIR=$PKG
 make -f Makefile.fip install INSTALLDIR=$PKG/usr/lib${LIBDIRSUFFIX} DESTDIR=$PKG
 

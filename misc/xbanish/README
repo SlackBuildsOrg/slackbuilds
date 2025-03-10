@@ -1,11 +1,14 @@
-xbanish (banish the mouse cursor when typing)
+xbanish (hides the mouse cursor while typing)
 
-xbanish hides the mouse cursor when you start typing, and shows it
-again when the mouse cursor moves or a mouse button is pressed. This is
-similar to xterm's pointerMode setting, but xbanish works globally in
-the X11 session.
+xbanish hides the mouse cursor when you start typing and makes it
+reappear when you move the mouse. It's useful for keeping the cursor
+out of the way while working in a terminal or writing text.
 
-One can easily start this automatically by putting "/usr/bin/xbanish &"
-in ~/.xinitrc or some other WM/DE-specific startup file.
+To use it, simply run:
 
-See also: accessibility/unclutter and accessibility/unclutter-xfixes.
+  xbanish &
+
+It runs in the background and starts working immediately.
+
+Homepage: https://github.com/jcs/xbanish
+

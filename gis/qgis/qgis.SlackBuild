@@ -4,7 +4,7 @@
 
 # Copyright 2011 David Spencer, Baildon, West Yorkshire, U.K.
 # Copyright 2013-2021 Benjamin Trigona-Harany
-# Copyright 2023-2024 Giancarlo Dessi, Cagliari, IT
+# Copyright 2023-2025 Giancarlo Dessi, Cagliari, IT
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=qgis
-VERSION=${VERSION:-3.40.1}
+VERSION=${VERSION:-3.42.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -113,9 +113,17 @@ else
   WITHGRASS=""
 fi
 
-# Patch to solve install failure in stable
+# Compatibility of recent versions of Qgis with 15.0 stable 
+# require some adjustments
 if [ -x /usr/bin/python3.9 ]; then
+  # This to prevent build failure
   patch -p1 < $CWD/qgis3d.pyi.patch
+  # This to prevent cmake failures
+  CMAKE="/opt/cmake-opt/bin/"
+  ccache --set-config sloppines=pch_defines,time_macros
+else
+  # in current no problems
+  CMAKE=""
 fi
 
 
@@ -123,7 +131,7 @@ sed -i '43 i IF (NOT PROJ_INCLUDE_DIR)\nFIND_PATH(PROJ_INCLUDE_DIR proj.h\n"$ENV
 
 mkdir -p build
 cd build
-  cmake .. \
+  ${CMAKE}cmake .. \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -pthread" \
     -DCMAKE_BUILD_TYPE="Release" \
@@ -145,7 +153,7 @@ cd build
     $WITHGRASS \
     $QTWEBKIT
 
-  make
+  make -j 10
   make install DESTDIR=$PKG
 cd -
 

@@ -2,7 +2,7 @@
 
 # Slackware build script for awf
 
-# Copyright 2017 Leonardo Citrolo, Italy
+# Copyright 2025, Fabrice Creuzot, France
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,15 +25,17 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=awf
-VERSION=${VERSION:-1.4.0}
+VERSION=${VERSION:-2.8.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
+# Automatically determine the architecture we're building on
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
+    # Unless $ARCH is already set, use uname -m for all other archs
        *) ARCH=$( uname -m ) ;;
   esac
 fi
@@ -64,7 +66,7 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e
+set -e # Exit on most errors
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -79,27 +81,57 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-./autogen.sh
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --build=$ARCH-slackware-linux
-
-make
+# ################################################
+# configure - compile - install steps
+autoreconf -fi
+./configure
+make -s
 make install DESTDIR=$PKG
 
+for gtk in "gtk2" "gtk3" "gtk4"; do
+
+	install -Dpm 644 data/awf-$$gtk.desktop $PKG/usr/applications/awf-$$gtk.desktop
+
+	cp -ar data/icons/ icons-$$gtk/
+	for file in icons-$$gtk/*/*/awf.png; do mv $$file `dirname $$file`/awf-$$gtk.png; done
+	for file in icons-$$gtk/*/*/awf.svg; do mv $$file `dirname $$file`/awf-$$gtk.svg; done
+	install -dm 755 $PKG/usr/icons/hicolor/
+	cp -a icons-$$gtk/* $PKG/usr/icons/hicolor/
+
+	install -Dpm 644 data/awf-$$gtk.1 $PKG/usr/man/man1/awf-$$gtk.1
+	install -Dpm 644 data/awf-$$gtk.fr.1 $PKG/usr/man/fr/man1/awf-$$gtk.1
+
+	for file in src/po/*.po; do
+		code=`basename "$$file" .po`
+		mkdir -p locale-$$gtk/$$code/LC_MESSAGES/
+		msgfmt src/po/$$code.po -o locale-$$gtk/$$code/LC_MESSAGES/awf-$$gtk.mo
+		install -Dpm 644 locale-$$gtk/$$code/LC_MESSAGES/awf-$$gtk.mo $PKG/usr/locale/$$code/LC_MESSAGES/awf-$$gtk.mo
+	done
+done
+
+# cleanup
+rm -rf icons-gtk*/ locale-gtk*/
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+# compress man pages
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
+# Copy program documentation into the package
+# Also include the SlackBuild script in the documentation directory
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS ChangeLog COPYING INSTALL NEWS README README.md \
+cp -a \
+  README.md LICENSE \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
+# Copy the slack-desc (and a custom doinst.sh if necessary) into ./install
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
+# Make the package; be sure to leave it in $OUTPUT
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

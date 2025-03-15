@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=webkit2gtk
 SRCNAM=webkitgtk
-VERSION=${VERSION:-2.46.6}
+VERSION=${VERSION:-2.48.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,6 +92,7 @@ cd build
 	-DLIBEXEC_INSTALL_DIR=/usr/lib${LIBDIRSUFFIX}/webkit2gtk-4.0 \
 	-DENABLE_GAMEPAD=OFF \
 	-DENABLE_MINIBROWSER=ON \
+        -DENABLE_SPEECH_SYNTHESIS=OFF \
         -DUSE_SOUP2=ON \
         -DENABLE_JOURNALD_LOG=OFF \
 	-DENABLE_DOCUMENTATION=OFF \
@@ -102,6 +103,7 @@ cd build
         -DUSE_GTK4=OFF \
         -DUSE_LIBBACKTRACE=OFF \
         -DUSE_JPEGXL=OFF \
+        -DUSE_FLITE=OFF \
         -DUSE_SYSTEM_SYSPROF_CAPTURE=NO \
         -Wno-dev \
         -G Ninja \

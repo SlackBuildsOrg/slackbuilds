@@ -1,0 +1,50 @@
+From 95d71be25d5b838b1171e6b9b2cd526190118fba Mon Sep 17 00:00:00 2001
+From: Diego Pino Garcia <dpino@igalia.com>
+Date: Mon, 4 Nov 2024 00:32:44 -0800
+Subject: [PATCH] [CMake] Update minimum ICU version to 70.1
+ https://bugs.webkit.org/show_bug.cgi?id=281398
+
+Reviewed by Miguel Gomez.
+
+Changeset 284568@main made ICU 70 the required minimum version.
+
+In Linux, Harfbuzz and LibXML2 depend on ICU. Their versions are also
+upgraded to the version featured in Ubuntu 22.04, the oldest Linux
+distribution supportted at this moment.
+
+* Source/cmake/OptionsGTK.cmake:
+* Source/cmake/OptionsJSCOnly.cmake:
+* Source/cmake/OptionsMac.cmake:
+* Source/cmake/OptionsPlayStation.cmake:
+* Source/cmake/OptionsWPE.cmake:
+* Source/cmake/OptionsWin.cmake:
+
+Canonical link: https://commits.webkit.org/286071@main
+---
+ Source/cmake/OptionsGTK.cmake         | 6 +++---
+ Source/cmake/OptionsJSCOnly.cmake     | 2 +-
+ Source/cmake/OptionsMac.cmake         | 2 +-
+ Source/cmake/OptionsPlayStation.cmake | 2 +-
+ Source/cmake/OptionsWPE.cmake         | 6 +++---
+ Source/cmake/OptionsWin.cmake         | 2 +-
+ 6 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/Source/cmake/OptionsGTK.cmake b/Source/cmake/OptionsGTK.cmake
+index 08d9756450545..c7881c3d2e0b6 100644
+--- a/Source/cmake/OptionsGTK.cmake
++++ b/Source/cmake/OptionsGTK.cmake
+@@ -10,11 +10,11 @@ set(USER_AGENT_BRANDING "" CACHE STRING "Branding to add to user agent string")
+ find_package(Cairo 1.16.0 REQUIRED)
+ find_package(LibGcrypt 1.7.0 REQUIRED)
+ find_package(Libtasn1 REQUIRED)
+-find_package(HarfBuzz 1.4.2 REQUIRED COMPONENTS ICU)
+-find_package(ICU 61.2 REQUIRED COMPONENTS data i18n uc)
++find_package(HarfBuzz 2.7.4 REQUIRED COMPONENTS ICU)
++find_package(ICU 70.1 REQUIRED COMPONENTS data i18n uc)
+ find_package(JPEG REQUIRED)
+ find_package(Epoxy 1.5.4 REQUIRED)
+-find_package(LibXml2 2.8.0 REQUIRED)
++find_package(LibXml2 2.9.13 REQUIRED)
+ find_package(PNG REQUIRED)
+ find_package(SQLite3 REQUIRED)
+ find_package(Threads REQUIRED)

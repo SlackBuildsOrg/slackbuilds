@@ -1,0 +1,22 @@
+
+xmcd - Full-featured CD player and ripper
+
+by Ti Kan
+
+Package includes:
+
+xmcd - Motif-based CD player with CDDB interface
+cda - command-line utility with curses-based, screen-oriented mode
+
+Supports CD recognition via Gracenote CDDB (R). It can connect to the
+CDDB servers on the Internet to get the artist, disc title, song
+titles and other information about the CD you're playing.
+
+Installation notes:
+
+1) Run /usr/lib64/X11/xmcd/config.sh as root after installation to
+   configure your CDROM device. Re-run as needed to try out
+   different config settings.
+
+2) FLAC support disabled in this Slackbuild
+

@@ -1,0 +1,239 @@
+#!/bin/bash
+
+# Slackware build script for xmcd
+
+# Copyright 2025 Judah Milgram Washington DC
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=xmcd
+VERSION=${VERSION:-3.3.2}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+patch -p1 < $CWD/$PRGNAM-$VERSION.patch
+
+xmkmf
+make Makefiles
+make
+
+### The following is adapted from xmcd's install.sh
+
+OWNER=root
+GROUP=root
+
+BINDIR=/usr/bin
+LIBDIR=/usr/lib${LIBDIRSUFFIX}/X11
+XMCDLIB=$LIBDIR/xmcd
+ARCHBIN=${XMCDLIB}/${ARCH}/bin
+DISCOGDIR=$XMCDLIB/discog
+MANDIR=/usr/man/man1
+APPDEFS=$XMCDLIB/app-defaults
+HELPDIR=$XMCDLIB/help
+PIXMAPS=$XMCDLIB/pixmaps
+CONFIGDIR=$XMCDLIB/config
+CFGTBL=$CONFIGDIR/.tbl
+SCRIPTSDIR=$XMCDLIB/scripts
+BINPERM=755
+XBINPERM=4755
+
+STARTUP_SCRIPT=.xmcd_start
+
+# Directories
+
+for d in $BINDIR $LIBDIR $XMCDLIB $DISCOGDIR \
+		 $MANDIR $APPDEFS $HELPDIR $PIXMAPS \
+		 $CONFIGDIR $CFGTBL $SCRIPTSDIR $ARCHBIN
+do
+    mkdir -p ${PKG}${d}
+done
+
+# Binaries
+
+install -s -m $XBINPERM xmcd_d/xmcd cda_d/cda ${PKG}${ARCHBIN}
+install -s -m $BINPERM util_d/gobrowser cdda_d/has_alsa ${PKG}${ARCHBIN}
+
+# App defaults
+
+install -m 644 xmcd_d/XMcd.ad ${PKG}${APPDEFS}/XMcd
+install -m 644 xmcd_d/XKeysymDB ${PKG}${APPDEFS}
+
+# Help files
+
+for p in xmcd_d/hlpfiles/[A-Z][a-z]/*.???; do
+    install -m 644 $p ${PKG}${HELPDIR}/$(basename $p)
+done
+
+# Pixmaps
+
+for f in xmcd.icon \
+	 xmcd_a.px \
+	 xmcd_b.px \
+	 xmcd.xpm \
+	 xmcd.open.fti \
+	 xmcd.closed.fti \
+	 xmcd.ftr
+do
+    install -m 644 misc_d/$f ${PKG}${PIXMAPS}
+done
+
+# Config files
+
+# Would like to install this first one as common.cfg.new
+# But sbopkglint doesn't like it.
+install -m 644 libdi_d/common.cfg ${PKG}${CONFIGDIR}
+install -m 644 libdi_d/device.cfg ${PKG}${CONFIGDIR}
+install -m 644 cdinfo_d/wwwwarp.cfg ${PKG}${CONFIGDIR}
+install -m 644 libdi_d/cfgtbl/* ${PKG}${CFGTBL}
+
+# Shell scripts:
+
+SEDSCR=$(mktemp)
+cat<<EOF>$SEDSCR
+s|^BINDIR=.*|BINDIR=$BINDIR|
+s|^XMCDLIB=.*|XMCDLIB=$XMCDLIB|
+s|^DISCOGDIR=.*|DISCOGDIR=$DISCOGDIR|
+s|^OWNER=.*|OWNER=$OWNER|
+s|^GROUP=.*|GROUP=$GROUP|
+EOF
+
+sed -f $SEDSCR libdi_d/config.sh > ${PKG}${CONFIGDIR}/config.sh
+chmod 755 ${PKG}${CONFIGDIR}/config.sh
+
+sed -f $SEDSCR misc_d/genidx.sh > ${PKG}${SCRIPTSDIR}/genidx
+chmod 755 ${PKG}${SCRIPTSDIR}/genidx
+
+# Local discographies
+
+install -m 644 misc_d/bkgnd.gif ${PKG}${DISCOGDIR}
+install -m 644 misc_d/xmcdlogo.gif ${PKG}${DISCOGDIR}
+sed -f $SEDSCR misc_d/discog.htm > ${PKG}${DISCOGDIR}/discog.html
+
+# HTML man pages
+
+for f in xmcd cda
+do
+    install -m 644 ${f}_d/${f}.htm ${PKG}${DISCOGDIR}/${f}.html
+done
+
+# Startup script
+
+sed -e "s|XMCD_LIBDIR=.*|XMCD_LIBDIR=${XMCDLIB}|" \
+    -e "s|EXEPATH=.*|EXEPATH=${ARCHBIN}/${PRGNAM}|" \
+    misc_d/start.sh > ${PKG}${BINDIR}/$STARTUP_SCRIPT
+chmod 755 ${PKG}${BINDIR}/$STARTUP_SCRIPT
+
+# Links to startup script
+
+for f in xmcd cda
+do
+    #    ln -s $BINDIR/$STARTUP_SCRIPT ${PKG}${BINDIR}/$f
+    ln -s $STARTUP_SCRIPT ${PKG}${BINDIR}/$f
+done
+
+# Man pages
+
+for f in xmcd cda
+do
+    install -m 644 ${f}_d/${f}.man ${PKG}${MANDIR}/${f}.1
+    gzip -9 ${PKG}${MANDIR}/${f}.1
+done
+
+# Docs
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+find docs_d -mindepth 1 ! -name INSTALL\* \
+     -exec install -m 644 {} $PKG/usr/doc/$PRGNAM-$VERSION \;
+install -m 644 $CWD/$PRGNAM.SlackBuild $PKG/usr/doc/$PRGNAM-$VERSION
+
+# slack-desc and doinst.sh
+
+mkdir -p $PKG/install
+install -m 644 $CWD/slack-desc $PKG/install
+sed -e "s|config.sh|$CONFIGDIR/config.sh|" \
+    $CWD/slack-desc > $PKG/install/slack-desc
+chmod 644 $PKG/install/slack-desc
+
+sed -e "s|CONFIGDIR=.*|CONFIGDIR=$CONFIGDIR|" \
+    -e "s|XMCDLIB=.*|XMCDLIB=$XMCDLIB|" \
+    -e "s|DISCOGDIR=.*|DISCOGDIR=$DISCOGDIR|" \
+    $CWD/doinst.sh > $PKG/install/doinst.sh
+chmod 755 $PKG/install/doinst.sh
+
+# Cleanup
+
+rm $SEDSCR
+
+### End material adapted from xmcd's install.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+

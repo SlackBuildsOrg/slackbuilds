@@ -1,0 +1,341 @@
+diff --git a/cda_d/Imakefile b/cda_d/Imakefile
+index badf956..6fd875e 100644
+--- a/cda_d/Imakefile
++++ b/cda_d/Imakefile
+@@ -148,7 +148,7 @@ INCLUDES=-I..
+ CDDBLIB= -L../cddb_d -lcddb
+ LOCAL_LIBDIR= -L/usr/freeware/lib32 -L/usr/local/lib
+ VORBLIB= -lvorbisenc -lvorbis -logg
+-FLACLIB= -lFLAC
++/* FLACLIB= -lFLAC */
+ ENCLIBS= $(LOCAL_LIBDIR) $(FLACLIB) $(VORBLIB)
+ 
+ 
+@@ -260,6 +260,7 @@ OBJS=	cda.o \
+ 	../cddb_d/libcddbkey.a \
+ 	../libdi_d/libdi.a \
+ 	../cdda_d/libcdda.a \
++	../cddb_d/libcddb.a \
+ 	../common_d/libutil.a
+ #endif
+ 
+diff --git a/cdda_d/Imakefile b/cdda_d/Imakefile
+index 2a74e6b..74faf39 100644
+--- a/cdda_d/Imakefile
++++ b/cdda_d/Imakefile
+@@ -89,7 +89,8 @@ RANLIB= /bin/true
+  *
+  */
+ 
+-ENCODERS= -DHAS_LAME -DHAS_VORBIS -DHAS_FLAC -DHAS_FAAC
++/* ENCODERS= -DHAS_LAME -DHAS_VORBIS -DHAS_FLAC -DHAS_FAAC */
++ENCODERS= -DHAS_LAME -DHAS_VORBIS -DHAS_FAAC
+ 
+ #if defined(LinuxArchitecture)
+ /* The following conditional is GNU-make specific */
+diff --git a/common_d/appenv.h b/common_d/appenv.h
+index 63c19e5..7366aa3 100644
+--- a/common_d/appenv.h
++++ b/common_d/appenv.h
+@@ -24,6 +24,11 @@
+  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  *
+  */
++
++#ifndef _DEFAULT_SOURCE
++#define _DEFAULT_SOURCE        1
++#endif
++
+ #ifndef __APPENV_H__
+ #define __APPENV_H__
+ 
+diff --git a/common_d/config.h b/common_d/config.h
+index 2024230..3f4be5f 100644
+--- a/common_d/config.h
++++ b/common_d/config.h
+@@ -144,6 +144,10 @@ static char *_config_h_ident_ = "@(#)config.h	7.14 04/04/05";
+  *
+  */
+ 
++#ifndef _DEFAULT_SOURCE
++#define _DEFAULT_SOURCE   1
++#endif
++
+ /* AIX */
+ #if defined(_AIX)
+ #define USE_TERMIO
+diff --git a/install.sh b/install.sh
+index d035b57..fffdf19 100644
+--- a/install.sh
++++ b/install.sh
+@@ -50,8 +50,8 @@ FILEPERM=444
+ XBINPERM=4711
+ BINPERM=711
+ GDIRPERM=777
+-OWNER=bin
+-GROUP=bin
++OWNER=root
++GROUP=root
+ XBINOWNER=root
+ XBINGROUP=bin
+ ERRFILE=/tmp/xmcd.err
+@@ -142,7 +142,7 @@ do_exit()
+ 	    $ECHO "Xmcd/cda will not work until that is done."
+ 	fi
+ 
+-	$ECHO "\nPlease read the $XMCDLIB/docs/README file.\n\n"
++	$ECHO "\nPlease read /usr/doc/xmcd-XXX/README file.\n\n"
+ 	exit 0
+ }
+ 
+@@ -211,7 +211,7 @@ get_yn()
+ 
+ do_link()
+ {
+-	source=$1
++	source=$DESTDIR$1
+ 	target=$2
+ 
+ 	rm -f $target
+@@ -261,12 +261,12 @@ do_chmod()
+ 
+ make_dir()
+ {
+-	dir=$1
++	dir=$DESTDIR$1
+ 	perm=$2
+ 	owner=$3
+ 	group=$4
+ 
+-	$ECHO "\t$dir"
++#	$ECHO
+ 	if [ ! -d $dir ]
+ 	then
+ 		mkdir -p $dir
+@@ -280,7 +280,7 @@ make_dir()
+ inst_file()
+ {
+ 	source=$1
+-	target=$2
++	target=$DESTDIR$2
+ 	perm=$3
+ 	owner=$4
+ 	group=$5
+@@ -1146,7 +1146,7 @@ ARCHLIB="${XMCDLIB}/lib-${OS_SYS_T}-${OS_MACH_T}"
+ # Make all necessary directories
+ $ECHO "\n\nMaking directories..."
+ 
+-if [ ! -d "$BINDIR" ]
++if [ ! -d "$DESTDIR$BINDIR" ]
+ then
+ 	make_dir $BINDIR $DIRPERM $OWNER $GROUP
+ fi
+@@ -1172,7 +1172,7 @@ make_dir $DISCOGDIR $GDIRPERM $OWNER $GROUP
+ 
+ if [ -n "$MANDIR" ]
+ then
+-	make_dir $MANDIR $DIRPERM $OWNER $GROUP
++	make_dir $DESTDIR$MANDIR $DIRPERM $OWNER $GROUP
+ fi
+ 
+ if [ "$DISCOGDIR" != "$XMCDLIB/discog" ]
+@@ -1212,11 +1212,11 @@ inst_file cdda_d/has_alsa $ARCHBIN/has_alsa $BINPERM $OWNER $GROUP
+ rm -f $ARCHBIN/README
+ echo "The executable files in this directory are not intended to be
+ run directly.  Please use the startup wrapper scripts installed in
+-$BINDIR." >$ARCHBIN/README
+-do_chown $OWNER $ARCHBIN/README
+-do_chgrp $GROUP $ARCHBIN/README
+-do_chmod $FILEPERM $ARCHBIN/README
+-$ECHO "\t$ARCHBIN/README"
++$BINDIR." > $DESTDIR$ARCHBIN/README
++do_chown $OWNER $DESTDIR$ARCHBIN/README
++do_chgrp $GROUP $DESTDIR$ARCHBIN/README
++do_chmod $FILEPERM $DESTDIR$ARCHBIN/README
++$ECHO "\t$DESTDIR$ARCHBIN/README"
+ 
+ # X resource defaults file
+ inst_file xmcd_d/XMcd.ad $XMCDLIB/app-defaults/XMcd $FILEPERM $OWNER $GROUP
+@@ -1227,23 +1227,25 @@ inst_file xmcd_d/XMcd_sgi.ad $XMCDLIB/app-defaults/XMcd.sgi \
+ inst_file xmcd_d/XKeysymDB $XMCDLIB/app-defaults/XKeysymDB \
+ 	$FILEPERM $OWNER $GROUP
+ 
+-# Documentation
+-rm -f $XMCDLIB/docs/*
+-for i in docs_d/*
+-do
+-	case $i in
+-	*SCCS)
+-		;;
+-	*RCS)
+-		;;
+-	*CVS)
+-		;;
+-	*)
+-		inst_file $i $XMCDLIB/docs/`basename $i` \
+-			$FILEPERM $OWNER $GROUP\
+-		;;
+-	esac
+-done
++# We handle docs in the Slackbuild. They'll go in /usr/doc/xmcd-XXX
++
++# # Documentation
++# rm -f $XMCDLIB/docs/*
++# for i in docs_d/*
++# do
++# 	case $i in
++# 	*SCCS)
++# 		;;
++# 	*RCS)
++# 		;;
++# 	*CVS)
++# 		;;
++# 	*)
++# 		inst_file $i $XMCDLIB/docs/`basename $i` \
++# 			$FILEPERM $OWNER $GROUP\
++# 		;;
++# 	esac
++# done
+ 
+ # Help files
+ rm -f $XMCDLIB/help/[A-Z]*.??? $XMCDLIB/help/[A-Z][a-z]/[A-Z]*.???
+@@ -1334,50 +1336,50 @@ sed -e "s/^#!\/bin\/sh.*/#!$SHELL_S/" \
+     -e "s/^XMCD_URL=.*/XMCD_URL=$XMCDURL_S/" \
+     -e "s/^OWNER=.*/OWNER=$OWNER/" \
+     -e "s/^GROUP=.*/GROUP=$GROUP/" \
+-    <misc_d/genidx.sh >$XMCDLIB/scripts/genidx
+-do_chown $OWNER $XMCDLIB/scripts/genidx
+-do_chgrp $GROUP $XMCDLIB/scripts/genidx
+-do_chmod $SCRPERM $XMCDLIB/scripts/genidx
+-$ECHO "\t$XMCDLIB/scripts/genidx"
++    <misc_d/genidx.sh > $DESTDIR$XMCDLIB/scripts/genidx
++do_chown $OWNER $DESTDIR$XMCDLIB/scripts/genidx
++do_chgrp $GROUP $DESTDIR$XMCDLIB/scripts/genidx
++do_chmod $SCRPERM $DESTDIR$XMCDLIB/scripts/genidx
++$ECHO "\t$DESTDIR$XMCDLIB/scripts/genidx"
+ 
+ # Local discographies
+ inst_file misc_d/bkgnd.gif $DISCOGDIR/bkgnd.gif $FILEPERM $OWNER $GROUP
+ inst_file misc_d/xmcdlogo.gif $DISCOGDIR/xmcdlogo.gif $FILEPERM $OWNER $GROUP
+-rm -f $DISCOGDIR/discog.html
++rm -f $DESTDIR$DISCOGDIR/discog.html
+ sed -e "s/\$SHELL/$SHELL_S/g" \
+     -e "s/\$BINDIR/$BINDIR_S/g" \
+     -e "s/\$XMCDLIB/$XMCDLIB_S/g" \
+     -e "s/file:\/\/localhost\/\$DISCOGDIR/file:\/\/localhost$DISCOGDIR_S/g" \
+     -e "s/\$DISCOGDIR/$DISCOGDIR_S/g" \
+     -e "s/\$XMCD_URL/$XMCDURL_S/g" \
+-    <misc_d/discog.htm >$DISCOGDIR/discog.html
++    <misc_d/discog.htm > $DESTDIR$DISCOGDIR/discog.html
+ do_chown $OWNER $DISCOGDIR/discog.html
+ do_chgrp $GROUP $DISCOGDIR/discog.html
+ do_chmod $FILEPERM $DISCOGDIR/discog.html
+-$ECHO "\t$DISCOGDIR/discog.html"
++$ECHO "\t$DESTDIR$DISCOGDIR/discog.html"
+ for i in xmcd cda
+ do
+ 	# HTML man pages
+-	rm -f $DISCOGDIR/${i}.html
++	rm -f $DESTDIR$DISCOGDIR/${i}.html
+ 	inst_file ${i}_d/${i}.htm $DISCOGDIR/${i}.html $FILEPERM $OWNER $GROUP
+ done
+ 
+ # Startup wrapper script
+-rm -f $BINDIR/$STARTUP_SCRIPT
++rm -f $DESTDIR$BINDIR/$STARTUP_SCRIPT
+ sed -e "s/^#!\/bin\/sh.*/#!$SHELL_S/" \
+     -e "s/XMCD_LIBDIR=.*/XMCD_LIBDIR=$XMCDLIB_S/" \
+-	misc_d/start.sh >$BINDIR/$STARTUP_SCRIPT
+-do_chown $OWNER $BINDIR/$STARTUP_SCRIPT
+-do_chgrp $GROUP $BINDIR/$STARTUP_SCRIPT
+-do_chmod $SCRPERM $BINDIR/$STARTUP_SCRIPT
+-$ECHO "\t$BINDIR/$STARTUP_SCRIPT"
++	misc_d/start.sh > $DESTDIR$BINDIR/$STARTUP_SCRIPT
++do_chown $OWNER $DESTDIR$BINDIR/$STARTUP_SCRIPT
++do_chgrp $GROUP $DESTDIR$BINDIR/$STARTUP_SCRIPT
++do_chmod $SCRPERM $DESTDIR$BINDIR/$STARTUP_SCRIPT
++$ECHO "\t$DESTDIR$BINDIR/$STARTUP_SCRIPT"
+ 
+ # Use startup wrapper script to invoke all supported programs
+ for i in xmcd cda
+ do
+-	rm -f $BINDIR/$i
++	rm -f $DESTDIR$BINDIR/$i
+ 	do_link $BINDIR/$STARTUP_SCRIPT $BINDIR/$i
+-	$ECHO "\t$BINDIR/$i"
++	$ECHO "\t$DESTDIR$BINDIR/$i"
+ done
+ 
+ # Manual page files
+diff --git a/labelh_d/LabelH.c b/labelh_d/LabelH.c
+index 4382268..e0d94db 100644
+--- a/labelh_d/LabelH.c
++++ b/labelh_d/LabelH.c
+@@ -33,6 +33,10 @@
+ static char *_LabelH_c_ident_ = "@(#)LabelH.c	7.8 03/12/12";
+ #endif
+ 
++#ifndef _DEFAULT_SOURCE
++#define _DEFAULT_SOURCE
++#endif
++
+ #include <Xm/Xm.h>
+ 
+ #if !defined(LesstifVersion) && !defined(NO_LABELH) && XmVersion > 1001
+diff --git a/util_d/Imakefile b/util_d/Imakefile
+index 4e86c26..b01e42b 100644
+--- a/util_d/Imakefile
++++ b/util_d/Imakefile
+@@ -43,6 +43,10 @@
+  * #include "Motif.tmpl"
+  * #include "Motif.rules"
+  */
++
++#include "Motif.tmpl"
++#include "Motif.rules"
++
+ LOCAL_LIBRARIES= XmClientLibs
+ 
+ 
+diff --git a/util_d/gobrowser.c b/util_d/gobrowser.c
+index 43e95f7..a966980 100644
+--- a/util_d/gobrowser.c
++++ b/util_d/gobrowser.c
+@@ -46,6 +46,10 @@
+  * implied warranty.
+  */
+ 
++#ifndef _DEFAULT_SOURCE
++#define _DEFAULT_SOURCE
++#endif
++
+ #include <stdio.h>
+ #ifndef NO_STDLIB_H
+ #include <stdlib.h>
+diff --git a/xmcd_d/Imakefile b/xmcd_d/Imakefile
+index 6bbd497..7f4bf80 100644
+--- a/xmcd_d/Imakefile
++++ b/xmcd_d/Imakefile
+@@ -44,10 +44,13 @@
+  * #include "Motif.rules"
+  */
+ 
++#include "Motif.tmpl"
++#include "Motif.rules"
++
+ CDDBLIB= -L../cddb_d -lcddb
+ LOCAL_LIBDIR= -L/usr/freeware/lib32 -L/usr/local/lib
+ VORBLIB= -lvorbisenc -lvorbis -logg
+-FLACLIB= -lFLAC
++/* FLACLIB= -lFLAC */
+ ENCLIBS= $(LOCAL_LIBDIR) $(FLACLIB) $(VORBLIB)
+ 
+ #if defined(LinuxArchitecture)
+@@ -271,6 +274,7 @@ OBJS=	callback.o \
+ 	../cddb_d/libcddbkey.a \
+ 	../libdi_d/libdi.a \
+ 	../cdda_d/libcdda.a \
++	../cddb_d/libcddb.a \
+ 	../common_d/libutil.a
+ #endif
+ 

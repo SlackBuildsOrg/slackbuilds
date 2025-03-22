@@ -1,9 +1,9 @@
 PRGNAM="miktex"
-VERSION="25.2"
+VERSION="25.3"
 HOMEPAGE="https://miktex.org"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/MiKTeX/miktex/archive/25.2/miktex-25.2.tar.gz \
+DOWNLOAD_x86_64="https://github.com/MiKTeX/miktex/archive/25.3/miktex-25.3.tar.gz \
           https://ctan.org/tex-archive/systems/win32/miktex/tm/packages/miktex-config-2.9.tar.lzma \
           https://ctan.org/tex-archive/systems/win32/miktex/tm/packages/miktex-dvips.tar.lzma \
           https://ctan.org/tex-archive/systems/win32/miktex/tm/packages/miktex-fontconfig.tar.lzma \
@@ -11,7 +11,7 @@ DOWNLOAD_x86_64="https://github.com/MiKTeX/miktex/archive/25.2/miktex-25.2.tar.g
           https://ctan.org/tex-archive/systems/win32/miktex/tm/packages/miktex-zzdb1-2.9.tar.lzma \
           https://ctan.org/tex-archive/systems/win32/miktex/tm/packages/miktex-zzdb3-2.9.tar.lzma \
           https://ctan.org/tex-archive/systems/win32/miktex/tm/packages/tetex.tar.lzma"
-MD5SUM_x86_64="13bf977f8706cb36da25a1bf45e297eb \
+MD5SUM_x86_64="d78fe5aefafae349267fcab6957cf738 \
         46d9eaa3f9e224153a991ddaf3914604 \
         c57068aee8f5966f0516cf535dc3f5b2 \
         4f42aa685dbb9284709cbc1f6688a899 \

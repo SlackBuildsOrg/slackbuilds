@@ -17,3 +17,4 @@ SerialDV is designed with the following assumptions:
   voice modes i.e. D-Star and the DMR likes (DMR, YSF, P25, ...). Some
   more may be added in the future if the need arises.
 - It will work for both encoding and decoding
+

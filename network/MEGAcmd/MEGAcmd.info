@@ -1,10 +1,10 @@
 PRGNAM="MEGAcmd"
-VERSION="1.7.0"
+VERSION="2.1.1"
 HOMEPAGE="https://github.com/meganz/MEGAcmd"
-DOWNLOAD="https://github.com/meganz/MEGAcmd/archive/1.7.0_Linux/MEGAcmd-1.7.0_Linux.tar.gz \
-          https://github.com/meganz/sdk/archive/v4.31.0b/sdk-4.31.0b.tar.gz"
-MD5SUM="9e9d2691cfc3b603e79675dfae5ca980 \
-        30c597165d83ddf8c39352f276e43b6c"
+DOWNLOAD="https://github.com/meganz/MEGAcmd/archive/2.1.1_Linux/MEGAcmd-2.1.1_Linux.tar.gz \
+          https://github.com/meganz/sdk/archive/v9.1.1/sdk-9.1.1.tar.gz"
+MD5SUM="b8aea9e19a22a61807e1e7054dc82127 \
+        b8fc6bf19988df8d99b2f8fad5d09cf2"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="FreeImage libmediainfo"

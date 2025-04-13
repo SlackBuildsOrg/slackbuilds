@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# Slackware build script for MEGAcmd
+# Slackware build script for <appname>
 
-# Copyright 2017,2018 Felipe Bugno <capent@yahoo.com>
-#
+# Copyright <year> <you> <where you live>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,17 +25,18 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=MEGAcmd
-VERSION=${VERSION:-1.7.0}
-SDK=${SDK:-4.31.0b}
-FFMPEG4_PATCHREV=${FFMPEG4_PATCHREV:-1.7.0}
+VERSION=${VERSION:-2.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+SDK=${SDK:-9.1.1}
 
+# Automatically determine the architecture we're building on:
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
+# Unless $ARCH is already set, use uname -m for all other archs:
        *) ARCH=$( uname -m ) ;;
   esac
 fi
@@ -49,9 +49,9 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   exit 0
 fi
 
-TMP=${TMP:-/tmp/SBo}
+TMP=${TMP:-/tmp/SBo}		# For consistency's sake, use this
 PKG=$TMP/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
+OUTPUT=${OUTPUT:-/tmp}		# Drop the package in /tmp
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
@@ -62,63 +62,106 @@ elif [ "$ARCH" = "i686" ]; then
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
 fi
 
-set -e
+set -e # Exit on most errors
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-${VERSION}_Linux
-tar xvf $CWD/$PRGNAM-${VERSION}_Linux.tar.?z
+tar xvf $CWD/$PRGNAM-${VERSION}_Linux.tar.gz
 cd $PRGNAM-${VERSION}_Linux/sdk
 tar --strip-components=1 -xvf $CWD/sdk-$SDK.tar.gz
-cd ../
-
-# Apply patch for FFmpeg4
-patch -p1 < $CWD/megacmd-${FFMPEG4_PATCHREV}_ffmpeg4.patch
+cd ..
 
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
- -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-./autogen.sh
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --with-ffmpeg \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --build=$ARCH-slackware-linux
+#PREPARE: We won't use vcpkg for compile
+sed -i '/^set(VCPKG_ROOT/d' CMakeLists.txt
 
-make
-make install DESTDIR=$PKG
+echo true > build/clone_vcpkg_from_baseline.sh # this script is executed by bash (not using shebang)
+sed -i '/IMPORTED_TARGET libcrypto++/s/++/pp/' sdk/cmake/modules/sdklib_libraries.cmake
+
+# Remove hardcoded install paths that break build-time options
+sed -i \
+    '/set(CMAKE_INSTALL_LIBDIR "opt\/megacmd\/lib")/d; /set(CMAKE_INSTALL_BINDIR "usr\/bin")/d' \
+    CMakeLists.txt
+
+# Fix PCRE and ZLib linking
+sed -i '/target_link_libraries(LMegacmdServer PUBLIC MEGA::SDKlib LMEGAcmdCommonUtils)/a target_link_libraries(LMegacmdServer PUBLIC pcrecpp z)' CMakeLists.txt
+
+# Your application will probably need different cmake flags; these are only
+# examples.  You might use 'ccmake' to see the available flags...
+  cmake -B build -S $TMP/$PRGNAM-${VERSION}_Linux \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DUSE_FREEIMAGE=no \
+    -DUSE_PDFIUM=no \
+    -DFULL_REQS=off \
+    -DCMAKE_BUILD_TYPE=Release
+
+#BUILD
+  cmake --build build
+
+#INSTALL
+  DESTDIR=$PKG cmake --install build
+
+# Remove unnecessary /usr/lib64 dir containing symlinks
+rm -rf $PKG/usr/lib${LIBDIRSUFFIX}
+
 # Fix installdir of megacmd_completion.sh
-rm -rf $PKG/etc
+rm -rf $PKG/usr/etc/
 install -Dm644 src/client/megacmd_completion.sh $PKG/usr/share/bash-completion/completions/megacmd
 
-# Don't ship .la files:
-rm -rf $PKG/usr/lib${LIBDIRSUFFIX}/*.la
+# Add completions for sub-commands
+for completion_cmd in $PKG/usr/bin/mega*;
+do
+  completion_cmd=$(basename "$completion_cmd")
+  ln -s "megacmd" "${PKG}/usr/share/bash-completion/completions/$completion_cmd"
+done
 
+install -D -m644 $TMP/$PRGNAM-${VERSION}_Linux/LICENSE -t "$PKG/usr/share/licenses/megacmd"
+
+# Strip binaries and libraries - this can be done with 'make install-strip'
+# in many source trees, and that's usually acceptable, if not, use this:
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+# Remove perllocal.pod and other special files that don't need to be installed,
+# as they will overwrite what's already on the system.  If this is not needed,
+# remove it from the script.
+find $PKG -name perllocal.pod -o -name ".packlist" -o -name "*.bs" | xargs rm -f || true
+
+# Copy program documentation into the package
+# The included documentation varies from one application to another, so be sure
+# to adjust your script as needed
+# Also, include the SlackBuild script in the documentation directory
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  LICENSE README.md UserGuide.md $PKG/usr/doc/$PRGNAM-$VERSION
+    *.txt LICENSE README.md UserGuide.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
+# Copy the slack-desc (and a custom doinst.sh if necessary) into ./install
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
+# Make the package; be sure to leave it in $OUTPUT
+# If package symlinks need to be created during install *before*
+# your custom contents of doinst.sh runs, then add the -p switch to
+# the makepkg command below -- see makepkg(8) for details
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

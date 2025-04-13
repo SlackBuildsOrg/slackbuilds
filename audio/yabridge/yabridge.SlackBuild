@@ -173,6 +173,9 @@ ninja -C build -j"$num_jobs"
 
 cd ./tools/yabridgectl
 
+# Vendor Dependencies....from Gemini!
+cargo vendor
+
 # Offline build
 # This makes cargo target the locale identical copy of reflink in vendor source directory
 sed -i 's|{ git = "https://github.com/nicokoch/reflink", rev = "e8d93b465f5d9ad340cd052b64bbc77b8ee107e2" }|"0.1.3"|g' Cargo.toml

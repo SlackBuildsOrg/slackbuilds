@@ -75,9 +75,9 @@ if [ $ARCH = "arm" ]; then
   exit 1
 fi
 
-which wine &>/dev/null
+which wine &>/dev/null # for vanilla Slackware only
 WINE_IN_PATH=$?
-which wine64 &>/dev/null
+which wine64 &>/dev/null # ALSO this for multilib install
 WINE64_IN_PATH=$?
 
 if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
@@ -89,10 +89,13 @@ if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
 elif [ $ARCH = "x86_64" ]; then
   LIBDIRSUFFIX="64"
   if (($WINE_IN_PATH)) || (($WINE64_IN_PATH)); then
-    echo "This  script look for wine and wine64 in PATH and needs them both for compiling and using yabridge on x86_64"
+      echo "This  script look for wine and wine64 in PATH and needs them both for compiling and using yabridge on x86_64. Note this means wine-staging must be installed with MULTILIB=yes."
     exit 1
   fi
 fi
+
+# Wine multilib is no longer needed, so assuming vanilla x64.
+LIBDIRSUFFIX="64"
 
 export PATH="/opt/rust/bin:$PATH"
 if [ -z "$LD_LIBRARY_PATH" ]; then

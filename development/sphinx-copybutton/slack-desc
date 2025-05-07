@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                 |-----handy-ruler------------------------------------------------------|
+sphinx-copybutton: sphinx-copybutton (A sphinx extension to add a 'copy' button.)
+sphinx-copybutton:
+sphinx-copybutton: Sphinx-copybutton does one thing: add a little “copy” button to
+sphinx-copybutton: the right of your code blocks. That’s it! It is a lightweight
+sphinx-copybutton: wrapper around the excellent (and also lightweight) Javascript
+sphinx-copybutton: library ClipboardJS.
+sphinx-copybutton:
+sphinx-copybutton:
+sphinx-copybutton:
+sphinx-copybutton:
+sphinx-copybutton: https://sphinx-copybutton.readthedocs.io/en/latest/

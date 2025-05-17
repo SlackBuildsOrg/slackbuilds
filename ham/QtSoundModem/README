@@ -1,0 +1,68 @@
+
+QtSoundModem (QtSM) is a multi-platform port of UZ7HO's SoundModem.
+Many thanks to Andy for allowing me to convert his excellent software.
+There are versions for Windows and Linux. If you are not familiar with
+SoundModem I suggest you look at the User Guide on Andrei's site before
+trying to use this program. I've only documented differences from the
+original program.
+
+Differences from original SoundModem.
+
+QtSM is generally compatible with Soundmodem V 1.08, including FX.25
+features. All modem types except BFSK FEC 4x100 are supported.
+
+The Filter parameters are not configurable.
+
+Sound Card Handling
+
+Sample Rate is fixed at 12000
+
+When running two channels the original SoundModem uses the left audio
+for the first and right for the second. Mine allows either channel to
+be allocated to either side. As a lot of radio interfaces are
+actually mono this makes little difference but does mean if you can
+access the two sides separately you could run QtSoundModem on one
+and another mode on the other. If you have both channels running on
+the same side you only get one waterfall.
+
+PTT
+
+As well as the normal RTS/DTR on a COM port QTSM supports:
+
+Using PTT pins on sound card interfaces based
+on the CM108 or CM119 Chips
+
+Using GPIO pin(s) on platforms like the Raspberry Pi.
+
+CAT Commands. You need to specify (in hex) the strings to be sent to
+the radio for PTT on and off.
+
+HAMLIB (rigctld)
+
+Running without the GUI
+
+QtSM can run without the graphics display. 
+
+Start with command line parameter nogui.
+
+This works on both Windows and Linux, but on Windows the only way to
+close the program is to kill it using Task Manager.
+
+It is possible to configure the program by editing the QtSoundModem.ini,
+but that is far from easy, so it is better if you can run the program
+in gui mode first, configure, then restart in nogui mode.
+
+IL2P Support
+
+QtSM now supports IL2P (Described here)
+
+IL2P is enabled via the Modem Menu. There are four options:
+
+None         IL2P Disabled
+RX Only      Decode IP2P as well as normal ax.25, send ax.25
+RX+TX        Decode IP2P as well as normal ax.25, send IL2P
+IL2P Only    Decode just IL2P, send IL2P
+At the moment IL2P should work in all AFSK and BPSK modes.
+
+This package is maintained by:
+Eduardo Castillo <hellocodelinux@gmail.com>

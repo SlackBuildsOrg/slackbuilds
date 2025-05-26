@@ -2,7 +2,7 @@
 #
 # Slackware build script for ttf-inconsolata.
 #
-# Copyright 2016-2023  Edinaldo P. Silva, Rio de Janeiro, Brazil.
+# Copyright 2016-2025  Edinaldo P. Silva, Rio de Janeiro, Brazil.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ttf-inconsolata
-VERSION=${VERSION:-3.000}
+VERSION=${VERSION:-3.001}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -45,6 +45,7 @@ PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 SRCNAM="Inconsolata"
+COMMIT="540ba910bb13ab92147f8d064d6f9ec070fe1820"
 
 set -e
 
@@ -52,8 +53,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar -xzvf $CWD/$SRCNAM-$VERSION.tar.?z
-mv $SRCNAM-$VERSION $PRGNAM-$VERSION
+tar -xzvf $CWD/$PRGNAM-$VERSION.tar.?z
+mv $SRCNAM-$COMMIT $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \

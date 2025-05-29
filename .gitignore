@@ -32,3 +32,4 @@ waf-2.0.*
 *.snap
 *.rej
 *.vapi
+debian-binary

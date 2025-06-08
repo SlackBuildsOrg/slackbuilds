@@ -1,0 +1,19 @@
+Contrast is a simple and modern color contrast checker
+developed by the GNOME project.
+
+It allows designers and developers to quickly check if the color
+combinations they use meet accessibility standards, such as the
+Web Content Accessibility Guidelines (WCAG). With an intuitive
+interface, users can select foreground and background colors
+and instantly see if the contrast ratio is sufficient for
+readable and accessible content.
+
+Features:
+
+- Easy-to-use graphical interface
+- Real-time contrast ratio calculation
+- WCAG compliance checking
+- Integration with GNOME desktop environment
+
+Homepage: https://gitlab.gnome.org/World/design/contrast
+License: GPLv3+

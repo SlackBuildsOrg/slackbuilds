@@ -1,0 +1,12 @@
+PRGNAM="netavark"
+VERSION="1.15.2"
+HOMEPAGE="https://github.com/containers/netavark"
+DOWNLOAD="https://github.com/containers/netavark/archive/v1.15.2/netavark-1.15.2.tar.gz \
+          https://github.com/containers/netavark/releases/download/v1.15.2/netavark-v1.15.2-vendor.tar.gz"
+MD5SUM="42e614a31f28c97c938a4c1cf93f8f97 \
+        8b1466251108a39688117441384b9a02"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="protobuf3 rust-opt"
+MAINTAINER="Gustavo B. Schenkel"
+EMAIL="gustavo.schenkel@gmail.com"

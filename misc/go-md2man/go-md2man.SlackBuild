@@ -21,12 +21,17 @@
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#  Updated for v2.0.7 by Gustavo B. Schenkel, Porto Alegre, Brazil
+#
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=go-md2man
-VERSION=${VERSION:-1.0.8}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-2.0.7}
+BFPRGNAM=${BFPRGNAM:-blackfriday}
+BFVERSION=${BFVERSION:-2.1.0}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -34,6 +39,7 @@ PKGTYPE=${PKGTYPE:-tgz}
 DOMAIN=github.com
 # The name of the organization/owner of the package
 ORG=cpuguy83
+BFORG=russross
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -71,9 +77,11 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-mkdir -p $PRGNAM-$VERSION/src/$DOMAIN/$ORG
-cd $PRGNAM-$VERSION/src/$DOMAIN/$ORG
-rm -rf $PRGNAM
+mkdir -p $PRGNAM-$VERSION/src/$DOMAIN/{$ORG,$BFORG}
+cd $PRGNAM-$VERSION/src/$DOMAIN/$BFORG
+tar xvf $CWD/$BFPRGNAM-$BFVERSION.tar.gz
+mv $BFPRGNAM-$BFVERSION $BFPRGNAM
+cd $TMP/$PRGNAM-$VERSION/src/$DOMAIN/$ORG
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 mv $PRGNAM-$VERSION $PRGNAM
 cd $PRGNAM
@@ -96,7 +104,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  LICENSE.md README.md Gopkg.* \
+  LICENSE.md README.md \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

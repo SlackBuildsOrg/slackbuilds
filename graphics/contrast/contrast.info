@@ -5,6 +5,6 @@ DOWNLOAD="https://gitlab.gnome.org/World/design/contrast/-/archive/0.0.5/contras
 MD5SUM="424aa9ab51d703b2a2adc52b6a033fca"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
+REQUIRES="libadwaita"
 MAINTAINER="Eduardo Castillo"
 EMAIL="hellocodelinux@gmail.com"

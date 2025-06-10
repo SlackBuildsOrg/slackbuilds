@@ -1,0 +1,54 @@
+DroidStar
+
+This software connects to M17, Fusion (YSF/FCS, DN and VW
+modes are supported), DMR, P25, NXDN, D-STAR
+(REF/XRF/DCS) reflectors and AllStar nodes (as an IAX2
+client) over UDP. It is compatible with all of the AMBE
+USB devices out there (ThumbDV, DVstick 30, DVSI, etc).
+It also supports MMDVM modems and can be used as a
+hotspot, or as a stand-alone transceiver via direct mode
+to the MMDVM device.
+
+This software is open source and uses the cross platform
+C++ library called Qt. It will build and run on Linux,
+Windows, MacOS, Android, and iOS. No USB device support
+for iOS though (AMBE vocoder or MMDVM). It should also
+build and run on any other posix platform that has Qt
+available (xxxBSD, Solaris, etc). This software is
+provided as-is and no support is available.
+
+There is a vocoder plugin API available for loading of
+vocoder software. Any vocoder plugin used with DroidStar
+should be properly licensed by the user if any copyright
+patents apply. Do not use any patented vocoder plugin
+that you are not licensed to use. I have no information
+regarding acquiring a software vocoder.
+
+Loading a vocoder plugin
+
+A vocoder plugin can be downloaded from a URL, which
+will place the vocoder into the correct location for the
+platform. Add a full http url, including the filename,
+to the Vocoder URL option on the settings tab, and click
+the Download vocoder button.
+
+For Android and iOS devices, the vocoder URL download
+method is the only way to load a vocoder plugin. For
+Linux/MacOS/Windows, a vocoder can also be manually
+placed. Copy the plugin to the system settings file
+location. On Linux, this is ~/.config/dudetronics. It is
+the same place where the host and id files are located
+(DMRHosts.txt, DMRIDs.data, etc).
+
+The vocoder plugin filename must be named
+vocoder_plugin.platform.arch where platform and arch can
+be any of the following: platform: linux, darwin, winnt,
+android, ios arch: x86_64, arm, arm64
+
+The platform and arch for your device are identified on
+the About tab.
+
+Download codec:
+https://github.com/hellocodelinux/droidstar_vocoder_plugin
+
+NOTE: Requires imbe_vocoder

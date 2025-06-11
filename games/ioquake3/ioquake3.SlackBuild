@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ioquake3
-VERSION=${VERSION:-1.36_70d07d9}
+VERSION=${VERSION:-1.36_8d2c2b4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,6 +92,7 @@ make \
    USE_CODEC_VORBIS=1 \
    USE_CURL=1 \
    USE_CURL_DLOPEN=0 \
+   BUILD_DEBUG=1 \
    USE_FREETYPE=1 \
    BUILD_RENDERER_OPENGL2=1 \
    USE_MUMBLE=1 \

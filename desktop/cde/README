@@ -1,0 +1,13 @@
+The Common Desktop Environment (CDE) was the dominant desktop on 
+proprietary Unix systems in the 90's. In 2012 it was relicensed under 
+GPL2 and has seen moderst maintenance from the community. Although
+functional, it is of course a very old desktop, and some parts of it,
+are not likely useful in a modern setting. Nevertheless, people still
+use it today, for nostalgia, if nothing else.
+
+PS: /etc/rc.d/rc.rpc needs to be running and configured correctly for the
+calendar application to work; in practice though, both the calendar and
+the main application are unlikely to be of any use in a modern setting.
+There are security considerations too, especially with CDE's calendar
+application. (NsCDE is a good alternative if you want a modern CDE
+look-a-like)

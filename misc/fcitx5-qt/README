@@ -17,7 +17,7 @@ you need to modify
 
 from "Off" to "On". Similarly, to turn on Qt6 support, turn
 
-  -DENABLE_QT6=On \
-  -DENABLE_QT6_WAYLAND_WORKAROUND=On ..
+  -DENABLE_QT6=Off \
+  -DENABLE_QT6_WAYLAND_WORKAROUND=Off ..
 
 from "Off" to "On".

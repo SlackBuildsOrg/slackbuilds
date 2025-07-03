@@ -102,6 +102,7 @@ find $PKG -name perllocal.pod \
   | xargs rm -f
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mv $PKG/usr/share/doc/libmpdclient/* $PKG/usr/doc/$PRGNAM-$VERSION
 rm -rf $PKG/usr/share/doc
 

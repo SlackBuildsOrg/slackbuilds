@@ -2,7 +2,7 @@
 
 # Slackware build script for OpenShadingLanguage
 
-# Copyright 2023 Giancarlo Dessi, Cagliari, IT
+# Copyright 2023-2025 Giancarlo Dessi, Cagliari, IT
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=OpenShadingLanguage
-VERSION=${VERSION:-1.12.14.0}
+VERSION=${VERSION:-1.13.12.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -76,6 +76,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+CMAKE_POLICY=""
+CMAKE_CXX_STANDARD=""
+if [ ! -f /usr/bin/clang-13 ]; then
+ CMAKE_POLICY="-DCMAKE_POLICY_DEFAULT_CMP0175=OLD -DCMAKE_POLICY_DEFAULT_CMP0167=OLD"
+ CMAKE_CXX_STANDARD="-DCMAKE_CXX_STANDARD=17 "
+fi
+patch -p1 < $CWD/llvm-20.patch
+
+
 mkdir -p build
 cd build
   cmake \
@@ -85,6 +94,8 @@ cd build
     -DUSE_partio=OFF \
     -DUSE_Qt6=OFF \
     -DUSE_PYTHON=ON \
+    $CMAKE_POLICY \
+    $CMAKE_CXX_STANDARD \
     -DCMAKE_BUILD_TYPE=Release ..
   make
   make install/strip DESTDIR=$PKG
@@ -99,6 +110,8 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 mv $PKG/usr/share/doc/OSL/* $PKG/usr/doc/$PRGNAM-$VERSION
 rm -f $PKG/usr/doc/$PRGNAM-$VERSION/INSTALL.md
 rm -r $PKG/usr/share/doc
+rm -r $PKG/usr/cmake
+rm -r $PKG/usr/build-scripts
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

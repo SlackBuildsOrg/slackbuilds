@@ -1,0 +1,72 @@
+pacoteco: SlackBuild Instructions
+=================================
+
+Overview
+--------
+This file explains how to use the `pacoteco.SlackBuild` script to build
+and package the `pacoteco` tool for Slackware. It focuses on
+SlackBuild-specific details and common challenges.
+
+SlackBuild Usage
+----------------
+1. Ensure source files are in `pacoteco-devel/src/pacoteco-VERSION-src/`
+(e.g., `pacoteco-1.0-src/`).
+2. Run the SlackBuild:
+   pacoteco-devel/slackbuilds$ sudo ./pacoteco.SlackBuild [TMP=/tmp/SBo]
+   [OUTPUT=../output]
+   - `TMP`: Temporary build directory (defaults to `/tmp/SBo`).
+   - `OUTPUT`: Package output directory (defaults to
+   `pacoteco-devel/output/`).
+3. Install the package:
+   pacoteco-devel/slackbuilds$ sudo installpkg
+   ../output/pacoteco-1.0-noarch-1_SBo.txz
+
+SlackBuild Details
+------------------
+- The script copies files from `src/pacoteco-VERSION-src/build/`
+to `TMP/package-pacoteco/` staging area, mimicking FHS
+paths (e.g., `usr/bin/pacoteco`, `usr/man/man8/pacoteco.8.gz`).
+- It sets permissions (0755 for executables, 0644 for others).
+- The `slack-desc` file is used for package description.
+- The `doinst.sh` script handles post-install tasks (if any).
+
+Common Challenges
+-----------------
+- **Source Files**: Ensure `build/` contains `pacoteco`,
+`pacoteco.8.gz`, and `template-devel.tar.gz`, matching `appletree/`
+paths.
+- **Temporary Directory**: Use `TMP=/tmp/SBo` to avoid conflicts with
+other builds. You may want to set `TMP=pacoteco-devel/tmp/SBo` for easy
+DEBUG access
+
+Next Steps
+----------
+- Read pacoteco-devel/README for general usage and installation.
+- Read src/pacoteco-git/README-src for source development details.
+- Customize `pacoteco.SlackBuild` if needed (e.g., for different
+versions or architectures).
+
+License
+-------
+- This file is part of pacoteco. It is released under GNU GPL version 3.
+See COPYING for details.
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation, version 3 of the License.
+
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+Public License for more details.
+
+You should have received a copy of the GNU General Public License along
+with this program. If not, see <https://www.gnu.org/licenses/>.
+
+Contact
+-------
+For issues or suggestions, contact:
+
+* Prof. Dr. Ruben Carlo Benante
+* Email: rcb@beco.cc
+

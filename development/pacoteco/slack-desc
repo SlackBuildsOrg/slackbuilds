@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+pacoteco: pacoteco (Tool to create Slackware package templates)
+pacoteco:
+pacoteco: This tool generates a template for creating Slackware packages.
+pacoteco: It includes a script and a tarball with a sample package structure.
+pacoteco: Run 'pacoteco <name> <version>' to create a new template.
+pacoteco: Run 'pacoteco <version> -s' to create a new SlackBuild script.
+pacoteco:
+pacoteco: Author: Ruben Carlo Benante <rcb@beco.cc>
+pacoteco: Homepage: https://beco.cc/downloads/slackware/pkgs/
+pacoteco: License: GNU GPL V3
+pacoteco:

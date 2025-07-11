@@ -1,0 +1,133 @@
+#!/bin/bash
+#
+# SlackBuild script for pacoteco
+# License: GNU General Public License Version 3
+#
+# Copyright 2025 by Ruben Carlo Benante <rcb@beco.cc>
+# All rights reserved.
+#
+# Redistribution and use of this script, with or  without  modification,
+# is permitted provided that the conditions from the  license  are  met.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR  "AS IS"  AND ANY  EXPRESS  OR
+# IMPLIED  WARRANTIES,  INCLUDING,  BUT  NOT  LIMITED  TO,  THE  IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS  FOR  A  PARTICULAR  PURPOSE
+# ARE DISCLAIMED. IN NO  EVENT  SHALL  THE  AUTHOR  BE  LIABLE  FOR  ANY
+# DIRECT, INDIRECT, INCIDENTAL,  SPECIAL,  EXEMPLARY,  OR  CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT  LIMITED  TO,  PROCUREMENT  OF  SUBSTITUTE
+# GOODS OR  SERVICES;  LOSS  OF  USE,  DATA,  OR  PROFITS;  OR  BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY  OF  LIABILITY, WHETHER
+# IN CONTRACT,  STRICT  LIABILITY,  OR  TORT  (INCLUDING  NEGLIGENCE  OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  THIS  SOFTWARE,  EVEN
+# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#----------------------------------------------------------------------#
+# More information in the COPYING, README and pacoteco.info files.     #
+#----------------------------------------------------------------------#
+
+# Save current working directory (slackbuilds/) ########################
+cd $(dirname $0) ; CWD=$(pwd)
+
+# Program metadata #####################################################
+# PRGNAM: Package name
+PRGNAM=pacoteco
+# VERSION: Package version
+VERSION=${VERSION:-2.0}
+# BUILD: Build number
+BUILD=${BUILD:-1}
+# TAG: Package tag (e.g., _SBo for SlackBuilds.org)
+TAG=${TAG:-_SBo}
+# PKGTYPE: Package type (txz is standard)
+PKGTYPE=${PKGTYPE:-tgz}
+
+# Set up build environment #############################################
+# TMP: Temporary directory where to stage the system root
+TMP=${TMP:-/tmp/SBo}
+# PKG: Root staging area for package structure
+PKG=${TMP}/package-${PRGNAM}
+# OUTPUT: Directory for the final .txz package
+OUTPUT=${OUTPUT:-/tmp}
+
+# Architecture detection ###############################################
+# ARCH: Define pacoteco's arch as noarch
+ARCH="noarch"
+
+# Useful variable combinations #########################################
+# Complete name of the binary package
+PKGALL="${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}"
+# Source directory (usually under TMP)
+PRGVERSRC="${PRGNAM}-${VERSION}-src"
+
+# PRINT_PACKAGE_NAME section ###########################################
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+    echo "${PKGALL}"
+    exit 0
+fi
+
+# Exit on errors #######################################################
+set -e
+
+# Prepare staging area #################################################
+rm -rf ${PKG}
+# Preparing working directories ########################################
+mkdir -p ${TMP} ${PKG} ${OUTPUT}
+cd ${TMP} || { echo "Can't change into ${TMP} directory" ; exit 1 ; }
+rm -rf ${PRGVERSRC}
+
+# Extract source tarball ###############################################
+if [ -f ${CWD}/${PRGVERSRC}.tar.gz ]; then
+    tar -xvf ${CWD}/${PRGVERSRC}.tar.gz
+else
+    echo "Error: ${CWD}/${PRGVERSRC}.tar.gz not found"
+    exit 1
+fi
+
+# Change to source directory ###########################################
+cd "${PRGVERSRC}" || { echo "Can't change into ${PRGVERSRC} directory" ; exit 1 ; }
+
+# Set ownership and permissions ########################################
+chown -R root:root .
+find -L . \
+    \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
+    -exec chmod 755 {} \; -o \
+    \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
+    -exec chmod 644 {} \;
+
+# Apply patches if any #################################################
+if [ -d patches ]; then
+    for patch in patches/*.patch; do
+        if [ -f "${patch}" ]; then
+            echo "Applying ${patch}"
+            patch -p1 < "${patch}"
+        fi
+    done
+fi
+
+# Build source #########################################################
+make
+
+# Install files from appletree (MakeInstall created by pacoteco -m) ####
+# PACOTECO MARKER - DO NOT REMOVE - INSTALL COMMANDS - BEGIN ###########
+# Slackbuild files to install/ directory
+install -Dm 0644 ${CWD}/slack-desc ${PKG}/install/slack-desc
+install -Dm 0644 ${CWD}/doinst.sh ${PKG}/install/doinst.sh
+# SlackBuild files to usr/doc/ directory
+install -Dm 0644 ${CWD}/slack-desc ${PKG}/usr/doc/pacoteco-2.0/slack-desc
+install -Dm 0644 ${CWD}/doinst.sh ${PKG}/usr/doc/pacoteco-2.0/doinst.sh
+install -Dm 0644 ${CWD}/pacoteco.info ${PKG}/usr/doc/pacoteco-2.0/pacoteco.info
+install -Dm 0644 ${CWD}/README ${PKG}/usr/doc/pacoteco-2.0/README
+install -Dm 0644 ${CWD}/COPYING ${PKG}/usr/doc/pacoteco-2.0/COPYING
+install -Dm 0644 ${CWD}/pacoteco.SlackBuild ${PKG}/usr/doc/pacoteco-2.0/pacoteco.SlackBuild
+# Documentation, man pages and package files
+install -Dm 0644 ${TMP}/${PRGVERSRC}/build/template-devel.tar.gz ${PKG}/usr/share/pacoteco-templates/template-devel.tar.gz
+install -Dm 0644 ${TMP}/${PRGVERSRC}/build/VERSION ${PKG}/usr/doc/pacoteco-2.0/VERSION
+install -Dm 0644 ${TMP}/${PRGVERSRC}/build/pacoteco.8.gz ${PKG}/usr/man/man8/pacoteco.8.gz
+install -Dm 0755 ${TMP}/${PRGVERSRC}/build/pacoteco ${PKG}/usr/bin/pacoteco
+# PACOTECO MARKER - DO NOT REMOVE - INSTALL COMMANDS - END #############
+
+# Make the package #####################################################
+cd ${PKG}
+/sbin/makepkg -l y -c n ${OUTPUT}/${PKGALL}
+
+#-----------------------------------------------------------------------
+# vi: set ai et ts=4 sw=4 tw=0 wm=0 fo=croql syn=sh : Shell Vim modeline
+# Template by Dr. Beco <rcb at beco dot cc>      Version 20250704.084004

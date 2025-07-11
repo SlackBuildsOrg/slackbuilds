@@ -1,0 +1,443 @@
+# Pacoteco - Slackware Package Build Environment Creator
+
+## Overview
+
+Pacoteco is a robust Bash script that simplifies and automates the
+creation and management of Slackware package build environments. Using
+a template-based approach, it streamlines the process of generating,
+building, and packaging Slackware packages while ensuring compliance
+with SlackBuilds.org (SBo) standards. Pacoteco handles everything from
+setting up directory structures to generating `MakeInstall` and
+`SlackBuild` scripts, producing source and SlackBuild tarballs,
+updating package metadata, and cleaning artifacts.
+
+- **Author**: Ruben Carlo Benante `<rcb@beco.cc>`
+- **License**: GNU General Public License v3
+- **Page**: [pacoteco](https://gitlab.com/drbeco/pacoteco-slackware/)
+
+## Features
+
+- **Template-Based Environment**: Creates a `<package>-devel/`
+directory from a customizable template.
+- **Automated Build Scripts**: Generates `MakeInstall` and updates
+`SlackBuild` scripts based on `appletree/`.
+- **Version Management**: Updates version information across
+`VERSION`, `SlackBuild`, and `.info` files.
+- **Tarball Creation**: Produces source (`-s`) and SlackBuild (`-b`)
+tarballs for distribution.
+- **Metadata Updates**: Updates `slackbuilds/<package>.info` with
+version, download URL, and MD5SUM (`-i`).
+- **Flexible Cleanup**: Supports cleaning specific artifacts (`-cs`,
+`-ci`, `-cb`) or broader sets (`-ca`, `-cA`, `-co`, `-cO`).
+- **Verbose Mode**: Provides detailed output and tips with `-v` or
+`-vv`.
+- **SBo Compliance**: Integrates with `sbopkglint` and `sbolint` for
+validating binary packages and SlackBuild tarballs.
+
+## Why Pacoteco Shines
+
+Pacoteco transforms Slackware package development into an intuitive,
+efficient, and enjoyable process. Its standout features include:
+
+- **Visual Package Design**: The `appletree/` directory mirrors the
+Linux Filesystem Hierarchy Standard (e.g., `/usr/bin`, `/usr/doc`,
+`/etc`), enabling developers to visualize and adjust the package’s
+layout directly. Adjust file locations, permissions, and contents
+with ease.
+- **Streamlined Workflow**: Organized into three phases —
+**Development**, **Building**, and **Packaging**—with a clear six-step
+process (plus
+optional cleanup) to reduce complexity and saves time.
+- **Automated Scripting**: The `-m` option scans `appletree/` to
+create precise `MakeInstall` and `SlackBuild` scripts, minimizing
+manual errors.
+- **Iterative Development**: Commands like `-u` for version updates
+and `-c` for cleanup support rapid iteration, freeing developers to
+focus on coding and testing.
+- **SBo-Ready Outputs**: Produces clean, SBo-compliant source and
+SlackBuild tarballs ready for submission or deployment.
+
+Whether you’re a seasoned Slackware packager or a first-time
+developer, Pacoteco makes package creation accessible, efficient,
+and precise.
+
+## Prerequisites
+
+- **Slackware**: Version 15.0 or current.
+- **Dependencies**:
+  - `slackpkg`: Required for package management.
+  - `sbopkglint` and `sbolint`: Optional, for validating binary
+  packages and SlackBuild tarballs.
+- A working `make` environment for building source files.
+
+## Installation
+
+To install `pacoteco` as a Slackware package:
+
+1. Download the SlackBuild tarball from
+[pacoteco-slackware](https://gitlab.com/drbeco/pacoteco-slackware/).
+2. Extract the tarball:
+
+   ```bash
+   tar -xzf pacoteco.tar.gz
+   ```
+
+3. Navigate to the `pacoteco` directory and run the SlackBuild script:
+
+   ```bash
+   cd pacoteco
+   sudo ./pacoteco.SlackBuild
+   ```
+
+4. Install the resulting package:
+
+   ```bash
+   sudo installpkg /tmp/pacoteco-VERSION-noarch-1_SBo.txz
+   ```
+
+5. Verify installation:
+
+   ```bash
+   pacoteco -V
+   ```
+
+The `pacoteco` script is installed in `/usr/bin/pacoteco`, with
+templates in `/usr/share/pacoteco-templates/` and documentation
+in `/usr/doc/pacoteco-VERSION/`.
+
+## Workflow
+
+Pacoteco organizes Slackware package development into three
+phases: **Development**, **Building**, and **Packaging**.
+The process consists of six steps, with an optional cleanup step.
+Below is the workflow for creating a package named `yrpkg` with
+version `0.2`.
+
+### Phase 1: Development
+
+1. **Create Environment** (`-g`):
+
+   ```bash
+   ~/sources$ pacoteco -vvgn yrpkg -k 0.2
+   ```
+
+   - Creates `yrpkg-devel/` with subdirectories: `yrpkg-src/`,
+   `slackbuilds/`, `output/`.
+   - Populates `yrpkg-src/VERSION` and
+   `yrpkg-src/appletree/usr/doc/yrpkg-0.2/VERSION` with `yrpkg 0.2`.
+   - Creates a symlink `yrpkg -> slackbuilds` for SlackBuild tarball
+   creation.
+
+   **What to Do**:
+
+   - Edit source files, documentation, and update your TODO list in
+   `yrpkg-src/`.
+   - Compile using:
+
+     ```bash
+     cd yrpkg-devel/yrpkg-src
+     yrpkg-src$ make
+     ```
+
+   - Builds source files and places outputs in `yrpkg-src/build/`.
+   - Adjust `appletree/` by moving files from `build/` to their final
+   locations (e.g., `usr/bin/`, `usr/doc/`), optionally setting
+   permissions with `-p` or using defaults (755 for binaries, 644 for
+   others).
+
+2. **Generate MakeInstall and SlackBuild** (`-m`):
+
+   ```bash
+   yrpkg-src$ pacoteco -vvm
+   ```
+
+   - Generates `yrpkg-src/MakeInstall` with install commands based on
+   `yrpkg-src/appletree/`.
+   - Updates `slackbuilds/yrpkg.SlackBuild` with install commands.
+   - Copies `yrpkg-src/build/README` to `slackbuilds/README` if
+   present.
+
+   **What to Do**:
+
+   - Test installation to a temporary staging area:
+
+     ```bash
+    yrpkg-src$ make install DESTDIR=/tmp/staging-yrpkg
+     ```
+
+     - Compare the staging area with `appletree/` to ensure accuracy.
+
+3. **Update Version** (`-u`, optional):
+
+   ```bash
+   yrpkg-src$ pacoteco -vvuk 0.3
+   ```
+
+   - Updates `yrpkg-src/VERSION`, `slackbuilds/yrpkg.SlackBuild`,
+   `slackbuilds/yrpkg.info`, and
+   `yrpkg-src/appletree/usr/doc/yrpkg-0.3/VERSION` to version `0.3`.
+
+   **What to Do**:
+
+   - Return to Step 1 to continue coding, building, and testing until
+   satisfied.
+
+4. **Create Source Tarball** (`-s`):
+
+   ```bash
+   yrpkg-src$ pacoteco -vvs
+   ```
+
+   - Creates `output/yrpkg-0.3-src.tar.gz`, excluding
+   `yrpkg-src/build/` and hidden files.
+
+   **What to Do**:
+
+   - This completes the Development phase. Proceed to the Building
+   phase.
+
+### Phase 2: Building
+
+5. **Update .info File and SlackBuild Files** (`-i`):
+
+   ```bash
+   cd ../slackbuilds
+   slackbuilds$ pacoteco -vvi
+   ```
+
+   - Updates `slackbuilds/yrpkg.info` with `VERSION`, `DOWNLOAD`, and
+   `MD5SUM`.
+   - Copies `output/yrpkg-0.3-src.tar.gz`, `yrpkg-src/README`, and
+   `yrpkg-src/COPYING` to `slackbuilds/`.
+   - Updates `slackbuilds/yrpkg.SlackBuild`.
+
+   **What to Do**:
+
+   - Review updated files:
+     - Check `slackbuilds/yrpkg.info` and
+     `slackbuilds/yrpkg.SlackBuild` for accuracy.
+     - Verify the source tarball in `slackbuilds/`.
+     - Edit `slackbuilds/README` and `slackbuilds/COPYING` if needed
+     (recover backups from `README~` or `COPYING~` if necessary).
+   - Run the SlackBuild script:
+
+     ```bash
+     slackbuilds$ sudo ./yrpkg.SlackBuild
+     ```
+
+   - Builds the binary package `/tmp/yrpkg-0.3-noarch-1_SBo.txz`.
+   - Test the binary package:
+
+    ```bash
+    slackbuilds$ sbopkglint /tmp/yrpkg-0.3-noarch-1_SBo.txz
+    ```
+
+     - Validates SBo compliance.
+   - Install the package:
+
+     ```bash
+     slackbuilds$ sudo installpkg /tmp/yrpkg-0.3-noarch-1_SBo.txz
+     ```
+
+     - Installs and tests the software. If satisfied, proceed to the
+     Packaging phase.
+
+### Phase 3: Packaging and Finishing
+
+6. **Save Binary Package and Create SlackBuild Tarball** (`-b`):
+
+   ```bash
+   cd ..
+   yrpkg-devel$ pacoteco -vvb
+   ```
+
+   - Copies `/tmp/yrpkg-0.3-noarch-1_SBo.txz` to `output/`.
+
+k$:call setpos('.',scp)
+
+   - Creates `output/yrpkg.tar.gz` from `slackbuilds/` (requires
+   `yrpkg -> slackbuilds` symlink).
+
+   **What to Do**:
+
+   - Validate the SlackBuild tarball:
+
+     ```bash
+     yrpkg-devel$ sbolint output/yrpkg.tar.gz
+     ```
+
+     - Ensures SBo compliance for submission.
+
+7. **Clean Artifacts** (`-c`, optional):
+
+   ```bash
+   cd yrpkg-src
+   yrpkg-src$ pacoteco -vvfca
+   make clean
+   ```
+
+   - Cleans specific artifacts (`-cs`, `-ci`, `-cb`) or broader sets
+   (`-ca`, `-cA`, `-co`, `-cO`).
+   - `make clean` clears `yrpkg-src/build/`.
+
+   **What to Do**:
+
+   - Use cleanup to remove outdated or temporary files, then recreate
+   as needed with `-m`, `-s`, `-i`, or `-b`.
+
+## Command Options
+
+```bash
+pacoteco [-v...] ( [-h|-V] | -g -n <package-name> [-k <version>] | -u
+[-k <version>] [-f] | -s | -m [-p] | -b | -c[aAoOsSiItTbB] [-f] | -i )
+```
+
+- `-h, --help`: Show help.
+- `-V, --version`: Show pacoteco version.
+- `-v, --verbose`: Enable verbose mode (cumulative; `-vv` for extra
+tips).
+- `-g, --generate`: Create `<package>-devel/` environment.
+- `-n, --name`: Specify package name (required with `-g`).
+- `-k, --pkgversion`: Specify package version (optional with `-g`,
+`-u`; defaults to `0.1` for `-g`).
+- `-m, --makeinstall`: Generate `MakeInstall` and update `SlackBuild`.
+- `-p, --permissions`: Use `appletree/` permissions in `MakeInstall`
+(with `-m`).
+- `-u, --update`: Update version in `VERSION`, `SlackBuild`, and
+`.info` files.
+- `-s, --source`: Create source tarball in `output/`.
+- `-i, --infofile`: Update `slackbuilds/<package>.info` and copy
+source tarball and docs to `slackbuilds/`.
+- `-b, --slackbuilds`: Create SlackBuild tarball and copy binary
+package to `output/`.
+- `-c, --clean`: Clean files (specify type):
+  - `-ca`: Almost all files (source tarballs, backup files, temporary
+  directories).
+  - `-cA`: All files (including `MakeInstall`, `build/`, docs).
+  - `-co`: Almost all files from other versions.
+  - `-cO`: All files from other versions.
+  - `-cs`, `-cS`: Source tarballs in `output/`.
+  - `-ci`: Backup files (`README~`, `COPYING~`) in `slackbuilds/`.
+  - `-cI`: All auto-generated files in `slackbuilds/` (backup files,
+  source tarballs).
+  - `-ct`: Temporary SlackBuild directories (`/tmp/SBo/`).
+  - `-cT`: All temporary SlackBuild files (including binary packages).
+  - `-cb`: SlackBuild tarball (`output/<package>.tar.gz`).
+  - `-cB`: All files in `output/` (binary packages, source and
+  SlackBuild tarballs).
+- `-f, --force`: Remove files without prompting (with `-c` or `-u`).
+
+## Directory Structure
+
+After running `pacoteco -g -n yrpkg -k 0.2`, the following structure
+is created:
+
+```
+yrpkg-devel/
+├── yrpkg -> slackbuilds
+├── yrpkg-src/
+│   ├── appletree/
+│   │   ├── usr/
+│   │   │   ├── bin/
+│   │   │   │   └── yrpkg.bin
+│   │   │   ├── doc/
+│   │   │   │   └── yrpkg-0.2/
+│   │   │   │       └── VERSION
+│   │   │   ├── man/
+│   │   │   │   └── man8/
+│   │   │   │       └── yrpkg.8.gz
+│   │   │   └── share/
+│   │   │       └── yrpkg/
+│   │   │           └── yrpkg-readonly.dat
+│   │   └── var/
+│   │       ├── cache/
+│   │       │   └── yrpkg/
+│   │       │       └── yrpkg-variable.dat
+│   │       └── games/
+│   │           └── yrpkg/
+│   │               └── yrpkg.score
+│   ├── build/
+│   ├── makefile
+│   ├── MakeInstall
+│   ├── VERSION
+│   ├── README
+│   └── <source files>
+├── output/
+└── slackbuilds/
+    ├── yrpkg.SlackBuild
+    ├── yrpkg.info
+    ├── slack-desc
+    ├── doinst.sh
+    ├── README
+    └── COPYING
+```
+
+- `yrpkg-src/appletree/`: Staging area mirroring the Linux filesystem
+for package files.
+- `yrpkg-src/build/`: Temporary build outputs.
+- `output/`: Stores source tarballs, binary packages, and SlackBuild
+tarballs.
+- `slackbuilds/`: Contains SBo-required files (`SlackBuild`, `.info`,
+`slack-desc`, `doinst.sh`, etc.).
+- `yrpkg`: Symlink to `slackbuilds/` for creating the SlackBuild
+tarball.
+
+## Notes for Developers
+
+- **Template**: The `template-devel.tar.gz` in
+`/usr/share/pacoteco-templates/` is used to create new package
+environments.
+- **README and COPYING**: Place `README` and `COPYING` in
+`<package>-src/`. The `-i` option copies them to `slackbuilds/`
+with backups (`-bu` flag).
+- **Version Control**: The `VERSION` file in `<package>-src/` must
+contain `<package> <version>` (e.g., `yrpkg 0.2`).
+- **Symlink Requirement**: The `-b` option requires the
+`<package> -> slackbuilds` symlink to create
+`output/<package>.tar.gz`.
+- **Cleanup Options**: Use `-cs`, `-ci`, `-cb` for targeted cleanup,
+or `-ca`, `-cA`, `-co`, `-cO` for broader cleanup. Combine with
+`-f` to skip prompts.
+- **SBo Compliance**: Validate binary packages with `sbopkglint` and
+SlackBuild tarballs with `sbolint`.
+- **Custom Builds**: Edit `<package>-src/makefile` and source files
+before running `make`.
+
+## Submitting to SlackBuilds.org
+
+1. Ensure the `yrpkg` package builds cleanly and passes `sbopkglint`
+and `sbolint`.
+2. Submit `output/yrpkg.tar.gz` to
+[https://slackbuilds.org/submit/](https://slackbuilds.org/submit/).
+3. Include in the submission comment:
+
+   ```
+   yrpkg: A delightful software that doubles your happiness with
+   vibrant visuals and pleasant sounds. This text is a template,
+   use your own... it never hurts to be obivous ;).
+   ```
+
+4. Follow
+[slackbuilds.org guidelines](https://slackbuilds.org/guidelines/) for
+submission details.
+
+## Contributing
+
+Contributions are welcome via
+[pacoteco-slackware](https://gitlab.com/drbeco/pacoteco-slackware/).
+Submit issues or merge requests for bug fixes or enhancements.
+
+## License
+
+Pacoteco is licensed under the GNU General Public License v3. See
+`COPYING` for details.
+
+## See Also
+
+- [](https://beco.cc/downloads/slackware/src/) - Source downloads.
+- [](https://beco.cc/downloads/slackware/pkg/) - Binary packages.
+- [https://blog.beco.cc/](https://blog.beco.cc/) - Dr. Beco’s blog.
+- [](https://slackbuilds.org/) - SlackBuilds.org official website.
+- [](https://mirrors.slackware.beco.cc/) - Dr. Beco’s Slackware
+Mirror.
+

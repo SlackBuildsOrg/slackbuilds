@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=icewm
-VERSION=${VERSION:-3.8.0}
+VERSION=${VERSION:-3.8.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -119,7 +119,6 @@ cp -a \
   AUTHORS COMPLIANCE COPYING ChangeLog NEWS README THANKS TODO VERSION \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/icewm.SlackBuild > $PKG/usr/doc/icewm-$VERSION/icewm.SlackBuild
-rm -rf $PKG/usr/doc/icewm-$VERSION/html
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

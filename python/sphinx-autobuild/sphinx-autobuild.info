@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/source/s/sphinx_autobuild/sphi
 MD5SUM="f2e25fcd546f9135f7104bb0d269ea83"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-build python3-installer python3-wheel"
+REQUIRES="python3-build python3-wheel"
 MAINTAINER="Tonus"
 EMAIL="tonus1@free.fr"

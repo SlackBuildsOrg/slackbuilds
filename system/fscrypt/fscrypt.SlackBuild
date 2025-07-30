@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Slackware build script for puzzles
+# Slackware build script for fscrypt
 
-# Copyright 2022-2025 Erich Ritz, Jenks, Oklahoma, USA
+# Copyright 2025 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,8 +24,8 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=puzzles
-VERSION=${VERSION:-20250722.dbe6378}
+PRGNAM=fscrypt
+VERSION=${VERSION:-0.3.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,16 +38,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-set -e
-
-if [ "$VERSION" = "latest" ]; then
-  VERSION=$(basename $(tar -tf $CWD/puzzles.tar.gz | head -1))
-  VERSION=${VERSION/puzzles-/}
-  SRCVER=
-else
-  SRCVER=-$VERSION
-fi
-
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -58,24 +48,22 @@ PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
-  SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
 fi
+
+set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM$SRCVER.tar.gz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -84,26 +72,59 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DNAME_PREFIX=puzzles- \
-    -DCMAKE_BUILD_TYPE=Release ..
-  make
-  make install/strip DESTDIR=$PKG
-cd ..
+mkdir -p vendor
+cat $CWD/modules.txt > vendor/modules.txt
+for DIR in $(grep -o "^# .* " vendor/modules.txt | cut -d' ' -f2)
+do
+  NAME=$(echo $DIR | sed 's/[./]v[0-9]\+$//' | xargs basename)
+  DIR=vendor/$DIR
+
+  # Extract the tarball
+  if [ $DIR = "vendor/github.com/urfave/cli" ]; then
+    tar xvf $CWD/cli-1.22.14.tar.gz
+  elif [ $DIR = "vendor/golang.org/x/exp/typeparams" ]; then
+    tar xvf $CWD/exp-*.tar.gz
+  else
+    tar xvf $CWD/$NAME-*.tar.gz
+  fi
+
+  # Rename extracted folders
+  mkdir -p $(dirname $DIR)
+  if [ $DIR = "vendor/github.com/urfave/cli" ]; then
+    mv cli-1.22.14 $DIR
+  elif [ $DIR = "vendor/golang.org/x/exp/typeparams" ]; then
+    mv exp-* $DIR
+  else
+    mv $NAME-* $DIR
+  fi
+done
+
+# Make sure fscrypt uses the vendor directory for compilation
+# It must not download anything during the build process
+export GOFLAGS="-mod=vendor"
+
+# Prevent creation of cache files in /root/.cache/go-build
+export GOCACHE="${GOCACHE:-$TMP/$PRGNAM-$VERSION/go-cache}"
+export GOMODCACHE="${GOMODCACHE:-$TMP/$PRGNAM-$VERSION/go}"
+
+make
+make install DESTDIR=$PKG PREFIX=/usr PAM_MODULE_DIR=/lib${LIBDIRSUFFIX}/security
+
+# Allow fscrypt to check login passphrase when creating a login protector
+install -Dm644 $CWD/pam_config $PKG/etc/pam.d/fscrypt
+
+# Remove Ubuntu-specific PAM file
+rm -r $PKG/usr/share/pam-configs
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a \
-  LICENCE README puzzles.txt \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE NEWS.md README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

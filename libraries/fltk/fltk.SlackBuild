@@ -28,8 +28,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fltk
-VERSION=${VERSION:-1.3.8}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.4.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -50,7 +50,7 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-DOCFILES="ANNOUNCEMENT CHANGES COPYING CREDITS README"
+DOCFILES="ANNOUNCEMENT COPYING CREDITS.txt CHANGES.txt"
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
@@ -81,22 +81,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-# Fix linking when --libdir=/usr/lib64
-sed -i \
-  -e '/RANLIB/s:$(libdir)/\(.*LIBNAME)\):$(libdir)/`basename \1`:g' \
-  src/Makefile || exit
+zcat $CWD/fltk.fltk-config.in.diff.gz | patch -p1 --verbose
 
-# Cairo library support
-# By default Cairo library support is enabled (like Slackware extra/fltk)
-case "${CAIRO:-1}" in
-    0)  CAIRO_FLAG="dis" ;;
-    *)  CAIRO_FLAG="en" ;;
-esac
-
-# Add small patch for eureka
-sed -i 's/class Fl_XFont_On_Demand/class FL_EXPORT Fl_XFont_On_Demand/' FL/x.H
-
-# --docdir seems to be ignored here
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -107,14 +93,18 @@ CXXFLAGS="$SLKCFLAGS" \
   --datadir=/usr/share/ \
   --localstatedir=/var \
   --mandir=/usr/man \
+  --enable-cairo \
   --enable-gl \
   --enable-largefile \
-  --enable-shared \
   --enable-threads \
-  --enable-xinerama \
-  --enable-xft \
+  --enable-x11 \
+  --enable-xcursor \
   --enable-xdbe \
-  --${CAIRO_FLAG}able-cairo \
+  --enable-xinerama \
+  --enable-xfixes \
+  --enable-xft \
+  --with-x \
+  --enable-shared \
   --build=$ARCH-slackware-linux
 
 # but not here... :)

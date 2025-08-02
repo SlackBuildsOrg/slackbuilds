@@ -93,7 +93,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --datadir=/usr/share/ \
   --localstatedir=/var \
   --mandir=/usr/man \
-  --enable-cairo \
+  --disable-cairo \
   --enable-gl \
   --enable-largefile \
   --enable-threads \

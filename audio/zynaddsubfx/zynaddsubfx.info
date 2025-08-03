@@ -5,6 +5,6 @@ DOWNLOAD="https://sourceforge.net/projects/zynaddsubfx/files/zynaddsubfx/3.0.6/z
 MD5SUM="62b6a152f941d76a92797add760b3de9"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="fltk liblo mxml"
+REQUIRES="ntk liblo mxml"
 MAINTAINER="Johannes Schoepfer"
 EMAIL="slackbuilds@schoepfer.info"

@@ -1,0 +1,1456 @@
+From c3ad276b8cd8c347c70bfdb154b525311e3419a9 Mon Sep 17 00:00:00 2001
+From: Mohammed Alyousef <may642_2000@hotmail.com>
+Date: Thu, 2 Jan 2025 21:26:16 +0300
+Subject: [PATCH] add cmake build
+
+exclude config.h.in in gitignore
+
+try fltk 1.3
+
+try again
+
+try again
+
+some cmake fixes for FLTK 1.3\
+
+remove make test for the time being
+
+skip looking for fluid
+
+use fetch content
+
+fix build
+
+use find_package(PkgConfig REQUIRED) for webp
+
+fix build on macos
+
+remove windows for now
+
+fixes
+
+fixes
+
+fetch git for cygwin
+
+fix for cygwin
+
+define HAVE_TRUNC for cygwin
+
+try webp on cygwin
+
+use pkg-config for webp
+
+try finding webp on macos
+
+try /usr/local/opt/webp/lib on macos
+
+try crosscompilation
+
+download gl libs for crosscompiling check
+
+try with FLTK 1.3
+
+for FLTK 1.3, use plain find_package
+
+try again for macos
+
+fixes
+
+support older cmake
+
+build for macos
+
+fix cmake.yml
+
+debug DILLO_FLTK_INCLUDE_DIRS
+
+debug FLTK_INCLUDE_DIRS on macos
+
+fix build on macos
+
+remove DNDEBUG flag when building for Release
+
+link windows libs for fltk 1.3 targeting msvc or mingw
+
+Update cmake.yml
+
+add warning when building against FLTK 1.4
+---
+ .github/workflows/cmake.yml | 176 ++++++++++++++++++
+ .gitignore                  |   3 +
+ CMakeLists.txt              | 351 ++++++++++++++++++++++++++++++++++++
+ cmake/config.h.in           |  18 ++
+ cmake/dpidrc.in             |   8 +
+ dlib/CMakeLists.txt         |   9 +
+ doc/CMakeLists.txt          |  44 +++++
+ dpi/CMakeLists.txt          | 135 ++++++++++++++
+ dpid/CMakeLists.txt         |  69 +++++++
+ dpip/CMakeLists.txt         |   9 +
+ dw/CMakeLists.txt           | 117 ++++++++++++
+ lout/CMakeLists.txt         |  27 +++
+ src/CMakeLists.txt          | 198 ++++++++++++++++++++
+ src/IO/CMakeLists.txt       |  56 ++++++
+ test/CMakeLists.txt         |   6 +
+ test/dw/CMakeLists.txt      |  48 +++++
+ test/html/CMakeLists.txt    |  79 ++++++++
+ test/unit/CMakeLists.txt    |  59 ++++++
+ 18 files changed, 1412 insertions(+)
+ create mode 100644 .github/workflows/cmake.yml
+ create mode 100644 CMakeLists.txt
+ create mode 100644 cmake/config.h.in
+ create mode 100644 cmake/dpidrc.in
+ create mode 100644 dlib/CMakeLists.txt
+ create mode 100644 doc/CMakeLists.txt
+ create mode 100644 dpi/CMakeLists.txt
+ create mode 100644 dpid/CMakeLists.txt
+ create mode 100644 dpip/CMakeLists.txt
+ create mode 100644 dw/CMakeLists.txt
+ create mode 100644 lout/CMakeLists.txt
+ create mode 100644 src/CMakeLists.txt
+ create mode 100644 src/IO/CMakeLists.txt
+ create mode 100644 test/CMakeLists.txt
+ create mode 100644 test/dw/CMakeLists.txt
+ create mode 100644 test/html/CMakeLists.txt
+ create mode 100644 test/unit/CMakeLists.txt
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 000000000..f3d97f3b6
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,351 @@
++cmake_minimum_required(VERSION 3.15)
++
++project(dillo VERSION 3.1.1
++        LANGUAGES C CXX)
++
++option(ENABLE_FLTK_1_4 "Enable FLTK 1.4" OFF)
++option(ENABLE_JPEG  "Enable JPEG support"  ON)
++option(ENABLE_PNG   "Enable PNG support"   ON)
++option(ENABLE_WEBP  "Enable WebP support"  ON)
++option(ENABLE_GIF   "Enable GIF support"   ON)
++option(ENABLE_SVG   "Enable SVG support"   ON)
++option(ENABLE_TLS   "Enable TLS (HTTPS)"   ON)
++option(ENABLE_OPENSSL   "Use OpenSSL if available" ON)
++option(ENABLE_MBEDTLS   "Use mbedTLS if OpenSSL unavailable/disabled" ON)
++option(ENABLE_IPV6  "Enable IPv6 support"  OFF)
++option(ENABLE_EFENCE "Enable ElectricFence" OFF)
++option(ENABLE_GPROF "Enable gprof profiling" OFF)
++option(ENABLE_INSURE "Enable Insure++"      OFF)
++option(ENABLE_COOKIES  "Enable cookie support" ON)
++option(ENABLE_THREADED_DNS "Enable threaded DNS" ON)
++option(ENABLE_RTFL  "Enable RTFL debugging messages" OFF)
++option(ENABLE_XEMBED "Enable XEmbed" ON) 
++option(ENABLE_HTML_TESTS "Enable HTML tests" OFF)
++option(DILLO_BUILD_TESTS "Build Dillo tests" OFF)
++
++set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
++
++set(CA_CERTS_FILE "" CACHE STRING
++    "Path to a bundle of trusted CA certificates (equivalent to --with-ca-certs-file)")
++
++set(CA_CERTS_DIR "" CACHE STRING
++    "Path to a directory containing trusted CA certificates (equivalent to --with-ca-certs-dir)")
++
++set(DILLO_COMPILE_DEFINITIONS "")
++set(BASE_CUR_WORKING_DIR ${CMAKE_SOURCE_DIR})
++
++include(CheckCCompilerFlag)
++include(CheckCXXCompilerFlag)
++include(CheckIncludeFile)
++include(GNUInstallDirs)
++
++set(CMAKE_INSTALL_SYSCONFDIR "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_SYSCONFDIR}/dillo/")
++
++check_include_file("stdint.h" HAVE_STDINT_H)
++check_include_file("stdint.h" HAVE_INTTYPES_H)
++
++if(NOT ENABLE_COOKIES)
++    list(APPEND DILLO_COMPILE_DEFINITIONS DISABLE_COOKIES)
++endif()
++
++if(ENABLE_IPV6)
++    list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_IPV6)
++endif()
++
++if(ENABLE_EFENCE)
++    set(EFENCE_LIB "efence")
++endif()
++
++if(ENABLE_GPROF)
++    set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -pg")
++    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pg")
++endif()
++
++if(ENABLE_INSURE)
++    message(WARNING "Insure++ usage is not trivial in CMake. Consider a custom toolchain.")
++endif()
++
++# Uncomment if threaded DNS is needed
++# if(ENABLE_THREADED_DNS)
++#     list(APPEND DILLO_COMPILE_DEFINITIONS D_DNS_THREADED)
++# endif()
++
++if(ENABLE_RTFL)
++    list(APPEND DILLO_COMPILE_DEFINITIONS DBG_RTFL)
++endif()
++
++if(NOT ENABLE_XEMBED)
++    list(APPEND DILLO_COMPILE_DEFINITIONS DISABLE_XEMBED)
++endif()
++
++set(DILLO_DEPS)
++set(DILLO_FLTK_LIBS)
++set(DILLO_FLTK_INCLUDE_DIR)
++
++if (ENABLE_FLTK_1_4)
++    find_package(FLTK 1.4 CONFIG)
++    if(NOT FLTK_FOUND)
++        set(FLTK_BUILD_TEST OFF CACHE BOOL " " FORCE)
++        set(FLTK_BUILD_FLUID OFF CACHE BOOL " " FORCE)
++        set(FLTK_BUILD_FLTK_OPTIONS OFF CACHE BOOL " " FORCE)
++        include(FetchContent)
++        FetchContent_Declare( 
++            FLTK
++            GIT_REPOSITORY https://github.com/FLTK/FLTK
++            GIT_SHALLOW    TRUE
++            OVERRIDE_FIND_PACKAGE
++        )
++        FetchContent_MakeAvailable(FLTK)
++        find_package(FLTK 1.4 CONFIG REQUIRED)
++    endif()
++    message(WARNING "Dillo will attempt to link against FLTK 1.4. This might cause rendering issues!")
++    list(APPEND DILLO_FLTK_LIBS fltk::fltk)
++else()
++    find_package(FLTK REQUIRED) # 1.3
++    list(APPEND DILLO_FLTK_INCLUDE_DIR ${FLTK_INCLUDE_DIR})
++    list(APPEND DILLO_FLTK_LIBS fltk)
++    if (APPLE)
++        list(APPEND DILLO_FLTK_LIBS "-framework Cocoa")
++    elseif(WIN32)
++        list(APPEND DILLO_FLTK_LIBS ws2_32 comctl32 gdi32 gdiplus oleaut32 ole32 uuid shell32 advapi32 comdlg32 winspool user32 kernel32 odbc32)
++    else()
++        list(APPEND DILLO_FLTK_LIBS X11)
++    endif()
++endif()
++
++
++find_package(ZLIB REQUIRED)
++
++if(ENABLE_PNG)
++    find_package(PNG)
++    if(PNG_FOUND)
++        list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_PNG)
++        list(APPEND DILLO_DEPS PNG::PNG)
++    else()
++        message(WARNING "libpng not found, disabling PNG support.")
++        set(ENABLE_PNG OFF)
++    endif()
++endif()
++
++if(ENABLE_JPEG)
++    find_package(JPEG)
++    if(JPEG_FOUND)
++        list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_JPEG)
++        list(APPEND DILLO_DEPS JPEG::JPEG)
++    else()
++        message(WARNING "libjpeg not found, disabling JPEG support.")
++        set(ENABLE_JPEG OFF)
++    endif()
++endif()
++
++set(WEBP_CFLAGS)
++set(WEBP_LIBS)
++
++if(ENABLE_WEBP)
++    # find_package(WebP QUIET)
++    # if(WebP_FOUND)
++    #     list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_WEBP)
++    #     list(APPEND WEBP_CFLAGS ${WebP_INCLUDE_DIRS})
++    #     list(APPEND WEBP_LIBS ${WebP_LIBRARIES})
++    # else()
++    find_package(PkgConfig)
++    if (PkgConfig_FOUND)
++        pkg_search_module(LIBWEBP QUIET libwebp)
++        if (LIBWEBP_FOUND)
++            list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_WEBP)
++            list(APPEND WEBP_CFLAGS ${LIBWEBP_INCLUDE_DIRS})
++            list(APPEND WEBP_LIBS ${LIBWEBP_LIBRARIES})
++            list(APPEND DILLO_DEPS ${WEBP_LIBS})
++        else()
++            message(WARNING "libwebp not found")
++            set(ENABLE_WEBP OFF)
++        endif()
++    endif()
++endif()
++
++if(ENABLE_GIF)
++    list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_GIF)
++endif()
++
++if(ENABLE_SVG)
++    list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_SVG)
++endif()
++
++set(TLS_OK OFF)
++set(TLS_IMPL "none")
++set(SSL_LIBS)
++
++if(ENABLE_TLS)
++    if(ENABLE_OPENSSL)
++        find_package(OpenSSL QUIET)
++        if(OPENSSL_FOUND)
++            message(STATUS "Using OpenSSL as TLS library.")
++            set(TLS_OK ON)
++            set(TLS_IMPL "OpenSSL")
++            set(ENABLE_MBEDTLS OFF)
++            list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_TLS HAVE_OPENSSL)
++            set(SSL_LIBS OpenSSL::SSL OpenSSL::Crypto)
++        else()
++            message(STATUS "Cannot find OpenSSL, trying mbedTLS.")
++        endif()
++    else()
++        message(STATUS "Skipping OpenSSL search, as it is disabled.")
++    endif()
++
++    if(NOT TLS_OK AND ENABLE_MBEDTLS)
++        find_path(MBEDTLS_INCLUDE_DIR mbedtls/ssl.h)
++        find_library(MBEDTLS_LIB mbedtls)
++        find_library(MBEDX509_LIB mbedx509)
++        find_library(MBEDCRYPTO_LIB mbedcrypto)
++
++        if(MBEDTLS_INCLUDE_DIR AND MBEDTLS_LIB AND MBEDX509_LIB AND MBEDCRYPTO_LIB)
++            message(STATUS "Using mbedTLS as TLS library.")
++            set(TLS_OK ON)
++            set(TLS_IMPL "mbedTLS")
++            list(APPEND DILLO_COMPILE_DEFINITIONS ENABLE_TLS HAVE_MBEDTLS)
++            set(SSL_LIBS ${MBEDTLS_LIB} ${MBEDX509_LIB} ${MBEDCRYPTO_LIB})
++        else()
++            message(STATUS "Cannot find mbedTLS.")
++        endif()
++    else()
++        message(STATUS "Skipping mbedTLS search, as it is disabled.")
++    endif()
++
++    if(NOT TLS_OK)
++        message(FATAL_ERROR "No TLS library available")
++    endif()
++
++    list(APPEND DILLO_DEPS ${SSL_LIBS})
++endif()
++
++find_package(Iconv REQUIRED)
++find_package(Threads REQUIRED)
++
++set(DILLO_DEFINES_CONTENT "")
++foreach(def IN LISTS DILLO_COMPILE_DEFINITIONS)
++    set(DILLO_DEFINES_CONTENT "${DILLO_DEFINES_CONTENT}\n#define ${def}")
++endforeach()
++
++if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
++    set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -Wall -W -Wno-unused-parameter -pedantic -std=c99 -D_POSIX_C_SOURCE=200112L -D_REENTRANT -D_THREAD_SAFE")
++    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -W -Wno-unused-parameter -fno-rtti -fno-exceptions -pedantic -std=c++11 -D_POSIX_C_SOURCE=200112L")
++endif()
++
++string(REGEX REPLACE "-DNDEBUG" "" CMAKE_CXX_FLAGS_MINSIZEREL "${CMAKE_CXX_FLAGS_MINSIZEREL}")
++string(REGEX REPLACE "-DNDEBUG" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
++string(REGEX REPLACE "-DNDEBUG" "" CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
++string(REGEX REPLACE "-DNDEBUG" "" CMAKE_C_FLAGS_MINSIZEREL "${CMAKE_C_FLAGS_MINSIZEREL}")
++string(REGEX REPLACE "-DNDEBUG" "" CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE}")
++string(REGEX REPLACE "-DNDEBUG" "" CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_RELWITHDEBINFO}")
++
++configure_file(
++    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/config.h.in"
++    "${CMAKE_CURRENT_BINARY_DIR}/config.h"
++    @ONLY
++)
++
++message(STATUS "")
++message(STATUS "==== Configuration summary ====")
++message(STATUS "  C Compiler     : ${CMAKE_C_COMPILER}")
++message(STATUS "  C Flags        : ${CMAKE_C_FLAGS}")
++message(STATUS "  CXX Compiler   : ${CMAKE_CXX_COMPILER}")
++message(STATUS "  CXX Flags      : ${CMAKE_CXX_FLAGS}")
++message(STATUS "")
++message(STATUS "  TLS enabled    : ${ENABLE_TLS}")
++message(STATUS "  TLS library    : ${TLS_IMPL}")
++if(TLS_OK)
++    if(TLS_IMPL STREQUAL "OpenSSL")
++        message(STATUS "  TLS flags      : ${OpenSSL_LIBRARIES}")
++    elseif(TLS_IMPL STREQUAL "mbedTLS")
++        message(STATUS "  TLS flags      : ${MBEDTLS_LIB} ${MBEDX509_LIB} ${MBEDCRYPTO_LIB}")
++    endif()
++endif()
++message(STATUS "")
++message(STATUS "  Cookies        : ${ENABLE_COOKIES}")
++message(STATUS "  XEmbed         : ${ENABLE_XEMBED}")
++message(STATUS "  RTFL           : ${ENABLE_RTFL}")
++message(STATUS "  JPEG           : ${ENABLE_JPEG}")
++message(STATUS "  PNG            : ${ENABLE_PNG}")
++message(STATUS "  GIF            : ${ENABLE_GIF}")
++message(STATUS "  SVG            : ${ENABLE_SVG}")
++message(STATUS "  WEBP           : ${ENABLE_WEBP}")
++message(STATUS "")
++message(STATUS "  HTML tests     : ${ENABLE_HTML_TESTS}")
++message(STATUS "====================================")
++message(STATUS "")
++
++add_subdirectory(lout)
++add_subdirectory(dw)
++add_subdirectory(dlib)
++add_subdirectory(dpip)
++add_subdirectory(dpid)
++add_subdirectory(src)
++add_subdirectory(dpi)
++add_subdirectory(doc)
++
++if (DILLO_BUILD_TESTS)
++    enable_testing()
++    add_subdirectory(test)
++    if(ENABLE_HTML_TESTS)
++        find_program(XVFB_EXECUTABLE xvfb-run)
++        find_program(XWD_EXECUTABLE xwd)
++        find_program(XWININFO_EXECUTABLE xwininfo)
++        find_program(CONVERT_EXECUTABLE convert)
++        if(NOT (XVFB_EXECUTABLE AND XWD_EXECUTABLE AND XWININFO_EXECUTABLE AND CONVERT_EXECUTABLE))
++            message(FATAL_ERROR "Cannot find all tools to enable HTML tests!")
++        endif()
++    endif()
++endif()
++
++include(CPack)
++
++install(PROGRAMS "${CMAKE_SOURCE_DIR}/dillo-install-hyphenation"
++        DESTINATION "${CMAKE_INSTALL_BINDIR}")
++
++install(FILES "${CMAKE_SOURCE_DIR}/dillorc"
++        DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}")
++
++install(FILES "${CMAKE_SOURCE_DIR}/dillo.desktop"
++        DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
++
++install(FILES "${CMAKE_SOURCE_DIR}/icons/48x48/dillo.png"
++        DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/48x48/apps")
++
++install(FILES "${CMAKE_SOURCE_DIR}/icons/128x128/dillo.png"
++        DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/128x128/apps")
++
++set(CPACK_SOURCE_FILES
++    "${CMAKE_SOURCE_DIR}/README.md"
++    "${CMAKE_SOURCE_DIR}/Doxyfile"
++    "${CMAKE_SOURCE_DIR}/dillorc"
++    "${CMAKE_SOURCE_DIR}/install-dpi-local"
++    "${CMAKE_SOURCE_DIR}/d_size.h"
++    "${CMAKE_SOURCE_DIR}/dillo-install-hyphenation"
++    "${CMAKE_SOURCE_DIR}/desktop_DATA/dillo.desktop"
++    "${CMAKE_SOURCE_DIR}/appicon48_DATA/icons/48x48/dillo.png"
++    "${CMAKE_SOURCE_DIR}/appicon128_DATA/icons/128x128/dillo.png"
++)
++
++set(CPACK_SOURCE_IGNORE_FILES
++    "/\\.git/"
++    "/build/"
++    "CMakeFiles/"
++    "CMakeCache.txt"
++    "cmake_install.cmake"
++    "Makefile"
++)
++
++set(CPACK_SOURCE_INCLUDE_TOPLEVEL_DIRECTORY OFF)
++
++set(CPACK_GENERATOR "TGZ;ZIP")
++set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Dillo Web Browser")
++set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
++set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
++set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
++
++foreach(file IN LISTS CPACK_SOURCE_FILES)
++    list(APPEND CPACK_SOURCE_FILES_LIST "${file}")
++endforeach()
++
++set(CPACK_SOURCE_FILES "${CPACK_SOURCE_FILES_LIST}")
++
+diff --git a/cmake/config.h.in b/cmake/config.h.in
+new file mode 100644
+index 000000000..a9c3df77c
+--- /dev/null
++++ b/cmake/config.h.in
+@@ -0,0 +1,18 @@
++/* config.h.in -- template for config.h used by CMake
++   This file is processed by configure_file(...). */
++
++/* --------------------------------------------------
++   Basic project info (substituted by CMake):
++   -------------------------------------------------- */
++#ifndef DILLO_CONFIG_H
++#define DILLO_CONFIG_H
++
++#define PACKAGE "@PROJECT_NAME@"
++#define VERSION "@PROJECT_VERSION@"
++
++#cmakedefine HAVE_STDINT_H
++#cmakedefine HAVE_INTTYPES_H
++#cmakedefine ENABLE_IPV6
++@DILLO_DEFINES_CONTENT@
++
++#endif /* DILLO_CONFIG_H */
+\ No newline at end of file
+diff --git a/cmake/dpidrc.in b/cmake/dpidrc.in
+new file mode 100644
+index 000000000..fb15d0e0a
+--- /dev/null
++++ b/cmake/dpidrc.in
+@@ -0,0 +1,8 @@
++#define LIBDIR "@LIBDIR@"
++#define EXEEXT "@EXEEXT@"
++
++dpi_dir=@libdir@/dillo/dpi
++
++proto.file=file/file.dpi@EXEEXT@
++proto.ftp=ftp/ftp.filter.dpi@EXEEXT@
++proto.data=datauri/datauri.filter.dpi@EXEEXT@
+\ No newline at end of file
+diff --git a/dlib/CMakeLists.txt b/dlib/CMakeLists.txt
+new file mode 100644
+index 000000000..5fb30731a
+--- /dev/null
++++ b/dlib/CMakeLists.txt
+@@ -0,0 +1,9 @@
++add_library(Dlib STATIC
++    dlib.c
++    dlib.h
++)
++
++target_include_directories(Dlib
++    PUBLIC
++        ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR}
++)
+\ No newline at end of file
+diff --git a/doc/CMakeLists.txt b/doc/CMakeLists.txt
+new file mode 100644
+index 000000000..f18bed83e
+--- /dev/null
++++ b/doc/CMakeLists.txt
+@@ -0,0 +1,44 @@
++set(DILLO_MAN_PAGE "${CMAKE_CURRENT_BINARY_DIR}/dillo.1")
++
++add_custom_command(
++    OUTPUT  "${DILLO_MAN_PAGE}"
++    COMMAND ${CMAKE_COMMAND} -E echo "Generating dillo.1 with prefix replaced"
++    COMMAND sed "s%/usr/local%${CMAKE_INSTALL_PREFIX}%g" 
++            < "${CMAKE_CURRENT_SOURCE_DIR}/dillo.1.in"
++            > "${DILLO_MAN_PAGE}"
++    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/dillo.1.in"
++    COMMENT "Creating man page dillo.1"
++)
++
++set(DILLO_HTML_HELP "${CMAKE_CURRENT_BINARY_DIR}/user_help.html")
++
++add_custom_command(
++    OUTPUT  "${DILLO_HTML_HELP}"
++    COMMAND ${CMAKE_COMMAND} -E echo "Generating user_help.html with project version"
++    COMMAND sed "s/__VERSION__/${PROJECT_VERSION}/g" 
++            < "${CMAKE_CURRENT_SOURCE_DIR}/user_help.in.html"
++            > "${DILLO_HTML_HELP}"
++    DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/user_help.in.html"
++    COMMENT "Creating user_help.html"
++)
++
++add_custom_target(doc ALL
++    DEPENDS "${DILLO_MAN_PAGE}" "${DILLO_HTML_HELP}"
++)
++
++install(FILES
++    "${DILLO_MAN_PAGE}"
++    DESTINATION share/man/man1
++)
++
++install(FILES
++    "${DILLO_HTML_HELP}"
++    DESTINATION share/dillo
++)
++
++install(FILES
++    "${CMAKE_CURRENT_SOURCE_DIR}/README"
++    "${CMAKE_CURRENT_SOURCE_DIR}/Cookies.txt"
++    "${CMAKE_CURRENT_SOURCE_DIR}/install.md"
++    DESTINATION share/dillo/doc
++)
+\ No newline at end of file
+diff --git a/dpi/CMakeLists.txt b/dpi/CMakeLists.txt
+new file mode 100644
+index 000000000..829b48c36
+--- /dev/null
++++ b/dpi/CMakeLists.txt
+@@ -0,0 +1,135 @@
++target_include_directories(dillo INTERFACE
++    ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR}
++)
++
++add_executable(bookmarks_dpi
++    bookmarks.c
++    dpiutil.c
++    dpiutil.h
++)
++
++set_target_properties(bookmarks_dpi PROPERTIES OUTPUT_NAME "bookmarks.dpi")
++
++target_link_libraries(bookmarks_dpi PRIVATE
++    Dpip
++    Dlib
++)
++
++install(TARGETS bookmarks_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/bookmarks
++)
++
++add_executable(downloads_dpi
++    downloads.cc
++    dpiutil.c
++    dpiutil.h
++)
++set_target_properties(downloads_dpi PROPERTIES OUTPUT_NAME "downloads.dpi")
++
++target_include_directories(downloads_dpi PRIVATE ${DILLO_FLTK_INCLUDE_DIR})
++
++target_link_libraries(downloads_dpi PRIVATE
++    ${DILLO_FLTK_LIBS}
++    Dpip
++    Dlib
++)
++
++install(TARGETS downloads_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/downloads
++)
++
++add_executable(ftp_filter_dpi
++    ftp.c
++    dpiutil.c
++    dpiutil.h
++)
++set_target_properties(ftp_filter_dpi PROPERTIES OUTPUT_NAME "ftp.filter.dpi")
++
++target_link_libraries(ftp_filter_dpi PRIVATE
++    Dpip
++    Dlib
++)
++
++install(TARGETS ftp_filter_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/ftp
++)
++
++add_executable(hello_filter_dpi
++    hello.c
++    dpiutil.c
++    dpiutil.h
++)
++set_target_properties(hello_filter_dpi PROPERTIES OUTPUT_NAME "hello.filter.dpi")
++
++target_link_libraries(hello_filter_dpi PRIVATE
++    Dpip
++    Dlib
++)
++
++install(TARGETS hello_filter_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/hello
++)
++
++add_executable(vsource_filter_dpi
++    vsource.c
++    dpiutil.c
++    dpiutil.h
++)
++set_target_properties(vsource_filter_dpi PROPERTIES OUTPUT_NAME "vsource.filter.dpi")
++
++target_link_libraries(vsource_filter_dpi PRIVATE
++    Dpip
++    Dlib
++)
++
++install(TARGETS vsource_filter_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/vsource
++)
++
++add_executable(file_dpi
++    file.c
++    dpiutil.c
++    dpiutil.h
++)
++set_target_properties(file_dpi PROPERTIES OUTPUT_NAME "file.dpi")
++
++target_link_libraries(file_dpi PRIVATE
++    Dpip
++    Dlib
++)
++
++install(TARGETS file_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/file
++)
++
++add_executable(cookies_dpi
++    cookies.c
++    dpiutil.c
++    dpiutil.h
++)
++set_target_properties(cookies_dpi PROPERTIES OUTPUT_NAME "cookies.dpi")
++
++target_link_libraries(cookies_dpi PRIVATE
++    Dpip
++    Dlib
++)
++
++install(TARGETS cookies_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/cookies
++)
++
++add_executable(datauri_filter_dpi
++    datauri.c
++    dpiutil.c
++    dpiutil.h
++)
++set_target_properties(datauri_filter_dpi PROPERTIES OUTPUT_NAME "datauri.filter.dpi")
++
++target_link_libraries(datauri_filter_dpi PRIVATE
++    Dpip
++    Dlib
++)
++
++install(TARGETS datauri_filter_dpi
++    RUNTIME DESTINATION lib/dillo/dpi/datauri
++)
+\ No newline at end of file
+diff --git a/dpid/CMakeLists.txt b/dpid/CMakeLists.txt
+new file mode 100644
+index 000000000..36314f26e
+--- /dev/null
++++ b/dpid/CMakeLists.txt
+@@ -0,0 +1,69 @@
++include(GNUInstallDirs)
++
++set(DPIDRC_INPUT  "${PROJECT_SOURCE_DIR}/cmake/dpidrc.in")
++set(DPIDRC_OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/dpidrc")
++
++if(NOT CMAKE_EXECUTABLE_SUFFIX)
++  set(CMAKE_EXECUTABLE_SUFFIX "")
++endif()
++
++add_executable(dpid
++    main.c
++    dpid.c
++    dpid_common.c
++    dpi.c
++    dpi_socket_dir.c
++    misc_new.c
++    dpi.h
++    dpi_socket_dir.h
++    dpid.h
++    dpid_common.h
++    misc_new.h
++)
++
++target_compile_definitions(dpid PRIVATE
++    DILLO_SYSCONF="${CMAKE_INSTALL_SYSCONFDIR}" ${CMAKE_INSTALL}
++    DILLO_DOCDIR="${CMAKE_INSTALL_DOCDIR}"
++    CUR_WORKING_DIR="${BASE_CUR_WORKING_DIR}/src"
++    EXEEXT="${CMAKE_EXECUTABLE_SUFFIX}"
++    DPIDRC_SYS="${CMAKE_INSTALL_SYSCONFDIR}/dpidrc"
++)
++
++
++target_link_libraries(dpid PRIVATE
++    Dpip
++    Dlib
++)
++
++add_executable(dpidc
++    dpidc.c
++)
++
++target_compile_definitions(dpidc PRIVATE
++    EXEEXT="${CMAKE_EXECUTABLE_SUFFIX}"
++    DPIDRC_SYS="${CMAKE_INSTALL_SYSCONFDIR}/dpidrc"
++)
++
++target_link_libraries(dpidc PRIVATE
++    Dpip
++    Dlib
++)
++
++configure_file(
++    "${DPIDRC_INPUT}"
++    "${DPIDRC_OUTPUT}"
++    @ONLY
++)
++
++add_custom_target(dpidrc_gen ALL
++    DEPENDS "${DPIDRC_OUTPUT}"
++)
++
++
++install(FILES "${DPIDRC_OUTPUT}"
++    DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}"
++)
++
++install(TARGETS dpid dpidc
++    RUNTIME DESTINATION bin
++)
+\ No newline at end of file
+diff --git a/dpip/CMakeLists.txt b/dpip/CMakeLists.txt
+new file mode 100644
+index 000000000..e6728bb37
+--- /dev/null
++++ b/dpip/CMakeLists.txt
+@@ -0,0 +1,9 @@
++add_library(Dpip STATIC
++    dpip.c
++    dpip.h
++)
++
++target_include_directories(Dpip
++    PUBLIC
++        ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR}
++)
+\ No newline at end of file
+diff --git a/dw/CMakeLists.txt b/dw/CMakeLists.txt
+new file mode 100644
+index 000000000..2d68fdd31
+--- /dev/null
++++ b/dw/CMakeLists.txt
+@@ -0,0 +1,117 @@
++set(DILLO_DEFINES
++    DILLO_LIBDIR="${CMAKE_INSTALL_LIBDIR}"
++    CUR_WORKING_DIR="${BASE_CUR_WORKING_DIR}/dw"
++)
++
++add_library(Dw-core STATIC
++    findtext.cc
++    imgrenderer.cc
++    iterator.cc
++    layout.cc
++    selection.cc
++    stackingcontextmgr.cc
++    style.cc
++    tools.cc
++    types.cc
++    ui.cc
++    view.hh
++    widget.cc
++    core.hh
++    events.hh
++    findtext.hh
++    imgbuf.hh
++    imgrenderer.hh
++    iterator.hh
++    layout.hh
++    platform.hh
++    selection.hh
++    stackingcontextmgr.hh
++    style.hh
++    tools.hh
++    types.hh
++    ui.hh
++    widget.hh
++)
++target_include_directories(Dw-core PRIVATE ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR})
++target_compile_definitions(Dw-core PRIVATE ${DILLO_DEFINES})
++target_link_libraries(Dw-core PUBLIC lout)
++
++add_library(Dw-fltk STATIC
++    fltkcomplexbutton.cc
++    fltkflatview.cc
++    fltkimgbuf.cc
++    fltkmisc.cc
++    fltkplatform.cc
++    fltkpreview.cc
++    fltkui.cc
++    fltkviewbase.cc
++    fltkviewport.cc
++    fltkcomplexbutton.hh
++    fltkcore.hh
++    fltkflatview.hh
++    fltkimgbuf.hh
++    fltkmisc.hh
++    fltkplatform.hh
++    fltkpreview.hh
++    fltkui.hh
++    fltkviewbase.hh
++    fltkviewport.hh
++)
++
++target_include_directories(Dw-fltk PRIVATE ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${DILLO_FLTK_INCLUDE_DIR})
++target_link_libraries(Dw-fltk PUBLIC ${DILLO_FLTK_LIBS})
++target_compile_definitions(Dw-fltk PRIVATE ${DILLO_DEFINES})
++
++add_library(Dw-widgets STATIC
++    alignedtablecell.cc
++    alignedtextblock.cc
++    bullet.cc
++    hyphenator.cc
++    image.cc
++    listitem.cc
++    oofawarewidget.cc
++    oofawarewidget_iterator.cc
++    ooffloatsmgr.cc
++    oofposabslikemgr.cc
++    oofposabsmgr.cc
++    oofposfixedmgr.cc
++    oofpositionedmgr.cc
++    oofposrelmgr.cc
++    outofflowmgr.cc
++    regardingborder.cc
++    ruler.cc
++    simpletablecell.cc
++    table.cc
++    table_iterator.cc
++    tablecell.cc
++    textblock.cc
++    textblock_iterator.cc
++    textblock_linebreaking.cc
++    alignedtablecell.hh
++    alignedtextblock.hh
++    bullet.hh
++    hyphenator.hh
++    image.hh
++    listitem.hh
++    oofawarewidget.hh
++    ooffloatsmgr.hh
++    oofposabslikemgr.hh
++    oofposabsmgr.hh
++    oofposfixedmgr.hh
++    oofpositionedmgr.hh
++    oofposrelmgr.hh
++    outofflowmgr.hh
++    regardingborder.hh
++    ruler.hh
++    simpletablecell.hh
++    table.hh
++    tablecell.hh
++    textblock.hh
++)
++
++target_compile_definitions(Dw-widgets PRIVATE ${DILLO_DEFINES})
++target_include_directories(Dw-widgets PRIVATE ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${DILLO_FLTK_INCLUDE_DIR})
++target_link_libraries(Dw-widgets PUBLIC ${DILLO_FLTK_LIBS})
++
++# install(FILES preview.xbm DESTINATION share/dillo/...)
++
+diff --git a/lout/CMakeLists.txt b/lout/CMakeLists.txt
+new file mode 100644
+index 000000000..413c56cbc
+--- /dev/null
++++ b/lout/CMakeLists.txt
+@@ -0,0 +1,27 @@
++add_library(lout STATIC
++    container.cc
++    container.hh
++    debug.hh
++    debug_rtfl.hh
++    identity.cc
++    identity.hh
++    misc.cc
++    misc.hh
++    object.cc
++    object.hh
++    signal.cc
++    signal.hh
++    unicode.cc
++    unicode.hh
++    msg.h
++)
++
++target_include_directories(lout
++    PUBLIC
++        ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR}
++)
++
++target_compile_definitions(lout
++    PRIVATE
++        CUR_WORKING_DIR="${BASE_CUR_WORKING_DIR}/lout"
++)
+\ No newline at end of file
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+new file mode 100644
+index 000000000..7daad2982
+--- /dev/null
++++ b/src/CMakeLists.txt
+@@ -0,0 +1,198 @@
++add_subdirectory(IO)
++
++set(DILLO_SOURCES
++    dillo.cc
++    version.cc
++    version.hh
++    paths.cc
++    paths.hh
++    tipwin.cc
++    tipwin.hh
++    ui.cc
++    ui.hh
++    uicmd.cc
++    uicmd.hh
++    bw.h
++    bw.c
++    cookies.c
++    cookies.h
++    actions.c
++    actions.h
++    hsts.c
++    hsts.h
++    auth.c
++    auth.h
++    md5.c
++    md5.h
++    digest.c
++    digest.h
++    colors.c
++    colors.h
++    binaryconst.h
++    misc.c
++    misc.h
++    history.h
++    history.c
++    prefs.c
++    prefs.h
++    prefsparser.cc
++    prefsparser.hh
++    keys.cc
++    keys.hh
++    msg.h
++    list.h
++    url.c
++    url.h
++    bitvec.c
++    bitvec.h
++    klist.c
++    klist.h
++    chain.c
++    chain.h
++    utf8.cc
++    utf8.hh
++    timeout.cc
++    timeout.hh
++    dialog.cc
++    dialog.hh
++    web.cc
++    web.hh
++    nav.c
++    nav.h
++    cache.c
++    cache.h
++    decode.c
++    decode.h
++    dicache.c
++    dicache.h
++    capi.c
++    capi.h
++    domain.c
++    domain.h
++    css.cc
++    css.hh
++    cssparser.cc
++    cssparser.hh
++    doctree.hh
++    styleengine.cc
++    styleengine.hh
++    plain.cc
++    html.cc
++    html.hh
++    html_charrefs.h
++    html_common.hh
++    form.cc
++    form.hh
++    table.cc
++    table.hh
++    bookmark.c
++    bookmark.h
++    dns.c
++    dns.h
++    gif.c
++    dgif.h
++    jpeg.c
++    djpeg.h
++    png.c
++    dpng.h
++    webp.c
++    dwebp.h
++    svg.c
++    nanosvg.h
++    nanosvgrast.h
++    dsvg.h
++    imgbuf.cc
++    imgbuf.hh
++    image.cc
++    image.hh
++    menu.hh
++    menu.cc
++    dpiapi.c
++    dpiapi.h
++    pixmaps.h
++    findbar.cc
++    findbar.hh
++    xembed.cc
++    xembed.hh
++)
++
++set(COMMIT_H   "${CMAKE_BINARY_DIR}/commit.h")
++set(COMMIT_TMP "${CMAKE_BINARY_DIR}/commit.tmp.h")
++
++if(GIT_AVAILABLE)
++    add_custom_command(
++        OUTPUT  "${COMMIT_H}"
++        COMMAND ${CMAKE_COMMAND} -E echo "Generating commit.tmp.h from git describe"
++        COMMAND git --work-tree="${PROJECT_SOURCE_DIR}" describe --dirty > commit_ver.txt
++        COMMAND ${CMAKE_COMMAND} -E echo "#define GIT_COMMIT `cat commit_ver.txt`" > "${COMMIT_TMP}"
++        COMMAND ${CMAKE_COMMAND} -E remove -f commit_ver.txt
++
++        COMMAND ${CMAKE_COMMAND} -E touch commit.h
++
++        COMMAND ${CMAKE_COMMAND} -E compare_files "${COMMIT_TMP}" "${COMMIT_H}" 
++            || ${CMAKE_COMMAND} -E copy "${COMMIT_TMP}" "${COMMIT_H}"
++        COMMAND ${CMAKE_COMMAND} -E remove -f "${COMMIT_TMP}"
++
++        DEPENDS "${PROJECT_SOURCE_DIR}/.git"
++        COMMENT "Generating commit.h (from git describe)"
++        VERBATIM
++    )
++else()
++    add_custom_command(
++        OUTPUT  "${COMMIT_H}"
++        COMMAND ${CMAKE_COMMAND} -E echo "/* no git commit info */" > "${COMMIT_H}"
++        COMMENT "Creating empty commit.h (no GIT)"
++        VERBATIM
++    )
++endif()
++
++list(APPEND DILLO_SOURCES "${COMMIT_H}")
++
++add_executable(dillo
++    ${DILLO_SOURCES}
++)
++
++target_compile_definitions(dillo PRIVATE
++    DILLO_SYSCONF="${CMAKE_INSTALL_SYSCONFDIR}"
++    DILLO_DOCDIR="${CMAKE_INSTALL_DOCDIR}"
++    CUR_WORKING_DIR="${BASE_CUR_WORKING_DIR}/src"
++    inbuf_t=char
++)
++
++if(ENABLE_THREADED_DNS)
++    target_compile_definitions(dillo PRIVATE D_DNS_THREADED)
++endif()
++
++if(ENABLE_WEBP)
++    target_include_directories(dillo PRIVATE ${WEBP_CFLAGS})
++endif()
++
++target_include_directories(dillo PRIVATE ${DILLO_FLTK_INCLUDE_DIR})
++
++target_link_libraries(dillo PRIVATE
++    Dlib
++    Dpip
++    Diof
++    Dw-widgets
++    Dw-fltk
++    Dw-core
++    lout
++    ${DILLO_FLTK_LIBS}    # required
++    ZLIB::ZLIB    # required
++    Iconv::Iconv # required
++    Threads::Threads # required
++    ${DILLO_DEPS}
++)
++
++install(TARGETS dillo
++    RUNTIME DESTINATION bin
++)
++
++install(FILES
++    "${CMAKE_CURRENT_SOURCE_DIR}/domainrc"
++    "${CMAKE_CURRENT_SOURCE_DIR}/keysrc"
++    "${CMAKE_CURRENT_SOURCE_DIR}/hsts_preload"
++    DESTINATION "${CMAKE_INSTALL_SYSCONFDIR}"
++)
++
++install(FILES chg srch DESTINATION share/dillo/src)
+diff --git a/src/IO/CMakeLists.txt b/src/IO/CMakeLists.txt
+new file mode 100644
+index 000000000..7bb2fc8dc
+--- /dev/null
++++ b/src/IO/CMakeLists.txt
+@@ -0,0 +1,56 @@
++set(DIOF_SOURCES
++    mime.c
++    mime.h
++    about.c
++    Url.h
++    http.c
++    tls.h
++    tls.c
++    dpi.c
++    IO.c
++    iowatch.cc
++    iowatch.hh
++    IO.h
++)
++
++if (ENABLE_TLS)
++    if(ENABLE_OPENSSL)
++        list(APPEND DIOF_SOURCES
++            tls_openssl.c
++            tls_openssl.h
++        )
++    endif()
++
++    if(ENABLE_MBEDTLS)
++        list(APPEND DIOF_SOURCES
++            tls_mbedtls.c
++            tls_mbedtls.h
++        )
++    endif()
++endif()
++
++add_library(Diof STATIC
++    ${DIOF_SOURCES}
++)
++
++target_include_directories(Diof
++    PUBLIC
++        ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${DILLO_FLTK_INCLUDE_DIR}
++)
++
++target_link_libraries(Diof PRIVATE ${DILLO_FLTK_LIBS})
++
++target_compile_definitions(Diof
++    PRIVATE
++        DILLO_BINDIR="${CMAKE_INSTALL_BINDIR}/"
++        CA_CERTS_FILE="${CA_CERTS_FILE}"
++        CA_CERTS_DIR="${CA_CERTS_DIR}"
++)
++
++if (ENABLE_TLS)
++    target_link_libraries(Diof PUBLIC ${SSL_LIBS})
++endif()
++
++
++
++# install(TARGETS Diof DESTINATION lib)
+\ No newline at end of file
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+new file mode 100644
+index 000000000..82f58b94f
+--- /dev/null
++++ b/test/CMakeLists.txt
+@@ -0,0 +1,6 @@
++add_subdirectory(unit)
++add_subdirectory(dw)
++
++if(ENABLE_HTML_TESTS)
++  add_subdirectory(html)
++endif()
+\ No newline at end of file
+diff --git a/test/dw/CMakeLists.txt b/test/dw/CMakeLists.txt
+new file mode 100644
+index 000000000..48990090f
+--- /dev/null
++++ b/test/dw/CMakeLists.txt
+@@ -0,0 +1,48 @@
++set(DW_LIBS
++    lout
++    Dw-widgets
++    Dw-fltk
++    Dw-core
++    Dlib
++    ${DILLO_FLTK_LIBS}
++)
++
++function(add_dw_test_executable exe_name)
++  add_executable(${exe_name} ${ARGN})
++  target_include_directories(${exe_name} PRIVATE ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR} ${DILLO_FLTK_INCLUDE_DIR})
++  target_compile_definitions(${exe_name} PRIVATE CUR_WORKING_DIR="${BASE_CUR_WORKING_DIR}/test")
++  target_link_libraries(${exe_name} PRIVATE ${DW_LIBS})
++endfunction()
++
++add_dw_test_executable(dw-anchors-test    dw_anchors_test.cc)
++add_dw_test_executable(dw-border-test     dw_border_test.cc)
++add_dw_test_executable(dw-example         dw_example.cc)
++add_dw_test_executable(dw-find-test       dw_find_test.cc)
++add_dw_test_executable(dw-float-test      dw_float_test.cc)
++add_dw_test_executable(dw-links           dw_links.cc)
++add_dw_test_executable(dw-links2          dw_links2.cc)
++add_dw_test_executable(dw-image-background dw_image_background.cc)
++add_dw_test_executable(dw-images-simple   dw_images_simple.cc)
++add_dw_test_executable(dw-images-scaled   dw_images_scaled.cc)
++add_dw_test_executable(dw-images-scaled2  dw_images_scaled2.cc)
++add_dw_test_executable(dw-lists           dw_lists.cc)
++add_dw_test_executable(dw-resource-test   dw_resource_test.cc)
++
++add_dw_test_executable(dw-simple-container-test
++  dw_simple_container.cc
++  dw_simple_container.hh
++  dw_simple_container_test.cc
++)
++
++add_dw_test_executable(dw-table           dw_table.cc)
++add_dw_test_executable(dw-table-aligned   dw_table_aligned.cc)
++add_dw_test_executable(dw-ui-test
++  form.cc
++  dw_ui_test.cc
++  form.hh
++)
++
++add_dw_test_executable(dw-imgbuf-mem-test dw_imgbuf_mem_test.cc)
++
++add_test(NAME dw-imgbuf-mem-test
++         COMMAND $<TARGET_FILE:dw-imgbuf-mem-test>)
+\ No newline at end of file
+diff --git a/test/html/CMakeLists.txt b/test/html/CMakeLists.txt
+new file mode 100644
+index 000000000..5be81ce04
+--- /dev/null
++++ b/test/html/CMakeLists.txt
+@@ -0,0 +1,79 @@
++set(DRIVER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/driver.sh")
++
++set(HTML_TEST_FILES
++    render/b-div.html
++    render/div-100-percent-with-padding.html
++    render/float-img-justify.html
++    render/github-infinite-loop.html
++    render/hackernews.html
++    render/img-aspect-ratio-absolute.html
++    render/img-aspect-ratio-div.html
++    render/img-aspect-ratio-mix-border.html
++    render/img-aspect-ratio-mix-margin.html
++    render/img-aspect-ratio-mix.html
++    render/img-aspect-ratio-relative-inside-fixed.html
++    render/img-aspect-ratio.html
++    render/main-style.html
++    render/margin-auto.html
++    render/max-width-body.html
++    render/max-width-div-clamp.html
++    render/max-width-div.html
++    render/max-width-html.html
++    render/max-width-nested-div.html
++    render/meta-refresh-0-no-url.html
++    render/min-width-body.html
++    render/min-width-div-extend.html
++    render/min-width-div.html
++    render/min-width-html.html
++    render/min-width-nested-div.html
++    render/span-padding.html
++    render/svg-current-color.html
++    render/table-max-width.html
++    render/table-missing-width-in-one-column.html
++    render/table-td-width-percent-img.html
++    render/table-td-width-percent.html
++    render/table-thead-tfoot.html
++    render/table-thead-tfoot-open-tag.html
++    render/white-space.html
++)
++
++# 3) Tests that we EXPECT TO FAIL (XFAIL_TESTS)
++set(XFAIL_TESTS
++    render/div-100-percent-with-padding.html
++    render/float-img-justify.html
++    render/margin-auto.html
++    render/max-width-html.html
++    render/min-width-html.html
++    render/span-padding.html
++    render/table-td-width-percent.html
++)
++
++function(add_html_test test_file)
++  get_filename_component(test_name "${test_file}" NAME)
++
++  add_test(NAME "${test_name}"
++    COMMAND
++      "${DRIVER_SCRIPT}" "${CMAKE_CURRENT_SOURCE_DIR}/${test_file}"
++  )
++
++  set_tests_properties("${test_name}" PROPERTIES
++    ENVIRONMENT
++      "TOP_BUILDDIR=${CMAKE_BINARY_DIR}"
++      "TOP_SRCDIR=${CMAKE_SOURCE_DIR}"
++      "BUILDDIR=${CMAKE_CURRENT_BINARY_DIR}"
++  )
++
++  # If it's in the XFAIL list, mark it as WILL_FAIL
++  list(FIND XFAIL_TESTS "${test_file}" xfail_index)
++  if(xfail_index GREATER -1)
++    # Means found in XFAIL_TESTS
++    set_tests_properties("${test_name}" PROPERTIES WILL_FAIL TRUE)
++  endif()
++endfunction()
++
++foreach(test_file IN LISTS HTML_TEST_FILES)
++  add_html_test("${test_file}")
++endforeach()
++
++install(FILES driver.sh DESTINATION share/dillo/test/html)
++install(DIRECTORY manual render DESTINATION share/dillo/test/html)
+diff --git a/test/unit/CMakeLists.txt b/test/unit/CMakeLists.txt
+new file mode 100644
+index 000000000..6cce1a92d
+--- /dev/null
++++ b/test/unit/CMakeLists.txt
+@@ -0,0 +1,59 @@
++set(BASE_LIBS
++  lout
++)
++
++function(add_unit_test_executable exe_name sources extra_libs)
++  add_executable(${exe_name} ${sources})
++  target_include_directories(${exe_name} PRIVATE ${PROJECT_SOURCE_DIR} ${CMAKE_BINARY_DIR})  
++  target_link_libraries(${exe_name} PRIVATE ${BASE_LIBS} ${extra_libs})
++  target_compile_definitions(${exe_name} PRIVATE 
++    CUR_SRC_DIR="${CMAKE_CURRENT_SOURCE_DIR}"
++    CUR_WORKING_DIR="${BASE_CUR_WORKING_DIR}/test/unit"
++  )
++endfunction()
++
++add_unit_test_executable(containers
++  containers.cc
++  "Dlib"
++)
++
++add_unit_test_executable(identity
++  identity.cc
++  "Dlib"
++)
++
++add_unit_test_executable(notsosimplevector
++  notsosimplevector.cc
++  ""
++)
++
++add_unit_test_executable(shapes
++  shapes.cc
++  "Dw-core;Dlib"
++)
++
++add_unit_test_executable(unicode_test
++  unicode_test.cc
++  "Dw-fltk"
++)
++
++add_unit_test_executable(liang
++  liang.cc
++  "Dw-widgets;Dw-fltk;Dw-core;Dlib"
++)
++
++add_unit_test_executable(cookies
++  cookies.c
++  "Dpip;Dlib"
++)
++
++add_unit_test_executable(trie
++  trie.cc
++  "Dw-widgets;Dw-fltk;Dw-core;Dlib"
++)
++
++foreach(tst IN ITEMS containers identity liang notsosimplevector shapes unicode_test)
++  add_test(NAME ${tst} COMMAND $<TARGET_FILE:${tst}>)
++endforeach()
++
++install(FILES hyph-en-us.pat hyph-de.pat DESTINATION share/dillo/tests/unit)

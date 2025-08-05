@@ -101,16 +101,16 @@ mkdir -p $PKG/usr/share/icons/hicolor/scalable/apps/
 mv $PKG/usr/share/pixmaps/$PRGNAM.svg $PKG/usr/share/icons/hicolor/scalable/apps/
 mv $PRGNAM.ico $PKG/usr/share/pixmaps
 
-cd ExternalPrograms/Spliter
-  make
-  cp -a spliter $PKG/usr/bin
-cd ../..
+#cd ExternalPrograms/Spliter
+#  make
+#  cp -a spliter $PKG/usr/bin
+#cd ../..
 
-cd ExternalPrograms/Controller
-  sed -i "s|Box\.h|Box\.H|" ControllerUI.fl
-  make
-  cp -a controller $PKG/usr/bin
-cd ../..
+#cd ExternalPrograms/Controller
+#  sed -i "s|Box\.h|Box\.H|" ControllerUI.fl
+#  make
+#  cp -a controller $PKG/usr/bin
+#cd ../..
 
 cd doc
   a2x --doctype manpage --format manpage zynaddsubfx.1.txt

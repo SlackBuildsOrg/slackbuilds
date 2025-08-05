@@ -14,6 +14,8 @@ config() {
 config etc/dillo/dillorc.new
 config etc/dillo/dpidrc.new
 config etc/dillo/keysrc.new
+config etc/dillo/hsts_preload.new
+config etc/dillo/domainrc.new
 
 if [ -x /usr/bin/update-desktop-database ]; then
   /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1

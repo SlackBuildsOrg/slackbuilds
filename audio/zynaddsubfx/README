@@ -6,9 +6,7 @@ to an amazing universe of sounds.
 Beside the standalone application, lv2 and vst plugins are provided.
 
 Optional dependencies, autodetected at buildtime:
-jack, dssi, portaudio, ntk, lash
-
-If ntk is detected at buildtime, fltk will not be used.
+jack, dssi, portaudio, lash
 
 If compiled against jack, this package uses POSIX filesystem
 capabilities to execute with elevated privileges (required for

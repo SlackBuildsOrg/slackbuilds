@@ -69,6 +69,7 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm $SRCNAM64.$COMPRESS || true
 rm -rf LMS_STUFF || true
+mv "$CWD/LMS_STUFF.tar.gz.diff" "$CWD/LMS_STUFF.tar.gz"
 tar -xzf "$CWD/LMS_STUFF.tar.gz"
 
 

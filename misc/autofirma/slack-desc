@@ -5,9 +5,7 @@
 # You must make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':' except on otherwise blank lines.
 
-         |-----handy-ruler------------------------------------------------------|
-autofirma: autofirma (sign digital certificates)
-autofirma:
+         |-----handy-ruler----------------------------------------------|
 autofirma: autofirma is a utility to sign local or online documents.
 autofirma:
 autofirma: Application to sign via digital certificates. Developed by
@@ -15,5 +13,7 @@ autofirma: the Spanish government. Launchable by browsers to sign in
 autofirma: webpages when required. UI interface is only in Spanish.
 autofirma:
 autofirma: Tested on Mozilla Firefox, Google Chrome and Microsoft Edge.
+autofirma:
+autofirma: Dependencies: Oracle or OpenJDK JRE version 11 or higher.
 autofirma:
 autofirma: Product home page: https://firmaelectronica.gob.es/

@@ -93,6 +93,8 @@ CXXFLAGS="$SLKCFLAGS" \
 make
 make install DESTDIR=$PKG PREFIX=/usr
 
+strip --strip-unneeded $PKG/usr/bin/rofi
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a AUTHORS Changelog COPYING INSTALL.md README.md \
    $PKG/usr/doc/$PRGNAM-$VERSION

@@ -53,7 +53,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $SRCNAM-$VERSION
-unzip $CWD/$SRCPREFIX-$SRCNAM-$VERSION.zip $SRCNAM-$VERSION/* || unzip $CWD/$SRCNAM-$VERSION.zip $SRCNAM-$VERSION/* 
+unzip $CWD/$SRCPREFIX-$SRCNAM-$VERSION.zip $SRCNAM-$VERSION/* || unzip $CWD/$SRCNAM-$VERSION.zip $SRCNAM-$VERSION/*
 cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \

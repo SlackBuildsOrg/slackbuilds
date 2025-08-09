@@ -32,7 +32,7 @@ VERSION=${VERSION:-20250305}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-SRCNAME=bitcoin-28.x-knots
+SRCNAME=bitcoin-28.1.knots20250305
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -50,6 +50,8 @@ fi
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+
+NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
@@ -76,7 +78,8 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 rm -rf $SRCNAME
 
-unzip $CWD/$SRCNAME.zip
+tar -zxf $CWD/$SRCNAME.tar.gz
+
 
 cd $SRCNAME
 chown -R root:root .
@@ -86,6 +89,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+
 ./autogen.sh
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -94,7 +98,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --docdir=/usr/doc/$PKGNAM$PRGNAM-$VERSION \
   --mandir=/usr/man
-make
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \

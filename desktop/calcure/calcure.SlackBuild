@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=calcure
-VERSION=${VERSION:-3.0.2}
+VERSION=${VERSION:-3.2.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -59,10 +59,12 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-python3 setup.py install --root=$PKG
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
-#mv $PKG/usr/share/man $PKG/usr/man
-#gzip -9 -c $PKG/usr/man/man1/$PRGNAM.1 > $PKG/usr/man/man1/$PRGNAM.1.gz
+python3 -m build --no-isolation
+python3 -m installer -d "$PKG" dist/*.whl
+
 mkdir -p $PKG/usr/man/man1/
 gzip -9 -c $PRGNAM.1.gz > $PKG/usr/man/man1/$PRGNAM.1.gz
 rm -fR $PKG/usr/share/man

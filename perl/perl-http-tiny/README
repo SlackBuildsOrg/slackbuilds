@@ -11,3 +11,7 @@ instead of IO::Socket::INET for transparent support for both IPv4 and
 IPv6.
 
 Cookie support requires HTTP::CookieJar or an equivalent class.
+
+Since v.0.089 [CHANGED]
+ - Find the certificate bundle via IO::Socket::SSL rather than
+   implementing it in HTTP::Tiny.

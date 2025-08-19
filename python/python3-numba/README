@@ -7,3 +7,5 @@ speeds of C or FORTRAN.
 compilation step, or even have a C/C++ compiler installed. Just apply
 one of the Numba decorators to your Python function, and Numba does
 the rest. 
+
+NOTE: 0.60.0 is the last version that support Python 3.9.

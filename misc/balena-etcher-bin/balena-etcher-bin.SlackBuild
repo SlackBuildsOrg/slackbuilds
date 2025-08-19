@@ -164,7 +164,7 @@ mkdir -p "$PKG"/usr/doc/$PRGNAM-"$VERSION"
 mkdir -p $PKG/install
   cat $CWD/slack-desc > $PKG/install/slack-desc
   cat $CWD/doinst.sh > $PKG/install/doinst.sh
-  cat $CWD/douninst.sh > $PKG/install/douninst.sh
+#  cat $CWD/douninst.sh > $PKG/install/douninst.sh
 
 cd $PKG
 /sbin/makepkg --remove-tmp-rpaths -l y -c n "$OUTPUT"/"$PRGNAM"-"$VERSION"-"$ARCH"-"$BUILD""$TAG"."$PKGTYPE"

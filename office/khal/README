@@ -5,6 +5,6 @@ for example CalDAV servers.
 ikhal (interactive khal) lets you browse and edit calendars and events
 
 No support for editing the timezones of events yet
-Works with python 3.6+
+Works with python 3.9+
 
 Completion with click avaible for bash, zsh and fish

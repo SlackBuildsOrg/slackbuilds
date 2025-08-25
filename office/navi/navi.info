@@ -1,306 +1,272 @@
 PRGNAM="navi"
-VERSION="2.23.0"
+VERSION="2.24.0"
 HOMEPAGE="https://github.com/denisidoro/navi"
-DOWNLOAD="https://github.com/denisidoro/navi/archive/v2.23.0/navi-2.23.0.tar.gz \
-          https://static.crates.io/crates/aho-corasick/aho-corasick-0.7.18.crate \
-          https://static.crates.io/crates/aligned/aligned-0.4.1.crate \
-          https://static.crates.io/crates/anstream/anstream-0.2.6.crate \
-          https://static.crates.io/crates/anstyle/anstyle-0.3.5.crate \
-          https://static.crates.io/crates/anstyle-parse/anstyle-parse-0.1.1.crate \
-          https://static.crates.io/crates/anstyle-wincon/anstyle-wincon-0.2.0.crate \
-          https://static.crates.io/crates/anyhow/anyhow-1.0.70.crate \
-          https://static.crates.io/crates/arrayvec/arrayvec-0.5.2.crate \
+DOWNLOAD="https://github.com/denisidoro/navi/archive/v2.24.0/navi-2.24.0.tar.gz \
+          https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.3.crate \
+          https://static.crates.io/crates/aligned/aligned-0.4.2.crate \
+          https://static.crates.io/crates/anstream/anstream-0.6.18.crate \
+          https://static.crates.io/crates/anstyle/anstyle-1.0.10.crate \
+          https://static.crates.io/crates/anstyle-parse/anstyle-parse-0.2.6.crate \
+          https://static.crates.io/crates/anstyle-query/anstyle-query-1.1.2.crate \
+          https://static.crates.io/crates/anstyle-wincon/anstyle-wincon-3.0.7.crate \
+          https://static.crates.io/crates/anyhow/anyhow-1.0.95.crate \
           https://static.crates.io/crates/as-slice/as-slice-0.2.1.crate \
-          https://static.crates.io/crates/autocfg/autocfg-1.0.1.crate \
-          https://static.crates.io/crates/bitflags/bitflags-1.3.2.crate \
-          https://static.crates.io/crates/cc/cc-1.0.79.crate \
+          https://static.crates.io/crates/autocfg/autocfg-1.4.0.crate \
+          https://static.crates.io/crates/bitflags/bitflags-2.8.0.crate \
           https://static.crates.io/crates/cfg-if/cfg-if-1.0.0.crate \
-          https://static.crates.io/crates/clap/clap-4.2.1.crate \
-          https://static.crates.io/crates/clap_builder/clap_builder-4.2.1.crate \
-          https://static.crates.io/crates/clap_derive/clap_derive-4.2.0.crate \
-          https://static.crates.io/crates/clap_lex/clap_lex-0.4.1.crate \
-          https://static.crates.io/crates/concolor-override/concolor-override-1.0.0.crate \
-          https://static.crates.io/crates/concolor-query/concolor-query-0.3.3.crate \
-          https://static.crates.io/crates/crossterm/crossterm-0.26.1.crate \
-          https://static.crates.io/crates/crossterm_winapi/crossterm_winapi-0.9.0.crate \
+          https://static.crates.io/crates/cfg_aliases/cfg_aliases-0.2.1.crate \
+          https://static.crates.io/crates/clap/clap-4.5.26.crate \
+          https://static.crates.io/crates/clap_builder/clap_builder-4.5.26.crate \
+          https://static.crates.io/crates/clap_derive/clap_derive-4.5.24.crate \
+          https://static.crates.io/crates/clap_lex/clap_lex-0.7.4.crate \
+          https://static.crates.io/crates/colorchoice/colorchoice-1.0.3.crate \
+          https://static.crates.io/crates/crossterm/crossterm-0.28.1.crate \
+          https://static.crates.io/crates/crossterm_winapi/crossterm_winapi-0.9.1.crate \
           https://static.crates.io/crates/cvt/cvt-0.1.2.crate \
           https://static.crates.io/crates/directories-next/directories-next-2.0.0.crate \
           https://static.crates.io/crates/dirs-sys-next/dirs-sys-next-0.1.2.crate \
           https://static.crates.io/crates/dns_common/dns_common-0.2.1.crate \
           https://static.crates.io/crates/dns_common_derive/dns_common_derive-0.2.1.crate \
-          https://static.crates.io/crates/dunce/dunce-1.0.4.crate \
-          https://static.crates.io/crates/edit/edit-0.1.4.crate \
-          https://static.crates.io/crates/either/either-1.6.1.crate \
-          https://static.crates.io/crates/errno/errno-0.3.0.crate \
-          https://static.crates.io/crates/errno-dragonfly/errno-dragonfly-0.1.2.crate \
-          https://static.crates.io/crates/etcetera/etcetera-0.7.1.crate \
-          https://static.crates.io/crates/fs_at/fs_at-0.1.4.crate \
-          https://static.crates.io/crates/getrandom/getrandom-0.2.3.crate \
-          https://static.crates.io/crates/hashbrown/hashbrown-0.12.3.crate \
-          https://static.crates.io/crates/heck/heck-0.4.0.crate \
-          https://static.crates.io/crates/hermit-abi/hermit-abi-0.3.1.crate \
-          https://static.crates.io/crates/home/home-0.5.4.crate \
-          https://static.crates.io/crates/indexmap/indexmap-1.9.3.crate \
-          https://static.crates.io/crates/io-lifetimes/io-lifetimes-1.0.9.crate \
-          https://static.crates.io/crates/is-terminal/is-terminal-0.4.6.crate \
-          https://static.crates.io/crates/itoa/itoa-1.0.6.crate \
-          https://static.crates.io/crates/lazy_static/lazy_static-1.4.0.crate \
-          https://static.crates.io/crates/libc/libc-0.2.140.crate \
-          https://static.crates.io/crates/linux-raw-sys/linux-raw-sys-0.3.1.crate \
-          https://static.crates.io/crates/lock_api/lock_api-0.4.6.crate \
-          https://static.crates.io/crates/log/log-0.4.17.crate \
+          https://static.crates.io/crates/dunce/dunce-1.0.5.crate \
+          https://static.crates.io/crates/edit/edit-0.1.5.crate \
+          https://static.crates.io/crates/either/either-1.13.0.crate \
+          https://static.crates.io/crates/equivalent/equivalent-1.0.1.crate \
+          https://static.crates.io/crates/errno/errno-0.3.10.crate \
+          https://static.crates.io/crates/etcetera/etcetera-0.8.0.crate \
+          https://static.crates.io/crates/fastrand/fastrand-2.3.0.crate \
+          https://static.crates.io/crates/fs_at/fs_at-0.2.1.crate \
+          https://static.crates.io/crates/getrandom/getrandom-0.2.15.crate \
+          https://static.crates.io/crates/hashbrown/hashbrown-0.15.2.crate \
+          https://static.crates.io/crates/heck/heck-0.5.0.crate \
+          https://static.crates.io/crates/home/home-0.5.11.crate \
+          https://static.crates.io/crates/indexmap/indexmap-2.7.0.crate \
+          https://static.crates.io/crates/is_terminal_polyfill/is_terminal_polyfill-1.70.1.crate \
+          https://static.crates.io/crates/itoa/itoa-1.0.14.crate \
+          https://static.crates.io/crates/lazy_static/lazy_static-1.5.0.crate \
+          https://static.crates.io/crates/libc/libc-0.2.169.crate \
+          https://static.crates.io/crates/libredox/libredox-0.1.3.crate \
+          https://static.crates.io/crates/linux-raw-sys/linux-raw-sys-0.4.15.crate \
+          https://static.crates.io/crates/lock_api/lock_api-0.4.12.crate \
+          https://static.crates.io/crates/log/log-0.4.25.crate \
           https://static.crates.io/crates/matchers/matchers-0.1.0.crate \
-          https://static.crates.io/crates/memchr/memchr-2.4.0.crate \
-          https://static.crates.io/crates/mio/mio-0.8.3.crate \
-          https://static.crates.io/crates/nix/nix-0.26.2.crate \
-          https://static.crates.io/crates/normpath/normpath-1.1.1.crate \
+          https://static.crates.io/crates/memchr/memchr-2.7.4.crate \
+          https://static.crates.io/crates/mio/mio-1.0.3.crate \
+          https://static.crates.io/crates/nix/nix-0.29.0.crate \
+          https://static.crates.io/crates/normpath/normpath-1.3.0.crate \
           https://static.crates.io/crates/nu-ansi-term/nu-ansi-term-0.46.0.crate \
-          https://static.crates.io/crates/once_cell/once_cell-1.17.1.crate \
+          https://static.crates.io/crates/once_cell/once_cell-1.20.2.crate \
           https://static.crates.io/crates/overload/overload-0.1.1.crate \
-          https://static.crates.io/crates/parking_lot/parking_lot-0.12.0.crate \
-          https://static.crates.io/crates/parking_lot_core/parking_lot_core-0.9.1.crate \
-          https://static.crates.io/crates/pin-project-lite/pin-project-lite-0.2.9.crate \
-          https://static.crates.io/crates/ppv-lite86/ppv-lite86-0.2.10.crate \
-          https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.56.crate \
-          https://static.crates.io/crates/quote/quote-1.0.26.crate \
-          https://static.crates.io/crates/rand/rand-0.8.3.crate \
-          https://static.crates.io/crates/rand_chacha/rand_chacha-0.3.1.crate \
-          https://static.crates.io/crates/rand_core/rand_core-0.6.2.crate \
-          https://static.crates.io/crates/rand_hc/rand_hc-0.3.0.crate \
-          https://static.crates.io/crates/redox_syscall/redox_syscall-0.2.8.crate \
-          https://static.crates.io/crates/redox_users/redox_users-0.4.0.crate \
-          https://static.crates.io/crates/regex/regex-1.7.3.crate \
+          https://static.crates.io/crates/parking_lot/parking_lot-0.12.3.crate \
+          https://static.crates.io/crates/parking_lot_core/parking_lot_core-0.9.10.crate \
+          https://static.crates.io/crates/pin-project-lite/pin-project-lite-0.2.16.crate \
+          https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.93.crate \
+          https://static.crates.io/crates/quote/quote-1.0.38.crate \
+          https://static.crates.io/crates/redox_syscall/redox_syscall-0.5.8.crate \
+          https://static.crates.io/crates/redox_users/redox_users-0.4.6.crate \
+          https://static.crates.io/crates/regex/regex-1.11.1.crate \
           https://static.crates.io/crates/regex-automata/regex-automata-0.1.10.crate \
+          https://static.crates.io/crates/regex-automata/regex-automata-0.4.9.crate \
           https://static.crates.io/crates/regex-syntax/regex-syntax-0.6.29.crate \
-          https://static.crates.io/crates/remove_dir_all/remove_dir_all-0.5.3.crate \
-          https://static.crates.io/crates/remove_dir_all/remove_dir_all-0.8.2.crate \
-          https://static.crates.io/crates/rustix/rustix-0.37.7.crate \
-          https://static.crates.io/crates/ryu/ryu-1.0.9.crate \
+          https://static.crates.io/crates/regex-syntax/regex-syntax-0.8.5.crate \
+          https://static.crates.io/crates/remove_dir_all/remove_dir_all-1.0.0.crate \
+          https://static.crates.io/crates/rustix/rustix-0.38.43.crate \
+          https://static.crates.io/crates/ryu/ryu-1.0.18.crate \
           https://static.crates.io/crates/same-file/same-file-1.0.6.crate \
-          https://static.crates.io/crates/scopeguard/scopeguard-1.1.0.crate \
-          https://static.crates.io/crates/serde/serde-1.0.159.crate \
-          https://static.crates.io/crates/serde_derive/serde_derive-1.0.159.crate \
-          https://static.crates.io/crates/serde_json/serde_json-1.0.95.crate \
-          https://static.crates.io/crates/serde_yaml/serde_yaml-0.9.21.crate \
-          https://static.crates.io/crates/sharded-slab/sharded-slab-0.1.4.crate \
+          https://static.crates.io/crates/scopeguard/scopeguard-1.2.0.crate \
+          https://static.crates.io/crates/serde/serde-1.0.217.crate \
+          https://static.crates.io/crates/serde_derive/serde_derive-1.0.217.crate \
+          https://static.crates.io/crates/serde_json/serde_json-1.0.135.crate \
+          https://static.crates.io/crates/serde_yaml/serde_yaml-0.9.34+deprecated.crate \
+          https://static.crates.io/crates/sharded-slab/sharded-slab-0.1.7.crate \
           https://static.crates.io/crates/shellwords/shellwords-1.1.0.crate \
-          https://static.crates.io/crates/signal-hook/signal-hook-0.3.13.crate \
-          https://static.crates.io/crates/signal-hook-mio/signal-hook-mio-0.2.3.crate \
-          https://static.crates.io/crates/signal-hook-registry/signal-hook-registry-1.4.0.crate \
-          https://static.crates.io/crates/smallvec/smallvec-1.10.0.crate \
-          https://static.crates.io/crates/smart-default/smart-default-0.6.0.crate \
+          https://static.crates.io/crates/signal-hook/signal-hook-0.3.17.crate \
+          https://static.crates.io/crates/signal-hook-mio/signal-hook-mio-0.2.4.crate \
+          https://static.crates.io/crates/signal-hook-registry/signal-hook-registry-1.4.2.crate \
+          https://static.crates.io/crates/smallvec/smallvec-1.13.2.crate \
           https://static.crates.io/crates/stable_deref_trait/stable_deref_trait-1.2.0.crate \
-          https://static.crates.io/crates/static_assertions/static_assertions-1.1.0.crate \
-          https://static.crates.io/crates/strip-ansi-escapes/strip-ansi-escapes-0.1.1.crate \
-          https://static.crates.io/crates/strsim/strsim-0.10.0.crate \
+          https://static.crates.io/crates/strip-ansi-escapes/strip-ansi-escapes-0.2.1.crate \
+          https://static.crates.io/crates/strsim/strsim-0.11.1.crate \
           https://static.crates.io/crates/syn/syn-1.0.109.crate \
-          https://static.crates.io/crates/syn/syn-2.0.13.crate \
+          https://static.crates.io/crates/syn/syn-2.0.96.crate \
           https://static.crates.io/crates/synstructure/synstructure-0.12.6.crate \
-          https://static.crates.io/crates/tempfile/tempfile-3.2.0.crate \
-          https://static.crates.io/crates/thiserror/thiserror-1.0.40.crate \
-          https://static.crates.io/crates/thiserror-impl/thiserror-impl-1.0.40.crate \
-          https://static.crates.io/crates/thread_local/thread_local-1.1.7.crate \
-          https://static.crates.io/crates/tracing/tracing-0.1.37.crate \
-          https://static.crates.io/crates/tracing-attributes/tracing-attributes-0.1.23.crate \
-          https://static.crates.io/crates/tracing-core/tracing-core-0.1.30.crate \
-          https://static.crates.io/crates/tracing-log/tracing-log-0.1.3.crate \
-          https://static.crates.io/crates/tracing-subscriber/tracing-subscriber-0.3.16.crate \
-          https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.8.crate \
-          https://static.crates.io/crates/unicode-width/unicode-width-0.1.10.crate \
-          https://static.crates.io/crates/unicode-xid/unicode-xid-0.2.2.crate \
-          https://static.crates.io/crates/unsafe-libyaml/unsafe-libyaml-0.2.8.crate \
-          https://static.crates.io/crates/utf8parse/utf8parse-0.2.1.crate \
-          https://static.crates.io/crates/valuable/valuable-0.1.0.crate \
-          https://static.crates.io/crates/vte/vte-0.10.1.crate \
-          https://static.crates.io/crates/vte_generate_state_changes/vte_generate_state_changes-0.1.1.crate \
-          https://static.crates.io/crates/walkdir/walkdir-2.3.3.crate \
-          https://static.crates.io/crates/wasi/wasi-0.10.2+wasi-snapshot-preview1.crate \
+          https://static.crates.io/crates/tempfile/tempfile-3.15.0.crate \
+          https://static.crates.io/crates/thiserror/thiserror-1.0.69.crate \
+          https://static.crates.io/crates/thiserror/thiserror-2.0.11.crate \
+          https://static.crates.io/crates/thiserror-impl/thiserror-impl-1.0.69.crate \
+          https://static.crates.io/crates/thiserror-impl/thiserror-impl-2.0.11.crate \
+          https://static.crates.io/crates/thread_local/thread_local-1.1.8.crate \
+          https://static.crates.io/crates/tracing/tracing-0.1.41.crate \
+          https://static.crates.io/crates/tracing-attributes/tracing-attributes-0.1.28.crate \
+          https://static.crates.io/crates/tracing-core/tracing-core-0.1.33.crate \
+          https://static.crates.io/crates/tracing-log/tracing-log-0.2.0.crate \
+          https://static.crates.io/crates/tracing-subscriber/tracing-subscriber-0.3.19.crate \
+          https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.14.crate \
+          https://static.crates.io/crates/unicode-width/unicode-width-0.2.0.crate \
+          https://static.crates.io/crates/unicode-xid/unicode-xid-0.2.6.crate \
+          https://static.crates.io/crates/unsafe-libyaml/unsafe-libyaml-0.2.11.crate \
+          https://static.crates.io/crates/utf8parse/utf8parse-0.2.2.crate \
+          https://static.crates.io/crates/valuable/valuable-0.1.1.crate \
+          https://static.crates.io/crates/vte/vte-0.14.1.crate \
+          https://static.crates.io/crates/walkdir/walkdir-2.5.0.crate \
           https://static.crates.io/crates/wasi/wasi-0.11.0+wasi-snapshot-preview1.crate \
-          https://static.crates.io/crates/which/which-4.1.0.crate \
+          https://static.crates.io/crates/which/which-4.4.2.crate \
           https://static.crates.io/crates/winapi/winapi-0.3.9.crate \
           https://static.crates.io/crates/winapi-i686-pc-windows-gnu/winapi-i686-pc-windows-gnu-0.4.0.crate \
-          https://static.crates.io/crates/winapi-util/winapi-util-0.1.5.crate \
+          https://static.crates.io/crates/winapi-util/winapi-util-0.1.9.crate \
           https://static.crates.io/crates/winapi-x86_64-pc-windows-gnu/winapi-x86_64-pc-windows-gnu-0.4.0.crate \
-          https://static.crates.io/crates/windows-sys/windows-sys-0.32.0.crate \
-          https://static.crates.io/crates/windows-sys/windows-sys-0.36.1.crate \
-          https://static.crates.io/crates/windows-sys/windows-sys-0.45.0.crate \
           https://static.crates.io/crates/windows-sys/windows-sys-0.48.0.crate \
-          https://static.crates.io/crates/windows-targets/windows-targets-0.42.2.crate \
-          https://static.crates.io/crates/windows-targets/windows-targets-0.48.0.crate \
-          https://static.crates.io/crates/windows_aarch64_gnullvm/windows_aarch64_gnullvm-0.42.2.crate \
-          https://static.crates.io/crates/windows_aarch64_gnullvm/windows_aarch64_gnullvm-0.48.0.crate \
-          https://static.crates.io/crates/windows_aarch64_msvc/windows_aarch64_msvc-0.32.0.crate \
-          https://static.crates.io/crates/windows_aarch64_msvc/windows_aarch64_msvc-0.36.1.crate \
-          https://static.crates.io/crates/windows_aarch64_msvc/windows_aarch64_msvc-0.42.2.crate \
-          https://static.crates.io/crates/windows_aarch64_msvc/windows_aarch64_msvc-0.48.0.crate \
-          https://static.crates.io/crates/windows_i686_gnu/windows_i686_gnu-0.32.0.crate \
-          https://static.crates.io/crates/windows_i686_gnu/windows_i686_gnu-0.36.1.crate \
-          https://static.crates.io/crates/windows_i686_gnu/windows_i686_gnu-0.42.2.crate \
-          https://static.crates.io/crates/windows_i686_gnu/windows_i686_gnu-0.48.0.crate \
-          https://static.crates.io/crates/windows_i686_msvc/windows_i686_msvc-0.32.0.crate \
-          https://static.crates.io/crates/windows_i686_msvc/windows_i686_msvc-0.36.1.crate \
-          https://static.crates.io/crates/windows_i686_msvc/windows_i686_msvc-0.42.2.crate \
-          https://static.crates.io/crates/windows_i686_msvc/windows_i686_msvc-0.48.0.crate \
-          https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.32.0.crate \
-          https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.36.1.crate \
-          https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.42.2.crate \
-          https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.48.0.crate \
-          https://static.crates.io/crates/windows_x86_64_gnullvm/windows_x86_64_gnullvm-0.42.2.crate \
-          https://static.crates.io/crates/windows_x86_64_gnullvm/windows_x86_64_gnullvm-0.48.0.crate \
-          https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.32.0.crate \
-          https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.36.1.crate \
-          https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.42.2.crate \
-          https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.48.0.crate"
-MD5SUM="30a4e7cef3bf1d8e3182ad6d9d3ab2cf \
-        425b8fdf70df59998d9b7c89083e48d1 \
-        d82a09f1c1a60aa9f46c0f76e4ea1265 \
-        031f246bd9367c5371a850e640e85abe \
-        53c2a5b5e01940a8d5149106c2dff04a \
-        d8c6a5fd9aaecb3dbf2b4a85bfb03e4c \
-        ca12cc5578bca6046cabf59d9ee9ee4c \
-        c819bcd547a7f325a7a2d710db5a0d8a \
-        c83252f91435a921e7e4434956010344 \
+          https://static.crates.io/crates/windows-sys/windows-sys-0.52.0.crate \
+          https://static.crates.io/crates/windows-sys/windows-sys-0.59.0.crate \
+          https://static.crates.io/crates/windows-targets/windows-targets-0.48.5.crate \
+          https://static.crates.io/crates/windows-targets/windows-targets-0.52.6.crate \
+          https://static.crates.io/crates/windows_aarch64_gnullvm/windows_aarch64_gnullvm-0.48.5.crate \
+          https://static.crates.io/crates/windows_aarch64_gnullvm/windows_aarch64_gnullvm-0.52.6.crate \
+          https://static.crates.io/crates/windows_aarch64_msvc/windows_aarch64_msvc-0.48.5.crate \
+          https://static.crates.io/crates/windows_aarch64_msvc/windows_aarch64_msvc-0.52.6.crate \
+          https://static.crates.io/crates/windows_i686_gnu/windows_i686_gnu-0.48.5.crate \
+          https://static.crates.io/crates/windows_i686_gnu/windows_i686_gnu-0.52.6.crate \
+          https://static.crates.io/crates/windows_i686_gnullvm/windows_i686_gnullvm-0.52.6.crate \
+          https://static.crates.io/crates/windows_i686_msvc/windows_i686_msvc-0.48.5.crate \
+          https://static.crates.io/crates/windows_i686_msvc/windows_i686_msvc-0.52.6.crate \
+          https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.48.5.crate \
+          https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.52.6.crate \
+          https://static.crates.io/crates/windows_x86_64_gnullvm/windows_x86_64_gnullvm-0.48.5.crate \
+          https://static.crates.io/crates/windows_x86_64_gnullvm/windows_x86_64_gnullvm-0.52.6.crate \
+          https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.48.5.crate \
+          https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.52.6.crate"
+MD5SUM="201f9036a9da1b5192e63d02c621305e \
+        03b2d126766ed746706241b4c7487654 \
+        5c77c87a9492a38f76c35d3fc65e185d \
+        0866078f947995a7f65621625717f2bc \
+        826d3b9b2c558ca5ad4cbb82c6765108 \
+        3dde3e81febbfe8ba5fc204ae0c432dd \
+        d767aa369f25db8299c2987cc9310d24 \
+        1225e8388f6db712b5a9a796c0240ff8 \
+        cdb79bf66833d3cfa9fd022e47910c93 \
         fdd18ab1fcd6905d1abb3dce8a86ea68 \
-        c6443ec8d007c729ba5482008d0c864d \
-        a295edb6953237ebbdfa8e731229f9a3 \
-        7d83f411bb22318c65fec8bbee937ece \
+        9e038efbd61e6d7cbc54983abc5b3948 \
+        630d0daee61403d4f6e8f3553102de93 \
         74634128440dbc3766bda76fdf0aaa05 \
-        211f466700ae4fb8501c36fd62805655 \
-        29b83c7c9c3a74416b15a2588be77b8e \
-        3decc2a3d38af16171bec276f5a6ac50 \
-        a53136b7917d066ae41a49f2b2d19fb9 \
-        489a1ad830f372e76a4363d1033a4eb4 \
-        eaf32bb0b3348f7aca6ceca260c31218 \
-        5f97ab6850664563218eba1deb775f18 \
-        22a24f05bcdf8e7e82aa83e1d1bf52b7 \
+        f5215c4283a1984b95043a7185245e00 \
+        c700e8ac62182b5e5f9557d8d19292f0 \
+        2e40b4d96da2189b348ba85b562e20b6 \
+        56e6f5a2aea9a4909d877b8f0f303d17 \
+        a3ae20980b5ce5831255acfe0d77d1ee \
+        8d244d1c44724ffa933f15695ba75435 \
+        5b6abd7e90730e502165a9cd07ed858d \
+        81b4ce6014002d0cb0415aa401a51578 \
         30ec1b3363b03c11d30f45a0c7005411 \
         84353239d240e4144020851ae9768f68 \
         056c8d712ee146347c412b72f4077b2f \
         e3349d8b49dd5d725cf90dba28fc0c4c \
         7d853b47c13b2cf79c38907a45c3a760 \
-        09fbe9408a658ae3e5d294812af2bc65 \
-        854188d01f3e24633d19b159a9cc1786 \
-        b4e2b229c362ad0dd313ff631816d5db \
-        de1bb7e293f523c2b891ecafcd57fad9 \
-        fc65414dcac661c46f2cfad7722304f9 \
-        2254666622c6a9707a8c2c7eef17a58c \
-        8675c1fd26857fd9591edb8b23c285c3 \
-        9db1c40cc98e60cc7bd6782249a0ba01 \
-        1b41b97d982520b7364a87a39e2a1ed8 \
-        4fd75413081a400a1c230f0700732611 \
-        c9fa9187985880eb320b350bd9024510 \
-        6385d8499b2b26e3d41edd145e744f24 \
-        11ce8b5f52cd315e8f52985b834b87eb \
-        4799f06459eb30063f0f0ddd1e0b1525 \
-        a9c5dd636ef108dd85ca4e080794618a \
-        ffbab2186e43af074b619d6d8bfe3566 \
-        fba3b040a55c01be7376d3dd5c4d4920 \
-        83b5b2bd50c54e08c9bbacb21757753e \
-        eb25786fe28f9e1774f0eb36562e4571 \
-        825ecc659b700477535aa5c7dea95a82 \
-        b31bf94ffe7e0f2ada93afae1076eaeb \
+        198d7f7c37f632bc83502b28870b6d60 \
+        260f846a52463806df4a3bf72e035b73 \
+        6d28dbfa9d67ad11061716672a7a1519 \
+        bdf329a72ecd0605c296f25e53136706 \
+        97fd3b6f8bd8cc9f0890a599853a4b71 \
+        f8bbc5e2d829e3a4cb40da5ef6dfcd72 \
+        b0a1ffd6b0b5fe67e3dac04cd26b3099 \
+        c44baeb5bab76e96be4e55e909d600e5 \
+        3c67481b4433a3219846e41d09aaeaa9 \
+        73e4ea17e8cce91a5473e934e104952c \
+        ce5935e8063a452913a61e5405b33cb9 \
+        050d875b4b8320ee1da724ef04b1d513 \
+        b03ce65007c696ec791adfc8cb0938de \
+        83cd180e6991b62b1cc6d646bf4d0284 \
+        c125f6c48f6f09ad96e234ff25a1c198 \
+        bb0c20f6e3faaa647d9c463c5501a8e0 \
+        3642745840be485f7de1ecfe80044007 \
+        b928626f9e8328e4085fc27cfc640c19 \
+        c794e0a278b9d264dc033b1c840dd217 \
+        eb44c81f81e4aecdbdbafeac9c0fdcab \
+        3a98a55d1d7041017bc987ee76a54b54 \
         29614f150859d094548bed37e78f586b \
-        9d375c3f54df74656fa0543c068b861e \
-        110b5ea3d4fc1e9bb304e74f7a3165ee \
-        580f8f88379ff0678e8336a781dda55d \
-        8d526535233ee01e0f1402b5e8f4e8e9 \
+        c0aab5e6eaaa6a2f3c7ed44f123d1c7d \
+        8c5b656fbc77cf40ea254ccea0bb189d \
+        ed4e44c8eeb59ccf02891681bd0a5f2d \
+        9a56f9ea516d7912a9e5257a455231c2 \
         a56461a712a83abc691cf473d1835228 \
-        ec9e9fe40bacdde764862148c53386de \
+        2b55f4f5a83a6ed664ff5b60aff9bfb4 \
         03a7ad2814bd9dd34e0acec8ca4f855e \
-        eab5fb7020e5cc0a6cfb7627c4e9b31f \
-        2bba2855e1e1f6f9f68e1c4e8446fcfa \
-        ce6dde2ea2691fdd97632fb8c9b3e042 \
-        a4ff7abd41c57dfd24bbd4b50edb848f \
-        4ed863e96f34f750bebed5d8bf9a7f89 \
-        323153a8ec1da78a73131fec9d900c2e \
-        e878596904877d1d7933d8f89a63dd49 \
-        e30085994bbeb4b7f4895d48216d5476 \
-        b5b168b1af99cbb8c0f5556ffe56f1e5 \
-        69e9436d5c9889a6fdf199dfc5c3d3fe \
-        6bc41c1a00d8876d2ebdcda4054ee4f5 \
-        d961a02195226cfce1a1e23ba5980cb4 \
-        b5b1d0537212721d9c7eddd603541569 \
+        c63cc43554a8abcf7b1166626f0e3736 \
+        fe316e1d51e3dff1e0455d0142dd37e4 \
+        f6c8ce4c412ca548e42dfd896c92112e \
+        1d813e5785bd2d72bca9758ba93ad912 \
+        52eb2853b626a95fb6caad9516797aa1 \
+        0076e500850fb04f53c509c33b5d0dd8 \
+        bee355e36a71b94ea45eedcd3d054ae1 \
+        83ecafda24e071eea2198d9b440739ce \
         95f4b6766a27d814b4e54d1ccb3b7fc9 \
+        15ca0efe66412fae9536d428d93e6a73 \
         f2303650593b13e30a85e39d8c79c961 \
-        0538d1da369f3e3f0412aa4d735c1b61 \
-        8f5ff45e31f879a4bb4f8815fb25acc1 \
-        85cdea1e8c0313f2b3129f9b85905eb9 \
-        7fe15f165a1812b23e5b1980aa364de2 \
+        45c2ac064f6aedb1944b989742218e26 \
+        6bf11e977e0e103bc8cccb8be7862642 \
+        a618743189e98b8085c3deaae36e6c8f \
+        56de037d755aeb0b45169991f9567cd7 \
         2d8d8b377d144f5e32b4f65a69eb0b24 \
-        b4a0a98a54439a5a37952c8879187ee3 \
-        93678b019fcae346dc398e0f01a83f10 \
-        7e7c135ac47f272b411ecd975090f73c \
-        68c2d7c90e8f29c8105d0c0a5a229acd \
-        9adeedabfb34b02593bdcc295acefe1a \
-        aea6e994efc417ef3e4b6de03255b64d \
+        f1358be8c98b98837cbd2cf51e75f8b3 \
+        5044eb3cfbb20628225c4b22a50f2cd4 \
+        51fd82290e7c39d86d6f252fd20d2621 \
+        eb57baa41c6e764aa42c342c8ddbb74c \
+        39e3168b0ff2d77bcca05882310b2a06 \
+        96261f3cee18842060fd64d618e056d8 \
         f6eeafec802ce9ef73b714d7317c0e05 \
-        b077f27c741a438d0a7a474a41e22a62 \
-        cd23eb9bc45514102af9b76e333230fb \
-        21b43d5721b3a9c16059acb691f4314d \
-        a8014a7c865aa54f305e8cda3ef02019 \
-        26b4ac1432c227434bc943817f42872e \
+        f60ab8537f924a65fbc0961e958d375b \
+        dee87bd305cac02d8fba62501664c431 \
+        a77d5770902a4260009320daafd1fff2 \
+        50d5a501f911bb592f0dce2d052c2aa8 \
         5988bad1543264a9f48b542192e7de9a \
-        c9defe80406280bcfce4ecf31c0200b3 \
-        409984247a8d8f4e15a7e0d097a0447a \
-        82d98dc87dc8503400aa095f5aa70f13 \
+        61e107c951535364f334286dea486723 \
+        fbe5da24bd1beef6125107ee41118187 \
         64d9f46e9ba78f68c30c486be3d8b7df \
-        d8a61b40310276b653b4e33f966dcd13 \
+        61c5e8fb09fdb11025a272ed3bde9c3c \
         8f6b6cc71be0473b79c65abfea592c07 \
-        6e328718765f2352dd34f10215488fbb \
-        ab44b0c93adeb9ee88e1c66555b8e6a7 \
-        dd290e713c28d2e565d78eedd471ed78 \
-        4375c6756918c2e9080870b4a7489d4e \
-        97e8197912c3d06f0b7486d07c31e182 \
-        45c1d005c5df9e62640b4bbb1f79090a \
-        e3189db1511d7f2fe59fd1b15ebac8ff \
-        96f07664354435a127662981676765dd \
-        89f2916b726f47831eb4877eee7e29a3 \
-        7544c989c31232ae0d941e321dfe9bb2 \
-        7d6d4fc9fad200d6e295f6930e97e022 \
-        087bfc476e9d73628cebd265590f11f7 \
-        ce3226324f5abd3860f9c79c9b92b372 \
-        ceee1159c41351d05f4cf705490867b3 \
-        4efc6e7a118524cecefa0023a18accf7 \
-        86a6d196e4dabf14f3b1366eee81b86c \
-        a29fec77b1e07caf7b682b881b676c06 \
-        250acb3063bbdc870cbb54edcd6fff8f \
-        a061ad1db3e0d839725b037ff8be84e7 \
+        e24d8f246a99a76549c965a12dccc9b8 \
+        9c02495b380dc51331dcd8789b26cbfb \
+        f3210ab639bb43104069f5ecb3f1a786 \
+        a4bb1b92a5b098fdaa5694733ea73e7a \
+        7291f99c00edc0ee2681bf4945c72b96 \
+        6739d2c377b9e20af9a23022e362aa33 \
+        7017e24adcde4f4411e9d9585a71e409 \
+        455343f64f758f5783ef4ffb09e26dda \
+        16954b67421d1ca0099c48bbe2cde06c \
+        beede1fdd5ce9840d395abc905d8ab3e \
+        82c93b008ea326aa04d1fb913fdc839d \
+        f73c8388e6e60cb14972b90323e45ebb \
+        8261fb5df8f4203bdfb771a2eb757a10 \
+        41e2f0237e471d10d38bc7794d30f51a \
+        a8c6d404eec9e0efc975e65312b76228 \
+        470f527a51d3921895bd2583fce8d9c4 \
+        4a1c91b24c3025dc6bb6e0eb9711772a \
+        802fa560a885fee434614f6679e7fb88 \
+        f38b27b8c9625110a51293658f1cc014 \
         e972ea58ec203bfa6c79c1207852298b \
-        164600124536762707f028a9485d6a54 \
+        9f0ad88c4840b999e28531dee406432d \
         0498c4a11448bfc35dc7bb2caa64c753 \
         db96b50050277bf05a3c68534bbb9586 \
-        b9e37d5fc4ad28b612b78ad37816684d \
+        e908e1808f2a480449f8d86281ae24ef \
         09de9d01e7331ff3da11f58be8bef0df \
-        102eda2342e9251f693364e58751ccb2 \
-        b3083009944ab58cbd9c4941f4965545 \
-        b58284cb8ce52b8de07e09f4f8fb9653 \
         f2797ade0e36f1e5d6be9d11b5076582 \
-        a369d510325342310c7ab159bd181dae \
-        7244738a73643f06df82069d00393ad7 \
-        7968284877e481b58df1569b68b5dc26 \
-        e8732bb9eec91463ea10020fc16991c1 \
-        35d9260a71d46dd3c5b267e6f64fba88 \
-        776128629d743f0d6127db259a0d8844 \
-        34d06a94727c506c11e4710160e90f32 \
-        3d2bf2e578fe93c538d4f8c5cfddbe9b \
-        edbc0fdbfa33030d9e89824ef3501e42 \
-        7f60b76e78bd2a190cf3ddc2b4c4920b \
-        017691b927b405669e1139b054a35f4a \
-        631f9e1bcfe18e3976ef4c893ee13531 \
-        b55c79e62c3cc7bdf51492e000e73be8 \
-        ce798410cba61fe713f3487cd6cafef4 \
-        f56c70fbae23f08fb0912284333f7851 \
-        f3dad0f67aa70c6618c1593bd2086c36 \
-        3c519baed53d525ce2e9aaf1744416a3 \
-        f55176d04297df9dd5ccae7c748e26c7 \
-        d20c2b0f45a62cc15c503ea610706a8f \
-        085ec81e4ced998bb7f1aea30b7a630e \
-        ec7e437088dc741e6a0653e553abca4e \
-        e24dfcf625e130a1e6db0ae375a17dd7 \
-        ee14d4b0db3e0697d378ed7260602eeb \
-        8e285ddee403a9abe62d6fe2bfbb736a \
-        8cec8a187df7a7b971009a7693f60140 \
-        2fa0c13b386de68baa17168774b1c5fa"
+        2376de634160158ece40c4bc2ab3eb41 \
+        73b177d6d000daaa8f05790414a887a3 \
+        24c64817e85ef77765ed0f26c31c9b4c \
+        9e876a38acd8262d97e9302ecb4e0f72 \
+        dae6d89034a6988042fd8be4cf5e037d \
+        8c8adde50f0a531c407c5b68ab928f0b \
+        de2839e16d9d7a9fd1c397da62f62b4a \
+        233b17dfcf7e49ac791eef30b7f406e3 \
+        e0c35ffb8cfdb74a39bf799811f79304 \
+        7cb99b00381f697eaf8a322ed3b8205c \
+        1baf62319b533f3d996993b82305e547 \
+        d990172b607020701f9e84ca8e1c043c \
+        311ded6588844e072d3fb953a8f994da \
+        0a68848588e847ceccf504891584d00b \
+        3f265cbde7668f38c1229043475470a9 \
+        45b469ad607b912256b7c80141fa2d17 \
+        4e50e886c72204c268c15a3230001d71 \
+        7799baff9a5664205d9110a2624e8989 \
+        b95760e9133ba1bb456d0f0cef74c9a4"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="rust-opt"

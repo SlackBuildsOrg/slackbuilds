@@ -120,6 +120,64 @@ if echo "$ARCH" | grep -q "i.86"; then
   sed -i '/1[02]bit/d;s|main.a \\|main.a|' contrib/x265/module.defs
   sed -i 's|-DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. -DLINKED_10BIT=ON -DLINKED_12BIT=ON |-DCMAKE_POSITION_INDEPENDENT_CODE=ON |' contrib/x265_8bit/module.defs
   export MAKEFLAGS=-j1
+  cat << EOF > contrib/x265/A09-Fix-compilation-on-x86.patch
+From 529b3379826e467be05e28742a0f70e0687af0ed Mon Sep 17 00:00:00 2001
+From: "Helmut K. C. Tessarek" <tessarek@evermeet.cx>
+Date: Mon, 17 Mar 2025 00:16:07 -0400
+Subject: [PATCH] fix: symbol not defined on not ELF
+
+---
+ source/common/x86/cpu-a.asm       | 2 +-
+ source/common/x86/pixel-util8.asm | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/source/common/x86/cpu-a.asm b/source/common/x86/cpu-a.asm
+index 747b921f7..2f469f6ec 100644
+--- a/source/common/x86/cpu-a.asm
++++ b/source/common/x86/cpu-a.asm
+@@ -177,7 +177,7 @@ cglobal safe_intel_cpu_indicator_init
+ %if WIN64
+     lea rax, [intel_cpu_indicator_init]
+     call rax
+-%elif FORMAT_ELF
++%elif UNIX64
+     call [rel intel_cpu_indicator_init wrt ..plt]
+ %else
+     call intel_cpu_indicator_init
+diff --git a/source/common/x86/pixel-util8.asm b/source/common/x86/pixel-util8.asm
+index 6ad2852d3..6d25c4112 100644
+--- a/source/common/x86/pixel-util8.asm
++++ b/source/common/x86/pixel-util8.asm
+@@ -8485,7 +8485,7 @@ cglobal costCoeffNxN, 6,11,6
+     ; r5 - scanFlagMask
+     ; r6 - sum
+ 
+-%if FORMAT_ELF
++%if UNIX64
+     mov         r0, [private_prefix %+ _entropyStateBits wrt ..gotpc]
+ %else
+     lea         r0, [private_prefix %+ _entropyStateBits]
+@@ -8670,7 +8670,7 @@ cglobal costCoeffNxN, 6,10,5
+     ; r6 - sum
+     ; {r3,r4} - ctxSig[15-0]
+     ; r8m - (numNonZero != 0) || (subPosBase == 0)
+-%if FORMAT_ELF
++%if UNIX64
+     mov             r0, [private_prefix %+ _entropyStateBits wrt ..gotpc]
+ %else
+     lea             r0, [private_prefix %+ _entropyStateBits]
+@@ -8914,7 +8914,7 @@ cglobal costC1C2Flag, 4,12,2
+     or          r11d, 0x100                     ; default value setting to 8
+     bsf         r11d, r11d
+ 
+-%if FORMAT_ELF
++%if UNIX64
+     mov             r5, [private_prefix %+ _entropyStateBits wrt ..gotpc]
+ %else
+     lea             r5, [private_prefix %+ _entropyStateBits]
+-- 
+2.49.0
+EOF
 fi
 
 # Make the GUI optional

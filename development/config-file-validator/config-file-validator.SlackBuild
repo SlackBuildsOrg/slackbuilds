@@ -75,10 +75,6 @@ CGO_ENABLED=0 \
 	mkdir -p $PKG/usr/bin
 	install -Dm755 validator $PKG/usr/bin/validator
 
-# Install the binary into package directory
-mkdir -p "$PKG/usr/bin"
-install -Dm755 validator "$PKG/usr/bin/validator"
-
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

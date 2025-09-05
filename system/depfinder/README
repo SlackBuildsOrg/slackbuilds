@@ -1,0 +1,69 @@
+depfinder is a tool that finds the dependencies of Slackware packages.
+
+depfinder is much faster than requiredbuilder, a very nice script
+by Stefano Stabellini that I used in the past to find package
+dependencies. But requiredbuilder is written entirely in bash and I
+had always thought that optimizing the search routines in C or C++
+would make the whole process a lot faster. So, the speed difference
+mainly comes from the C++ code that is used in depfinder to find in
+which package each individual library is included. That C++ code is
+'borrowed' (as in blatanly ripped) from Nigel Bosch's zpm code.
+
+depfinder also has support for running multiple jobs in parallel that
+makes it a lot faster when used with multiple CPUs/cores.
+
+The dependency list is by default being output in a comma separated
+list, without version information, but there are options to output
+dependencies with version information and to a file: a .dep file
+with a comma separated list without version information, or a
+slack-required file with version information, respectively.
+
+Note that I don't really agree with version information in
+dependency lists. "libxyz >= 1.0-i486-2gv" actually doesn't always
+mean that the package will work with any version of libxyz greater
+than 1.0. There will be cases that it will have to be rebuilt with
+a new libxyz version. Also the check will fail if someone has
+"libxyz >= 1.0-i486-1xy" installed since "1xy"<"2gv". But the two
+libxyz packages might really be identical otherwise. Using
+"libxyz = 1.0-i486-2gv" is not a solution, since the check will
+always fail with any subsequent libxyz packages, prompting for
+a package rebuild, which would be completely unnecessary. But this is
+the format used as standard for slack-required files that are used by
+many slackware-based projects, so I added support for it anyway.
+
+I also don't personally agree with slack-required files being
+inside packages, which I think is a very poor and inefficient design.
+A simple change in the dependency list, which would otherwise require
+the editing of a text file only, requires rebuilding the package, which
+then requires reuploading and redistributing the package, for the users
+only to upgrade to a version that in terms of functionality is identical
+to the one they have with the previously installed package. Lots of
+work, time and bandwidth can be completely wasted that way.
+But that's really a whole different matter and I'll stop my ranting
+now, since everyone can do whatever he wants with the dependency list
+he gets with depfinder.
+
+depfinder is perfectly accurate when detecting dependencies of binary
+files. I didn't want to implement support for detecting python
+dependencies until I was sure I could do it in a way that would really
+work. I didn't want to go the way requiredbuilder went and "pretend" to
+have support for detecting python dependencies. Detecting python as a
+dependency and detecting python dependencies is not at all the same
+thing. The way it works now in depfinder I think is the best way it can
+be done. All python files in a package are parsed for modules that they
+import (or try to import). In most cases there is going to be some extra
+output in the form of warnings and the packager might need to do some
+manual work to sort out which python dependencies are optional and which
+are not, but at least there is no chance that a python dependency will
+not be reported (I think). Python dependency checking is going to make
+depfinder run a bit slower, it needs to do a lot of work, probing every
+single file in the package and parsing all python scripts for certain
+keywords, but it's not really that bad in terms of speed. Support for
+detecting perl dependencies might be a possibility for the future.
+
+Apart from basic shell commands, like ls, sed, touch etc, depfinder
+requires python in order to detect python dependencies. You also need to
+have the gcc-g++ compiler, so that depfinder-search can be compiled.
+
+A huge thanks goes to Nigel Bosch for creating the original code for his
+zpm package manager and making it available in the first place.

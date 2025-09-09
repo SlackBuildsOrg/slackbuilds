@@ -1,0 +1,11 @@
+--- extra/meson_post_install.sh	2024-12-08 23:33:48.000000000 +0100
++++ extra/patched-meson_post_install.sh	2025-09-07 17:16:14.538593028 +0200
+@@ -1,7 +1,7 @@
+ #!/bin/sh
+
+ # Needed to remove password prompt when recording a monitor (without desktop portal option) on amd/intel or nvidia wayland
+-/usr/sbin/setcap cap_sys_admin+ep ${MESON_INSTALL_DESTDIR_PREFIX}/bin/gsr-kms-server \
++setcap cap_sys_admin+ep ${MESON_INSTALL_DESTDIR_PREFIX}/bin/gsr-kms-server \
+     || echo "\n!!! Please re-run install as root\n"
+
+ # Cant do this because it breaks desktop portal (create session)!!!.

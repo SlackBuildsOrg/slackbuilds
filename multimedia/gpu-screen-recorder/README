@@ -1,0 +1,7 @@
+GPU Screen Recorder is a screen recorder that has minimal impact on
+system performance by recording your monitor using the GPU only,
+similar to shadowplay on Windows.
+
+You'll need meson 0.62.0 or greater to succesfully build this
+package since Slackware's meson is too old. Newer versions of meson
+can be installed from SlackBuilds.org or from the testing repository.

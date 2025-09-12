@@ -1,0 +1,5 @@
+GPU Screen Recorder is a screen recorder that has minimal impact on
+system performance by recording your monitor using the GPU only,
+similar to shadowplay on Windows.
+
+python3-meson-opt is a build time dependency.

@@ -1,0 +1,10 @@
+--- meson.build	2024-12-08 23:33:48.000000000 +0100
++++ patched-meson.build	2025-09-07 17:09:41.819241063 +0200
+@@ -41,6 +41,7 @@
+ 
+ dep = [
+     dependency('threads'),
++    dependency('dl'),
+     dependency('libavcodec'),
+     dependency('libavformat'),
+     dependency('libavutil'),

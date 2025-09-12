@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# Slackware build script for soloud
+# Adapted from https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=soloud
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=soloud
+SRCNAM=RELEASE
+VERSION=${VERSION:-20200207}
+BUILD=${BUILD:-0}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+    LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+    LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+    LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+    LIBDIRSUFFIX="64"
+else
+    LIBDIRSUFFIX=""
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+
+cd $TMP
+rm -rf $PRGNAM-${SRCNAM}_$VERSION
+tar xzvf $CWD/${SRCNAM}_$VERSION.tar.?z
+
+cd $PRGNAM-${SRCNAM}_$VERSION
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+
+cd build
+genie gmake
+cd gmake
+make config=release
+
+cd $TMP/$PRGNAM-${SRCNAM}_$VERSION
+
+mkdir -p $PKG/usr/lib$LIBDIRSUFFIX
+mkdir -p $PKG/usr/include/$PRGNAM
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+
+install -Dm755 lib/libsoloud.so -t $PKG/usr/lib$LIBDIRSUFFIX/
+install -Dm644 include/*.h -t $PKG/usr/include/$PRGNAM/
+
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

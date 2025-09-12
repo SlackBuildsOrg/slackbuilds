@@ -1,0 +1,3 @@
+GTK frontend for GPU Screen Recorder.
+
+python3-meson-opt is a build time dependency.

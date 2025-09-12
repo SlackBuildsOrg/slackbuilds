@@ -1,0 +1,11 @@
+--- meson.build	2025-08-07 20:38:29.000000000 +0200
++++ patched-meson.build	2025-09-07 17:52:12.880388365 +0200
+@@ -15,7 +15,7 @@
+ dep = [
+     dependency('gtk+-3.0'),
+     dependency('x11'),
+-    dependency('ayatana-appindicator3-0.1'),
++    dependency('libayatana-appindicator3-0.1'),
+ ]
+
+ prefix = get_option('prefix')

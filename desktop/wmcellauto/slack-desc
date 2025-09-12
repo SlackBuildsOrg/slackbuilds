@@ -6,11 +6,11 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
           |-----handy-ruler------------------------------------------------------|
-wmcellauto: wmcellauto (Window Maker dockapp for displaying cellular automata)
+wmcellauto: wmcellauto (Windowmaker dockapp for displaying cellular automata)
 wmcellauto:
-wmcellauto: wmcellauto is a cellular automata simulator which runs in a 64x64
-wmcellauto: window, intended to be used with the WindowMaker dock (though it will
-wmcellauto: run in any window manager).
+wmcellauto: wmcellauto runs cellular automata such as Conway's Game of Life in a
+wmcellauto: 64x64 dockapp window. It supports multiple automata rulesets, custom
+wmcellauto: rules, and custom colors.
 wmcellauto:
 wmcellauto:
 wmcellauto:

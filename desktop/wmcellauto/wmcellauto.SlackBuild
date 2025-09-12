@@ -9,7 +9,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=wmcellauto
-VERSION=${VERSION:-0.1}
+VERSION=${VERSION:-1.0+6fc6b7d_20240604}
+COMMIT=${COMMIT:-6fc6b7d7ee007e2ac937f61c1e0242875c926f80}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -33,16 +34,12 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -50,17 +47,25 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $PRGNAM-$COMMIT
+tar xvf $CWD/$PRGNAM-$COMMIT.tar.gz
+cd $PRGNAM-$COMMIT
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find -L .  -perm /111 -a \! -perm 755 -a -exec chmod -h 755 {} + -o \
+        \! -perm /111 -a \! -perm 644 -a -exec chmod -h 644 {} +
+
+# Man page: did the name change at some point? Also add the version
+# number and update the modification date.
+DATE="$( date '+%B %Y' )"
+sed -i -e 's,wmautocell,wmcellauto,g' \
+       -e 's,WMAUTOCELL,WMCELLAUTO,g' \
+       -e '/\.TH/s,$, "'$VERSION'",'  \
+       -e "s,March 2017,$DATE,"       \
+    $PRGNAM.1
 
 autoreconf -if
 
 CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
@@ -73,11 +78,11 @@ CXXFLAGS="$SLKCFLAGS" \
 
 make
 make install-strip DESTDIR=$PKG
-gzip -9 $PKG/usr/man/man*/*
+gzip $PKG/usr/man/man*/*
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p $PKGDOC
-cp -a COPYING *.md $PKGDOC
+cp -a README* ChangeLog* COPYING* $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

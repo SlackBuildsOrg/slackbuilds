@@ -91,13 +91,13 @@ mkdir -p $PRGNAM-$VERSION
 cd $PKG
 ar p $CWD/${PRGNAM}_${VERSION}_${DEBARCH}.deb data.tar.gz | tar zxv
 
+rm -rf etc usr/lib/systemd usr/lib/tmpfiles.d
+
 if [ -d "$PKG/usr/lib/nordvpn" ]; then
   mkdir -p "$PKG/usr/lib${LIBDIRSUFFIX}"
   mv "$PKG/usr/lib/nordvpn" "$PKG/usr/lib${LIBDIRSUFFIX}/"
   rmdir --ignore-fail-on-non-empty "$PKG/usr/lib" 2>/dev/null || true
 fi
-
-rm -rf etc usr/lib/systemd usr/lib/tmpfiles.d
 
 mkdir -p "$PKG/etc/ld.so.conf.d"
 echo "/usr/lib${LIBDIRSUFFIX}/nordvpn" > "$PKG/etc/ld.so.conf.d/nordvpn.conf"

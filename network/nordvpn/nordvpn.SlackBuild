@@ -2,7 +2,7 @@
 #
 # Slackware build script for NordVPN
 #
-# Copyright 2019-2021 Reza Talebi, Shahin Shahr, Iran.
+# Copyright 2019-2025 Reza Talebi, Shahin Shahr, Iran.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,8 +22,6 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Modified by Pouria Rezaei <Pouria.rz@outlook.com>
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nordvpn
@@ -33,7 +31,7 @@ TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 # Select nordvpn's default group
-NORD_GROUP=${NORD_GROUP:-nordvpn}
+NORD_GROUP=${NORD_GROUP:-$PRGNAM}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -93,14 +91,18 @@ ar p $CWD/${PRGNAM}_${VERSION}_${DEBARCH}.deb data.tar.gz | tar zxv
 
 rm -rf etc usr/lib/systemd usr/lib/tmpfiles.d
 
-if [ -d "$PKG/usr/lib/nordvpn" ]; then
+if [ -d "$PKG/usr/lib/$PRGNAM" ]; then
   mkdir -p "$PKG/usr/lib${LIBDIRSUFFIX}"
-  mv "$PKG/usr/lib/nordvpn" "$PKG/usr/lib${LIBDIRSUFFIX}/"
+  mv "$PKG/usr/lib/$PRGNAM" "$PKG/usr/lib${LIBDIRSUFFIX}/"
   rmdir --ignore-fail-on-non-empty "$PKG/usr/lib" 2>/dev/null || true
+  mkdir -p "$PKG/usr/libexec/$PRGNAM"
+  mv "$PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/nordfileshare" "$PKG/usr/libexec/$PRGNAM"
+  mv "$PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/norduserd" "$PKG/usr/libexec/$PRGNAM"
+  mv "$PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/openvpn" "$PKG/usr/libexec/$PRGNAM"
 fi
 
 mkdir -p "$PKG/etc/ld.so.conf.d"
-echo "/usr/lib${LIBDIRSUFFIX}/nordvpn" > "$PKG/etc/ld.so.conf.d/nordvpn.conf"
+echo "/usr/lib${LIBDIRSUFFIX}/$PRGNAM" > "$PKG/etc/ld.so.conf.d/$PRGNAM.conf"
 
 mv usr/share/man usr/
 rm -rf $PKG/usr/share/doc

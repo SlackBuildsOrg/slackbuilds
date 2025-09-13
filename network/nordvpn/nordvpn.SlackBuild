@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nordvpn
-VERSION=${VERSION:-3.19.0}
+VERSION=${VERSION:-4.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -56,10 +56,13 @@ set -e
 
 if [ "$ARCH" = "i586" ]; then
   DEBARCH="i386"
+  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   DEBARCH="i386"
+  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   DEBARCH="amd64"
+  LIBDIRSUFFIX="64"
 else
   echo "Package for $ARCH architecture is not available."
   exit 1
@@ -88,9 +91,17 @@ mkdir -p $PRGNAM-$VERSION
 cd $PKG
 ar p $CWD/${PRGNAM}_${VERSION}_${DEBARCH}.deb data.tar.gz | tar zxv
 
-rm -fR etc usr/lib
+if [ -d "$PKG/usr/lib/nordvpn" ]; then
+  mkdir -p "$PKG/usr/lib${LIBDIRSUFFIX}"
+  mv "$PKG/usr/lib/nordvpn" "$PKG/usr/lib${LIBDIRSUFFIX}/"
+  rmdir --ignore-fail-on-non-empty "$PKG/usr/lib" 2>/dev/null || true
+fi
 
-# Move man where the man likes
+rm -rf etc usr/lib/systemd usr/lib/tmpfiles.d
+
+mkdir -p "$PKG/etc/ld.so.conf.d"
+echo "/usr/lib${LIBDIRSUFFIX}/nordvpn" > "$PKG/etc/ld.so.conf.d/nordvpn.conf"
+
 mv usr/share/man usr/
 rm -rf $PKG/usr/share/doc
 

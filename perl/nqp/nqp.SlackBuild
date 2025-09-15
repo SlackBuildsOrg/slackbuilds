@@ -20,7 +20,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nqp
-VERSION=${VERSION:-2025.05}
+VERSION=${VERSION:-2025.08}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,6 +83,9 @@ make install DESTDIR=$PKG
 if [ "${MAKETEST:-no}" = "yes" ]; then
   make test
 fi
+
+find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

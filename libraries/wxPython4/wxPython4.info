@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/4c/d9/4451392d3d6ba45aa23aa77a
 MD5SUM="d9b4c75202bb5d7d15a104c48b234807"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="wxWidgets python3-pathlib2 python3-attrdict python3-typing-extensions python3-setuptools-opt"
+REQUIRES="wxWidgets python3-pathlib2 python3-attrdict python3-typing-extensions python3-setuptools-opt webkit2gtk4.1"
 MAINTAINER="Willy Sudiarto Raharjo"
 EMAIL="willysr@slackbuilds.org"

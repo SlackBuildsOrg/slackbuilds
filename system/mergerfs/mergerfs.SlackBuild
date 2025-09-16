@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mergerfs
-VERSION=${VERSION:-2.33.5}
+VERSION=${VERSION:-2.40.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,13 +78,16 @@ find -L . \
 
 make \
     CFLAGS="$SLKCFLAGS" \
-    CXXFLAGS="$SLKCFLAGS" \
+    CXXLAGS="$SLKCFLAGS" \
     PREFIX="/usr" \
+    LIBDIR="/usr/lib$LIBDIRSUFFIX" \
     MANDIR="/usr/man" \
     DOCDIR="/usr/doc/$PRGNAM-$VERSION" \
     BUILD="$ARCH-slackware-linux" \
     DESTDIR=$PKG \
-    install 
+    install
+
+chmod a+x $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/*.so
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

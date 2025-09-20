@@ -92,17 +92,16 @@ ar p $CWD/${PRGNAM}_${VERSION}_${DEBARCH}.deb data.tar.gz | tar zxv
 rm -rf etc usr/lib/systemd usr/lib/tmpfiles.d
 
 if [ -d "$PKG/usr/lib/$PRGNAM" ]; then
-  mkdir -p "$PKG/usr/lib${LIBDIRSUFFIX}"
-  mv "$PKG/usr/lib/$PRGNAM" "$PKG/usr/lib${LIBDIRSUFFIX}/"
-  rmdir --ignore-fail-on-non-empty "$PKG/usr/lib" 2>/dev/null || true
+  if [ "${LIBDIRSUFFIX:-}" = "64" ]; then
+    mkdir -p "$PKG/usr/lib64"
+    mv "$PKG/usr/lib/$PRGNAM" "$PKG/usr/lib64/"
+    rmdir --ignore-fail-on-non-empty "$PKG/usr/lib" 2>/dev/null || true
+  fi
   mkdir -p "$PKG/usr/libexec/$PRGNAM"
   mv "$PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/nordfileshare" "$PKG/usr/libexec/$PRGNAM"
   mv "$PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/norduserd" "$PKG/usr/libexec/$PRGNAM"
   mv "$PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/openvpn" "$PKG/usr/libexec/$PRGNAM"
 fi
-
-mkdir -p "$PKG/etc/ld.so.conf.d"
-echo "/usr/lib${LIBDIRSUFFIX}/$PRGNAM" > "$PKG/etc/ld.so.conf.d/$PRGNAM.conf"
 
 mv usr/share/man usr/
 rm -rf $PKG/usr/share/doc

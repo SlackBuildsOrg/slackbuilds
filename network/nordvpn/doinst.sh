@@ -1,8 +1,4 @@
 # Refresh the dynamic linker cache for NordVPN private libs
-if [ -x /sbin/ldconfig ]; then
-  /sbin/ldconfig
-fi
-
 if [ -x /usr/bin/update-desktop-database ]; then
   /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
 fi

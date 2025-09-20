@@ -57,6 +57,18 @@ nordvpnd_start()
 
   if [ -x "$DAEMON" ]; then
     echo "Starting $BASE"
+
+    # --- Minimal addition: scope NordVPN private libs to the daemon only ---
+    if [ -d /usr/lib64/nordvpn ]; then
+      _nvlib=/usr/lib64/nordvpn
+    elif [ -d /usr/lib/nordvpn ]; then
+      _nvlib=/usr/lib/nordvpn
+    else
+      _nvlib=
+    fi
+    [ -n "$_nvlib" ] && export LD_LIBRARY_PATH="$_nvlib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    # --- end minimal addition ---
+
     "$DAEMON" > /dev/null &
     pidof "${BASE}d" > "$PID"
 

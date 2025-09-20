@@ -30,7 +30,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=openrc
-VERSION=${VERSION:-0.62.9}
+VERSION=${VERSION:-0.63}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -82,17 +82,9 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Use a local Meson >= 0.62 just for this build
-VENV="$TMP/meson-venv"
-if [ ! -d "$VENV" ]; then
-  python3 -m venv "$VENV"
-  . "$VENV/bin/activate"
-  pip install --upgrade pip
-  pip install "meson==0.62.0" "ninja>=1.10"
-else
-  . "$VENV/bin/activate"
-fi
-export PATH="$VENV/bin:$PATH"
+# Use python3-meson-opt's meson just for this build
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
 MESONARGS+=(--prefix /usr)
 MESONARGS+=(build)

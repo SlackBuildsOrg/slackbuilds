@@ -15,7 +15,7 @@ DOWNLOAD="https://github.com/neovim/neovim/archive/v0.11.4/neovim-0.11.4.tar.gz 
           https://github.com/neovim/unibilium/archive/v2.1.2/unibilium-2.1.2.tar.gz \
           https://www.inf.puc-rio.br/~roberto/lpeg/lpeg-1.1.0.tar.gz \
           https://github.com/JuliaStrings/utf8proc/archive/v2.10.0/utf8proc-2.10.0.tar.gz"
-MD5SUM="0555b24bdb9770ab451d1129df04ceb9
+MD5SUM="0555b24bdb9770ab451d1129df04ceb9 \
         89bd4d1644f5194c7cc6b3cf1dce02d4 \
         a23bfdd0e9255e99b772f5da42c8d2c5 \
         4b53edbd6222230a50f58ca8f9a98d18 \

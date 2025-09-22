@@ -1,0 +1,158 @@
+#!/bin/sh
+
+# Slackware build script for bcachefs kernel DKMS module
+
+# Copyright 2025 Anj Duvnjak
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+PRGNAM=bcachefs-kernel-dkms
+SRCNAM=bcachefs-tools
+VERSION=${VERSION:-1.31.2}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+
+PKGVER="$(printf %s "${VERSION}" | tr - _)"
+
+# Architecture-independent package
+ARCH=noarch
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+
+# Extract bcachefs-tools source
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-v$VERSION.tar.gz
+cd $SRCNAM-$VERSION
+chown -R root:root .
+
+# Generate original dkms.conf (substituting version)
+sed "s|@PACKAGE_VERSION@|$VERSION|g" dkms/dkms.conf.in > dkms/dkms.conf
+
+# Set up DKMS directory structure and install base files first
+DKMSDIR=$PKG/usr/src/bcachefs-$VERSION
+mkdir -p $DKMSDIR/src/fs/bcachefs
+mkdir -p $DKMSDIR/src/lib
+mkdir -p $DKMSDIR/src/include/linux
+mkdir -p $DKMSDIR/src/fs/bcachefs/vendor
+
+# Install base DKMS files
+install -m0644 dkms/Makefile $DKMSDIR/
+install -m0644 dkms/dkms.conf $DKMSDIR/
+
+# Install bcachefs source files
+install -m0644 libbcachefs/Makefile $DKMSDIR/src/fs/bcachefs/
+install -m0644 libbcachefs/*.[ch] $DKMSDIR/src/fs/bcachefs/
+install -m0644 libbcachefs/vendor/*.[ch] $DKMSDIR/src/fs/bcachefs/vendor/
+
+# Now install our additional files
+# While we wait for min_heap to be added to the dkms source, this patch
+# allows us to build bcachefs modules on kernels that dont have it bcfs enabled.
+patch -p1 -d $DKMSDIR < $CWD/add_min_heap.patch
+install -m0755 $CWD/pre_build.sh $DKMSDIR/
+
+# Now make modifications to the installed files
+# Remove CONFIG_BCACHEFS=y/m kernel requirement
+sed -i 's/$(CONFIG_BCACHEFS_FS)/m/' $DKMSDIR/src/fs/bcachefs/Makefile
+
+# Backup original files and install custom versions
+cp $DKMSDIR/Makefile $DKMSDIR/Makefile.orig
+cp $DKMSDIR/dkms.conf $DKMSDIR/dkms.conf.orig
+
+# Install custom Makefile and dkms.conf
+patch -p0 -d $DKMSDIR < $CWD/makefile.patch
+sed "s|@PACKAGE_VERSION@|$VERSION|g" $CWD/dkms.conf > $DKMSDIR/dkms.conf
+
+# Fix TRACE_INCLUDE_PATH in trace.h
+if [ "$MAKE_KMOD" = "yes" ]; then
+  # For direct building, use absolute path to build directory
+  sed -i "s|^#define TRACE_INCLUDE_PATH \\.\\./\\.\\./fs/bcachefs$|#define TRACE_INCLUDE_PATH $DKMSDIR/src/fs/bcachefs|" \
+    $DKMSDIR/src/fs/bcachefs/trace.h
+else
+  # For DKMS, use absolute path to /usr/src
+  sed -i 's/$(CONFIG_BCACHEFS_FS)/m/' $DKMSDIR/src/fs/bcachefs/Makefile
+  sed -i "s|^#define TRACE_INCLUDE_PATH \\.\\./\\.\\./fs/bcachefs$|#define TRACE_INCLUDE_PATH /usr/src/bcachefs-$VERSION/src/fs/bcachefs|" \
+    $DKMSDIR/src/fs/bcachefs/trace.h
+fi
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+# We will change PRGNAM if building a kernel module
+PRGNAM_ORIG=$PRGNAM
+
+MAKE_KMOD=${MAKE_KMOD:-no}
+
+if [ "$MAKE_KMOD" = "yes" ]; then
+  # Build kernel modules instead of packaging source
+  cd $DKMSDIR
+  ./pre_build.sh
+  make
+
+  # Source the generated config
+  . ./build_config.sh
+
+  # Set variables if they arent in build_config.sh
+  [ -z "$arch_ko" ] && arch_ko=`uname -m`
+  [ -z "$module_version" ] && module_version=\"$VERSION\"
+  [ -z "$kernelver" ] && kernelver=`uname -r`
+
+  # Create module installation directory
+  MODDIR=$PKG/lib/modules/$kernelver/kernel
+  mkdir -p $MODDIR/fs/bcachefs
+  mkdir -p $MODDIR/lib
+
+  # Install bcachefs module
+  install -m0644 src/fs/bcachefs/bcachefs.ko $MODDIR/fs/bcachefs/
+
+  # Install min_heap module if it isnt a dummy
+  if [ "$BUILD_MIN_HEAP_REAL" = "1" ]; then
+    install -m0644 min_heap.ko $MODDIR/lib/
+  fi
+
+  make clean
+
+  # Create doinst.sh for kernel module package
+  sed "s/@KERNEL@/$kernelver/g" $CWD/doinst.sh > $PKG/install/doinst.sh
+
+  # Update package name and arch
+  PRGNAM=bcachefs-kernel-module
+  ARCH=$arch_ko
+
+  # Update slack-desc package name for kernel module package
+  sed -i "s/$PRGNAM_ORIG:/$PRGNAM:/g" $PKG/install/slack-desc
+
+  # Remove DKMS source tree since we're packaging compiled modules only
+  rm -rf $PKG/usr/src
+fi
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$PKGVER
+cat $CWD/$PRGNAM_ORIG.SlackBuild > $PKG/usr/doc/$PRGNAM-$PKGVER/$PRGNAM.SlackBuild
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$PKGVER-$ARCH-$BUILD$TAG.${PKGTYPE:-tgz}
+

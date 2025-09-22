@@ -1,0 +1,37 @@
+This package provides the bcachefs kernel module source for building
+via DKMS (Dynamic Kernel Module Support), or the kernel module can 
+optionally be built by the package itself without DKMS.
+
+This package contains the kernel module dkms source code that can be
+installed to /usr/src/ where it can be managed by DKMS. Users can
+then build and install the module for their target kernel using
+standard DKMS commands.
+
+KERNEL REQUIREMENTS:
+This package requires a custom kernel with minimum version 6.16. 
+
+Kernel headers >= 6.16 must be installed also.  These are not
+available for Slackware 15.0 by default - you can use the 
+kernel-headers.SlackBuild script from Slackware source to generate
+them.
+
+The target kernel must be configured with one of the following:
+
+1) CONFIG_BCACHEFS_FS=m (bcachefs built as module) - RECOMMENDED
+   This is the safest approach as all dependencies are handled
+   automatically by the kernel configuration system.  DKMS can then
+   replace the old module with the latest version.
+
+2) If CONFIG_BCACHEFS_FS=n (bcachefs disabled), the kernel must include
+   all of bcachefs's dependencies. For example CONFIG_CRC64,
+   CONFIG_CRYPTO_CHACHA20, CONFIG_LZ4_COMPRESS and so forth.  
+ 
+OPTIONAL KERNEL MODULE BUILD:
+This SlackBuild can also create pre-compiled kernel modules instead
+of installing DKMS source. To build kernel modules for your installed
+kernel, set MAKE_KMOD as follows:
+
+MAKE_KMOD=yes ./bcachefs-kernel-dkms.SlackBuild
+
+This creates a bcachefs-kernel-module package with compiled .ko files
+that can be installed immediately without using/requiring DKMS tools.

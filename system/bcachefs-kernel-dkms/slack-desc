@@ -1,0 +1,21 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                    |-----handy-ruler------------------------------------------------------|
+bcachefs-kernel-dkms: bcachefs-kernel-dkms (kernel module for bcachefs filesystem)
+bcachefs-kernel-dkms:
+bcachefs-kernel-dkms: This package provides the bcachefs kernel module source for building
+bcachefs-kernel-dkms: via DKMS (Dynamic Kernel Module Support). Once installed it can be 
+bcachefs-kernel-dkms: managed through dkms add/build/install mechanisms.
+bcachefs-kernel-dkms: 
+bcachefs-kernel-dkms: Optionally this package can build and install the kernel modules
+bcachefs-kernel-dkms: for the currently installed kernel without using DKMS.  
+bcachefs-kernel-dkms: 
+bcachefs-kernel-dkms: Includes compatibility patches for kernels without bcachefs enabled.
+bcachefs-kernel-dkms:
+bcachefs-kernel-dkms: Homepage: https://bcachefs.org/
+

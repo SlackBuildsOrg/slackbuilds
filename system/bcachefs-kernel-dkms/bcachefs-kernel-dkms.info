@@ -1,0 +1,11 @@
+PRGNAM="bcachefs-kernel-dkms"
+VERSION="1.31.2"
+HOMEPAGE="https://bcachefs.org/"
+DOWNLOAD="https://github.com/koverstreet/bcachefs-tools/archive/v1.31.2/bcachefs-tools-v1.31.2.tar.gz"
+MD5SUM="1ef724511831fa33337e1449692f0b55"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="dkms"
+MAINTAINER="Anj Duvnjak"
+EMAIL="alvind11@hotmail.com"
+

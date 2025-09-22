@@ -1,0 +1,35 @@
+--- Makefile.orig	2025-09-20 13:05:37.000000000 +1000
++++ Makefile	2025-09-20 14:07:31.555100861 +1000
+@@ -1,12 +1,29 @@
+ ifneq (${KERNELRELEASE},)
+-ccflags-y := -I$(src)/include
++
++# Include build configuration from pre_build script
++-include build_config.mk
++
++$(info DEBUG: BUILD_MIN_HEAP_REAL=$(BUILD_MIN_HEAP_REAL))
++#$(info DEBUG: BUILD_CLOSURE_REAL=$(BUILD_CLOSURE_REAL))
++
++ccflags-y := -I$(src)/src/include
++
++# Use environment variables set by PRE_BUILD script
++ifeq ($(BUILD_MIN_HEAP_REAL),1)
++obj-m += min_heap.o
++min_heap-y := src/lib/min_heap.o
++else
++obj-m += min_heap.o
++min_heap-y := src/lib/min_heap_dummy.o
++endif
++
+ obj-m += src/fs/bcachefs/
++
+ else
+ KDIR ?= /lib/modules/`uname -r`/build
+-
+ default:
+ 	$(MAKE) -C $(KDIR) M=$$PWD modules
+-
+ clean:
+ 	$(MAKE) -C $(KDIR) M=$$PWD clean
+ endif
++

@@ -1,0 +1,12 @@
+PRGNAM="bcachefs-tools"
+VERSION="1.31.2"
+HOMEPAGE="https://bcachefs.org/"
+DOWNLOAD="https://github.com/koverstreet/bcachefs-tools/archive/v1.31.2/bcachefs-tools-v1.31.2.tar.gz \
+          https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-2.41.1.tar.xz"
+MD5SUM="1ef724511831fa33337e1449692f0b55 \
+        7e5e68845e2f347cf96f5448165f1764"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="jq liburcu rust-opt bcachefs-kernel-dkms"
+MAINTAINER="Anj Duvnjak"
+EMAIL="alvind11@hotmail.com"

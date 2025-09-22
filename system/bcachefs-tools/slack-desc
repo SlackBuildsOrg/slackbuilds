@@ -1,0 +1,21 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+              |-----handy-ruler------------------------------------------------------|
+bcachefs-tools: bcachefs-tools (userspace tools for bcachefs filesystem)
+bcachefs-tools:
+bcachefs-tools: Bcachefs is a next-generation copy-on-write filesystem for Linux that
+bcachefs-tools: aims to provide features from Btrfs and ZFS with a cleaner codebase
+bcachefs-tools: and better performance. It supports advanced features like snapshots,
+bcachefs-tools: checksumming, compression, and encryption.
+bcachefs-tools:
+bcachefs-tools: This package contains the userspace utilities for creating,
+bcachefs-tools: checking, and managing bcachefs filesystems. The kernel module
+bcachefs-tools: is provided separately by bcachefs-kernel-dkms.
+bcachefs-tools:
+bcachefs-tools: Homepage: https://bcachefs.org/
+

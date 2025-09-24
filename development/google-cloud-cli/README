@@ -1,0 +1,10 @@
+google-cloud-cli Package from Google official repositorie.
+
+* Login commands
+ gcloud auth login
+ gcloud config set project [YOUR_PROJECT_ID]
+
+* Avaiable binaries
+gsutil
+bq
+gcloud

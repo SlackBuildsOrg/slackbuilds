@@ -1,0 +1,183 @@
+#!/bin/bash
+
+# Slackware build script for bcachefs userspace tools
+
+# Copyright 2025 Anj Duvnjak
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=bcachefs-tools
+VERSION=${VERSION:-1.31.2}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+# util-linux version for libblkid
+UTILLINUX_VERSION=2.41.1
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686 -fPIC"
+  YEAR2038_OPT="--disable-year2038"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686 -fPIC"
+  YEAR2038_OPT="--disable-year2038"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX=""
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+
+# Check if we need to build custom util-linux
+NEW_UTIL_LINUX=${NEW_UTIL_LINUX:-no}
+
+if [ "$NEW_UTIL_LINUX" != "yes" ]; then
+  echo "Building custom util-linux for libblkid..."
+
+  # Extract and build util-linux
+  rm -rf util-linux-$UTILLINUX_VERSION
+  tar xvf $CWD/util-linux-$UTILLINUX_VERSION.tar.xz
+  cd util-linux-$UTILLINUX_VERSION
+  chown -R root:root .
+  find -L . \
+   \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+    -o -perm 511 \) -exec chmod 755 {} \; -o \
+   \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+    -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+  ./configure \
+    --prefix=/usr/local/bcachefs \
+    --disable-all-programs \
+    --enable-libblkid \
+    --enable-blkid \
+    --enable-static \
+    --disable-shared \
+    --enable-static-programs=blkid \
+    $YEAR2038_OPT \
+    CFLAGS="-fPIC -O2"
+
+  make
+
+  cd $TMP
+fi
+
+# Extract and build bcachefs-tools
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+if [ "$NEW_UTIL_LINUX" != "yes" ]; then
+  echo "Patching bcachefs-tools to use custom libblkid..."
+
+  # Modify Makefile - remove blkid from PKGCONFIG_LIBS
+  sed -i 's/PKGCONFIG_LIBS="blkid uuid/PKGCONFIG_LIBS="uuid/' Makefile
+
+  # Add custom libblkid paths before CFLAGS+=$(PKGCONFIG_CFLAGS)
+  sed -i '/^CFLAGS+=$(PKGCONFIG_CFLAGS)/i PKGCONFIG_CFLAGS += -I'"$TMP"'/util-linux-'"$UTILLINUX_VERSION"'/libblkid/src' Makefile
+  sed -i '/^CFLAGS+=$(PKGCONFIG_CFLAGS)/i PKGCONFIG_LDLIBS += '"$TMP"'/util-linux-'"$UTILLINUX_VERSION"'/.libs/libblkid.a' Makefile
+
+  # Modify build.rs - replace blkid linking
+  sed -i 's|println!("cargo:rustc-link-lib=blkid");|println!("cargo:rustc-link-search='"$TMP"'/util-linux-'"$UTILLINUX_VERSION"'/.libs");\
+    println!("cargo:rustc-link-lib=static=blkid");|' build.rs
+fi
+
+# Build bcachefs-tools
+env -u ARCH CFLAGS="$SLKCFLAGS" make VERSION=$VERSION
+
+# Install bcachefs-tools
+env -u ARCH make install \
+  VERSION=$VERSION \
+  PREFIX=/usr \
+  DESTDIR=$PKG
+
+# Remove DKMS files (we only want the tools)
+rm -rf $PKG/usr/src
+
+# Remove initramfs-tools files (Debian/Ubuntu specific, not used on Slackware)
+rm -rf $PKG/usr/share/initramfs-tools
+
+# Cant configure MAN path, so we'll move it manually
+mv $PKG/usr/share/man $PKG/usr
+
+# If we built custom util-linux, install the custom blkid binary
+if [ "$NEW_UTIL_LINUX" != "yes" ]; then
+  mkdir -p $PKG/sbin
+  cp $TMP/util-linux-$UTILLINUX_VERSION/blkid.static $PKG/sbin/blkid.bcachefs
+fi
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+# Copy any documentation files found
+for doc in README* COPYING* INSTALL* NEWS* ChangeLog* AUTHORS* TODO* HACKING*; do
+  [ -f "$doc" ] && cp -a $doc $PKG/usr/doc/$PRGNAM-$VERSION/
+done
+
+# Remove install instructions if necessary
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/INSTALL.md || true
+
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+

@@ -1,0 +1,24 @@
+Bcachefs is a modern copy-on-write filesystem for Linux offering 
+advanced features like snapshots, checksumming, compression, 
+and encryption.
+
+This package only provides userspace utilities for bcachefs 
+management.  Bcachefs support should also be enabled in your kernel
+(compiled directly in, as a module, or preferably via DKMS).
+
+Bcachefs userspace tools require libblkid and blkid versions that
+are newer than that available in Slackware 15.0.  The build script 
+handles this by temporarily compiling libblkid for static linking 
+without installing it system-wide.
+
+The script will also install an updated blkid binary as
+/sbin/blkid.bcachefs to provide the functionality needed without
+conflicting with the system blkid.
+
+If you are running Slackware-current or have a custom setup with
+util-linux >= 2.40.1 installed, you can skip building libblkid
+and blkid by setting NEW_UTIL_LINUX as follows:
+
+NEW_UTIL_LINUX=yes ./bcachefs-tools.SlackBuild
+
+Note: Requires a recent/updated kernel-headers package installed.

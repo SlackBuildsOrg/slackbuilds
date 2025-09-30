@@ -28,10 +28,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cinelerra
-VERSION=${VERSION:-20210331_eabda9c}
+VERSION=${VERSION:-5.1.0.20251124}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+COMMIT=1914b32
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -78,9 +80,12 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-gg-$VERSION
-tar xvf $CWD/$PRGNAM-gg-$VERSION.tar.xz
-cd $PRGNAM-gg-$VERSION/cinelerra-5.1
+rm -rf $PRGNAM-$VERSION
+mkdir $PRGNAM-$VERSION
+cd $PRGNAM-$VERSION
+tar xvf $CWD/*tar.gz
+cd $PRGNAM-$COMMIT/cinelerra-5.1
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -98,6 +103,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --with-plugin-dir=/usr/lib${LIBDIRSUFFIX}/cin \
   --mandir=/usr/man \
+  --without-cuda \
   --build=$ARCH-slackware-linux \
   $mmx
 

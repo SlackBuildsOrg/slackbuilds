@@ -1,0 +1,2 @@
+Optional dependencies are: github-cli glab and ripgrep
+Also platform-specific optional modules (npm) : @img/sharp-linux-$ARCH 0.33.5

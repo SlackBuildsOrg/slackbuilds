@@ -1,0 +1,31 @@
+From 765ab1ae75fd6f08c7380b07165856498f865b60 Mon Sep 17 00:00:00 2001
+From: Yogesh Tyagi <yogesh.tyagi@intel.com>
+Date: Mon, 23 Jun 2025 22:50:09 +0800
+Subject: [PATCH] Use correct format specifier for time_t
+
+use %jd instead of %ld to print variable of time_t type otherwise
+on 32 bit system:
+
+src/thd_gddv.cpp:457:41: error: format '%ld' expects argument of type 'long int', but argument 11 has type 'time_t' {aka 'long long int'} [-Werror=format=]
+src/thd_gddv.cpp:457:41: error: format '%ld' expects argument of type 'long int', but argument 13 has type 'time_t' {aka 'long long int'} [-Werror=format=]
+
+Signed-off-by: Yogesh Tyagi <yogesh.tyagi@intel.com>
+---
+ src/thd_gddv.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/thd_gddv.cpp b/src/thd_gddv.cpp
+index f579dd45..b8d95972 100644
+--- a/src/thd_gddv.cpp
++++ b/src/thd_gddv.cpp
+@@ -455,8 +455,8 @@ void cthd_gddv::dump_apct() {
+ 
+ 			thd_log_info(
+ 					"\ttarget:%d device:%s condition:%s comparison:%s argument:%d"
+-							" operation:%s time_comparison:%d time:%ld"
+-							" stare:%d state_entry_time:%ld\n",
++							" operation:%s time_comparison:%d time:%jd"
++							" stare:%d state_entry_time:%jd\n",
+ 					condition_set[j].target, condition_set[j].device.c_str(),
+ 					cond_name.c_str(), comp_str.c_str(),
+ 					condition_set[j].argument, op_str.c_str(),

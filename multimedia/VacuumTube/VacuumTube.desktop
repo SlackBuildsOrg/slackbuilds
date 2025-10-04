@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Exec=/opt/VacuumTube/VacuumTube-x86_64.AppImage
+Name=VacuumTube
+Icon=VacuumTube

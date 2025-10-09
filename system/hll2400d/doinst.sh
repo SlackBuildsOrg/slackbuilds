@@ -1,0 +1,8 @@
+( cd opt/brother/Printers/HLL2400D/lpd ; rm -rf brprintconflsr3 )
+( cd opt/brother/Printers/HLL2400D/lpd ; ln -sf /opt/brother/Printers/HLL2400D/lpd/x86_64/brprintconflsr3 brprintconflsr3 )
+( cd opt/brother/Printers/HLL2400D/lpd ; rm -rf rawtobr3 )
+( cd opt/brother/Printers/HLL2400D/lpd ; ln -sf /opt/brother/Printers/HLL2400D/lpd/x86_64/rawtobr3 rawtobr3 )
+( cd usr/lib64/cups/filter ; rm -rf brother_lpdwrapper_HLL2400D )
+( cd usr/lib64/cups/filter ; ln -sf /opt/brother/Printers/HLL2400D/cupswrapper/lpdwrapper brother_lpdwrapper_HLL2400D )
+( cd usr/share/cups/model ; rm -rf brother-HLL2400D-cups-en.ppd )
+( cd usr/share/cups/model ; ln -sf /opt/brother/Printers/HLL2400D/cupswrapper/brother-HLL2400D-cups-en.ppd brother-HLL2400D-cups-en.ppd )

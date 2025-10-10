@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/hashcat/hashcat/archive/v7.1.2/hashcat-7.1.2.tar.gz
 MD5SUM="467eeb9841dee2359dd16236c7707233"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
+REQUIRES="libminizip"
 MAINTAINER="B. Watson"
 EMAIL="urchlay@slackware.uk"

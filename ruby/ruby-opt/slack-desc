@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+        |-----handy-ruler------------------------------------------------------|
+ruby-opt: ruby-opt (short desc)
+ruby-opt:
+ruby-opt: Ruby. A dynamic, open source programming language with a focus on
+ruby-opt: simplicity and productivity. It has an elegant syntax that is natural 
+ruby-opt: to read and easy to write. 
+ruby-opt:
+ruby-opt: This will install ruby (latest stable version) to the /opt directory.
+ruby-opt:
+ruby-opt:
+ruby-opt:
+ruby-opt:

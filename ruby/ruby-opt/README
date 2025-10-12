@@ -1,0 +1,22 @@
+ruby-opt will install ruby (latest stable version) to the /opt
+directory.
+
+This SlackBuild script is for the latest stable version of Ruby. This
+build allows users to install and use the most up-to-date Ruby release
+alongside the system-provided version. Importantly, it does not replace
+or interfere with the Ruby version supplied by the system. Instead,
+it offers a clean way to run the latest Ruby without modifying or
+affecting the system's default Ruby environment.
+
+To run this version, you need to have to add the path to the $PATH
+environment variable:
+
+export PATH="/opt/ruby/bin:$PATH"
+
+------------------
+
+This can be particularly useful for developers who prefer not to use
+version managers like rbenv or rvm. Instead of managing multiple Ruby
+environments and shims, this approach offers a simpler alternative:
+a clean, system-wide installation of the latest Ruby that coexists
+with the system version.

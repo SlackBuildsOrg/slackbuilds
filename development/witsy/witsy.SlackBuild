@@ -86,6 +86,11 @@ find -L $WTF_NAME \
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+# Fix permissions for ELF binaries
+find $PKG -type f -exec file {} + | grep "ELF" | cut -d: -f1 | while read -r bin; do
+  chmod 755 "$bin"
+done
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   version LICENSE* \

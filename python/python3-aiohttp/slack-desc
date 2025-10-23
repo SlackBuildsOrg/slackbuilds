@@ -10,7 +10,7 @@ python3-aiohttp: python3-aiohttp (HTTP client/server for asyncio)
 python3-aiohttp:
 python3-aiohttp: AIOHTTP is an asynchronous HTTP client/server framework for asyncio.
 python3-aiohttp:
-python3-aiohttp:
+python3-aiohttp: Homepage: https://docs.aiohttp.org/en/stable/
 python3-aiohttp:
 python3-aiohttp:
 python3-aiohttp:

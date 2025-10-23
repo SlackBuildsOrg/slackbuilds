@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Cursor
+Comment=The AI Code Editor.
+GenericName=IDE
+Exec=/usr/share/cursor/cursor %F
+Icon=co.anysphere.cursor
+Type=Application
+StartupNotify=false
+StartupWMClass=Cursor
+Categories=Development;
+MimeType=application/x-cursor-workspace;
+Keywords=cursor;

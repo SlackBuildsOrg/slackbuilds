@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
       |-----handy-ruler------------------------------------------------------|
-cursor: cursor (AI-assisted IDE)
-cursor:
-cursor: Cursor is a proprietary AI-assisted integrated development
-cursor: environment for Windows, macOS and Linux designed to enhance
-cursor: developer productivity by integrating artificial intelligence
-cursor: features directly into the coding environment.
-cursor:
-cursor:
-cursor: Homepage: https://cursor.com
-cursor:
+cursor: cursor (AI Code Editor)
+cursor: An Electron-based code editor enhanced with powerful AI features.
+cursor: It leverages models like OpenAI, Anthropic, and Gemini to boost
+cursor: productivity. Smart autocomplete predicts and writes code accurately.
+cursor: Understands full project context to provide relevant suggestions.
+cursor: Seamlessly integrates with GitHub, Slack, and other dev tools.
+cursor: Offers both on-demand assistance and autonomous AI agent support.
+cursor: Trusted by global teams to accelerate development cycles.
+cursor: Combines simplicity and elegance with advanced functionality.
+cursor: Ideal for turning ideas into high-quality code quickly.
 cursor:

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# @(#) xfile.SlackBuild 1.6@(#)
+# @(#) xfile.SlackBuild 1.7@(#)
 
 # Slackware build script for xfile
 
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xfile
-VERSION=${VERSION:-1.0.1}
+VERSION=${VERSION:-1.0.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,12 +92,12 @@ install -Dm644 src/default.db $PKG/usr/share/xfile/types/default.db
 install -Dm644 src/xfile.1 $PKG/usr/man/man1/xfile.1
 
 for icon in src/icons/*.xpm; do
-  install -Dm644 "$icon" $PKG/usr/share/xfile/icons/$(basename "$icon")
+  install -Dm664 "$icon" $PKG/usr/share/xfile/icons/$(basename "$icon")
 done
 
-install -Dm644 src/icons/README $PKG/usr/share/xfile/README.icons
+install -Dm664 src/icons/README $PKG/usr/share/xfile/README.icons
 
-install -Dm644 src/xbm/cabinet.xpm $PKG/usr/share/pixmaps/xfile_48x48.xpm
+install -Dm664 src/xbm/cabinet.xpm $PKG/usr/share/pixmaps/xfile_48x48.xpm
 
 # construe app-defaults file
 mkdir -p $PKG/etc/X11/app-defaults

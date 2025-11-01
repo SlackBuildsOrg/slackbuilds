@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
       |-----handy-ruler------------------------------------------------------|
-coppwr: coppwr (Low level PipeWire control GUI)
+coppwr: coppwr (Low level control GUI for PipeWire)
 coppwr:
-coppwr: coppwr is a tool that provides low level control over the PipeWire
-coppwr: multimedia server.It aims to expose and provide as many ways to
-coppwr: inspect and control the many aspects of the PipeWire multimedia
-coppwr: server as possible.It can be used as a diagnostic tool for PipeWire
-coppwr: and to help develop software that interacts with it.
+coppwr: coppwr displays and provides control over many aspects of PipeWire as
+coppwr: directly as possible in an organized and visual way. It can help with
+coppwr: debugging and diagnosing a PipeWire setup or with developing software
+coppwr: that interacts with PipeWire.
 coppwr:
-coppwr: End-users of PipeWire that want to configure it should look into
-coppwr: simpler tools recommended by the PipeWire devs.
 coppwr: Homepage: https://github.com/dimtpap/coppwr
+coppwr:
+coppwr:
+coppwr:

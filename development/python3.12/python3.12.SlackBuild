@@ -1,0 +1,161 @@
+#!/bin/bash
+
+# Slackware build script Python 3.12
+
+# Copyright 2025  Eugene Wissner, Mannheim, Germany
+# Copyright 2012-2017 Audrius Kažukauskas <audrius@neutrino.lt>
+# Copyright 2017, 2018, 2019, 2023, 2024  Patrick J. Volkerding, Sebeka, MN, USA
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=python3.12
+SRCNAM=Python
+VERSION=${VERSION:-3.12.12}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) export ARCH=i686 ;;
+    arm*) export ARCH=arm ;;
+       *) export ARCH=$( uname -m ) ;;
+  esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+# Don't set any SLKCFLAGS here, or OPT="$SLKCFLAGS" before the ./configure.
+# Python gets the compile options right without any help.
+if [ "$ARCH" = "i686" ]; then
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "arm" ]; then
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "armel" ]; then
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "aarch64" ]; then
+  LIBDIRSUFFIX="64"
+else
+  LIBDIRSUFFIX=""
+fi
+
+set -e
+
+# Location for Python site-packages:
+SITEPK=$PKG/usr/lib${LIBDIRSUFFIX}/${PRGNAM}/site-packages
+# same as above without $PKG
+TOOLSDIR=/usr/lib${LIBDIRSUFFIX}/${PRGNAM}/site-packages
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $SRCNAM-$VERSION
+tar xf $CWD/$SRCNAM-$VERSION.tar.xz
+cd $SRCNAM-$VERSION
+
+# Fix python3 path in cgi.py.
+sed -i "1s|^#.*/usr/local/bin/python|#!/usr/bin/${PRGNAM}|" Lib/cgi.py
+
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --with-platlibdir=lib${LIBDIRSUFFIX} \
+  --mandir=/usr/man \
+  --docdir=/usr/doc/$PRGNAM-$VERSION \
+  --enable-ipv6 \
+  --enable-shared \
+  --with-computed-gotos \
+  --enable-optimizations \
+  --with-dbmliborder=gdbm:ndbm \
+  --with-system-expat \
+  --with-system-ffi \
+  --enable-loadable-sqlite-extensions \
+  --without-ensurepip \
+  --with-tzpath=/usr/share/zoneinfo \
+  --build=$ARCH-slackware-linux
+
+make
+make install DESTDIR=$PKG
+
+find $PKG/usr/bin $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig -type l -delete
+
+# We don't want a large libpython*.a.
+find $PKG -name "libpython*.a" -exec rm --verbose "{}" \;
+
+# Make sure we have a non-platform-specific site-packages directory:
+mkdir -p $PKG/usr/lib/${PRGNAM}/site-packages
+
+# We'll install the python-tools under site-packages.
+mkdir -p $SITEPK
+cp -a Tools/* $SITEPK
+
+# Remove DOS batch/exe files.
+find $PKG \( -name '*.exe' -o -name '*.bat' \) -exec rm -f '{}' \+
+
+# Fix permissions on dynamic libraries.
+find $PKG -type f -perm 555 -exec chmod 755 '{}' \+
+
+# Fix possible incorrect permissions.
+( cd $PKG
+  find . -type d -exec chmod 755 "{}" \+
+  find . -perm 640 -exec chmod 644 "{}" \+
+  find . -perm 750 -exec chmod 755 "{}" \+
+)
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find $PKG/usr/man -type f -exec gzip -9 {} \+
+find $PKG/usr/man -type l -delete
+
+# Install docs.
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a README.rst LICENSE Misc $PKG/usr/doc/$PRGNAM-$VERSION
+# Delete stuff that we don't need to package:
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/Misc/{HISTORY,*.in,*.wpr,python.man,svnmap.txt}
+mv $SITEPK/README $PKG/usr/doc/$PRGNAM-$VERSION/README.python-tools
+( cd $PKG/usr/doc/$PRGNAM-$VERSION ; ln -sf $TOOLSDIR Tools )
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

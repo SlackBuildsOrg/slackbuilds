@@ -13,7 +13,7 @@ clojure: Virtual Machine. It is desgined to be a general-purpose language,
 clojure: combining the approachability and interactive development of a 
 clojure: scripting language with an efficient and robust infrastructure for
 clojure: multithreaded programming.
-clojure:
 clojure: Clojure is a dialect of Lisp, and shares with Lisp the code-as-data
 clojure: philosophy and a powerful macro system.
+clojure:
 clojure: Homepage: https://clojure.org/

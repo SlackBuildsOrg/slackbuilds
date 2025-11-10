@@ -98,6 +98,7 @@ DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.2/car
           https://static.crates.io/crates/wit-bindgen/wit-bindgen-0.46.0.crate \
           https://static.crates.io/crates/xml-rs/xml-rs-0.8.28.crate"
 MD5SUM="6ab4cea5a1def73f70e932dec8118cc8 \
+        873036bd52f5fd829bd41b3c2ca0bc08 \
         2fb8e2b2c327d642027d27dd82160195 \
         3e70bb53cab36a3ef2a02dfce21bc472 \
         5a5f45206802441161524e1be576da1f \

@@ -1,7 +1,7 @@
 PRGNAM="pekwm"
 VERSION="0.4.0"
 HOMEPAGE="https://github.com/pekdon/pekwm"
-DOWNLOAD="https://github.com/pekwm/pekwm/archive/release-0.4.0.tar.gz"
+DOWNLOAD="https://github.com/pekwm/pekwm/archive/release-0.4.0/pekwm-release-0.4.0.tar.gz"
 MD5SUM="26fb82c960a7c7db1632e6e5f52f09bf"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

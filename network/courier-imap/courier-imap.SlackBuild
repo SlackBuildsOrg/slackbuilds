@@ -3,13 +3,13 @@
 # Slackware build script for courier IMAP
 
 # Written by Derek Noonburg (derekn@foolabs.com)
-# 2012-03-20, last updated 2019-08-26
+# 2012-03-20, last updated 2025-11.17
 # Released into the public domain.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=courier-imap
-VERSION=${VERSION:-5.0.7}
+VERSION=${VERSION:-5.3.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -65,6 +65,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --sysconfdir=/etc/courier-imap \
   --localstatedir=/var \
+  --datarootdir=/usr/share/courier-imap \
   --mandir=/usr/man \
   --enable-root-check=no \
   --build=$ARCH-slackware-linux \

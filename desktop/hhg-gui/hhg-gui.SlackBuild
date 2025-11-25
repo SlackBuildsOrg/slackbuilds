@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=hhg-gui
 VERSION=${VERSION:-20240825_2d75ace}
 COMMIT=2d75ace656407b05b8d0f09594288755ab6cea52
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 SRCNAM=main
@@ -41,6 +41,9 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -49,6 +52,17 @@ fi
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "x86_64" ]; then
+  BINARCH="linux_x64"
+elif [ "$ARCH" = "aarch64" ]; then
+  BINARCH="linux_arm64"
+elif [ "$ARCH" = "armv7l" ]; then
+  BINARCH="linux_armhf"
+else
+  echo "$ARCH is not supported."
+  exit 1
+fi
 
 set -e
 
@@ -71,16 +85,6 @@ chmod +x build.sh
 
 mkdir -p $PKG/usr/bin $PKG/usr/doc/$PRGNAM-$VERSION
 
-if [ "$ARCH" = "x86_64" ]; then
-  BINARCH="linux_x64"
-elif [ "$ARCH" = "aarch64" ]; then
-  BINARCH="linux_arm64"
-elif [ "$ARCH" = "armv7l" ]; then
-  BINARCH="linux_armhf"
-else
-  echo "Platform not supported."
-  exit 1
-fi
 install dist/hhkb/hhkb-$BINARCH $PKG/usr/bin/hhg-gui
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
@@ -96,3 +100,5 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+
+exit 0

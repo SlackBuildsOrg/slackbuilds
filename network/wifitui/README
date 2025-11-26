@@ -17,5 +17,6 @@ Features:
  - Fully keyboard-driven TUI (no mouse required).
  - Written in Go and distributed under the MIT license.
 
-NOTE: this script need network access to download modules
-during build.
+To run wifitui:
+  $ wifitui
+

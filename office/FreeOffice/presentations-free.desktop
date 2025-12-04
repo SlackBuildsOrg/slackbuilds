@@ -1,0 +1,16 @@
+[Desktop Entry]
+Categories=Office;Presentation;
+Comment=The Presentations software lets you design any kind of presentation - even including special effects, animations, and transitions.
+Exec=/usr/bin/presentations24free %F
+GenericName=Presentation
+Icon=/usr/share/pixmaps/prl24free.png
+InitialPreference=10
+MimeType=application/x-prdx;application/x-prvx;application/x-prsx;application/x-prd;application/x-prv;application/x-prs;application/ppt;application/mspowerpoint;application/vnd.ms-powerpoint;application/vnd.openxmlformats-officedocument.presentationml.presentation;application/vnd.ms-powerpoint.presentation.macroenabled.12;application/vnd.openxmlformats-officedocument.presentationml.template;application/vnd.ms-powerpoint.template.macroEnabled.12;application/vnd.ms-powerpoint.slideshow.macroenabled.12;application/vnd.openxmlformats-officedocument.presentationml.slideshow;
+Name=FreeOffice Presentations
+NoDisplay=false
+StartupNotify=true
+StartupWMClass=pr
+Terminal=false
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

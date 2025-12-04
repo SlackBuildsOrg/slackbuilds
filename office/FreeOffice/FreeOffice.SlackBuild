@@ -2,6 +2,7 @@
 
 # Slackware build script for FreeOffice
 
+# Copyright 2025, Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2020 Andre Fernando, Indonesia
 # All rights reserved.
 #
@@ -26,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=FreeOffice
 SRCNAM=softmaker-${PRGNAM,,}
-VERSION=${VERSION:-2018_978}
+VERSION=${VERSION:-2024_1228}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -96,9 +97,13 @@ find -L . \
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+rm -rf $PKG/usr/share/applications/*.desktop
 cp $CWD/*.desktop $PKG/usr/share/applications/
+rm -rf $PKG/usr/share/freeoffice2024/mime/*.desktop
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/usr/share/doc/softmaker-freeoffice-2024/* $PKG/usr/doc/$PRGNAM-$VERSION
+rm -rf $PKG/usr/share/doc
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

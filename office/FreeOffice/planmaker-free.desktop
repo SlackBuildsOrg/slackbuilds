@@ -1,0 +1,16 @@
+[Desktop Entry]
+Categories=Office;Spreadsheet;
+Comment=PlanMaker lets you create all kinds of spreadsheets -- from simple ones to the most complex ones. Includes a high-caliber charting module.
+Exec=/usr/bin/planmaker24free %F
+GenericName=Spreadsheet
+Icon=/usr/share/pixmaps/pml24free.png
+InitialPreference=10
+MimeType=application/x-pmd;application/x-pmdx;application/x-pmv;application/excel;application/x-excel;application/x-ms-excel;application/x-msexcel;application/x-sylk;application/x-xls;application/xls;application/vnd.ms-excel;application/vnd.stardivision.calc;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.ms-excel.sheet.macroenabled.12;application/vnd.openxmlformats-officedocument.spreadsheetml.template;application/vnd.ms-excel.template.macroEnabled.12;application/x-dif;text/spreadsheet;text/csv;application/x-prn;application/vnd.ms-excel.sheet.binary.macroenabled.12;
+Name=FreeOffice PlanMaker
+NoDisplay=false
+StartupNotify=true
+StartupWMClass=pm
+Terminal=false
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=

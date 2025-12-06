@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/ad/3d/fb764303deb34cbc1a32fcec
 MD5SUM="6dfd5963c8a5d85f2634d1650b1ddfe1"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="tinycss2"
+REQUIRES="python3-tinycss2"
 MAINTAINER="Dimitris Zlatanidis"
 EMAIL="d.zlatanidis@gmail.com"

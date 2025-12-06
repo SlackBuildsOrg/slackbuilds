@@ -22,6 +22,9 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20251206 bkw:
+# - update for v0.68.
+
 # 20251123 bkw: BUILD=3
 # - take over maintenance.
 # - simplify script.
@@ -36,8 +39,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnurobbo
-VERSION=${VERSION:-0.66}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-0.68}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -81,13 +84,17 @@ find . ! -type l    -a \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
-# use a pixmap font to reduce deps by default, also it looks cooler
+# 0.68 needs this, 0.66 doesn't.
+[ -d $PRGNAM/ ] && cd $PRGNAM
+
+# use a pixmap font to reduce deps by default, also it looks more retro.
 [ "${TTFONTS:-no}" = "no" ] && \
   sed -i Makefile -e '/^FONT_USE_SDL_TTF/s,^,#,' \
                   -e '/#FONT_USE_PIXMAP/s,#,,'
 
-sed -i Makefile -e "/^CFLAGS/s,-O3,$SLKCFLAGS -fcommon," \
-                -e '/^LIBS/s,$, -lm,'
+sed -i Makefile -e "/^CFLAGS/s,-Wall,$SLKCFLAGS -fcommon -Wall," \
+                -e '/^LIBS/s,$, -lm,' \
+                -e '/^CFLAGS/s,-d,,'
 
 DOC=/usr/doc/$PRGNAM-$VERSION
 

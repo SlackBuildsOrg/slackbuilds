@@ -7,4 +7,4 @@ Avalon in 1989.
 This script will build without support for TrueType fonts by
 default. Export TTFONTS=yes in the environment to enable TrueType,
 which links against SDL_ttf and also changes the appearance of the
-in-game text.
+in-game text. The default text is more blocky and "retro".

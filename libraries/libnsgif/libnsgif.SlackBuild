@@ -9,6 +9,10 @@
 # This build looks like it has no dependees, but graphics/imv lists it
 # as an optional dep, so don't remove this just yet.
 
+# 20251206 bkw: update for v1.0.0.
+# - Switch to the original libnsgif from the netsurf project. It used
+#   to be hard/impossible to build on Linux, but these days it's OK.
+
 # 20230117 bkw: update for v0.2.1+20220113_105a920.
 # - There are two libnsgif's on github, the original and the autotools-ized
 #   one. This build is libnsgif-autotools, use correct repo in .info file
@@ -17,7 +21,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libnsgif
-VERSION=${VERSION:-0.2.1+20220113_105a920}
+VERSION=${VERSION:-1.0.0}
+BSVER=${BSVER:=1.10}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -59,41 +64,39 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+tar xvf $CWD/$PRGNAM-$VERSION-src.tar.gz
 cd $PRGNAM-$VERSION
+tar xvf $CWD/buildsystem-$BSVER.tar.gz
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
-autoreconf -ivf
+# 20251206 bkw: the netsurf buildsystem is a bit overkill since this library
+# has only 2 C source files...
+runmake() {
+  make \
+    Q="" \
+    CCOPT="$SLKCFLAGS -Wno-error" \
+    NSSHARED=buildsystem-$BSVER \
+    COMPONENT=nsgif \
+    COMPONENT_VERSION=$VERSION \
+    COMPONENT_TYPE=lib-shared \
+    LIBDIR=lib$LIBDIRSUFFIX \
+    PREFIX=/usr \
+    "$@"
+}
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --enable-shared \
-  --disable-static \
-  --build=$ARCH-slackware-linux
-
-make
-make install-strip DESTDIR=$PKG
-
-sed -i '/^includedir/s,$,/libnsgif,' \
-       $PKG/usr/lib$LIBDIRSUFFIX/pkgconfig/$PRGNAM.pc
-
-# we don't need this:
-rm -f $PKG/usr/lib$LIBDIRSUFFIX/*.la
+runmake
+runmake install DESTDIR=$PKG
+strip $PKG/usr/lib*/lib*.so.*.*
 
 # examples/ has a broken perl script that doesn't even use libnsgif and
 # a shell script that doesn't work at all. Don't bother.
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a README* CHANGELOG COPYING $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a README* COPYING $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

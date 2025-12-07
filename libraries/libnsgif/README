@@ -1,4 +1,4 @@
-libnsgif (gif image decoder library)
+libnsgif (GIF image decoder library)
 
 The functions provided by this library allow for efficient progressive
 GIF decoding. This library was originally part of the netsurf browser,

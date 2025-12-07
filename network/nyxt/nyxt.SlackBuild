@@ -63,9 +63,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-patch -p1 < $CWD/002-cl-gobject-introspection-sb-int.patch
-patch -p1 < $CWD/003-fset-sb-int.patch
-
 # use $TMP/$PRGNAM-$VERSION/.cache dir instead of $HOME/.cache/common-lisp/
 (
   code="(setf asdf:*user-cache* \"$TMP/$PRGNAM-$VERSION/.cache/\")"

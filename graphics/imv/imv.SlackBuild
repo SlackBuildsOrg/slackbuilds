@@ -6,6 +6,13 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251206 bkw: update for v5.0.1.
+# - no more FreeImage (upstream dropped it).
+# - make libnsgif a hard dependency. nobody wants an image viewer that can't
+#   handle GIF.
+# - add support for qoi and optional libnsbmp.
+# - need newer meson, so REQUIRES get python-meson-opt.
+
 # 20240318 bkw:
 # - update for v4.5.0.
 # - upstream now has tagged releases, no more commit hash filenames.
@@ -30,7 +37,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=imv
-VERSION=${VERSION:-4.5.0}
+VERSION=${VERSION:-5.0.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,10 +91,16 @@ sed -i -e 's,/etc/imv_config,/etc/imv/imv_config,' \
        -e '/\/usr\/local\/etc/d' \
     src/imv.c doc/imv.1.txt
 
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
+
+# 20251206 bkw: qoi is a 'header-only library', it's small, always include it.
+mkdir qoi
+cat $CWD/qoi.h > qoi/qoi.h
+
 mkdir build
 cd build
-  CFLAGS="$SLKCFLAGS" \
-  CXXFLAGS="$SLKCFLAGS" \
+  CFLAGS="$SLKCFLAGS -I$(pwd)/../qoi" \
   meson .. \
     --buildtype=release \
     --infodir=/usr/info \
@@ -105,7 +118,6 @@ gzip -9 $PKG/usr/man/man?/*.?
 mv $PKG/etc/$PRGNAM/${PRGNAM}_config $PKG/etc/$PRGNAM/${PRGNAM}_config.new
 
 # Slackware doesn't have an icon called multimedia-photo-viewer...
-mkdir -p $PKG/usr/share/applications
 sed -i "s,multimedia-photo-viewer,$PRGNAM," \
     $PKG/usr/share/applications/*.desktop
 
@@ -126,15 +138,13 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mkdir -p $PKG/install
 
 # update slack-desc to say which optional deps are included
-F=no; G=no; H=no; J=no
-ldd $PKG/usr/bin/$PRGNAM-x11 > lddtmp
-grep -q 'libfreeimage' lddtmp && F=yes
-grep -q 'libnsgif' lddtmp && G=yes
+B=no; G=no; H=no; J=no
+objdump -p $PKG/usr/bin/$PRGNAM-x11 | grep NEEDED > lddtmp
+grep -q 'libnsbmp' lddtmp && B=yes
 grep -q 'libheif' lddtmp && H=yes
 grep -q 'libjxl' lddtmp && J=yes
 
-sed -e "s,@F@,$F," \
-    -e "s,@G@,$G," \
+sed -e "s,@B@,$B," \
     -e "s,@H@,$H," \
     -e "s,@J@,$J," \
     $CWD/slack-desc > $PKG/install/slack-desc

@@ -7,6 +7,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251207 bkw: update for 1.26.12.
 # 20251109 bkw: update for 1.26.11.
 # 20250918 bkw:
 # - update for 1.26.8. can't build older versions, sorry.
@@ -28,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mupdf
-VERSION=${VERSION:-1.26.11}
+VERSION=${VERSION:-1.26.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -93,12 +94,10 @@ rm -rf $PRGNAM-$VERSION-source
 tar xvf $CWD/$PRGNAM-$VERSION-source.tar.lz
 cd $PRGNAM-$VERSION-source
 
-# 20250918 bkw: || true here because there are dangling symlinks in
-# the source. They don't actually hurt anything.
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +    \
-     || true
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # 20230531 bkw: derp. Never did apply the flags...
 sed -i "s,-O2,$SLKCFLAGS," Makerules

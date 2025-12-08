@@ -71,7 +71,7 @@ find -L . \
 
 (
   export PREFIX=/usr NASDF_COMPRESS=t
-  make -j1 doc nyxt LIBDIR=$PREFIX/lib${LIBDIRSUFFIX} NASDF_SOURCE_PATH=$PREFIX/share/nyxt
+  make -j1 nyxt LIBDIR=$PREFIX/lib${LIBDIRSUFFIX} NASDF_SOURCE_PATH=$PREFIX/share/nyxt
   make install DESTDIR=$PKG LIBDIR=$PKG/$PREFIX/lib${LIBDIRSUFFIX}
 )
 

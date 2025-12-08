@@ -25,11 +25,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=MuseScore-Libraries
-VERSION=${VERSION:-6.9.1}
+VERSION=${VERSION:-6.9.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=qt-everywhere-src-6.9.1.tar.xz
+TARBALL=qt-everywhere-src-6.9.2.tar.xz
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

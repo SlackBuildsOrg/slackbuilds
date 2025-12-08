@@ -102,6 +102,10 @@ else
   export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
 fi
 
+# force vendored PipeWire/SPA instead of Slackware-15.0's old system version
+export LIBSPA_SYS_NO_PKG_CONFIG=1
+export PIPEWIRE_SYS_NO_PKG_CONFIG=1
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 cargo build --offline --release --target $TRIPLET

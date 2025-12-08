@@ -7,22 +7,19 @@ addition to the RDP server. Xrdp can also act as a bridging server,
 allowing RDP clients to connect to other RDP or VNC servers through
 the xrdp server.
 
-Xvnc is included with tigervnc (in Slackware /extra).
-xorgxrdp can be compiled and installed after installing xrdp.
+Xvnc is included with tigervnc (in Slackware /extra), but you should
+install system/xorgxrdp, as it is much better performing.
 
-By default, this script will make xrdp without PAM support since
-PAM is not installed in Slackware by default.  The script supports
-building with PAM, but it is completely untested by us.  If you want
-to enable PAM, run the script as follows:
-  USE_PAM=YES ./xrdp.SlackBuild
-
-By default, this script will make xrdp without GVFS support, as it
+By default, this script will make xrdp with GVFS support, hoewever, it
 can cause a problem if a session is unexpectedly terminated leaving
-an orphan GVFS mount. (This can be corrected by logging into the
-server hosting xrdp and running 'fusermount -uz ~/thinclient_drives').
-If you want to use drive redirection and shared clipboard support, run
-the script as follows:
-  USE_GVFS=YES ./xrdp.SlackBuild
+an orphan GVFS mount. If you run into this, it can be corrected by
+logging into the server hosting xrdp and running
+
+'fusermount -uz ~/thinclient_drives'
+
+If you want to disable drive redirection and shared clipboard support,
+to prevent this possibility, run the script as follows:
+  USE_GVFS=NO ./xrdp.SlackBuild
 
 After installing xrdp there are some configuration files in /etc/xrdp
 that can be modified:

@@ -3,7 +3,6 @@
 FILES="
 CONTRIBUTING.md
 Changelog.md
-Collaborators.md
 LICENSE
 supportedsites.md
 "

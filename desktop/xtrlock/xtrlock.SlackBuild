@@ -6,6 +6,10 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251209 bkw: updated for v2.18. no code changes, but the man page
+# has been fixed (so I can get rid of my patch). again, only updating
+# to avoid the 2.17 source vanishing.
+
 # 20250611 bkw: updated for v2.17. no code changes, only the debian
 # packaging has changed. only doing this update because the 2.16
 # source is likely to disappear soon.
@@ -25,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xtrlock
-VERSION=${VERSION:-2.17}
+VERSION=${VERSION:-2.18}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,9 +75,6 @@ find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
 
 # work around slack 14.2 bug (only happens when upgrading from 14.2):
 touch host.def
-
-# 20250121 bkw: fix formatting of new -F option in man page.
-patch -p1 < $CWD/manpage.diff
 
 # 20250121 bkw: build with capabilities and "multitouch" (XInput
 # extension), which attempts to grab multitouch devices which are not

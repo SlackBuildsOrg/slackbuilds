@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=antigravity
-VERSION=${VERSION:-1.11.14_1764918088}
+VERSION=${VERSION:-1.11.17_1765244408}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -52,9 +52,10 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf Antigravity
-
-ar -x $CWD/antigravity_1.11.14-1764918088_amd64_acf73c2fd8e096dca6a2d5535d58efc5.deb
+rm -rf $PRGNAM-$VERSION
+mkdir $PRGNAM-$VERSION
+cd $PRGNAM-$VERSION
+ar -x $CWD/antigravity_1.11.17-1765244408_amd64_9df0712156d4f7f37ea353feaa9633ca.deb
 tar xvf data.tar.xz -C $PKG
 
 cd $PKG

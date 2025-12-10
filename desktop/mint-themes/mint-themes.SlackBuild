@@ -26,13 +26,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM="mint-themes"
-VERSION=${VERSION:-2.3.3}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-2.3.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 ARCH=noarch
-COMMITVER=${COMMITVER:-c31db2aa95403e86cde7f265259542ce70b9c8eb}
 
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
@@ -45,16 +44,11 @@ OUTPUT=${OUTPUT:-/tmp}
 
 set -e
 
-# "tar xvf" command explanation:
-# This SlackBuild downloads according to the commit, not the package version.
-# (i.e. the tarball filename is mint-themes-c31db2aa95403e86cde7f265259542ce70b9c8eb.tar.gz)
-# Extract the tarball and rename the extracted folder to 'mint-themes-2.3.3'
-
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$COMMITVER.tar.gz --transform s/$PRGNAM-$COMMITVER/$PRGNAM-$VERSION/
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \

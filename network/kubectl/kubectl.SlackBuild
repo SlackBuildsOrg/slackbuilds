@@ -41,6 +41,7 @@
 # v1.33.4:     13/Ago/2025 by r1w1s1 - Update version.
 # v1.34.1:     10/Sep/2025 by r1w1s1 - Update version.
 # v1.34.2:     12/Nov/2025 by r1w1s1 - Update version.
+# v1.34.3:     09/Dec/2025 by r1w1s1 - Update version.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
@@ -50,7 +51,7 @@ IFS=$'\n\t'
 
 PKGBASE=kubernetes
 PRGNAM=kubectl
-VERSION=${VERSION:-1.34.2}
+VERSION=${VERSION:-1.34.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

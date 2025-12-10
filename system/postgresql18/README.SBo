@@ -1,7 +1,7 @@
 Before you can run postgresql you'll need to create the
 database files in /var/lib/pgsql. The following should do
 the trick.
-	# su postgres -c "initdb -D /var/lib/pgsql/18/data --locale=en_US.UTF-8 -A md5 -W"
+	# su postgres -c "initdb -D /var/lib/pgsql/18/data --locale=en_US.UTF-8 -A scram-sha-256 -W"
 
 Additionally, a logrotation script and init script are included.
 For production level log file handling please read
@@ -44,7 +44,7 @@ A few hints for PostgreSQL 17.x -> 18.x upgrade:
   - Install PostgreSQL 18.x, note that binaries are in
     '/usr/lib64/postgresql18/18/bin'
   - Create database file for postgresql 18 without data checksums
-    # su postgres -c "initdb -D /var/lib/pgsql/18/data --no-data-checksums --locale=en_US.UTF-8 -A md5 -W"
+    # su postgres -c "initdb -D /var/lib/pgsql/18/data --no-data-checksums --locale=en_US.UTF-8 -A scram-sha-256 -W"
   - Adjust the pg_hba.conf in postgresql 18 to allow postgres user to connect
   - Run pg_upgrade (as postgres user)
 	$ pg_upgrade --old-datadir /var/lib/pgsql/17/data/ --new-datadir /var/lib/pgsql/18/data/ --old-bindir /usr/lib64/postgresql17/17/bin/ --new-bindir /usr/lib64/postgresql18/18/bin/ -U postgres

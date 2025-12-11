@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/lxqt/libfm-qt/releases/download/1.4.0/libfm-qt-1.4.
 MD5SUM="d018e160cefdbccfea8bd550f2d7b517"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="lxqt-build-tools lxqt-menu-data menu-cache"
+REQUIRES="lxqt-menu-data menu-cache"
 MAINTAINER="Isaac Yu"
 EMAIL="isaacyu@protonmail.com"

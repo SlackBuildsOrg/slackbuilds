@@ -2,6 +2,7 @@
 
 # Slackware build script for a68g
 
+# Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2025 Ioannis Anagnostakis GR
 # All rights reserved.
 #
@@ -27,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=a68g
 SRCNAM=algol68g
-VERSION=${VERSION:-3.9.10}
+VERSION=${VERSION:-3.10.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

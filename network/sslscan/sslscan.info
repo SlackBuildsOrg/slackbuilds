@@ -1,10 +1,10 @@
 PRGNAM="sslscan"
-VERSION="2.2.0"
+VERSION="2.2.1"
 HOMEPAGE="https://github.com/rbsec/sslscan"
-DOWNLOAD="https://github.com/rbsec/sslscan/archive/2.2.0/sslscan-2.2.0.tar.gz \
-          https://github.com/openssl/openssl/archive/openssl-3.5.2/openssl-openssl-3.5.2.tar.gz"
-MD5SUM="2b3dd774132f74bbebe6e3e53f734c3b \
-        466b31a51be9fa8f7ed509e62c076941"
+DOWNLOAD="https://github.com/rbsec/sslscan/archive/2.2.1/sslscan-2.2.1.tar.gz \
+          https://github.com/openssl/openssl/archive/openssl-3.5.4/openssl-openssl-3.5.4.tar.gz"
+MD5SUM="73ea0c6e9809f3e18adcd9009de2e09b \
+        30eb5f35d91bb4afe99748b7cc3e26ce"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

@@ -1,0 +1,2 @@
+This plugin contains lexers for IPython-specific special convenience
+syntax, to use with the Pygments syntax highlighting package.

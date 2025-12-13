@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=wxWidgets
-VERSION=${VERSION:-3.2.8.1}
+VERSION=${VERSION:-3.2.9}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -136,13 +136,12 @@ fi
 
 #Move librarys to their correct location and fix pkgconfig
 if [ "$LIBDIRSUFFIX" != "" ]; then
-  mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}
   sed -i "s/\/lib\//\/lib${LIBDIRSUFFIX}\//g" \
-    $PKG/usr/lib${LIBDIRSUFFIX}/cmake/$PRGNAM/${PRGNAM}Config.cmake
+    $PKG/usr/lib${LIBDIRSUFFIX}/cmake/$PRGNAM-3.2/${PRGNAM}Config.cmake
   sed -i "s/\/lib\//\/lib${LIBDIRSUFFIX}\//g" \
-    $PKG/usr/lib${LIBDIRSUFFIX}/cmake/$PRGNAM/${PRGNAM}Targets.cmake
+    $PKG/usr/lib${LIBDIRSUFFIX}/cmake/$PRGNAM-3.2/${PRGNAM}Targets.cmake
   sed -i "s/\/lib\//\/lib${LIBDIRSUFFIX}\//g" \
-    $PKG/usr/lib${LIBDIRSUFFIX}/cmake/$PRGNAM/${PRGNAM}Targets-release.cmake
+    $PKG/usr/lib${LIBDIRSUFFIX}/cmake/$PRGNAM-3.2/${PRGNAM}Targets-release.cmake
 fi
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

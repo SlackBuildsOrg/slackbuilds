@@ -1,0 +1,12 @@
+PRGNAM="netavark"
+VERSION="1.17.1"
+HOMEPAGE="https://github.com/containers/netavark"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://github.com/containers/netavark/archive/v1.17.1/netavark-1.17.1.tar.gz \
+                 https://github.com/containers/netavark/releases/download/v1.17.1/netavark-v1.17.1-vendor.tar.gz"
+MD5SUM_x86_64="382e32142879fa0b9fab7bff3006a577 \
+               cb041651bdb7fc2fee6c522410b6d42e"
+REQUIRES="protobuf3 aardvark-dns"
+MAINTAINER="Vijay Marcel"
+EMAIL="vijaymarcel@outlook.com"

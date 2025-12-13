@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=openrazer-daemon
 VERSION=${VERSION:-3.11.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -97,11 +97,19 @@ cp logo/*.svg $PKG/usr/share/icons/hicolor/scalable/apps/
 
 # Add application icons
 for i in 16 24 32 48 64 96 128 256; do
-  mkdir -p $PKG/usr/share/icons/hicolor/${i}x${i}/apps
-  convert -background none $PKG/usr/share/icons/hicolor/scalable/apps/openrazer-chroma.svg -resize ${i}x${i} \
-    $PKG/usr/share/icons/hicolor/${i}x${i}/apps/openrazer-chroma.png
-  convert -background none $PKG/usr/share/icons/hicolor/scalable/apps/openrazer-static.svg -resize ${i}x${i} \
-    $PKG/usr/share/icons/hicolor/${i}x${i}/apps/openrazer-static.png
+  mkdir -p "$PKG/usr/share/icons/hicolor/${i}x${i}/apps"
+
+  rsvg-convert \
+    --width=${i} \
+    --height=${i} \
+    "$PKG/usr/share/icons/hicolor/scalable/apps/openrazer-chroma.svg" \
+    -o "$PKG/usr/share/icons/hicolor/${i}x${i}/apps/openrazer-chroma.png"
+
+  rsvg-convert \
+    --width=${i} \
+    --height=${i} \
+    "$PKG/usr/share/icons/hicolor/scalable/apps/openrazer-static.svg" \
+    -o "$PKG/usr/share/icons/hicolor/${i}x${i}/apps/openrazer-static.png"
 done
 
 # Add Launcher

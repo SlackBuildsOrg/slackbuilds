@@ -1,0 +1,4 @@
+passt implements a translation layer between a Layer-2 network
+network interface and native Layer-4 sockets (TCP, UDP, ICMP/ICMPv6
+echo)on a host. It doesn't require  any capabilities or privileges,
+and it can be used as a simple replacement for Slirp.

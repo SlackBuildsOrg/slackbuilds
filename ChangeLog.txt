@@ -1,3 +1,134 @@
+Sat Dec 13 09:24:32 UTC 2025
+academic/edsim51di: Updated for version 2.1.39.
+accessibility/xdotool: Updated for version 4.20251130.1.
+audio/ocenaudio-bin: Updated for version 3.16.5
+desktop/buku: Update readme for Python 3.9 EOL.
+desktop/lightdm-slick-greeter: Update for 2.2.4
+desktop/mint-themes: Update for 2.3.4
+desktop/xtrlock: Updated for version 2.18.
+development/HeidiSQL: Added (Database Management Tool).
+development/a68g: Updated for version 3.10.8, New Maintainer.
+development/antigravity: Updated for version 1.11.17_1765244408
+development/aspnetcore-runtime-10.0: Updated for version 10.0.1.
+development/aws-cdk: Updated for version 2.1034.0.
+development/bbcsdl: Updated for version 20251210_aa10a94
+development/bun-bin: Updated for version 1.3.4.
+development/claude-code: Updated for version 2.0.61
+development/dbeaver-ce: Updated for version 25.3.0.
+development/dotnet-runtime-10.0: Updated for version 10.0.1.
+development/dotnet-sdk-10.0: Updated for version 10.0.101.
+development/eisl: Updated for version 5.61
+development/golangci-lint: Updated for version 2.7.2.
+development/gopls: Updated for version 0.21.0.
+development/hoppscotch: Updated for version 25.11.2.
+development/jupyter-nbconvert: Rename tinycss2 dependency to python3-tinycss2
+development/jupyter_client: Updated README.
+development/jupyter_core: Updated README.
+development/lm-studio-bin: Updated for version 0.33.3.1
+development/lua-language-server: Updated for version 3.16.1.
+development/notepad++: Updated for version 8.8.9
+development/pgmodeler: Updated for version 1.2.2.
+development/pnpm: Updated for version 10.25.0.
+development/postman: Updated for version 11.75.1
+development/rider: Updated for version 2025.3.0.4.
+development/stklos: Updated for version 2.10
+development/vscode-bin: Updated for version 1.107.0.
+development/vscodium: Updated for version 1.106.37943.
+games/Mindustry: Fix MD5SUM.
+games/gnurobbo: Updated for version 0.68.
+games/melonds: Updated for version 1.1.
+games/puzzles: Updated for version 20251211.5c2f87c.
+games/trackballs: Updated for version 1.3.5.
+graphics/blender: Version bump to 5.0.0
+graphics/imv: Updated for version 5.0.1.
+graphics/vuescan: Updated MD5SUM_x86_64.
+graphics/xviewer: Update for 3.4.14
+ham/qlog: Updated for version 0.47.0.
+libraries/MuseScore-Libraries: Updated for version 6.9.2
+libraries/aqbanking: Updated for version 6.8.2.
+libraries/gwenhywfar: Updated for version 5.14.1.
+libraries/heif-gimp-plugin: Updated for commit 510a9f5
+libraries/libfm-qt: Remove lxqt-build-tools dependency
+libraries/libgit2: Updated for version 1.9.2
+libraries/libheif: Updated for version 1.20.2
+libraries/libnsbmp: Added (BMP/ICO image file decoder).
+libraries/libnsgif: Updated for version 1.0.0.
+libraries/microsoft-gsl: Updated for version 4.2.1.
+libraries/process-cpp: Version bump to 3.0.3
+libraries/qt-avif-image-plugin: Updated for version 0.9.5.
+libraries/wxWidgets: Updated for version 3.2.9.
+libraries/xapp: Updated for version 3.2.1.
+libraries/zziplib: Updated for version 0.13.80.
+multimedia/cinelerra: Updated for version 5.1.0.20251124
+multimedia/lsdvd: Updated for version 0.21.
+network/brave-browser: update 1.85.111
+network/chawan: Updated for version 0.3.2.
+network/dropbox: Updated for version 238.4.6075.
+network/kubectl-bin: Updated for version 1.34.3.
+network/kubectl: Updated for version 1.34.3.
+network/librewolf: Updated for version 146.0_2.
+network/microsoft-edge: Updated for version 143.0.3650.80.
+network/mullvadvpn-app: Updated for version 2025.14.
+network/netavark: Added (Network Stack).
+network/nyxt: Updated for version 3.12.0.
+network/opera: Updated for version 125.0.5729.15
+network/passt: Added (Translation Layer).
+network/shadowsocks-rust: Updated for version 1.24.0.
+network/signal-desktop: Updated for version 7.82.0.
+network/sslscan: Updated for version 2.2.1.
+network/static-web-server: Updated for version 2.40.1.
+network/teamviewer: Updated for version 15.72.3.
+network/tor-browser: Updated for version 15.0.3.
+network/vivaldi: Updated for version 7.7.3851.61.
+network/waterfox: Updated for version 6.6.6
+network/weechat: Updated for version 4.8.1.
+network/whalebird: Updated for version 6.2.7
+network/yt-dlp-bin: Updated for version 2025.12.08.
+network/zen-browser: Updated for version 1.17.13b.
+office/OpenAudible-bin: Updated for version 4.6.8
+office/mupdf: Updated for version 1.26.12.
+office/qownnotes: Updated for version 25.12.5.
+office/zathura-cb: Updated for version 0.1.12.
+office/zathura-djvu: Updated for version 0.2.11.
+office/zathura-pdf-mupdf: Updated for version 0.4.6.
+office/zathura-ps: Updated for version 0.2.9.
+office/zathura: Update bundled poppler plugin.
+python/cssselect2: Rename tinycss2 dependency to python3-tinycss2
+python/python3-aiohttp-socks: Updated for version 0.11.0.
+python/python3-anyio: Version bump to 4.12.0
+python/python3-debugpy: Updated for 1.8.18.
+python/python3-ipython-pygments-lexers: Added (lexers for IPython).
+python/python3-odfdo: Updated for version 3.18.0
+python/python3-pypandoc: Updated for 1.16.2.
+python/python3-pypdf: Updated for version 6.4.1
+python/python3-qstylizer: Rename tinycss2 dependency to python3-tinycss2
+python/python3-socks: Updated for version 2.8.0.
+ruby/rubygem-sass: Updated for version 3.7.4.
+system/Iosevka-aile: Updated for version 33.3.6.
+system/Iosevka-etoile: Updated for version 33.3.6.
+system/Iosevka-slab: Updated for version 33.3.6
+system/Iosevka: Updated for version 33.3.6
+system/apache-cassandra: Updated for version 4.1.10.
+system/bat: Updated for version 0.26.1.
+system/distrobuilder: Added (System Container).
+system/docker-machine-kvm: Updated $DOWNLOAD_x86_64.
+system/far2l: Updated for version 2.7.0.
+system/fastfetch: Updated for version 2.56.0.
+system/fzf-bin: Updated for version 0.67.0.
+system/jenkins: Updated for version 2.528.3.
+system/lf: Update for r40
+system/limine: Updated for version 10.5.0.
+system/lxcfs: Added (Userspace Filesystem).
+system/nemo: Updated for version 6.6.1.
+system/openrazer-daemon: Update script.
+system/postgresql18: Update to use scram-sha-256.
+system/sarasa-gothic: Updated for version 1.0.35.
+system/sbozyp: Updated for version 1.2.4
+system/timeshift: Updated for version 25.12.0
+system/ttf-genjyuu-gothic: Updated for version 20150607.
+system/xorgxrdp: Version bump to 0.10.4
+system/xrdp: Version bump to 0.10.4.1 + new maintainer
++--------------------------+
 Sat Dec  6 08:56:01 UTC 2025
 academic/eprover: Updated for version 3.2.5.
 academic/gmsh: Updated for version 4.15.0.

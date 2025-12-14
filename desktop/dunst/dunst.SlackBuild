@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2014-2021 S. S. Bolokanar, Bulgaria <bolokanar@bulgarsociety.org>
+# Copyright 2014-2021 S. S. Bolokanar, Bulgaria <bolokanar@bulgarsociety.eu>
 #                     С. С. Болоканаръ, България
 # All rights reserved.
 #
@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dunst
-VERSION=${VERSION:-1.12.2}
+VERSION=${VERSION:-1.13.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

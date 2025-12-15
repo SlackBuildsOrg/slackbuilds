@@ -1,5 +1,5 @@
 PRGNAM="libheif"
-VERSION="1.20.1"
+VERSION="1.20.2"
 HOMEPAGE="https://github.com/strukturag/libheif"
 DOWNLOAD="https://github.com/strukturag/libheif/releases/download/v1.20.2/libheif-1.20.2.tar.gz"
 MD5SUM="5d0442f7197a34b7aaf95bdffabb51e9"

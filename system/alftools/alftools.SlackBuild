@@ -8,10 +8,12 @@
 
 # I'm my own upstream for this one. ALF is pretty niche-market, too.
 
+# 20251215 bkw: updated for v0.4.0.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=alftools
-VERSION=${VERSION:-0.3.2}
+VERSION=${VERSION:-0.4.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

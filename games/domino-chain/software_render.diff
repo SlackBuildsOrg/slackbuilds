@@ -1,0 +1,11 @@
+diff -Naur domino-chain.gitlab.io-1.1/src/domino-chain/screen.cpp domino-chain.gitlab.io-1.1.patched/src/domino-chain/screen.cpp
+--- domino-chain.gitlab.io-1.1/src/domino-chain/screen.cpp	2020-02-09 03:53:36.000000000 -0500
++++ domino-chain.gitlab.io-1.1.patched/src/domino-chain/screen.cpp	2025-12-15 20:10:54.789642159 -0500
+@@ -42,6 +42,7 @@
+   animationState(0), blockX(g.blockX()), blockY(g.blockY())
+ {
+   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
++  SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
+   SDL_CreateWindowAndRenderer(g.resolutionX(), g.resolutionY(), 0, &sdlWindow, &sdlRenderer);
+   SDL_RenderSetLogicalSize(sdlRenderer, g.resolutionX(), g.resolutionY());
+ 

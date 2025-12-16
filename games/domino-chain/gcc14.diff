@@ -1,0 +1,10 @@
+--- a/src/domino-chain/tools.cpp
++++ b/src/domino-chain/tools.cpp
+@@ -44,6 +44,7 @@
+ #include <sys/stat.h>
+ #include <dirent.h>
+ 
++#include <algorithm>
+ #include <stdexcept>
+ 
+ #include <boost/filesystem.hpp>

@@ -29,18 +29,19 @@
          cwd: moduleInfo.moduleBuildDir,
          env,
          shell: true,
---- a/scripts/hak/link.ts	2025-07-30 17:41:30.000000000 +0300
-+++ b/scripts/hak/link.ts	2025-08-12 21:51:22.436370101 +0300
-@@ -38,10 +38,10 @@
-         );
-     }
+--- a/scripts/hak/link.ts	2025-12-16 17:54:33.000000000 +0300
++++ b/scripts/hak/link.ts	2025-12-16 21:47:41.160382012 +0300
+@@ -13,11 +13,11 @@
  
--    await hakEnv.spawn("yarn", ["link"], {
-+    await hakEnv.spawn("yarn", ["--offline", "link"], {
+ export default async function link(hakEnv: HakEnv, moduleInfo: DependencyInfo): Promise<void> {
+     const linkFolder = path.join(hakEnv.dotHakDir, "links");
+-    await hakEnv.spawn("yarn", ["link", "--link-folder", linkFolder], {
++    await hakEnv.spawn("yarn", ["--offline", "link", "--link-folder", linkFolder], {
          cwd: moduleInfo.moduleOutDir,
      });
--    await hakEnv.spawn("yarn", ["link", moduleInfo.name], {
-+    await hakEnv.spawn("yarn", ["--offline", "link", moduleInfo.name], {
+ 
+-    await hakEnv.spawn("yarn", ["link", "--link-folder", linkFolder, moduleInfo.name], {
++    await hakEnv.spawn("yarn", ["--offline", "link", "--link-folder", linkFolder, moduleInfo.name], {
          cwd: hakEnv.projectRoot,
      });
  }

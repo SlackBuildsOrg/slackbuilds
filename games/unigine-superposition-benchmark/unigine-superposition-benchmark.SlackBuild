@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=unigine-superposition-benchmark
 VERSION=${VERSION:-1.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -78,8 +78,12 @@ chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+ \( -perm 666 -o -perm 664 -o -perm 660 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+chmod 755 ./opt ./opt/$PRGNAM
+find ./opt/$PRGNAM -type d -exec chmod 755 {} \;
+find ./opt/$PRGNAM -type f -perm -111 -exec chmod a+r {} \;
 
 # add application launcher
 mkdir -p $PKG/usr/share/applications

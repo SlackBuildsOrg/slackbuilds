@@ -1,0 +1,20 @@
+PRGNAM="nvidia-legacy580-driver"
+VERSION="580.119.02"
+HOMEPAGE="https://www.nvidia.com"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/580.119.02/NVIDIA-Linux-x86_64-580.119.02.run \
+                 https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-580.119.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-modprobe/nvidia-modprobe-580.119.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-persistenced/nvidia-persistenced-580.119.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-580.119.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-xconfig/nvidia-xconfig-580.119.02.tar.bz2"
+MD5SUM_x86_64="5603f48f2af83d4fb3164ca9ef27ff3a \
+               3b00a55de97bdd628869405b8ed9286c \
+               595ecaf45b4bd6e9f03a0b0e5851e401 \
+               fd253b2f4ac952c9415fa828c018ca84 \
+               ed5194d50ce85083640b18140cc620ce \
+               89467d75dfbb340df30b7b367db25bb4"
+REQUIRES="nvidia-legacy580-kernel"
+MAINTAINER="Lenard Spencer"
+EMAIL="lenardrspencer@gmail.com"

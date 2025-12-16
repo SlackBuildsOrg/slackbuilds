@@ -23,8 +23,7 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #
-# 2025/02/13 - Updated to upstream v26.0.9
-# 2024/12/16 - Updated to upstream V25.0.2
+# 2025/12/11 - Updated to upstream V29.0.3
 # 2022/10/08 - Updated to upstream V20.3.0
 #            - Updated package name draw.io -> drawio to be consistent with
 #              upstream naming adjustment.
@@ -35,7 +34,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=drawio
-VERSION=${VERSION:-26.0.9}
+VERSION=${VERSION:-29.0.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

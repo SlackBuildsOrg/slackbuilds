@@ -1,0 +1,18 @@
+fetcha is a small system information tool written in C.
+
+It follows a suckless-style design and prints basic system information
+(OS, kernel, memory, CPU, etc.) alongside a small ASCII logo.
+
+fetcha is intended for lightweight window managers, terminal usage,
+and SSH sessions.
+
+Like other suckless-style tools, fetcha uses a C-based configuration.
+The file config.def.h contains the default settings, and config.h is
+used as the active configuration at build time.
+
+If you want fetcha to run automatically when starting a shell, add the
+line "fetcha" to the end of your shell configuration file (for example
+~/.bashrc or ~/.zshrc).
+
+This SlackBuild applies a small patch to change the default ASCII logo
+to a neutral one suitable for Slackware.

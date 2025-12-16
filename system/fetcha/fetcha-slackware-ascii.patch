@@ -1,0 +1,37 @@
+--- config.def.h.orig	2025-12-14 23:58:24.826740709 -0300
++++ config.def.h	2025-12-14 23:58:27.967237663 -0300
+@@ -65,26 +65,11 @@
+ 
+ const size_t config_items_len = sizeof config_items / sizeof config_items[0];
+ 
+-
+-static const char *ascii_art  =
+-"                   $1-` \n"
+-"                  .o+`\n"
+-"                 `ooo/\n"
+-"                `+oooo:\n"
+-"               `+oooooo:\n"
+-"               -+oooooo+:\n"
+-"             `/:-:++oooo+:\n"
+-"            $3`/++++/+++++++:\n"
+-"           `/++++++++++++++:\n"
+-"          `/+++$1ooooooooooooo/`\n"
+-"         ./ooosssso++osssssso+`\n"
+-"        .oossssso-````/ossssss+`\n"
+-"       -osssssso.      :ssssssso.\n"
+-"      :osssssss/        osssso+++. \n"
+-"     /ossssssss/        +ssssooo/-  \n"
+-"   `/ossssso+/:-        -:/+osssso+-   \n"
+-"  `+sso+:-`                 `.-/+oso:     \n"
+-" `++:.                           `-/+/   \n"
+-" .`                                 `/  \n"
+-;
+-
++static const char *ascii_art =
++"   .--.  \n"
++"  |o_o | \n"
++"  |:_/ | \n"
++" //   \\ \\ \n"
++"(|     | )\n"
++"/'\\_   _/`\\\n"
++"\\___)=(___/\n";

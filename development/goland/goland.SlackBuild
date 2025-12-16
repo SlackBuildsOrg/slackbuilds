@@ -7,8 +7,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=goland
-ARCNAM=goland
-VERSION=${VERSION:-2025.2}
+VERSION=${VERSION:-2025.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -31,7 +30,7 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG/opt/ $OUTPUT
 cd $PKG/opt/
-tar xvf $CWD/$ARCNAM-$VERSION.tar.*z
+tar xvf $CWD/$PRGNAM-$VERSION.tar.*z
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -47,7 +46,7 @@ cat << EOF > $PKG/usr/share/applications/$PRGNAM.desktop
 Version=1.0
 Type=Application
 Path=/opt/$PRGNAM
-Exec=/opt/$PRGNAM/bin/$PRGNAM.sh %f
+Exec=/opt/$PRGNAM/bin/$PRGNAM %f
 Name=GoLand: A Clever IDE to Go by JetBrains
 GenericName=GoLand
 Comment=
@@ -58,15 +57,13 @@ Terminal=false
 EOF
 
 install -D -m 0644 $PKG/opt/$PRGNAM/bin/$PRGNAM.png \
-  $PKG/usr/share/pixmaps/$PRGNAM.png
+	$PKG/usr/share/pixmaps/$PRGNAM.png
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/bin
-cat << EOF > $PKG/usr/bin/$PRGNAM
-#!/bin/sh
-cd \$HOME
-/opt/$PRGNAM/bin/$PRGNAM.sh \$@
-EOF
-chmod 0755 $PKG/usr/bin/$PRGNAM
+ln -sf /opt/$PRGNAM/bin/$PRGNAM $PKG/usr/bin/$PRGNAM
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

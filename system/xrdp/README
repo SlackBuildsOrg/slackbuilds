@@ -21,6 +21,8 @@ If you want to disable drive redirection and shared clipboard support,
 to prevent this possibility, run the script as follows:
   USE_GVFS=NO ./xrdp.SlackBuild
 
+NOTE: GVFS will be disabled in i586 as it break build
+
 After installing xrdp there are some configuration files in /etc/xrdp
 that can be modified:
 

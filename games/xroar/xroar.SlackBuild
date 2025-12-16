@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251216 bkw: update for 1.10.
 # 20250612 bkw: update for 1.8.2
 # 20250121 bkw: update for 1.7.3
 # 20241122 bkw: update for 1.7.1, remove gtkglext/sdl1/gtk2 support.
@@ -37,7 +38,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xroar
-VERSION=${VERSION:-1.8.2}
+VERSION=${VERSION:-1.10}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -104,8 +105,9 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # 20241123 bkw: the old gtk2 + sdl1 + gtkglext UI can still be built,
 # but gtk3 and sdl2 have been part of core Slackware for years. From
@@ -190,9 +192,10 @@ ln -s ../icons/hicolor/48x48/apps/$PRGNAM.png $PKG/usr/share/pixmaps/$PRGNAM.png
 mkdir $PKG/usr/share/applications
 cp $CWD/*.desktop $PKG/usr/share/applications
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
 # Don't bother with the README: it's only about installation, not usage
-cp -a COPYING* ChangeLog $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a COPYING* ChangeLog $PKGDOC
 
 # HTML version of the info page, for those who hate info pages...
 ( cd doc && make $PRGNAM.html )

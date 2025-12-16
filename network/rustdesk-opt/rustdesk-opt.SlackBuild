@@ -2,7 +2,7 @@
 
 # Slackware build script for rustdesk-opt
 
-# Copyright 2024 Olivier Brouckaert <olivier.b@i-services.be>, Brussels, Belgium
+# Copyright 2025 Olivier Brouckaert <olivier.b@i-services.be>, Brussels, Belgium
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rustdesk-opt
 SRCNAM=rustdesk
-VERSION=${VERSION:-1.4.2}
+VERSION=${VERSION:-1.4.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,23 +80,10 @@ cd $TMP
 rm -rf vcpkg-2023.04.15
 tar -xvzf $CWD/vcpkg-2023.04.15.tar.gz
 
-if [ -e $CWD/vcpkg-2023.04.15-deps.tar.gz ] && [ -e $CWD/vcpkg-glibc ]; then
-  cd vcpkg-2023.04.15
-  touch vcpkg.disable-metrics
-  tar -xvzf $CWD/vcpkg-2023.04.15-deps.tar.gz
-  cp $CWD/vcpkg-glibc vcpkg
-  chmod 755 vcpkg
-  cd ..
-
-  VCPKG_DL="--no-downloads"
-else
-  ./vcpkg-2023.04.15/bootstrap-vcpkg.sh --disableMetrics
-
-  VCPKG_DL=""
-fi
+./vcpkg-2023.04.15/bootstrap-vcpkg.sh --disableMetrics
 
 export VCPKG_ROOT=$TMP/vcpkg-2023.04.15
-./vcpkg-2023.04.15/vcpkg --disable-metrics $VCPKG_DL install libvpx libyuv opus aom
+./vcpkg-2023.04.15/vcpkg --disable-metrics install libvpx libyuv opus aom
 
 # rustdesk
 
@@ -115,9 +102,7 @@ mkdir -p target/release
 cp $CWD/libsciter-gtk.so target/release/
 chmod 755 target/release/libsciter-gtk.so
 
-if [ -e $CWD/$SRCNAM-$VERSION-deps.tar.gz ]; then
-  tar -xvzf $CWD/$SRCNAM-$VERSION-deps.tar.gz
-elif [ -e .gitmodules ]; then
+if [ -e .gitmodules ]; then
   cd libs
   for url in `cat ../.gitmodules | grep "url =" | sed "s/url =//"`
   do

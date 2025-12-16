@@ -72,7 +72,11 @@ find -L . \
 autoreconf -vfi
 
 if [ "$USE_GVFS" = "YES" ]; then
-    NOGVFS_OPT="--enable-fuse"
+    if [ "$ARCH" = "x86_64" ]; then
+        NOGVFS_OPT="--enable-fuse"
+    else
+        NOGVFS_OPT="--disable-fuse"
+    fi
 else
     NOGVFS_OPT="--disable-fuse"
 fi

@@ -2,13 +2,13 @@
 #
 # Slackware build script for IntelliJ IDEA
 # Written by Mario Antunes (mariolpantunes@gmail.com)
+# Improved by Joielechong
 # This script is just a binary repackaging.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=idea
-ARCNAM=ideaIC
-VERSION=${VERSION:-2025.2.5}
+VERSION=${VERSION:-2025.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -29,7 +29,7 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG/opt/ $OUTPUT
 cd $PKG/opt/
-tar xvf $CWD/$ARCNAM-$VERSION.tar.*z
+tar xvf $CWD/$PRGNAM-$VERSION.tar.*z
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -46,18 +46,24 @@ Version=1.0
 Type=Application
 Path=/opt/$PRGNAM
 Exec=/opt/$PRGNAM/bin/$PRGNAM %f
-Name=IntelliJ IDEA Community Edition
+Name=IntelliJ IDEA
 GenericName=IntelliJ IDEA
 Comment=Develop with pleasure!
 Icon=$PRGNAM
 StartupNotify=true
 Categories=Development;IDE;
 Terminal=false
-StartupWMClass=jetbrains-idea-ce
+StartupWMClass=jetbrains-idea
 EOF
 
 install -D -m 0644 $PKG/opt/$PRGNAM/bin/$PRGNAM.png \
   $PKG/usr/share/pixmaps/$PRGNAM.png
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+    | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p $PKG/usr/bin
+ln -sf /opt/$PRGNAM/bin/$PRGNAM $PKG/usr/bin/$PRGNAM
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

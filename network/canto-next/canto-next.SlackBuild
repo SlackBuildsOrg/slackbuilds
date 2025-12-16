@@ -1,0 +1,138 @@
+#!/bin/bash
+
+# Slackware build script for canto-next
+
+# Written by B. Watson (urchlay@slackware.uk)
+
+# Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# This replaces the old abandoned canto SlackBuild, which was for canto 0.7.x.
+
+# Note that the plugins are installed to /usr/lib/canto, even on
+# 64-bit. This isn't a problem: they're Python scripts (not shared
+# libs), and they don't even get used from their default location.
+# You have to copy them to ~/.config/canto/plugins to use them.
+# I considered changing this to /usr/share/canto, but I decided to
+# leave upstream's default as-is.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=canto-next
+VERSION=${VERSION:-0.9.8}
+CURSVER=${CURSVER:-0.9.9}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+# No compiler flags or libdir stuff needed: setup.py knows what to do.
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-build
+mkdir -p $PRGNAM-build
+cd $PRGNAM-build
+TOPDIR=$(pwd)
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+tar xvf $CWD/canto-curses-$CURSVER.tar.gz
+chown -R root:root .
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
+
+# 20251213 bkw: This builds fine with Slackware 15.0's old
+# python-setuptools on either 32-bit x86 or pure (non-multilib)
+# x86_64. If we're on multilib, the old setuptools has a hard-coded
+# -L/usr/lib that causes the build to fail if 32-bit libncursesw
+# and/or libreadline are installed.  Using the new setuptools on SBo
+# works, but I don't want to put it in REQUIRES for everyone.
+
+if [ -e /lib64/libc.so.6 -a -e /lib/libc.so.6 ]; then
+  PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+  export PYTHONPATH=/opt/python$PYVER/site-packages
+  if [ ! -d $PYTHONPATH/setuptools ]; then
+    cat <<EOF
+
+*** You are trying to build on a multilib system. For this to work, you
+*** must install python3-setuptools-opt and re-run this script.
+
+EOF
+    exit 1
+  fi
+fi
+
+sed -i 's,share/man/,man/,' */setup.py
+
+cd $PRGNAM-$VERSION
+python3 setup.py install --root=$PKG
+
+cd $TOPDIR/canto-curses-$CURSVER
+
+# 20251214 bkw: Pressing the spacebar on a feed title (rather than
+# an article) causes a scary-looking stack trace in the UI. Patched
+# by the SlackBuild author.
+patch -p1 < $CWD/fix_exception.diff
+
+# 20251214 bkw: These 2 came from upstream git, by way of Gentoo.
+# Not needed on 15.0, but helpful for -current.
+patch -p1 < $CWD/drop_pipes_import.diff
+patch -p1 < $CWD/missing_headers.diff
+
+python3 setup.py install --root=$PKG
+
+strip $PKG/usr/lib*/python*/site-packages/canto_curses/*.so
+gzip -9 $PKG/usr/man/man*/*
+
+# Don't need, and including it can be misleading.
+rm -rf $PKG/usr/lib/systemd
+
+# Icon is internet-news-reader.svg from the Tango icon theme.
+for i in $CWD/icons/*.png; do
+  px="$( basename $i .png )"
+  dir=$PKG/usr/share/icons/hicolor/${px}x${px}/apps
+  mkdir -p $dir
+  cat $i > $dir/$PRGNAM.png
+done
+
+PXMAP=$PKG/usr/share/pixmaps
+mkdir -p $PXMAP
+ln -s ../icons/hicolor/48x48/apps/$PRGNAM.png $PXMAP/$PRGNAM.png
+
+# .desktop written by SlackBuild author.
+mkdir -p $PKG/usr/share/applications
+cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
+
+# Don't bother with the READMEs, they're basically content-free. The real
+# docs are the man pages.
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a COPYING $PKGDOC
+cat $CWD/README > $PKGDOC/README
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat $CWD/doinst.sh > $PKG/install/douninst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

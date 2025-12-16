@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Canto
+GenericName=RSS/Atom Feed Aggregator
+Icon=canto-next
+Exec=/usr/bin/canto-curses
+Terminal=true
+Type=Application
+Categories=Network;News

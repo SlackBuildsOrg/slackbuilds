@@ -14,7 +14,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xrdp
 VERSION=${VERSION:-0.10.4.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -42,6 +42,7 @@ USE_GVFS=${USE_GVFS:-YES}
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
+  DISABLE_SIMD="--without-simd"
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
   LIBDIRSUFFIX=""
@@ -90,7 +91,8 @@ CPPFLAGS="$SLKCFLAGS" \
   --disable-painter \
   --disable-rfxcodec \
   --disable-static \
-  $NOGVFS_OPT
+  $NOGVFS_OPT \
+  $DISABLE_SIMD
 
 ## Use sed rather than patch as line locations change between versions
 # Change LogLevel to INFO instead of DEBUG

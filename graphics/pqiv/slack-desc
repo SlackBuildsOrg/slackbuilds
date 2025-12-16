@@ -8,12 +8,12 @@
     |-----handy-ruler------------------------------------------------------|
 pqiv: pqiv (powerful image viewer with minimal UI)
 pqiv:
-pqiv: pqiv is a powerful GTK 3 based command-line image viewer with a
-pqiv: minimal UI. It is highly customizable, can be fully controlled from
-pqiv: scripts, and has support for various file formats including PDF,
-pqiv: Postscript, video files and archives. It is optimized to be quick and
-pqiv: responsive.
+pqiv: pqiv is a powerful GTK+ based command-line image viewer with a minimal
+pqiv: UI. It is highly customizable, can be fully controlled from scripts,
+pqiv: and has support for various file formats including PDF, Postscript,
+pqiv: video files and archives. It is optimized to be quick and responsive.
 pqiv:
-pqiv: Homepage: http://www.pberndt.com/Programme/Linux/pqiv/index.html
+pqiv: This package was built for GTK+@GTKVER@.
 pqiv:
+pqiv: Homepage: http://www.pberndt.com/Programme/Linux/pqiv/
 pqiv:

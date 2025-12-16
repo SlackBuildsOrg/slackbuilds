@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=clion
 ARCNAM=CLion
-VERSION=${VERSION:-2025.2.4}
+VERSION=${VERSION:-2025.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -64,7 +64,7 @@ cat << EOF > $PKG/usr/share/applications/$PRGNAM.desktop
 [Desktop Entry]
 Version=1.0
 Type=Application
-Exec=/opt/$PRGNAM/bin/$PRGNAM.sh
+Exec=/opt/$PRGNAM/bin/$PRGNAM
 Name=CLion
 GenericName=CLion
 Comment=A cross-platform IDE for C and C++
@@ -75,7 +75,7 @@ Terminal=false
 StartupWMClass=jetbrains-clion
 EOF
 
-ln -s /opt/$PRGNAM/bin/$PRGNAM.sh $PKG/usr/bin/$PRGNAM.sh
+ln -s /opt/$PRGNAM/bin/$PRGNAM $PKG/usr/bin/$PRGNAM
 
 install -D -m 0644 $PKG/opt/$PRGNAM/bin/$PRGNAM.png \
   $PKG/usr/share/pixmaps/$PRGNAM.png

@@ -4,7 +4,7 @@
 
 # Copyright 2011 crocket (email removed)
 # Copyright 2013-2015 LukenShiro, Italy
-# Copyright 2020 B. Watson
+# Copyright 2020-2025 B. Watson
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,6 +24,7 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20251216 bkw: update for v2025.4.15.
 # 20240814 bkw: update for v2024.2.26.
 # 20200203 bkw:
 # - new maintainer
@@ -36,7 +37,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=html2text
-VERSION=${VERSION:-2024.2.26}
+VERSION=${VERSION:-2025.4.15}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -67,14 +68,20 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
-python3 setup.py install --root=$PKG
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a *.rst *.md COPYING $PKG/usr/doc/$PRGNAM-$VERSION/
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+python3 -m build --wheel --no-isolation
+python3 -m installer --destdir "$PKG" dist/*.whl
+
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a *.rst *.md COPYING $PKGDOC/
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

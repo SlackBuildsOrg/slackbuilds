@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=muse-sounds-manager
-VERSION=${VERSION:-2.0.4.872}
+VERSION=${VERSION:-2.1.1.912}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -50,7 +50,7 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf ${PRGNAM}-${VERSION}
 tar xvfz $CWD/Muse_Sounds_Manager_x64.tar.gz
-mv muse_sounds_manager_x64_${VERSION} ${PRGNAM}-${VERSION}
+mv Muse_Sounds_Manager_x64_${VERSION} ${PRGNAM}-${VERSION}
 cd ${PRGNAM}-${VERSION}
 
 chown -R root:root .

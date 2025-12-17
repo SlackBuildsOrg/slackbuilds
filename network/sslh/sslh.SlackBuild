@@ -7,12 +7,7 @@
 # Original script had no license. Modified version is licensed under
 # the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
-# 20250706 bkw: normally I would go with the latest release, but there
-# are some pretty important-looking fixes in the last few git commits.
-# There's not a single line of mara's original script left, other than
-# boilerplate code copied from the SBo template, so I don't feel bad
-# relicensing it.
-
+# 20251217 bkw: update for v2.3.0.
 # 20250719 bkw:
 # - updated for latest git, v2.2.4+20250630_11da63c.
 # - fix almost everything: README, slack-desc, rc script...
@@ -24,7 +19,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sslh
-VERSION=${VERSION:-2.2.4+20250630_11da63c}
+VERSION=${VERSION:-2.3.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -66,7 +61,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \

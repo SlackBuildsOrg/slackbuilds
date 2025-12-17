@@ -8,7 +8,8 @@ development of the now inactive VisualBoy Advance project, with many
 improvements from various developments of VBA.
 
 The main executable is /usr/games/vbam, which is a command-line app
-with no GUI controls.
+with no GUI controls. Most users will prefer to use the wxWidgets GUI
+executable (visualboyadvance-m).
 
 Optional dependencies:
 
@@ -16,16 +17,22 @@ wxWidgets - highly recommended, autodetected (can be disabled via
 WX=no). This gives you a /usr/games/visualboyadvance-m executable that
 has a modern graphical user interface, plus desktop integration.
 
-SFML - autodetected (can be disabled via SFML=no). Only required for
-emulating the GBA Link cable.
-
 lirc - autodetected (can be disabled via LIRC=no). Allows using an
 IR remote control to control the emulator. Only works with the SDL
 user interface (the vbam executable). Untested by the SlackBuild
 maintainer, as I don't own any lirc-compatible hardware.
 
-x264 and x265 - autodetected. Required for recording gameplay as video
-files. Yes, both are needed.
+x264 and x265 - autodetected. Supposedly required for recording
+gameplay as video files, though it seems to work fine without them.
+Only works with the wxWidgets UI (the visualboyadvance-m executable).
+
+fmt - autodetected. Used by visualboyadvance-m, but I have no idea
+what it's used for. Apparently nothing: no source file includes any of
+the fmt headers...?
+
+FAudio - autodetected. Used by visualboyadvance-m. Allows using FAudio
+as an audio backend (rather than OpenAL or SDL audio). Doesn't sound
+any different to me.
 
 Notes:
 

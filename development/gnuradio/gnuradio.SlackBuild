@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnuradio
 VERSION=${VERSION:-3.10.12.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -77,6 +77,11 @@ find -L . \
  -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# fix build with Boost 1.89.0
+patch -p1 <$CWD/patches/a166bdf73d3e3bfd362c239bbd58852faaad39c4.diff
+# don't download stuff during the build
+patch -p1 <$CWD/patches/skip-validation-for-document-syntax-from-remote.diff
 
 # install docs in the right place
 sed -i "s|\${GR_DATA_DIR}/doc|doc|" CMakeLists.txt

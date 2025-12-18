@@ -1,9 +1,9 @@
 PRGNAM="nanobind"
-VERSION="2.9.2"
+VERSION="2.10.2"
 HOMEPAGE="https://github.com/wjakob/nanobind"
-DOWNLOAD="https://github.com/wjakob/nanobind/archive/v2.9.2/nanobind-2.9.2.tar.gz \
+DOWNLOAD="https://github.com/wjakob/nanobind/archive/v2.10.2/nanobind-2.10.2.tar.gz \
           https://github.com/Tessil/robin-map/archive/4ec1bf1/robin-map-4ec1bf19c6a96125ea22062f38c2cf5b958e448e.tar.gz"
-MD5SUM="7e7f2288b9a235c7caa7c802f4693a52 \
+MD5SUM="29106ce3adcabad998164db2880b9820 \
         9100e1fe0df90bddfb7c907969047ee1"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

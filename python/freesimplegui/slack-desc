@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+freesimplegui: freesimplegui (the free-forever python simple gui software)
+freesimplegui:
+freesimplegui: FreeSimpleGUI is a Python package that enables Python programmers
+freesimplegui: of all levels to create GUIs. You specify your GUI window using
+freesimplegui: a "layout" which contains widgets (they're called "Elements" in
+freesimplegui: FreeSimpleGUI). Your layout is used to create a window using one of
+freesimplegui: the 4 supported frameworks to display and interact with your window.
+freesimplegui:
+freesimplegui:
+freesimplegui:
+freesimplegui:

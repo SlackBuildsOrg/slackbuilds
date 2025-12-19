@@ -1,0 +1,12 @@
+Google's Verified Boot reference implementation (versions 1.x & 2.x)
+and helper tools.
+
+Tools included:
+ - cgpt, utility to read/write/modify GPT partitions with support for
+Chrome OS extensions.
+ - futility, used to create, sign, and validate Chrome OS images.
+ - crossystem (optional), Chrome OS firmware/system interface utility.
+
+  If you want to build the crossystem tool (used at chromebook 
+platforms) set CROSSYSTEM=yes, this requires chromeos-flashrom
+package.

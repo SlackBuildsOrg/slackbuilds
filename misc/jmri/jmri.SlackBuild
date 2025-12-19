@@ -27,8 +27,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jmri
-VERSION=${VERSION:-5.12}
-REVISION=${REVISION:-Rc5bd588235}
+VERSION=${VERSION:-5.14}
+REVISION=${REVISION:-Rdea51dcccf}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

@@ -1,0 +1,14 @@
+xhidecursor is a small X11 utility that hides the mouse cursor while
+typing.
+
+It is useful for users who spend most of their time typing in terminal
+emulators or editors and want to avoid the cursor getting in the way.
+
+The program uses the XFixes and XInput extensions and is designed to be
+simple, fast, and unobtrusive.
+
+xhidecursor is intended to be started from .xinitrc or a window manager
+startup script, for example:
+
+  xhidecursor &
+

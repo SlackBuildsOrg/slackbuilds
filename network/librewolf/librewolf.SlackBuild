@@ -26,7 +26,7 @@
 cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=librewolf
-VERSION=${VERSION:-146.0_2}
+VERSION=${VERSION:-146.0.1_1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

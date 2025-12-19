@@ -26,11 +26,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=notepadqq
-VERSION=${VERSION:-20250915_79ebae7}
+VERSION=${VERSION:-20251218_5d2a96a}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=${TARBALL:-79ebae7df64ea1c7d2ba3ec5e1e0568735037d54}
+TARBALL=${TARBALL:-5d2a96a2a828dbc68f4b04c5031150b8a1bcbe8c}
 
 
 if [ -z "$ARCH" ]; then

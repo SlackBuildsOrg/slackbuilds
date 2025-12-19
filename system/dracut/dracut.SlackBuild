@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Copyright 2023  Matt Egger USA
-# Copyright 2024  Patrick J. Volkerding, Sebeka, Minnesota, USA
-# Copyright 2025  Matt Egger USA
+# Copyright 2023, 2025  Matt Egger, Philadelphia, PA,  USA
+# Copyright 2024, 2025  Patrick J. Volkerding, Sebeka, Minnesota, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +25,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dracut
 SRCNAM=dracut-ng
-VERSION=${VERSION:-108}
+VERSION=${VERSION:-109}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -106,8 +105,11 @@ cat $CWD/elogind.conf | sed "s#/lib/#/lib${LIBDIRSUFFIX}/#g" > $PKG/etc/dracut.c
 # it's scaring the children. ;-)
 cat $CWD/omit_systemd_modules.conf > $PKG/etc/dracut.conf.d/omit_systemd_modules.conf.new
 
+# Set i18n_vars to prevent a warning:
+cat $CWD/i18n_vars.conf > $PKG/etc/dracut.conf.d/i18n_vars.conf.new
+
 # Set hostonly_cmdline=yes, otherwise encrypted root will fail.
-echo "hostonly_cmdline=yes" > $PKG/etc/dracut.conf.d/hostonly_cmdline_yes.conf.new
+cat $CWD/hostonly_cmdline_yes.conf > $PKG/etc/dracut.conf.d/hostonly_cmdline_yes.conf.new
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 

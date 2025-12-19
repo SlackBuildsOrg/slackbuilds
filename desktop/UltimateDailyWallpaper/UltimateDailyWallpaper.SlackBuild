@@ -2,7 +2,7 @@
 
 # Slackware build script for UltimateDailyWallpaper
 
-# Copyright 2023 Patrice Coni
+# Copyright 2025 Patrice Coni
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=UltimateDailyWallpaper
-VERSION=${VERSION:-3.3.6}
+VERSION=${VERSION:-3.3.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -59,8 +59,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/ultimatedailywallpaper-$VERSION.tar.gz
-cd ultimatedailywallpaper-$VERSION
+tar xvf $CWD/ultimatedailywallpaper-v$VERSION.tar.gz
+cd ultimatedailywallpaper-v$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

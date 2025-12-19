@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                 |-----handy-ruler------------------------------------------------------|
+chromeos-flashrom: chromeos-flashrom (ChromiumOS fork of the Flashrom tool)
+chromeos-flashrom:
+chromeos-flashrom: chromeos-flashrom is a utility for reading, writing, verifying and
+chromeos-flashrom: erasing flash ROM chips.  It's often used to flash
+chromeos-flashrom: BIOS/EFI/coreboot/firmware images.  chromeos-flashrom is a fork of
+chromeos-flashrom: the coreboot project.
+chromeos-flashrom:
+chromeos-flashrom: Homepage:
+chromeos-flashrom:   https://chromium.googlesource.com/chromiumos/third_party/flashrom
+chromeos-flashrom:
+chromeos-flashrom:

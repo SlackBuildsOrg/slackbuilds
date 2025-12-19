@@ -1,0 +1,8 @@
+ChromiumOS fork of the Flashrom tool.
+
+Flashrom is a utility for reading, writing, verifying and erasing
+flash ROM chips. It's often used to flash BIOS/EFI/coreboot/firmware
+images.
+
+The original flashrom is part of the coreboot project.
+This version is maintained by chromiumos project.

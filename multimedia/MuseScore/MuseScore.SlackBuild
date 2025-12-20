@@ -101,7 +101,7 @@ export Qt6Test_DIR=/opt/MuseScore-Libraries/lib/cmake/Qt6Test
     -DCMAKE_MODULE_LINKER_FLAGS_RELEASE="-pthread" \
     -DQT_QMAKE_EXECUTABLE=/opt/MuseScore-Libraries/bin/qmake
 
-/opt/cmake-opt/bin/cmake --build b -j 8
+/opt/cmake-opt/bin/cmake --build b
 cd b
 make install \
   DESTDIR=$PKG \

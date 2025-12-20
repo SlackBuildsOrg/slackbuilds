@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=qt6
 SRCNAM=qt-everywhere-src
 VERSION=${VERSION:-6.8.3}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -92,7 +92,7 @@ if [ "${QTGRPC:-OFF}" = "OFF" ]; then
    QTGRPC="-skip qtgrpc"
 fi
 
-cd qtbase
+pushd qtbase
 patch -Np1 -i $CWD/CVE-2025-3512-qtbase-6.8.diff
 patch -Np1 -i $CWD/CVE-2025-4211-qtbase-6.8.diff
 patch -Np1 -i $CWD/CVE-2025-5455-qtbase-6.8.patch
@@ -102,12 +102,21 @@ patch -Np1 -i $CWD/CVE-2025-5992-qtbase-6.8.patch
 
 sed -i 's/QPCCertContextPointer certificateContext;/const CERT_CONTEXT *certificateContext = nullptr;/g' $CWD/CVE-2025-6338-qtbase-6.8.patch
 patch -Np1 -i $CWD/CVE-2025-6338-qtbase-6.8.patch
-cd ../qtsvg
+popd
+
+pushd qtsvg
 patch -Np1 -i $CWD/CVE-2025-10728-qtsvg-6.8.diff
 patch -Np1 -i $CWD/CVE-2025-10729-qtsvg-6.8.diff
-cd ../qtimageformats
+popd
+
+pushd qtimageformats
 patch -Np1 -i $CWD/CVE-2025-5683-qtimageformats-6.8.patch
-cd ..
+popd
+
+pushd qtdeclarative
+patch -Np1 -i $CWD/CVE-2025-12385-qtdeclarative-6.8-0001.diff
+patch -Np1 -i $CWD/CVE-2025-12385-qtdeclarative-6.8-0002.diff
+popd
 
 export QT6PREFIX="/usr"
 export CFLAGS="$SLKCFLAGS"

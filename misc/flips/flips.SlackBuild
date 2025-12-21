@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=flips
 SRCNAM=Flips
 VERSION=${VERSION:-198}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -80,6 +80,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 sed -i '/Flips.desktop/ s/755/644/g' Makefile
+sed -i "/COMMIT_COUNT/ s/git rev-list --count master/echo ${VERSION}/g" Makefile
 TARGET=gtk make CFLAGS="$SLKCFLAGS -fstack-protector-strong -pie -fPIE -D_FORTIFY_SOURCE=2"
 make DESTDIR="$PKG" install
 

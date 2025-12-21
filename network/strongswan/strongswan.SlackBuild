@@ -23,6 +23,11 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #
+# 2025-12-21
+#   - upgraded upstream to verion 6.0.4
+#   - enabled the 'stroke' plugin for backward compatibility, I'll keep this
+#     enabled as long as it exists
+#
 # 2024-11-27
 #   - upgraded upstream to verion 5.9.14
 #
@@ -33,7 +38,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=strongswan
-VERSION=${VERSION:-5.9.14}
+VERSION=${VERSION:-6.0.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -49,6 +54,7 @@ DEFAULT_CONFIG_OPTS="\
     --enable-cmd \
     --enable-af-alg \
     --enable-gcrypt \
+    --enable-aes \
     --enable-aesni \
     --enable-sha3 \
     --enable-files \
@@ -80,6 +86,11 @@ DEFAULT_CONFIG_OPTS="\
     --enable-farp \
     --enable-lookip \
     --enable-nm \
+    --enable-stroke \
+    --enable-socket-dynamic \
+    --enable-smp \
+    --enable-ha \
+    --enable-duplicheck \
 "
 
 if [ -z "$ARCH" ]; then

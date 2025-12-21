@@ -33,11 +33,14 @@
 # if asio is installed. added a note to README about asio. also, remove
 # the .la file from the package. still no new abiword-docs release.
 
+# 20251220 Patrice Coni: updated for v3.0.7. Still no new abiword-docs
+# release.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=abiword
 SRCNAM=AbiWord-release
-VERSION=${VERSION:-3.0.5}
+VERSION=${VERSION:-3.0.7}
 DOCSVER=3.0.2     # version of abiword-docs
 DOCTAR=3.0.1      # sigh, the tarball contains abiword-docs-3.0.1 still
                   # (DOCTAR WHO?)
@@ -94,6 +97,7 @@ find -L . \
  -exec chmod 644 {} \+
 
 patch -p1 < $CWD/enchant-2.1.patch
+patch -p0 < $CWD/fix-configure-error-enchant-2.patch
 
 # 20200622 bkw: don't let abiword create /root/.config/abiword/profile
 # during the build process. Don't break ccache in the process.
@@ -116,6 +120,7 @@ CXXFLAGS="$SLKCFLAGS -std=c++11" \
   --enable-clipart \
   --enable-templates \
   --enable-plugins \
+  --enable-spell \
   --build=$ARCH-slackware-linux
 
 make
@@ -126,6 +131,7 @@ cd abiword-docs-$DOCTAR
   PATH="$PKG/usr/bin:$PATH" \
   PKG_CONFIG_PATH="$PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig:$PKG_CONFIG_PATH" \
   ./configure \
+    --enable-spell \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \

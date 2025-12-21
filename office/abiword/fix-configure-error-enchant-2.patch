@@ -1,0 +1,11 @@
+--- configure.ac.orig	2021-07-03 17:46:07.000000000 +0200
++++ configure.ac	2025-12-14 12:08:00.005137261 +0100
+@@ -94,7 +94,7 @@
+ "
+ 
+ # optional deps
+-enchant_req='enchant >= 1.2.0'
++enchant_req='enchant-2'
+ gio_req='gio-2.0'
+ goffice_req='libgoffice-0.10 >= 0.10.0'
+ 

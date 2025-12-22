@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-driver
-VERSION=${VERSION:-590.44.01}
+VERSION=${VERSION:-590.48.01}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -324,9 +324,6 @@ if [ "${PERSISTENCED:-no}" = "yes" ]; then
   sed -i "s|__USER__|nvidia|" $PKG/etc/rc.d/rc.nvidia-persistenced
   chown nvidia:nvidia $PKG/var/run/nvidia-persistenced
 fi
-
-# Fix permission
-chown 644 $PKG/usr/share/icons/hicolor/128x128/apps/nvidia-settings.png
 
 # We must now remove our custom nvidia-installer as it will no longer
 # work on an installed driver:

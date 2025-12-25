@@ -2,7 +2,7 @@
 
 # Slackware build script for python3-gmpy2
 
-# Copyright 2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2025-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2019-2023, Alexander Verbovetsky, Moscow, Russia
 # All rights reserved.
 #
@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-gmpy2
 SRCNAM=gmpy2
-VERSION=${VERSION:-2.2.1}
+VERSION=${VERSION:-2.2.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -57,6 +57,7 @@ cd $TMP
 rm -rf $SRCNAM-$VERSION
 tar xf $CWD/$SRCNAM-$VERSION.tar.?z
 cd $SRCNAM-$VERSION
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -66,6 +67,7 @@ find -L . \
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH=/opt/python$PYVER/site-packages
+python3 setup.py build_ext
 python3 setup.py install --root=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

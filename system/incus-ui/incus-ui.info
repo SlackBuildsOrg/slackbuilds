@@ -1,12 +1,12 @@
 PRGNAM="incus-ui"
-VERSION="20251124_bbeababb"
+VERSION="20251211_d16e2476"
 HOMEPAGE="https://github.com/zabbly/incus-ui-canonical/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://sourceforge.net/projects/slackbuildsdirectlinks/files/incus/incus-ui-canonical-20251124_bbeababb.tar.lz \
-                 https://sourceforge.net/projects/slackbuildsdirectlinks/files/incus-ui-canonical-20251124_bbeababb-NM.tar.lz"
-MD5SUM_x86_64="3ad850fe4a66281a32b2168a4f503fbf \
-               e7247e314fac7e85faaa60bf91929f6b"
+DOWNLOAD_x86_64="https://sourceforge.net/projects/slackbuildsdirectlinks/files/incus/incus-ui-canonical-20251211_d16e2476.tar.lz \
+                 https://sourceforge.net/projects/slackbuildsdirectlinks/files/incus-ui-canonical-20251211_d16e2476-NM.tar.lz"
+MD5SUM_x86_64="a4eb62828e6880f926b1edcf43c2afe0 \
+               7f6c9fc6ea19c20f1b1485c8b3be68e6"
 REQUIRES="yarn"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

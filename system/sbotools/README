@@ -19,9 +19,8 @@ request automatic reverse dependency rebuilds, see sbohints(1) or
 /etc/sbotools/sbotools.hints.
 
 Please note that this implementation of sbotools was forked from
-sbotools-2.7 and added to SlackBuilds.org in late 2024. Configuration
-files from version 2.7 are compatible, but some of the options are new.
-A debt of gratitude is owed to original author Jacob Pipkin, longtime
-maintainer Andreas Guldstrand and major contributor Luke Williams.
+sbotools-2.7 and added to SlackBuilds.org in late 2024. A debt of
+gratitude is owed to original author Jacob Pipkin, longtime maintainer
+Andreas Guldstrand and major contributor Luke Williams.
 
 sbotools conflicts with system/sbotools2 (Legacy Sbotools).

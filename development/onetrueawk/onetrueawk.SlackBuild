@@ -6,13 +6,14 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251226 bkw: update for v20251225.
 # 20250902 bkw: update for v20250116.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=onetrueawk
 SRCNAME=awk
-VERSION=${VERSION:-20250116}
+VERSION=${VERSION:-20251225}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -53,8 +54,9 @@ rm -rf $PRGNAM-$SRCNAME
 tar xvf $CWD/$SRCNAME-$VERSION.tar.gz
 cd $SRCNAME-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 make HOSTCC=${CC:-gcc} CFLAGS="$SLKCFLAGS"
 

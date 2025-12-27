@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
    |-----handy-ruler------------------------------------------------------|
-buf: buf (A command line tool for working with Protocol Buffers)
+buf: buf (The best way of working with Protocol Buffers.)
 buf:
-buf: The all-in-one Protobuf toolchain:
+buf: The buf CLI is the best tool for working with Protocol Buffers. It
+buf: provides a linter, a breaking change detector, a generator,
+buf: a formatter, integration with the Buf Schema Registry, including full
+buf: dependency management.
 buf:
-buf: Generate code, prevent breaking changes, lint Protobuf schemas,
-buf: enforce best practices, and invoke APIs with the Buf CLI.
+buf: Homepage: https://buf.build/
 buf:
 buf:
-buf:
-buf: Home-Page: https://github.com/bufbuild/buf
 buf:

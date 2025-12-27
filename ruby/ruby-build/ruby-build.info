@@ -1,5 +1,5 @@
 PRGNAM="ruby-build"
-VERSION="20251218"
+VERSION="20251225"
 HOMEPAGE="https://github.com/rbenv/ruby-build"
 DOWNLOAD="https://github.com/rbenv/ruby-build/archive/v20251225/ruby-build-20251225.tar.gz"
 MD5SUM="2ad69bb99e613c71b93e7cf7f4c43db5"

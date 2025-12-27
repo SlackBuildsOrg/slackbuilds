@@ -1,0 +1,63 @@
+SlackBuilds OVERLAY
+==================
+
+This repository is a fork of SlackBuilds.org.
+
+The master branch tracks SlackBuilds.org upstream and is updated
+regularly. In addition to upstream content, this fork contains a
+local OVERLAY/ directory.
+
+OVERLAY/
+--------
+
+OVERLAY/ contains local SlackBuilds that are intentionally different
+from upstream. These changes are:
+
+- used locally
+- opinionated
+- sometimes Slackware-current specific
+- not intended for upstream submission
+- changes that upstream maintainers do not want to accept
+
+Packages placed in OVERLAY/ are considered permanent local overrides
+and may diverge indefinitely from SlackBuilds.org.
+
+Workflow
+--------
+
+master
+  Maintained fork of SlackBuilds.org.
+  Contains upstream content plus OVERLAY/.
+  Updated from upstream using fast-forward only.
+  Local files must never be destroyed by sync operations.
+
+update/*
+  Temporary branches used only to prepare upstream pull requests.
+  One package per branch.
+  Deleted after the PR is merged.
+
+OVERLAY/
+  Local SlackBuilds overrides.
+  Never submitted upstream.
+  Not affected by upstream updates.
+
+Policy
+------
+
+If a change is suitable for upstream, it should be prepared in an
+update/* branch and proposed to SlackBuilds.org.
+
+If a change is local-only, opinionated, or explicitly rejected by
+upstream maintainers, it belongs in OVERLAY/.
+
+Important
+---------
+
+Once OVERLAY/ exists, this repository must never be synced using
+destructive commands such as:
+
+  git reset --hard upstream/master
+  git push --force
+
+Upstream updates must be integrated using fast-forward only.
+

@@ -1,3 +1,138 @@
+Sat Dec 27 07:00:09 UTC 2025
+audio/clockchimes: Orphaned.
+audio/dopamine-bin: Updated for version 3.0.1
+audio/musikcube: Updated for version 3.0.5
+desktop/UltimateDailyWallpaper: Updated for version 3.4.0.
+desktop/idesk: Add note to self.
+desktop/mint-themes: Update for 2.3.6
+desktop/numix-gtk-theme: Removed (FTBFS and Upstream Inactive).
+desktop/progman: Added (Simple Window Manager).
+development/a68g: Updated for version 3.10.9
+development/antigravity: Updated for version 1.13.3
+development/aws-cdk: Updated for version 2.1100.1.
+development/bbcsdl: Updated for version 20251222_2bb3804
+development/chatgpt_sh: Orphaned
+development/claude-code: Updated for version 2.0.74
+development/extra-cmake-modules-opt: Added (CMake Modules).
+development/fasm: Updated for version 1.73.34.
+development/gf: Added (GDB Frontend).
+development/hoppscotch: Updated for version 25.12.0.
+development/jupyter-nbclient: Update README (why software version should not be updated)
+development/lm-studio-bin: Updated for version 0.3.36.1
+development/mle: New maintainer.
+development/postman: Updated for version 11.76.9
+development/qb64pe: Updated for version 4.3.0
+development/rider: Updated for version 2025.3.1.
+development/robotframework: Updated for version 7.4.
+development/sourcegit: Updated for version 2025.40
+development/spyder: Fix replace-pkg_resources patch
+development/sublime_text: Updated for version 4.2.00.
+development/tcc: Updated for version 0.9.28rc+20251217_34eed88a.
+development/zizmor: Updated for version 1.19.0.
+games/eureka: Updated for version 2.1.0.
+games/hedgewars: Updated for version 1.0.3.
+games/sameboy: Updated for version 1.0.2.
+games/widelands: Updated for version 1.3
+graphics/nvidia-texture-tools: Build shared libs
+graphics/pngcheck: Updated for version 4.0.1.
+graphics/vuescan: Updated MD5SUM_x86_64.
+graphics/xnap: Added (X11 Utility).
+libraries/aqbanking: Updated for version 6.8.4.
+libraries/exempi: Updated for version 2.6.6.
+libraries/girara: Updated for version 0.4.5.
+libraries/iksemel: Update maintainer.
+libraries/kwindowsystem6: Added (KWindowSystem).
+libraries/layer-shell-qt6: Added (LayerShellQt Library).
+libraries/leptonica: Updated for version 1.87.0.
+libraries/libconfig: Updated for version 1.8.2.
+libraries/libdbusmenu-lxqt: Added (fork of libdbusmenu-qt).
+libraries/libkscreen6: Added (screen management library).
+libraries/notcurses: Updated for version 3.0.17, New Maintainer
+libraries/plasma-wayland-protocols-opt: Added (Plasma Wayland Protocol).
+libraries/polkit-qt6-1: Added (QT6 build of polkit-qt).
+libraries/qt-avif-image-plugin: Updated for version 0.10.0.
+libraries/qt6: Security fix for version 6.8.3.
+libraries/solid6: Added (Device Integration Framework).
+misc/flips: Updated for version 198.
+multimedia/MediathekView: Updated for version 14.4.2.
+multimedia/muse-sounds-manager: Removed (need newer GLIBC).
+multimedia/tsduck: Fix MD5SUM and script.
+network/abdownloadmanager-bin: Updated for version 1.8.1
+network/acme.sh: Updated for version 3.1.2.
+network/anydesk: Updated for version 7.1.2.
+network/aoetools: Orphaned
+network/brave-browser: update 1.85.118
+network/floorp-bin: Updated for version 12.8.3.
+network/floorp-bin: Updated for version 12.9.1.
+network/haproxy: Updated for version 3.2.10.
+network/neomutt: Updated for version 20251211.
+network/opera: Updated for version 125.0.5729.49
+network/rspamd: Updated for version 3.14.2
+network/skypeforlinux: Removed (discontinued upstream).
+network/sslh: Updated for version 2.3.0.
+network/strongswan: Updated for version 6.0.4.
+network/tailscale: update 1.92.3
+network/teams: Removed (discontinued upstream).
+network/unbound: Updated for version 1.24.2.
+network/zabbix_agent2: Updated for version 7.0.22.
+network/zabbix_frontend: Updated for version 7.0.22.
+network/zabbix_java_gateway: Updated for version 7.0.22.
+network/zabbix_proxy: Updated for version 7.0.22.
+network/zabbix_server: Updated for version 7.0.22.
+network/zen-browser: Updated for version 1.17.15b
+office/abiword: Updated for version 3.0.7.
+office/eid-mw: Updated for version 5.1.26.
+office/homebank: Updated for version 5.9.6.
+office/onlyoffice-desktopeditors: Updated for version 9.2.1
+office/qownnotes: Updated for version 25.12.7.
+office/scribus: Updated for version 1.6.5.
+python/python2-blessed: Added (Python Library).
+python/python2-enlighten: Updated for version 1.14.1.
+python/python2-nuitka: Updated for version 2.8.10
+python/python2-prefixed: Added (Numeric Library).
+python/python3-enlighten: Updated for version 1.14.1.
+python/python3-gmpy2: Updated for version 2.2.2
+python/python3-mistune: Update for 3.2.0
+python/python3-nuitka: Updated for version 2.8.10
+python/python3-odfdo: Updated for version 3.18.3
+python/python3-prefixed: Added (Python numeric library).
+python/python3-pypdf: Updated for version 6.5.0
+ruby/ruby-build: Updated for version 20251218.
+system/B-em: Updated for version 20251220_7eb9b67
+system/Iosevka-core: Added (Minimal Iosevka Font Set).
+system/alftools: Updated for version 0.4.1.
+system/bottom: Updated for version 0.12.1.
+system/collectd: Update download URL
+system/docker-compose: Updated for version 5.0.1
+system/doublecmd-qt5: Updated for version 1.1.31
+system/fastfetch: Updated for version 2.56.1; new maintainer.
+system/fetcha: Fix script.
+system/fff: New maintainer.
+system/grub2-splashimages: Added (Splash Images for GRUB).
+system/idle3-tools: Orphaned.
+system/incus-ui: Updated for version 20251211_d16e2476
+system/incus: Updated for version 6.20
+system/isomd5sum: Updated for version 1.2.5.
+system/kmscon: Updated for version 9.2.1.
+system/limine: Updated for version 10.5.1
+system/mongodb: Updated for version 8.2.3.
+system/nerdctl: Updated for version 2.2.1.
+system/nvidia-driver: Updated for version 590.48.01.
+system/nvidia-kernel: Updated for version 590.48.01.
+system/oksh: New maintainer.
+system/onefetch: Updated for version 2.26.1.
+system/pax-utils: Updated for version 1.3.10.
+system/rar2fs: Updated for version 1.29.7.
+system/rar: Updated for version 7.12.
+system/sbotest: Updated for version 1.2.1.
+system/sbotools: Updated for version 4.1.3.
+system/sbozyp: Updated for version 1.4.0
+system/timeshift: Updated for version 25.12.2
+system/tm: Orphaned.
+system/unrar: Updated for version 7.2.3.
+system/wine: Use rsvg-convert to convert the svg (safer).
+system/zutty: New Maintainer
++--------------------------+
 Sat Dec 20 00:51:29 UTC 2025
 desktop/UltimateDailyWallpaper: Updated for version 3.3.7.
 desktop/buku: Fix VERSION.

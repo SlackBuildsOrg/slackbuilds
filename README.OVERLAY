@@ -3,99 +3,141 @@ SlackBuilds OVERLAY
 
 This repository is a fork of SlackBuilds.org.
 
-The master branch tracks SlackBuilds.org upstream and is updated
-regularly. In addition to upstream content, this fork contains a
-local OVERLAY/ directory used for permanent local changes.
+Its purpose is to:
+- track SlackBuilds.org upstream cleanly
+- maintain a small set of local SlackBuild overrides that are
+  intentionally different from upstream
 
---------------------------------------------------------------------
+Local overrides live in OVERLAY/ and are never submitted upstream.
 
-Branches and Directories
-------------------------
+
+Repository Model
+----------------
+
+upstream/master
+  SlackBuilds.org canonical history (read-only).
 
 master
-  Maintained fork of SlackBuilds.org.
-  Tracks upstream using fast-forward updates only.
-  Contains upstream content plus the local OVERLAY/ directory.
-  Must never be rewritten or reset.
+  Local fork mirror of SlackBuilds.org.
+  May contain local commits such as OVERLAY/.
+  NOT safe as a base for upstream pull requests.
 
-update/*
-  Temporary branches used only to prepare upstream pull requests.
+add/*, update/*
+  Temporary branches for upstream pull requests.
+  Always created from upstream/master.
   One package per branch.
-  Created from master and deleted after upstream merge.
-  Never updated in place.
+  Deleted after merge.
 
 OVERLAY/
-  Local SlackBuilds overrides.
-  Used for packages and changes that are:
-    - used locally
-    - opinionated
-    - sometimes Slackware-current specific
-    - explicitly rejected or not accepted upstream
-  Packages in OVERLAY/ may diverge indefinitely from upstream.
-  OVERLAY/ is never submitted upstream and never modified by syncs.
+  Local SlackBuild overrides.
+  Permanent and opinionated.
+  Never submitted upstream.
+  May diverge indefinitely.
 
---------------------------------------------------------------------
 
-Upstream Contribution Workflow (update/*)
------------------------------------------
+What Belongs in OVERLAY
+----------------------
 
-update/* branches are disposable transport branches.
-They exist only to submit a change upstream and are never updated
-or reused.
+A change belongs in OVERLAY if it is:
 
-Rules:
+- Slackware-current specific
+- Required for local systems only
+- Opinionated or policy-based
+- Rejected or not desired by upstream maintainers
+- Experimental or long-term local customization
 
-- update/* branches are always created from master
-- update/* branches never touch OVERLAY/
-- update/* branches are never merged, rebased, or synced
-- after upstream merge, update/* branches are deleted
+OVERLAY is intentional divergence.
 
-Workflow:
 
-1. Update master from upstream
-   sb-sync-master
+Upstream Contributions
+----------------------
 
-2. Create a new update branch
+SlackBuilds.org distinguishes between:
+
+1. Updates to existing packages
+2. New package submissions
+
+These two cases follow different processes.
+
+
+Updates to Existing Packages
+----------------------------
+
+Updates to packages that already exist in SlackBuilds.org
+(e.g. version bumps, build fixes, minor improvements) may
+be submitted via pull request.
+
+Fail-safe workflow:
+
+1. Fetch upstream
+   git fetch upstream
+
+2. Create PR branch from upstream/master
+   git checkout upstream/master
    git checkout -b update/pkgname-version
 
 3. Make a minimal upstream-acceptable change
-   git commit -am "category/pkg: message"
+   git commit -am "category/pkgname: short description"
 
-4. Push and open pull request
+4. Push and open PR
    git push origin update/pkgname-version
-   gh pr create ...
 
-5. After the change is merged upstream
+5. After PR merge
    git checkout master
-   sb-sync-master
+   git fetch upstream
+   git merge --ff-only upstream/master
    git branch -D update/pkgname-version
 
-Note:
-update/* branches are never updated to follow master.
-They are deleted and recreated when needed.
 
---------------------------------------------------------------------
+New Package Submissions
+----------------------
 
-Local Policy
-------------
+New packages MUST NOT be submitted via pull request.
 
-If a change is suitable for upstream, minimal, and acceptable to
-SlackBuilds.org maintainers, it should be proposed using an
-update/* branch.
+SlackBuilds.org requires new packages to be submitted using
+the official submission form:
 
-If a change is local-only, opinionated, Slackware-current specific,
-or explicitly rejected upstream, it belongs in OVERLAY/.
+  https://slackbuilds.org/submit/
 
---------------------------------------------------------------------
+Rules for new packages:
 
-Important
----------
+- Do NOT open a pull request
+- Do NOT add the package to this repository for upstream
+- Prepare the SlackBuild locally
+- Submit it using the web form
+- Wait for reviewer feedback via email
 
-Once OVERLAY/ exists, this repository must never be synced using
-destructive commands such as:
+This repository may still be used locally to develop and test
+new SlackBuilds, but submission happens outside Git.
 
-  git reset --hard upstream/master
-  git push --force
 
-Upstream updates must always be integrated using fast-forward only.
+Important Safety Rules
+----------------------
+
+Once OVERLAY exists:
+
+- NEVER create PR branches from fork master
+- PR branches MUST be created from upstream/master
+- NEVER mix OVERLAY commits with upstream commits
+- NEVER force-push or hard-reset master
+
+If a PR branch accidentally includes OVERLAY commits:
+- Close the PR
+- Create a new branch from upstream/master
+- Cherry-pick only the upstream commit
+- Open a new PR
+
+Cherry-pick is a repair tool, not a workflow.
+
+
+Philosophy
+----------
+
+Upstream stays clean.
+Local systems stay functional.
+Processes are respected.
+Workflow stays boring.
+
+OVERLAY is where reality lives.
+upstream/master is the source of truth.
 

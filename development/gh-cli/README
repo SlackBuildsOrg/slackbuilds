@@ -1,0 +1,9 @@
+gh-cli is the GitHub command line interface.
+
+It provides access to GitHub features directly from the terminal,
+including repository management, issues, pull requests, releases,
+and GitHub Actions workflows.
+
+This SlackBuild builds gh-cli from source using the upstream Makefile
+and the system Go compiler.
+

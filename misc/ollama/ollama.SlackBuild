@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ollama
-VERSION=${VERSION:-0.13.3}
+VERSION=${VERSION:-0.13.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,7 +77,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # disabling ggml-vulkan until we have vulkan-sdk >= 1.4
-sed -i '143,154d' CMakeLists.txt
+sed -i '150,161d' CMakeLists.txt
 
 sed -i "/lib\/ollama/ s/lib/lib${LIBDIRSUFFIX}/g" CMakeLists.txt
 cmake -B build \

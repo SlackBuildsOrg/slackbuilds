@@ -26,6 +26,13 @@ The package includes the ROM images required for emulation.
 Full documentation is available at:
 https://86box.readthedocs.io/en/latest/index.html
 
+Dynamic recompilation: On x86_64 and aarch64, 86box's CPU emulation
+can make use of dynamic recompilation, for a speed boost. By
+default, the "old" dynamic recompilation is used. You can export
+NEW_DYNAREC=yes in the environment to try the "new" code (possibly
+faster but less well-tested). On 32-bit x86, dynamic recompilation is
+not supported at all.
+
 Optional dependency: rtmidi (autodetected). If rtmidi is installed
 at build time, 86box will be built with support for it. If you have
 rtmidi installed but want to build without it, export RTMIDI=no in the

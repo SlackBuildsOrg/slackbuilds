@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/tome2/tome2/archive/8857999/tome2-885799917d42ea9e6
 MD5SUM="22586a89507f42af54eec3cb824ac6b9"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
+REQUIRES="fmt"
 MAINTAINER="David Melik"
 EMAIL="dchmelik@gmail.com"

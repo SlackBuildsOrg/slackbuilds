@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tome-ah
-VERSION=${VERSION:-20240912_203c8c1}
+VERSION=${VERSION:-20251213_8857999}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -109,8 +109,8 @@ install -m 0644 -D $CWD/tome-ah.png $PKG/usr/share/pixmaps/tome-ah.png
 install -m 0644 -D $CWD/$PRGNAM.desktop $PKG/usr/share/applications/$PRGNAM.desktop
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a doc/DEBUG.txt doc/RELEASE.txt doc/changes.txt doc/credits.txt $PKG/usr/share/games/$PRGNAM/lib/tome/help \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+#cp -a doc/DEBUG.txt doc/RELEASE.txt doc/changes.txt doc/credits.txt $PKG/usr/share/games/$PRGNAM/lib/tome/help \
+#  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

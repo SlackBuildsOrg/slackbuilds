@@ -21,8 +21,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=alien
-VERSION=${VERSION:-8.95}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-8.95.9}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -63,7 +63,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM\_$VERSION.tar.xz
+tar xvf $CWD/$PRGNAM\_$VERSION.orig.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \

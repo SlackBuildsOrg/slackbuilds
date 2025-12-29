@@ -1,0 +1,11 @@
+pipes.sh is a small animated pipes screensaver for the terminal.
+
+It draws continuously moving pipes using ANSI escape sequences and
+runs entirely as a shell script.
+
+pipes.sh is commonly used as a terminal screensaver, visual demo,
+or simply as a fun distraction while a terminal is idle.
+
+This SlackBuild installs the pipes.sh script and its manual page
+without requiring any build steps or dependencies.
+

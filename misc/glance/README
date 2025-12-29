@@ -1,0 +1,9 @@
+glance 
+
+A lightweight, highly customizable dashboard that displays
+your feeds in a beautiful, streamlined interface.
+
+Current /etc/glance/glance.yml created by me as an example, you
+can place your edits there as for your needs.
+
+Open your browser to localhost:8080

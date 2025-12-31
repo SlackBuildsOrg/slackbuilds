@@ -1,0 +1,11 @@
+--- a/panel/lxqtpanel.cpp
++++ b/panel/lxqtpanel.cpp
+@@ -58,7 +58,7 @@
+ #include "backends/ilxqtabstractwmiface.h"
+ 
+ 
+-#include <LayerShellQt/Window>
++#include <LayerShellQt6/Window>
+ 
+ // Turn on this to show the time required to load each plugin during startup
+ // #define DEBUG_PLUGIN_LOADTIME

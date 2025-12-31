@@ -1,5 +1,5 @@
 lxqt-config contains tools for configuring LXQt and the underlying
 operating system.
 
-lxqt-qtplugin allows lxqt-config to change the Qt5 theme, even
-outside of LXQt.
+lxqt-qtplugin and lxqt-qt6plugin allows lxqt-config to change the
+Qt5 and Qt6 themes, even outside of LXQt.

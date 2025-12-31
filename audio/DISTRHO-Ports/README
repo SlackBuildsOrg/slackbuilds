@@ -1,0 +1,25 @@
+This pack contains several open source audio plugins that FalkTx (of
+KXStudio) ported to Linux. It includes:
+
+Arctican filters
+Dexed DX7 Emulator
+Drow Audio plugins
+EasySSP visualiser
+Juced Drum Synth and EQ
+Klangfalter audio convolutor
+Lufsmeter
+Luftikus EQ
+Mverb
+NDC plugins
+Obxd OB-X emulator
+Pitched Delay filter
+ReFine mastering plugins
+Stereo source separation filter
+TAL Dub-3, Filter, NoiseMaker, Reverb, and Vocoder
+Vex 3 oscillator subtractive waverom synth
+wolpertinger subtractive synth
+
+LV2 and Linux-native VST plugins are included.
+
+To exclude VST:
+VST=no ./distrho-ports.SlackBuild

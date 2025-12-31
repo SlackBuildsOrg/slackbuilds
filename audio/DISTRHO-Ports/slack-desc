@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+DISTRHO-Ports: DISTRHO-Ports (LV2 and VST audio plugins)
+DISTRHO-Ports:
+DISTRHO-Ports: This is a dump of Faltx's ports of several audio plugins, including:
+DISTRHO-Ports: Arctican, dexed DX7 emulator, drow, easySSP, juce OPL, juced plugins,
+DISTRHO-Ports: klangfalter, lufsmeter, luftikus, mverb, ndc, obxd OBX emulator,
+DISTRHO-Ports: pitched delay, refine, stereo source separation, TAL plugins,
+DISTRHO-Ports: vex synth, and wolpertinger synth.
+DISTRHO-Ports:
+DISTRHO-Ports: http://distrho.sourceforge.net/ports
+DISTRHO-Ports:
+DISTRHO-Ports:

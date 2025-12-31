@@ -1,0 +1,7 @@
+libfm-qt6 is the Qt port of libfm, a library providing components to 
+build desktop file managers.
+
+libfm-qt6 is a dependency of PCManFM-Qt, the Qt port of PCManFM.
+
+libfm-qt6 can be installed alongside libfm-qt (which instead supports
+qt5).

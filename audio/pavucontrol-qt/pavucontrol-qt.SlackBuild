@@ -3,7 +3,7 @@
 # Slackware build script for pavucontrol-qt
 
 # Copyright 2023 Petar Petrov, slackalaxy at gmail dot com
-# Copyright 2024 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2024-2025 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pavucontrol-qt
-VERSION=${VERSION:-1.4.0}
+VERSION=${VERSION:-2.3.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -87,8 +87,6 @@ cd build
   make
   make install/strip DESTDIR=$PKG
 cd ..
-
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

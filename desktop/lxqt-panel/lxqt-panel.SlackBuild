@@ -89,6 +89,9 @@ patch -p1 < $CWD/LayerShellQt6_build_directory.patch
 sed -i "/Type=Application/a\
 Name=lxqt-panel" autostart/lxqt-panel_wayland.desktop.in
 
+# source manually
+. /etc/profile.d/qt6.sh
+
 mkdir build
 cd build
   cmake \

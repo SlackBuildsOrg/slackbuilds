@@ -83,7 +83,7 @@ find -L . \
 [ ${LIBSYSSTAT:-no} = yes ] && ENABLE_SYSSTAT=YES || ENABLE_SYSSTAT=NO
 
 # Build using the LayerShellQt6 directory (instead of LayerShellQt)
-patch -p1 < $CWD/LayerShellQt6_build_directory.patch  
+patch -p1 < $CWD/LayerShellQt6_build_directory.patch
 
 # Fix sbopkglint error (desktop entry format issue)
 sed -i "/Type=Application/a\

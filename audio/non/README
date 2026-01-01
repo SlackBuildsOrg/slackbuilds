@@ -1,22 +1,8 @@
 Non is a modular (in the Unix sense) DAW, and is designed
 to be fast enough to run on low-end processors.
 
-MODULES:
-
-The components of Non work together and separately, allowing you
-create a studio tailored to your own needs.
-
-If you want to build only one component of Non, you may pass the name
-of that component to the SlackBuild script as the variable PROJECT.
-For instance:
-
-PROJECT=mixer ./non.SlackBuild
-
-The component names are:
-mixer|sequencer|timeline|session-manager
-
-By default, this SlackBuild builds everything, so the result is a
-complete, traditional DAW-like suite.
+This SlackBuild builds the Non mixer, sequencer, timeline, and
+session-manager, which can be used together or independently.
 
 OPTIONAL DEPENDENCY:
 

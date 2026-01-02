@@ -2,7 +2,7 @@
 
 # Slackware build script for readpe
 
-# Copyright 2023-2024 Ebben Aries <slackbuilds@dscp.org>
+# Copyright 2023-2026 Ebben Aries <slackbuilds@dscp.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=readpe
-VERSION=${VERSION:-20240519_0184edd}
-GITHASH=${GITHASH:-0184edd5aea3f0bcbaca418d133023d005d16875}
+VERSION=${VERSION:-20250829_d1e885a}
+GITHASH=${GITHASH:-d1e885a271de3477bea212508be88aecff171a26}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

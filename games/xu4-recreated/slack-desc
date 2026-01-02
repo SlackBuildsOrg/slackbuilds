@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+xu4-recreated: xu4-recreated (extra content for xu4)
+xu4-recreated:
+xu4-recreated: xu4-recreated is an add-on module for xu4. It enhances Ultima IV with
+xu4-recreated: graphics from the Upgrade & Remastered projects, unique spell sounds,
+xu4-recreated: and speech for NPCs. Work has begun on replacing the original map &
+xu4-recreated: dialog data.
+xu4-recreated:
+xu4-recreated: Once the package is installed, it can be selected in the game module
+xu4-recreated: browser in xu4. Press Escape at the main menu to bring up the browser.
+xu4-recreated:
+xu4-recreated:

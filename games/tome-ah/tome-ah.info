@@ -1,8 +1,10 @@
 PRGNAM="tome-ah"
-VERSION="20240912_203c8c1"
+VERSION="20251213_8857999"
 HOMEPAGE="https://github.com/tome2/"
-DOWNLOAD="https://github.com/tome2/tome2/archive/203c8c1/tome2-203c8c1d8e180607d99d27c70e233dcc41fa3970.tar.gz"
-MD5SUM="d249570309631b3b7d390f0b4a963a20"
+DOWNLOAD="https://github.com/tome2/tome2/archive/8857999/tome2-885799917d42ea9e6eb69fc320fa03922cd8cbb4.tar.gz \
+          https://github.com/fmtlib/fmt/releases/download/12.0.0/fmt-12.0.0.zip"
+MD5SUM="22586a89507f42af54eec3cb824ac6b9 \
+        9bd04e6e8c5b1733e4eefb473604219d"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

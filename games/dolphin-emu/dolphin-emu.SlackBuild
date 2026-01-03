@@ -31,7 +31,7 @@ SRCNAM=dolphin
 VERSION=${VERSION:-2503}
 ANALYTICS=${ANALYTICS:-OFF}
 DISCORD=${DISCORD:-OFF}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -124,9 +124,9 @@ tar -xvf $CWD/zlib-ng-ce01b1e41da298334f8214389cc9369540a7560f.tar.gz \
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 '{}' \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 '{}' \+
 
 # llvm >=18 is required for for disassembly support
 if [ "${LLVM:-ON}" = "ON" ]; then
@@ -160,6 +160,7 @@ cd build
     $LLVM \
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DUSE_SYSTEM_LIBMGBA=OFF \
+    -DUSE_SYSTEM_FMT=OFF \
     -DENABLE_AUTOUPDATE=OFF \
     -DCMAKE_BUILD_TYPE=Release ..
   ninja

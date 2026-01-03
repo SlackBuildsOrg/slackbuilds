@@ -1,137 +1,132 @@
-SlackBuilds OVERLAY
-==================
+SLACKBUILDS-OVERLAY
 
-This repository is a fork of SlackBuilds.org.
+slackbuilds-overlay is a local fork of SlackBuilds.org used to track
+upstream cleanly while maintaining a small, intentional set of local
+SlackBuild overrides.
 
-Its purpose is to:
-- track SlackBuilds.org upstream cleanly
-- maintain a small set of local SlackBuild overrides that are
-  intentionally different from upstream
-
-Local overrides live in OVERLAY/ and are never submitted upstream.
+The overlay exists to support local systems, Slackware-current usage,
+and opinionated policies that are not suitable for upstream submission.
 
 
-Repository Model
-----------------
+REPOSITORY MODEL
 
-upstream/master
-  SlackBuilds.org canonical history (read-only).
+This repository follows a strict separation of roles:
 
-master
-  Local fork mirror of SlackBuilds.org.
-  May contain local commits such as OVERLAY/.
-  NOT safe as a base for upstream pull requests.
+- upstream/master
+  Canonical SlackBuilds.org history (read-only).
 
-add/*, update/*
-  Temporary branches for upstream pull requests.
+- master
+  Local fork of SlackBuilds.org.
+  Contains permanent OVERLAY commits.
+  Upstream changes are integrated via merge commits.
+  Not safe as a base for upstream pull requests.
+
+- add/*, update/*
+  Temporary branches for upstream contributions.
   Always created from upstream/master.
   One package per branch.
   Deleted after merge.
 
-OVERLAY/
+- OVERLAY/
   Local SlackBuild overrides.
   Permanent and opinionated.
   Never submitted upstream.
-  May diverge indefinitely.
 
 
-What Belongs in OVERLAY
-----------------------
+OVERLAY SCOPE
 
 A change belongs in OVERLAY if it is:
 
 - Slackware-current specific
 - Required for local systems only
-- Opinionated or policy-based
-- Rejected or not desired by upstream maintainers
-- Experimental or long-term local customization
+- Opinionated or policy-driven
+- Rejected or not desired upstream
+- Experimental or long-term customization
 
 OVERLAY is intentional divergence.
 
 
-Upstream Contributions
-----------------------
+FORK SYNC
 
-SlackBuilds.org distinguishes between:
+Once OVERLAY exists on master, fast-forward merges are no longer
+possible.
 
-1. Updates to existing packages
-2. New package submissions
+To sync this fork with SlackBuilds.org upstream:
 
-These two cases follow different processes.
+  git fetch upstream
+  git checkout master
+  git merge upstream/master
+  git push origin master
 
-
-Updates to Existing Packages
-----------------------------
-
-Updates to packages that already exist in SlackBuilds.org
-(e.g. version bumps, build fixes, minor improvements) may
-be submitted via pull request.
-
-Fail-safe workflow:
-
-1. Fetch upstream
-   git fetch upstream
-
-2. Create PR branch from upstream/master
-   git checkout upstream/master
-   git checkout -b update/pkgname-version
-
-3. Make a minimal upstream-acceptable change
-   git commit -am "category/pkgname: short description"
-
-4. Push and open PR
-   git push origin update/pkgname-version
-
-5. After PR merge
-   git checkout master
-   git fetch upstream
-   git merge --ff-only upstream/master
-   git branch -D update/pkgname-version
+This creates a merge commit and preserves all OVERLAY history.
+No commits are rewritten.
 
 
-New Package Submissions
-----------------------
+UPSTREAM WORKFLOW
 
-New packages MUST NOT be submitted via pull request.
+SlackBuilds.org distinguishes between updates to existing packages and
+new package submissions. These follow different processes.
 
-SlackBuilds.org requires new packages to be submitted using
-the official submission form:
+
+UPDATING EXISTING PACKAGES
+
+Updates to packages already present in SlackBuilds.org may be submitted
+via pull request.
+
+Workflow:
+
+  git fetch upstream
+  git checkout upstream/master
+  git checkout -b update/pkgname-version
+  git commit -am "category/pkgname: short description"
+  git push origin update/pkgname-version
+
+After merge:
+- delete the branch
+- sync master using the Fork Sync procedure
+
+
+NEW PACKAGE SUBMISSIONS
+
+New packages must not be submitted via pull request.
+
+Rules:
+
+- do not open a pull request
+- do not add the package for upstream in this repository
+- prepare and test the SlackBuild locally
+- submit it using the official submission form:
 
   https://slackbuilds.org/submit/
 
-Rules for new packages:
-
-- Do NOT open a pull request
-- Do NOT add the package to this repository for upstream
-- Prepare the SlackBuild locally
-- Submit it using the web form
-- Wait for reviewer feedback via email
-
-This repository may still be used locally to develop and test
-new SlackBuilds, but submission happens outside Git.
+Reviewer feedback is handled via email.
 
 
-Important Safety Rules
-----------------------
+SAFETY RULES
 
-Once OVERLAY exists:
+Once OVERLAY exists on master:
 
-- NEVER create PR branches from fork master
-- PR branches MUST be created from upstream/master
-- NEVER mix OVERLAY commits with upstream commits
-- NEVER force-push or hard-reset master
+- never rebase master
+- never hard-reset master
+- never force-push master
+- never attempt fast-forward merges
+- upstream updates are integrated via regular merges only
 
-If a PR branch accidentally includes OVERLAY commits:
-- Close the PR
-- Create a new branch from upstream/master
-- Cherry-pick only the upstream commit
-- Open a new PR
+Pull request branches must never be created from master.
 
 Cherry-pick is a repair tool, not a workflow.
 
 
-Philosophy
-----------
+VALIDATION
+
+To verify that master only diverges via OVERLAY:
+
+  git diff upstream/master..master --stat
+
+Only OVERLAY/ and OVERLAY.README should appear.
+
+
+PHILOSOPHY
 
 Upstream stays clean.
 Local systems stay functional.

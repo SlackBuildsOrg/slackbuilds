@@ -49,6 +49,6 @@ MD5SUM_x86_64="e8547a91cd4762cebff947e8c9a16e19 \
 	       41db1b97a51047fc2adbcaf98f062a62 \
 	       77cc6a163e5ebb8b293ec0b5b4fe60b3 \
 	       59bc34854f5bb7492810e30f20b844eb"
-REQUIRES="fmt qt6 llvm-opt"
+REQUIRES="qt6 llvm-opt"
 MAINTAINER="Ruoh-Shoei LIN"
 EMAIL="lin.ruohshoei+sbo@gmail.com"

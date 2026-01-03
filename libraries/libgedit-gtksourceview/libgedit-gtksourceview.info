@@ -1,7 +1,7 @@
 PRGNAM="libgedit-gtksourceview"
 VERSION="299.0.5"
 HOMEPAGE="https://gedit-technology.github.io/"
-DOWNLOAD="https://github.com/gedit-technology/libgedit-gtksourceview/archive/299.0.5/libgedit-gtksourceview-299.0.5.tar.gz"
+DOWNLOAD="https://gitlab.gnome.org/World/gedit/libgedit-gtksourceview/-/archive/299.0.5/libgedit-gtksourceview-299.0.5.tar.gz"
 MD5SUM="2f20bcc19e72a370021d4144019af770"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

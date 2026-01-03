@@ -14,6 +14,9 @@ default if found in your system. You can disable it passing to the
 script an environment variable as following:
    HDF5=no ./alembic-framework.Slackbuild
 
+Versions of Alembic more recent than 1.8.8 require Imath 3
+so this version is the latest compatible with Slackware 15.0
+
 Warning:
 alembic-framework is an optional dependency for Blender autodetected,
 but the build of Blender against this dependency works only in current.

@@ -21,6 +21,13 @@
 # The other frontends are mac/windows only.
 # Anyway, it has a nice Qt GUI, I don't see why it needs a frontend.
 
+# 20251228 bkw: update for v5.3.
+# - the floppy drive .wav samples have been broken out into a separate
+#   'assets' tarball, so add that.
+# - munt is now supported. make sure it uses the bundled source, not
+#   whatever version might be on the system.
+# - add NEW_DYNAREC variable (default to no).
+
 # 20251117 bkw: fix i586/i686 build.
 # 20251103 bkw: update for v5.2.
 # 20250914 bkw: update for v5.1.
@@ -35,7 +42,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=86box
 SRCNAM=86Box
-VERSION=${VERSION:-5.2}
+VERSION=${VERSION:-5.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,6 +91,7 @@ OUTPUT=${OUTPUT:-/tmp}
 # In 5.2, they seem to have dropped support for it (on x86), but not
 # added a cmake check to auto-disable it. Have to turn it off myself.
 DYNAREC=ON
+NDOPT=OFF
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686 -msse2"
@@ -93,10 +101,18 @@ elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686 -msse2"
   check_sse2
   DYNAREC=OFF
-elif [ "$ARCH" = "x86_64" ]; then
+elif [ "$ARCH" = "x86_64" -o "$ARCH" = "aarch64" ]; then
   SLKCFLAGS="-O2 -fPIC"
 else
   SLKCFLAGS="-O2"
+fi
+
+if [ "${NEW_DYNAREC:-no}" = "yes" ]; then
+  if [ "$DYNAREC" = "OFF" ]; then
+    echo "*** Dynamic recompilation not supported on this platform"; exit 1
+  else
+    NDOPT="ON"
+  fi
 fi
 
 set -e
@@ -108,12 +124,15 @@ rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
 tar xvf $CWD/roms-$VERSION.tar.gz
+tar xvf $CWD/assets-$VERSION.tar.gz
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # 20240311 bkw: rtmidi still not autodetected in 4.1.
 # 20250829 bkw: or 5.0 either.
+# 20251228 bkw: or 5.3...
 if [ "${RTMIDI:-yes}" != "yes" ] || ! pkg-config --exists rtmidi; then
   RTMIDI="-DRTMIDI=OFF"
 fi
@@ -122,7 +141,10 @@ mkdir -p build
 cd build
   cmake \
     -DDYNAREC=$DYNAREC \
+    -DNEW_DYNAREC=$NDOPT \
     $RTMIDI \
+    -DMUNT=ON \
+    -DMUNT_EXTERNAL=OFF \
     -DCMAKE_C_FLAGS="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -137,6 +159,7 @@ ln -s $SRCNAM $PKG/usr/bin/$PRGNAM
 # This mv will be fast, src and dest are always on the same FS.
 mkdir -p $PKG/usr/share/$SRCNAM
 mv roms-$VERSION $PKG/usr/share/$SRCNAM/roms
+mv assets-$VERSION $PKG/usr/share/$SRCNAM/assets
 
 # Upstream ships desktop/icons, but 'make install' doesn't install them.
 mkdir -p $PKG/usr/share/applications
@@ -165,8 +188,11 @@ cp -a AUTHORS COPYING *.md $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
-sed "s,@WITH@,$WITH," < $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
+sed -e "s,@WITH@,$WITH," \
+    -e "s,@DR@,$DYNAREC," \
+    -e "s,@NDR@,$NDOPT," \
+    < $CWD/slack-desc > $PKG/install/slack-desc
+	cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

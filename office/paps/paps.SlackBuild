@@ -23,6 +23,7 @@
 
 # Now maintained by B. Watson <urchlay@slackware.uk>.
 
+# 20260102 bkw: BUILD=2, add fmt-12.patch because fmt is updating to 12.1.0.
 # 20230503 bkw: update for v0.8.0.
 # - README.md is back.
 # - fix src-to-paps shebang and path to .outlang file.
@@ -45,7 +46,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=paps
 VERSION=${VERSION:-0.8.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -89,14 +90,17 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Fix the shebang: #!/usr/bin/python is still python 2 on Slackware 15.0.
 # Fix the hardcoded path to pango_markup.outlang.
 # Add a few more filename extensions for autodetecting various languages,
 # including ".SlackBuild".
 patch -p1 < $CWD/src-to-paps.diff
+
+patch -p1 < $CWD/fmt-12.patch
 
 ./autogen.sh
 CFLAGS="$SLKCFLAGS" \

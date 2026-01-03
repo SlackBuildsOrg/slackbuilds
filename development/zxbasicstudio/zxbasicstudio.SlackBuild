@@ -26,11 +26,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=zxbasicstudio
-VERSION=${VERSION:-1.6}
+VERSION=${VERSION:-1.6.0_beta6.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=ZXBasicStudio-Linux-x64.v1.6.0-beta5.zip
+TARBALL=ZXBasicStudio-Linux-x64.v_version_.0-beta5.zip
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -57,6 +57,7 @@ rm -rf $PRGNAM-$VERSION
 mkdir $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 unzip $CWD/*.zip
+
 
 chown -R root:root .
 find -L . \

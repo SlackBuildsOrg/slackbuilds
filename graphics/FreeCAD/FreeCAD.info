@@ -1,10 +1,10 @@
 PRGNAM="FreeCAD"
-VERSION="1.0.1"
+VERSION="1.0.2"
 HOMEPAGE="https://www.freecadweb.org/"
-DOWNLOAD="https://github.com/FreeCAD/FreeCAD/archive/1.0.1/FreeCAD-1.0.1.tar.gz \
+DOWNLOAD="https://github.com/FreeCAD/FreeCAD/archive/1.0.2/FreeCAD-1.0.2.tar.gz \
           https://sourceforge.net/projects/slackbuildsdirectlinks/files/FreeCAD/GSL-20240226_b39e7e4.tar.lz \
           https://sourceforge.net/projects/slackbuildsdirectlinks/files/FreeCAD/OndselSolver-20250121_09d6175.tar.lz"
-MD5SUM="8132438b0daefe08427e7c06a791541b \
+MD5SUM="483bc63d9711d3079c155fb12d9439ab \
         484cbd9e28b0ba842f5f2b5aabff3015 \
         69cd7ba35074c8d2e87adcd0a320deed"
 DOWNLOAD_x86_64=""

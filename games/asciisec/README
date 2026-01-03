@@ -4,7 +4,8 @@ colorful roguelike SDL interface.
 
 Have fun!
 
-To run this game the user has to be in the "games" group.
+To run this game the user has to be in the "games" group. Alternatively,
+you can just copy /opt/asciisec into your home directory or use sudo.
 
 PS: This game seems to be abandoned by its author; This package installs
 the last working binary version from an Amazon AWS server.

@@ -24,10 +24,11 @@
 # Changelog:
 # v0.7.1:      29/oct/2025 by r1w1s1 - Initial build.
 # v0.8.0:      25/nov/2025 by r1w1s1 - update.
+# v0.10.0:     04/jan/2025 by r1w1s1 - update.
 
 cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=wifitui
-VERSION=${VERSION:-0.8.0}
+VERSION=${VERSION:-0.10.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,7 +84,8 @@ cd $PRGNAM-${VERSION}
 
 # Build stripped static binary with embedded version info
 echo "Building $PRGNAM $VERSION..."
-go build -ldflags "-s -w -X main.Version=$(git describe --tags --always 2>/dev/null || echo dev) -extldflags '-static'" .
+#go build -ldflags "-s -w -X main.Version=$(git describe --tags --always 2>/dev/null || echo dev) -extldflags '-static'" .
+go build -ldflags "-s -w -X main.Version=$VERSION -extldflags '-static'" .
 
 # Install binary
 mkdir -p $PKG/usr/bin

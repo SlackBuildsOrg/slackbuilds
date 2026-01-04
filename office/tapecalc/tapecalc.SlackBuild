@@ -13,6 +13,7 @@
 # I'll use their name. As a nice side effect, it's easier to search
 # for under this name.
 
+# 20260104 bkw: update for v20250914.
 # 20250828 bkw: update for v20240916.
 # 20240208 bkw: update for v20240110.
 
@@ -20,7 +21,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tapecalc
 SRCNAM=add
-VERSION=${VERSION:-20240916}
+VERSION=${VERSION:-20250914}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

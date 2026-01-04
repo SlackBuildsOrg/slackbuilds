@@ -76,14 +76,16 @@ via pull request.
 Workflow:
 
   git fetch upstream
-  git checkout upstream/master
-  git checkout -b update/pkgname-version
+  git checkout -b update/pkgname-version upstream/master
   git commit -am "category/pkgname: short description"
   git push origin update/pkgname-version
 
 After merge:
 - delete the branch
 - sync master using the Fork Sync procedure
+
+NOTE: PR branches must always be created directly from upstream/master.
+Do not branch from local master or overlay branches.
 
 
 NEW PACKAGE SUBMISSIONS

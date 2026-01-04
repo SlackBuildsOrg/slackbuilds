@@ -26,11 +26,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=atari_8bit_utils
-VERSION=${VERSION:-20241017_6da5fcf}
+VERSION=${VERSION:-20260104_bb7b488}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=${TARBALL:-6da5fcfc19f523cdda6bf2474a16210441259363}
+TARBALL=${TARBALL:-bb7b4887f57314d0236596569f8a76232dd9c037}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

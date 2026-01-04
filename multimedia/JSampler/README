@@ -1,14 +1,13 @@
 A graphical frontend for LinuxSampler.
 
-This build script assumes you have some JDK installed, and that $JAVA_HOME is
-properly set for the root user during the build process.
+This build script assumes you have some JDK installed, and that
+$JAVA_HOME is properly set for the root user during the build process.
 
-Any JDK distributed on SlackBuilds.org includes a configuration file to set
-JAVA_HOME.
+Any JDK distributed on SlackBuilds.org includes a configuration file to
+set JAVA_HOME.
 
 The default is zulu-openjdk8.
 If you want to use a different JDK, then you must manually specify it.
 For example, suppose you've installed jdk23 and want to use it:
 
 # JDK=jdk23 ./JSampler.SlackBuild
-

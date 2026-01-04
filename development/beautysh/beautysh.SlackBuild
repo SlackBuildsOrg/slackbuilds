@@ -7,6 +7,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260104 bkw: update for v6.4.2.
 # 20251111 bkw: update for v6.4.1 (new dep python3-editorconfig).
 
 # 20230508 bkw:
@@ -18,7 +19,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=beautysh
-VERSION=${VERSION:-6.4.1}
+VERSION=${VERSION:-6.4.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

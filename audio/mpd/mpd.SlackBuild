@@ -93,6 +93,10 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
+# revert lookup paths for yajl.
+# this patch can be dropped after we upgrade to 0.24.x since yajl is replaced
+# with nlohmann_json
+zcat $CWD/0aeda01ba6d22a8d9fc583faa67ffc6473869a43.patch.gz | patch -R -p1
 chown -R root:root .
 find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
         \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+

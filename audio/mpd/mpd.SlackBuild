@@ -42,7 +42,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mpd
-VERSION=${VERSION:-0.23.16}
+VERSION=${VERSION:-0.23.17}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -106,6 +106,7 @@ cd build
     -Dpulse=$PULSE \
     -Dupnp=disabled \
     -Dmikmod=disabled \
+    -Dyajl=disabled \
     --buildtype=release \
     --infodir=/usr/info \
     --libdir=/usr/lib${LIBDIRSUFFIX} \

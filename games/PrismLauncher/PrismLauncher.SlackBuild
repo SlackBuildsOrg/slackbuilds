@@ -2,6 +2,7 @@
 
 # Slackware build script for PrismLauncher
 
+# Copyright 2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # Copyright 2023-2025 Samuel Young, MO, USA
 # All rights reserved.
 #
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=PrismLauncher
-VERSION=${VERSION:-9.3}
+VERSION=${VERSION:-9.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -76,28 +77,41 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  cmake -S . -G Ninja \
-    -Wno-dev \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-    -DMAN_INSTALL_DIR=/usr/man \
-    -DENABLE_LTO=ON \
-    -DLauncher_QT_VERSION_MAJOR="5" \
-    -DLauncher_BUILD_PLATFORM="slackware" \
-    -DCMAKE_BUILD_TYPE=Release ..
-  cmake --build .
-  DESTDIR=$PKG cmake --install .
-cd ..
+# fix building with newer Java
+if [ $(java -version 2>&1 | awk -F'[ ".]' '/version/ {print $4}') -ge 21 ]; then
+  sed -i 's/-target 7 -source 7/--release 8 -Xlint:-options/' libraries/{javacheck,launcher}/CMakeLists.txt
+fi
+
+if [ "${QT6:-no}" = "no" ]; then
+  USE_QT5="-DLauncher_QT_VERSION_MAJOR=5"
+fi
+
+cmake -G Ninja \
+      -Wno-dev \
+      -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+      -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+      -DCMAKE_INSTALL_PREFIX="/usr" \
+      -DLIB_SUFFIX="$LIBDIRSUFFIX" \
+      -DMAN_INSTALL_DIR="/usr/man" \
+      -DENABLE_LTO="ON" \
+      $USE_QT5 \
+      -DLauncher_BUILD_PLATFORM="slackware" \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -B build
+cmake --build build
+DESTDIR=$PKG cmake --install build
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+if [ -d $PKG/usr/share/man ]; then
+  mv $PKG/usr/share/man $PKG/usr/
+fi
+
+if [ -d $PKG/usr/man ]; then
+  find $PKG/usr/man -type f -exec gzip -9 {} \;
+  for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+fi
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

@@ -106,6 +106,7 @@ cd build
     -Dpulse=$PULSE \
     -Dupnp=disabled \
     -Dmikmod=disabled \
+    -Dyajl=disabled \
     --buildtype=release \
     --infodir=/usr/info \
     --libdir=/usr/lib${LIBDIRSUFFIX} \

@@ -2,7 +2,7 @@
 
 # Slackware build script for paraview
 
-# Copyright 2016-2025 Christoph Willing  Sydney, Australia
+# Copyright 2016-2026 Christoph Willing  Sydney, Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,9 +26,9 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=paraview
 SRCNAM=ParaView
-VERSION=${VERSION:-5.13.3}
-SHORT_VERSION=${SHORT_VERSION:-5.13}
-DOC_VERSION=${DOC_VERSION:-5.13.3}
+VERSION=${VERSION:-6.0.1}
+SHORT_VERSION=${SHORT_VERSION:-6.0}
+DOC_VERSION=${DOC_VERSION:-6.0.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -117,6 +117,9 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   CONTRIBUTING* Copyright* README* \
   $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/usr/share/doc/ParaView/* $PKG/usr/doc/$PRGNAM-$VERSION; rm -rf $PKG/usr/share/doc
+mv $PKG/usr/bin/paraview?* $PKG/usr/share/$PRGNAM-$SHORT_VERSION/
+rmdir --ignore-fail-on-non-empty $PKG/usr/doc/$PRGNAM-$VERSION/examples
 cp $CWD/ParaViewGettingStarted-${VERSION}.pdf $PKG/usr/doc/$PRGNAM-$VERSION/GettingStarted.pdf
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

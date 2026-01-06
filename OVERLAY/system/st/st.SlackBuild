@@ -1,0 +1,155 @@
+#!/bin/bash
+
+# Slackware build script for st
+
+# Originally written by Nikolay Korotkiy <email removed>
+# Now maintained by B. Watson <urchlay@slackware.uk>
+
+# Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# 20250820 bkw: updated for v0.9.3.
+# 20240709 bkw: updated for v0.9.2.
+# 20221228 bkw: updated for v0.9.
+
+# 20211119 bkw: BUILD=2
+# - new maintainer.
+# - don't overwrite ncurses' st and st-256color terminfo entries.
+#   thanks to Eric Lindblad for pointing this out.
+# - install the rest of the docs (FAQ, LEGACY, TODO).
+# - include config.h in the doc dir.
+# - include patches.txt in the doc dir, if patches are used.
+# - add .desktop and icon.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=st
+VERSION=${VERSION:-0.9.3}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+else
+  SLKCFLAGS="-O2"
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+chown -R root:root .
+find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
+        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+
+[ -e "$CWD/config.h" ] && cp -f $CWD/config.h config.h
+
+# Now apply any other patches the user might have added. Have to
+# do this *after* applying custom config.h, so any changes to
+# config.h here won't get overwritten.
+for i in $(ls $CWD/patches 2>/dev/null); do
+  [ "$i" = "README" ] && continue
+  echo "=== applying patch $i"
+  patch -p1 < $CWD/patches/$i
+  PATCHES+=" $i"
+done
+
+# 20200123 bkw: 'tic' stuff in Makefile doesn't respect DESTDIR.
+sed -i "s|\\<tic\\>|& -o $PKG/usr/share/terminfo|" Makefile
+
+# Above sed command got broken by upstream (they removed the @)
+# so files were being written to the real /usr, not $PKG/usr.
+# Doing it this way means the terminfo stuff is cleanly removed
+# when the package is removed. tic won't create the dir, so:
+mkdir -p $PKG/usr/share/terminfo
+
+CFLAGS="$SLKCFLAGS" make && \
+make install \
+  PREFIX=/usr \
+  MANPREFIX=/usr/man \
+  DESTDIR=$PKG
+
+strip $PKG/usr/bin/$PRGNAM
+gzip -9 $PKG/usr/man/man?/*
+
+# 20211119 bkw: some of st's terminfo defs have been included in
+# Slackware's ncurses package. After some discussion with Thomas
+# Dickey (the ncurses maintainer) I've decided the ncurses versions
+# of these are better. Instead of hardcoding a list here, we'll
+# actually use the ncurses package's file list to decide what to
+# exclude.
+pkgfile="$(
+  ls /var/lib/pkgtools/packages/ncurses-* \
+  | grep '/ncurses-[^-]\+-[^-]\+-[^-]\+$' \
+)"
+
+if [ -z "$pkgfile" ]; then
+  echo "!!! can't find ncurses package, including all st terminfo entries"
+  pkgfile=/dev/null
+fi
+
+for file in $PKG/usr/share/terminfo/s/*; do
+  name="$( basename $file )"
+  if grep -q '^usr/share/terminfo/s/'$name'$' $pkgfile
+  then
+    echo "=== excluding terminfo entry: $name"
+    rm $file
+  fi
+done
+
+# .desktop file adapted from xterm.desktop
+mkdir -p $PKG/usr/share/applications
+cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
+
+# Icons converted from https://en.wikipedia.org/wiki/File:Suckless_logo.svg
+for px in 16 32 48 64 128; do
+  size=${px}x${px}
+  dir=$PKG/usr/share/icons/hicolor/$size/apps
+  mkdir -p $dir
+  convert -resize $size $CWD/$PRGNAM.png $dir/$PRGNAM.png
+done
+
+mkdir -p $PKG/usr/share/pixmaps
+ln -s ../icons/hicolor/48x48/apps/$PRGNAM.png $PKG/usr/share/pixmaps/$PRGNAM.png
+
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a config.h FAQ LEGACY LICENSE README TODO $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
+
+if [ -n "$PATCHES" ]; then
+  echo "This package was built with the following patch(es):" > $PKGDOC/patches.txt
+  echo "$PATCHES" | sed 's, ,\n,g' >> $PKGDOC/patches.txt
+fi
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -1,44 +1,41 @@
 SLACKBUILDS-OVERLAY
 
-slackbuilds-overlay is a local fork of SlackBuilds.org used to track
-upstream cleanly while maintaining a small, intentional set of local
-SlackBuild overrides.
+This repository is a local fork of SlackBuilds.org used to track upstream
+cleanly while maintaining a small, intentional set of local SlackBuild
+overrides (OVERLAY).
 
-The overlay exists to support local systems, Slackware-current usage,
-and opinionated policies that are not suitable for upstream submission.
+OVERLAY exists for Slackware-current usage, local policies, and changes
+that are not suitable for upstream submission.
 
 
 REPOSITORY MODEL
-
-This repository follows a strict separation of roles:
 
 - upstream/master
   Canonical SlackBuilds.org history (read-only).
 
 - master
-  Local fork of SlackBuilds.org.
+  Local fork.
   Contains permanent OVERLAY commits.
-  Upstream changes are integrated via merge commits.
+  Synced from upstream via merge commits.
   Not safe as a base for upstream pull requests.
 
 - add/*, update/*
   Temporary branches for upstream contributions.
   Always created from upstream/master.
-  One package per branch.
   Deleted after merge.
 
 - OVERLAY/
-  Local SlackBuild overrides.
+  Local-only SlackBuild overrides.
   Permanent and opinionated.
   Never submitted upstream.
 
 
-OVERLAY SCOPE
+WHEN TO USE OVERLAY
 
 A change belongs in OVERLAY if it is:
 
 - Slackware-current specific
-- Required for local systems only
+- Required only for local systems
 - Opinionated or policy-driven
 - Rejected or not desired upstream
 - Experimental or long-term customization
@@ -46,34 +43,42 @@ A change belongs in OVERLAY if it is:
 OVERLAY is intentional divergence.
 
 
-FORK SYNC
+WORKING WITH OVERLAY
 
-Once OVERLAY exists on master, fast-forward merges are no longer
-possible.
+All OVERLAY work is done on local master.
 
-To sync this fork with SlackBuilds.org upstream:
+1. Switch to master:
 
-  git fetch upstream
-  git checkout master
-  git merge upstream/master
-  git push origin master
+   git checkout master
 
-This creates a merge commit and preserves all OVERLAY history.
-No commits are rewritten.
+2. Sync with upstream (never reset):
+
+   git fetch upstream
+   git merge upstream/master
+
+3. Create or modify files only inside OVERLAY/:
+
+   OVERLAY/category/pkgname/
+
+4. Test the SlackBuild locally.
+
+5. Commit the OVERLAY change:
+
+   git add OVERLAY/category/pkgname
+   git commit -m "OVERLAY: customize pkgname for local use"
+
+6. Push to your fork:
+
+   git push origin master
+
+OVERLAY commits are permanent and must never be submitted upstream.
 
 
-UPSTREAM WORKFLOW
+UPSTREAM CONTRIBUTIONS
 
-SlackBuilds.org distinguishes between updates to existing packages and
-new package submissions. These follow different processes.
+Pull requests must always start from upstream/master.
 
-
-UPDATING EXISTING PACKAGES
-
-Updates to packages already present in SlackBuilds.org may be submitted
-via pull request.
-
-Workflow:
+Updating an existing package:
 
   git fetch upstream
   git checkout -b update/pkgname-version upstream/master
@@ -82,26 +87,22 @@ Workflow:
 
 After merge:
 - delete the branch
-- sync master using the Fork Sync procedure
-
-NOTE: PR branches must always be created directly from upstream/master.
-Do not branch from local master or overlay branches.
+- sync master via merge
 
 
-NEW PACKAGE SUBMISSIONS
+CI TESTING (OPTIONAL)
 
-New packages must not be submitted via pull request.
+For contributors with CI access, builds can be triggered after opening a
+pull request by adding a PR comment:
 
-Rules:
+  @sbo-bot: build category/pkgname
 
-- do not open a pull request
-- do not add the package for upstream in this repository
-- prepare and test the SlackBuild locally
-- submit it using the official submission form:
+Example:
 
-  https://slackbuilds.org/submit/
+  @sbo-bot: build system/xbattmon
 
-Reviewer feedback is handled via email.
+This must be posted as a PR comment, not in the commit message or PR
+description.
 
 
 SAFETY RULES
@@ -111,21 +112,19 @@ Once OVERLAY exists on master:
 - never rebase master
 - never hard-reset master
 - never force-push master
-- never attempt fast-forward merges
-- upstream updates are integrated via regular merges only
+- never fast-forward merge upstream
+- never branch from master for PRs
 
-Pull request branches must never be created from master.
-
-Cherry-pick is a repair tool, not a workflow.
+Only add/* and update/* branches may be used for upstream work.
 
 
 VALIDATION
 
-To verify that master only diverges via OVERLAY:
+To confirm that master only diverges due to OVERLAY:
 
   git diff upstream/master..master --stat
 
-Only OVERLAY/ and OVERLAY.README should appear.
+Only OVERLAY/ and README.OVERLAY should appear.
 
 
 PHILOSOPHY

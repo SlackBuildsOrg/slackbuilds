@@ -106,7 +106,7 @@ cd build
     -Dcava=disabled \
     -Dwireplumber=disabled \
     -Dgps=disabled \
-    --auto-features=enabled \
+    --auto-features=disabled \
     --wrap-mode=nodownload \
     -Dexperimental=false \
 

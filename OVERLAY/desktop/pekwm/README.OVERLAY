@@ -1,0 +1,10 @@
+This directory is a local OVERLAY of desktop/pekwm.
+
+It is used for local customization and testing.
+On Slackware-current, xinitrc.pekwm is modified to start PipeWire
+services to ensure audio works correctly without relying on a
+system-wide session manager.
+
+Changes in this directory are local-only and not intended for
+upstream submission.
+

@@ -1,0 +1,23 @@
+This directory is a local OVERLAY of system/qemu.
+
+The SlackBuild is kept here to allow local customization and testing.
+In practice, only x86_64 targets are usually needed, so builds are
+invoked with explicit TARGETS instead of building all architectures.
+
+Build commands used:
+
+Slackware-current:
+  AUDIODRIVERS=pipewire \
+  KVMGROUP=kvm \
+  BRIDGE_HELPER_SETUID=yes \
+  TARGETS="x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user" \
+  ./qemu.SlackBuild
+
+Slackware 15.0:
+  BRIDGE_HELPER_SETUID=yes \
+  TARGETS="x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user" \
+  ./qemu.SlackBuild
+
+Changes in this directory are local-only and not intended for upstream
+submission.
+

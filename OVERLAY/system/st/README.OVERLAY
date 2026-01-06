@@ -1,0 +1,7 @@
+This directory is a local OVERLAY of system/st.
+
+It is used for local customization and testing.
+Currently, config.h is customized to use the Iosevka font.
+
+Changes in this directory are local-only and not intended for
+upstream submission.

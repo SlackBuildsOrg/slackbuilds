@@ -1,6 +1,0 @@
-For Slackware-current
-AUDIODRIVERS=pipewire KVMGROUP=kvm BRIDGE_HELPER_SETUID=yes TARGETS="x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user" ./qemu.SlackBuild
-
-For Slackware-15
-BRIDGE_HELPER_SETUID=yes TARGETS="x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user" ./qemu.SlackBuild
-

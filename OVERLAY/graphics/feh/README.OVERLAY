@@ -1,0 +1,11 @@
+This directory is a local OVERLAY of graphics/feh.
+
+It tracks a newer upstream release (3.11.2) than the version currently
+available in SlackBuilds.org (3.10.3).
+
+On Slackware-current, the build requires defining _GNU_SOURCE, so the
+SlackBuild adds -D_GNU_SOURCE to CFLAGS.
+
+Changes in this directory are local-only and not intended for
+upstream submission.
+

@@ -86,7 +86,8 @@ if [ $(cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
     export PATH="/opt/cmake-opt/bin/:$PATH"
 fi
 
-mkdir -p build
+mkdir -p build build/_deps/fmt-subbuild/fmt-populate-prefix/src/
+cp $CWD/$fmt-10.2.1.tar.gz build/_deps/fmt-subbuild/fmt-populate-prefix/src/10.2.1.tar.gz
 cd build
   cmake \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \

@@ -1,8 +1,10 @@
 PRGNAM="ueberzugpp"
 VERSION="2.9.8"
 HOMEPAGE="https://github.com/jstkdng/ueberzugpp"
-DOWNLOAD="https://github.com/jstkdng/ueberzugpp/archive/v2.9.8/ueberzugpp-2.9.8.tar.gz"
-MD5SUM="6ec05dab806debcaec12e91e51a41c8d"
+DOWNLOAD="https://github.com/jstkdng/ueberzugpp/archive/v2.9.8/ueberzugpp-2.9.8.tar.gz \
+          https://github.com/fmtlib/fmt/archive/10.2.1/fmt-10.2.1.tar.gz"
+MD5SUM="6ec05dab806debcaec12e91e51a41c8d \
+	dc09168c94f90ea890257995f2c497a5"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="CLI11 chafa libsixel nlohmann_json range-v3 spdlog tbb vips cmake-opt"

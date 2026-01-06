@@ -2,7 +2,7 @@
 
 # Slackware build script for lammps
 
-# Copyright 2023-2024 Giancarlo Dessi, Cagliari, IT
+# Copyright 2023-2026 Giancarlo Dessi, Cagliari, IT
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,13 +25,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lammps
-VERSION=${VERSION:-2023.08.02_update3}
+VERSION=${VERSION:-2025.07.22_update2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 SRCNAM=lammps-stable
-SRCVERSION=${SRCVERSION:-2Aug2023_update3}
-PACEVERSION=v.2023.10.04
+SRCVERSION=${SRCVERSION:-22Jul2025_update2}
+PACEVERSION=v.2023.11.25.fix2
 MDIVERSION=1.4.26
 N2P2VERSION=2.2.0
 OCLLVERSION=2022.01.04
@@ -49,27 +49,27 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   exit 0
 fi
 
-# First detect if openmpi or mpich are installed, so we can build LAMMPS with the
+# First detect if openmpi or mpich are installed, so we can build LAMMPS with the 
 # parallel computing and enable some packages
 MP=""
 mpi=""
-if pkg-config --exists ompi;  then
- MP="openmpi";
+if pkg-config --exists ompi;  then 
+ MP="openmpi"; 
  mpi="-DBUILD_OMP=yes "
 fi
-if pkg-config --exists mpich;  then
- MP="mpich";
+if pkg-config --exists mpich;  then 
+ MP="mpich"; 
  mpi="-DBUILD_MPI=yes "
 fi
 
-# Detect if some dependencies are installed or extrafile download.
-# These are needed conditions to prevent the download of extrafiles
+# Detect if some dependencies are installed or extrafile download. 
+# These are needed conditions to prevent the download of extrafiles 
 # during the build
 scafacos=""
 mdi=""
 mlpace=""
 # External ScaFaCos must be installed in the system
-if pkg-config --exists scafacos;  then
+if pkg-config --exists scafacos;  then 
  scafacos="-DPKG_SCAFACOS=yes -DDOWNLOAD_SCAFACOS=OFF "
 fi
 # lammps-user-pace must be downloaded in $CWD
@@ -91,7 +91,7 @@ fi
 
 
 # These internal packages are enabled by default.
-# If you do not require some of them you have to edit the conditions in this block
+# If you do not require some of them you have to edit the conditions in this block 
 # otherwise pass the respective environment variables set to "no" to the script
 # for each package not desired
 # (for example: AMOEBA=no ASPHERE=no ./lammps.SlackBuild)
@@ -171,7 +171,7 @@ yaff="" ; [ "${YAFF:-yes}" = "yes" ] && yaff="-DPKG_YAFF=yes "
 # otherwise a bundled linear algebra is used. To force the use of internal
 # linear algebra edit the CMake flag setting "-DUSE_INTERNAL_LINALG=yes "
 if [ "$electrode" = "-DPKG_ELECTRODE=yes " ]; then
- if pkg-config --exists openblas;  then
+ if pkg-config --exists openblas;  then 
    electrode=$electrode"-DUSE_INTERNAL_LINALG=no "
  fi
 fi
@@ -191,25 +191,25 @@ fi
 # The GPU package requires some basic settings that may be customized through environment
 # variables. For advanced options requiring specific hardware configurations (GPU) see the
 # documentation in lammps.org
-# This package causes many issues depending on the hardware/software configuration (build
+# This package causes many issues depending on the hardware/software configuration (build 
 # failure or segmentation fault) that require additional settings to be solved, so it is
-# disabled by default.
+# disabled by default. 
 if [ "${GPU:-no}" = "yes" ]; then
   # by default the GPU package is enabled using bundled OpenCL ICD loader library/headers
   # but users may prefer the local opencl installed in the system
   opencl_loader="yes" ; [ "${STATIC_OCL:-no}" = "no" ] && opencl_loader="no"
   gpu="-DPKG_GPU=yes -DGPU_API=opencl -DUSE_STATIC_OPENCL_LOADER=${opencl_loader} "
 else
-  opencl_loader=""
+  opencl_loader="" 
   gpu=""
-fi
+fi     
 
 # Following conditions enable by default all packages that require dependencies if these
-# are installed in the system
+# are installed in the system 
 
 latboltz=""
 openmp=""
-if [ "$MP" = "openmpi" ]; then
+if [ "$MP" = "openmpi" ]; then 
  latboltz="" ; [ "${LATBOLTZ:-yes}" = "yes" ] && latboltz="-DPKG_LATBOLTZ=yes "
  openmp="" ; [ "${OPENMP:-yes}" = "yes" ] && openmp="-DPKG_OPENMP=yes "
 fi
@@ -225,7 +225,7 @@ else
 fi
 
 netcdf=""
-if pkg-config --exists netcdf;  then
+if pkg-config --exists netcdf;  then 
  netcdf="" ; [ "${NETCDF:-yes}" = "yes" ] && netcdf="-DPKG_NETCDF=yes "
 fi
 
@@ -234,15 +234,15 @@ if [ -f /usr/bin/h5cc ]; then
  h5md="" ; [ "${H5MD:-yes}" = "yes" ] && h5md="-DPKG_H5MD=yes "
 fi
 
-# This shouldn't need in 32-bit architectures, however it significantly extends the build times
+# This shouldn't need in 32-bit architectures, however it significantly extends the build times 
 # and absorbs many resources. Openmpi is strictly required.
 kokkos=""
 if [ "$ARCH" = "x86_64" ]; then
  if [ "${KOKKOS:-yes}" = "yes" ] ; then
    kokkos="-DPKG_KOKKOS=yes -DKokkos_ARCH_NATIVE=yes -DKokkos_ENABLE_OPENMP=yes "
  fi
- if [ "$MP" != "openmpi" ]; then
-   kokkos=""
+ if [ "$MP" != "openmpi" ]; then 
+   kokkos="" 
  fi
 fi
 
@@ -298,7 +298,7 @@ if [ "$MP" = "" ]; then
   echo " the build and installation of LAMMPS, but some "
   echo " packages cannot be enabled and other may work  "
   echo " not optimally.                                 "
-  echo -e "\n*************************************************\n\033[0m"
+  echo -e "\n*************************************************\n\033[0m" 
 fi
 
 # Prepare directories to move the extrafiles needed to build some packages
@@ -342,8 +342,13 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  
+sed -i cmake/CMakeLists.txt -e "s:SET CMP0109 OLD:SET CMP0109 NEW:g"  
+sed -i cmake/CMakeLists.txt -e "s:SET CMP0135 OLD:SET CMP0135 NEW:g"  
+sed -i cmake/Modules/Packages/PLUMED.cmake -e "s:SET CMP0135 OLD:SET CMP0135 NEW:g"  
+sed -i cmake/Modules/Packages/ML-PACE.cmake -e "s:SET CMP0135 OLD:SET CMP0135 NEW:g"  
 
-# The Source has not a CMakeLists.txt file in the root directory we
+# The Source has not a CMakeLists.txt file in the root directory we 
 # need to change in the cmake directory
 cd cmake
 cd build

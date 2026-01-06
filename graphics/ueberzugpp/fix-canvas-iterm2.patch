@@ -1,0 +1,35 @@
+Fix build issues with GCC 11.2.0 and fmt after 10.2.1
+
+ src/canvas/iterm2/iterm2.cpp | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/src/canvas/iterm2/iterm2.cpp b/src/canvas/iterm2/iterm2.cpp
+index 2818aab..d2832e9 100644
+--- a/src/canvas/iterm2/iterm2.cpp
++++ b/src/canvas/iterm2/iterm2.cpp
+@@ -27,7 +27,6 @@
+ #include <iostream>
+ 
+ #include <fmt/format.h>
+-#include <spdlog/spdlog.h>
+ 
+ #ifdef HAVE_STD_EXECUTION_H
+ #  include <execution>
+@@ -35,8 +34,6 @@
+ #  include <oneapi/tbb.h>
+ #endif
+ 
+-#include <range/v3/all.hpp>
+-
+ namespace fs = std::filesystem;
+ 
+ Iterm2::Iterm2(std::unique_ptr<Image> new_image, std::mutex *stdout_mutex)
+@@ -72,7 +69,7 @@ void Iterm2::draw()
+     const uint64_t bytes_per_chunk = 4 * ((chunk_size + 2) / 3) + 100;
+     str.reserve((num_chunks + 2) * bytes_per_chunk);
+ 
+-    ranges::for_each(chunks, [this](const std::unique_ptr<Iterm2Chunk> &chunk) { str.append(chunk->get_result()); });
++    std::for_each(chunks.begin(), chunks.end(), [this](const std::unique_ptr<Iterm2Chunk> &chunk) { str.append(chunk->get_result()); });
+     str.append("\a");
+ 
+     const std::scoped_lock lock{*stdout_mutex};

@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/jstkdng/ueberzugpp/archive/v2.9.8/ueberzugpp-2.9.8.
 MD5SUM="6ec05dab806debcaec12e91e51a41c8d"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="CLI11 chafa libsixel nlohmann_json range-v3 spdlog tbb vips cmake-opt"
+REQUIRES="CLI11 chafa libsixel nlohmann_json range-v3 spdlog tbb vips"
 MAINTAINER="xaizek"
 EMAIL="xaizek@posteo.net"

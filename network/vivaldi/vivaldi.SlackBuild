@@ -4,7 +4,7 @@
 #
 # Copyright 2015-2017  Edinaldo P. Silva, Rio de Janeiro, Brazil.
 # Copyright 2017-2019, Alexander Verbovetsky, Moscow, Russia
-# Copyright 2019-2025, Ruari Oedegaard, Oslo, Norway
+# Copyright 2019-2026, Ruari Oedegaard, Oslo, Norway
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vivaldi
-VERSION=${VERSION:-7.7.3851.66}
+VERSION=${VERSION:-7.7.3851.67}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,12 +83,6 @@ for logo in "$PKG/opt/vivaldi"/product_logo_*.png; do
   mkdir -p "$icondir"
   ln -fs "../../../../../../opt/vivaldi/$logo" "$icondir/vivaldi.png"
 done
-
-sed \
-  -e "s|vivaldi-stable|vivaldi|" \
-  $PKG/usr/share/applications/vivaldi-stable.desktop \
-  > $PKG/usr/share/applications/vivaldi.desktop
-rm $PKG/usr/share/applications/vivaldi-stable.desktop
 
 for doc in README README.SBo $PRGNAM.SlackBuild; do
   install -Dm644 $CWD/$doc $PKG/usr/doc/$PRGNAM-$VERSION/$doc

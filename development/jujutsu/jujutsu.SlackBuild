@@ -2,7 +2,7 @@
 
 # Slackware build script for jujutsu
 
-# Copyright 2022 Julian Grinblat <julian@dotcore.co.il>
+# Copyright 2026 Julian Grinblat <julian@dotcore.co.il>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jujutsu
 SRCNAM=jj
-VERSION=${VERSION:-0.36.0}
+VERSION=${VERSION:-0.37.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

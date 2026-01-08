@@ -85,9 +85,20 @@ Updating an existing package:
   git commit -am "category/pkgname: short description"
   git push origin update/pkgname-version
 
-After merge:
-- delete the branch
-- sync master via merge
+Commit messages for upstream submissions must use the format:
+
+  category/pkgname: short description
+
+Example:
+
+  system/TLP: update to 1.9.1
+
+Branch names may follow the local convention:
+
+  update/pkgname-version
+
+Branch names are disposable and local-only; commit messages must follow
+upstream style.
 
 
 CI TESTING (OPTIONAL)

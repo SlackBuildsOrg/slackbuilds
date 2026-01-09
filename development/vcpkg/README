@@ -1,0 +1,13 @@
+vcpkg is a C/C++ dependency management framework used as a build-time
+tool by modern projects.
+
+It provides CMake integration, library port definitions, and build
+configuration files (triplets) required by software that embeds vcpkg
+into its build system.
+
+- command-line tool for managing C/C++ dependencies;
+- CMake toolchain file for build integration;
+- ports and triplets describing third-party libraries;
+- used during build time, not at runtime;
+- required by projects such as the Ladybird web browser.
+

@@ -1,0 +1,141 @@
+#!/bin/bash
+
+# Slackware build script for PeaZip
+
+# Copyright 2025-2026 Marco Lavorini, Italy
+# All rights reserved.
+#
+# Heavy based on ArchLinux AUR https://aur.archlinux.org/packages/peazip
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=PeaZip
+VERSION=${VERSION:-10.8.0}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+# gtk2 (default), gtk3 (alpha stage) or qt6 (requires installation of Qt6 bindings)
+WIDGET=${WIDGET:-gtk2}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+
+PACKS=(
+  $TMP/$PRGNAM-$VERSION/peazip-sources/dev/metadarkstyle/metadarkstyle.lpk
+  $TMP/$PRGNAM-$VERSION/peazip-sources/dev/project_pea.lpi
+  $TMP/$PRGNAM-$VERSION/peazip-sources/dev/project_peach.lpi
+)
+
+# use system binaries
+sed -E -e 's&(\bHSYSBIN\b\s*)=\s*[0-9];&\1= 2;&' \
+  -i $TMP/$PRGNAM-$VERSION/peazip-sources/dev/peach.pas
+
+# set paths, needs trailing slash
+sed -E \
+  -e 's&(\bHBINPATH\b\s*)=\s*'\'\'';&\1= '\''/usr/bin/'\'';&' \
+  -e 's&(\bHSHAREPATH\b\s*)=\s*'\'\'';&\1= '\'/usr/share/$PRGNAM/\'';&' \
+  -i $TMP/$PRGNAM-$VERSION/peazip-sources/dev/peach.pas
+
+# remove buttons from about dialog
+BUTTONS=(
+  FormPeach.baboutbin
+  FormPeach.baboutplugindir
+  FormPeach.baboutplugins
+  FormPeach.baboutremoveunace
+  FormPeach.baboutremoveunrar
+  FormPeach.baboutup
+)
+for i in ${BUTTONS[@]}; do
+  sed -E -e "/^${i//./\\.}.Caption:=/s&^.*\$&${i}.Visible:=False;&" -i $TMP/$PRGNAM-$VERSION/peazip-sources/dev/peach.pas
+done
+
+LAZ_OPTS=(
+   --build-all \
+   --cpu=$ARCH \
+   --lazarusdir=/usr/share/lazarus \
+   --os=linux \
+   --primary-config-path=config \
+   --widgetset=$WIDGET \
+   --opt="-O3 -Sa -CX -XX -k--sort-common -k--as-needed -k-z -krelro -k-z -know"
+)
+
+for x in ${PACKS[@]}; do
+  lazbuild "${LAZ_OPTS[@]}" "$x"
+done
+
+# binaries
+SRC=$TMP/$PRGNAM-$VERSION/peazip-sources/dev
+install -Dm755 $SRC/peazip $PKG/usr/bin/peazip
+install -Dm755 $SRC/pea $PKG/usr/bin/pea
+
+# icons
+SRC=$TMP/$PRGNAM-$VERSION/peazip-sources/res/share/icons
+install -Dm644 $SRC/peazip_{7z,rar,zip}.png                 -t $PKG/usr/share/icons/hicolor/256x256/mimetypes/
+install -Dm644 $SRC/peazip_{add,extract,browse,convert}.png -t $PKG/usr/share/icons/hicolor/256x256/actions/
+
+# launcher
+SRC=$TMP/$PRGNAM-$VERSION/peazip-sources/res/share/batch/freedesktop_integration
+install -Dm644 $SRC/peazip.png    -t $PKG/usr/share/icons/hicolor/256x256/apps/
+install -Dm644 $SRC/peazip.desktop -t $PKG/usr/share/applications/
+
+# res
+install -dm755 $PKG/usr/share/$PRGNAM
+SRC=$TMP/$PRGNAM-$VERSION/peazip-sources/res/share
+cp -a $SRC/{icons,lang,themes,presets} $PKG/usr/share/$PRGNAM/
+cp -a $SRC/*.pdf                       $PKG/usr/share/$PRGNAM/
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp $TMP/$PRGNAM-$VERSION/LICENSE $PKG/usr/doc/$PRGNAM-$VERSION/
+cp -a $TMP/$PRGNAM-$VERSION/peazip-sources/res/share/copying $PKG/usr/doc/$PRGNAM-$VERSION/
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+# permissions
+chown -R root:root $PKG/
+chmod -R u+rwX,go+rX,go-w $PKG/
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

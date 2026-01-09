@@ -5,7 +5,7 @@
 # Copyright 2008-2013  Robby Workman  Northport, AL, USA
 # Copyright 2014-2017  Ryan P.C. McQuen | Everett, WA | ryanpcmcquen@member.fsf.org
 # Copyright 2017       Dhaby Xiloj <slack.dhabyx@gmail.com>
-# Copyright 2024-2025 Jeremy Hansen <jebrhansen+SBo@gmail.com>
+# Copyright 2024-2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 
 # All rights reserved.
 #
@@ -37,7 +37,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=blender
-VERSION=${VERSION:-5.0.0}
+VERSION=${VERSION:-5.0.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

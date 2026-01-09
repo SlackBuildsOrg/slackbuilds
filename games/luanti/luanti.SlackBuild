@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Slackware build script for luanti
+# Maintained by Lumin Etherlight <lumin+slackbuilds@etherlight.link>
 
+# Copyright 2026 Lumin Etherlight
 # Copyright 2025 Samuel Young, MO, USA
 # All rights reserved.
 #
@@ -22,10 +24,13 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20251231 lumin:
+# - update for v5.14.0
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=luanti
-VERSION=${VERSION:-5.13.0}
+VERSION=${VERSION:-5.14.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,7 +85,7 @@ build_server=FALSE ; [ "${BUILD_SERVER:-no}" != "no" ] && build_server=TRUE
 
 mkdir -p build
 cd build
-  cmake \
+cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -89,8 +94,8 @@ cd build
     -DBUILD_SERVER=$build_server \
     -DRUN_IN_PLACE=FALSE \
     -DCMAKE_BUILD_TYPE=Release ..
-  make
-  make install/strip DESTDIR=$PKG
+make
+make install/strip DESTDIR=$PKG
 cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

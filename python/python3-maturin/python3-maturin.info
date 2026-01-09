@@ -1,10 +1,10 @@
 PRGNAM="python3-maturin"
-VERSION="1.10.2"
+VERSION="1.11.5"
 HOMEPAGE="https://github.com/PyO3/maturin"
-DOWNLOAD="https://files.pythonhosted.org/packages/source/m/maturin/maturin-1.10.2.tar.gz \
-          https://slackware.uk/~fourtysixandtwo/src/maturin-vendored-sources-1.10.2-1.tar.xz"
-MD5SUM="f6b86b227fe5d25cc65f8d44738dad13 \
-        db0a0938012c7e6b752b2bafadd7948c"
+DOWNLOAD="https://files.pythonhosted.org/packages/source/m/maturin/maturin-1.11.5.tar.gz \
+          https://slackware.uk/~fourtysixandtwo/src/maturin-vendored-sources-1.11.5-1.tar.xz"
+MD5SUM="f335b690a812734f64b00336c865a290 \
+        f498e09b1fc430a06af5e064e3c3ff60"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="rust-opt python3-setuptools-rust-opt"

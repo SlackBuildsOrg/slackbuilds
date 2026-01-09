@@ -1,0 +1,25 @@
+If installed from a package, joystickwake launches automatically when
+a user logs in to any modern linux desktop environment. It can also be
+run manually, without formal installation, since the executable is
+self-contained.
+
+While running, it monitors udev to find devices with the
+ID_INPUT_JOYSTICK property (including devices that are plugged in later)
+and reacts to activity from any of them.
+
+The screen is kept awake by periodically running a heartbeat-like wake
+command: an external tool provided by the system. Most desktop
+environments and screen savers include such a command, and joystickwake
+knows how to use the common ones, so there is normally no need for a
+user to install or configure one. This design keeps joystickwake
+compatible with just about every screensaver and power management system
+there is.
+
+OPTIONAL DEPENDENCIES
+
+python3-dbus-fast:
+if installed joystickwake will also try to inhibit the desktop
+environment's screen idle state for a short while after detecting
+activity, using the org.freedesktop.ScreenSaver interface. This helps
+with certain environments whose heartbeat-style wake interfaces are
+missing or broken.

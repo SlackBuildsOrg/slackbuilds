@@ -17,7 +17,6 @@ different Java versions.
 1.16 or older:   Java SE 8
 
 Optional dependencies are:
-- qt6:   use QT6=yes to build PrismLauncher with Qt6 instead of Qt5
 - scdoc: if present at build time, a man page for PrismLauncher will be
          generated
 - glfw3: use system GLFW libraries

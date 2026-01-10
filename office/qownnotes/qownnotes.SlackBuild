@@ -2,7 +2,7 @@
 
 # Slackware build script for qownnotes
 
-# Copyright 2025 Vladislav 'fsLeg' Borisov, Moscow, Russia
+# Copyright 2025-2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # Copyright 2014-2021 Patrizio Bekerle (patrizio@bekerle.com)
 # All rights reserved.
 #
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=qownnotes
-VERSION=${VERSION:-26.1.3}
+VERSION=${VERSION:-26.1.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -94,7 +94,6 @@ mkdir build
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 cmake \
-  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DBUILD_WITH_ASPELL=ON \
   $USE_QT6 \

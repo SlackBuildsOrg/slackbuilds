@@ -2,7 +2,7 @@
 
 # Slackware build script for udpbench
 
-# Copyright 2024 Alexander Bluhm, Germany
+# Copyright 2024-2026 Alexander Bluhm, Germany
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=udpbench
-VERSION=${VERSION:-1.12}
+VERSION=${VERSION:-1.13}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -3,7 +3,7 @@
 # Written by Marco Cecchetti (mrc.ildp@gmail.com)
 # Update by Diogo Leal (diogo@diogoleal.com)
 
-# Copyright 2022-2025  fourtysixandtwo <fourtysixandtwo@sliderr.net>
+# Copyright 2022-2026  fourtysixandtwo <fourtysixandtwo@sliderr.net>
 # Copyright 2017 Ekin Akoglu, Erdemli, Mersin, Turkey | ekinakoglu@gmail.com
 # Ryan P.C. McQuen | Everett, WA | ryanpcmcquen@member.fsf.org
 
@@ -31,7 +31,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=exaile
-VERSION=${VERSION:-4.2.0}
+VERSION=${VERSION:-4.2.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

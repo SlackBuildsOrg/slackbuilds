@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=opera
-VERSION=${VERSION:-125.0.5729.49}
+VERSION=${VERSION:-126.0.5750.18}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

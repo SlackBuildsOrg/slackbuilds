@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=miktex
-VERSION=${VERSION:-25.4}
+VERSION=${VERSION:-25.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -70,14 +70,14 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
 # Bootstrapping without network
 install -Dm644 $CWD/*.lzma -t build
@@ -108,6 +108,8 @@ cd build
     -DMIKTEX_LINUX_DIST_VERSION=15.0 \
     -DWITH_LEGACY_WINDOWS_SUPPORT=OFF \
     -DINSTALL_MIKTEX_HEADERS=OFF \
+    -DUSE_SYSTEM_HARFBUZZ=OFF \
+    -DUSE_SYSTEM_HARFBUZZ_ICU=OFF \
     -DUSE_SYSTEM_LOG4CXX=${SYSTEM:-OFF} \
     -DUSE_SYSTEM_MPFI=OFF \
     -DUSE_SYSTEM_MSPACK=${SYSTEM:-OFF} \

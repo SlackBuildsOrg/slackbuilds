@@ -22,6 +22,10 @@ After installation, you must physically remove the Unifying Receiver and
 re-insert it for the device node permissions to take effect for the
 first time.
 
+As of version 1.1.18 Solaar is only guaranteed to work in Python 3.13 or
+later.  Local testing shows 1.1.18 does not work with Slackware's
+python, so this is frozen at version 1.1.17.
+
 Uninstalling: Solaar may leave behind configuration files in your home
 directory. To delete them, run:
 rm -rf ~/.config/solaar

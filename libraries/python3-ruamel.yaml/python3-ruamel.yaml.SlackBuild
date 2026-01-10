@@ -2,7 +2,7 @@
 
 # Slackware build script for python3-ruamel.yaml
 
-# Copyright 2024-2025  fourtysixandtwo <fourtysixandtwo@sliderr.net>
+# Copyright 2024-2026  fourtysixandtwo <fourtysixandtwo@sliderr.net>
 # Copyright 2019-2023, Alexander Verbovetsky, Moscow, Russia
 # All rights reserved.
 #
@@ -26,7 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-ruamel.yaml
-VERSION=${VERSION:-0.18.16}
+SRCNAM=ruamel_yaml
+VERSION=${VERSION:-0.19.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -54,7 +55,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf ${PRGNAM:8}-$VERSION
-tar xvf $CWD/${PRGNAM:8}-$VERSION.tar.gz
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd ${PRGNAM:8}-$VERSION
 
 chown -R root:root .

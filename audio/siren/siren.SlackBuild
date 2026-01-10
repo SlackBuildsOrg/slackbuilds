@@ -2,6 +2,7 @@
 
 # Slackware build script for siren
 
+# Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2023 Samuel Young, MO, USA
 # All rights reserved.
 #
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=siren
-VERSION=${VERSION:-0.10}
+VERSION=${VERSION:-0.11}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -85,6 +86,8 @@ CXXFLAGS="$SLKCFLAGS" \
 
 make
 make install DESTDIR=$PKG
+chmod +x $PKG/usr/lib${LIBDIRSUFFIX}/siren/ip/*.so
+chmod +x $PKG/usr/lib${LIBDIRSUFFIX}/siren/op/*.so
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 

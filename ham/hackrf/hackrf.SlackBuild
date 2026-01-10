@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=hackrf
-VERSION=${VERSION:-2024.02.1}
+VERSION=${VERSION:-2026.01.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -55,14 +55,14 @@ if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
-     SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-     LIBDIRSUFFIX=""
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-     SLKCFLAGS="-O2 -fPIC"
-     LIBDIRSUFFIX="64"
+  SLKCFLAGS="-O2 -fPIC -fPIE -pie -Wl,-z,relro,-z,now -fstack-protector-all -fstack-clash-protection -fcf-protection=full -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS"
+  LIBDIRSUFFIX="64"
 else
-     SLKCFLAGS="-O2"
-     LIBDIRSUFFIX=""
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -72,7 +72,7 @@ mkdir -p $TMP $PKG $OUTPUT
 
 # Use the dongle as a non-root user.
 if [ "${RULES:-no}" == "yes" ]; then
-	OPT1="$OPT -DINSTALL_UDEV_RULES=ON"
+  OPT1="$OPT -DINSTALL_UDEV_RULES=ON"
 fi
 
 cd $TMP
@@ -91,12 +91,12 @@ sed -i "s|lib/pkgconfig|lib${LIBDIRSUFFIX}/pkgconfig|" libhackrf/CMakeLists.txt
 mkdir -p build
 cd build
   cmake \
- 	-DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-	-DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-	-DCMAKE_INSTALL_PREFIX=/usr \
-        $OPT1 \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DLIB_SUFFIX=$LIBDIRSUFFIX ..
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    $OPT1 \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLIB_SUFFIX=$LIBDIRSUFFIX ..
   make
 make install DESTDIR=$PKG
 cd ../..
@@ -104,6 +104,7 @@ cd ../..
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+mv -v ${PKG}/etc/udev/rules.d/53-hackrf.rules ${PKG}/etc/udev/rules.d/53-hackrf.rules.new
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a CODE_OF_CONDUCT.md RELEASENOTES Readme.md COPYING $PKG/usr/doc/$PRGNAM-$VERSION
 
@@ -111,6 +112,7 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

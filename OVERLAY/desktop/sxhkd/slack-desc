@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+sxhkd: sxhkd (Simple X hotkey daemon)
+sxhkd:
+sxhkd: sxhkd is an X daemon that reacts to input events by executing
+sxhkd: commands. It's configuration file is a series of bindings that
+sxhkd: define the associations between the input events and the commands.
+sxhkd:
+sxhkd: The format of the configuration file supports a simple notation for
+sxhkd: mapping multiple shortcuts to multiple commands in parallel.
+sxhkd:
+sxhkd: Homepage: https://github.com/baskerville/sxhkd
+sxhkd:

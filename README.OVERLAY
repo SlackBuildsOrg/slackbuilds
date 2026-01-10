@@ -116,6 +116,41 @@ This must be posted as a PR comment, not in the commit message or PR
 description.
 
 
+AFTER UPSTREAM MERGE
+
+SlackBuilds.org may merge pull requests directly, cherry-pick commits,
+or apply changes manually. In all cases, upstream/master is the source
+of truth.
+
+Once changes have been merged or applied upstream, the local fork must
+be resynchronized and temporary branches cleaned up.
+
+Update local master from upstream:
+
+  git checkout master
+  git fetch upstream
+  git merge upstream/master
+
+Accept the default merge commit message.
+
+Verify that the changes are present upstream, either by inspecting the
+SlackBuilds.org repository or by checking the local tree after the merge.
+
+Temporary add/* and update/* branches are disposable and should be
+removed once upstream has applied the changes.
+
+Local cleanup:
+
+  git branch -D update/pkgname-version
+
+Force deletion is expected here, as upstream may apply changes without
+creating a merge commit.
+
+Remote cleanup (optional):
+
+  git push origin --delete update/pkgname-version
+
+
 SAFETY RULES
 
 Once OVERLAY exists on master:

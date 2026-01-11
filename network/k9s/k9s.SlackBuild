@@ -32,7 +32,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 PRGNAM=k9s
-VERSION=${VERSION:-0.50.16}
+VERSION=${VERSION:-0.50.18}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

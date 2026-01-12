@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260111 bkw: updated for v2.2.15.
 # 20240907 bkw: updated for v2.2.13.
 # 20230714 bkw: updated for v2.2.11.
 # - new deps (see .info file).
@@ -15,7 +16,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=srb2
-VERSION=${VERSION:-2.2.13}
+VERSION=${VERSION:-2.2.15}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,8 +72,9 @@ tar xvf $CWD/SRB2-SRB2_release_$VERSION.tar.gz \
 cd SRB2-SRB2_release_$VERSION
 
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Assets (actually WAD and pk3 aka zip files) aren't found in the
 # source, have to download them separately. The build actually checks
@@ -88,7 +90,7 @@ find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
   # upstream release a 2.2.8 followed by a 229, handle either.
   ZIPFILE="$CWD/SRB2-v$VERSION-Full.zip"
   [ -e "$ZIPFILE" ] || ZIPFILE="$CWD/SRB2-v${VERSION//.}-Full.zip"
-  unzip "$ZIPFILE" '*.dta' '*.pk3'
+  unzip "$ZIPFILE" '*.dta' '*.pk3' || true
 )
 
 # As shipped, the path /usr/games/SRB2 is hardcoded in various places
@@ -162,9 +164,10 @@ cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
 # dev and modding docs in doc/, config files for cwiid and various doom
 # level editors in extras/. We don't need yet another copy of the GPL
 # in doc/, so:
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 rm -f doc/.gitignore doc/copying
-cp -a doc extras $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cp -a doc extras $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

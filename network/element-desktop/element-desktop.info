@@ -1,14 +1,14 @@
 PRGNAM="element-desktop"
-VERSION="1.12.7"
+VERSION="1.12.8"
 HOMEPAGE="https://element.io/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/element-hq/element-desktop/archive/v1.12.7/element-desktop-1.12.7.tar.gz \
-                 https://github.com/element-hq/element-web/archive/v1.12.7/element-web-1.12.7.tar.gz \
-                 https://sbo.t-rg.ws/element-desktop-1.12.7-vendored-sources.tar.xz"
-MD5SUM_x86_64="f314a3a53093b5cd67a59c7250a0b406 \
-               ad9cd297fcb3770e24956830a40d79e8 \
-               d148a3216b20a8afbf6f3d6d102196bd"
+DOWNLOAD_x86_64="https://github.com/element-hq/element-desktop/archive/v1.12.8/element-desktop-1.12.8.tar.gz \
+                 https://github.com/element-hq/element-web/archive/v1.12.8/element-web-1.12.8.tar.gz \
+                 https://sbo.t-rg.ws/element-desktop-1.12.8-vendored-sources.tar.xz"
+MD5SUM_x86_64="027415fb6be686b616f76a7485e5cd49 \
+               b594503e3a32543d49cc6fd5a26e11a6 \
+               7a4e4d42bbcdcf27c3c7759e39057c67"
 REQUIRES="sqlcipher rust-opt nodejs24-bin"
 MAINTAINER="Vladislav 'fsLeg' Borisov"
 EMAIL="fsleg@t-rg.ws"

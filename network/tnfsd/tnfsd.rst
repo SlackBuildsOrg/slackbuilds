@@ -1,7 +1,7 @@
 .. RST source for tnfsd(1) man page. Convert with:
 ..   rst2man.py tnfsd.rst > tnfsd.1
 
-.. |version| replace:: 23.0207.1_95c5b55
+.. |version| replace:: 23.0207.1_20240406_5a82b42
 .. |date| date::
 
 =====
@@ -31,8 +31,8 @@ computers. It's simpler than NFS, SMB, or FTP. It's similar to TFTP,
 but has features TFTP lacks.
 
 **tnfsd** is the server for the TNFS protocol. It listens for clients
-on UDP port 16384. In theory, the protocol supports TCP connections,
-but this hasn't been implemented yet.
+on UDP and TCP ports 16384. Although TCP is supported, most clients
+use UDP only... maybe *all* clients?
 
 The mandatory **directory** option is the root of the TNFS filesystem
 tree.
@@ -47,7 +47,7 @@ in case there's a bug in **tnfsd** that allows such access (currently,
 no such bug is known of).
 
 Note that **tnfsd** can be started by a normal user, since it uses an
-unprivileged UDP port. The **-c** option won't work in this case.
+unprivileged port number. The **-c** option won't work in this case.
 
 **tnfsd** logs various information to standard error. If compiled with
 *-DUSAGE_LOG*, the log includes all mount, umount, and file transfer
@@ -60,7 +60,7 @@ LIMITATIONS
 limitations should not be read as complaints or feature requests.
 
 There is no way to run multiple **tnfsd** instances on the same
-host, not even on a multi-homed host. The default UDP port cannot
+host, not even on a multi-homed host. The default port cannot
 be changed; neither can the IP address used for binding (which is
 *0.0.0.0*, aka *INADDR_ANY*). Also, there's no concept of virtual
 hosts. If you *really* want to run multiple instances, use containers

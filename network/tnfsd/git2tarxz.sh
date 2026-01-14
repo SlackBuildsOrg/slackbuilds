@@ -49,13 +49,10 @@ fi
 
 GIT_SHA=$( git rev-parse --short HEAD )
 
-# the version hardcoded in main.c includes the date, so
-# don't use this.
-#DATE=$( git log --date=format:%Y%m%d --format=%cd | head -1 )
-#VERSION=${DATE}_${GIT_SHA}
+DATE=$( git log --date=format:%Y%m%d --format=%cd | head -1 )
 
 VERMAIN="$( grep 'const  *char  *\*version' tnfs/tnfsd/main.c | cut -d'"' -f2 )"
-VERSION=${VERMAIN}_${GIT_SHA}
+VERSION=${VERMAIN}_${DATE}_${GIT_SHA}
 
 rm -rf .git
 find . -name .gitignore -print0 | xargs -0 rm -f

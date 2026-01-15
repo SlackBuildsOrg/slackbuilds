@@ -1,0 +1,15 @@
+PeaZip free file archiver utility.
+PeaZip is an Open Source (LGPLv3) cross-platform archive manager 
+utility, supporting over 200 archiving and compression formats as 7Z, 
+BZip2, Brotli, GZip, PEA, RAR, ZIP, ZPAQ, Zstandard, and many more.
+
+There are three widget sets you can use:
+gtk2: default option
+gtk3: alpha stage, not tested
+qt6:  require lazarus qt6 bindings, not tested
+
+If, for example, you want to use gtk3, run:
+WIDGET=gtk3 ./PeaZip.SlackBuild
+
+lazarus is required only for build, not for runtime.
+arc, unace and upx are optional runtime dependencies.

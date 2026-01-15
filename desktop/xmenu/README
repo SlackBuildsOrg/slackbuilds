@@ -1,0 +1,15 @@
+XMenu is a desktop menu utility for the X11 window system.
+XMenu receives a menu specification in stdin, shows a menu for the user
+to select one of the options, and outputs the selected option to stdout.
+
+Features:
+- Reads something in and prints something out, the UNIX way.
+- Menu hierarchies (submenus).
+- Icons and separators.
+- Optional alternate activation (click a menu entry with middle-button).
+- Customization via X resources.
+- Multi-monitor support (via Xinerama).
+- File navigation via menus (see “-f”)
+- Torn-off (detachable) menus (see “-w”).
+- Fine window management hints (see “-p” and “-t”).
+- Use as a standalone desktop start-menu (see “-x”).

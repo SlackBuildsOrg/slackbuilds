@@ -2,25 +2,18 @@
 
 # Slackware build script for meh
 
-# Copyright 2014 Leonard Schmidt <email removed>
-# All rights reserved.
-#
-# Permission to use, copy, modify, and distribute this software for any purpose
-# with or without fee is hereby granted, provided that the above copyright
-# notice and this permission notice appear in all copies.
-#
-# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
-# INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
-# FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-# AUTHORS AND COPYRIGHT HOLDERS AND THEIR CONTRIBUTORS BE LIABLE FOR ANY
-# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+# Original author: Leonard Schmidt <email removed>.
 # Now maintained by B. Watson <urchlay@slackware.uk>.
+
+# Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# 20260114 bkw: update for v0.3+20181021_69f653a.
+# - relicense as WTFPL, with permission from Leonard.
+# - this is the last git commit from upstream.
+# - this is the same version FreeBSD ports has as "0.3.27".
+# - redo man page as rst, add new key bindings.
+# - rework giflib patch for this version.
+# - add key bindings space (next) and backspace (previous).
 
 # 20250117 bkw: BUILD=2
 # - stop spewing spurious 'GIFLIB: (null)' to stderr when viewing gifs.
@@ -36,8 +29,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=meh
-VERSION=${VERSION:-0.3}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-0.3+20181021_69f653a}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -74,21 +67,28 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
-# 20250117 bkw: Fixes for giflib-5.1, originally from
-# https://github.com/jhawthorn/meh but modified slightly:
-# DGifCloseFile(g->gif,&ret) sets ret to D_GIF_SUCCEEDED (aka 0) on
-# success, *NOT* GIF_OK (aka 1).
+# 20260114 bkw: supposedly upstream fixed the 'GIFLIB: (null)' spam
+# on stderr, but... not quite. this is now a one-line patch.
 patch -p1 < $CWD/meh-giflib.patch
+
+# 20260114 bkw: every image viewer I use (qiv, pqiv, etc) supports
+# Space => next image. Since the spacebar doesn't do anything else
+# in meh, make it do what I want.
+patch -p1 < $CWD/space-backspace.diff
 
 # 20250117 bkw: this fixes imagemagick support, so we can view e.g.
 # webp, jpeg2000, etc.
 sed -i '/argv/s,"255","16",' src/imagemagick.c
+
+# 20260114 bkw: have the -v (version) option report the full version.
+sed -i "/meh version 0/s,0\\.3,$VERSION," src/main.c
 
 CFLAGS="$SLKCFLAGS" make
 install -D -s -o root -g root -m 755 $PRGNAM $PKG/usr/bin/$PRGNAM
@@ -98,12 +98,14 @@ install -D -s -o root -g root -m 755 $PRGNAM $PKG/usr/bin/$PRGNAM
 # he likes it).
 # 20250119 bkw: add GIF to the list of builtin types, mention that
 # animation's not supported.
+# 20260114 bkw: add new keystrokes to man.
 mkdir -p $PKG/usr/man/man1
 gzip -9c < $CWD/$PRGNAM.1 > $PKG/usr/man/man1/$PRGNAM.1.gz
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS BUGS COPYING NEWS README THANKS $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a AUTHORS BUGS COPYING NEWS README THANKS $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

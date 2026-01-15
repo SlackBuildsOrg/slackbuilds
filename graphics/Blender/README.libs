@@ -1,0 +1,18 @@
+The "libs" tarball of official blender.org libraries is
+linked to in the Blender.info file.
+
+To locally generate a "libs" tarball
+e.g. blender-5.0.1-libs.tar.lz
+
+first ensure git-lfs is installed (available at SBo).
+Next ensure ~10G disk space is available.
+
+Then run:
+  git clone https://projects.blender.org/blender/blender.git
+  cd blender
+  git checkout v5.0.1
+  make update
+  cd lib
+  tar cvf blender-5.0.1-libs.tar linux_x64
+  plzip -9 --output=blender-5.0.1-libs.tar.lz blender-5.0.1-libs.tar
+

@@ -1,10 +1,11 @@
-The Common Desktop Environment (CDE) was the dominant desktop on
-proprietary Unix systems in the 90's. In 2012 it was relicensed under
-GPL2 and has seen modest maintenance from the community. Although
-functional, it is of course a very old desktop, and some parts of it,
-such as the mail application, are not likely useful in a modern setting.
-(NsCDE is a good alternative if you want a modern CDE look-a-like)
-Nevertheless, people still use it today, for nostalgia, if nothing else.
+The Common Desktop Environment (CDE) was the dominant desktop on 
+proprietary Unix systems in the 90's. In 2012 it was relicensed under 
+GPL2 and has seen modest maintenance from the community. Although largely
+functional, it is a very old desktop. Parts of it, such as the mail
+application, will not be useful in a modern setting, and there are known
+security vulnerabilities. (NsCDE is a good alternative if you want a
+modern CDE look-a-like) Nevertheless, people still use it today, for
+nostalgia, if nothing else.
 
 PS: The RPC service needs to be running for CDE to work:
 
@@ -24,7 +25,6 @@ x1:4:respawn:/usr/dt/bin/dtlogin
 
 
 Optional Calendar instructions:
-
 
 If you want to use the Calendar application, you need the inetd and cmsd
 daemons, and you need to configure some additional files:
@@ -51,3 +51,6 @@ can either start it manually or add the following to /etc/rc.d/rc.local:
 if [ -x /etc/rc.d/rc.cmsd ]; then
   /etc/rc.d/rc.cmsd start
 fi
+
+PPS: Like the dtlogin caucion, there are security considerations
+with dtspcd, see: https://sourceforge.net/p/cdesktopenv/wiki/Home

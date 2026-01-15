@@ -1,0 +1,14 @@
+PRGNAM="ekphos"
+VERSION="0.15.0"
+HOMEPAGE="https://www.ekphos.xyz/"
+DOWNLOAD="https://github.com/hanebox/ekphos/archive/v0.15.0/ekphos-0.15.0.tar.gz \
+          https://github.com/thnkman/slackbuilds/releases/download/vendor/ekphos-0.15.0-vendor_i586.tar.xz"
+MD5SUM="0ec9d3ea81af1a9673bb4148cf52c0e2 \
+        c27a855ee9cedc40fb668b8f8fdb385a"
+DOWNLOAD_x86_64="https://github.com/hanebox/ekphos/archive/v0.15.0/ekphos-0.15.0.tar.gz \
+                 https://github.com/thnkman/slackbuilds/releases/download/vendor/ekphos-0.15.0-vendor_x86_64.tar.xz"
+MD5SUM_x86_64="0ec9d3ea81af1a9673bb4148cf52c0e2 \
+               ea7876add1b2dcae29414a1a83130316"
+REQUIRES="rust-opt"
+MAINTAINER="thnkman"
+EMAIL="thnkman@proton.me"

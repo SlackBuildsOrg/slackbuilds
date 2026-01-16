@@ -1,0 +1,16 @@
+Box2D is a 2D rigid body simulation library for games.
+Programmers can use it in their games to make objects
+move in realistic ways and make the game world more
+interactive.
+From the game engine's point of view, a physics engine
+is a system for procedural animation.
+
+Box2D also provides many collision routines that can be
+used even when rigid body simulation is not used.
+There are functions for overlap and cast queries.
+
+There is also a bounding volume hierarchy (dynamic tree)
+that can be used for game specific spatial sorting needs.
+
+Box2D is written in portable C17. Most of the types
+defined in the engine begin with the b2 prefix.

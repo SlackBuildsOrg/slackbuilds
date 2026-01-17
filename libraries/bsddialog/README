@@ -1,0 +1,12 @@
+bsddialog
+---------
+
+bsddialog is a terminal dialog utility developed for FreeBSD as a modern
+replacement for dialog.
+
+It provides cleaner layout and better defaults for installer-style menus
+and simple system prompts.
+
+This package installs the bsddialog command-line tool for use in shell
+scripts.
+

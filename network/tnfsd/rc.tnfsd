@@ -7,14 +7,19 @@
 #   [ -x /etc/rc.d/rc.tnfsd ] && /etc/rc.d/rc.tnfsd start
 
 # tnfsd will chroot to $TNFS_ROOT and set its user ID to $TNFS_USER,
-# and its group ID to $TNFS_USER's primary group. Since there's no
-# other form of access control, make sure the $TNFS_USER can't wrote
-# to $TNFS_ROOT, unless you want to allow everyone who can connect
+# and its group ID to $TNFS_GROUP. Since there's no other form
+# of access control, make sure the $TNFS_USER can't write to
+# $TNFS_ROOT, unless you want to allow everyone who can connect
 # to write/delete/overwrite everything in $TNFS_ROOT. By default,
 # /var/tnfs is owned by root:tnfs-files.
 
 TNFS_USER=tnfsd
+TNFS_GROUP=tnfsd
 TNFS_ROOT=/var/tnfs
+
+# This could be "-r" for read-only mode, "-a" for Atari mode, or
+# "-r -a" for both:
+TNFS_OPTS=""
 
 # Log gets overwritten on startup (no rotation).
 TNFS_LOG=/var/log/tnfsd.log
@@ -30,7 +35,12 @@ kill_tnfsd() {
 start_tnfsd() {
   echo "Starting tnfsd."
   kill_tnfsd &>/dev/null
-  /usr/bin/tnfsd "$TNFS_ROOT" -c "$TNFS_USER" >"$TNFS_LOG" </dev/null 2>&1 &
+  /usr/bin/tnfsd \
+    $TNFS_OPTS \
+    -u "$TNFS_USER" \
+    -g "$TNFS_GROUP" \
+    "$TNFS_ROOT" \
+    >"$TNFS_LOG" </dev/null 2>&1 &
 }
 
 stop_tnfsd() {

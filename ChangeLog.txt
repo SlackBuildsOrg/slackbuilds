@@ -1,3 +1,168 @@
+Sat Jan 17 01:25:48 UTC 2026
+academic/locarna: Upgrade to version 2.0.1
+academic/plus42: Updated for version 1.3.13
+audio/helm: Removed (FTBFS and Upstream is Archived).
+audio/muse: Updated for version 4.2.1.
+audio/pavucontrol-qt: Disable x86 source downloads
+audio/podget: Updated for version 1.0.0.
+audio/reaper: Updated for version 7.59
+audio/siren: Updated for version 0.11
+desktop/cde: Updated for version 2.5.3.
+desktop/icewm: Updated for version 4.0.0.
+desktop/joystickwake: Added (Screen Waker).
+desktop/libqt6xdg: Disable x86 source downloads
+desktop/lxqt-menu-data: Disable x86 source downloads
+desktop/lxqt-runner: Disable x86 source downloads
+desktop/lxqt-themes: Disable x86 source downloads
+desktop/thunar-sendto-clamtk: Updated for version 0.08_2
+desktop/xmenu: Added (Desktop Menu Utility).
+development/Catch2: Fix pkgconfig location
+development/REDasm: Fix DOWNLOAD url.
+development/SQLAlchemy: Updated for version 2.0.45.
+development/aws-cdk: Updated for version 2.1101.0.
+development/bruno: Updated for version 3.0.2.
+development/claude-code: Updated for version 2.1.4
+development/colordiff: Updated for version 1.0.22.
+development/deno: Updated for version 2.6.5.
+development/github-cli: Updated for version 2.85.0
+development/gitify-bin: Updated for version 6.15.0
+development/google-go-lang: Updated for version 1.25.6.
+development/idea: Updated for version 2025.3.1.1.
+development/mongodb-compass: Updated for version 1.49.0.
+development/mongodb-shell: Updated for version 2.6.0.
+development/mrustc: Added (Rust Compiler).
+development/nextvi: Updated for version 3.2.
+development/nodejs22: Added (Javascript Runtime).
+development/php84: Updated for version 8.4.17
+development/pkgdiff: Updated for version 1.8.
+development/pnpm: Updated for version 10.28.0.
+development/poedit: Updated for version 3.8.1.
+development/postman: Updated for version 11.79.5
+development/rgbds: Updated for version 1.0.1.
+development/sourcegit: Updated for version 2026.01
+development/vscode-bin: Updated for version 1.108.1.
+development/vscodium: Updated for version 1.108.10359.
+development/vstudio: Updated for version 16.5.2
+development/xmake: Updated for version 3.0.6.
+development/zope.sqlalchemy: Fix broken build.
+games/BrogueCE: Update script.
+games/PrismLauncher: Updated for version 10.0.2.
+games/openclonk: Fix build with miniupnpc 2.3.3.
+games/puzzles: Updated for version 20251220.ecb576f.
+games/srb2: Updated for version 2.2.15.
+gis/viking: Updated for version 1.11.
+graphics/Blender: Updated for version 5.0.1
+graphics/lximage-qt: Disable x86 source downloads
+graphics/meh: Updated for version 0.3+20181021_69f653a.
+graphics/yacreader: Updated for version 9.16.3.
+ham/hackrf: Updated for version 2026.01.1.
+ham/inspectrum: Updated for version 0.4.0.
+ham/libsigmf: Updated for version 20260111.299dc8f9.
+ham/redsea: Updated for version 1.3.0.
+ham/rtl_433: Updated for version 25.12.
+ham/satdump: Updated for version 20260111.63d3cd96.
+ham/sdrangel: Updated for version 7.22.10.
+ham/sdrpp: Updated for version 20260111.65a0e11d.
+libraries/double-conversion: new maintainer.
+libraries/html5lib: new maintainer.
+libraries/imlib2: Updated for version 1.12.6.
+libraries/kidletime6: Disable x86 source downloads
+libraries/layer-shell-qt6: Disable x86 source downloads
+libraries/libfm-qt6: Disable x86 source downloads
+libraries/liblxqt: Disable x86 source downloads
+libraries/librepfunc: Updated for version 1.11.2.
+libraries/libsysstat: Disable x86 source downloads
+libraries/libtorrent: Updated for version 0.16.6.
+libraries/lxqt-build-tools-qt6: Disable x86 source downloads
+libraries/lxqt-notificationd: Disable x86 source downloads
+libraries/lxqt-qt6plugin: Disable x86 source downloads
+libraries/lxqt-sudo: Disable x86 source downloads
+libraries/md4c: new maintainer.
+libraries/miniupnpc: Updated for version 2.3.3.
+libraries/polkit-qt6-1: Disable x86 source downloads
+libraries/skalibs: Updated for version 2.14.5.0
+libraries/solid6: Disable x86 source downloads
+libraries/stormlib: Updated for version 9.31.
+libraries/tvision: Added (Turbo Vision Port).
+misc/ekphos: Added (TUI Markdown).
+network/brave-browser: update 1.85.120
+network/demagnetize-rs-bin: Added (Convert Bittorrent Magnet).
+network/discord: Version bump to 0.0.120
+network/eiskaltdcpp: Fix build with miniupnpc 2.3.3.
+network/element-desktop-bin: Updated to version 1.12.8.
+network/element-desktop: Updated to version 1.12.8.
+network/floorp-bin: Updated for version 12.10.2.
+network/gallery-dl: Updated for version 1.31.3
+network/k9s: update to 0.50.18
+network/kirc: Updated for version 1.2.2.
+network/landrun: update to 0.1.14
+network/librewolf: Updated for version 147.0_1
+network/mattermost-bin: Added (Online Collaboration Server).
+network/newsraft: Updated for version 0.35
+network/opera: Updated for version 126.0.5750.37
+network/retroshare: Fix build with miniupnpc 2.3.3
+network/rtorrent: Updated for version 0.16.6.
+network/shibboleth-sp: Updated for version 3.5.2.
+network/tailscale: update 1.92.5
+network/telegram: Updated for version 6.4.2.
+network/tnfsd: Updated for version 23.0207.1_20240406_5a82b42.
+network/tor-browser: Updated for version 15.0.4.
+network/transmission-remote-gtk: Updated for version 1.7.0.
+network/waterfox: Updated for version 6.6.8
+network/wireshark: Updated for version 4.6.3.
+office/Joplin: Fix permission.
+office/Joplin: Updated for version 3.5.11.
+office/hebcal: Updated for version 5.9.6.
+office/ledger-live: Updated for version 2.135.2
+office/qownnotes: Updated for version 26.1.7.
+office/wps-office-dicts: Updated for version 26.2.0.2
+office/zettlr: Updated for version 4.1.0.
+python/python3-geventhttpclient: Updated for version 2.3.7.
+python/python3-json5: Updated for version 0.13.0.
+python/python3-keyring: Updated to version 25.7.0; new maintainer.
+python/python3-meson-opt: Updated for version 1.10.0.
+python/python3-mesonpy: Updated for version 0.19.0.
+python/python3-psutil: Updated for version 7.2.1.
+python/python3-setuptools-git-versioning: Updated for version 3.0.1.
+python/python3-trove-classifiers: Updated for version 2026.1.14.14.
+python/python3-uv_build: Updated for version 0.9.26.
+ruby/ruby-build: Updated for version 20260114.
+system/PeaZip: Added (File Archiver).
+system/apparmor: Updated for version 4.1.3.
+system/cpu-g: Removed (Missing dependency and broken).
+system/dust: Updated for version 1.2.4.
+system/execline: Updated for version 2.9.8.0
+system/limine: Updated for version 10.6.3
+system/locust: Updated for version 2.34.0.
+system/lxqt-about: Disable x86 source downloads
+system/lxqt-admin: Disable x86 source downloads
+system/lxqt-archiver: Disable x86 source downloads
+system/lxqt-config: Disable x86 source downloads
+system/lxqt-globalkeys: Disable x86 source downloads
+system/lxqt-openssh-askpass: Disable x86 source downloads
+system/lxqt-policykit: Disable x86 source downloads
+system/lxqt-powermanagement: Disable x86 source downloads
+system/lxqt-session: Disable x86 source downloads
+system/netdata: Updated for version 2.8.5.
+system/osquery-bin: Updated for version 5.21.0.
+system/pcmanfm-qt: Disable x86 source downloads
+system/qps: Disable x86 source downloads
+system/qtxdg-tools: Disable x86 source downloads
+system/s6-linux-init: Updated for version 1.2.0.0
+system/s6: Updated for version 2.14.0.0
+system/sdl2trs: Updated for version 1.2.34+20251207_c98eb0e9.
+system/sdltrs: Updated for version 1.2.34.
+system/silk: Updated for version 1.0.5
+system/slpkg: Updated for version 5.5.0.
+system/slpkg: Updated for version 5.5.1.
+system/smpq: Updated for version 1.7.
+system/tarlz: Updated for version 0.29.
+system/usermin: Updated for version 2.520.
+system/wine-staging: Updated for version 11.0.
+system/wine: Updated for version 11.0.
+system/witr: Updated for version 0.2.3
+system/xtrs: Updated for version 4.9d+20250818_3a2180c.
++--------------------------+
 Sat Jan 10 04:36:18 UTC 2026
 academic/gephi: Fixed gephi build.
 academic/gwyddion: Updated for version 2.70.

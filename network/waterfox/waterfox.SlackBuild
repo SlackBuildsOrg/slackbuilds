@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=waterfox
-VERSION=${VERSION:-6.6.7}
+VERSION=${VERSION:-6.6.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,14 +77,25 @@ cd ..
 mkdir -p $PKG/opt/
 mv ${PRGNAM} $PKG/opt/
 
+# Sbopkglint complaints
+chmod +x $PKG/opt/$PRGNAM/*.so
+AUX="opt/waterfox/updater opt/waterfox/gmp-clearkey/0.1/libclearkey.so opt/waterfox/waterfox-bin opt/waterfox/waterfox opt/waterfox/vaapitest opt/waterfox/glxtest"
+for f in $AUX; do
+    chmod +x $PKG/$f
+done
+
 if [ "${POLICIES:-no}" = "yes" ]; then
     mkdir -p $PKG/opt/waterfox/distribution
     cp $CWD/policies.json $PKG/opt/waterfox/distribution
 fi
 
 mkdir -p $PKG/usr/bin $PKG/usr/share/applications $PKG/usr/share/pixmaps
-( cd $PKG/usr/bin ; rm -rf waterfox )
-( cd $PKG/usr/bin ; ln -sf ../../opt/waterfox/waterfox waterfox )
+cat <<EOF > $PKG/usr/bin/waterfox
+#!/bin/bash
+
+/opt/waterfox/waterfox "$@"
+EOF
+chmod +x $PKG/usr/bin/waterfox
 cp $CWD/waterfox.png $PKG/usr/share/pixmaps/
 cp $CWD/waterfox.desktop $PKG/usr/share/applications
 

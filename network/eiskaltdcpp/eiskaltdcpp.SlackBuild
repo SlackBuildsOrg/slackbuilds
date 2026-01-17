@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=eiskaltdcpp
 VERSION=${VERSION:-2.4.2}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -80,6 +80,8 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+patch -Np1 -i $CWD/5ab5e1137a46864b6ecd1ca302756da8b833f754.patch
 
 mkdir -p build
 cd build

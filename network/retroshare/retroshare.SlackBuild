@@ -21,7 +21,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=retroshare
 VERSION=${VERSION:-20220216_3dfcb58}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -69,6 +69,10 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+pushd libretroshare
+patch -Np1 -i $CWD/f1b89c4f87d77714571b4135c301bf0429096a20.patch
+popd
 
 RETROTOR=${RETROTOR:-no}
 if [ $RETROTOR = yes ]; then

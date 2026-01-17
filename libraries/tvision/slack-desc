@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+tvision: tvision (Turbo Vision)
+tvision:
+tvision: A modern port of Turbo Vision 2.0, the classical framework for
+tvision: text-based user interfaces.
+tvision:
+tvision: Now cross-platform and with Unicode support.
+tvision:
+tvision: home: https://github.com/magiblot/tvision
+tvision:
+tvision:
+tvision:

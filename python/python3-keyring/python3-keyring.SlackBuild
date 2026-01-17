@@ -2,8 +2,9 @@
 
 # Slackware build script for python3-keyring
 
-# Copyright 2015-2019  Dimitris Zlatanidis  Orestiada, Greece
+# Copyright 2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # Copyright 2024-2025 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2015-2019  Dimitris Zlatanidis  Orestiada, Greece
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,12 +27,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-keyring
-VERSION=${VERSION:-25.6.0}
+VERSION=${VERSION:-25.7.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-SRCNAM=keyring
+SRCNAM=${PRGNAM#python3-}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -65,11 +66,14 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# drop useless coherent.licensed dependency
+sed -i '/coherent.licensed/d' pyproject.toml
+
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH=/opt/python$PYVER/site-packages/
 
 python3 -m build --no-isolation
-python3 -m installer -d "$PKG" dist/*.whl
+python3 -m installer --destdir "$PKG" dist/*.whl
 
 # Add python3-keyring shell completions (requires python3-shtab)
 if $(python3 -c 'import pkgutil; exit(not pkgutil.find_loader("shtab"))'); then
@@ -83,7 +87,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a NEWS.rst README.rst SECURITY.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE NEWS.rst README.rst SECURITY.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

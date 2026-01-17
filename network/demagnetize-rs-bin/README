@@ -1,0 +1,7 @@
+demagnetize is a Rust program for converting one or more BitTorrent
+magnet links into .torrent files by downloading the torrent info from
+active peers.
+
+Use like:
+
+demagnetize -o file.torrent "magnet:..."

@@ -1,8 +1,7 @@
 .. RST source for tnfs-fuse(1) man page. Convert with:
 ..   rst2man.py tnfs-fuse.rst > tnfs-fuse.1
-.. rst2man.py comes from the SBo development/docutils package.
 
-.. |version| replace:: 20130127_fd46ff
+.. |version| replace:: 20240707_3b99907
 .. |date| date::
 
 =========
@@ -21,7 +20,7 @@ trivial network filesystem client
 SYNOPSIS
 ========
 
-tnfs-fuse **directory** **-o address=host**\[:*port*]
+tnfs-fuse **-o address=host**\[:*port*] [*fuse-options*] *directory*
 
 DESCRIPTION
 ===========
@@ -31,8 +30,10 @@ simplicity and ease of implementation on small systems, such as 8-bit
 computers. It's simpler than NFS, SMB, or FTP. It's similar to TFTP,
 but has features TFTP lacks.
 
-**tnfs-fuse** is a client for the TNFS protocol. It uses UDP port
-16384 by default (standard for TNFS).
+**tnfs-fuse** is a client for the TNFS protocol. It mounts TNFS
+servers with **fuse**\(8) so they appear as though they were local
+filesystems. It attempts to use TCP port 16384 by default (standard
+for TNFS), and falls back to UDP if it can't connect via TCP.
 
 When working with mounted TNFS directories, some error messages will
 be wrong, e.g. instead of "Permission denied", you may get "Bad file
@@ -57,7 +58,7 @@ EXAMPLE
 To mount the TNFS server at **fujinet.online**::
 
   mkdir fujinet
-  tnfs-fuse fujinet -o address=fujinet.online
+  tnfs-fuse -o address=fujinet.online fujinet
 
 Now the contents of the TNFS server are visible under fujinet/ (or
 whatever name you chose). You might also want to add **-o ro** to mount

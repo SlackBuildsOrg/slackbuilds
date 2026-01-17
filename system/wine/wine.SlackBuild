@@ -145,8 +145,8 @@ if [ "$WINE64" = "yes" ]; then
      --program-suffix= \
      --disable-tests \
      --build=$BUILD_ARCH
-  make depend
-  make
+  make depend -j10
+  make -j14
   make install DESTDIR=$PKG
   cd ..
 fi

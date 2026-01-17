@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -e
+
+touch /var/log/mattermost.stdout
+touch /var/log/mattermost.stderr
+chown mattermost /var/log/mattermost.{stdout,stderr}
+
+function start() {
+  mkdir -p /sys/fs/cgroup/memory/rc.d/mattermost
+  echo  $BASHPID >> /sys/fs/cgroup/memory/rc.d/mattermost/tasks
+  printf "Starting mattermost...\n"
+  if ! pgrep postgres >/dev/null ; then
+    printf "Postgres not running! Exiting.\n"
+  fi
+  cd /opt/mattermost
+  su mattermost -c '/opt/mattermost/bin/mattermost 1>/var/log/mattermost.stdout 2>/var/log/mattermost.stderr & exit'
+}
+
+function stop() {
+  if [[ "$(cat /sys/fs/cgroup/memory/rc.d/mattermost/tasks )" != "" ]] ; then
+    kill $(cat /sys/fs/cgroup/memory/rc.d/mattermost/tasks )
+  fi
+  sleep 1
+  if [[ "$(cat /sys/fs/cgroup/memory/rc.d/mattermost/tasks )" != "" ]] ; then
+    kill -9 $(cat /sys/fs/cgroup/memory/rc.d/mattermost/tasks )
+  fi
+}
+
+case "$1" in
+  start)
+    printf "case up\n"
+    start
+    exit "$?"
+    ;;
+  stop)
+    printf "case down\n"
+    stop
+    exit "$?"
+    ;;
+  status)
+    printf "Mattermost pids: %s\n" $(cat /sys/fs/cgroup/memory/rc.d/mattermost/tasks)
+    exit 0
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *) printf "usage: {start,stop,restart,status}\n"
+esac

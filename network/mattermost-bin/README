@@ -1,0 +1,31 @@
+mattermost is an online collaboration server, featuring chatting,
+online calls, VCS integration, and much more.
+
+It relies on PostgreSQL, which is a run-time dependency.
+
+It is also famous for its "matterbridge" bridge infrastructure.
+
+By default mattermost is running on http://localhost:8065
+
+A basic setup with local-only postgres 14 is the following:
+
+1. install postgresql (14 should work)
+2. init postgres db:
+su postgres -c "initdb -D /var/lib/pgsql/14/data \
+--locale=en_US.UTF-8 -A md5 -W"
+3. set some password, say "password"
+4. /etc/rc.d/rc.postgresql start
+4.1 echo  "/etc/rc.d/rc.postgresql start" >> /etc/rc.d/rc.local
+5. PGPASSWORD=password psql -U postgres -S postgres -c\
+"create user mmuser with password 'mmpassword';"
+6. PGPASSWORD=password psql -U postgres -S postgres -c\
+"CREATE DATABASE mattermost WITH ENCODING 'UTF8' \
+LC_COLLATE='en_US.UTF-8' LC_CTYPE='en_US.UTF-8' \
+TEMPLATE=template0;"
+7. PGPASSWORD=password psql -U postgres -S postgres -c\
+"GRANT ALL PRIVILEGES ON DATABASE mattermost to mmuser;"
+8. setup mattermost config file
+/opt/mattermost/config/config.json
+
+The init script rc.mattermost is a bit improvised, do not expect too
+much of it.

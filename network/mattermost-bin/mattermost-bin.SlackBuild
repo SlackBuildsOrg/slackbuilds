@@ -1,0 +1,139 @@
+#!/bin/bash
+
+# Copyright 2025, Lockywolf
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=mattermost-bin
+VERSION=${VERSION:-11.2.2}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+TARNAM=mattermost
+
+MUID=${MUID:-394}
+MGID=${MGID:-394}
+MUSERNAME=${MUSERNAME:-mattermost}
+MGROUPNAME=${MGROUPNAME:-mattermost}
+
+if ! getent group "$MGROUPNAME" 2>&1 > /dev/null; then
+  echo "  You must have an $TARNAM group to run this script."
+  echo "    # groupadd -g $MGID $MGROUPNAME"
+  exit 1
+elif ! getent passwd "$MUSERNAME" 2>&1 > /dev/null; then
+  echo "  You must have a $MUSERNAME user to run this script."
+  echo "    # useradd -u $MUID -g $MGID -d /opt/mattermost $MUSERNAME"
+  exit 1
+fi
+
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  LIBDIRSUFFIX=""
+  UNSUP=1
+elif [ "$ARCH" = "i686" ]; then
+  LIBDIRSUFFIX=""
+  UNSUP=1
+elif [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  LIBDIRSUFFIX="64"
+  UNSUP=1
+else
+  LIBDIRSUFFIX=""
+  UNSUP=1
+fi
+
+if [[ "$UNSUP" == 1 ]] ; then
+  printf "Unsupported architecture: unknown.\n" 1>&2
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $TARNAM-$VERSION
+mkdir $TARNAM-$VERSION
+tar xvf $CWD/$TARNAM-$VERSION-linux-amd64.tar.*z*
+
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} + -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} +
+
+install -d -m755 $PKG/opt
+mv ${TARNAM} $PKG/opt/
+mkdir -p $PKG/etc/rc.d/
+install -m600 $CWD/rc.mattermost $PKG/etc/rc.d/
+
+mkdir $PKG/opt/$TARNAM/data
+chown -R $MUSERNAME:$MGROUPNAME $PKG/opt/mattermost
+chmod -R g+w $PKG/opt/mattermost
+cp $PKG/opt/mattermost/config/config.json $PKG/opt/mattermost/config/config.defaults.json
+
+mkdir -p "$PKG"/usr/bin
+(
+    cd $PKG/usr/bin
+    ln -sr ../../opt/${TARNAM}/bin/${TARNAM} ./
+    ln -sr ../../opt/${TARNAM}/bin/mmctl ./
+)
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  $PKG/opt/$TARNAM/{ENTERPRISE-EDITION-LICENSE.txt,NOTICE.txt,README.md} \
+  $PKG/usr/doc/$PRGNAM-$VERSION/
+chown -R root:root $PKG/usr/doc/$PRGNAM-$VERSION/
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+if [[ "${PRGNAM: -4}" != "-bin" ]] ; then
+  printf "Fatal Error: PRGNAM must end in '-bin', but now ends with %s\n" \
+         "${PRGNAM: -4}"
+  exit 2
+fi
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

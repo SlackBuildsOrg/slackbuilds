@@ -1,0 +1,12 @@
+PRGNAM="demagnetize-rs-bin"
+VERSION="0.6.1"
+HOMEPAGE="https://github.com/jwodder/demagnetize-rs"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://github.com/jwodder/demagnetize-rs/releases/download/v0.6.1/demagnetize-x86_64-unknown-linux-gnu.tar.xz \
+https://github.com/jwodder/demagnetize-rs/releases/download/v0.6.1/source.tar.gz"
+MD5SUM_x86_64="588cd439976096ff67bcaf06abcbee08 \
+5c0286523590e8d3c6140780b4a032e8"
+REQUIRES=""
+MAINTAINER="Lockywolf"
+EMAIL="for_sbo.demagnetize-rs-bin_2025-01-16@lockywolf.net"

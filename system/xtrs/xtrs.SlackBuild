@@ -70,6 +70,11 @@ rm -rf $TMP/$PRGNAM-$VERSION
 cd $TMP
 tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
+
+# 20260119 bkw: include the tiny ROMs with the build, so we don't have
+# a hard dep on zmac.
+cp $CWD/prebuilt-roms/*.hex .
+
 chown -R root:root .
 # upstream permissions are wonky, do not revert to template.
 find . -type f -a -exec chmod 644 {} + -o \

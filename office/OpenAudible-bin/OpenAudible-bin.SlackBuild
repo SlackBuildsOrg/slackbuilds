@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=OpenAudible-bin
-VERSION=${VERSION:-4.6.8}
+VERSION=${VERSION:-4.7.1}
 SRCNAM=OpenAudible_"$VERSION"_x86_64
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -87,6 +87,8 @@ find $PKG/opt/OpenAudible/jre/lib/ -type f -name "*.so" -exec chmod 755 {} \;
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+find $PKG -type f -exec file {} \; | \
+  grep ELF | cut -d: -f1 | xargs chmod 755
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done

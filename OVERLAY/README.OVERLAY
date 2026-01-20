@@ -1,0 +1,5 @@
+This directory contains local SlackBuilds that are NOT intended
+to be submitted upstream.
+
+Packages here may include personal patches, config choices,
+or experimental builds.

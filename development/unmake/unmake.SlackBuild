@@ -69,8 +69,10 @@ rm -rf $PRGNAM-$VERSION
 tar -xvzf $CWD/$PRGNAM-$VERSION.tgz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find . -perm /111 \! -perm 755 -exec chmod 755 {} + -o \
-       \! -perm /111 \! -perm 644 -exec chmod 644 {} +
+find . -type f \( -perm -4000 -o -perm -2000 \) -exec chmod -s {} +
+find . ! -type l -type d ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f -perm /111 ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f ! -perm /111 ! -perm 644 -exec chmod -f 644 {} +
 
 install -Dm755 $SRCNAM/$PRGNAM "$PKG"/usr/bin/$PRGNAM
 

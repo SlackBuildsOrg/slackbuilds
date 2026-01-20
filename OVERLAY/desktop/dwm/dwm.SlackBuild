@@ -1,0 +1,152 @@
+#!/bin/bash
+# Slackware build script for dwm
+#
+# Update by r1w1s1 to keep the package as vanilla as possible
+#
+# Now maintained by Dave Woodfall <dave@slackbuilds.org>
+#
+# Ryan P.C. McQuen | Everett, WA | ryanpcmcquen@member.fsf.org
+# Erik Falor <ewfalor@gmail.com>
+#
+# With permission of original maintainer Tom Canich.
+# All rights reserved.
+
+# Copyright (c) 2009,2011 Tom Canich, State College, Pennsylvania, USA
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of Ryan P.C. McQuen nor the names of other contributors
+#       may be used to endorse or promote products derived from this
+#       software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY Ryan P.C. McQuen ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+# NO EVENT SHALL Ryan P.C. McQuen BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+# TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER # IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+# EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=dwm
+VERSION=${VERSION:-6.7}
+BUILD=${BUILD:-2}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+
+if [ -e "$CWD/config.h" ]; then
+  cp -v $CWD/config.h config.def.h
+fi
+
+if [ -d "$CWD/patches" ]; then
+  for i in "$CWD"/patches/*.patch; do
+    [ -e "$i" ] || continue
+    echo "Applying patch $(basename "$i")"
+    patch -p1 < "$i" || exit 1
+    PATCHES="$PATCHES $(basename "$i")"
+  done
+fi
+
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+make \
+  OPTS="$SLKCFLAGS" \
+  PREFIX=/usr \
+  MANPREFIX=/usr/man \
+  X11INC=/usr/include \
+  X11LIB=/usr/lib${LIBDIRSUFFIX}/X11
+
+make install \
+  OPTS="$SLKCFLAGS" \
+  PREFIX=/usr \
+  MANPREFIX=/usr/man \
+  X11INC=/usr/include \
+  X11LIB=/usr/lib${LIBDIRSUFFIX}/X11 \
+  DESTDIR=$PKG
+
+find $PKG -print0 | xargs -0 file | grep ELF | cut -f1 -d: | \
+  xargs strip --strip-unneeded 2>/dev/null || true
+
+for mandir in $PKG/usr/man $PKG/usr/share/man; do
+  if [ -d "$mandir" ]; then
+    ( cd "$mandir"
+      find . -type f -exec gzip -9 {} \;
+      for i in $(find . -type l); do
+        ln -s "$(readlink "$i").gz" "$i.gz"
+        rm "$i"
+      done
+    )
+  fi
+done
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE README $CWD/README.CONFIG \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+install -Dm0755 $CWD/xinitrc.dwm $PKG/etc/X11/xinit/xinitrc.dwm
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

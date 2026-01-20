@@ -1,0 +1,50 @@
+dwm is a dynamic window manager for X. It manages windows in tiled and
+floating layouts. Either layout can be applied dynamically, optimizing
+the environment for the application in use and the task performed. It is
+the little brother of wmii.
+
+As of 6.1, `st' is the default terminal. This does not require
+installing `st', only symlinking your favourite terminal to:
+
+  /usr/local/bin/st
+
+If a config.h is found in the SlackBuild directory it will be copied to
+the source directory and used in the build, allowing easy customisation.
+
+See README.CONFIG for more information.
+
+OPTIONS
+
+The following options all default to `no', but can be enabled by E.G.:
+
+  CK=yes ./dwm.SlackBuild
+
+An xinitrc with ConsoleKit and dbus support:         CK=yes
+A system tray patch:                                 SYSTRAY=yes
+Use Mod4 (Windows key) instead of Mod1 (alt):        MOD4=yes
+Use rofi instead of dmenu:                           ROFI=yes
+Enable keypad for tags as well as top row digits:    KEYPAD=yes
+Enable extra patches (in patches directory):         PATCHES=yes
+Change default bar font size:                        FONTSIZE=N
+
+Multiple options can be used together.
+
+The ROFI option also installs dwm.rasi rofi theme to
+/usr/share/rofi/themes.  This uses the same font as dwm, so if you have
+patched the dwm font then you may also want to adjust it to match.
+
+OPTIIONAL
+
+st: A very minimal terminal with fontconfig support.  Think `urxvt', but
+with automatic font fallback.
+
+rofi: A replacement for dmenu with more features, themes etc.
+
+NOTE
+
+The following may fix problems displaying java applications:
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+This should be run in the shell before starting the application.  This
+is known to fix pycharm.

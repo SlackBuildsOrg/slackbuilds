@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Blender
 VERSION=${VERSION:-5.0.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -127,11 +127,11 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mkdir -p $PKG/etc/profile.d
 cat > $PKG/etc/profile.d/${PRGNAM}.sh <<EOF
 #!/bin/bash
-export PATH="${PATH}:${INSTALL_PATH}"
+export PATH="\${PATH}:${INSTALL_PATH}"
 EOF
 cat > $PKG/etc/profile.d/${PRGNAM}.csh <<EOF
 #!/bin/bash
-setenv PATH "${PATH}:${INSTALL_PATH}"
+setenv PATH "\${PATH}:${INSTALL_PATH}"
 EOF
 chmod a+x $PKG/etc/profile.d/${PRGNAM}.*sh
 

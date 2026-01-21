@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260120 bkw: add README warning about pkgtools.
 # 20260112 bkw: update for v1.8, add perl-file-libmagic dep.
 
 cd $(dirname $0) ; CWD=$(pwd)

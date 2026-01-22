@@ -68,13 +68,15 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
  * Rules define the *initial* placement only.
  */
 static const Rule rules[] = {
-	/* class     instance  title  tags mask  isfloating  monitor */
 
+	/* class, instance, title, tags mask, isfloating, monitor */
+	
 	/* Firefox always starts on tag 1 and floating */
 	{ "Firefox", NULL,     NULL,  1 << 0,    1,           -1 },
 
-	/* tabbed container starts on tag 2 */
-	{ "tabbed",  NULL,     NULL,  1 << 1,    0,           -1 },
+	/* feh: image viewer, always floating */
+	{ "feh",     NULL,     NULL,  0,         1,           -1 },
+
 };
 
 /*

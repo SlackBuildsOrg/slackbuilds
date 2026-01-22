@@ -41,7 +41,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dwm
 VERSION=${VERSION:-6.7}
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-6}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

@@ -9,7 +9,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scala3
-VERSION=${VERSION:-3.7.4}
+VERSION=${VERSION:-3.8.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -34,9 +34,9 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-# if running on jdk8, x86-32 is still supported
-# however, starting with scala 3.8, jdk17 will be required
-# and support for x86-32 will be over then
+# when running on jdk17, x86-32 is still supported
+# however, when jdk>17 becomes the minimum required
+# version in the future, support for x86-32 will be over
 if [ "$ARCH" = "x86_64" ]; then
   LIBDIRSUFFIX="64"
 else

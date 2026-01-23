@@ -1,0 +1,12 @@
+PRGNAM="eclipse-rcp"
+VERSION="4.38"
+HOMEPAGE="https://www.eclipse.org"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://ftp2.osuosl.org/pub/eclipse/technology/epp/downloads/release/2025-12/R/eclipse-rcp-2025-12-R-linux-gtk-x86_64.tar.gz \
+                 https://ftp2.osuosl.org/pub/eclipse/technology/epp/downloads/release/2025-12/R/eclipse-rcp-2025-12-R-linux-gtk-aarch64.tar.gz"
+MD5SUM_x86_64="84cc93b7c56834d6ec70ca0ae38822fe \
+               a347273c6e617af8c9741f7da7beece7"
+REQUIRES=""
+MAINTAINER="Lockywolf"
+EMAIL="for_sbo.eclipse-rcp_2025-01-23@lockywolf.net"

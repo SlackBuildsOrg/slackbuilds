@@ -1,0 +1,6 @@
+libirecovery is a cross-platform library which implements communication
+to iBoot/iBSS found on Apple's iOS devices via USB. A command-line uti-
+lity named irecovery is also provided.
+
+This is a fork of an older version from former openjailbreak.org and is
+meant to be used with idevicerestore from the libimobiledevice project.

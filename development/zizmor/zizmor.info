@@ -1,7 +1,7 @@
 PRGNAM="zizmor"
-VERSION="1.20.0"
+VERSION="1.22.0"
 HOMEPAGE="https://github.com/zizmorcore/zizmor"
-DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.20.0/zizmor-1.20.0.tar.gz \
+DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.22.0/zizmor-1.22.0.tar.gz \
           https://static.crates.io/crates/Inflector/Inflector-0.11.4.crate \
           https://static.crates.io/crates/addr2line/addr2line-0.25.1.crate \
           https://static.crates.io/crates/adler2/adler2-2.0.1.crate \
@@ -40,9 +40,9 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.20.0/zizmor-1.20.0.tar
           https://static.crates.io/crates/cfg-if/cfg-if-1.0.4.crate \
           https://static.crates.io/crates/cfg_aliases/cfg_aliases-0.2.1.crate \
           https://static.crates.io/crates/clap-verbosity-flag/clap-verbosity-flag-3.0.4.crate \
-          https://static.crates.io/crates/clap/clap-4.5.53.crate \
-          https://static.crates.io/crates/clap_builder/clap_builder-4.5.53.crate \
-          https://static.crates.io/crates/clap_complete/clap_complete-4.5.62.crate \
+          https://static.crates.io/crates/clap/clap-4.5.54.crate \
+          https://static.crates.io/crates/clap_builder/clap_builder-4.5.54.crate \
+          https://static.crates.io/crates/clap_complete/clap_complete-4.5.65.crate \
           https://static.crates.io/crates/clap_complete_nushell/clap_complete_nushell-4.5.10.crate \
           https://static.crates.io/crates/clap_derive/clap_derive-4.5.49.crate \
           https://static.crates.io/crates/clap_lex/clap_lex-0.7.6.crate \
@@ -132,7 +132,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.20.0/zizmor-1.20.0.tar
           https://static.crates.io/crates/ignore/ignore-0.4.25.crate \
           https://static.crates.io/crates/indexmap/indexmap-2.12.1.crate \
           https://static.crates.io/crates/indicatif/indicatif-0.18.3.crate \
-          https://static.crates.io/crates/insta/insta-1.45.1.crate \
+          https://static.crates.io/crates/insta/insta-1.46.0.crate \
           https://static.crates.io/crates/inventory/inventory-0.3.21.crate \
           https://static.crates.io/crates/ipnet/ipnet-2.11.0.crate \
           https://static.crates.io/crates/iri-string/iri-string-0.7.8.crate \
@@ -185,10 +185,10 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.20.0/zizmor-1.20.0.tar
           https://static.crates.io/crates/parking_lot/parking_lot-0.12.5.crate \
           https://static.crates.io/crates/parking_lot_core/parking_lot_core-0.9.12.crate \
           https://static.crates.io/crates/percent-encoding/percent-encoding-2.3.2.crate \
-          https://static.crates.io/crates/pest/pest-2.8.4.crate \
-          https://static.crates.io/crates/pest_derive/pest_derive-2.8.4.crate \
-          https://static.crates.io/crates/pest_generator/pest_generator-2.8.4.crate \
-          https://static.crates.io/crates/pest_meta/pest_meta-2.8.4.crate \
+          https://static.crates.io/crates/pest/pest-2.8.5.crate \
+          https://static.crates.io/crates/pest_derive/pest_derive-2.8.5.crate \
+          https://static.crates.io/crates/pest_generator/pest_generator-2.8.5.crate \
+          https://static.crates.io/crates/pest_meta/pest_meta-2.8.5.crate \
           https://static.crates.io/crates/pin-project-lite/pin-project-lite-0.2.16.crate \
           https://static.crates.io/crates/pin-utils/pin-utils-0.1.0.crate \
           https://static.crates.io/crates/portable-atomic/portable-atomic-1.11.1.crate \
@@ -239,7 +239,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.20.0/zizmor-1.20.0.tar
           https://static.crates.io/crates/scopeguard/scopeguard-1.2.0.crate \
           https://static.crates.io/crates/security-framework-sys/security-framework-sys-2.14.0.crate \
           https://static.crates.io/crates/security-framework/security-framework-3.3.0.crate \
-          https://static.crates.io/crates/self_cell/self_cell-1.2.1.crate \
+          https://static.crates.io/crates/self_cell/self_cell-1.2.2.crate \
           https://static.crates.io/crates/semver/semver-1.0.27.crate \
           https://static.crates.io/crates/serde-sarif/serde-sarif-0.8.0.crate \
           https://static.crates.io/crates/serde/serde-1.0.228.crate \
@@ -299,7 +299,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.20.0/zizmor-1.20.0.tar
           https://static.crates.io/crates/tokio-rustls/tokio-rustls-0.26.4.crate \
           https://static.crates.io/crates/tokio-stream/tokio-stream-0.1.17.crate \
           https://static.crates.io/crates/tokio-util/tokio-util-0.7.16.crate \
-          https://static.crates.io/crates/tokio/tokio-1.48.0.crate \
+          https://static.crates.io/crates/tokio/tokio-1.49.0.crate \
           https://static.crates.io/crates/toml/toml-0.9.10%2Bspec-1.1.0.crate \
           https://static.crates.io/crates/toml_datetime/toml_datetime-0.7.5%2Bspec-1.1.0.crate \
           https://static.crates.io/crates/toml_writer/toml_writer-1.0.6%2Bspec-1.1.0.crate \
@@ -418,7 +418,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.20.0/zizmor-1.20.0.tar
           https://static.crates.io/crates/zerovec-derive/zerovec-derive-0.11.1.crate \
           https://static.crates.io/crates/zerovec/zerovec-0.11.4.crate \
           https://static.crates.io/crates/zmij/zmij-1.0.2.crate"
-MD5SUM="e8ef4fe7c9f6015b315f30de7ebe7210 \
+MD5SUM="a594c3f1417f502d58b077d757daaefc \
         b7f1a4cd029f5b6ffbc31b3acd5ae605 \
         6185be920ab1302a8b29a5ed44875324 \
         873036bd52f5fd829bd41b3c2ca0bc08 \
@@ -457,9 +457,9 @@ MD5SUM="e8ef4fe7c9f6015b315f30de7ebe7210 \
         7dbc461580b8ee7d163a6e02524c6d90 \
         f5215c4283a1984b95043a7185245e00 \
         086892910cbb1ee9a921e82cb197f45d \
-        581ef6a1a04a39a9d4a62ff4c5672fe2 \
-        6c4dc3ce32b759e4e5ed30102e2a43f8 \
-        03abf3a283ad2cc37a4a576d79e38e2f \
+        81b6c40f5d53676b4cf3d7e358bd54e2 \
+        30baf0a4469c006cd5d171f7a129945d \
+        b7552312eade0e0219369452cf32e2f2 \
         36d2afc29c418799ca3f949c56471a3c \
         4bff8de0233dc9e6dba69fba8dac9f8a \
         315c7fa8c291077dac11ffe8e977cf99 \
@@ -549,7 +549,7 @@ MD5SUM="e8ef4fe7c9f6015b315f30de7ebe7210 \
         f28afe09de1fc3658da6d032131af629 \
         8f59171feae8fed5d29b62e534c6b5d0 \
         8d7cff15be998dc73e22e888eb238e4f \
-        620783e622b0618c931587a768f18d27 \
+        5352531966cdae687d38e8bc6823c7b2 \
         fbf570a9e07b43735c318b50d3c03dd9 \
         a184d54ca99f3af8f5afc00b6c64c0b5 \
         d7c1cc573dac4e6107aa22c67360fd9c \
@@ -602,10 +602,10 @@ MD5SUM="e8ef4fe7c9f6015b315f30de7ebe7210 \
         439ec4865e007e2470fdc635f282599e \
         9d5019b2e6c4e1352ccff8b64b88e2cf \
         ef8998050cc1339f2187fcb43e927f1b \
-        7c4b65808efcddb3d2620a6926423183 \
-        fd94fc9a00da6a74bae8304481b0f5b8 \
-        71a1c31c82cc7a6b674f4221be025b57 \
-        8fc9b8907440e951472d55cd528192ca \
+        c68e5bc4181a17b3ed9ca91824719610 \
+        9e6cffbadd94930357b29b8812591170 \
+        55c9b310f4b98f00a9b9023f5a34c7a5 \
+        ddf31006c55563897f7d8ed26f8e0993 \
         f6c8ce4c412ca548e42dfd896c92112e \
         07c75fec267864bcbb800ca7709ceae2 \
         728d8e34babbfa86ab419879265c2d12 \
@@ -656,7 +656,7 @@ MD5SUM="e8ef4fe7c9f6015b315f30de7ebe7210 \
         f1358be8c98b98837cbd2cf51e75f8b3 \
         ddbe25a4f2651d91d6c93b3c2d119203 \
         3b17847d956cdad03ef4f257b46198f0 \
-        e0b4dbeea97de8f02d19fd467b805b46 \
+        c6c6b497240e82b731faec0195aaba60 \
         47a71e25c316729a529ade4ce1ba5f5c \
         070868d210a8cb42fd21780fe5724562 \
         d156b7c4a314664880656902717747ed \
@@ -716,7 +716,7 @@ MD5SUM="e8ef4fe7c9f6015b315f30de7ebe7210 \
         4cfdcf6e7f8d4b6e8e810222fba4187e \
         3c1c805d76adb466586bd43a6823f257 \
         ca2f90526815cc621c21a4de1faf61f1 \
-        1047e0f056cb043029598f49d813ebdf \
+        3b149d608e101ec2cb1fbac7b00e70a3 \
         40bb687ceb233bcd78e91ed73243b1f9 \
         9bf537e7d26a16e35156d3a4b5c9338b \
         3aace232a48239015af2b93472c71e3e \

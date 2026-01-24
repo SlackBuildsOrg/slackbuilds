@@ -30,7 +30,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nodejs22
 SRCNAM=node
-VERSION=${VERSION:-22.21.1}
+VERSION=${VERSION:-22.22.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -108,14 +108,15 @@ make install DESTDIR=$PKG
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+find $PKG/usr/man $PKG/usr/lib$LIBDIRSUFFIX/node_modules/npm/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man $PKG/usr/lib$LIBDIRSUFFIX/node_modules/npm/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 ## Add bash completion file for npm.
-install -D -m 644 $CWD/npm.sh $PKG/usr/share/bash-completion/completions/npm
+install -D -m 644 $PKG/usr/lib${LIBDIRSUFFIX}/node_modules/npm/lib/utils/completion.sh $PKG/usr/share/bash-completion/completions/npm
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 mv $PKG/usr/doc/node $PKG/usr/doc/$PRGNAM-$VERSION
+ln -sf $PRGNAM-$VERSION/node $PKG/usr/doc/node
 cp -a LICENSE *.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

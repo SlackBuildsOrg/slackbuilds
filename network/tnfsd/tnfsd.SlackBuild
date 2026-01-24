@@ -6,10 +6,10 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
-# 20260114 bkw: update for v23.0207.1_20240406_5a82b42.
-# - version number is unwieldy, but it includes upstream's version number,
-#   which hasn't chenged.
+# 20260114 bkw: update for 24.0522.1+20260108_bac37dc.
+# - switch upstream to FujiNetWIFI, which is the actively-maintained fork.
 # - upstream now supports TCP properly, remove patch that disabled it.
+# - rework man page, -c is gone, -p -u -g -a -r have been added.
 
 # 20230208 bkw: update for v23.0207.1_95c5b55.
 # - this is a security update, see:
@@ -20,15 +20,10 @@
 # - remove TCP support entirely. it's incomplete & thoroughly broken.
 # - mention UDP port 16384 in slack-desc.
 
-# Note to self: tnfs-perl/tnfsd.pl looks interesting, but it lacks
-# the ability to chroot and set a new user ID. Leave it out of
-# the package. The tnfs-fuseclient/ is empty except a README, and
-# tnfsd.test/ looks like an ancient version from 2010.
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tnfsd
-VERSION=${VERSION:-23.0207.1_20240406_5a82b42}
+VERSION=${VERSION:-24.0522.1+20260108_bac37dc}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -98,10 +93,30 @@ find . ! -type l    -a \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
+cd src
+
+# 20260115 bkw: We don't want to require xa for building this. It's
+# 229 bytes of 6502 object code.
+cat $CWD/atari_bootsector.bin > atari_bootsector.bin
+
+# 20260115 bkw: *really annoying* mollyguard here: it actually
+# searches $PATH for xa, even if it's not needed because the .bin
+# file already exists. Nuke.
+sed -i '/^ATARI_BOOT_ASM/,/^$/d' Makefile
+
+# 20260115 bkw: always enable this...
+SLKCFLAGS+=" -DENABLE_CHROOT"
+
+# 20260115 bkw: allow disabling this.
 [ "${USAGELOG:-yes}" = "yes" ] && SLKCFLAGS+=" -DUSAGELOG"
+
+# 20260115 bkw: apply all of the above:
 sed -i "s,-Wall,& $SLKCFLAGS," Makefile
+
 mkdir -p bin
-make OS=LINUX
+make OS=LINUX ATARI_BOOT_EXISTS=yes
+
+cd -
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 PKGBIN=$PKG/usr/bin
@@ -110,15 +125,13 @@ PKGRCD=$PKG/etc/rc.d
 PKGVAR=$PKG/var/tnfs
 mkdir -p $PKGDOC $PKGBIN $PKGMAN1 $PKGRCD $PKGVAR
 install -s -m0755 bin/tnfsd $PKGBIN/tnfsd
-cp -a *.md *.txt $PKGDOC
+rm -f BUILD.md
+cp -a *.md $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKGVAR
 chown root:tnfs-files $PKGVAR
 chmod 1775 $PKGVAR
-
-# upstream license only exists in C comments, so I included this:
-cat $CWD/COPYING > $PKGDOC/COPYING
 
 # man page written for this SlackBuild.
 gzip -9c < $CWD/$PRGNAM.1 > $PKGMAN1/$PRGNAM.1.gz

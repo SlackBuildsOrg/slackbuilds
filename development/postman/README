@@ -10,3 +10,5 @@ Postman features include:
 * Web-viewable, detailed API documentation
 * Flexible API monitoring, for uptime, performance, and accuracy
 * Mock servers, to support split-stack development
+
+NOTE: Version 11.71.7 is the last version that works on Slackware 15.0.

@@ -27,7 +27,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "TNFSD" 1 "2026-01-14" "23.0207.1_20240406_5a82b42" "SlackBuilds.org"
+.TH "TNFSD" 1 "2026-01-16" "24.0522.1+20260108_bac37dc" "SlackBuilds.org"
 .SH NAME
 tnfsd \- trivial network filesystem daemon
 .\" RST source for tnfsd(1) man page. Convert with:
@@ -36,7 +36,7 @@ tnfsd \- trivial network filesystem daemon
 .
 .SH SYNOPSIS
 .sp
-tnfsd \fBdirectory\fP [\fB\-c\fP \fIusername\fP]
+tnfsd [\fB\-a\fP] [\fB\-r\fP] [\fB\-p\fP \fIport\fP] [\fB\-u\fP \fIusername\fP \fB\-g\fP \fIgroup\fP] \fBdirectory\fP
 .SH DESCRIPTION
 .sp
 TNFS is a simplified Internet file transfer protocol, designed for
@@ -45,49 +45,63 @@ computers. It\(aqs simpler than NFS, SMB, or FTP. It\(aqs similar to TFTP,
 but has features TFTP lacks.
 .sp
 \fBtnfsd\fP is the server for the TNFS protocol. It listens for clients
-on UDP and TCP ports 16384. Although TCP is supported, most clients
-use UDP only... maybe \fIall\fP clients?
+on UDP and TCP ports 16384 by default. Although TCP is supported, most
+clients use UDP only... maybe \fIall\fP clients?
 .sp
-The mandatory \fBdirectory\fP option is the root of the TNFS filesystem
-tree.
-.sp
-The \fB\-c\fP \fIusername\fP option requires \fBtnfsd\fP to be run as
-\fIroot\fP\&. If given, \fBtnfsd\fP will \fBchroot\fP(2) to the \fIdirectory\fP,
-then drop its root privileges and run as the \fIusername\fP user instead.
+The mandatory \fBdirectory\fP option is the root of the TNFS
+filesystem tree. With the \fB\-u\fP and \fB\-g\fP options, \fBtnfsd\fP will
+\fBchroot\fP(2) to this directory.
 .sp
 Even without \fBchroot\fP, \fBtnfsd\fP will not deliberately allow access
-to files outside the \fIdirectory\fP\&. The \fB\-c\fP option is a safety net,
-in case there\(aqs a bug in \fBtnfsd\fP that allows such access (currently,
-no such bug is known of).
+to files outside the \fIdirectory\fP\&. The \fB\-u\fP/\fB\-g\fP chroot option
+is a safety net, in case there\(aqs a bug in \fBtnfsd\fP that allows such
+access (currently, no such bug is known of).
 .sp
 Note that \fBtnfsd\fP can be started by a normal user, since it uses an
-unprivileged port number. The \fB\-c\fP option won\(aqt work in this case.
+unprivileged port number. The \fB\-u\fP/\fB\-g\fP options won\(aqt work in this case.
 .sp
 \fBtnfsd\fP logs various information to standard error. If compiled with
 \fI\-DUSAGE_LOG\fP, the log includes all mount, umount, and file transfer
 requests including the client IP addresses.
+.SH OPTIONS
+.INDENT 0.0
+.TP
+.B \fB\-p\fP
+Set the port number to listen to for UDP and TCP. Default: \fI16384\fP\&.
+.TP
+.B \fB\-r\fP
+Read\-only. Attempts to upload, delete, or modify files will fail.
+.TP
+.B \fB\-a\fP
+Atari 8\-bit mode. Binary files will be wrapped in a bootable \fBATR\fP image.
+.TP
+.B \fB\-u\fP \fIuser\fP \fB\-g\fP \fIgroup\fP
+Causes \fBtnfsd\fP to \fBchroot\fP to \fIdirectory\fP, then set its user and
+group IDs to \fIuser\fP and \fIgroup\fP\&. Requires \fBtnfsd\fP to be started as root.
+If \fB\-u\fP is used, \fB\-g\fP is required (and vice versa); it\(aqs an error
+to give only one of these options.
+.UNINDENT
+.sp
+\fBNote:\fP Older versions of \fBtnfsd\fP used the \fB\-c\fP option to chroot. Scripts
+that start \fBtnfsd\fP will have to be updated to use \fB\-u\fP and \fB\-g\fP instead.
 .SH LIMITATIONS
 .sp
 \fBtnfsd\fP is designed to be simple, so the following list of
 limitations should not be read as complaints or feature requests.
 .sp
-There is no way to run multiple \fBtnfsd\fP instances on the same
-host, not even on a multi\-homed host. The default port cannot
-be changed; neither can the IP address used for binding (which is
-\fI0.0.0.0\fP, aka \fIINADDR_ANY\fP). Also, there\(aqs no concept of virtual
-hosts. If you \fIreally\fP want to run multiple instances, use containers
-or virtual machines.
-.sp
 There\(aqs no way to limit which hosts may access \fBtnfsd\fP using any
-mechanism such as \fBtcpd\fP(8). Firewall rules may be used instead,
-e.g. \fBiptables\fP(8).
+mechanism such as \fBtcpd\fP(8), and there\(aqs no way to have \fBtnfsd\fP
+bind to a particular interface (it listens on all of them). Firewall
+rules may be used instead, e.g. \fBiptables\fP(8).
 .sp
-There isn\(aqt a way to share a directory read\-only with the current
-\fBtnfsd\fP implementation. However, filesystem permissions can be used
-to prevent the daemon from writing to the shared directory.
+There isn\(aqt a way to selectively share some subdirectories read\-only
+with the current \fBtnfsd\fP implementation. The \fB\-r\fP option applies
+to the whole tree. However, without \fB\-r\fP, filesystem permissions can
+be used to prevent the daemon from writing to directories you want to
+be read\-only while allowing writes to other dirs.
 .SH COPYRIGHT
 .sp
-See the file /usr/doc/tnfsd\-23.0207.1_20240406_5a82b42/COPYING for license information.
+See the file /usr/doc/tnfsd\-24.0522.1+20260108_bac37dc/COPYING for license information.
 .SH AUTHORS
 .sp
 tnfsd was written by Dylan Smith.
@@ -98,6 +112,6 @@ by B. Watson, and is licensed under the WTFPL.
 .sp
 \fBtnfs\-fuse\fP(1), \fBfujinet\-pc\fP(1)
 .sp
-/usr/doc/tnfsd\-23.0207.1_20240406_5a82b42/tnfs\-protocol.md
+/usr/doc/tnfsd\-24.0522.1+20260108_bac37dc/tnfs\-protocol.md
 .\" Generated by docutils manpage writer.
 .

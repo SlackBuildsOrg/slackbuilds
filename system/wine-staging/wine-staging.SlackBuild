@@ -182,7 +182,7 @@ if [ "$WINE32" = "yes" ]; then
   ../configure \
     $wine64 \
     --prefix=/usr \
-    --libdir=/usr/lib \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
     --localstatedir=/var \
     --sysconfdir=/etc \
     --mandir=/usr/man \

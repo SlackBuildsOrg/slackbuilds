@@ -11,6 +11,6 @@ MD5SUM="415c28c84c371e14edc4c18f69be199f \
 56eec2d269140c34675329bb43eedbd0"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-hatchling python3-packaging-opt img2pdf python3-reportlab pikepdf python3-pdfminer.six python3-reportlab tesseract"
+REQUIRES="python3-hatchling python3-packaging-opt img2pdf python3-reportlab pikepdf python3-pdfminer.six python3-reportlab tesseract tqdm"
 MAINTAINER="Lockywolf"
 EMAIL="for_sbo.ocrmypdf_2025-06-30@lockywolf.net"

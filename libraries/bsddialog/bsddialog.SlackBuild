@@ -1,0 +1,144 @@
+#!/bin/bash
+
+# Slackware build script for bsddialog
+
+# Copyright 2026 r1w1s1
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=bsddialog
+VERSION=${VERSION:-1.1.1}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+ARCH=${ARCH:-}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ ! -z "$PRINT_PACKAGE_NAME" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+if [ -z "$ARCH" ]; then
+  case "$(uname -m)" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$(uname -m) ;;
+  esac
+fi
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+
+tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
+cd $PRGNAM-$VERSION
+
+chown -R root:root .
+
+# Set installation prefix to /usr (upstream defaults to /usr/local).
+# Disable RPATH embedding to keep binaries and libraries clean.
+export PREFIX=/usr
+export DISABLERPATH=1
+
+# Upstream install rules do not create required directories.
+# Prepare DESTDIR layout for clean packaging.
+mkdir -p \
+  $PKG/usr/bin \
+  $PKG/usr/lib \
+  $PKG/usr/include \
+  $PKG/usr/share/man/man1 \
+  $PKG/usr/share/man/man3 \
+  $PKG/usr/man1
+
+make \
+  CFLAGS="$SLKCFLAGS -D_XOPEN_SOURCE_EXTENDED -D_XOPEN_SOURCE -D_GNU_SOURCE \
+          -I/usr/include/ncursesw -I$PWD/lib -Wall -Wextra -fpic"
+
+make install \
+  PREFIX=/usr \
+  DESTDIR=$PKG
+
+find $PKG -print0 | xargs -0 file | grep ELF | cut -f1 -d: | \
+  xargs strip --strip-unneeded 2>/dev/null || true
+
+# Fix incorrect manpage install path (upstream installs into /usr/man1)
+if [ -d "$PKG/usr/man1" ]; then
+  mkdir -p $PKG/usr/man/man1
+  mkdir -p $PKG/usr/man/man3
+  [ -f "$PKG/usr/man1/bsddialog.1" ] && mv $PKG/usr/man1/bsddialog.1 $PKG/usr/man/man1/
+  [ -f "$PKG/usr/man1/bsddialog.3" ] && mv $PKG/usr/man1/bsddialog.3 $PKG/usr/man/man3/
+  rmdir $PKG/usr/man1 2>/dev/null || true
+fi
+
+# Compress man pages (handle both possible locations)
+for mandir in $PKG/usr/man $PKG/usr/share/man; do
+  if [ -d "$mandir" ]; then
+    ( cd "$mandir"
+      find . -type f -exec gzip -9 {} \;
+      for i in $(find . -type l); do
+        ln -s "$(readlink "$i").gz" "$i.gz"
+        rm "$i"
+      done
+    )
+  fi
+done
+
+# Remove empty /usr/share/man hierarchy (Slackware uses /usr/man)
+if [ -d "$PKG/usr/share/man" ]; then
+  rmdir $PKG/usr/share/man/man1 2>/dev/null || true
+  rmdir $PKG/usr/share/man/man3 2>/dev/null || true
+  rmdir $PKG/usr/share/man      2>/dev/null || true
+  rmdir $PKG/usr/share          2>/dev/null || true
+fi
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE CHANGELOG README.* \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

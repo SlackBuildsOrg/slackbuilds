@@ -30,7 +30,7 @@ PRGNAM=Catch2
 VERSION=${VERSION:-3.12.0}
 DOCS=${DOCS:-OFF}
 EXTRAS=${EXTRAS:-ON}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -67,11 +67,14 @@ fi
 
 #Test for multilib
 COMPAT32=${COMPAT32@L}
-if [ "$COMPAT32" = "" ] ; then
+if [ "$COMPAT32" = "yes" ] ; then
+  echo "Checking COMPAT32 status ..."
   COMPATTMP="$( mktemp -d $TMP/compat32-test-XXXXXX )"
   echo "int main(void) {; return(0); }" > "$COMPATTMP/test.c"
-  gcc -m32 "$COMPATTMP/test.c" -o /dev/null >/dev/null 2>&1 \
-    && COMPAT32=${COMPAT32:-yes}
+  gcc -m32 "$COMPATTMP/test.c" -o /dev/null >/dev/null 2>&1 || {
+    COMPAT32=no
+    echo "COMPAT32 build not supported on this system"
+  }
   rm -rf "$COMPATTMP"
 fi
 
@@ -103,12 +106,12 @@ cd build
   make install/strip DESTDIR=$PKG
 cd ..
 
-if [ "$COMPAT32" = "yes" ]; then
+if [ "$ARCH" = "x86_64" -a "$COMPAT32" = "yes" ]; then
+  echo; echo "Build for COMPAT32 requested"; sleep 1
   mkdir -p build32
   cd build32
     cmake \
       -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -m32" \
-      -DCMAKE_SHARED_LINKER_FLAGS:STRING="-m32" \
       -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_INSTALL_LIBDIR=lib \
       -DCATCH_INSTALL_DOCS=$DOCS \

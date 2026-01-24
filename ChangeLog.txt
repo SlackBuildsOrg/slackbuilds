@@ -1,3 +1,108 @@
+Sat Jan 24 01:02:39 UTC 2026
+academic/locarna: Fix build.
+academic/openboard: Updated for version 1.7.4.
+audio/ocenaudio-bin: Updated for version 3.17.1
+desktop/idevicerestore: Added (Firmware Restore).
+desktop/slstatus: Added (Status Monitor).
+desktop/xapp-symbolic-icons: Added (symbolic icons).
+desktop/xfce4-alsa-plugin: Updated for version 0.4.0.
+development/Catch2: Require opt-in for COMPAT32 option
+development/SQLAlchemy: Updated for version 2.0.46.
+development/antigravity: Updated for version 1.14.2
+development/async-profile: Updated for version 4.3
+development/aws-cdk: Updated for version 2.1102.0.
+development/buf: Updated for version 1.64.0.
+development/cargo-auditable: fix permissions
+development/claude-code: Updated for version 2.1.12
+development/config-file-validator: fix permissions
+development/corrosion: Updated for version 0.6.1.
+development/cursor: Updated for version 2.3.41
+development/dart-sass: Updated for version 1.97.3.
+development/deno: Updated for version 2.6.6.
+development/diffoscope: updated for version 310
+development/eclipse-rcp: Added (Java Developer IDE).
+development/electron-bin: Updated for version 40.0.0
+development/fortitude-bin: fix permissions
+development/github-cli: Updated for version 2.86.0
+development/gum: fix permissions
+development/lm-studio-bin: Updated for version 0.3.39.2
+development/mysql-workbench: Updated for version 8.0.46.
+development/nodejs22: Updated for version 22.22.0.
+development/obsidian: updated for version 1.11.5
+development/pkgdiff: Update README (no script changes).
+development/pnpm: Updated for version 10.28.1.
+development/postman: Reverted back to 11.71.7.
+development/postman: Updated for version 11.81.0
+development/protobuf3: Updated for version 33.4.
+development/scala3: Updated for version 3.8.1
+development/sourcegit: fix permissions
+development/unmake: fix permissions
+development/velero: update to 1.17.2
+development/vscode-bin: Updated for version 1.108.2.
+development/zizmor: Updated for version 1.22.0.
+development/zxbasic: Updated for version 1.18.5
+graphics/Blender: Fix PATH in profile.d scripts
+graphics/screengrab: Update for 3.1.0 (+new maintainer)
+ham/tqsl: Updated for version 2.8.3.
+libraries/bsddialog: Added (Terminal Dialog Utility).
+libraries/libirecovery: Added (cross-platform library).
+libraries/superlu: Updated for version 7.0.1.
+libraries/tlsh: updated for version 4.12.1
+misc/par2cmdline: Updated for version 1.0.0.
+multimedia/vlc: Updated for version 3.0.23
+network/DownTube: fix permissions
+network/badwolf: Updated for version 1.4.0.
+network/chawan: updated for version 0.3.3
+network/chrony: Updated for version 4.8.
+network/copyparty: updated for version 1.20.3
+network/discord: Version bump to 0.0.121
+network/dooble: fix permissions
+network/dropbox: Updated for version 240.4.8493.
+network/dstp: fix persmissions
+network/fujinet-pc: Updated for version 2312.2.
+network/holehe: fix permissions
+network/librewolf: Updated for version 147.0.1_3
+network/opera: Updated for version 126.0.5750.43
+network/tnfs-fuse: Updated for version 20240707_3b99907.
+network/tnfsd: Updated for version 24.0522.1+20260108_bac37dc.
+network/translate-shell: fix permissions
+network/turbo-attack: fix permissions
+network/turbo-scanner: fix permissions
+network/waterfox: fix md5
+network/xmrig: Updated for version 6.25.0.
+network/zen-browser: Updated for version 1.18b
+office/Joplin: Update script.
+office/OpenAudible-bin: Updated for version 4.7.1
+office/epub2txt2: fix permissions
+office/hunspell-ancient-greek: fix permissions
+office/hunspell-gr: fix permissions
+office/ledger-live: Updated for version 2.137.0
+office/ocrmypdf: fix dep tqdm
+office/qownnotes: Updated for version 26.1.11.
+office/star-tex: fix permissions
+office/when: Orphaned.
+python/python3-icoextract: Updated for version 0.2.0
+python/python3-meson-opt: Updated for version 1.10.1.
+python/python3-packaging-opt: Updated for version 26.0.
+python/python3-setuptools-opt: Updated for version 80.10.1.
+ruby/ruby-build: Updated for version 20260121.
+system/FreeFileSync: Updated for version 14.7
+system/Microsoft-Fonts: fix permissions
+system/c-lcrypt: fix permissions
+system/distrobox: Updated for version 1.8.2.3.
+system/docker-buildx: Updated for version 0.31.0.
+system/fzy: fix permissions
+system/jenkins: Updated for version 2.541.1.
+system/jnv-bin: fix permissions
+system/partclone: Updated for version 0.3.41
+system/plocate: Updated for version 1.1.24.
+system/sdl2trs: Fix permissions in doc dir.
+system/sff: fix permissions
+system/wine-staging: Fix path.
+system/wine: Fix path.
+system/witr: Updated for version 0.2.5
+system/xtrs: Include prebuilt ROMs (avoid zmac dep).
++--------------------------+
 Sat Jan 17 01:25:48 UTC 2026
 academic/locarna: Upgrade to version 2.0.1
 academic/plus42: Updated for version 1.3.13

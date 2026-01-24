@@ -3,5 +3,8 @@ slstatus
 slstatus is a status monitor for window managers that use WM_NAME
 or stdin to fill the status bar.
 
-If a config.h is found in the SlackBuild directory it will be copied to
-the source directory and used in the build, allowing easy customisation.
+This SlackBuild ships with a minimal example config.h file.
+If a config.h is found in the SlackBuild directory, it will be copied
+to the source directory and used in the build, allowing easy
+customisation.
+

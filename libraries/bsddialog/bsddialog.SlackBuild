@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bsddialog
-VERSION=${VERSION:-1.1.1}
+VERSION=${VERSION:-1.1.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 ARCH=${ARCH:-}
@@ -75,22 +75,10 @@ cd $PRGNAM-$VERSION
 
 chown -R root:root .
 
-# Set installation prefix to /usr (upstream defaults to /usr/local).
-# Disable RPATH embedding to keep binaries and libraries clean.
 export PREFIX=/usr
-export DISABLERPATH=1
-
-# Upstream install rules do not create required directories.
-# Prepare DESTDIR layout for clean packaging.
-mkdir -p \
-  $PKG/usr/bin \
-  $PKG/usr/lib \
-  $PKG/usr/include \
-  $PKG/usr/share/man/man1 \
-  $PKG/usr/share/man/man3 \
-  $PKG/usr/man1
 
 make \
+  DISABLERPATH=1 \
   CFLAGS="$SLKCFLAGS -D_XOPEN_SOURCE_EXTENDED -D_XOPEN_SOURCE -D_GNU_SOURCE \
           -I/usr/include/ncursesw -I$PWD/lib -Wall -Wextra -fpic"
 
@@ -101,13 +89,19 @@ make install \
 find $PKG -print0 | xargs -0 file | grep ELF | cut -f1 -d: | \
   xargs strip --strip-unneeded 2>/dev/null || true
 
-# Fix incorrect manpage install path (upstream installs into /usr/man1)
-if [ -d "$PKG/usr/man1" ]; then
-  mkdir -p $PKG/usr/man/man1
-  mkdir -p $PKG/usr/man/man3
-  [ -f "$PKG/usr/man1/bsddialog.1" ] && mv $PKG/usr/man1/bsddialog.1 $PKG/usr/man/man1/
-  [ -f "$PKG/usr/man1/bsddialog.3" ] && mv $PKG/usr/man1/bsddialog.3 $PKG/usr/man/man3/
-  rmdir $PKG/usr/man1 2>/dev/null || true
+# Fix libdir on x86_64
+if [ "$LIBDIRSUFFIX" = "64" ] && [ -d "$PKG/usr/lib" ]; then
+  mv $PKG/usr/lib $PKG/usr/lib64
+fi
+
+ln -sf libbsddialog.so.$VERSION $PKG/usr/lib${LIBDIRSUFFIX}/libbsddialog.so
+
+# Move man pages to /usr/man and remove /usr/share
+if [ -d "$PKG/usr/share/man" ]; then
+  mkdir -p $PKG/usr/man
+  mv $PKG/usr/share/man/* $PKG/usr/man/ 2>/dev/null || true
+  rmdir $PKG/usr/share/man 2>/dev/null || true
+  rmdir $PKG/usr/share 2>/dev/null || true
 fi
 
 # Compress man pages (handle both possible locations)
@@ -122,14 +116,6 @@ for mandir in $PKG/usr/man $PKG/usr/share/man; do
     )
   fi
 done
-
-# Remove empty /usr/share/man hierarchy (Slackware uses /usr/man)
-if [ -d "$PKG/usr/share/man" ]; then
-  rmdir $PKG/usr/share/man/man1 2>/dev/null || true
-  rmdir $PKG/usr/share/man/man3 2>/dev/null || true
-  rmdir $PKG/usr/share/man      2>/dev/null || true
-  rmdir $PKG/usr/share          2>/dev/null || true
-fi
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE CHANGELOG README.* \

@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/LightTable/LightTable/archive/0.8.1/LightTable-0.8.
 MD5SUM="28f961bdd3293054cda4551c4fae584e"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="leiningen nodejs"
+REQUIRES="leiningen nodejs22"
 MAINTAINER="DhabyX"
 EMAIL="slack.dhabyx@gmail.com"

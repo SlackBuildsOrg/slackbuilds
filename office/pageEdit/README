@@ -1,0 +1,7 @@
+Simple Single Page XHTML Visual Editor, split from Sigil’s BookView.
+
+PageEdit was originally designed as a replacement for the Book View
+feature found in older Sigil versions. However, it can also be used
+as a general purpose visual XHTML editor.
+
+Homepage: https://sigil-ebook.com/pageedit/

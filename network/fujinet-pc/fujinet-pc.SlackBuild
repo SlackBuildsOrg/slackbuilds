@@ -6,12 +6,18 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260125 bkw:
+# - updated for v1.5.2 (which would be 25.12.x by the old version scheme).
+# - upstream folded the fujinet-pc fork back into the main fujinet-firmware
+#   repo, so we get a new homepage and differently-named tarball.
+
 # 20260117 bkw: updated for v2312.2.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fujinet-pc
-VERSION=${VERSION:-2312.2}
+SRCNAM=fujinet-firmware
+VERSION=${VERSION:-1.5.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -45,8 +51,6 @@ fi
 
 set -e
 
-SRCVER="release-$VERSION"
-
 SDVER="${SDVER:-2021-04-29}"
 
 HOST="${HOST:-$( hostname -s )}"
@@ -55,9 +59,9 @@ PORT="${PORT:-/dev/ttyUSB0}"
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$SRCVER
-tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz
-cd $PRGNAM-$SRCVER
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find . ! -type l    -a \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
@@ -71,7 +75,9 @@ mkdir -p $PKGDOC $PKGBIN $PKGLIBX $PKGSHARE
 
 # 20260117 bkw: new dep mbedtls. upstream expects to link it statically
 # but we only have shared libs.
-patch -p1 < $CWD/mbedtls_shared.diff
+sed -i '/libmb[^.]*\.a/s,\.a,.so,' \
+  fujinet_pc.cmake \
+  components_pc/libssh/cmake/Modules/FindMbedTLS.cmake
 
 # 20260117 bkw: our /usr/bin/python is still python 2... fortunately
 # it obeys $PATH.
@@ -82,7 +88,9 @@ export PATH="$(pwd)/fakeusrbin:$PATH"
 # fujinet-pc itself:
 mkdir -p build
 cd build
+  FUJINET_TARGET=ATARI \
   /usr/bin/cmake \
+    -DFUJINET_TARGET=ATARI \
     -DWITH_ZLIB=ON \
     -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS -DNDEBUG" \
     -DCMAKE_CXX_FLAGS_RELEASE="$SLKCFLAGS -DNDEBUG" \

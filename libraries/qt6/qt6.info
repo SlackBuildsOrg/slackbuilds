@@ -27,6 +27,6 @@ MD5SUM_x86_64="10a39c4b4af4f465c4ff0352a6d18a0a \
 	       a7de8365cba1f08330bbd3828ce3db9e \
 	       8a18cecf476e522680a598cc86ef4d56 \
 	       d9058dbdf5f991c31bd57d3ccfdee9ac"
-REQUIRES="double-conversion html5lib md4c nodejs llvm-opt"
+REQUIRES="double-conversion html5lib md4c nodejs22 llvm-opt"
 MAINTAINER="Ruoh-Shoei LIN"
 EMAIL="lin.ruohshoei+sbo@gmail.com"

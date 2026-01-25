@@ -3,12 +3,12 @@
 # Slackware build script for varnish-cache
 
 # Written by Matt Schurenko <matt.schurenko@gmail.com>
-# Updated by Emmanuel N. Millan
+# Updated by 2020-2026 Emmanuel N. Millan, Mendoza, Argentina
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=varnish
-VERSION=${VERSION:-7.6.0}
+VERSION=${VERSION:-8.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

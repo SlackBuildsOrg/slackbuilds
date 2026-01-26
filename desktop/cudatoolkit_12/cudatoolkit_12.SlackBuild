@@ -1,0 +1,171 @@
+#!/bin/bash
+
+# Slackware build script for CUDA Toolkit
+
+# Copyright 2020 Giorgio Peron <giorgio.peron@gmail.com>, Belluno, Italy
+# Copyright 2026 Christoph Willing  Sydney, Australia
+# All rights reserved.
+#
+# Version 12.9.1 (2026) based on Lockywolf's (lwf) earlier cudatoolkit_12.6
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=cudatoolkit_12
+FILENAME=cuda
+VERSION=${VERSION:-12.9.1}
+DRIVER=${DRIVER:-575.57.08}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  ARCH=$( uname -m )
+fi
+
+if [ "$ARCH" != "x86_64" ]; then
+  printf '%s' "$ARCH architecture is unsupported." 1>&2
+  exit 1
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+#CPREFIX=cuda-12.9
+SHORT_VERSION=$(echo ${VERSION%.*})
+CPREFIX=cuda-$SHORT_VERSION
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+mkdir -p $PRGNAM-$VERSION
+
+echo -n "Unpacking .run file ..."
+sh $CWD/"${FILENAME}"_"${VERSION}"_"${DRIVER}"_linux.run --extract=$(readlink -f $PRGNAM-$VERSION)
+echo
+
+cd $PRGNAM-$VERSION
+
+# Clean unused files & directories
+find . -name cuda-uninstaller -delete
+find . -name .lock -delete
+rm -r NVIDIA*.run bin
+
+# legal stuff
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mv EULA.txt version.json $PKG/usr/doc/$PRGNAM-$VERSION
+mv cuda_documentation/{CUDA_Toolkit_Release_Notes.txt,DOCS,README} $PKG/usr/doc/$PRGNAM-$VERSION/
+mv cuda_documentation/EULA.txt $PKG/usr/doc/$PRGNAM-$VERSION/EULA-doc.txt
+mv cuda_documentation/tools/* $PKG/usr/doc/$PRGNAM-$VERSION/
+rm -rf cuda_documentation
+
+# extras
+mkdir -p ${PKG}/opt/${CPREFIX}/extras
+mv cuda_demo_suite/extras/demo_suite "${PKG}/opt/${CPREFIX}/extras/demo_suite"
+mv cuda_sanitizer_api/compute-sanitizer "${PKG}/opt/${CPREFIX}/extras/compute-sanitizer"
+rmdir cuda_sanitizer_api
+
+# Main CUDA
+mkdir -p $PKG/opt/${CPREFIX}/
+mv integration $PKG/opt/${CPREFIX}/
+# Optional NSight items
+if [ "${NSIGHT:-no}" = "yes" ]; then
+  chmod a+x nsight_systems/target-linux-x64/plugins/efa_metrics/nic_sampler
+  mv nsight_compute nsight_systems $PKG/opt/${CPREFIX}/
+else
+  rm -rf nsight_compute nsight_systems nsightee_plugins
+fi
+for component in *; do
+  cp -alr --force "$component"/* "${PKG}/opt/${CPREFIX}/"
+done
+
+# Ensure shared objects are executable
+find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod a+x 2> /dev/null || true
+
+# Strip them
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# lwf: arch does this, not sure if this is required
+# Define compilers for CUDA to use.
+# This allows us to use older versions of GCC if we have to.
+ln -s /usr/bin/gcc-11.2.0 "${PKG}/opt/${CPREFIX}"/bin/gcc
+ln -s /usr/bin/g++-gcc-11.2.0 "${PKG}/opt/${CPREFIX}"/bin/g++
+
+# lwf: arch does this, not sure if this is needed.
+# Add a symlink lib->lib64 as some libraries might expect that (FS#76951)
+( cd "${PKG}/opt/${CPREFIX}" && ln -sr lib64 lib)
+
+rm "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/include
+rm "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/lib/lib64
+rm -rf "${PKG}/opt/${CPREFIX}"/gds-tools
+rm -rf "${PKG}/opt/${CPREFIX}"/gds/usr
+
+
+# arch also does this.
+# not sure if this is a must, and Slackware's g++ is even 11.2
+# Allow newer compilers to work. This is not officially supported in the Arch package but
+# if users want to try, let them try.
+# See https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#system-requirements
+# for official requirements
+sed -i "/.*unsupported GNU version.*/d" "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
+sed -i "/.*unsupported clang version.*/d" "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
+
+  # Fix Makefile paths to CUDA
+for f in $(find "${PKG}/opt/${CPREFIX}" -name Makefile); do
+  sed -i "s|/usr/local/cuda|/opt/${CPREFIX}|g" "$f"
+done
+
+# Install profile and ld.so.config files
+install -Dm755 "${CWD}/profile/cuda.sh" "${PKG}/etc/profile.d/$CPREFIX.sh"
+install -Dm755 "${CWD}/profile/cuda.csh" "${PKG}/etc/profile.d/$CPREFIX.csh"
+sed -i "s|@VERSION@|$SHORT_VERSION|g" "${PKG}/etc/profile.d/$CPREFIX.sh" "${PKG}/etc/profile.d/$CPREFIX.csh"
+
+# Install pkgconfig
+mkdir -p "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/
+cp "$CWD"/pkgconfig/*.pc "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/
+sed -i "s|Version: 11.0|Version: $SHORT_VERSION|g" "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
+sed -i "s|cudaroot=/opt/cuda|cudaroot=/opt/$CPREFIX|g" "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
+
+# Register application NVVP and NSIGHT (if enabled)
+mkdir -p $PKG/usr/share/applications
+cp $CWD/dotdesktop/*.desktop $PKG/usr/share/applications
+sed -i "s|/usr/share/cuda|/opt/$CPREFIX|g" $PKG/usr/share/applications/*.desktop
+if [ "${NSIGHT:-no}" = "no" ]; then
+  rm $PKG/usr/share/applications/nsight.desktop
+fi
+
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n --compress -1 $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

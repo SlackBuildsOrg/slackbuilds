@@ -2,7 +2,7 @@
 #
 # Slackware build script for Modules
 #
-# Copyright 2015-2021 Emmanuel N. Millan, Mendoza, Argentina.
+# Copyright 2015-2026 Emmanuel N. Millan, Mendoza, Argentina.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,12 +25,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=modules
-VERSION=${VERSION:-4.7.0}
+VERSION=${VERSION:-5.6.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-DOCS="CONTRIBUTING.rst ChangeLog INSTALL.rst COPYING.GPLv2 MIGRATING.rst NEWS.rst README.md"
+DOCS="CODE_OF_CONDUCT.md COPYING.GPLv2 GOVERNANCE.rst SECURITY.md"
 
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
@@ -92,9 +92,12 @@ make install DESTDIR=$PKG
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $(find $PKG/usr/man -type l) ; do ln -s $(readlink $i).gz $i.gz ; rm $i ; done
+strip $PKG/usr/lib*/*.so*
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION
+rm $PKG/usr/doc/$PRGNAM-$VERSION/INSTALL-win.txt
+rm $PKG/usr/doc/$PRGNAM-$VERSION/INSTALL.txt
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/etc/profile.d/

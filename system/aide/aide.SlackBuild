@@ -2,7 +2,7 @@
 
 # Slackware build script for AIDE
 # Andy Bailey <GooseYArd@gmail.com>
-# Copyright 2018-2024 Emmanuel N. Millan, Mendoza, Argentina.
+# Copyright 2018-2026 Emmanuel N. Millan, Mendoza, Argentina.
 
 cd $(dirname $0) ; CWD=$(pwd)
 

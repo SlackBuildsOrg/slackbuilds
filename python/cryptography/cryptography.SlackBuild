@@ -3,7 +3,7 @@
 # Slackware build script for cryptography
 
 # Copyright 2014-2018 Markus Reichelt, Aachen, DE
-# Copyright 2021-2025 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2021-2026 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cryptography
-VERSION=${VERSION:-45.0.7}
+VERSION=${VERSION:-46.0.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,8 +77,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-sed -i "s|!=74.1.2,||g" pyproject.toml
-sed -i "s|,!=75.2.0||g" pyproject.toml
+# This caused build failure on -stable
+sed -i "s|\"cffi>=2.0.0; platform_python_implementation != 'PyPy' and python_version >= '3.9'\",||g" pyproject.toml
 
 export PATH="/opt/rust/bin:$PATH"
 if [ -z "$LD_LIBRARY_PATH" ]; then
@@ -106,7 +106,7 @@ PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH=/opt/python$PYVER/site-packages
 
 rm -rf tests/bench
-git init
+
 python3 -m build --wheel --no-isolation
 python3 -m installer -d "$PKG" dist/*.whl
 

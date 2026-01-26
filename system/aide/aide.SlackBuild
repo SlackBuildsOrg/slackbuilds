@@ -2,13 +2,13 @@
 
 # Slackware build script for AIDE
 # Andy Bailey <GooseYArd@gmail.com>
-# Emmanuel N. Millan <emmanueln@gmail.com> - 2018,2024
+# Copyright 2018-2024 Emmanuel N. Millan, Mendoza, Argentina.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=aide
 #PKGVER=`basename $PRGNAM*tar.gz .tar.gz | cut -d- -f2`
-VERSION=${VERSION:-0.18.8}
+VERSION=${VERSION:-0.19.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,9 +92,8 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -ra \
-  contrib \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -ra AUTHORS COPYING NEWS README SECURITY.md ChangeLog \
+      $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 cat $CWD/README.Slackware > $PKG/usr/doc/$PRGNAM-$VERSION/README.Slackware
 

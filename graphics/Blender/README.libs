@@ -1,18 +1,85 @@
-The "libs" tarball of official blender.org libraries is
-linked to in the Blender.info file.
+######################################
+Precompiled libraries from blender.org
+######################################
 
-To locally generate a "libs" tarball
-e.g. blender-5.0.1-libs.tar.lz
+Since blender-5.0.1, this SlackBuild uses a set of precompiled libraries
+which are required to build Blender from source code.  They are
+downloaded as a tarball and unpacked as required.
 
-first ensure git-lfs is installed (available at SBo).
-Next ensure ~10G disk space is available.
+Initially this tarball of precompiled libraries was created by
+downloading them from blender.org using the 'make update' command,
+along the lines of:
+
+-  Install git-lfs from SBo
+-  Next ensure ~10G disk space is available.
 
 Then run:
-  git clone https://projects.blender.org/blender/blender.git
-  cd blender
-  git checkout v5.0.1
-  make update
-  cd lib
-  tar cvf blender-5.0.1-libs.tar linux_x64
-  plzip -9 --output=blender-5.0.1-libs.tar.lz blender-5.0.1-libs.tar
+-  git clone https://projects.blender.org/blender/blender.git
+-  cd blender
+-  git checkout v5.0.1
+-  make update
+-  cd lib
+-  tar cvf blender-5.0.1-libs.tar linux_x64
+-  plzip -9 --output=blender-5.0.1-libs.tar.lz blender-5.0.1-libs.tar
+
+The resulting tarball was then uploaded to SourceForge from where
+it could be downloaded by anyone when executing the SlackBuild.
+
+Since then, the libraries have been compiled from source by the
+maintainer and uploaded to SourceForge. See below to build the
+libraries from source code locally.
+
+
+###################################################
+Building the precompiled libraries from source code
+###################################################
+
+Since the method described above uses prebuilt libraries obtained
+elsewhere, purists are provided with an alternative system which builds
+the necessary precompiled libraries from source code. Since this is an
+extremely resource expensive procedure (see Resources section below),
+it is not used by default but is described here for those wanting to use
+it.
+
+Prerequisites (from SBo):
+-  cmake-opt
+-  cudatoolkit_12
+
+cmake-opt from SBo provides cmake version 3.30.5
+(Slackware 15.0's cmake version 3.21.4 is insufficient!)
+
+SlackBuild cudatoolkit_12 now exists to track the latest version
+of the 12.x.x series of official CUDA releases.
+
+Run the blender-libs.sh script in this directory. The blender-libs.sh
+and blender-libs.defs files are based on standard SBo .SlackBuild and
+.info files but renamed to avoid confusion with real .SlackBuild and
+.info files. Instead of creating a normal Slackware package, this
+script generates a tarball of precompiled libraries. Running the
+build script will perform the following steps:
+
+- obtain a list of source tarballs from blender-libs.defs
+- download the source tarballs from local cache or source repositories
+- rename some source tarballs to names expected by blender
+- unpack blender source tarball
+- move source tarballs to location expected by blender
+- build all libraries
+- generate tarball of libraries
+- move downloaded source tarballs to a local cache (in case of reuse).
+
+If the source tarballs have previously been downloaded and stored
+somewhere to avoid repeated downloading, the storage location may be
+specified with the SOURCES_CACHE environment variable when running the
+script e.g.
+    SOURCES_CACHE=/var/cache/blender-sources bash blender-libs.sh
+
+
+##################################################
+Resources for source build of precompiled libraries
+##################################################
+
+- library source tarballs:          2 GB
+- time to download source tarballs: depends on internet connection (downloading 2GB)
+- time to build library tarball:    2 hours
+- disk space to build:              46 GB
 

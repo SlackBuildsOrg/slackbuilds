@@ -26,7 +26,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Blender
 VERSION=${VERSION:-5.0.1}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
+LIBS_BUILD=${LIBS_BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -61,6 +62,12 @@ else
   SLKCFLAGS="-O2"
 fi
 
+with_cuda=""
+[ -x /etc/profile.d/cuda-12.*.sh ] && {
+  . /etc/profile.d/cuda-12.*.sh
+  with_cuda="-DWITH_CYCLES_DEVICE_CUDA=ON -DWITH_CYCLES_CUDA_BINARIES=ON "
+}
+
 set -e
 
 
@@ -78,14 +85,14 @@ else
 fi
 cd $SRCNAM-$VERSION
 if [ "$CONTINUE" = "yes" ]; then
-#(cd lib && tar xf $CWD/$SRCNAM-$VERSION-libs.tar.gz)
+#(cd lib && tar xf $CWD/$SRCNAM-libs-$VERSION.$LIBS_BUILD.tar.gz)
   echo "CONTINUE mode"
 else
-  if [ -r "$CWD"/"$SRCNAM"-"${VERSION}"-libs.tar.lz ]; then
+  if [ -r "$CWD"/"$SRCNAM"-libs-"${VERSION}"."$LIBS_BUILD".tar.lz ]; then
     echo "Unpacking  -libs tarball ..."
-    (cd lib && tar xf $CWD/$SRCNAM-$VERSION-libs.tar.lz)
+    (cd lib && tar xf $CWD/$SRCNAM-libs-$VERSION.$LIBS_BUILD.tar.lz)
   else
-    echo ; echo "Generate the $SRCNAM-$VERSION-libs.tar.lz tarball; then run build script again."
+    echo ; echo "Generate the $SRCNAM-libs-$VERSION.$LIBS_BUILD.tar.lz tarball; then run build script again."
     exit 0
   fi
 fi
@@ -98,12 +105,16 @@ find -L . \
 
 mkdir -p build
 cd build
-  cmake ../ \
+  cmake .. \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DLIBDIR:PATH=$(pwd)/../lib/linux_x64 \
+    -DCMAKE_EXE_LINKER_FLAGS_RELEASE=-ldrm \
     -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
     -DWITH_INSTALL_PORTABLE:BOOL=ON \
     -DWITH_BUILDINFO:BOOL=ON \
+	$with_cuda \
 
   # From https://projects.blender.org/blender (Release: Bump to 5.0.1)
   COMMIT_HASH="a3db93c5b2"

@@ -8,8 +8,15 @@ modeling, uv-mapping, texturing, particle and other simulation,
 scripting, rendering, compositing, post-production and game creation.
 
 This SlackBuild builds Blender from source code using prepackaged
-official support libraries from blender.org and since they don't
-provide libraries for i*86, 32bit builds are no longer supported.
+support libraries which don't provide libraries for i*86,
+therefore 32bit builds are no longer supported.
+
+The prepackaged libraries can themselves be built from source code.
+See README.libs
+
+When targeting Nvidia GPU, it is recommended to first install the
+cudatoolkit_12 package, in which case additional dedicated rendering
+binaries will be generated during the Blender build.
 
 After installing the built package, log out and back in again to the
 initiate ability to launch from the desktop menu (at Graphics/Blender).

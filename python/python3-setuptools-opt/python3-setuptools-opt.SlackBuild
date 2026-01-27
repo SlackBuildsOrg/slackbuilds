@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-setuptools-opt
 SRCNAM=setuptools
-VERSION=${VERSION:-80.10.1}
+VERSION=${VERSION:-80.10.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

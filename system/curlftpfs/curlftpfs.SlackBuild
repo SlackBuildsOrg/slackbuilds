@@ -114,7 +114,8 @@ patch -p1 < $CWD/consistent-feature-flag.patch
 patch -p1 < $CWD/getpass-prototype.patch
 patch -p1 < $CWD/fix_bashism_in_test_script.patch
 
-CFLAGS="$SLKCFLAGS" \
+
+CFLAGS="$SLKCFLAGS -Wno-implicit-function-declaration -Wno-int-conversion" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \

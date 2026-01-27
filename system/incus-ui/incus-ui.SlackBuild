@@ -2,7 +2,7 @@
 
 # Slackware build script for incus-ui
 
-# Copyright 2025 Christoph Willing    Sydney, Australia
+# Copyright 2025-26 Christoph Willing    Sydney, Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=incus-ui
 SRCNAM=incus-ui-canonical
-VERSION=${VERSION:-20251211_d16e2476}
+VERSION=${VERSION:-20260123_ae304d94}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

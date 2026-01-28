@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=copasi
-VERSION=${VERSION:-4.45.298}
+VERSION=${VERSION:-4.46.300}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -35,9 +35,6 @@ if [ -z "$ARCH" ]; then
 fi
 
 case "$ARCH" in
-  i?86)
-    BINNAME="Linux-32bit"
-    ;;
   x86_64)
     BINNAME="Linux-64bit"
     ;;

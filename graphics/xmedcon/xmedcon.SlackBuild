@@ -2,7 +2,7 @@
 #
 # Slackware build script for (X)MedCon
 #
-# Copyright 2016-2025 Marek Šrejma <marek@modweb.de>, Germany
+# Copyright 2016-2026 Marek Šrejma <marek@modweb.de>, Germany
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xmedcon
-VERSION=${VERSION:-0.25.2}
+VERSION=${VERSION:-0.26.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -102,7 +102,6 @@ done
 rm -f $PKG/usr/lib$LIBDIRSUFFIX/libmdc.la
 
 mkdir -p $PKG/usr/share/pixmaps
-cp -a etc/xmedcon.png $PKG/usr/share/pixmaps
 
 mkdir -p $PKG/usr/share/applications
 install -m644 $CWD/xmedcon.desktop $PKG/usr/share/applications/xmedcon.desktop

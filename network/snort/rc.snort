@@ -2,22 +2,23 @@
 # Start/stop/restart snort
 
 # This tell snort which interface to listen on ("any" == every interface)
-IFACE=${IFACE:-any}
+IFACE=${IFACE:-eth0}
 
 # Make sure this matches your IFACE
-PIDFILE=/var/run/snort_$IFACE.pid
+PIDFILE=/var/log/snort/snort.pid
 
 # You probably don't want to change this, but in case you do
 LOGDIR="/var/log/snort"
 
-# Probably not this either
-CONF=/etc/snort/snort.conf
+# You need to edit this configuration file first
+# Default configuration is not really helpful, so we skip it for now
+CONF=/etc/snort/snort.lua
 
 # Start snort:
 snort_start() {
-  CMDLINE="/usr/bin/snort -d -D -i $IFACE"
+  CMDLINE="/usr/bin/snort -u snort -g snort -d -D -L pcap -i $IFACE -l $LOGDIR"
   echo "Starting Snort daemon:  $CMDLINE"
-  $CMDLINE --pid-path /var/run --create-pidfile -l $LOGDIR -c $CONF
+  $CMDLINE --create-pidfile -l $LOGDIR
   echo
 }
 

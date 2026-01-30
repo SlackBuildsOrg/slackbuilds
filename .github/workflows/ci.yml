@@ -14,25 +14,27 @@ concurrency:
 
 env:
   # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
-  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.3-15.0@sha256:e617db2c7de01f7a5778b7139439fc99a69715ba5ea573a7b0e2add34155f455
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.3-15.0@sha256:add7ceae8566f071520b6fc0b28f4bbd128a4c7f15c20f1d66f36be9a79fb65e
 
 jobs:
   changes:
     runs-on: ubuntu-24.04
     permissions:
       contents: read
+    if: contains(fromJSON('["SlackBuildsOrg/slackbuilds"]'), github.repository)
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Calculate clone depth.
         run: printf "CHECKOUT_FETCH_DEPTH=%s\n" "$(( ${{ github.event.pull_request.commits }} + 1 ))" >> "${GITHUB_ENV}"
 
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           show-progress: false
           fetch-depth: ${{ env.CHECKOUT_FETCH_DEPTH }}
           ref: ${{ github.head_ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+          persist-credentials: false
 
       - name: Get slackbuild directories which have changes.
         run: |
@@ -60,16 +62,18 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+    if: contains(fromJSON('["SlackBuildsOrg/slackbuilds"]'), github.repository)
     needs: [changes]
     strategy:
       matrix:
         include: ${{ fromJSON(needs.changes.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           show-progress: false
           ref: ${{ github.head_ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+          persist-credentials: false
 
       - name: Run sbolint
         env:
@@ -102,7 +106,7 @@ jobs:
           bash
 
       - name: Find Comment
-        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         id: fc
         with:
           issue-number: ${{ github.event.number }}
@@ -110,7 +114,7 @@ jobs:
           body-includes: "sbolint - ${{ matrix.dir }}"
 
       - name: Comment with sbolint results
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4.0.0
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.number }}
@@ -123,16 +127,18 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+    if: contains(fromJSON('["SlackBuildsOrg/slackbuilds"]'), github.repository)
     needs: [changes]
     strategy:
       matrix:
         include: ${{ fromJSON(needs.changes.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           show-progress: false
           ref: ${{ github.head_ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+          persist-credentials: false
 
       - name: Get short package name
         run: printf '%s\n' "$MATRIX_DIR" | cut -d/ -f2 | sed 's/^/PACKAGE_NAME=/' >> "$GITHUB_ENV"
@@ -141,7 +147,7 @@ jobs:
 
       - name: Look up dependencies
         id: get_deps
-        uses: fjogeleit/http-request-action@23ad54bcd1178fcff6a0d17538fa09de3a7f0a4d # v1.16.4
+        uses: fjogeleit/http-request-action@551353b829c3646756b2ec2b3694f819d7957495 # v2.0.0
         with:
           url: 'https://slackbuilds.org/revdeps.php?q=${{ env.PACKAGE_NAME }}'
           method: 'GET'
@@ -164,7 +170,7 @@ jobs:
           bash
 
       - name: Find Comment
-        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
+        uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
         id: fc
         with:
           issue-number: ${{ github.event.number }}
@@ -172,7 +178,7 @@ jobs:
           body-includes: "reverse dependencies - ${{ matrix.dir }}"
 
       - name: Comment with dependency results
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4.0.0
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.number }}

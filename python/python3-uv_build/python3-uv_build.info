@@ -1,10 +1,10 @@
 PRGNAM="python3-uv_build"
-VERSION="0.9.27"
+VERSION="0.9.28"
 HOMEPAGE="https://docs.astral.sh/uv/"
-DOWNLOAD="https://files.pythonhosted.org/packages/source/u/uv_build/uv_build-0.9.27.tar.gz \
-          https://slackware.uk/~fourtysixandtwo/src/uv_build-vendored-sources-0.9.27-1.tar.xz"
-MD5SUM="1a833d7a26cae4756d5400d1f527f157 \
-        a3fca1ae83b2bd705c9bd64b6c4ca2d4"
+DOWNLOAD="https://files.pythonhosted.org/packages/source/u/uv_build/uv_build-0.9.28.tar.gz \
+          https://slackware.uk/~fourtysixandtwo/src/uv_build-vendored-sources-0.9.28-1.tar.xz"
+MD5SUM="3904ab8fe8fba432d03ee8fce35f4b0c \
+        fdb2c7d89501920010bc43e456818119"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="python3-maturin"

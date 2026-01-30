@@ -1,22 +1,22 @@
 IPTVnator - IPTV Player Application
 
-IPTVnator is a video player application that provides support for the 
-playback of IPTV playlists (m3u, m3u8). 
-The application allows to import playlists by using remote URLs or per 
+IPTVnator is a video player application that provides support for the
+playback of IPTV playlists (m3u, m3u8).
+The application allows to import playlists by using remote URLs or per
 file upload from the file system. Additionally there is a support of EPG
 information XMLTV-based which can be provided by URL.
 
-The application is a cross-platform and open source project based on 
+The application is a cross-platform and open source project based on
 Electron and Angular.
 
-Note: IPTVnator doesn't provide any playlists or other digital 
-content. 
+Note: IPTVnator doesn't provide any playlists or other digital
+content.
 
 Features
 -  M3u and M3u8 playlists support
 -  Xtream Code (XC) and Stalker portal (STB) support
 -  External player support - MPV, VLC
--  Add playlists from the file system or remote URLs 
+-  Add playlists from the file system or remote URLs
 -  Automatic playlist updates on application startup
 -  Channel search functionality
 -  EPG support (TV Guide) with detailed information

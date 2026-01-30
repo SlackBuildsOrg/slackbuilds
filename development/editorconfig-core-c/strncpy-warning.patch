@@ -1,0 +1,28 @@
+From 750c39e605cb78e038452197653731e93f350f60 Mon Sep 17 00:00:00 2001
+From: liweiganga <liweiganga@gmail.com>
+Date: Sun, 21 Dec 2025 14:59:47 +0800
+Subject: Fix strncpy buffer truncation warning in ini.c (#148)
+
+- Replace strncpy(dest, src, size) with strncpy(dest, src, size - 1) in strncpy0()
+  function to prevent GCC -Wstringop-truncation warning when destination size
+  equals buffer size
+- Ensure null-termination with dest[size - 1] = '\0' for safety
+- This maintains backward compatibility while addressing compiler security warning
+
+diff --git a/src/lib/ini.c b/src/lib/ini.c
+index f7db341..587de0d 100644
+--- a/src/lib/ini.c
++++ b/src/lib/ini.c
+@@ -90,8 +90,10 @@ static char* find_last_char_or_comment(const char* s, char c)
+ /* Version of strncpy that ensures dest (size bytes) is null-terminated. */
+ static char* strncpy0(char* dest, const char* src, size_t size)
+ {
+-    strncpy(dest, src, size);
+-    dest[size - 1] = '\0';
++    if (size > 0) {
++        strncpy(dest, src, size - 1);
++        dest[size - 1] = '\0';
++    }
+     return dest;
+ }
+ 

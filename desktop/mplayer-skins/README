@@ -1,0 +1,7 @@
+Collections of Skins for the Mplayer Media player.
+This is a repackage for Slackware Linux.
+To install these skins system-wide extract the 
+desired skin and copy it to $PREFIX/share/mplayer/skins 
+or to install per user then copy the extracted 
+skins to $HOME/.mplayer/skins. 
+The url list is in wget-list and URL.md

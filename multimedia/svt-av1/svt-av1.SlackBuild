@@ -2,7 +2,7 @@
 
 # Slackware build script for SVT-AV1
 
-# Copyright 2022-2025 Vijay Marcel
+# Copyright 2022-2026 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -10,6 +10,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -38,17 +42,18 @@
 # 12/09/2025: svt-av1 for now compiles and works on 32-bit,support for it
 # will be dropped by upstream in future.cpuinfo is no longer a dependency.
 # updated to version 3.1.2
+# 30/01/2025: updated tp version 4.0.1
 
 # -----------------------------------------------------------------------
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=svt-av1
-VERSION=${VERSION:-3.1.2}
+VERSION=${VERSION:-4.0.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-DIR=${DIR:-SVT-AV1-v3.1.2}
+DIR=${DIR:-SVT-AV1-v4.0.1}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -72,8 +77,7 @@ elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-march=x86-64 -mtune=generic -pipe -O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
-  SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
+  echo "This SlackBuild will not run on $ARCH" && exit 1
 fi
 
 if [ ! -z "${PRINT_PACKAGE_NAME}"  ]; then
@@ -104,7 +108,9 @@ cmake -B build -S $TMP/$DIR \
         -DCMAKE_BUILD_TYPE:STRING=Release \
         -DCMAKE_INSTALL_PREFIX:PATH=/usr \
         -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib${LIBDIRSUFFIX} \
-        -DUSE_CPUINFO=SYSTEM
+        -DBUILD_SHARED_LIB=ON \
+        -DBUILD_TESTING=OFF \
+        -DSVT_AV1_PGO=OFF
 
 make -C build
 make -C build install DESTDIR=$PKG

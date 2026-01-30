@@ -12,7 +12,7 @@ bun-bin: Bun is an all-in-one toolkit for JavaScript and TypeScript apps.
 bun-bin: It ships as a single executable called bun.At its core is the Bun
 bun-bin: runtime, a fast javascript runtime designed as drop-in replacement
 bun-bin: for NodeJs.It reduces startup times and reduces memory usage.
-bun-bin:
+bun-bin: This is the binary version of bun from upstream for Slackware linux.
 bun-bin:
 bun-bin:
 bun-bin: Homepage:https://bun.com

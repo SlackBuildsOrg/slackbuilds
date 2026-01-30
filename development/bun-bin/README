@@ -3,3 +3,6 @@ It ships as a single executable called bun.At its core is the Bun
 runtime, a fast javascript runtime designed as drop-in replacement
 for NodeJs.It reduces startup times and reduces memory usage.
 
+Note:
+This is the binary version of bun from upstream for
+Slackware Linux. This is x86-64 bit only.

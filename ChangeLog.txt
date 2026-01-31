@@ -1,3 +1,175 @@
+Sat Jan 31 00:55:59 UTC 2026
+academic/cdo: Updated for version 2.5.4.
+academic/copasi: Updated for version 4.46.300.
+academic/nco: Updated for version 5.3.6.
+academic/units: Updated for version 2.25.
+desktop/SiriKali: Tidy README whitespace.
+desktop/SiriKali: Updated for version 1.8.5.
+desktop/UltimateDailyWallpaper: Updated for version 3.4.1.
+desktop/cinnamon-desktop: Update for 6.6.2
+desktop/cudatoolkit_12: Added (CUDA Toolkit CUDA).
+desktop/hhg-gui: Switch to nodejs22.
+desktop/i3: Update version to 4.25
+desktop/lightdm-slick-greeter: Update for 2.2.6
+desktop/mint-themes: Update for 2.3.8
+desktop/nwg-displays: Updated for version 0.3.27.
+desktop/pfetch: update maintainer
+desktop/slstatus: add example config.h and document it
+desktop/xapp-symbolic-icons: New Maintainer
+development/antigravity: Updated for version 1.15.8
+development/aspnetcore-runtime-10.0: Updated for version 10.0.2.
+development/aspnetcore-runtime-8.0: Updated for version 8.0.23.
+development/aspnetcore-runtime-9.0: Updated for version 9.0.12.
+development/aws-cdk: Switch to nodejs22.
+development/aws-cdk: Updated for version 2.1104.0.
+development/bun-bin: Updated for version 1.3.5.
+development/byacc: Updated for version 20260126.
+development/claud-code: Switch to nodejs22.
+development/composer: Updated for version 2.9.5
+development/cudatoolkit_12: Moved from desktop.
+development/cudatoolkit_13: Added (CUDA Toolkit).
+development/deno: Updated for version 2.6.7.
+development/diffoscope: Updated for version 311.
+development/dotnet-runtime-10.0: Updated for version 10.0.2.
+development/dotnet-runtime-8.0: Updated for version 8.0.23.
+development/dotnet-runtime-9.0: Updated for version 9.0.12.
+development/dotnet-sdk-10.0: Updated for version 10.0.102.
+development/dotnet-sdk-8.0: Updated for version 8.0.417.
+development/dotnet-sdk-9.0: Updated for version 9.0.310.
+development/hoppscotch: Updated for version 26.1.0.
+development/idea: Updated for version 2025.3.2.
+development/jupyterlab: Switch to nodejs22.
+development/kicad-doc: Switch to nodejs22.
+development/lighttable: Switch to nodejs22.
+development/lua-language-server: Updated for version 3.17.1.
+development/minikube: Updated for version 1.38.0.
+development/mongodb-compass: Updated for version 1.49.1.
+development/nodejs24-bin: Updated for version 24.13.0.
+development/notepad++: Updated for version 8.9.1
+development/npm2tgz: Switch to nodejs22.
+development/pnpm: Switch to nodejs22.
+development/pnpm: Updated for version 10.28.2.
+development/qb64pe: Updated for version 4.4.0
+development/rider: Updated for version 2025.3.2.
+development/sbcl: Updated for version 2.6.1
+development/sbt: Updated for version 1.12.1
+development/terraform: Updated for version 1.14.4
+development/yarn: Switch to nodejs22.
+games/chessx: Updated for version 1.6.6.
+games/shattered-pixel-dungeon: Updated for version 3.3.4.
+games/sunshine: Switch to nodejs22.
+gis/eccodes: Updated for version 2.45.0.
+gis/proj-data: Updated for version 1.24.
+gis/proj: Updated for version 9.7.1.
+graphics/Blender: Add libs build scripts
+graphics/pencil3: Switch to nodejs22.
+graphics/xmedcon: Updated for version 0.26.0.
+graphics/xviewer: Update for 3.4.16
+ham/inmarsatc: Added (C++ Library).
+ham/sdrangel: Updated for version 7.23.0.
+ham/tqsl: Updated for version 2.8.4.
+libraries/KDSingleApplication: Added (Helper Class).
+libraries/bsddialog: update to 1.1.2
+libraries/imlib2_loaders: Explain version stuff in README.
+libraries/libaec: Updated for version 1.1.5.
+libraries/libcurl-gnutls: Updated for version 8.18.0.
+libraries/libuninameslist: Updated for version 20260107.
+libraries/liburcu: Updated for version 0.15.6.
+libraries/node-xoauth2: Switch to nodejs22.
+libraries/oath-toolkit: Updated for version 2.6.14.
+libraries/openapv: Updated for version 0.2.1.0.
+libraries/qt6: Switch to nodejs22.
+libraries/qt6gtk2: Update for 0.7
+libraries/simdjson: Updated for version 4.2.4.
+libraries/simdutf: Updated for version 8.0.0.
+libraries/tree-sitter-yaml: Switch to nodejs22.
+libraries/udunits: fix download URL.
+libraries/xcb-util-xrm: change email
+misc/dvtm: change maintainer
+misc/ollama: Updated for version 0.15.1.
+multimedia/castnow: Switch to nodejs22.
+multimedia/droidcam: Fix VERSION.
+multimedia/iptvnator: Tidy README whitespace.
+multimedia/iptvnator: Updated for version 0.18.0.
+multimedia/plexmediaserver: Updated for version 1.43.0.10467_2b1ba6e69.
+multimedia/qdvdauthor: Fix MD5SUM.
+multimedia/strawberry: Updated for version 1.2.17, new maintainer.
+multimedia/stremio: Switch to nodejs22.
+multimedia/w_scan_cpp: Update VDR version.
+network/DownTube: Switch to nodejs22.
+network/anydesk: Updated for version 7.1.3.
+network/brave-browser: update 1.86.142
+network/copyparty: Updated for version 1.20.4.
+network/coturn: new maintainer
+network/element-desktop-bin: Updated for version 1.12.9.
+network/element-desktop: Updated for version 1.12.9; switch to nodejs22.
+network/etherpad-lite: Switch to nodejs22.
+network/fujinet-pc: Updated for version 1.5.2.
+network/gallery-dl: Updated for version 1.31.4
+network/librewolf: Updated for version 147.0.2_1
+network/microsoft-edge: Updated for version 144.0.3719.92.
+network/munge: Update version to 0.5.17
+network/opera: Updated for version 126.0.5750.59
+network/signal-desktop: Updated for version 7.87.0.
+network/slurm: Update version to 25.11.2
+network/teams-for-linux: Updated for version 2.7.0.
+network/tor-browser: Updated for version 15.0.5.
+network/varnish: Fix permission.
+network/varnish: Updated version 8.0.0
+network/vivaldi: Updated for version 7.8.3925.56.
+network/warpinator: Update for 2.0.3
+network/zen-browser: Updated for version 1.18.1b
+office/msee: Switch to nodejs22.
+office/pageEdit: Added (XHTML Visual Editor).
+office/pdfsam-basic: Updated for version 5.4.5.
+office/python3-xlsx2csv: Updated for version 0.8.6.
+office/qownnotes: Updated for version 26.1.14.
+office/texstudio: Update version to 4.9.1
+office/trello-cli: Switch to nodejs22.
+office/wps-office-dicts: Updated for version 26.2.0.3
+python/cryptography: Updated for version 46.0.3.
+python/odoo: Switch to nodejs22.
+python/python3-cffi: Added (Python Module).
+python/python3-fritzconnection: Updated for version 1.15.1.
+python/python3-multidict: Updated for version 6.7.1.
+python/python3-pathspec: Updated for version 1.0.4.
+python/python3-psutil: Updated for version 7.2.2.
+python/python3-pypdf: Updated for version 6.6.1
+python/python3-rich: Updated for version 14.3.1.
+python/python3-setuptools-opt: Updated for version 80.10.2.
+python/python3-uv_build: Updated for version 0.9.27.
+python/python3-uv_build: Updated for version 0.9.28.
+python/python3-xapp: Updated for version 3.0.2, New Maintainer
+python/roundrobin: Updated for version 0.1.0.
+system/Iosevka-aile: Updated for version 34.1.0.
+system/Iosevka-core: update to 34.1.0
+system/Iosevka-etoile: Updated for version 34.1.0.
+system/Iosevka-slab: Updated for version 34.1.0
+system/Iosevka: Updated for version 34.1.0
+system/aide: Update version to 0.19.2
+system/chkrootkit: Update version to 0.59
+system/curlftpfs: Fix build on -current.
+system/curlftpfs: Fix build with newer CURL.
+system/docker-buildx: Updated for version 0.31.1.
+system/docker-compose: Updated for version 5.0.2
+system/fastfetch: Updated for version 2.58.0.
+system/fish: update maintainer
+system/fnt: Updated for version 1.9.1.
+system/incus-ui: Updated for version 20260123_ae304d94
+system/incus: Updated for version 6.21
+system/lightdm-settings: Update for 2.1.1
+system/modules: Update version to 5.6.1
+system/mongodb: Updated for version 8.2.4.
+system/monitorix: Update version to 3.16.0
+system/nemo: Update for 6.6.3
+system/openmpi: Update version to 4.1.8
+system/partclone: Updated for version 0.3.42
+system/sarasa-gothic: Updated for version 1.0.36.
+system/slpkg: Updated for version 5.5.2.
+system/thermald: Updated for version 2.5.11.
+system/usermin: Updated for version 2.521.
+system/webmin: Updated for version 2.621.
++--------------------------+
 Sat Jan 24 01:02:39 UTC 2026
 academic/locarna: Fix build.
 academic/openboard: Updated for version 1.7.4.

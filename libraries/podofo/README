@@ -1,4 +1,8 @@
-The PoDoFo library is a free, portable C++ library. It can
-parse existing PDF files and create new ones from scratch.
+The PoDoFo library is a free, portable C++ library. It can parse
+existing PDF files and create new ones from scratch.
+
+As of version 1.x, the tools are no longer maintained or supported and
+are not build by default. The tools can still be built by passing
+BUILDTOOLS=TRUE to the build script.
 
 Optional dependencies are cppunit and lua.

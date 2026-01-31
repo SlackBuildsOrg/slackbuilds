@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+    |-----handy-ruler------------------------------------------------------|
+keyd: keyd (per-device keyboard remapping daemon)
+keyd:
+keyd: keyd is a low-level keyboard remapping daemon that operates
+keyd: at the evdev layer, before X11 or the Linux console process
+keyd: input events.
+keyd:
+keyd: It allows per-device key remapping, making it suitable for
+keyd: external keyboards, macro pads, and special-purpose devices.
+keyd:
+keyd: Homepage: https://github.com/rvaiya/keyd
+keyd:

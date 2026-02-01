@@ -1,10 +1,16 @@
 PRGNAM="fish"
-VERSION="3.7.1"
+VERSION="4.3.3"
 HOMEPAGE="https://fishshell.com/"
-DOWNLOAD="https://github.com/fish-shell/fish-shell/releases/download/3.7.1/fish-3.7.1.tar.xz"
-MD5SUM="d32913b45d52459f40e6d434389e7bd4"
+DOWNLOAD="https://github.com/fish-shell/fish-shell/releases/download/4.3.3/fish-4.3.3.tar.xz \
+          https://github.com/fish-shell/rust-pcre2/archive/0.2.9-utf32/rust-pcre2-0.2.9-utf32.tar.gz \
+          https://git.sr.ht/~r1w1s1/slackbuilds-tarballs/blob/main/fish-4.3.3-vendor.tar.gz \
+          https://git.sr.ht/~r1w1s1/slackbuilds-tarballs/blob/main/fish-4.3.3-manpages.tar.gz"
+MD5SUM="09ec2ff159a4e56e2daa1c1482acdbc5 \
+        3f1dea84a6ee4fd81c4442f9a74c2d23 \
+        954f692bb2a289498567765a16f13f4b \
+        746c8d22ebdce09b4acff373812eb974"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
+REQUIRES="rust-opt"
 MAINTAINER="r1w1s1"
 EMAIL="r1w1s1@fastmail.com"

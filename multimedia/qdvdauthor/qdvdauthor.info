@@ -4,9 +4,9 @@ HOMEPAGE="https://sourceforge.net/projects/qdvd"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://sourceforge.net/projects/qdvd/files/qdvd-2.3.1-qt5/qdvdauthor-2.3.1-015.tar.gz \
-          https://qdvdauthor.sourceforge.net/data/masks.tar.bz2 \
-          https://qdvdauthor.sourceforge.net/data/buttons.tar.bz2 \
-          https://qdvdauthor.sourceforge.net/data/alpha_trans.tar.bz2 \
+          https://sourceforge.net/projects/qdvd/files/masks.tar.bz2 \
+          https://sourceforge.net/projects/qdvd/files/buttons.tar.bz2 \
+          https://sourceforge.net/projects/qdvd/files/alpha_trans.tar.bz2 \
           https://ffmpeg.org/releases/ffmpeg-0.6.7.tar.bz2"
 MD5SUM_x86_64="7ff7164391b9744c8b35217a8e6d43f6 \
         1ed15c30ffaf344c97fdadfca390fc78 \

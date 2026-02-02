@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=golangci-lint
 VERSION=${VERSION:-2.8.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -63,7 +63,13 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-go build -v -ldflags "-X main.version=$VERSION -X main.commit=$(bsdcat $CWD/$PRGNAM-$VERSION.tar.gz | git get-tar-commit-id | cut -c 1-7) -X main.date=$(date -u "+%Y-%m-%dT%TZ")" ./cmd/golangci-lint
+GO_LDFLAGS="-X main.version=$VERSION -X main.commit=$(bsdcat $CWD/$PRGNAM-$VERSION.tar.gz | git get-tar-commit-id | cut -c 1-7) -X main.date=$(date -u "+%Y-%m-%dT%TZ")"
+
+if [ "$ARCH" = "aarch64" ] ; then
+  GO_LDFLAGS="-extldflags=-fuse-ld=bfd $GO_LDFLAGS"
+fi
+
+go build -v -ldflags "$GO_LDFLAGS" ./cmd/golangci-lint
 
 ./golangci-lint completion bash > $PRGNAM.bash
 ./golangci-lint completion zsh > $PRGNAM.zsh

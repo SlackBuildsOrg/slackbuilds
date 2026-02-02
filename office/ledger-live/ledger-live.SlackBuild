@@ -26,7 +26,7 @@
 cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=ledger-live
-VERSION=${VERSION:-2.137.0}
+VERSION=${VERSION:-2.139.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -56,7 +56,7 @@ mkdir -p "$TMP" "$PKG" "$OUTPUT"
 mkdir -p "$PKG/install"
 mkdir -p "$PKG/lib/udev/rules.d"
 mkdir -p "$PKG/usr/doc/$NAMVER"
-mkdir -p "$PKG/usr/share/$NAMVER"
+#mkdir -p "$PKG/usr/share/$NAMVER"
 mkdir -p "$PKG/usr/share/applications"
 mkdir -p "$PKG/usr/share/pixmaps"
 mkdir -p "$PKG/usr/bin"

@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sbozyp
 DISTNAM=App-$PRGNAM
-VERSION=${VERSION:-1.4.1}
+VERSION=${VERSION:-1.5.4}
 ARCH=${ARCH:-noarch}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -85,6 +85,7 @@ cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 mkdir -p $PKG/etc/sbozyp
 cp -a package/sbozyp.conf $PKG/etc/sbozyp/sbozyp.conf.new
+cp -a package/sbozyp.blacklist $PKG/etc/sbozyp/sbozyp.blacklist.new
 
 mkdir -p $PKG/usr/share/bash-completion/completions
 cp -a package/sbozyp.bash $PKG/usr/share/bash-completion/completions/sbozyp

@@ -23,3 +23,4 @@ preserve_perms() {
 }
 
 preserve_perms etc/sbozyp/sbozyp.conf.new
+preserve_perms etc/sbozyp/sbozyp.blacklist.new

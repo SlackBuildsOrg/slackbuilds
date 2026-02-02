@@ -1,9 +1,9 @@
 PRGNAM="zxbasic"
-VERSION="1.18.5"
+VERSION="1.18.6"
 HOMEPAGE="https://zxbasic.readthedocs.io"
-DOWNLOAD="https://github.com/boriel-basic/zxbasic/archive/v1.18.5/zxbasic-1.18.5.tar.gz \
+DOWNLOAD="https://github.com/boriel-basic/zxbasic/archive/v1.18.6/zxbasic-1.18.6.tar.gz \
           https://www.python.org/ftp/python/3.13.3/Python-3.13.3.tgz"
-MD5SUM="a11354de3f4208aed283c849f9403d5d \
+MD5SUM="899ef93601adfb2a3e401defb98cf7f3 \
         b3d8c043dcdd52d55d48769a95c8e7d1"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

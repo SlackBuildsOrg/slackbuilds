@@ -31,10 +31,11 @@ is to provide a Software Defined Radio platform that is committed to:
 Depending to your SDR hardware you may want to install some or all:
 libairspy, libairspyhf, libbladeRF, libhackrf, liniio, libmirisdr,
 SDRplay, libperseus, librtlsdr, uhd ...
+(for a complete list, see https://github.com/f4exb/sdrangel/wiki/)
 (not all available at slackbuilds.org)
 
 Optional features can be enabled installing:
 aptdec, cm256cc, dab_lib, mbelib, serialDV, dsdcc, sgp4, libsigmf,
-ggmorse
+ggmorse, rnnoise, inmarsatc
 
 SERVER=yes|no (Default is no) to compile also the server variant

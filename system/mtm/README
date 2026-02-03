@@ -1,0 +1,28 @@
+mtm (Micro Terminal Multiplexer)
+
+mtm is a very small, curses-based terminal multiplexer that allows
+splitting a single terminal screen into multiple panes.
+
+Unlike tmux or screen, mtm does not support sessions, windows, mouse
+interaction, or runtime configuration. All panes are always visible,
+and control is entirely keyboard-driven. This makes mtm simple,
+predictable, and lightweight.
+
+This SlackBuild packages mtm version 1.2.1 (last upstream release).
+It includes a small backported upstream patch adding a "nuke" key
+binding, which clears the current pane's screen and scrollback
+buffer (Ctrl-g k by default). No other behavior is changed.
+
+mtm is suitable for users who want basic pane splitting without the
+complexity of a full terminal workspace manager.
+
+Homepage:
+  https://github.com/deadpixi/mtm
+
+Key bindings (default):
+  Ctrl-g v   split vertically
+  Ctrl-g h   split horizontally
+  Ctrl-g o   switch pane
+  Ctrl-g k   clear screen and scrollback (nuke)
+  Ctrl-g PgUp/PgDn scrollback
+

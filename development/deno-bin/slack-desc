@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+deno-bin: deno-bin (Javascript and Typescript Runtime)
+deno-bin:
+deno-bin: Deno is a JavaScript, TypeScript, and WebAssembly runtime with
+deno-bin: secure defaults and a great developer experience. It is built on
+deno-bin: V8, Rust, and Tokio.Deno is TypeScript-ready out of the box.
+deno-bin: Deno is fully compatible with Node and npm.This is the
+deno-bin: repackage of Binary from upstream for Slackware Linux.
+deno-bin:
+deno-bin:
+deno-bin: Homepage:https://deno.com/
+deno-bin:

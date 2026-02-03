@@ -2,7 +2,7 @@
 
 # Slackware build script for libfabric
 
-# Copyright 2022-2025 Vijay Marcel
+# Copyright 2022-2026 Vijay Marcel
 
 # All rights reserved.
 #
@@ -11,6 +11,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -37,12 +41,13 @@
 # 16/04/2025: updated to version 2.1.0
 # 25/07/2025: updated to version 2.2.0
 # 21/10/2025: updated to version 2.3.1
+# 30/01/2026: updated to version 2.4.0
 # ---------------------------------------------------------------------------------------
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libfabric
-VERSION=${VERSION:-2.3.1}
+VERSION=${VERSION:-2.4.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

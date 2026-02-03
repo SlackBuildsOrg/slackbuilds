@@ -1,0 +1,14 @@
+The Fobos SDR is a high-performance Software-Defined
+Radio (SDR) receiver with a USB 3.0 interface. This
+device offers a continuous operating frequency range
+from 100 kHz to 6 GHz and up to 50 MHz bandwidth with
+14-bit signal sampling resolution, ensuring full data
+integrity. With two auxiliary input channels, HF1 and HF2,
+for coherent direct sampling and a primary RF reception
+channel, Fobos SDR provides flexibility and precision in
+signal reception. It has 14 GHz per second best in class
+Band Scan feature.
+
+Fobos SDR an ideal solution for hobbyists, researchers, and
+professionals in the field of radio communication seeking
+to leverage the capabilities of SDR technology fully.

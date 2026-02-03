@@ -13,7 +13,7 @@ OptiX-Headers: developed using these can outsource its ray-tracing to the onboar
 OptiX-Headers: NVIDIA GPU, potentially providing a dramatic performance increase,
 OptiX-Headers: especially when compared to CPU-bound ray-tracing operations.
 OptiX-Headers:
-OptiX-Headers: https://developer.nvidia.com/optix
+OptiX-Headers:
 OptiX-Headers:
 OptiX-Headers:
 OptiX-Headers:

@@ -1,0 +1,24 @@
+keyd is a low-level keyboard remapping daemon for Linux.
+
+It operates at the evdev layer, before X11 or the Linux console
+process input events, allowing per-device key remapping.
+
+This makes keyd suitable for external keyboards, macro pads, or
+special-purpose devices where tools like xmodmap or sxhkd are
+insufficient.
+
+Configuration files are read from:
+
+  /etc/keyd/*.conf
+
+keyd must be run as root to access input devices. No systemd
+components are required.
+
+See the keyd manual page for usage details.
+
+The package does not include a startup script. To start keyd on
+boot, edit /etc/rc.d/rc.local and add a section like this:
+
+if [ -x /usr/bin/keyd ]; then
+  /usr/bin/keyd >/dev/null 2>&1 &
+fi

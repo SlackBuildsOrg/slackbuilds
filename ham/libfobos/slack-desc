@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+libfobos: libfobos (Fobos SDR API library)
+libfobos:
+libfobos: This is the Fobos SDR receiver host software API shared library.
+libfobos: Lightweight and easy to start. Full source code.
+libfobos:
+libfobos:
+libfobos:
+libfobos: homepage: https://github.com/rigexpert/libfobos/
+libfobos:
+libfobos:
+libfobos:

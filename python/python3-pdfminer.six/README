@@ -34,3 +34,5 @@ sensible way.
 The dumppdf.py tool can be used to extract the internal structure from a
 PDF. This tool is primarily for debugging purposes, but that can be
 useful to anybody working with PDF’s.
+
+NOTE: 20251107 is the last version to support python-3.9

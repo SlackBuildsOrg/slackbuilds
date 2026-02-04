@@ -6,6 +6,12 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260203 bkw, BUILD=2:
+# - expand shell script wrapper a bit, and use a symlink for the data/ dir
+#   rather than copying it. should make upgrades closer to seamless.
+# - add a few more TNFS hosts to the default config.
+# - update man page.
+
 # 20260125 bkw:
 # - updated for v1.5.2 (which would be 25.12.x by the old version scheme).
 # - upstream folded the fujinet-pc fork back into the main fujinet-firmware
@@ -18,7 +24,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=fujinet-pc
 SRCNAM=fujinet-firmware
 VERSION=${VERSION:-1.5.2}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

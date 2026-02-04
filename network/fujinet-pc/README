@@ -13,7 +13,7 @@ the fujinet-sd-card git repo.
 When fujinet-pc is running, you can control it with a web browser
 (with JavaScript enabled), at the address: http://localhost:8000
 
-See https://github.com/FujiNetWIFI/fujinet-pc for the current
+See https://github.com/FujiNetWIFI/fujinet-firmware for the current
 status of fujinet-pc. See also the FujiNet documentation wiki:
 https://github.com/FujiNetWIFI/fujinet-platformio/wiki
 
@@ -25,16 +25,3 @@ menu; the ~/.fujinet-pc directory will be created and populated if it
 doesn't already exist.
 
 To exit fujinet-pc, press ^C or close the terminal it's running in.
-
-Upgrade note: After upgrading fujinet-pc, you must delete or move your
-user's old data directory out of the way:
-
-  $ mv ~/.fujinet-pc/ ~/old.fujinet-pc
-
-When you start the new version of fujinet-pc, it will recreate the
-~/.fujinet-pc/ with the new contents. At this point, you can copy
-your old config:
-
-  $ cp ~/old.fujinet-pc/fnconfig.ini ~/.fujinet-pc/
-
-...and restart fujinet-pc.

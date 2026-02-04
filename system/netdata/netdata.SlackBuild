@@ -2,7 +2,7 @@
 
 # Slackware build script for netdata
 
-# Copyright 2017-2025 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2017-2026 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=netdata
-VERSION=${VERSION:-2.5.3}
+VERSION=${VERSION:-2.8.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -95,7 +95,6 @@ find -L . \
 sed -e s,@NETDATA_USER@,$NETDATA_USER, -e s,@NETDATA_GROUP@,$NETDATA_GROUP, \
   $CWD/logrotate-use-netdata-user-and-group.diff | patch -p1 --verbose
 
-# wsr
 # Somehow abseil-cpp that we have in SBo or current is too new
 # So we will use the bundled protobuf in order to build for now
 # Let's keep the deps in place just in case they fixed it in the future
@@ -114,6 +113,9 @@ cd build
     -DENABLE_PLUGIN_GO=FALSE \
     -DENABLE_ACLK=FALSE \
     -DENABLE_BUNDLED_PROTOBUF=TRUE \
+    -DENABLE_PLUGIN_SYSTEMD_UNITS=FALSE \
+    -DENABLE_NETDATA_JOURNAL_FILE_READER=FALSE \
+    -DENABLE_PLUGIN_OTEL=FALSE \
     -DCMAKE_BUILD_TYPE=Release ..
   cmake --build ../build
   DESTDIR=$PKG cmake --install ../build

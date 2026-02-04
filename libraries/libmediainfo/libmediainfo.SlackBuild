@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libmediainfo
-VERSION=${VERSION:-25.04}
+VERSION=${VERSION:-25.10}
 SRCNAM=MediaInfoLib
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -41,9 +41,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -87,9 +84,9 @@ if pkg-config --exists libgvc ; then graphviz="--with-graphviz" ; else graphviz=
 if pkg-config --exists libmms ; then libmms="--with-libmms" ; else libmms="--without-libmms" ; fi
 if pkg-config --exists tinyxml2 ; then tinyxml2="--with-libtinyxml2" ; else tinyxml2="" ; fi
 
-# Remove seemingly unneeded argument that breaks compilation
-# https://github.com/MediaArea/MediaInfoLib/issues/2143
-sed -i 's|Renderers_Size, NULL|Renderers_Size|' Source/MediaInfo/Export/Export_Graph.cpp
+# Fix for Graphviz 13.x+
+# https://github.com/MediaArea/MediaInfoLib/issues/2375
+sed -i 's|unsigned int|size_t|' Source/MediaInfo/Export/Export_Graph*
 
 cd Project/GNU/Library
 ./autogen.sh

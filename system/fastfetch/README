@@ -6,7 +6,7 @@ performance and customizability in mind.
 
 This SlackBuild disables runtime detection for package managers that
 would not be expected to be present on a Slackware system (like dpkg,
-rpm, pacman, etc). If you would like to enable runtime detection for
+winget, pacman, etc). If you would like to enable runtime detection for
 any disabled package manager, you can run fastfetch with
   --packages-disabled ""
 to re-enable detection.

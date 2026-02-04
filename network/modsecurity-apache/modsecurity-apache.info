@@ -1,10 +1,10 @@
 PRGNAM="modsecurity-apache"
-VERSION="2.9.8"
+VERSION="2.9.12"
 HOMEPAGE="https://www.modsecurity.org/"
-DOWNLOAD="https://github.com/owasp-modsecurity/ModSecurity/releases/download/v2.9.8/modsecurity-v2.9.8.tar.gz \
-          https://github.com/coreruleset/coreruleset/archive/v4.6.0/coreruleset-4.6.0.tar.gz"
-MD5SUM="69ba67a0d1e93404919b276980d88331 \
-        2dfe58af935db7d3c843db9ba6c8794a"
+DOWNLOAD="https://github.com/owasp-modsecurity/ModSecurity/releases/download/v2.9.12/modsecurity-v2.9.12.tar.gz \
+          https://github.com/coreruleset/coreruleset/archive/v4.17.1/coreruleset-4.17.1.tar.gz"
+MD5SUM="0a53077bc36e53d7c9e8b617d7e08f9d \
+        aeba46647a3f630cf4bc18ab11c963fd"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

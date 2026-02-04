@@ -36,7 +36,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=plexmediaserver
-VERSION=${VERSION:-1.41.8.9834_071366d65}
+VERSION=${VERSION:-1.43.0.10467_2b1ba6e69}
 PKG_VERSION=$(echo $VERSION | tr _ -)
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

@@ -16,4 +16,4 @@ soxr: (rational or irrational) resampling ratio. Phase-response, preserved
 soxr: bandwidth, aliasing, and rejection level parameters are all
 soxr: configurable.
 soxr:
-soxr: http://sourceforge.net/projects/soxr
+soxr: https://github.com/dofuuz/soxr

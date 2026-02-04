@@ -3,7 +3,7 @@
 # Slackware build script for Opensubdiv
 
 # Copyright 2019 J. "MUFTI" Scheurich Stuttgart/Germany
-# Copyright 2021-2023 Christoph Willing  Brisbane/Australia
+# Copyright 2021-2026 Christoph Willing,  Sydney Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,16 +23,12 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# 20220222 bkw: Modified by SlackBuilds.org, BUILD=2:
-# - fix github download URL.
-# - don't install static libraries.
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=OpenSubdiv
-VERSION=${VERSION:-3.6.0}
+VERSION=${VERSION:-3.7.0}
 SRCVER=$(echo $VERSION | tr . _)
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -108,15 +104,17 @@ cd build
   make install/strip DESTDIR=$PKG
 cd ..
 
+mkdir -p $PKG/usr/share/$PRGNAM
+mv $PKG/usr/bin/tutorials $PKG/usr/share/$PRGNAM
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -rf documentation/* $PKG/usr/doc/$PRGNAM-$VERSION
+find $PKG/usr/doc/$PRGNAM-$VERSION -type f -exec chmod 0644 {} +
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
-# Can't have tutorials directory in /usr/bin
-mv $PKG/usr/bin/tutorials $PKG/usr/doc/$PRGNAM-$VERSION/
-
 # 20220224 bkw: get rid of static libs.
-rm -f $PKG/usr/lib*/*.a
+# Keep static libs (needed elsewhere)
+#rm -f $PKG/usr/lib*/*.a
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

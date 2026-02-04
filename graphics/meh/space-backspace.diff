@@ -1,0 +1,18 @@
+diff -Naur meh-0.3+20181021_69f653a/src/xlib.c meh-0.3+20181021_69f653a.patched/src/xlib.c
+--- meh-0.3+20181021_69f653a/src/xlib.c	2026-01-14 21:32:38.000000000 -0500
++++ meh-0.3+20181021_69f653a.patched/src/xlib.c	2026-01-14 23:32:13.990180821 -0500
+@@ -205,12 +205,14 @@
+ 		case XK_l:
+ 		case XK_Right:
+ 		case XK_Down:
++		case XK_space:
+ 			key_next();
+ 			break;
+ 		case XK_k:
+ 		case XK_h:
+ 		case XK_Left:
+ 		case XK_Up:
++		case XK_BackSpace:
+ 			key_prev();
+ 			break;
+ 		case XK_r:

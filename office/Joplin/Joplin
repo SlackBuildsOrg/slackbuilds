@@ -2,7 +2,7 @@
 # Slackware wrapper for the Joplin AppImage.
 runme(){
     cd /opt/Joplin
-    ./Joplin-3.2.12.AppImage "$@"
+    ./Joplin-3.5.11.AppImage "$@"
 }
 
 if [ $UID == 0 ]; then

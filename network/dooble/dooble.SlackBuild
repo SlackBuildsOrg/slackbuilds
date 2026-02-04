@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dooble
-VERSION=${VERSION:-2025.06.10}
+VERSION=${VERSION:-2025.11.25}
 DIC_VERSION="dooble-dictionaries-0f1e715b85a47f930deb004fc44fa9e234941604"
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -64,17 +64,21 @@ if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
 fi
 
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . -type f \( -perm -4000 -o -perm -2000 \) -exec chmod -s {} +
+find . ! -type l -type d ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f -perm /111 ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f ! -perm /111 ! -perm 644 -exec chmod -f 644 {} +
 
 export DOOBLE_DICTIONARIES_DIRECTORY="$DIC_VERSION"/Dictionaries
 
-QMAKE=$(which qmake)
+# for sudoers with unset qmake in user $PATH ...
+QMAKE=$(which qmake) || true
 
-"$QMAKE" dooble.pro
+if [ -x "$QMAKE" ]; then
+    "$QMAKE" dooble.pro
+else
+  /usr/lib64/qt5/bin/qmake dooble.pro
+fi
 make
 
     mkdir -p "$PKG/usr/bin"
@@ -85,6 +89,8 @@ make
 cat $CWD/slack-dooble.sh > "$PKG"/usr/bin/"$PRGNAM"
 mv Distributions/$PRGNAM.desktop "$PKG"/usr/share/applications/
 mv Icons/Logo/$PRGNAM.png "$PKG"/usr/share/pixmaps/
+install -Dm644 Translations/dooble_*.qm -t "$PKG/usr/share/$PRGNAM/translations"
+install -Dm644 qtwebengine_dictionaries/* -t "$PKG/usr/share/$PRGNAM/qtwebengine_dictionaries"
 cp -R * "$PKG/opt/$PRGNAM"/
 
 chmod +x "$PKG"/usr/bin/"$PRGNAM"

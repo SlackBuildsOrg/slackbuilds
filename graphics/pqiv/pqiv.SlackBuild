@@ -7,6 +7,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251216 bkw: update for v2.13.3, add GTK2 option.
 # 20241203 bkw: update for v2.13.2.
 # 20240317 bkw: update for v2.13.1.
 # 20230507 bkw:
@@ -17,7 +18,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pqiv
-VERSION=${VERSION:-2.13.2}
+VERSION=${VERSION:-2.13.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -62,8 +63,17 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
+
+# 20251216 bkw: allow building with gtk2. maybe good for low-end systems?
+if [ "${GTK2:-no}" = "yes" ]; then
+  GTK2OPT="--gtk-version=2"
+  GTKVER=2
+else
+  GTKVER=3
+fi
 
 # --prefix is the only option that the ./configure script really takes into
 # account at present, but I'll leave the others, just in case.
@@ -71,13 +81,14 @@ find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
+  $GTK2OPT \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --build=$ARCH-slackware-linux
 
-make
+make VERBOSE=1
 strip $PRGNAM
 make install DESTDIR=$PKG
 gzip $PKG/usr/man/man*/*
@@ -88,7 +99,7 @@ cp -a LICENSE README* $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
-cat $CWD/slack-desc > $PKG/install/slack-desc
+sed "s,@GTKVER@,$GTKVER," < $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG

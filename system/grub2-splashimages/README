@@ -1,0 +1,10 @@
+This package contains a collection of splashimages which can be
+used for GRUB2. The splashimages are located in
+/usr/share/backgrounds/grub. To change the background
+edit the /etc/default/grub file and add this line
+GRUB_BACKGROUND="/usr/share/images/grub/SOME_IMAGE.png"
+after saving the file run grub-mkconfig -o /boot/grub/grub.cfg
+
+Note:
+Do not enable both GRUB_THEME and GRUB_BACKGROUND at the
+same time.

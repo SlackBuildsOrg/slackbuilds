@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=chessx
-VERSION=${VERSION:-1.6.2}
+VERSION=${VERSION:-1.6.6}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,13 +79,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Taken from Arch, fixes the GUI problems
-sed -i '/QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);/a\
-    QCoreApplication::setAttribute(Qt::AA_DontUseNativeDialogs);' src/gui/main.cpp
-
 # Compile the application with Qt
-lupdate-qt5 chessx.pro
-lrelease-qt5 i18n/*.ts
+lrelease-qt5 chessx.pro
 qmake-qt5 QMAKE_CXXFLAGS="$SLKCFLAGS"
 make
 

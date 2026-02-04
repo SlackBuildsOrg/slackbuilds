@@ -1,0 +1,7 @@
+LXCFS is a simple userspace filesystem designed to work around some
+current limitations of the Linux kernel.Specifically, it's providing
+two main things.A set of files which can be bind-mounted
+over their /proc originals to provide CGroup-aware values.A cgroupfs
+like tree which is container aware.The focus is now on making
+containers feel more like a real independent system through
+the proc masking feature.

@@ -1,10 +1,12 @@
 PRGNAM="melonds"
-VERSION="0.9.5"
+VERSION="1.1"
 HOMEPAGE="https://melonds.kuribo64.net"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/melonDS-emu/melonDS/archive/0.9.5/melonDS-0.9.5.tar.gz"
-MD5SUM_x86_64="23ee3637af072854371675b9e61ab96d"
-REQUIRES="libslirp"
-MAINTAINER="Steven Voges"
-EMAIL="svoges.sbo@gmail.com"
+DOWNLOAD_x86_64="https://github.com/melonDS-emu/melonDS/archive/1.1/melonDS-1.1.tar.gz \
+                 https://github.com/melonDS-emu/melonDS/commit/330b030e81a6a746290e18dad99f80210ccbee1b.patch"
+MD5SUM_x86_64="a1b7d97d8231d122b8f4bada48521ab1 \
+               eb04ac647b0e69c00ee47d21a77ad0ca"
+REQUIRES="enet faad2"
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

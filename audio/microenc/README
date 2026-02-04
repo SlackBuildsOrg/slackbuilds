@@ -1,0 +1,11 @@
+Bash script (using ffmpeg) for encoding directories with audio files
+to other formats, including MP3, AAC, OGG Vorbis, OPUS, AC3, EAC3, DTS,
+FLAC, ALAC, Wavpack, AIFF, and WAV.
+
+Auto-copies metadata and cover art for MP3/AAC/FLAC/ALAC/AIFF.
+
+Optional dependencies:
+
+faac or fdkaac and libfdk-aac (for AAC)
+aften (for AC3)
+dcaenc (for dts, note: this is a legal quagmire)

@@ -80,10 +80,7 @@ static void process_file(const char *filename)
 		if (duration > 0)
 			ASAPInfo_SetDuration(info, i, (int) (duration * (1773447 / 1789772.5 * 262 / 312)));
 	}
-	static unsigned char output[ASAPInfo_MAX_MODULE_LENGTH];
-	ASAPWriter_SetOutput(writer, output, 0, sizeof(output));
 	int output_len = ASAPWriter_Write(writer, filename, info, module, module_len, true);
-	ASAPWriter_Delete(writer);
 	if (output_len < 0)
 		fatal_error("%s: conversion error", filename);
 
@@ -91,12 +88,13 @@ static void process_file(const char *filename)
 	fp = fopen(filename, "wb");
 	if (fp == NULL)
 		fatal_error("cannot write %s", filename);
-	if (fwrite(output, output_len, 1, fp) != 1) {
+	if (fwrite(ASAPWriter_GetOutput(writer), ASAPWriter_GetOutputLength(writer), 1, fp) != 1) {
 		fclose(fp);
 		remove(filename); /* "unlink" is less portable */
 		fatal_error("%s: write error", filename);
 	}
 	fclose(fp);
+	ASAPWriter_Delete(writer);
 
 	/* print summary */
 	printf("%s: ", filename);

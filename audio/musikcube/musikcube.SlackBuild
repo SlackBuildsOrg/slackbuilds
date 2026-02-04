@@ -2,6 +2,7 @@
 
 # Slackware build script for musikcube
 
+# Copyright 2025-2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2023-2024 Samuel Young, MO, USA
 # All rights reserved.
 #
@@ -28,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=musikcube
-VERSION=${VERSION:-3.0.4}
+VERSION=${VERSION:-3.0.5}
 ASIO=${ASIO:-f693a3eb7fe72a5f19b975289afc4f437d373d9c}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

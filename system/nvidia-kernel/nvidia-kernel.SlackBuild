@@ -4,7 +4,7 @@
 
 # Copyright 2007-2011 Heinz Wiesinger, Amsterdam, The Netherlands
 # Copyright 2012-2019 Edward W. Koenig, Vancouver, WA, USA
-# Updates copyright 2020-2024 Lenard Spencer, Orlando, FL, USA
+# Updates copyright 2020-2025 Lenard Spencer, Orlando, FL, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -29,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-kernel
-VERSION=${VERSION:-570.169}
+VERSION=${VERSION:-590.48.01}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -37,19 +37,17 @@ PKGTYPE=${PKGTYPE:-tgz}
 KERNEL=${KERNEL:-$(uname -r)}
 KERNELPATH=${KERNELPATH:-/lib/modules/${KERNEL}/build}
 
-if [ "${OPEN:-no}" = "yes" ]; then
-  OPEN1="-open"
-  OPEN2="_OPEN"
-  DESC="OPEN"
-else
+if [ "${OPEN:-yes}" = "no" ]; then
   unset OPEN1
-  unset OPEN2
   DESC="PROPRIETARY"
+else
+  OPEN1="-open"
+  DESC="OPEN"
 fi
 
 set -e
 
-PKGVER=${VERSION}${OPEN2}_$(echo $KERNEL | tr - _)
+PKGVER=${VERSION}_$(echo $KERNEL | tr - _)
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -96,17 +94,20 @@ find -L . \
 # CC=${CC:-gcc} suppresses an otherwise harmless "compiler mismatch"
 # message.  If you custom-build your kernel with clang,
 # then pass CC=clang to this script.
-  CC=${CC:-gcc} make SYSSRC=$KERNELPATH module || exit 1
+  if [ "${DRM:-yes}" != "no" ]; then
+    CC=${CC:-gcc} make SYSSRC=$KERNELPATH module || exit 1
+  else
+    CC=${CC:-gcc} NV_EXCLUDE_KERNEL_MODULES=nvidia-drm make SYSSRC=$KERNELPATH module || exit 1
+  fi
 )
 
 mkdir -p $PKG/lib/modules/$KERNEL/kernel/drivers/video
-install -m 0664 kernel$OPEN1/nvidia.ko $PKG/lib/modules/$KERNEL/kernel/drivers/video/
-install -m 0664 kernel$OPEN1/nvidia-modeset.ko $PKG/lib/modules/$KERNEL/kernel/drivers/video/
-install -m 0664 kernel$OPEN1/nvidia-drm.ko $PKG/lib/modules/$KERNEL/kernel/drivers/video/
-install -m 0664 kernel$OPEN1/nvidia-uvm.ko $PKG/lib/modules/$KERNEL/kernel/drivers/video/
+install -m 644 kernel$OPEN1/*.ko $PKG/lib/modules/$KERNEL/kernel/drivers/video/;
 
-mkdir -p $PKG/usr/share/X11/xorg.conf.d/
-cat $TMP/$SRCNAM/nvidia-drm-outputclass.conf > $PKG/usr/share/X11/xorg.conf.d/10-nvidia.conf
+if [ "${DRM:-yes}" = "yes" ]; then
+  mkdir -p $PKG/usr/share/X11/xorg.conf.d/
+  cat $TMP/$SRCNAM/nvidia-drm-outputclass.conf > $PKG/usr/share/X11/xorg.conf.d/10-nvidia.conf
+fi
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$PKGVER
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$PKGVER/$PRGNAM.SlackBuild

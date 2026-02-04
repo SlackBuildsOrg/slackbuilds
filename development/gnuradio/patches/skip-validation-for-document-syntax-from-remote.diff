@@ -1,0 +1,11 @@
+--- gnuradio-3.10.12.0/gr-trellis/docs/CMakeLists.txt.orig	2025-02-20 02:23:56.000000000 +0100
++++ gnuradio-3.10.12.0/gr-trellis/docs/CMakeLists.txt	2025-12-13 11:23:35.579202683 +0100
+@@ -16,7 +16,7 @@
+     add_custom_command(
+         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/gr-trellis.html
+         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/gr-trellis.xml
+-        COMMAND ${XMLTO_EXECUTABLE} html-nochunks
++        COMMAND ${XMLTO_EXECUTABLE} --skip-validation html-nochunks
+                 ${CMAKE_CURRENT_SOURCE_DIR}/gr-trellis.xml)
+     add_custom_target(gr_trellis_html ALL
+                       DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/gr-trellis.html)

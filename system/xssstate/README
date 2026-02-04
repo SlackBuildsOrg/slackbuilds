@@ -1,0 +1,11 @@
+xssstate
+--------
+
+This is the xssstate utility from suckless.org.
+
+This tool is a simple tool that retrieves the X screensaver state.
+This can be used in scripts that can start screen lockers, or
+other utilities.
+
+For more inforamtion on why this package exists, and for
+an example how to use it is detailed in the README.Slackware file.

@@ -1,0 +1,16 @@
+System container and VM image builder for Incus and LXC.
+The image definition is a YAML document which describes the source
+of the image, its package manager, what packages to install/remove
+for specific image variants,os releases and architectures,as well as
+additional files to generate and arbitrary actions to execute as part
+of the image build process.The output is either a plain root
+filesystem, an Incus image or a LXC image.
+
+optional dependencies:
+
+btrfs-progs dosfstools qemu for building Incus VM images
+Hivex and wimlib are needed for repack-windows command
+
+Note:
+Use login shell for building this package.
+This package needs internet access to build.

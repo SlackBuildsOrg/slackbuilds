@@ -8,10 +8,8 @@
 
 # Notes:
 
-# This thing uses the current directory for its config file. I thought
-# about patching it to use ~/.86box.cfg or ~/.config/86Box/86box.cfg,
-# but it might be considered a feature (create each VM in it own
-# directory, with its own 86box.cfg).
+# Version 4.x used to write the config file to the current directory.
+# Starting with 5.0, it stores configs in ~/.config/86box.
 
 # We now have rtmidi in the repo. The build doesn't autodetect it and
 # disable it if it's missing, we have to help it out with -DRTMIDI=OFF
@@ -23,9 +21,19 @@
 # The other frontends are mac/windows only.
 # Anyway, it has a nice Qt GUI, I don't see why it needs a frontend.
 
+# 20251228 bkw: update for v5.3.
+# - the floppy drive .wav samples have been broken out into a separate
+#   'assets' tarball, so add that.
+# - munt is now supported. make sure it uses the bundled source, not
+#   whatever version might be on the system.
+# - add NEW_DYNAREC variable (default to no).
+
+# 20251117 bkw: fix i586/i686 build.
+# 20251103 bkw: update for v5.2.
+# 20250914 bkw: update for v5.1.
+# 20250829 bkw: update for v5.0.
 # 20240925 bkw: update for v4.2.1.
 # 20240812 bkw: update for v4.2.
-
 # 20240311 bkw: update for v4.1.
 # - submitted a build for rtmidi, so it's now supported here as an
 #   optional dep.
@@ -34,7 +42,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=86box
 SRCNAM=86Box
-VERSION=${VERSION:-4.2.1}
+VERSION=${VERSION:-5.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -52,22 +60,59 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   exit 0
 fi
 
+# 20250829 bkw: Starting with version 5.0, SSE2 is required at
+# runtime, for x86 and x86_64. If we're somehow building on an ancient
+# CPU that lacks SSE2, warn the user, but don't stop the build.
+# There is probably a way to patch it to build without SSE2 on x86,
+# but I'm not spending a lot of time to figure it out because I doubt
+# anyone really needs it.
+check_sse2() {
+  grep -q '\<sse2\>' /proc/cpuinfo && return
+  cat <<EOF
+
+********************************************************************
+* WARNING: 86box requires SSE2 extensions, but you are building on a
+* system without SSE2. If you install the resulting package on this
+* system, it will fail with "Illegal Instruction" errors.
+*
+* Press ^C within 5 seconds to abort the build, or wait 5 seconds to
+* continue.
+********************************************************************
+
+EOF
+  sleep 5
+}
+
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+# 20251117 bkw: in 86box <= 5.1, dynamic recompilation worked on x86.
+# In 5.2, they seem to have dropped support for it (on x86), but not
+# added a cmake check to auto-disable it. Have to turn it off myself.
+DYNAREC=ON
+NDOPT=OFF
+
 if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686 -msse2"
+  check_sse2
+  DYNAREC=OFF
 elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686 -msse2"
+  check_sse2
+  DYNAREC=OFF
+elif [ "$ARCH" = "x86_64" -o "$ARCH" = "aarch64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
+fi
+
+if [ "${NEW_DYNAREC:-no}" = "yes" ]; then
+  if [ "$DYNAREC" = "OFF" ]; then
+    echo "*** Dynamic recompilation not supported on this platform"; exit 1
+  else
+    NDOPT="ON"
+  fi
 fi
 
 set -e
@@ -79,11 +124,15 @@ rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
 tar xvf $CWD/roms-$VERSION.tar.gz
+tar xvf $CWD/assets-$VERSION.tar.gz
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # 20240311 bkw: rtmidi still not autodetected in 4.1.
+# 20250829 bkw: or 5.0 either.
+# 20251228 bkw: or 5.3...
 if [ "${RTMIDI:-yes}" != "yes" ] || ! pkg-config --exists rtmidi; then
   RTMIDI="-DRTMIDI=OFF"
 fi
@@ -91,12 +140,14 @@ fi
 mkdir -p build
 cd build
   cmake \
+    -DDYNAREC=$DYNAREC \
+    -DNEW_DYNAREC=$NDOPT \
     $RTMIDI \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DMUNT=ON \
+    -DMUNT_EXTERNAL=OFF \
+    -DCMAKE_C_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-    -DMAN_INSTALL_DIR=/usr/man \
     -DCMAKE_BUILD_TYPE=Release ..
   make
   make install/strip DESTDIR=$PKG
@@ -108,6 +159,7 @@ ln -s $SRCNAM $PKG/usr/bin/$PRGNAM
 # This mv will be fast, src and dest are always on the same FS.
 mkdir -p $PKG/usr/share/$SRCNAM
 mv roms-$VERSION $PKG/usr/share/$SRCNAM/roms
+mv assets-$VERSION $PKG/usr/share/$SRCNAM/assets
 
 # Upstream ships desktop/icons, but 'make install' doesn't install them.
 mkdir -p $PKG/usr/share/applications
@@ -136,8 +188,11 @@ cp -a AUTHORS COPYING *.md $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
-sed "s,@WITH@,$WITH," < $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
+sed -e "s,@WITH@,$WITH," \
+    -e "s,@DR@,$DYNAREC," \
+    -e "s,@NDR@,$NDOPT," \
+    < $CWD/slack-desc > $PKG/install/slack-desc
+	cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

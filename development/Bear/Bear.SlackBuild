@@ -25,27 +25,25 @@
 cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=Bear
-VERSION=${VERSION:-3.1.4}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-3.1.6}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-NAMVER=$PRGNAM-$VERSION
 
 if [ -z "$ARCH" ]; then
-	case "$(uname -m)" in
-		i?86) ARCH=ia32 ;;
-		arm*) ARCH=aarch64 ;;
-		*) ARCH=$(uname -m) ;;
-	esac
+  case "$(uname -m)" in
+    i?86) ARCH=ia32 ;;
+    arm*) ARCH=aarch64 ;;
+    *) ARCH=$(uname -m) ;;
+  esac
 fi
 
 if [ -n "${PRINT_PACKAGE_NAME}" ]; then
-	echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
-	exit 0
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
 fi
 
 TMP="${TMP:-/tmp/SBo}"
-SRC="$TMP/$NAMVER"
 PKG="$TMP/package-$PRGNAM"
 OUTPUT="${OUTPUT:-/tmp}"
 
@@ -75,44 +73,59 @@ rm -rf "$PRGNAM-$VERSION"
 tar xvf "$CWD/$PRGNAM-$VERSION.tar.gz"
 cd "$PRGNAM-$VERSION"
 chown -R root:root .
-chmod -R u+w,go+r-w,a-s .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-INSTPREFIX='/usr'
-
-cmake \
-	-DENABLE_UNIT_TESTS=OFF \
-	-DENABLE_FUNC_TESTS=OFF \
-	-DCMAKE_INSTALL_PREFIX=$INSTPREFIX \
-	-DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
-	-DCMAKE_INSTALL_DOCDIR=doc/$NAMVER \
-
-make all
-make DESTDIR="$PKG" install
+mkdir -p build
+cd       build
+  cmake \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_MANDIR=/usr/man \
+    -DCMAKE_INSTALL_DOCDIR=/usr/doc/$PRGNAM-$VERSION \
+    -DENABLE_UNIT_TESTS=OFF \
+    -DENABLE_FUNC_TESTS=OFF \
+    -DCMAKE_BUILD_TYPE=Release \
+    ..
+  make all
+  make install/strip DESTDIR="$PKG"
+cd ..
 
 # There is an install/strip Makefile recipe, but sbopkglint still compalins.
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 # The project does not respect -DCMAKE_INSTALL_MANDIR.
-# I have reported the issue, so, hopefully, it will be fixed soon.
-mv "$PKG$INSTPREFIX/share/man" "$PKG$INSTPREFIX"
-rm -rf "$PKG$INSTPREFIX/share"
-
-# Remove useless garbage after the install Makefile recipe.
-rm "$PKG$INSTPREFIX/doc/$NAMVER/CODE_OF_CONDUCT.md"
-rm "$PKG$INSTPREFIX/doc/$NAMVER/CONTRIBUTING.md"
-rm "$PKG$INSTPREFIX/doc/$NAMVER/INSTALL.md"
-mv "$PKG$INSTPREFIX/doc/$NAMVER/COPYING" "$PKG$INSTPREFIX/doc/$NAMVER/LICENSE"
-mv "$PKG$INSTPREFIX/doc/$NAMVER/README.md" "$PKG$INSTPREFIX/doc/$NAMVER/repository-README.md"
+# Ivan reported the issue, but it was not fixed.
+# https://github.com/rizsotto/Bear/issues/516
+mv "$PKG/usr/share/man" "$PKG/usr"
+rm -rf "$PKG/usr/share"
 
 # Compress man pages.
-find "$PKG$INSTPREFIX/man" -type f -exec gzip {} +;
+find "$PKG/usr/man" -type f -exec gzip -9 {} \;
+
+# Remove useless garbage after the install Makefile recipe.
+rm  "$PKG/usr/doc/$PRGNAM-$VERSION/CODE_OF_CONDUCT.md"
+rm  "$PKG/usr/doc/$PRGNAM-$VERSION/CONTRIBUTING.md"
+rm  "$PKG/usr/doc/$PRGNAM-$VERSION/INSTALL.md"
+mv  "$PKG/usr/doc/$PRGNAM-$VERSION/COPYING"   "$PKG/usr/doc/$PRGNAM-$VERSION/LICENSE"
+mv  "$PKG/usr/doc/$PRGNAM-$VERSION/README.md" "$PKG/usr/doc/$PRGNAM-$VERSION/repository-README.md"
+cat "$CWD/$PRGNAM.SlackBuild"               > "$PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild"
+cat "$CWD/README"                           > "$PKG/usr/doc/$PRGNAM-$VERSION/README"
 
 mkdir -p "$PKG/install"
-mkdir -p "$PKG/usr/doc/$NAMVER"
-cat "$CWD/$PRGNAM.SlackBuild" > "$PKG/usr/doc/$NAMVER/$PRGNAM.SlackBuild"
-cat "$CWD/README"             > "$PKG/usr/doc/$NAMVER/README"
 cat "$CWD/slack-desc"         > "$PKG/install/slack-desc"
 
 cd "$PKG"
-/sbin/makepkg -l y -c n "$OUTPUT/$NAMVER-$ARCH-$BUILD$TAG.$PKGTYPE"
+# There's a "stage/" directory in the build dir that gets installed
+# to the $PKG dir, e.g.: $PKG/tmp/SBo/Bear-3.1.6/stage
+# Remove the unwanted parent of this "stage/" dir inside the $PKG.
+# https://github.com/rizsotto/Bear/issues/625
+# https://github.com/rizsotto/Bear/issues/627
+rm -r $(find . -type d -name stage | cut -d '/' -f2)
+/sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

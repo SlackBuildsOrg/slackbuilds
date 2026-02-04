@@ -19,5 +19,5 @@ them from within the app.
 The ability is set to "off" by default and can be enabled in the
 settings menu.
 
-SiriKali downloads gocryptfs and securefs in
+SiriKali download gocryptfs and securefs in
 "~/.local/share/SiriKali/bin".

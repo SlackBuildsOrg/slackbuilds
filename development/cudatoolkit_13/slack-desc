@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+              |-----handy-ruler------------------------------------------------------|
+cudatoolkit_13: cudatoolkit_13 (NVIDIA's parallel computing architecture)
+cudatoolkit_13:
+cudatoolkit_13: CUDA is NVIDIA's parallel computing architecture. It enables dramatic
+cudatoolkit_13: increases in computing performance by harnessing the power of
+cudatoolkit_13: the GPU.
+cudatoolkit_13:
+cudatoolkit_13: Homepage https://developer.nvidia.com/cuda-toolkit
+cudatoolkit_13:
+cudatoolkit_13: This is a versioned build for the 13 series only.
+cudatoolkit_13:
+cudatoolkit_13:

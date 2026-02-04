@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gqrx-sdr
 SRCNAM=gqrx
-VERSION=${VERSION:-2.17.6}
+VERSION=${VERSION:-2.17.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -85,32 +85,19 @@ find -L . \
 sed 's/^\(cmake_minimum_required(VERSION\) 3.2)$/\1 3.5)/' -i CMakeLists.txt
 
 mkdir -p build
-cd build
-cmake \
-       -DCMAKE_C_FLAGS="$SLKCFLAGS" \
-       -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
-       -DCMAKE_INSTALL_PREFIX=/usr \
-       -DCMAKE_PREFIX_PATH=/usr/lib${LIBDIRSUFFIX}/cmake/gnuradio/gnuradio/ \
-       -Wno-dev ..
-make
-make install DESTDIR=$PKG
-
-cd ..
+( cd build
+  cmake \
+    -DCMAKE_C_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_PREFIX_PATH=/usr/lib${LIBDIRSUFFIX}/cmake/gnuradio/gnuradio/ \
+    -Wno-dev ..
+  make
+  make install DESTDIR=$PKG
+)
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-mkdir -p $PKG/usr/share/{applications,pixmaps}
-mkdir -p $PKG/usr/share/icons/hicolor/{16x16,32x32,48x48,64x64}/apps
-install -m644 resources/icons/gqrx.svg $PKG/usr/share/pixmaps/gqrx.png
-install -m644 resources/icons/gqrx.svg \
-  ${PKG}/usr/share/icons/hicolor/64x64/apps/gqrx.png
-convert resources/icons/gqrx.svg -resize 16x16 \
-  ${PKG}/usr/share/icons/hicolor/16x16/apps/gqrx.png
-convert resources/icons/gqrx.svg -resize 32x32 \
-  ${PKG}/usr/share/icons/hicolor/32x32/apps/gqrx.png
-convert resources/icons/gqrx.svg -resize 48x48 \
-  ${PKG}/usr/share/icons/hicolor/48x48/apps/gqrx.png
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a README.md COPYING $PKG/usr/doc/$PRGNAM-$VERSION

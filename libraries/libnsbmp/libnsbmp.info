@@ -1,0 +1,12 @@
+PRGNAM="libnsbmp"
+VERSION="0.1.7"
+HOMEPAGE="https://www.netsurf-browser.org/projects/libnsbmp/"
+DOWNLOAD="https://download.netsurf-browser.org/libs/releases/libnsbmp-0.1.7-src.tar.gz \
+          https://download.netsurf-browser.org/libs/releases/buildsystem-1.10.tar.gz"
+MD5SUM="1f73274187cae1085152ef531d8c9b99 \
+        5b14efaefbb620d3c85fff3f6c02f103"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="B. Watson"
+EMAIL="urchlay@slackware.uk"

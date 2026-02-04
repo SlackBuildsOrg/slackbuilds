@@ -13,6 +13,7 @@
 #    still can't make it work directly from the command line, even
 #    though it works from the menu. *Shrug*.
 
+# 20251227 bkw: update for v1.7.
 # 20250123 bkw: update for v1.4.
 
 # 20241203 bkw: update for v1.3.
@@ -27,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=syncterm
-VERSION=${VERSION:-1.4}
+VERSION=${VERSION:-1.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -68,8 +69,9 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION-src.tgz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Man page: Fix path to dialing list and a couple typos. The path
 # baked into the binary really is /etc/syncterm.lst (not /usr/etc)...

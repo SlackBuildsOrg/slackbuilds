@@ -1,10 +1,12 @@
 PRGNAM="Blender"
-VERSION="3.3.10"
+VERSION="5.0.1"
 HOMEPAGE="https://blender.org"
-DOWNLOAD="https://download.blender.org/source/blender-3.3.10.tar.xz"
-MD5SUM="a190dbfc5dfd490d737ee64ba68ce79c"
-DOWNLOAD_x86_64=""
-MD5SUM_x86_64=""
-REQUIRES="potrace OpenSubdiv pugixml jack opencollada valgrind python3-numpy openimageio freealut"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.0.1.tar.xz \
+        https://sourceforge.net/projects/slackbuildsdirectlinks/files/Blender/blender-libs-5.0.1.1.tar.lz"
+MD5SUM_x86_64="b7b865015cd203c53f8b5369899fb503 \
+        8c30f0f900f2f1ea0009a1ab2d6734ed"
+REQUIRES=""
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

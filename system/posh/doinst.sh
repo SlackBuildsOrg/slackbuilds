@@ -3,6 +3,6 @@ if [ ! -r etc/shells ]; then
   chmod 644 etc/shells
 fi
 
-if ! grep -q /bin/posh etc/shells ; then
+if ! grep -q '^/bin/posh$' etc/shells ; then
   echo /bin/posh >> etc/shells
 fi

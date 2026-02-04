@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=microsoft-edge
 BRANCH=stable
-VERSION=${VERSION:-137.0.3296.83}
+VERSION=${VERSION:-144.0.3719.92}
 BUILD=${BUILD:-1}
 DEBBUILD=${DEBBUILD:-1}
 TAG=${TAG:-_SBo}
@@ -97,8 +97,8 @@ mkdir -p $PKG/{usr/bin,usr/share,opt}
 
 # move icon into place
 mkdir -p $PKG/usr/share/pixmaps
-cp -a opt/microsoft/msedge/product_logo_32.xpm \
-   $PKG/usr/share/pixmaps/microsoft-edge.xpm
+cp -a opt/microsoft/msedge/product_logo_32.png \
+   $PKG/usr/share/pixmaps/microsoft-edge.png
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

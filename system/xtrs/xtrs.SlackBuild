@@ -7,6 +7,12 @@
 # There was no license on the original version. Modified version is
 # licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260109 bkw: update to latest git, 4.9d+20250818_3a2180c.
+# - rework sbo.diff.
+# - remove window_close.diff (no longer needed).
+# - add new gxtrs binary to the package.
+# - .desktop file now launches gxtrs.
+
 # 20230517 bkw: BUILD=4
 # - include patch from Jens Guenther (sdltrs upstream maintainer) to
 #   make the window close button work.
@@ -24,8 +30,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xtrs
-VERSION=${VERSION:-4.9d}
-BUILD=${BUILD:-4}
+VERSION=${VERSION:-4.9d+20250818_3a2180c}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -62,29 +68,50 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 rm -rf $TMP/$PRGNAM-$VERSION
 cd $TMP
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
+
+# 20260119 bkw: include the tiny ROMs with the build, so we don't have
+# a hard dep on zmac.
+cp $CWD/prebuilt-roms/*.hex .
+
 chown -R root:root .
 # upstream permissions are wonky, do not revert to template.
 find . -type f -a -exec chmod 644 {} + -o \
        -type d -a -exec chmod 755 {} +
 
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+SHARE=$PKG/usr/share/$PRGNAM
+
 # 20230418 bkw: patch does all this:
 # - use system-wide ROMs from trs80-roms package.
 # - install binaries to /usr/games and man pages to section 6.
 # - strip binaries.
-# - use correct app-defaults dir.
 patch -p1 < $CWD/sbo.diff
 
-# 20230517 bkw: Jens Guenther's "quick and dirty" patch to make the
-# windowmanager's close button work. Many thanks!
-patch -p1 < $CWD/window_close.diff
+# 20260109 bkw: Whatever html2text command the author's using, it's
+# not compatible with the one on SBo. We're not even packaging the
+# *.txt versions of the docs, so just touch these to keep the build
+# from failing.
+touch cpmutil.txt dskspec.txt
 
 # 20230418 bkw: the -laoss here allows xtrs to make sound via ALSA
 # or PulseAudio (via /etc/asound.conf).
-make DEBUG="$SLKCFLAGS" EXTRALIBS="-laoss"
+# 20260109 bkw: "make" by itself doesn't build gxtrs...
+make DEBUG="$SLKCFLAGS" EXTRALIBS="-laoss" default gxtrs
 mkdir -p $PKG/usr/games $PKG/usr/man/man6
-make BINDIR=$PKG/usr/games MANDIR=$PKG/usr/man install
+make BINDIR=$PKG/usr/games \
+     MANDIR=$PKG/usr/man \
+     DOCDIR=$PKGDOC \
+     SHAREDIR=$SHARE \
+     install install-gxtrs
+
+# 20260109 bkw: these are the 0-length dummies we created above.
+rm -f $PKGDOC/{cpmutil,dskspec}.txt
+
+# 20260109 bkw: this ROM ships with xtrs, but doesn't get installed
+# by 'make install'.
+cp -a esfrom.hex $SHARE
 
 gzip -9 $PKG/usr/man/man*/*
 
@@ -106,10 +133,9 @@ cat $CWD/xtrs.desktop > $PKG/usr/share/applications/xtrs.desktop
 
 # 20230418 bkw: the .txt files are just rendered versions of the man
 # pages (with ddoouubblleedd characters), do not package.
-PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p $PKGDOC/utilities
 cp -a ChangeLog README *.html $PKGDOC
-cp -a *.ccc *.cmd *.tgz *.jcl *.bas *.z80 *.lst xtrsemt.h *.hex *.README \
+cp -a *.ccc *.cmd *.tgz *.jcl *.bas *.z80 xtrsemt.h *.hex *.README \
       $PKGDOC/utilities
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 

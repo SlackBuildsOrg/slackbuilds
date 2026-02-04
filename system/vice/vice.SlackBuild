@@ -7,6 +7,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251227 bkw: update for v3.10.
 # 20250509 bkw: BUILD=2, install the SDL keymaps.
 # 20250122 bkw: update for v3.9.
 
@@ -63,8 +64,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vice
-VERSION=${VERSION:-3.9}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-3.10}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -104,10 +105,6 @@ fi
 
 set -e
 
-# ffmpeg is included in the base OS on post-14.2 -current, but leave
-# this here in case someone's doing something clever.
-[ -x /usr/bin/ffmpeg ] && ffmpeg="--enable-ffmpeg"
-
 # Anticipating 15.0's pure-alsa-system
 # 20240214 bkw: which sadly never materialized. I keep this here for
 # my own use, anyway.
@@ -127,8 +124,9 @@ tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 chmod 644 doc/html/fonts/OFL.txt # this file shouldn't be +x
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Fix some mildly broken constructs in vice.texi, so we can generate
 # the vice.info doc.
@@ -166,21 +164,28 @@ config() {
   # 20210809 bkw: in 3.5, upstream added dos2unix as a required dep,
   # but it's *only used* if you run "make dist" or "make dist-gzip",
   # which we don't do. DOS2UNIX=/bin/true bypasses the autodetection.
-  # XDG_DESKTOP_MENU=/bin/true prevents installing .desktop files,
-  # because those don't respect $DESTDIR. We can't just disable them
-  # with a configure argument, because that stops them being built
-  # at all.
+
+  # 20251227 bkw: --disable-desktop-files because there's no way to
+  # keep 'make install' from installing the .desktop and icons to
+  # the real /usr/share. They get installed later on in this script.
+
+  # 20251228 bkw: disable a pointless "hidden" dependency: if libbsd
+  # happens to be installed, we don't need or want to link with it.
+  # There's no configure arg to disable it, but the ac_cv_* stuff
+  # below does the job.
 
   # 20230504 bkw: note to self: -w means disable all warnings.
+  ac_cv_lib_bsd_gethostbyname=no \
+  ac_cv_lib_bsd_gettimeofday=no \
   CFLAGS="$SLKCFLAGS -w -fcommon" \
   CXXFLAGS="$SLKCFLAGS" \
   DOS2UNIX=/bin/true \
   XA=/bin/true \
-  XDG_DESKTOP_MENU=/bin/true \
+  CC="$( which gcc )" \
   ./configure \
     $configarg \
-    $ffmpeg \
     $pulseopt \
+    --disable-desktop-files \
     --enable-html-docs \
     --enable-platformdox \
     --enable-x64 \
@@ -251,7 +256,7 @@ esac
 
 # Now build & install the whole project with the gtk3 UI.
 # 20250122 bkw: whoops, PDF doc was missing from 3.8, restore it.
-config "--enable-pdf-docs --enable-gtk3ui --enable-desktop-files"
+config "--enable-pdf-docs --enable-gtk3ui"
 make
 make install-strip DESTDIR=$PKG
 
@@ -262,12 +267,23 @@ mkdir -p $PKGDOC
 cp -a doc/*.txt $PKGDOC
 
 # Install desktop files manually.
-mkdir -p $PKG/usr/share/desktop-directories \
-         $PKG/usr/share/applications
-install -m0644 src/arch/gtk3/data/unix/vice*desktop \
+mkdir -p $PKG/usr/share/applications
+install -m0644 data/common/*.desktop \
         $PKG/usr/share/applications
-install -m0644 src/arch/gtk3/data/unix/vice*directory \
-        $PKG/usr/share/desktop-directories
+
+# 20251227 bkw: install icons manually. What a mess. Not gonna
+# bother with the .svg ones.
+HICOLOR=$PKG/usr/share/icons/hicolor
+cd data/common
+for i in vice-*.png; do
+  NAME="$( echo $i | cut -d_ -f1)"
+  PX="$( basename $i .png | cut -d_ -f2 )"
+  SZ=${PX}x${PX}
+  DIR=$HICOLOR/$SZ/apps
+  mkdir -p $DIR
+  cp -a $i $DIR/$NAME.png
+done
+cd -
 
 # Documentation. vice.pdf has already been installed to the doc dir.
 # Generate info, plaintext, and HTML versions here. The text doc is
@@ -277,13 +293,14 @@ install -m0644 src/arch/gtk3/data/unix/vice*directory \
 # outdated texinfo package in Slackware 15.0, or because upstream
 # broke some kind of rule... regardless, it's disabled for now.
 # 20230504 bkw: Patched vice.texi, so this is now enabled by default.
-if [ "${MAKEINFO:-yes}" = "yes" ]; then
-	makeinfo doc/$PRGNAM.texi
+# 20251228 bkw: Add --force, the result may not be perfect but it looks OK.
+if [ "${MKINFO:-yes}" = "yes" ]; then
+	makeinfo --force doc/$PRGNAM.texi
 	mkdir -p $PKG/usr/info
 	mv $PRGNAM.info* $PKG/usr/info
 	gzip -9 $PKG/usr/info/*
 
-	makeinfo --plaintext doc/$PRGNAM.texi > $PKGDOC/$PRGNAM.txt
+	makeinfo --force --plaintext doc/$PRGNAM.texi > $PKGDOC/$PRGNAM.txt
 fi
 
 # 20221130 bkw: HTML docs do get built, but never installed.

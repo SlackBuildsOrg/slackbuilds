@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libreoffice
-VERSION=${VERSION:-"25.2.4"}
+VERSION=${VERSION:-"25.8.4"}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -126,6 +126,7 @@ cd $PKG/usr/bin
       rm -f $FILE
       ln -sf ../../opt/libreoffice$SRCSHORT/program/$FILE $FILE ;
   done
+  ln -sf ../../opt/libreoffice$SRCSHORT/program/soffice libreoffice
 
 # The symlinks below are required to (directly) open documents
 # supported by libreoffice with Xfe file manager.

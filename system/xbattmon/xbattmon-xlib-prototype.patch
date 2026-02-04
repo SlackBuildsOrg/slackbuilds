@@ -1,0 +1,11 @@
+--- xbattmon.c.orig	2026-01-06 01:57:42.615507040 -0300
++++ xbattmon.c	2026-01-06 02:01:36.808663560 -0300
+@@ -311,7 +311,7 @@
+ #endif
+ 
+ Bool
+-evpredicate()
++evpredicate(Display *dpy, XEvent *ev, XPointer arg)
+ {
+ 	return True;
+ }

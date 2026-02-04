@@ -1,0 +1,4 @@
+KDSingleApplication (KDAB's helper class for single-inst policy apps)
+
+KDSingleApplication is a helper class for single-instance policy
+applications written by KDAB.

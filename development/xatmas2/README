@@ -1,0 +1,13 @@
+xatmas2 (6502 cross assembler for Atari 8-bit computers)
+
+Xatmas2 is a cross-assembler for modern systems to cross-assemble
+original source code for the Atmas II assembler for the Atari 8-bit
+series, once a popular assembler in the eighties and nineties.
+
+The manual for the original Atari 8-bit Atmas II, plus some
+example source code written for xatmas2, are included in:
+/usr/doc/xatmas2-$VERSION/
+
+If you want to run the xatmas2 self-test suite, pass TEST=yes
+in the script's environment. The test results will be saved to:
+/usr/doc/xatmas2-$VERSION/maketest.out

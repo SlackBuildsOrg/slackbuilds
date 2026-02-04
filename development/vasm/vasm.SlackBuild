@@ -6,6 +6,8 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260101 bkw: update for v2.0d.
+# - add m68k-madmac (vasmm68k_madmac) target.
 # 20240822 bkw:
 # - update for v1.9f.
 # - enable qnice (it's a toy/test arch, but someone might want it).
@@ -16,7 +18,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vasm
-VERSION=${VERSION:-1.9f}
+VERSION=${VERSION:-2.0d}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,7 +82,7 @@ CPUS="6502 6800 6809 arm c16x jagrisc m68k \
       pdp11 ppc qnice tr3200 vidcore x86 z80"
 
 # only a few CPUs get extra syntax modules:
-EXTRAS="m68k-mot ppc-mot 6502-madmac jagrisc-madmac \
+EXTRAS="m68k-mot ppc-mot 6502-madmac jagrisc-madmac m68k-madmac \
         6502-oldstyle 6800-oldstyle 6809-oldstyle z80-oldstyle"
 
 mkdir -p $PKG/usr/bin

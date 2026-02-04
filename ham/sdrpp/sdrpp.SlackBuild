@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sdrpp
-VERSION=${VERSION:-20250426.2dd8c6ce}
+VERSION=${VERSION:-20260111.65a0e11d}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -81,13 +81,16 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Fix
+sed "/volk_32fc_s32fc_x2_rotator2_32fc/s/phaseDelta/\&phaseDelta/" -i decoder_modules/dab_decoder/src/dab_dsp.h
+
 mkdir -p build
 cd build
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_LIBDIR=lib$LIBDIRSUFFIX \
     -DCMAKE_INSTALL_MANDIR=/usr/man \
     -DCMAKE_INSTALL_DOCDIR=/usr/doc/$PRGNAM-$VERSION \
     -DOPT_BUILD_AIRSPY_SOURCE=OFF \
@@ -104,9 +107,6 @@ cd build
     -DCMAKE_BUILD_TYPE=Release ..
   make install/strip DESTDIR=$PKG
 cd ..
-
-# Fix (it seems that LIB_SUFFIX is not taken into account)
-[ -d $PKG/usr/lib -a ! -e $PKG/usr/lib$LIBDIRSUFFIX ] && mv $PKG/usr/lib $PKG/usr/lib$LIBDIRSUFFIX
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

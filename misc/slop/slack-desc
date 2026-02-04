@@ -6,13 +6,13 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
     |-----handy-ruler------------------------------------------------------|
-slop: slop (selection query)
+slop: slop (select operation)
 slop:
-slop: slop (Select Operation) is an application that
-slop: queries for a selection from the user
-slop: and prints the region to stdout.
-slop:
-slop: https://github.com/naelstrof/slop
+slop: slop is an application that queries for a selection from the user and
+slop: prints the region to stdout. It grabs the mouse and turns it into a
+slop: crosshair, lets the user click and drag to make a selection (or click
+slop: on a window) while drawing a pretty box around it, then finally prints
+slop: the selection's dimensions to stdout.
 slop:
 slop:
 slop:

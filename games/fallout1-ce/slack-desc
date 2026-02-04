@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+           |-----handy-ruler------------------------------------------------------|
+fallout1-ce: fallout1-ce (Fallout Community Edition)
+fallout1-ce:
+fallout1-ce: Fallout Community Edition is a fully working re-implementation of
+fallout1-ce: Fallout, with the same original gameplay, engine bugfixes, and some
+fallout1-ce: quality of life improvements, that works (mostly) hassle-free on
+fallout1-ce: multiple platforms.
+fallout1-ce:
+fallout1-ce:
+fallout1-ce:
+fallout1-ce: https://github.com/alexbatalov/fallout1-ce
+fallout1-ce:

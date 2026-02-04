@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260105 bkw: update for v1.3.2.
 # 20250618 bkw: update for v1.2.16.
 # 20250128 bkw: update for v1.2.13. once again, datadir.diff changed.
 # 20230111 bkw: update for v1.2.12.
@@ -29,7 +30,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bstone
-VERSION=${VERSION:-1.2.16}
+VERSION=${VERSION:-1.3.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,9 +72,9 @@ cd $TMP
 rm -rf $PRGNAM-$SRCVER
 tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz
 cd $PRGNAM-$SRCVER
-chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # look in /usr/share/games/bstone for game data files, not the
 # directory the executable lives in. the --data_dir option can
@@ -102,9 +103,10 @@ cd ..
 
 # man page and .desktop written for this build. icon converted from upstream's
 # src/sys/win32/bstone_icon.ico.
-mkdir -p $PKG/usr/share/applications $PKG/usr/share/pixmaps $PKG/usr/man/man6
+mkdir -p $PKG/usr/share/{applications,pixmaps,icons/hicolor/48x48/apps} $PKG/usr/man/man6
 cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
-cat $CWD/$PRGNAM.png > $PKG/usr/share/pixmaps/$PRGNAM.png
+cat $CWD/$PRGNAM.png > $PKG/usr/share/icons/hicolor/48x48/apps/$PRGNAM.png
+ln -s ../icons/hicolor/48x48/apps/$PRGNAM.png $PKG/usr/share/pixmaps/$PRGNAM.png
 gzip -9c < $CWD/$PRGNAM.6 > $PKG/usr/man/man6/$PRGNAM.6.gz
 
 # the original source code license is supplied only as a MS word .doc

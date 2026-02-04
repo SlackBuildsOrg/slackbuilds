@@ -2,17 +2,19 @@
 
 # Slackware build script for rar
 
-# Written by Steven Pledger <spledger91@yahoo.com>
-# Modified by Ozan Türkyılmaz <ozan.turkyilmaz@gmail.com>
-# Modified by Mario Preksavec <mario@slackware.hr>
+# Written 2010, 2011  Steven Pledger <spledger91@yahoo.com>
+# Modified 2010  Ozan Türkyılmaz <ozan.turkyilmaz@gmail.com>
+# Modified 2013, 2025  Mario Preksavec, Zagreb, Croatia
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rar
-VERSION=${VERSION:-5.5.0}
+VERSION=${VERSION:-7.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+PRGVER=${VERSION//.}
 
 # 2023-05-17 DW: move all the ARCH stuff above PRINT_PACKAGE_NAME
 if [ -z "$ARCH" ]; then
@@ -25,9 +27,6 @@ fi
 
 if [ "$ARCH" = "x86_64" ]; then
    LIBDIRSUFFIX="64"
-   x64FIX="x64-"
-elif [[ $ARCH =~ i?86 ]]; then
-   LIBDIRSUFFIX=""
 else
    printf "\n$ARCH is not supported...\n\n" ; exit 1
 fi
@@ -52,7 +51,8 @@ set -e
 rm -rf $TMP/$PRGNAM $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-tar xvf $CWD/${PRGNAM}linux-$x64FIX$VERSION.tar.gz
+tar xvf $CWD/${PRGNAM}linux-x64-$VERSION.tar.gz \
+|| tar xvf $CWD/${PRGNAM}linux-x64-$PRGVER.tar.gz
 cd $PRGNAM
 chown -R root:root .
 find -L . \

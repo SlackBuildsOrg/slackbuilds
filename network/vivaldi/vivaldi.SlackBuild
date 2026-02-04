@@ -4,7 +4,7 @@
 #
 # Copyright 2015-2017  Edinaldo P. Silva, Rio de Janeiro, Brazil.
 # Copyright 2017-2019, Alexander Verbovetsky, Moscow, Russia
-# Copyright 2019-2025, Ruari Oedegaard, Oslo, Norway
+# Copyright 2019-2026, Ruari Oedegaard, Oslo, Norway
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vivaldi
-VERSION=${VERSION:-7.4.3684.52}
+VERSION=${VERSION:-7.8.3925.56}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -60,7 +60,7 @@ find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \; 2>/dev/null
 
 rm -r opt/vivaldi/cron usr/share/doc
 mv opt usr $PKG/
@@ -75,16 +75,14 @@ rm -f $PKG/usr/bin/vivaldi*
 ln -s ../../opt/vivaldi/vivaldi $PKG/usr/bin/vivaldi
 ln -s ../../opt/vivaldi/vivaldi $PKG/usr/bin/vivaldi-stable
 
-for res in 16 22 24 32 48 64 128 256; do
-   install -Dm644 "$PKG/opt/vivaldi/product_logo_${res}.png" \
-"$PKG/usr/share/icons/hicolor/${res}x${res}/apps/vivaldi.png"
+# Logo sizes vary between releases
+for logo in "$PKG/opt/vivaldi"/product_logo_*.png; do
+  logo="${logo##*/}"
+  res="$(echo "$logo" | grep -o '[0-9]\+')"
+  icondir="$PKG/usr/share/icons/hicolor/${res}x${res}/apps"
+  mkdir -p "$icondir"
+  ln -fs "../../../../../../opt/vivaldi/$logo" "$icondir/vivaldi.png"
 done
-
-sed \
-  -e "s|vivaldi-stable|vivaldi|" \
-  $PKG/usr/share/applications/vivaldi-stable.desktop \
-  > $PKG/usr/share/applications/vivaldi.desktop
-rm $PKG/usr/share/applications/vivaldi-stable.desktop
 
 for doc in README README.SBo $PRGNAM.SlackBuild; do
   install -Dm644 $CWD/$doc $PKG/usr/doc/$PRGNAM-$VERSION/$doc
@@ -97,4 +95,4 @@ cat $CWD/doinst.sh > $PKG/install/doinst.sh
 cat $CWD/douninst.sh > $PKG/install/douninst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

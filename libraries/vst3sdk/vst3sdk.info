@@ -1,22 +1,22 @@
 PRGNAM="vst3sdk"
-VERSION="3.7.13"
+VERSION="3.8.0"
 HOMEPAGE="https://www.steinberg.net/developers/"
-DOWNLOAD="https://github.com/steinbergmedia/vst3sdk/archive/v3.7.13_build_42/vst3sdk-3.7.13_build_42.tar.gz \
-          https://github.com/steinbergmedia/vst3_base/archive/823de87a7aa5752c1eca9c33e2015f160fb8642e/vst3_base-823de87a7aa5752c1eca9c33e2015f160fb8642e.tar.gz \
-          https://github.com/steinbergmedia/vst3_cmake/archive/49af6906f868afbf9d4657df1a1aa91f25264b0f/vst3_cmake-49af6906f868afbf9d4657df1a1aa91f25264b0f.tar.gz \
-          https://github.com/steinbergmedia/vst3_doc/archive/361184b03fe3a4f850397940eb50266766017a75/vst3_doc-361184b03fe3a4f850397940eb50266766017a75.tar.gz \
-          https://github.com/steinbergmedia/vst3_pluginterfaces/archive/0786cbef972d9a722fbb7cfabcbdb8d492fefa62/vst3_pluginterfaces-0786cbef972d9a722fbb7cfabcbdb8d492fefa62.tar.gz \
-          https://github.com/steinbergmedia/vst3_public_sdk/archive/6ccc1020904e0d8994a20b213015c3159591041d/vst3_public_sdk-6ccc1020904e0d8994a20b213015c3159591041d.tar.gz \
-          https://github.com/steinbergmedia/vst3_tutorials/archive/2a40f5e4c6e13f92903fcb4d2e3902d3cf58ab58/vst3_tutorials-2a40f5e4c6e13f92903fcb4d2e3902d3cf58ab58.tar.gz \
-          https://github.com/steinbergmedia/vstgui/archive/fc4cf0d6a7d6c7d63ffd12f54f0e924510a56eef/vstgui-fc4cf0d6a7d6c7d63ffd12f54f0e924510a56eef.tar.gz"
-MD5SUM="dd98589a647c46e4a1c839afe790db3f \
-        2dec09cffaee17603d9015d15e57a6d3 \
-        2f1833af1dc331e8494c40bc83e1f8c5 \
-        7013d4156b929311f8165d19ede0cba1 \
-        726407458629de37e521f0df075de3a7 \
-        8ec0a44a4f3054df966b75cd485710e2 \
-        ebfffc3cab3e403677153c1b353de974 \
-        9871c3f1aed02dc05c608e8ae6cd670e"
+DOWNLOAD="https://github.com/steinbergmedia/vst3sdk/archive/v3.8.0_build_66/vst3sdk-3.8.0_build_66.tar.gz \
+          https://github.com/steinbergmedia/vst3_base/archive/3d2e82f8e6bff59c1d8b7a27491a29c2286b5206/vst3_base-3d2e82f8e6bff59c1d8b7a27491a29c2286b5206.tar.gz \
+          https://github.com/steinbergmedia/vst3_cmake/archive/de6e54eeaaab35b7145f5c32c279b5e892146e04/vst3_cmake-de6e54eeaaab35b7145f5c32c279b5e892146e04.tar.gz \
+          https://github.com/steinbergmedia/vst3_doc/archive/6d4737c9e70750056e731d88d49aa06eefc8a1a4/vst3_doc-6d4737c9e70750056e731d88d49aa06eefc8a1a4.tar.gz \
+          https://github.com/steinbergmedia/vst3_pluginterfaces/archive/31d6eeba6daaa3e2a8bfbe3e7a90ca0b7fbfbc1c/vst3_pluginterfaces-31d6eeba6daaa3e2a8bfbe3e7a90ca0b7fbfbc1c.tar.gz \
+          https://github.com/steinbergmedia/vst3_public_sdk/archive/a3911a4615dabbfdfd9d181ee26b05c70c289a95/vst3_public_sdk-a3911a4615dabbfdfd9d181ee26b05c70c289a95.tar.gz \
+          https://github.com/steinbergmedia/vst3_tutorials/archive/33b73dfbb87f3fde3bce8c0a10cae934dc66ad34/vst3_tutorials-33b73dfbb87f3fde3bce8c0a10cae934dc66ad34.tar.gz \
+          https://github.com/steinbergmedia/vstgui/archive/9e9523b2baab3da9027ebaef8c946ae740c99917/vstgui-9e9523b2baab3da9027ebaef8c946ae740c99917.tar.gz"
+MD5SUM="6c2a8cff326ad489a7ab363c1871c6dd \
+        59367b8bef7bdb0ab34d3e70dbd27cd5 \
+        417277ffc22c9fd57de5d3f926008657 \
+        7da91b5f9ad9835bd64d2ce37f6a4a61 \
+        c83a5882d777cfc8334bb7709cd40293 \
+        aea8fe7a0c4da9ff1aa0a8d33240f217 \
+        d67d0eb492e9166570763c81b96194f4 \
+        27ad5fa013779fff61a153c33a469dc0"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

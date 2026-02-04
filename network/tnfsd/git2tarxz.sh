@@ -31,7 +31,7 @@
 
 ## Config:
 PRGNAM=tnfsd
-CLONE_URL=https://github.com/FujiNetWIFI/spectranet/
+CLONE_URL=https://github.com/FujiNetWIFI/tnfsd
 ## End of config.
 
 set -e
@@ -48,25 +48,19 @@ if [ "$1" != "" ]; then
 fi
 
 GIT_SHA=$( git rev-parse --short HEAD )
+DATE=$( git log --date=format:%Y%m%d --format=%cd | head -1 )
+VERTAG=$( git tag --sort=version:refname | tail -1 | sed 's,^v,,' )
 
-# the version hardcoded in main.c includes the date, so
-# don't use this.
-#DATE=$( git log --date=format:%Y%m%d --format=%cd | head -1 )
-#VERSION=${DATE}_${GIT_SHA}
-
-VERMAIN="$( grep 'const  *char  *\*version' tnfs/tnfsd/main.c | cut -d'"' -f2 )"
-VERSION=${VERMAIN}_${GIT_SHA}
+VERSION=${VERTAG}+${DATE}_${GIT_SHA}
 
 rm -rf .git
 find . -name .gitignore -print0 | xargs -0 rm -f
 
-rm -rf tnfs/tnfsd/{vscode_sample,bin/*}
-mv tnfs/*.{md,txt} tnfs/tnfsd
+rm -rf src/vscode_sample bin/*
 
 cd "$CWD"
 rm -rf $PRGNAM-$VERSION $PRGNAM-$VERSION.tar.xz
-mv $GITDIR/tnfs/tnfsd $PRGNAM-$VERSION
-rm -rf $GITDIR
+mv $GITDIR $PRGNAM-$VERSION
 tar cvfJ $PRGNAM-$VERSION.tar.xz $PRGNAM-$VERSION
 
 echo

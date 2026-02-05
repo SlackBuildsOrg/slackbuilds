@@ -13,3 +13,15 @@ building.
 NOTE:
 See the separate SlackBuild script for the language packs.
 Avahi is only needed if you need to use Impress and Draw
+
+WARNING:
+LibreOffice 25.8.4 is the latest version working in Slackware 15.0 using
+normal Slackware stock packages. Newer version requires newer glibc.
+
+You can use this script to build for newer version, but for 15.0 users,
+you will need to upgrade packages from testing/packages/binutils-gcc-glibc.
+
+Place the new version source (eg. 26.2.0) in the same directory and run:
+VERSION=26.2.0 sh libreoffice.SlackBuild
+
+If you feel uncomfortable, please stick with the current 25.8.4 version

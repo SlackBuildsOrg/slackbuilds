@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260205 bkw: update for v2.2.16.
 # 20250614 bkw: update for v2.2.13.
 # 20250216 bkw: update for v2.2.7.
 # 20241124 bkw: update for v2.2.4.
@@ -14,7 +15,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=hardinfo2
-VERSION=${VERSION:-2.2.13}
+VERSION=${VERSION:-2.2.16}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -57,15 +58,13 @@ rm -rf $TARNAM
 tar xvf $CWD/$TARNAM.tar.gz
 cd $TARNAM
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Note to self: get rid of -DHARDINFO2_LIBSOUP3=0 to build with
 # libsoup3. No idea what (if any) advantage this would give. When
 # Slackware (not SBo) ships libsoup 3.x, remove this option.
-
-# 20250216 bkw: don't access network during build.
-sed -i 's,appstreamcli validate,& --no-net,' CMakeLists.txt
 
 mkdir -p build
 cd build

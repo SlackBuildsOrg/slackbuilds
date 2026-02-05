@@ -10,6 +10,7 @@
 # Normally I prefer all-lowercase package names, but this just looks
 # *wrong* as "ircii".
 
+# 20260205 bkw: updated for v20260115.
 # 20250115 bkw: note to self: the reason we're using a slackware.uk
 # URL is that the download site's URLs aren't stable. Current version
 # gets moved to old/ or just deleted, when a new one is released.
@@ -32,7 +33,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ircII
-VERSION=${VERSION:-20240918}
+VERSION=${VERSION:-20260115}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -96,8 +97,9 @@ rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.bz2
 cd $SRCNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # 20241126 bkw: Debian's patches no longer apply, except the reverse
 # color one. spelling.diff is based on their old spelling patch.

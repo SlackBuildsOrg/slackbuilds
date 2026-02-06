@@ -1,26 +1,26 @@
 PRGNAM="lf"
-VERSION="r40"
+VERSION="r41"
 HOMEPAGE="https://github.com/gokcehan/lf"
-DOWNLOAD="https://github.com/gokcehan/lf/archive/r40/lf-r40.tar.gz \
+DOWNLOAD="https://github.com/gokcehan/lf/archive/r41/lf-r41.tar.gz \
           https://github.com/gdamore/encoding/archive/v1.0.1/encoding-1.0.1.tar.gz \
           https://github.com/gdamore/tcell/archive/v2.9.0/tcell-2.9.0.tar.gz \
           https://github.com/fsnotify/fsnotify/archive/v1.9.0/fsnotify-1.9.0.tar.gz \
           https://github.com/lucasb-eyer/go-colorful/archive/v1.3.0/go-colorful-1.3.0.tar.gz \
           https://github.com/mattn/go-runewidth/archive/v0.0.19/go-runewidth-0.0.19.tar.gz \
           https://github.com/clipperhouse/uax29/archive/v2.2.0/uax29-2.2.0.tar.gz \
-          https://github.com/golang/sys/archive/v0.39.0/sys-0.39.0.tar.gz \
-          https://github.com/golang/term/archive/v0.38.0/term-0.38.0.tar.gz \
+          https://github.com/golang/sys/archive/v0.40.0/sys-0.40.0.tar.gz \
+          https://github.com/golang/term/archive/v0.39.0/term-0.39.0.tar.gz \
           https://github.com/golang/text/archive/v0.29.0/text-0.29.0.tar.gz \
           https://github.com/djherbis/times/archive/v1.6.0/times-1.6.0.tar.gz"
-MD5SUM="853912f34b0a66c553323d8d24376a2f \
+MD5SUM="d8c9ac917c4357b2612cd418dc2e35b5 \
         7230f9efe74e07a07b8dfbfaafbf9d0a \
         5992cf811ff765951cd51497190d2421 \
         5454c1d94d5cf135b2b636908fc78632 \
         0a073f8ecaa1e50ed4dcdd8640544ef2 \
         1ba8a21c4b3ad92f7af49e3700a4eb20 \
         a9fa336f274e3f0f88dd513ee41ef8e9 \
-        ba281164b09195f1dc2e2651cda786e5 \
-        9b76afb8bd4357200c0b3dce338802ad \
+        de11370acf38768b2f93663038357439 \
+        e7cff613bebd57ad7568b9efd662014c \
         8425b5baac1a3756fcfa31c236d3fe1d \
         8369ccd09c3dfbc13991c9453d2f5b58"
 DOWNLOAD_x86_64=""

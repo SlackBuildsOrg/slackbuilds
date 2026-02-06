@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+grepcidr3: grepcidr3 (Filter IP addresses matching CIDR specification)
+grepcidr3:
+grepcidr3: grepcidr3 can be used to filter a list of IP addresses against one or
+grepcidr3: more CIDR specifications, or network address ranges.  As with grep,
+grepcidr3: there are options to invert matching, and load patterns from a file.
+grepcidr3: grepcidr3 is capable of comparing millions of IPs to networks with
+grepcidr3: little memory usage and in reasonable computation time.
+grepcidr3:
+grepcidr3: Homepage: https://github.com/jrlevine/grepcidr33
+grepcidr3:
+grepcidr3:

@@ -1,0 +1,7 @@
+grepcidr (Filter IP addresses matching CIDR specification)
+
+grepcidr can be used to filter a list of IP addresses against one or
+more CIDR specifications, or network address ranges.  As with grep,
+there are options to invert matching, and load patterns from a file.
+grepcidr is capable of comparing millions of IPs to networks with
+little memory usage and in reasonable computation time.

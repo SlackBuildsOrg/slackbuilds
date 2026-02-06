@@ -1,0 +1,9 @@
+sniffnet (Comfortably monitor your Internet traffic)
+
+Sniffnet is a network monitoring tool to help you
+easily keep track of your Internet traffic.
+
+Note that if you are not running as root, you need 
+to set capabilities to inspect a network adapter:
+
+  # setcap cap_net_raw,cap_net_admin=eip /usr/bin/sniffnet

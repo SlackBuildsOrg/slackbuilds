@@ -1,6 +1,6 @@
 PRGNAM="td_lib"
 VERSION="20250928"
-HOMEPAGE="http://invisible-island.net/ded/"
+HOMEPAGE="https://invisible-island.net/ded/"
 DOWNLOAD="https://invisible-mirror.net/archives/ded/td_lib-20250928.tgz"
 MD5SUM="7a5b9bc4d00cc50d51d0d8499db06297"
 DOWNLOAD_x86_64=""

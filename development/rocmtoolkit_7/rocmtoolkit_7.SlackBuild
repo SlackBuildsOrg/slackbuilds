@@ -94,8 +94,7 @@ mv ${PKG}/opt/rocm-$VERSION/share/man $PKG/usr/
 mkdir -p $PKG/usr/man/man1
 mv ${PKG}/opt/rocm-$VERSION/lib/llvm/share/man/man1/* $PKG/usr/man/man1/ && \
   rm -rf ${PKG}/opt/rocm-$VERSION/lib/llvm/share
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+find $PKG/usr/man -name \*.[15] -exec gzip -9 {} \;
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 mv ${PKG}/opt/rocm-$VERSION/share/doc/* ${PKG}/usr/doc/$PRGNAM-$VERSION && rmdir ${PKG}/opt/rocm-$VERSION/share/doc

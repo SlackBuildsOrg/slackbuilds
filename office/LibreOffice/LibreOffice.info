@@ -2,7 +2,7 @@ PRGNAM="LibreOffice"
 VERSION="26.2.0.3"
 HOMEPAGE="https://www.libreoffice.org"
 DOWNLOAD="https://download.documentfoundation.org/libreoffice/src/26.2.0/libreoffice-26.2.0.3.tar.xz \
-#          https://sourceforge.net/projects/slackbuildsdirectlinks/files/LibreOffice/libreoffice-26.2.0.3-srcs.tar.xz"
+          https://sourceforge.net/projects/slackbuildsdirectlinks/files/LibreOffice/libreoffice-26.2.0.3-srcs.tar.xz"
 MD5SUM="39bb3c455f49034d68507a2831552ce4 \
         706b2b2a76238d33e9dd6b21e7e1f66e"
 DOWNLOAD_x86_64=""

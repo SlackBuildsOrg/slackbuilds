@@ -1,12 +1,12 @@
 PRGNAM="vuescan"
-VERSION="9.8.50"
+VERSION="9.8.51"
 HOMEPAGE="https://www.hamrick.com"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://d2bwyyzfw77fhf.cloudfront.net/vuea6498.tgz \
                  https://d2bwyyzfw77fhf.cloudfront.net/vuex6498.tgz"
-MD5SUM_x86_64="300cfd3d00f92d5cd32eb6980fd2f16b \
-               884930ae80eadd380390660cf27075b0"
+MD5SUM_x86_64="42cd8e89626092b0872e7f4ff1f5c149 \
+               0275188f5b77ba70334d7da3d8ae1865"
 REQUIRES=""
 MAINTAINER="Andrew Clemons"
 EMAIL="andrew.clemons@gmail.com"

@@ -31,10 +31,26 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=snort
-VERSION=${VERSION:-2.9.17}
-BUILD=${BUILD:-3}
+SRCNAM=snort3
+VERSION=${VERSION:-3.10.2.0}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+SUID=${MUID:-395}
+MGID=${MGID:-395}
+MUSERNAME=${MUSERNAME:-snort}
+MGROUPNAME=${MGROUPNAME:-snort}
+
+if ! getent group "$MGROUPNAME" 2>&1 > /dev/null; then
+  echo "  You must have a $MGROUPNAME group to run this script."
+  echo "    # groupadd -g $MGID $MGROUPNAME"
+  exit 1
+elif ! getent passwd "$MUSERNAME" 2>&1 > /dev/null; then
+  echo "  You must have a $MUSERNAME user to run this script."
+  echo "    # useradd -u $MUID -g $MGID -d /var/log/snort $MUSERNAME"
+  exit 1
+fi
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -44,9 +60,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -75,24 +88,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-# respecting content-disposition may include cgi params in the filename
-TARBALL=$CWD/$PRGNAM-$VERSION.tar.gz
-if [ ! -e $TARBALL ]; then
-  TARBALL="$(/bin/ls $TARBALL\?* | head -1)"
-fi
-tar xvf $TARBALL
-cd $PRGNAM-$VERSION
-
-# The Makefiles do not respect the --libdir setting, which causes the libs to
-# go to /usr/lib/ on Slackware64. We'll "teach them" how to do it right :)
-for mf in $( find src/ -name Makefile.in ) ; do
-  sed -i "s|\${exec_prefix}/lib/snort_dynamic|@libdir@/snort_dynamic|g" $mf
-done
-
-# Similar problem with the --docdir in /doc/Makefile.in ...
-sed -i "s|\${datadir}/doc/\${PACKAGE}|@docdir@|g" doc/Makefile.in
-
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -100,46 +98,25 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-NON_ETHERNET_DECODERS='--enable-non-ether-decoders'
-if [ "${NON_ETHER:-yes}" = 'no' ]; then
-  NON_ETHERNET_DECODERS=''
-fi
-
 CPPFLAGS="$CPPFLAGS -I/usr/include/tirpc/" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./configure \
+./configure_cmake.sh  \
   --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --mandir=/usr/man \
-  --localstatedir=/var \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --enable-pthread \
-  --enable-linux-smp-stats \
-  ${NON_ETHERNET_DECODERS} \
-  --build=$ARCH-slackware-linux
+  --enable-shell \
+  --enable-large-pcap \
+  --enable-ccache \
+  --disable-pdf-docs \
+  --disable-text-docs \
 
-make
-make install-strip DESTDIR=$PKG
+make -C build
+make -C build install DESTDIR=$PKG
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $(readlink $i).gz $i.gz ; rm $i ; done
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 # Set up a sane config directory - snort won't do this on its own
 mkdir -p $PKG/etc/$PRGNAM
-# Fix paths for libraries in snort.conf, also 64-bits and rules paths...
-# also set "unified2" as standard output, without special options
-sed -e "s|usr/local/lib|usr/lib${LIBDIRSUFFIX}|g" \
-    -e "s|PATH ../|PATH |g" \
-    -e "/^# output unified2*/aoutput unified2: filename snort.log, limit 128" \
-    etc/snort.conf > $PKG/etc/snort/snort.conf.new
-cat etc/threshold.conf > $PKG/etc/snort/threshold.conf.new
-cat etc/reference.config > $PKG/etc/snort/reference.config.new
-cat etc/classification.config > $PKG/etc/snort/classification.config.new
-cat etc/attribute_table.dtd > $PKG/etc/snort/attribute_table.dtd.new
-cat etc/gen-msg.map > $PKG/etc/snort/gen-msg.map.new
-cat etc/unicode.map > $PKG/etc/snort/unicode.map.new
 
 # Create default, empty directory for rules
 mkdir -p $PKG/etc/snort/rules
@@ -150,8 +127,23 @@ mkdir -p $PKG/etc/rc.d
 cat $CWD/rc.snort > $PKG/etc/rc.d/rc.snort.new
 chmod 0755 $PKG/etc/rc.d/rc.snort.new
 
+# Include update rule script
+install -m755 $CWD/update_rules.sh $PKG/usr/bin/update_rules.sh
+
+mv $PKG/usr/etc/snort/* $PKG/etc/snort/
+rm -rf $PKG/usr/etc
+mv $PKG/etc/snort/balanced.lua $PKG/etc/snort/balanced.lua.new
+mv $PKG/etc/snort/connectivity.lua $PKG/etc/snort/connectivity.lua.new
+mv $PKG/etc/snort/inline.lua $PKG/etc/snort/inline.lua.new
+mv $PKG/etc/snort/max_detect.lua $PKG/etc/snort/max_detect.lua.new
+mv $PKG/etc/snort/security.lua $PKG/etc/snort/security.lua.new
+mv $PKG/etc/snort/snort.lua  $PKG/etc/snort/snort.lua.new
+mv $PKG/etc/snort/snort_defaults.lua  $PKG/etc/snort/snort_defaults.lua.new
+mv $PKG/etc/snort/talos.lua $PKG/etc/snort/talos.lua.new
+
 # Create directory for logging
 mkdir -p $PKG/var/log/snort
+chown -R $MUSERNAME:$MGROUPNAME $PKG/var/log/snort
 
 # Create directories for schemas and signatures
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/{schemas,signatures}
@@ -159,10 +151,12 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/{schemas,signatures}
 # Create directory for dynamic rules
 mkdir -p $PKG/usr/lib${LIBDIRSUFFIX}/snort_dynamicrules
 
-cp -a COPYING ChangeLog LICENSE RELEASE.NOTES \
+cp -a COPYING ChangeLog.md LICENSE \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 cat $CWD/README.SLACKWARE > $PKG/usr/doc/$PRGNAM-$VERSION/README.SLACKWARE
+mv $PKG/usr/share/doc/snort/* $PKG/usr/doc/$PRGNAM-$VERSION/
+rm -rf $PKG/usr/share/
 
 rm -f $PKG/usr/lib*/*.la
 

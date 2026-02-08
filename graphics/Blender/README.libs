@@ -6,7 +6,7 @@ Since blender-5.0.1, this SlackBuild uses a set of precompiled libraries
 which are required to build Blender from source code.  They are
 downloaded as a tarball and unpacked as required.
 
-Initially this tarball of precompiled libraries was created by
+Historically, this tarball of precompiled libraries was created by
 downloading them from blender.org using the 'make update' command,
 along the lines of:
 
@@ -73,13 +73,25 @@ specified with the SOURCES_CACHE environment variable when running the
 script e.g.
     SOURCES_CACHE=/var/cache/blender-sources bash blender-libs.sh
 
+While not mandatory, AMD graphics hardware support depends on prior
+installation of the rocmtoolkit_6 package.
+
+## NOTE ##
+Even if not targeting the Nvidia GPU, the cudatoolkit_12 package is
+still mandatory.
+
 
 ##################################################
 Resources for source build of precompiled libraries
 ##################################################
 
 - library source tarballs:          2 GB
-- time to download source tarballs: depends on internet connection (downloading 2GB)
+- time to download source tarballs: depends on internet connection
+                                    (downloading 2GB)
+- time to build & install cudatoolkit_12 and rocmtoolkit_6
+                                    (both very large)
 - time to build library tarball:    2 hours
-- disk space to build:              46 GB
+- disk space to build:              70 GB (over and above full
+                                           Slackware installation)
+
 

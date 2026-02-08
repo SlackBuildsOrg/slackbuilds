@@ -22,12 +22,16 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# BUILD = 1: Enable building of openimagedenoise
+#            by disabling OIDN_DEVICE_HIP in its CMakeLists.txt
+# BUILD = 2: rocm-6.4.4 available (like cudatoolkit for AMD)
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=blender-libs
 SRCNAM=blender
 VERSION=${VERSION:-5.0.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -47,6 +51,22 @@ fi
 TMP=${TMP:-/tmp/SBo}
 OUTPUT=${OUTPUT:-/tmp}
 
+CUDAToolkit_ROOT=${CUDAToolkit_ROOT:-/opt/cuda-12.9}
+ROCM_PATH=${ROCM_PATH:-/opt/rocm-6.4.4}
+
+# cudatoolkit is mandatory, rocmtoolkit is optional (although recommended)
+[ -d "$CUDAToolkit_ROOT" -a -x "$CUDAToolkit_ROOT"/bin/nvcc ] || {
+  echo "Can't proceed without cudatoolkit being installed."
+  echo "Please install the cudatoolkit_12 SlackBuild from SBo."
+  exit 1
+}
+
+export CUDAToolkit_ROOT
+export ROCM_PATH
+echo "CUDAToolkit_ROOT set to $CUDAToolkit_ROOT, ROCM_PATH set to $ROCM_PATH"
+export PATH=${CUDAToolkit_ROOT}/bin:${ROCM_PATH}/bin:${PATH}
+echo "PATH = $PATH"
+
 # Ensure updated versions of some system packages are installed
 # Slackware 15.0 stock cmake version is 3.21.4 (NOT usable)
 # Slackware 15.0 also has version 3.31.8 in testing (usable)
@@ -59,12 +79,13 @@ REQUIRED_CMAKE_VERSION=3.30.5
 [ -x /opt/cmake-opt/bin/cmake ] && \
   export PATH="/opt/cmake-opt/bin:${PATH}"
 
-
 installed_cmake_version=$(cmake --version | head -1 |cut -d' ' -f3)
 if [ ! "$REQUIRED_CMAKE_VERSION" = "$installed_cmake_version" ]; then
   echo "Wrong cmake version ($installed_cmake_version) detected."
-  exit 1
+  echo "For Slackware 15.0, install the cmake-opt SlackBuild from SBo."
+  exit 2
 fi
+
 
 # Obtain sources
 # The user should set SOURCES_CACHE in the environment
@@ -76,6 +97,7 @@ for f in $DOWNLOAD_x86_64 ; do
   echo "Source file: $(basename $f)"
   cp -u $SOURCES_CACHE/$(basename $f) . || \
 	wget $f
+#  md5sum $(basename $f) |cut -f1 -d' '
 done
 
 # rename some source files (those listed in .defs file):
@@ -98,12 +120,6 @@ cp  3cf6c1e53037eb9e198860365712e1bafb22f7c6.tar.gz x265-3cf6c1e53037eb9e1988603
 
 set -e
 
-CUDAToolkit_ROOT=${CUDAToolkit_ROOT:-/opt/cuda-12.9}
-export CUDAToolkit_ROOT
-echo "CUDAToolkit_ROOT set to $CUDAToolkit_ROOT"
-export PATH=${PATH}:${CUDAToolkit_ROOT}/bin
-echo "PATH = $PATH"
-
 mkdir -p $TMP $OUTPUT
 cd $TMP
 rm -rf $SRCNAM-$VERSION
@@ -118,9 +134,12 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# For now, don't try building openimagedenoise for HIP device (not avaiable)
+# Disable building openimagedenoise if hipcc not available
 #
-sed -i -e 's/DOIDN_DEVICE_HIP=ON/DOIDN_DEVICE_HIP=OFF/' build_files/build_environment/cmake/openimagedenoise.cmake
+[ -x "$ROCM_PATH"/bin/hipcc ] || \
+  sed -i -e 's/DOIDN_DEVICE_HIP=ON/DOIDN_DEVICE_HIP=OFF/' \
+  build_files/build_environment/cmake/openimagedenoise.cmake
+
 
 # Copy source files to where blender expects them
 # (where make deps would download them to)

@@ -4,9 +4,9 @@ HOMEPAGE="https://blender.org"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.0.1.tar.xz \
-        https://sourceforge.net/projects/slackbuildsdirectlinks/files/Blender/blender-libs-5.0.1.1.tar.lz"
+        https://sourceforge.net/projects/slackbuildsdirectlinks/files/Blender/blender-libs-5.0.1.2.tar.lz"
 MD5SUM_x86_64="b7b865015cd203c53f8b5369899fb503 \
-        8c30f0f900f2f1ea0009a1ab2d6734ed"
-REQUIRES=""
+        4a7c19c8c491a2686fb01929a0dc1c07"
+REQUIRES="numactl"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

@@ -7,19 +7,34 @@ range of essential tools for the creation of 3D content, including
 modeling, uv-mapping, texturing, particle and other simulation,
 scripting, rendering, compositing, post-production and game creation.
 
+
 This SlackBuild builds Blender from source code using prepackaged
 support libraries which don't provide libraries for i*86,
 therefore 32bit builds are no longer supported.
 
-The prepackaged libraries can themselves be built from source code.
-See README.libs
+The prepackaged libraries can themselves be built from source code if
+desired and provided sufficient resources (disk space, cpu, time) are
+available. See the README.libs file.
 
-When targeting Nvidia GPU, it is recommended to first install the
-cudatoolkit_12 package, in which case additional dedicated rendering
-binaries will be generated during the Blender build.
+If targeting hardware rendering with Nvidia GPU, it is necessary to
+first install the cudatoolkit_12 package, in which case additional
+dedicated rendering binaries will be generated during the Blender
+build. In this case, it is also recommended to install the
+OptiX-Headers SlackBuild; this enables optix render kernels to be
+built into Blender.
 
-After installing the built package, log out and back in again to the
-initiate ability to launch from the desktop menu (at Graphics/Blender).
+For a comparison of bare CUDA and OptiX (which requires CUDA anyway)
+see:
+    https://yelzkizi.org/optix-vs-cuda/
+
+If targeting hardware rendering with AMD GPU, it is necessary to
+first install the rocmtoolkit_6 package, in which case additional
+dedicated rendering binaries will be generated during the Blender
+build.
+
+After installing the built package, log out and back in again to
+initiate the ability to launch from the desktop menu
+(at Graphics/Blender).
 
 See also: graphics/blender (note, lowercase b), which repackages the
 official Blender x86_64 release binary.

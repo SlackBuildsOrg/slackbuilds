@@ -26,8 +26,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Blender
 VERSION=${VERSION:-5.0.1}
-BUILD=${BUILD:-3}
-LIBS_BUILD=${LIBS_BUILD:-1}
+BUILD=${BUILD:-4}
+LIBS_BUILD=${LIBS_BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -66,6 +66,15 @@ with_cuda=""
 [ -x /etc/profile.d/cuda-12.*.sh ] && {
   . /etc/profile.d/cuda-12.*.sh
   with_cuda="-DWITH_CYCLES_DEVICE_CUDA=ON -DWITH_CYCLES_CUDA_BINARIES=ON "
+}
+with_rocm=""
+[ -x /etc/profile.d/rocmtoolkit_6.sh ] && {
+  . /etc/profile.d/rocmtoolkit_6.sh
+  with_rocm="-DWITH_CYCLES_DEVICE_HIP=ON -DWITH_CYCLES_HIP_BINARIES=ON -DWITH_CYCLES_DEVICE_HIPRT=ON "
+}
+with_optix=""
+[ -d /usr/include/optix ] && {
+  with_optix="-DOPTIX_INCLUDE_DIR=/usr/include/optix -DWITH_CYCLES_DEVICE_OPTIX=ON "
 }
 
 set -e
@@ -106,7 +115,7 @@ find -L . \
 mkdir -p build
 cd build
   cmake .. \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS $(pkg-config --libs numa)" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_BUILD_TYPE=Release \
     -DLIBDIR:PATH=$(pwd)/../lib/linux_x64 \
@@ -114,7 +123,9 @@ cd build
     -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
     -DWITH_INSTALL_PORTABLE:BOOL=ON \
     -DWITH_BUILDINFO:BOOL=ON \
-	$with_cuda \
+    $with_cuda \
+    $with_rocm \
+    $with_optix \
 
   # From https://projects.blender.org/blender (Release: Bump to 5.0.1)
   COMMIT_HASH="a3db93c5b2"

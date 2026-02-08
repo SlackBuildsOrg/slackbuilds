@@ -1,0 +1,24 @@
+--- intervaltree-3.2.1.orig/pyproject.toml	2026-01-05 03:30:00.213908569 +0100
++++ intervaltree-3.2.1/pyproject.toml	2026-01-05 03:31:18.272187043 +0100
+@@ -1,19 +1,11 @@
+ [build-system]
+-requires = ["hatchling", "uv-dynamic-versioning"]
++requires = ["hatchling"]
+ build-backend = "hatchling.build"
+ 
+-[tool.uv-dynamic-versioning]
+-pattern = "default-unprefixed"
+-# test.pypi.org won't accept anything after a +, so metadata has to go :(
+-metadata = false
+-
+-[tool.hatch.version]
+-source = "uv-dynamic-versioning"
+-
+ [project]
+ name = "intervaltree"
+ description = 'Editable interval tree data structure for Python 2 and 3'
+-dynamic = ['version']
++version = "@VERSION@"
+ authors = [
+   { name="Chaim Leib Halbert", email="chaim.leib.halbert@gmail.com" },
+   { name="Konstantin Tretyakov" },

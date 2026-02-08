@@ -1,1 +1,6 @@
 python3-jaraco.text (Module for text manipulation)
+
+NOTE: Upstream has removed the LICENSE file from the source repo and
+      I will not be updating until that situation has been resolved.
+      See https://github.com/pypa/setuptools/issues/5001 for the 
+      reasons this decision should be reversed.

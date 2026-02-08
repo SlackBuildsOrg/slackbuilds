@@ -1,0 +1,17 @@
+diff --git a/mtm.1 b/mtm.1
+index 4c2c3f1..XXXXXXX 100644
+--- a/mtm.1
++++ b/mtm.1
+@@ -102,6 +102,11 @@ While running,
+ .It Em "l"
+ .Pq "the letter ell"
+ Redraw the screen.
++.It Em "k"
++Clear the contents of the currently focused terminal.
++This action is sometimes referred to as
++.Dq nuke
++and is useful for forcing a full redraw of the active pane.
+ .It Em "PgUp/PgDown/End"
+ Scroll the terminal up/down/to the bottom.
+ By default,
+

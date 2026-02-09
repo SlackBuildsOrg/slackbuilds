@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=zotero
 SRCNAM=Zotero
-VERSION=${VERSION:-8.0.1}
+VERSION=${VERSION:-8.0.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,7 +73,7 @@ find -L . \
 mkdir -p $PKG/{usr/bin,opt/$PRGNAM}
   cp -a * $PKG/opt/$PRGNAM
   ln -s /opt/$PRGNAM/zotero $PKG/usr/bin/$PRGNAM
-
+  
 # put the icons in the right place
 mkdir -p $PKG/usr/share/icons/hicolor/{128x128,32x32,64x64}/apps
 cp -a $PKG/opt/$PRGNAM/icons/icon128.png \
@@ -96,7 +96,6 @@ mkdir -p $PKG/usr/share/applications
 cp -a \
    $PKG/opt/$PRGNAM/$PRGNAM.desktop \
    $PKG/usr/share/applications/$PRGNAM.desktop
-chmod 644 $PKG/usr/share/applications/$PRGNAM.desktop
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

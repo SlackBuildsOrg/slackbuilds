@@ -1,0 +1,4 @@
+pgvector
+
+pgvector is an extension for postgresql. An open-source vector similarity
+search for Postgres database.

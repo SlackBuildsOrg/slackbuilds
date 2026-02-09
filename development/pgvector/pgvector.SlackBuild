@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Copyright ...
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# ------------------------------------------------------------------------------
+# Variables & Environment
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=${PRGNAM:-pgvector}
+VERSION=${VERSION:-0.8.1}
+ARCH=$(uname -m)
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+ARCNAM="v${VERSION}.tar.gz"
+WORK=$TMP/work-$PRGNAM
+
+# ------------------------------------------------------------------------------
+# Initialize
+rm -rf $WORK $PKG
+mkdir -p $WORK $PKG
+
+# ------------------------------------------------------------------------------
+# Unpack archive
+cd $WORK
+tar -xzf $CWD/$ARCNAM
+
+# ------------------------------------------------------------------------------
+# Build archive source
+cd $WORK/${PRGNAM}-${VERSION}
+make
+
+# ------------------------------------------------------------------------------
+# Assemble package
+cd $WORK/${PRGNAM}-${VERSION}
+make DESTDIR=$PKG install
+
+# ------------------------------------------------------------------------------
+# Create Slackware package
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

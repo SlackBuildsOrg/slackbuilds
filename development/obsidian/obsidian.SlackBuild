@@ -2,8 +2,8 @@
 
 # Slackware build script for Obsidian
 
-# Copyright 2025  Matt Egger, Philadelphia, PA, United States
 # Copyright 2024  Dimitar Nikov, Alfreton, United Kingdom
+# Copyright 2025-2026  Matt Egger, Philadelphia, PA, United States
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=obsidian
-VERSION=${VERSION:-1.11.5}
+VERSION=${VERSION:-1.11.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

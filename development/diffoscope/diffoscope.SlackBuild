@@ -2,8 +2,8 @@
 
 # Slackware build script for diffoscope
 
-# Copyright 2024-2026 Matt Egger, Philadelphia, PA, USA
 # Copyright 2016 David Spencer, Baildon, West Yorkshire, U.K.
+# Copyright 2024-2026 Matt Egger, Philadelphia, PA, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=diffoscope
-VERSION=${VERSION:-311}
+VERSION=${VERSION:-312}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -1,3 +1,6 @@
 Tenacity is an Apache 2.0 licensed general-purpose retrying library,
 written in Python, to simplify the task of adding retry behavior to
 just about anything.
+
+python3-tenacity 9.1.2 is the last available version for Slackware 15.0.
+Later versions require Python >= 3.10.

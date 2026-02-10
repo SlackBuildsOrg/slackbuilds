@@ -23,25 +23,6 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
-# SlackBuild script for kubectl
-# ===========================
-# By:          r1w1s1 (https://fosstodon.org/@r1w1s1)
-# For:         kubectl
-# Descr:       kubectl is a command-line tool for controlling Kubernetes clusters.
-# URL:         https://kubernetes.io/
-# Changelog:
-# v1.32.1:     10/Feb/2025 by r1w1s1 - Initial build from sources.
-# v1.32.3:     18/Mar/2025 by r1w1s1 - Update version.
-# v1.32.4:     23/Apr/2025 by r1w1s1 - Update version.
-# v1.33.0:     13/May/2025 by r1w1s1 - Update version.
-# v1.33.1:     15/May/2025 by r1w1s1 - Update version.
-# v1.33.2:     18/Jun/2025 by r1w1s1 - Update version.
-# v1.33.3:     15/Jul/2025 by r1w1s1 - Update version.
-# v1.33.4:     13/Ago/2025 by r1w1s1 - Update version.
-# v1.34.1:     10/Sep/2025 by r1w1s1 - Update version.
-# v1.34.2:     12/Nov/2025 by r1w1s1 - Update version.
-# v1.34.3:     09/Dec/2025 by r1w1s1 - Update version.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
@@ -51,7 +32,7 @@ IFS=$'\n\t'
 
 PKGBASE=kubernetes
 PRGNAM=kubectl
-VERSION=${VERSION:-1.34.3}
+VERSION=${VERSION:-1.34.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

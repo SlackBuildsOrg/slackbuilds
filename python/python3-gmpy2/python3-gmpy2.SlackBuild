@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-gmpy2
 SRCNAM=gmpy2
-VERSION=${VERSION:-2.2.2}
+VERSION=${VERSION:-2.3.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -37,3 +37,5 @@ the Quick Plugin sparklines option) wifi (for wifi plugin) zeroconf
 NOTE: When launching glances from a terminal with a bright background,
 the option '--theme-white' is recommended. More options are documented
 in the man page and in the file glances.conf.
+
+NOTE: 4.4.1 is the last version to support python-3.9

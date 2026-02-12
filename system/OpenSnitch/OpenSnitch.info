@@ -45,6 +45,6 @@ MD5SUM="59a4e5ea0306c9b74f10a62db954c2bb \
         43665ed08f7a47e5d9340886f5835005"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="protoc-gen-go-grpc python3-grpcio python3-pyinotify python3-slugify"
+REQUIRES="protoc-gen-go-grpc python3-grpcio python3-pyinotify python3-slugify python3-typing-extensions"
 MAINTAINER="Isaac Yu"
 EMAIL="isaacyu@protonmail.com"

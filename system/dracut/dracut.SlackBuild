@@ -25,7 +25,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dracut
 SRCNAM=dracut-ng
-VERSION=${VERSION:-109}
+VERSION=${VERSION:-110}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -95,8 +95,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static \
   --build=$ARCH-slackware-linux || exit 1
 
-make
-make install DESTDIR=$PKG || exit 1
+make DRACUT_FULL_VERSION="$VERSION-$BUILD$TAG"
+make DRACUT_FULL_VERSION="$VERSION-$BUILD$TAG" install DESTDIR=$PKG || exit 1
 
 # Include elogind-uaccess-command to allow processing uaccess rules correctly:
 cat $CWD/elogind.conf | sed "s#/lib/#/lib${LIBDIRSUFFIX}/#g" > $PKG/etc/dracut.conf.d/elogind.conf.new

@@ -3,6 +3,7 @@
 # Slackware build script for PostgreSQL
 #
 # Copyright 2007-2018 Adis Nezirovic <adis_at_linux.org.ba>
+# Copyright 2025-2026 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -30,7 +31,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=postgresql
-VERSION=${VERSION:-14.20}
+VERSION=${VERSION:-14.21}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

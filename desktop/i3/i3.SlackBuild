@@ -26,6 +26,9 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260213 bkw: Modified by SlackBuilds.org: remove 'make test' for the
+# perl module, since it only works *in* an i3 session.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=i3
@@ -135,9 +138,10 @@ perl Makefile.PL \
   INSTALLVENDORMAN3DIR=/usr/man/man3
 make
 
-if [ -n "$DISPLAY" ]; then
-  make test
-fi
+# 20260213 bkw: note: do not run "make test" for the perl module,
+# because it will always fail unless it's run under an i3 session
+# (i3 would have to already be installed and in use as the WM, for it
+# to work).
 
 make install DESTDIR=$PKG
 

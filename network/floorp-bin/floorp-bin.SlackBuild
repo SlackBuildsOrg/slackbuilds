@@ -2,7 +2,7 @@
 
 # Slackware build script for floorp-bin
 
-# Copyright 2025 Dimitris Zlatanidis Orestiada, Greece
+# Copyright 2025-2026 Dimitris Zlatanidis Orestiada, Greece
 # Copyright 2024 Hunter Ellett <hunter2k1@disroot.org>
 # All rights reserved.
 #
@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=floorp-bin
 SRCNAM=floorp
-VERSION=${VERSION:-12.10.2}
+VERSION=${VERSION:-12.10.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

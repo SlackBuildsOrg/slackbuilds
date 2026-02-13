@@ -1,14 +1,10 @@
 PRGNAM="mono"
-VERSION="6.12.0.205"
+VERSION="6.14.1"
 HOMEPAGE="https://www.mono-project.com/"
-DOWNLOAD="https://download.mono-project.com/sources/mono/preview/mono-6.12.0.205.tar.xz \
-          http://sourceforge.net/projects/svoges-sbo/files/mono/mono-4.4.2.11-i586.tar.bz2"
-MD5SUM="413a241298161da75f8a34a0791cdd67 \
-        3f974dba179a452bdcd94659ddc47e33"
-DOWNLOAD_x86_64="https://download.mono-project.com/sources/mono/preview/mono-6.12.0.205.tar.xz \
-                 http://sourceforge.net/projects/svoges-sbo/files/mono/mono-4.4.2.11-x86_64.tar.bz2"
-MD5SUM_x86_64="413a241298161da75f8a34a0791cdd67 \
-               daba2c08651c68566ee1214e03d5a080"
+DOWNLOAD="https://dl.winehq.org/mono/sources/mono/mono-6.14.1.tar.xz"
+MD5SUM="8927a28fe883e81fec9a1abef9150c75"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
 REQUIRES="libgdiplus"
-MAINTAINER="Steven Voges"
-EMAIL="svoges.sbo@gmail.com"
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

@@ -360,20 +360,20 @@ export UNO_PATH="$sd_prog"
 export URE_BOOTSTRAP=vnd.sun.star.pathname:$sd_prog/fundamentalrc
 export PATH=\${PATH}:$sd_prog
 EOF
-cat <<EOF >"$PKG"/etc/profile.d/libreoffice.csh
+cat <<EOF > $PKG/etc/profile.d/libreoffice.csh
 setenv UNO_PATH "$sd_prog"
 setenv URE_BOOTSTRAP vnd.sun.star.pathname:sd_prog/fundamentalrc
 setenv PATH \${PATH}:$sd_prog
 EOF
-chmod 0755 "$PKG"/etc/profile.d/libreoffice.{csh,sh}
+chmod 0755 $PKG/etc/profile.d/libreoffice.{csh,sh}
 
-mkdir -p "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"
-cp -a COPYING* README* "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"
-cat "$CWD"/"$PRGNAM".SlackBuild > "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"/"$PRGNAM".SlackBuild
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a COPYING* README* $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p "$PKG"/install
-cat "$CWD"/slack-desc > "$PKG"/install/slack-desc
-cat "$CWD"/doinst.sh > "$PKG"/install/doinst.sh
+cat $CWD/slack-desc > "$PKG"/install/slack-desc
+cat $CWD/doinst.sh > "$PKG"/install/doinst.sh
 
-cd "$PKG"
-/sbin/makepkg -l y -c n "$OUTPUT"/"$PRGNAM"-"$VERSION"-"$ARCH"-"$BUILD""$TAG"."$PKGTYPE"
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

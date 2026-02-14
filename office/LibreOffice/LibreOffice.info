@@ -4,7 +4,7 @@ HOMEPAGE="https://www.libreoffice.org"
 DOWNLOAD="https://download.documentfoundation.org/libreoffice/src/26.2.0/libreoffice-26.2.0.3.tar.xz \
           https://sourceforge.net/projects/slackbuildsdirectlinks/files/LibreOffice/libreoffice-26.2.0.3-srcs.tar.xz"
 MD5SUM="39bb3c455f49034d68507a2831552ce4 \
-        706b2b2a76238d33e9dd6b21e7e1f66e"
+        75ece8772159b0f8d8fff41607f571fe"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="zulu-openjdk17 apache-ant perl-Archive-Zip libcdr libfreehand liblangtag libmspub libzmf python3-meson-opt"

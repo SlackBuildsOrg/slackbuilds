@@ -82,12 +82,17 @@ if [ -e "$CWD/config.h" ]; then
   cp -v $CWD/config.h config.def.h
 fi
 
+# Now apply any other patches the user might have added. Have to
+# do this *after* applying custom config.h, so any changes to
+# config.h here won't get overwritten.
+PATCHES=""
 if [ -d "$CWD/patches" ]; then
-  for i in "$CWD"/patches/*.patch; do
-    [ -e "$i" ] || continue
-    echo "Applying patch $(basename "$i")"
+  for i in $CWD/patches/*.patch; do
+    [ ! -f "$i" ] && continue
+    basename_i="$(basename $i)"
+    echo "=== applying patch $basename_i"
     patch -p1 < "$i" || exit 1
-    PATCHES="$PATCHES $(basename "$i")"
+    PATCHES+=" $basename_i"
   done
 fi
 

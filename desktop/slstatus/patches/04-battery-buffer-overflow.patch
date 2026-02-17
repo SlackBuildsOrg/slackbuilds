@@ -1,0 +1,32 @@
+commit 98769dfed7266b5a9959162e03bee1ddfaf5ecb4
+Author: drkhsh <me@drkhsh.at>
+Date:   Thu Feb 12 22:52:21 2026 +0100
+
+    fix buffer overflow in battery state parsing
+    
+    "Not charging" is 12 characters; %12[a-zA-Z ] reads up to 12 chars
+    plus a NUL terminator (13 bytes) into a 12-byte buffer. Increase
+    state buffer to 13 in both battery_state and battery_remaining.
+
+diff --git a/components/battery.c b/components/battery.c
+index 1c753f9..f2dc393 100644
+--- a/components/battery.c
++++ b/components/battery.c
+@@ -62,7 +62,7 @@
+ 			{ "Not charging", "o" },
+ 		};
+ 		size_t i;
+-		char path[PATH_MAX], state[12];
++		char path[PATH_MAX], state[13];
+ 
+ 		if (esnprintf(path, sizeof(path), POWER_SUPPLY_STATUS, bat) < 0)
+ 			return NULL;
+@@ -81,7 +81,7 @@
+ 	{
+ 		uintmax_t charge_now, current_now, m, h;
+ 		double timeleft;
+-		char path[PATH_MAX], state[12];
++		char path[PATH_MAX], state[13];
+ 
+ 		if (esnprintf(path, sizeof(path), POWER_SUPPLY_STATUS, bat) < 0)
+ 			return NULL;

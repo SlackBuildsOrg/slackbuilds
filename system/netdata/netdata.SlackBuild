@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=netdata
-VERSION=${VERSION:-2.8.5}
+VERSION=${VERSION:-2.9.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -68,12 +68,19 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -94,6 +101,13 @@ find -L . \
 # logrotate needs to su to the netdata user and group before rotating logs:
 sed -e s,@NETDATA_USER@,$NETDATA_USER, -e s,@NETDATA_GROUP@,$NETDATA_GROUP, \
   $CWD/logrotate-use-netdata-user-and-group.diff | patch -p1 --verbose
+
+export PATH="/opt/rust/bin:$PATH"
+if [ -z "$LD_LIBRARY_PATH" ]; then
+  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX"
+else
+  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
+fi
 
 # Somehow abseil-cpp that we have in SBo or current is too new
 # So we will use the bundled protobuf in order to build for now

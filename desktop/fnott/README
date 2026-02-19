@@ -1,0 +1,19 @@
+Fnott is a keyboard driven and lightweight notification daemon for
+wlroots-based Wayland compositors.
+
+It implements (parts of) the Desktop Notifications Specification.
+
+Supported features:
+* Summary
+* Body
+* Actions (requires a dmenu-like utility to display and let user select
+  action)
+* Urgency
+* Icons
+  * PNGs (using libpng)
+  * SVGs (using bundled nanosvg)
+* Markup
+* Timeout
+
+Copy the example fnott.ini to ${HOME}/.config/fnott/fnott.ini and edit
+to your liking.

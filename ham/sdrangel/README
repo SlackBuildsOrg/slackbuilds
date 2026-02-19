@@ -29,8 +29,9 @@ is to provide a Software Defined Radio platform that is committed to:
   moreover mission critical usage.
 
 Depending to your SDR hardware you may want to install some or all:
-libairspy, libairspyhf, libbladeRF, libhackrf, liniio, libmirisdr,
-SDRplay, libperseus, librtlsdr, uhd ...
+libairspy, libmirisdr, sdrplay, librtlsdr, liniio, libbladeRF,
+libhackrf, LimeSuite, libairspyhf, libperseus, uhd, xtrx-images,
+SoapySDR, SoapyRemote
 (for a complete list, see https://github.com/f4exb/sdrangel/wiki/)
 (not all available at slackbuilds.org)
 

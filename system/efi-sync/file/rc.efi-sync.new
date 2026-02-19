@@ -1,0 +1,72 @@
+#!/bin/sh
+
+# Time to wait for shutdown before kill service.
+SHUTDOWN_WAIT=60
+
+efi_start() {
+  echo -n "Starting EFI Sync: "
+
+  daemon \
+    --name=efi-sync --pidfiles=/run \
+    --output=/var/log/efi-sync.log \
+    -- efi-sync watch
+
+  sleep 0.5s
+
+  if efi_status | grep "is running" >/dev/null ; then
+    echo "ok"
+  else
+    echo "Failed"
+  fi
+}
+
+efi_stop() {
+  echo -n "Stopping EFI Sync: "
+
+  if efi_status | grep "is running" >/dev/null ; then
+  	/usr/bin/daemon --name=efi-sync --pidfiles=/run --stop
+  else
+    echo "Not running"
+    return
+  fi
+
+  for i in $(seq 1 ${SHUTDOWN_WAIT}) ; do
+    if efi_status | grep "is not running" >/dev/null ; then
+      break
+    else
+      sleep 1s
+    fi
+  done
+
+  if efi_status | grep "is not running" >/dev/null ; then
+    echo "Stopped"
+  else
+    /usr/bin/daemon --name=efi-sync --pidfiles=/run --signal=kill
+    echo "Killed"
+  fi
+}
+
+efi_status() {
+  echo -n "EFI Sync is "
+
+  if /usr/bin/daemon --name=efi-sync --pidfiles=/run --running ; then
+    echo "running"
+  else
+    echo "not running"
+  fi
+}
+
+case "$1" in
+start)
+	efi_start
+	;;
+stop)
+	efi_stop
+	;;
+status)
+	efi_status
+	;;
+*)
+	echo $"Usage: $0 {start|stop|status}"
+	exit 1
+esac

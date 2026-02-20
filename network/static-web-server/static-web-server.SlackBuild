@@ -23,22 +23,11 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 #
-# SlackBuild script for static-web-server
-# =======================================
-# By:          r1w1s1 (https://snac.bsd.cafe/r1w1s1)
-# For:         static-web-server
-# Descr:       A fast and secure static web server written in Rust
-# URL:         https://github.com/static-web-server/static-web-server
-# Changelog:
-# v2.38.1:     15/sep/2025 by r1w1s1 - Initial build.
-# v2.39.0:     27/sep/2025 by r1w1s1 - update
-# v2.40.0:     30/nov/2025 by r1w1s1 - update
-# v2.40.1:     08/dec/2025 by r1w1s1 - update
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=static-web-server
-VERSION=${VERSION:-2.40.1}
+VERSION=${VERSION:-2.41.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

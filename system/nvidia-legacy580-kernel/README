@@ -6,7 +6,9 @@ start the script setting the KERNEL variable as in
     KERNEL=4.6.3 ./nvidia-kernel.SlackBuild
 
 This script now includes the option to build the open kernel module
-instead of the default proprietary module.  To build the open module,
+instead of the default proprietary module.  However, this version of
+the open modules will not build on the 5.15.x kernel, so the script
+forces the proprietary build.  To build the open module on -current,
 pass "OPEN=yes" to the script.  (See notes below.)
 
 NOTE REGARDING CURRENT AND DRM: Because of all the changes to the way

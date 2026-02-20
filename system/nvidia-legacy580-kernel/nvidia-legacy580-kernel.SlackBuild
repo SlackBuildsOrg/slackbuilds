@@ -29,13 +29,21 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-legacy580-kernel
-VERSION=${VERSION:-580.119.02}
+VERSION=${VERSION:-580.126.18}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 KERNEL=${KERNEL:-$(uname -r)}
 KERNELPATH=${KERNELPATH:-/lib/modules/${KERNEL}/build}
+
+# The nvidia-uvm open module will not build on 5.15.x,
+# so we must force the proprietary build (no problems in -current):
+if [ "${MAJVER:-$(echo $KERNEL | cut -c 1-4)}" = "5.15" ]; then
+  OPEN=no
+  echo "5.15 kernel detected!  Forcing PROPRIETARY build:"
+  sleep 1
+fi
 
 if [ "${OPEN:-no}" = "yes" ]; then
   OPEN1="-open"

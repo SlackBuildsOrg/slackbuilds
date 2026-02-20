@@ -1,9 +1,9 @@
 PRGNAM="fop"
-VERSION="2.10"
+VERSION="2.11"
 HOMEPAGE="https://xmlgraphics.apache.org/fop/"
-DOWNLOAD="https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-2.10-bin.tar.gz \
+DOWNLOAD="https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-2.11-bin.tar.gz \
           https://downloads.sourceforge.net/offo/2.2/offo-hyphenation-compiled.zip"
-MD5SUM="ee04006682c0f9431ccb7472180878ae \
+MD5SUM="084d97d24978b9a65b4120e29cf51ac9 \
         5ec09cce6d8a09bc53a6441790021ecf"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

@@ -14,7 +14,7 @@ if desired, do:
   COMPAT32="yes" ./nvidia-driver.SlackBuild
 
 This script now gives the option of installing the nvidia-persistenced
-daemon (recommended if you are using the open kernel module).
+daemon (HIGHLY recommended if you are using the open kernel module).
 For details, see README.nvidia-persistenced.
 
 BIG FAT NOTE: if nvidia-kernel was built with DRM=no, DO NOT build

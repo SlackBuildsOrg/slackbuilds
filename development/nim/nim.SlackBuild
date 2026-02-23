@@ -2,7 +2,7 @@
 
 # Slackware build script for nim
 
-# Copyright 2024-2025 by Nick Smallbone <nick@smallbone.se>
+# Copyright 2024-2026 by Nick Smallbone <nick@smallbone.se>
 # Copyright 2022 by Ruben Schuller <sb@rbn.im>
 # Maintained 2020-2021 by Benjamin Trigona-Harany <slackbuilds@jaxartes.net>
 # All rights reserved.
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nim
-VERSION=${VERSION:-2.2.6}
+VERSION=${VERSION:-2.2.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

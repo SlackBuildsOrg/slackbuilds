@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+          |-----handy-ruler------------------------------------------------------|
+jack_mixer: jack_mixer (JACK Audio Mixer)
+jack_mixer:
+jack_mixer: jack_mixer is a GTK JACK audio mixer app with a look similar
+jack_mixer: to its hardware counterpart. It has lot of useful features,
+jack_mixer: apart from being able to mix multiple JACK audio streams.
+jack_mixer:
+jack_mixer:
+jack_mixer:
+jack_mixer:
+jack_mixer:
+jack_mixer:

@@ -2,7 +2,7 @@
 
 # Slackware build script for protonmail-bridge
 
-# Copyright 2018-2025 Erich Ritz, Jenks, Oklahoma, USA
+# Copyright 2018-2026 Erich Ritz, Jenks, Oklahoma, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=protonmail-bridge
-VERSION=${VERSION:-3.21.2}
+VERSION=${VERSION:-3.22.0}
 DEBVERSION=${DEBVERSION:--1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

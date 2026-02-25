@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=par2cmdline
-VERSION=${VERSION:-1.0.0}
+VERSION=${VERSION:-1.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,7 +84,7 @@ chmod 644 ChangeLog INSTALL NEWS
 
 # Generate 'configure'.
 aclocal
-automake --add-missing --foreign
+automake --add-missing
 autoconf
 
 CFLAGS="$SLKCFLAGS" \
@@ -102,25 +102,11 @@ make
 make check
 make install DESTDIR=$PKG
 
-# Replace absolute symlinks with relative ones.
-cd $PKG/usr/bin
-rm -f par2create; ln -s par2 par2create
-rm -f par2repair; ln -s par2 par2repair
-rm -f par2verify; ln -s par2 par2verify
-cd -
-
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
-# Symlink manpage for the command aliases.
-cd $PKG/usr/man/man1
-ln -s par2.1.gz par2create.1.gz
-ln -s par2.1.gz par2repair.1.gz
-ln -s par2.1.gz par2verify.1.gz
-cd -
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a AUTHORS COPYING ChangeLog PORTING README.md ROADMAP \

@@ -1,12 +1,12 @@
 PRGNAM="onlyoffice-desktopeditors"
-VERSION="9.2.1"
+VERSION="9.3.0"
 HOMEPAGE="https://www.onlyoffice.com/apps.aspx"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/ONLYOFFICE/DesktopEditors/releases/download/v9.2.1/onlyoffice-desktopeditors_amd64.deb \
-                 https://github.com/ONLYOFFICE/DesktopEditors/releases/download/v9.2.1/onlyoffice-desktopeditors-help_all.deb"
-MD5SUM_x86_64="4cc5f965981be8fd0e23336daee640ea \
-               33b6de998b932a424ceca9061ad5a43d"
+DOWNLOAD_x86_64="https://github.com/ONLYOFFICE/DesktopEditors/releases/download/v9.3.0/onlyoffice-desktopeditors_amd64.deb \
+                 https://github.com/ONLYOFFICE/DesktopEditors/releases/download/v9.3.0/onlyoffice-desktopeditors-help_all.deb"
+MD5SUM_x86_64="f0c0f5ab8cfb48d8c542187db8ae54a2 \
+               b7d664f0114d2140b4007e66afa06134"
 REQUIRES=""
 MAINTAINER="Antonio Leal"
 EMAIL="antonioleal@yahoo.com"

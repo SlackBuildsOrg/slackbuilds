@@ -2,6 +2,7 @@
 
 # Slackware build script for element-desktop-bin
 #
+# Copyright 2025-2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # Copyright 2022 marav, Paris, FR
 # All rights reserved.
 #
@@ -26,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=element-desktop-bin
 DEBNAM=${PRGNAM%-bin}
-VERSION=${VERSION:-1.12.10}
+VERSION=${VERSION:-1.12.11}
 SRCVERSION=$( echo $VERSION | tr _ - )
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

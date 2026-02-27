@@ -2,10 +2,11 @@
 
 # Slackware build script for electron
 
-# Copyright 2017 Dhaby Xiloj <slack.dhabyx@gmail.com>
+# Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2025 Ioannis Anagnostakis Greece
 # Copyright 2022-2024 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2017 Dhaby Xiloj <slack.dhabyx@gmail.com>
 # All rights reserved.
-# 2025 Ioannis Anagnostakis Greece
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:

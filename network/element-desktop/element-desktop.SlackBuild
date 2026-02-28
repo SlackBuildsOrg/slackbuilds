@@ -2,7 +2,7 @@
 
 # Slackware build script for element-desktop
 
-# Copyright 2025 Vladislav 'fsLeg' Borisov, Moscow, Russia
+# Copyright 2025-2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=element-desktop
 WEBNAM=element-web
-VERSION=${VERSION:-1.12.10}
+VERSION=${VERSION:-1.12.11}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,9 +79,11 @@ export YARN_YARN_OFFLINE_MIRROR=$BASE_TMP_DIR/vendor
 export YARN_CACHE_FOLDER=$BASE_TMP_DIR/cache
 export npm_config_cache=$YARN_CACHE_FOLDER
 export npm_config_nodedir=/usr
+export npm_config_offline=true
 export COREPACK_HOME=$BASE_TMP_DIR/corepack
 export COREPACK_ENABLE_NETWORK=0
 export XDG_CACHE_HOME=$BASE_TMP_DIR/electron-cache
+export XDG_CONFIG_HOME="$BASE_TMP_DIR"
 export CARGO_HOME=$BASE_TMP_DIR/cargo
 export CFLAGS="$SLKCFLAGS"
 export CXXFLAGS="$SLKCFLAGS"
@@ -102,19 +104,17 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-sed -i 's|yarn |yarn --offline |g' package.json
+corepack install --global --cache-only $COREPACK_HOME/pm.tgz
+mkdir -p $COREPACK_HOME/bin
+corepack enable --install-directory $COREPACK_HOME/bin
+export PATH=$COREPACK_HOME/bin:$PATH
+pnpm config set store-dir "$XDG_CONFIG_HOME/pnpm-store"
 
-corepack install --global --cache-only $COREPACK_HOME/yarn.tgz
-export PATH=$COREPACK_HOME/v1/yarn/$(corepack yarn --version)/bin:$PATH
-
-yarn install --frozen-lockfile \
-             --ignore-engines \
-             --no-fund \
-             --update-checksums \
+pnpm install --frozen-lockfile \
              --offline
 VERSION=$VERSION \
-  yarn --offline build
-yarn --offline cache clean
+NX_TUI=false \
+  pnpm run build
 
 cd ../$PRGNAM-$VERSION
 chown -R root:root .
@@ -126,22 +126,20 @@ find -L . \
 
 # use vendored sources and prevent warnings
 patch -p1 < $CWD/yarn-offline.patch
-sed -i 's|yarn |yarn --offline |g' package.json .hak/hakModules/matrix-seshat/package.json
-sed -i 's|cargo build |cargo build --frozen |' .hak/hakModules/matrix-seshat/package.json
+sed -i 's|yarn |yarn --offline |g
+        s|cargo build |cargo build --frozen |' \
+        .hak/hakModules/matrix-seshat/package.json
 
 mkdir -p deploys
 mv ../$WEBNAM-$VERSION/webapp deploys/element-v$VERSION
-yarn install --frozen-lockfile \
-             --ignore-engines \
-             --no-fund \
-             --update-checksums \
-             --offline || true
-yarn --offline run fetch --noverify --cfgdir ""
+pnpm install --frozen-lockfile \
+             --offline
+pnpm run fetch --noverify --cfgdir ""
 CRATE_CC_NO_DEFAULTS=1 \
 RUSTFLAGS="-C target-cpu=native" \
-  yarn --offline run build:native
+  pnpm run build:native
 rm -r .hak/hakModules/matrix-seshat/{.cargo,node_modules,target,vendor}
-yarn --offline run build --publish never
+pnpm run build --publish never
 
 mkdir -p $PKG/usr/{bin,lib$LIBDIRSUFFIX,share/applications}
 mv dist/linux-unpacked $PKG/usr/lib$LIBDIRSUFFIX/element-desktop

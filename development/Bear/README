@@ -1,3 +1,6 @@
+---------
+Build EAR
+---------
 Bear is a tool that generates a compilation database for clang tooling.
 
 The JSON compilation database is used in the clang project to provide
@@ -7,3 +10,45 @@ is easy to re-run the compilation with alternate programs.
 Some build system natively supports the generation of JSON compilation
 database. For projects which does not use such build tool, Bear
 generates the JSON file during the build process.
+
+------------------
+Vendoring yourself
+------------------
+If you want to create a vendored archive yourself, you can use
+the following commands as pointers (adjust the version or lib
+dir based on your setup).
+............................................................
+export PATH="/opt/rust/bin:$PATH"
+if [ -z "$LD_LIBRARY_PATH" ]
+then
+  export LD_LIBRARY_PATH="/opt/rust/lib64"
+else
+  export LD_LIBRARY_PATH="/opt/rust/lib64:$LD_LIBRARY_PATH"
+fi
+
+tar xf Bear-4.0.3.tar.gz
+cd Bear-4.0.3/
+
+cat << EOF >> Cargo.toml
+[workspace.metadata.vendor-filter]
+platforms = ["x86_64-unknown-linux-gnu",
+             "i686-unknown-linux-gnu",
+             "aarch64-unknown-linux-gnu",
+             "arm-unknown-linux-gnueabihf"]
+all-features = true
+EOF
+
+mkdir -p .cargo/
+if command -v cargo-vendor-filterer > /dev/null 2>&1
+then
+  cargo-vendor-filterer | tee -a .cargo/config.toml
+else
+  cargo vendor | tee -a .cargo/config.toml
+fi
+
+cd ..
+tar -cJf Bear-4.0.3-vendored-sources.tar.xz \
+    Bear-4.0.3/{vendor,.cargo}
+............................................................
+These commands are inspired by fourtysixandtwo's script of
+cargo-mkvendored.sh in cargo-vendor-filterer package.

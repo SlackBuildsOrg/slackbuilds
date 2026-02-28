@@ -48,3 +48,5 @@ environment by running the terminal command:
 From version 6.18 (build 2), the web based UI is available
 separately via the incus-ui package (64bit only).
 
+With the skopeo prerequisite, incus is capable of consuming docker
+images (or any images confoming to OCI format).

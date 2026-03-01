@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Slackware build script for untldr
+# Slackware build script for tinytldr
 
 # Copyright 2025 Antonio Leal <antonioleal@yahoo.com>
 # Copyright 2022-2023 Ivan Kovmir <i@kovmir.eu>

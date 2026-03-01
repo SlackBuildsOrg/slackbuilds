@@ -7,7 +7,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gargoyle
-VERSION=${VERSION:-2023.1}
+VERSION=${VERSION:-2026.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -96,6 +96,9 @@ sed -e "/^Icon/s,=,=/usr/share/pixmaps/," \
     -e "/^Exec/s,=,=/usr/games/," \
     < garglk/gargoyle.desktop \
     > $PKG/usr/share/applications/gargoyle.desktop
+
+# Remove empty /usr/bin dir
+rmdir $PKG/usr/bin
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

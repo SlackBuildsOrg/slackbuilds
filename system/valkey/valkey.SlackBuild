@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=valkey
-VERSION=${VERSION:-8.1.4}
+VERSION=${VERSION:-9.0.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,7 +83,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # Use our CFLAGS.
-sed -i "s|-O3||" deps/Makefile deps/hiredis/Makefile
+sed -i "s|-O3||" deps/Makefile
 
 # No ./configure necessary.
 #

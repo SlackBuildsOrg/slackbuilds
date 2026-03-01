@@ -24,6 +24,7 @@
 
 PRGNAM=space-invaders
 TARGET=~/.local/bin
+mkdir -p $TARGET
 
 if [ ! -f "$TARGET/$PRGNAM/SpaceInvaders" ]; then
     cd $TARGET

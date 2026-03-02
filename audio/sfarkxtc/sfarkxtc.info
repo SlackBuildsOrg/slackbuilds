@@ -1,10 +1,12 @@
 PRGNAM="sfarkxtc"
-VERSION="20070326"
+VERSION="20181208"
 HOMEPAGE="https://github.com/raboof/sfarkxtc"
-DOWNLOAD="http://ponce.cc/slackware/sources/repo/sfarkxtc_lx86.tar.gz"
-MD5SUM="3350e57ed3d09e9477d125dfc23e21f1"
-DOWNLOAD_x86_64="UNSUPPORTED"
+DOWNLOAD="https://github.com/raboof/sfarkxtc/archive/4ed577d5779a68422b816f96a40e8e4abe65894a/sfarkxtc-4ed577d5779a68422b816f96a40e8e4abe65894a.tar.gz \
+          https://github.com/raboof/sfArkLib/archive/c710d851a9b9c1759ac8597e12f55ea290a3f007/sfArkLib-c710d851a9b9c1759ac8597e12f55ea290a3f007.tar.gz"
+MD5SUM="9bf42a54242d50ce214a5af0837486ff \
+        5ebbb5d3d7e16d4d8f7b2dd539384171"
+DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""
-MAINTAINER="Ben Collver"
-EMAIL="bencollver@gmail.com"
+MAINTAINER="B. Watson"
+EMAIL="urchlay@slackware.uk"

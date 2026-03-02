@@ -1,3 +1,6 @@
-sfarkxtc is a console utility to extract sfark files on Linux.  sfArk
-is a lossless audio compression format optimized for SoundFont files.
-sfArk is free for non-commercial use. 
+sfarkxtc (extract sfArk v2 files)
+
+sfarkxtc is a console utility to convert soundfonts in the legacy
+sfArk v2 file format to sf2. sfArk is a lossless audio compression
+format optimized for SoundFont files. Only v2 sfArk archives are
+supported.

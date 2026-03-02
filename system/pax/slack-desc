@@ -12,7 +12,7 @@ pax: Pax is the POSIX standard archive tool.
 pax: It supports the two most common forms of standard
 pax: archive (backup) files - CPIO and TAR.
 pax:
-pax: Homepage: http://wiki.bash-hackers.org/howto/pax
+pax: Homepage: http://www.mirbsd.org/pax.htm
 pax:
 pax:
 pax:

@@ -36,11 +36,14 @@
 # 20251220 Patrice Coni: updated for v3.0.7. Still no new abiword-docs
 # release.
 
+# 20260228 Patrice Coni: updated for v3.0.8. Still no new abiword-docs
+# release.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=abiword
 SRCNAM=AbiWord-release
-VERSION=${VERSION:-3.0.7}
+VERSION=${VERSION:-3.0.8}
 DOCSVER=3.0.2     # version of abiword-docs
 DOCTAR=3.0.1      # sigh, the tarball contains abiword-docs-3.0.1 still
                   # (DOCTAR WHO?)

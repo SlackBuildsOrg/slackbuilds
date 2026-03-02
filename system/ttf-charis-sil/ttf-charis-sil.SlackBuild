@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# @(#) ttf-charis-sil.SlackBuild 1.4@(#)
+# @(#) ttf-charis-sil.SlackBuild 1.5@(#)
 
 # Slackware build script for ttf-charis-sil
 
-# Copyright 2024 pomfland
+# Copyright 2024-2026 pomfland
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,12 +27,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ttf-charis-sil
-VERSION=${VERSION:-6.200}
+VERSION=${VERSION:-7.000}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-SRCNAM=CharisSIL
+SRCNAM=Charis
 
 ARCH=noarch
 

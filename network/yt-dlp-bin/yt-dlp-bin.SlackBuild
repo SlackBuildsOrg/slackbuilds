@@ -7,6 +7,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260306 bkw: updated for v2026.03.03.
 # 20260207 bkw: updated for v2026.02.04.
 # 20260131 bkw: updated for v2026.01.29.
 # 20251209 bkw: updated for v2025.12.08.
@@ -35,7 +36,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=yt-dlp-bin
 SRCNAM=${PRGNAM%-bin}
-VERSION=${VERSION:-2026.02.04}
+VERSION=${VERSION:-2026.03.03}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

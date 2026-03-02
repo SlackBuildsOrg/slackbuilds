@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                           |-----handy-ruler------------------------------------------------------|
+fonts-atkinson-hyperlegible: fonts-atkinson-hyperlegible (Atkinson Hyperlegible font)
+fonts-atkinson-hyperlegible:
+fonts-atkinson-hyperlegible: A typeface with improved readability and legibility for low vision
+fonts-atkinson-hyperlegible: readers.
+fonts-atkinson-hyperlegible:
+fonts-atkinson-hyperlegible: Named after Braille Institute founder, J. Robert Atkinson, the
+fonts-atkinson-hyperlegible: Atkinson Hyperlegible font focuses on letterform distinction.
+fonts-atkinson-hyperlegible:
+fonts-atkinson-hyperlegible: This package contains the TTF, OTF and WOFF2 (web) fonts.
+fonts-atkinson-hyperlegible:
+fonts-atkinson-hyperlegible: Homepage: https://brailleinstitute.org/freefont

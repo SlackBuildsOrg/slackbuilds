@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+      |-----handy-ruler------------------------------------------------------|
+gr-gsm: gr-gsm (Gnuradio blocks and tools for receiving GSM transmissions)
+gr-gsm:
+gr-gsm: The gr-gsm project is based on the gsm-receiver written by Piotr
+gr-gsm: Krysik (also the main author of gr-gsm) for the Airprobe project.
+gr-gsm:
+gr-gsm: The aim is to provide set of tools for receiving information
+gr-gsm: transmitted by GSM equipment/devices.
+gr-gsm:
+gr-gsm:
+gr-gsm:
+gr-gsm:

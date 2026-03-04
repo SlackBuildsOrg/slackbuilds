@@ -2,7 +2,7 @@
 
 # Slackware build script for awf
 
-# Copyright 2025 Fabrice Creuzot, France
+# Copyright 2026 Fabrice Creuzot, France
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=awf
-VERSION=${VERSION:-3.2.0}
+VERSION=${VERSION:-4.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -86,38 +86,39 @@ autoreconf -fiv
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --build=$ARCH-slackware-linux \
-  --disable-gtk5
+  --disable-gtk5 \
+  --disable-qt7
 
 make
 make install DESTDIR=$PKG
 
-for gtk in "gtk2" "gtk3" "gtk4"; do
+for engine in "gtk2" "gtk3" "gtk4" "qt5" "qt6"; do
 
-  install -Dpm 644 data/awf-$gtk.desktop $PKG/usr/share/applications/awf-$gtk.desktop
+  install -Dpm 644 data/awf-$engine.desktop $PKG/usr/share/applications/awf-$engine.desktop
 
-  cp -ar data/icons/ icons-$gtk/
-  for file in icons-$gtk/*/*/awf.png; do mv $file `dirname $file`/awf-$gtk.png; done
-  for file in icons-$gtk/*/*/awf.svg; do mv $file `dirname $file`/awf-$gtk.svg; done
+  cp -ar data/icons/ icons-$engine/
+  for file in icons-$engine/*/*/awf.png; do mv $file `dirname $file`/awf-$engine.png; done
+  for file in icons-$engine/*/*/awf.svg; do mv $file `dirname $file`/awf-$engine.svg; done
   install -dm 755 $PKG/usr/share/icons/hicolor/
-  cp -a icons-$gtk/* $PKG/usr/share/icons/hicolor/
+  cp -a icons-$engine/* $PKG/usr/share/icons/hicolor/
 
-  install -Dpm 644 data/awf-$gtk.1 $PKG/usr/man/man1/awf-$gtk.1
-  install -Dpm 644 data/awf-$gtk.fr.1 $PKG/usr/man/fr/man1/awf-$gtk.1
+  install -Dpm 644 data/awf-$engine.1 $PKG/usr/man/man1/awf-$engine.1
+  install -Dpm 644 data/awf-$engine.fr.1 $PKG/usr/man/fr/man1/awf-$engine.1
 
   if pkg-config --exists bash-completion ; then
-    install -Dpm 644 data/awf-$gtk.bash $PKG/usr/share/bash-completion/completions/awf-$gtk
+    install -Dpm 644 data/awf-$engine.bash $PKG/usr/share/bash-completion/completions/awf-$engine
   fi
 
   for file in src/po/*.po; do
     code=`basename "$file" .po`
-    mkdir -p locale-$gtk/$code/LC_MESSAGES/
-    msgfmt src/po/$code.po -o locale-$gtk/$code/LC_MESSAGES/awf-$gtk.mo
-    install -Dpm 644 locale-$gtk/$code/LC_MESSAGES/awf-$gtk.mo $PKG/usr/share/locale/$code/LC_MESSAGES/awf-$gtk.mo
+    mkdir -p locale-$engine/$code/LC_MESSAGES/
+    msgfmt src/po/$code.po -o locale-$engine/$code/LC_MESSAGES/awf-$engine.mo
+    install -Dpm 644 locale-$engine/$code/LC_MESSAGES/awf-$engine.mo $PKG/usr/share/locale/$code/LC_MESSAGES/awf-$engine.mo
   done
 done
 
 # cleanup
-rm -rf icons-gtk*/ locale-gtk*/
+rm -rf icons-gtk*/ locale-gtk*/ icons-qt*/ locale-qt*/
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

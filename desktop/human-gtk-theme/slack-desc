@@ -8,12 +8,12 @@
                |-----handy-ruler------------------------------------------------------|
 human-gtk-theme: human-gtk-theme (the old Ubuntu Human theme)
 human-gtk-theme:
-human-gtk-theme: This theme works with GTK 2.24 (with murrine), 3.24, and 4.12.
-human-gtk-theme: Better rendering with Pango 1.42- or 1.51+.
+human-gtk-theme: This theme is mainly intended for MATE and Xfce desktop environments.
 human-gtk-theme:
-human-gtk-theme: It is mainly intended for MATE and Xfce desktop environments.
 human-gtk-theme: After installation you must restart your session.
+human-gtk-theme: After uninstallation be sure to remove the config file:
+human-gtk-theme:  /etc/profile.d/human-theme-gtk.sh
 human-gtk-theme:
-human-gtk-theme: Suggests: murrine, gnome-icon-theme, dmz cursor theme
+human-gtk-theme: Suggests: murrine, gnome-icon-theme, dmz-cursor-theme
 human-gtk-theme: Homepage: https://github.com/luigifab/human-theme
 human-gtk-theme:

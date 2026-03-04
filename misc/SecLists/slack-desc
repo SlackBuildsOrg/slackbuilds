@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+SecLists: SecLists (the security tester's companion.)
+SecLists:
+SecLists: It's a collection of multiple types of lists used during security
+SecLists: assessments, collected in one place. 
+SecLists: List types include usernames, passwords, URLs, sensitive data 
+SecLists: patterns, fuzzing payloads, web shells, and many more. 
+SecLists: The goal is to enable a security tester to pull this repository 
+SecLists: onto a new testing box and have access to every type of list 
+SecLists: that may be needed.
+SecLists:
+SecLists: Repository: https://github.com/danielmiessler/SecLists

@@ -2,7 +2,7 @@
 
 # Slackware build script for mbuffer
 
-# Copyright 2023-2025 Matt Egger USA
+# Copyright 2023-2026 Matt Egger USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mbuffer
-VERSION=${VERSION:-20251025}
+VERSION=${VERSION:-20260221}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

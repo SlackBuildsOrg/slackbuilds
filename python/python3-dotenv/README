@@ -5,3 +5,6 @@ as environment variables. It helps in the development of applications
 following the 12-factor principles.
 
 NOTE: If you want cli to work, have "click" installed before buildling.
+
+NOTE: 1.2.1 is last version to support python-3.9
+

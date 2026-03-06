@@ -1,12 +1,18 @@
 PRGNAM="SmallBASIC"
-VERSION="12.27"
+VERSION="12.33"
 HOMEPAGE="https://smallbasic.github.io"
-DOWNLOAD="https://github.com/smallbasic/SmallBASIC/releases/download/12_27/smallbasic-12.27.tar.gz \
+DOWNLOAD="https://github.com/smallbasic/SmallBASIC/archive/v12_33/SmallBASIC-12_33.tar.gz \
           https://github.com/fltk/fltk/releases/download/release-1.4.3/fltk-1.4.3-source.tar.gz \
-          https://github.com/smallbasic/SmallBASIC/releases/download/12_27/smallbasic_12.27.zip"
-MD5SUM="ca244c58d4f16e0975eae80eb5f9f0a1 \
+          https://github.com/zserge/jsmn/archive/25647e692c7906b96ffd2b05ca54c097948e879c/jsmn-25647e692c7906b96ffd2b05ca54c097948e879c.tar.gz \
+          https://github.com/lvandeve/lodepng/archive/17d08dd26cac4d63f43af217ebd70318bfb8189c/lodepng-17d08dd26cac4d63f43af217ebd70318bfb8189c.tar.gz \
+          https://github.com/dr-soft/miniaudio/archive/350784a9467a79d0fa65802132668e5afbcf3777/miniaudio-350784a9467a79d0fa65802132668e5afbcf3777.tar.gz \
+          https://github.com/nothings/stb/archive/f58f558c120e9b32c217290b80bad1a0729fbb2c/stb-f58f558c120e9b32c217290b80bad1a0729fbb2c.tar.gz"
+MD5SUM="5a1196548c62dbe243293f20b171f8f8 \
         766435100c58520ddc3428cfd3a22e8e \
-        c585ccc6eb7f7038ce2574375132fb9a"
+        e5fb6f30a7596a0290dd3849e11270ff \
+        bdd36d2e9a4ada1e63f0a17026b9bb56 \
+        a50d7c7e8a33bf1b41621651bd733f5d \
+        a69d2b9417c1b30a84f4537eb5d868ca"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

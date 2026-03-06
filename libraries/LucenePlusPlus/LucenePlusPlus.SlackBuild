@@ -2,7 +2,7 @@
 
 # Slackware build script for LucenePlusPlus
 
-# Copyright 2014-2025 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2014-2026 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=LucenePlusPlus
 VERSION=${VERSION:-3.0.9}
-BUILD=${BUILD:-3}
+COMMITID="29fcfed6b4c92710dd16685c9fcc7b8575789ddb"
+BUILD=${BUILD:-4}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -66,25 +67,15 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-rel_${VERSION}
-tar xvf $CWD/rel_${VERSION}.tar.gz || tar xvf $CWD/$PRGNAM-rel_${VERSION}.tar.gz
-cd $PRGNAM-rel_${VERSION}
+rm -rf $PRGNAM-$COMMITID
+unzip $CWD/$PRGNAM-$COMMITID.zip
+cd $PRGNAM-$COMMITID
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-patch -p1 < $CWD/a460863810b3a6a473780686e5d3fd70bf4378ba.patch
-patch -p1 < $CWD/76dc90f2b65d81be018c499714ff11e121ba5585.patch
-patch -p1 < $CWD/e6a376836e5c891577eae6369263152106b9bc02.patch
-patch -p1 < $CWD/boost.patch
-patch -p1 < $CWD/noboost.patch
-
-# Thanks to Conraid
-sed -e '/cmake_minimum_required/s/VERSION [0-9.]*)/VERSION 3.5...4.0)/' \
-    -i CMakeLists.txt -i cmake/cotire.cmake -i src/core/CMakeLists.txt -i src/contrib/CMakeLists.txt
 
 mkdir -p build
 cd build

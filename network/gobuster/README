@@ -1,0 +1,28 @@
+Gobuster is a high-performance directory/file, DNS and virtual host
+brute-forcing tool written in Go. It's designed to be fast, 
+reliable, and easy to use for security professionals and 
+penetration testers.
+
+Features:
+ - High Performance: Multi-threaded scanning with configurable
+   concurrency
+ - Multiple Modes: Directory, DNS, virtual host, S3, GCS, TFTP, and
+   fuzzing modes
+ - Security Focused: Built for penetration testing and security
+   assessments
+ - Docker Support: Available as a Docker container
+ - Extensible: Pattern-based scanning and custom wordlists
+
+What Can Gobuster Do?
+ - Web Directory/File Enumeration: Discover hidden directories and
+   files on web servers
+ - DNS Subdomain Discovery: Find subdomains with wildcard support
+ - Virtual Host Detection: Identify virtual hosts on target web
+   servers
+ - Cloud Storage Enumeration: Discover open Amazon S3 and Google
+   Cloud Storage buckets
+ - TFTP File Discovery: Find files on TFTP servers
+ - Custom Fuzzing: Flexible fuzzing with customizable parameters
+
+REQUIRES="google-go-lang"
+

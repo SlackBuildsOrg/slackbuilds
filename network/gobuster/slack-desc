@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+        |-----handy-ruler------------------------------------------------------|
+gobuster: gobuster (A fast and flexible brute-forcing tool written in Go)
+gobuster:
+gobuster: Gobuster is a high-performance directory/file, DNS and virtual
+gobuster: host brute-forcing tool written in Go. It's designed to be
+gobuster: fast, reliable, and easy to use for security professionals and
+gobuster: penetration testers.
+gobuster:
+gobuster:
+gobuster: Home: https://github.com/OJ/gobuster
+gobuster:
+gobuster:

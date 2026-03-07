@@ -1,3 +1,6 @@
 Pyrsistent is a number of persistent collections (by some referred to
 as functional data structures). Persistent in the sense that they are
 immutable.
+
+Note: python3-pyrsistent is held back at version 0.20.0 on Slackware
+15.0 (later versions require Python >= 3.10.)

@@ -2,7 +2,7 @@
 
 # Slackware build script for chafa
 
-# Copyright 2022-2025  Vijay Marcel
+# Copyright 2022-2026  Vijay Marcel
 
 # All rights reserved.
 #
@@ -11,6 +11,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -40,12 +44,13 @@
 # 10/06/2025: updated to version 1.16.1
 # 25/07/2025: updated to version 1.16.2
 # 11/11/2025: updated to version 1.18.0
+# 9/3/2026: updated tp version 1.18.1
 #-----------------------------------------------------------------------------------------#
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=chafa
-VERSION=${VERSION:-1.18.0}
+VERSION=${VERSION:-1.18.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

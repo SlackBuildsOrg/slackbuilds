@@ -1,10 +1,11 @@
-The Common Desktop Environment (CDE) was the dominant desktop on
-proprietary Unix systems in the 90's. In 2012 it was relicensed under
-GPL2 and has seen modest maintenance from the community. Although
-functional, it is of course a very old desktop, and some parts of it,
-such as the mail application, are not likely useful in a modern setting.
-(NsCDE is a good alternative if you want a modern CDE look-a-like)
-Nevertheless, people still use it today, for nostalgia, if nothing else.
+The Common Desktop Environment (CDE) was the dominant desktop on 
+proprietary Unix systems in the 90's. In 2012 it was relicensed under 
+GPL2 and has seen modest maintenance from the community. Although largely
+functional, it is a very old desktop. Parts of it, such as the mail and
+print applications, will not be useful in a modern setting, and there are
+known security vulnerabilities. (NsCDE is a good alternative if you want
+a modern CDE look-a-like) Nevertheless, people still use it today, for
+nostalgia, if nothing else.
 
 PS: The RPC service needs to be running for CDE to work:
 

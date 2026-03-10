@@ -15,20 +15,10 @@
 #
 # 0. You just DO WHAT THE FUCK YOU WANT TO.
 #
-# SlackBuild script for wifitui
-# =============================
-# By:          r1w1s1 (https://snac.bsd.cafe/r1w1s1)
-# For:         wifitui
-# Descr:       A fast and friendly terminal Wi-Fi interface supporting NetworkManager and iwd
-# URL:         https://github.com/shazow/wifitui
-# Changelog:
-# v0.7.1:      29/oct/2025 by r1w1s1 - Initial build.
-# v0.8.0:      25/nov/2025 by r1w1s1 - update.
-# v0.10.0:     04/jan/2025 by r1w1s1 - update.
 
 cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=wifitui
-VERSION=${VERSION:-0.10.0}
+VERSION=${VERSION:-0.11.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

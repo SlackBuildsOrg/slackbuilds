@@ -1,0 +1,12 @@
+AutoKey is a desktop automation utility for Linux and X11. It allows you to 
+manage a collection of scripts and phrases, and assign abbreviations and 
+hotkeys to these. This allows you to execute a script or insert text 
+on-demand in any program.
+
+This package contains the GTK-based version for Xfce, GNOME, MATE, and 
+other GTK-based desktop environments.
+
+FEATURES:
+- Abbreviations that expand to frequently-used text
+- Window filtering (scripts run only in specific applications)
+- System tray icon for quick access

@@ -2,7 +2,7 @@
 
 # Slackware build script for fzf-bin
 
-# Copyright 2025 Vijay Marcel
+# Copyright 2025-2026 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -10,6 +10,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -25,11 +29,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fzf-bin
-VERSION=${VERSION:-0.67.0}
+VERSION=${VERSION:-0.70.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-SRCNAM=${SRCNAM:-fzf-0.67.0-linux_amd64}
+SRCNAM=${SRCNAM:-fzf-0.70.0-linux_amd64}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -62,7 +66,10 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $SRCNAM
-tar xvf $CWD/$SRCNAM.tar.gz
+mkdir -pv $PKG/usr/bin
+tar xvf $CWD/$SRCNAM.tar.gz -C $PKG/usr/bin
+chmod -v 0755 $PKG/usr/bin/fzf
+cd $PKG
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -70,8 +77,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-mkdir -pv $PKG/usr/bin
-install -Dvm 0755 fzf -t $PKG/usr/bin
+cd $TMP
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded --remove-section=.comment --remove-section=.note 2> /dev/null || true

@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=element-desktop
 WEBNAM=element-web
-VERSION=${VERSION:-1.12.11}
+VERSION=${VERSION:-1.12.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -110,11 +110,13 @@ corepack enable --install-directory $COREPACK_HOME/bin
 export PATH=$COREPACK_HOME/bin:$PATH
 pnpm config set store-dir "$XDG_CONFIG_HOME/pnpm-store"
 
-pnpm install --frozen-lockfile \
-             --offline
-VERSION=$VERSION \
-NX_TUI=false \
-  pnpm run build
+pushd apps/web
+  pnpm install --frozen-lockfile \
+               --offline
+  VERSION=$VERSION \
+  NX_TUI=false \
+    pnpm run build
+popd
 
 cd ../$PRGNAM-$VERSION
 chown -R root:root .
@@ -131,7 +133,7 @@ sed -i 's|yarn |yarn --offline |g
         .hak/hakModules/matrix-seshat/package.json
 
 mkdir -p deploys
-mv ../$WEBNAM-$VERSION/webapp deploys/element-v$VERSION
+mv ../$WEBNAM-$VERSION/apps/web/webapp deploys/element-v$VERSION
 pnpm install --frozen-lockfile \
              --offline
 pnpm run fetch --noverify --cfgdir ""

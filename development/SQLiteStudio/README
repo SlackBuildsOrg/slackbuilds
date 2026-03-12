@@ -17,3 +17,6 @@ To build this package the official Slackware Python 3.9 and the
 chrpath package (found in SlackBuilds) are required.
 
 This package installs to /opt/SQLiteStudio
+
+Note: The Sqlite database from the official Slackware
+patches/packages is installed along this package.

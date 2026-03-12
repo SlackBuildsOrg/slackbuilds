@@ -15,3 +15,7 @@ Some key features of Diffuse:
 - Unicode support
 - unlimited undo
 - easy keyboard navigation
+
+This repository is a fork of the original project on SourceForge,
+which doesn’t seem to be maintained anymore:
+https://sourceforge.net/projects/diffuse/

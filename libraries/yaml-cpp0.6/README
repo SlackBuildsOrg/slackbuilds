@@ -1,0 +1,9 @@
+yaml-cpp is a YAML parser and emitter in C++
+matching the YAML 1.2 spec.
+
+This SlackBuild uses version 0.6.3 (last of the 0.6.x series)
+for use by SlackBuilds not able to use later versions, in
+particular FreeCAD-1.0.2 which needs 0.6.3.
+
+NOTE: yaml-cpp conflict with yaml-cpp0.3 and yaml-cpp
+You must NOT install both of them on one system.

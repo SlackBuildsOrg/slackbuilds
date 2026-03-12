@@ -5,7 +5,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=edbrowse
-VERSION=${VERSION:-3.8.15}
+VERSION=${VERSION:-3.8.16}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -57,7 +57,7 @@ install -m 0644 -D doc/man-edbrowse-debian.1 $PKG/usr/man/man1/edbrowse.1
 gzip -9 $PKG/usr/man/man1/edbrowse.1
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -ar CHANGES LICENSE README doc $PKG/usr/doc/$PRGNAM-$VERSION
+cp -ar CHANGES LICENSE README.md doc $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

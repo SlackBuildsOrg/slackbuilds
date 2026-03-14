@@ -2,7 +2,7 @@
 
 # Slackware build script for fscrypt
 
-# Copyright 2025 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2025-2026 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fscrypt
-VERSION=${VERSION:-0.3.5}
+VERSION=${VERSION:-0.3.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -81,9 +81,15 @@ do
 
   # Extract the tarball
   if [ $DIR = "vendor/github.com/urfave/cli" ]; then
-    tar xvf $CWD/cli-1.22.14.tar.gz
+    tar xvf $CWD/cli-1.22.17.tar.gz
   elif [ $DIR = "vendor/golang.org/x/exp/typeparams" ]; then
-    tar xvf $CWD/exp-*.tar.gz
+    tar --wildcards -xvf $CWD/exp-2478ac8*.tar.gz exp-2478ac8*/typeparams --strip-components=1
+  elif [ $DIR = "vendor/golang.org/x/tools" ]; then
+    tar xvf $CWD/tools-0.36.0.tar.gz
+  elif [ $DIR = "vendor/golang.org/x/tools/go/expect" ]; then
+    tar xvf $CWD/tools-0.11.0.tar.gz tools-0.11.0/go/expect --strip-components=2
+  elif [ $DIR = "vendor/honnef.co/go/tools" ]; then
+    tar xvf $CWD/go-tools-0.6.1.tar.gz
   else
     tar xvf $CWD/$NAME-*.tar.gz
   fi
@@ -91,9 +97,15 @@ do
   # Rename extracted folders
   mkdir -p $(dirname $DIR)
   if [ $DIR = "vendor/github.com/urfave/cli" ]; then
-    mv cli-1.22.14 $DIR
+    mv cli-1.22.17 $DIR
   elif [ $DIR = "vendor/golang.org/x/exp/typeparams" ]; then
-    mv exp-* $DIR
+    mv typeparams $DIR
+  elif [ $DIR = "vendor/golang.org/x/tools" ]; then
+    mv tools-0.36.0 $DIR
+  elif [ $DIR = "vendor/golang.org/x/tools/go/expect" ]; then
+    mv expect $DIR
+  elif [ $DIR = "vendor/honnef.co/go/tools" ]; then
+    mv go-tools-0.6.1 $DIR
   else
     mv $NAME-* $DIR
   fi

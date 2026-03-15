@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+           |-----handy-ruler------------------------------------------------------|
+autokey-gtk: autokey-gtk (Desktop automation utility)
+autokey-gtk:
+autokey-gtk: AutoKey is a desktop automation utility for Linux and X11. It
+autokey-gtk: allows you to manage a collection of scripts and phrases,
+autokey-gtk: and assign abbreviations and hotkeys to these. This allows you
+autokey-gtk: to execute a script or insert text on-demand in any program.
+autokey-gtk:
+autokey-gtk: This package contains the GTK-based version for Xfce, GNOME, etc.
+autokey-gtk:
+autokey-gtk: Homepage: https://github.com/autokey/autokey
+autokey-gtk:

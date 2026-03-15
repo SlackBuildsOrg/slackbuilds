@@ -2,7 +2,7 @@
 
 # Slackware build script for the SQLiteStudio
 
-# Copyright 2023-2024 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2023-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -30,7 +30,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=SQLiteStudio
-VERSION=${VERSION:-3.4.6}
+VERSION=${VERSION:-3.4.21}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,9 +38,13 @@ BASENAME=${BASENAME:-sqlitestudio}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
-    arm*) ARCH=arm ;;
-       *) ARCH=$( uname -m ) ;;
+    i?86) ARCH=i586
+          ;;
+    arm*) echo "Unsupported $ARCH architecture."
+          exit 1
+          ;;
+       *) ARCH=$( uname -m )
+          ;;
   esac
 fi
 
@@ -73,6 +77,13 @@ BUILDDIR=$TMP/$BASENAME-$VERSION
 rm -rf $PKG $BUILDDIR
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
+
+# Make sure sqlite from the official patches/packages is installed
+if [[ "$ARCH" == "i586" ]]; then
+    /sbin/upgradepkg --install-new $CWD/sqlite-3.50.4-i586-2_slack15.0.txz
+else
+    /sbin/upgradepkg --install-new $CWD/sqlite-3.50.4-x86_64-2_slack15.0.txz
+fi
 
 tar xvfz $CWD/$BASENAME-$VERSION.tar.gz
 cd $BUILDDIR

@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=deno
-VERSION=${VERSION:-2.7.4}
+VERSION=${VERSION:-2.7.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -97,17 +97,20 @@ else
   export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
 fi
 
+# using release-lite profile nearly halves the compile time
+DENOPROFILE=${DENOPROFILE:-release-lite}
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-cargo build --release --locked
+cargo build --profile $DENOPROFILE --locked
 
-install -Dm755 target/release/deno "$PKG"/usr/bin/deno
+install -Dm755 target/$DENOPROFILE/deno "$PKG"/usr/bin/deno
 install -dm755 "$PKG"/usr/share/bash-completion/completions
-./target/release/deno completions bash > "$PKG"/usr/share/bash-completion/completions/deno
+./target/$DENOPROFILE/deno completions bash > "$PKG"/usr/share/bash-completion/completions/deno
 install -dm755 "$PKG"/usr/share/zsh/site-functions
-./target/release/deno completions zsh > "$PKG"/usr/share/zsh/site-functions/_deno
+./target/$DENOPROFILE/deno completions zsh > "$PKG"/usr/share/zsh/site-functions/_deno
 install -dm755 "$PKG"/usr/share/fish/vendor_completions.d
-./target/release/deno completions fish > "$PKG"/usr/share/fish/vendor_completions.d/deno.fish
+./target/$DENOPROFILE/deno completions fish > "$PKG"/usr/share/fish/vendor_completions.d/deno.fish
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

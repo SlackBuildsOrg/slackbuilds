@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
         |-----handy-ruler------------------------------------------------------|
-deadbeef: deadbeef (as in 0xDEADBEEF)
-deadbeef: with X11 (though now it also runs in plain console without X,
-deadbeef: in FreeBSD, and in OpenSolaris).
+deadbeef: deadbeef (cross-platform audio player)
 deadbeef:
-deadbeef: Homepage: http://deadbeef.sourceforge.net/
+deadbeef: DeaDBeeF (as in 0xDEADBEEF) is a modular cross-platform audio
+deadbeef: player which runs on GNU/Linux distributions, macOS, Windows,
+deadbeef: *BSD, OpenSolaris, and other UNIX-like systems.
 deadbeef:
+deadbeef: DeaDBeeF plays a variety of audio formats, converts between
+deadbeef: them, lets you customize the UI in almost any way you want, and
+deadbeef: use many additional plugins which can extend it even more.
 deadbeef:
-deadbeef:
-deadbeef:
-deadbeef:
-deadbeef:
+deadbeef: Homepage: https://deadbeef.sourceforge.io

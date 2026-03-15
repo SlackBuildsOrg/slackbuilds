@@ -5,3 +5,6 @@ desired skin and copy it to $PREFIX/share/mplayer/skins
 or to install per user then copy the extracted
 skins to $HOME/.mplayer/skins.
 The url list is in wget-list and URL.md
+
+Note:
+This package conflicts with Ater-MPlayer-skin

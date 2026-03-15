@@ -1,10 +1,10 @@
 PRGNAM="unicode-character-database"
-VERSION="17.0.0"
+VERSION="18.0.0"
 HOMEPAGE="https://www.unicode.org/ucd/"
-DOWNLOAD="https://www.unicode.org/Public/17.0.0/ucd/UCD.zip \
-          https://www.unicode.org/Public/17.0.0/ucd/Unihan.zip"
-MD5SUM="aa35d214bbc24b3b8d07b96bb9db7dca \
-        c619d9d45cfb2c96e468b6b64e5bfe2e"
+DOWNLOAD="https://www.unicode.org/Public/18.0.0/ucd/UCD.zip \
+          https://www.unicode.org/Public/18.0.0/ucd/Unihan.zip"
+MD5SUM="7d91e30513084aebbdeaf48330dbf304 \
+        5d9787f8e5b6960df8536ff4cbd733e4"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

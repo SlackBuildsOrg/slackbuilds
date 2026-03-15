@@ -7,14 +7,17 @@ enhancements while keeping the original gameplay intact.
 
 This is the full version of the game.
 
-Install done, game won’t create user dirs.
+NOTE: you will need to create proper user dirs complete with
+configuration file overrides to properly store settings and savegames.
 
-Make them manually with:
+Install overrides manually with:
 
-install -Dm0644 /opt/ut99/UnrealTournament/System64/UnrealTournament.ini \
+install -Dm0644 \
+  /opt/ut99/UnrealTournament/System64/UnrealTournament.ini \
   ~/.utpg/System/UnrealTournament.ini
 
-install -Dm0644 /opt/ut99/UnrealTournament/System64/User.ini \
+install -Dm0644 \
+  /opt/ut99/UnrealTournament/System64/User.ini \
   ~/.utpg/System/User.ini
 
 Features:

@@ -27,10 +27,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sourcegit
-VERSION=${VERSION:-2026.05}
+VERSION=${VERSION:-2026.06}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+AvaloniaEdit=87e83c5c0e4c3886d5db9acf3d0b37366690f762
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -59,8 +60,8 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION/depends/
 rmdir AvaloniaEdit
-tar xvf $CWD/AvaloniaEdit-80222a80b3f78d21da7db474d54a0d6a2e526c00.tar.gz
-mv AvaloniaEdit-80222a80b3f78d21da7db474d54a0d6a2e526c00 AvaloniaEdit
+tar xvf $CWD/AvaloniaEdit-$AvaloniaEdit.tar.gz
+mv AvaloniaEdit-$AvaloniaEdit AvaloniaEdit
 cd ..
 
 chown -R root:root .

@@ -23,6 +23,8 @@ preserve_perms() {
 }
 
 preserve_perms etc/rc.d/rc.3proxy.new
-config etc/3proxy/bandlimiters.new
-config etc/3proxy/counters.new
-config etc/3proxy/passwd.new
+config etc/3proxy/3proxy.cfg.new
+config var/lib/3proxy/conf/3proxy.cfg.new
+config var/lib/3proxy/conf/bandlimiters.new
+config var/lib/3proxy/conf/counters.new
+config var/lib/3proxy/conf/passwd.new

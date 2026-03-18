@@ -6,7 +6,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ETL
-VERSION=${VERSION:-1.5.3}
+VERSION=${VERSION:-1.5.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,6 +73,7 @@ find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp  AUTHORS COPYING NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/$PRGNAM.info > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.info
 
 rm -f $PKG/usr/lib*/*.la
 

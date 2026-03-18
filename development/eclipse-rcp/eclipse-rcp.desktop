@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=eclipse-rcp
+Name=Eclipse Java
+GenericName=Eclipse IDE for Java Developers
+Icon=eclipse-rcp
+StartupNotify=true
+Categories=Qt;KDE;GNOME;Development;GTK;

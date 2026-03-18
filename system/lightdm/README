@@ -1,0 +1,21 @@
+LightDM is a lightweight, cross-desktop display manager.
+
+A "lightdm" user and group must be set up prior to running this script.
+That is - please run the following commands:
+  groupadd -g 380 lightdm
+  useradd -d /var/lib/lightdm -s /bin/false -u 380 -g 380 lightdm
+
+
+To load lightdm upon boot:
+
+Edit /etc/inittab. Change the default runlevel from 3 to 4.
+Then, edit /etc/rc.d/rc.4 and add the following section:
+
+if [ -x /usr/bin/lightdm ]; then
+  exec /usr/bin/lightdm
+fi
+
+
+To enable automatic unlocking of password-protected directories upon
+login, pass FSCRYPT=yes to the SlackBuild.
+This is useful (ex. when encrypting the /home directory with fscrypt).

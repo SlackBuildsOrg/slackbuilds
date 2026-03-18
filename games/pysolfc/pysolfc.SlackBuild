@@ -8,6 +8,10 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20250819 bkw: update for v3.4.0 (and cardset-minimal 3.1.0).
+# 20250329 bkw: update for v3.2.0 (cardset-minimal still 3.0.0).
+# 20240824 bkw: update for v3.0.0 (and cardset-minimal 3.0.0).
+
 # 20231216 bkw: update for v2.21.0 (and cardset-minimal 2.2.0),
 # fix broken permissions for cardsets.
 
@@ -41,12 +45,12 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pysolfc
 SRCNAM=PySolFC
-VERSION=${VERSION:-2.21.0}
+VERSION=${VERSION:-3.4.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-CARDSETVER=${CARDSETVER:-2.2.0}
+CARDSETVER=${CARDSETVER:-3.1.0}
 CARDSETS=$SRCNAM-Cardsets--Minimal-$CARDSETVER
 
 if [ -z "$ARCH" ]; then
@@ -77,8 +81,8 @@ TARDIR=$( basename $TARBALL .tar.gz )
 
 fixperms() {
   chown -R root:root $1
-  find -L $1 -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-          \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+  find -L $1 -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
+          \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 }
 
 rm -rf $PKG

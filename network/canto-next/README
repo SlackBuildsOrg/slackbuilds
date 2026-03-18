@@ -1,0 +1,41 @@
+canto-next (ncurses RSS aggregator)
+
+canto is an Atom/RSS feed reader for the console that is meant to
+be quick, concise, and colorful. It is meant to allow you to crank
+through feeds like you've never cranked before, by providing a minimal
+yet information-packed interface.
+
+The package includes canto-daemon (which downloads the feeds in the
+background), canto-curses (the reader), and canto-remote (which can be
+used to control the daemon). Each of these has a man page. The default
+location for canto's config and data is ~/.config/canto/ unless you
+have changed XDG_CONFIG_HOME in the environment.
+
+When you run canto-curses, it will automatically start canto-daemon
+if it's not already running. If you want the daemon to exit when you
+log out, add a line like this to your .bash_logout (or whatever logout
+script your shell uses):
+
+  canto-remote kill &>/dev/null
+
+The "help" key for canto-curses is '?'. Remember that, if you can
+remember nothing else.
+
+Note for multilib users: You'll have to install python3-setuptools-opt
+and its dependencies, to build canto-next. Pure 32-bit or 64-bit
+doesn't require this, so I didn't put it in REQUIRES.
+
+There are a few Slackware-specific RSS feeds that you might want to
+add to canto-next's config. To do this, use either "canto-remote add
+<URL>" or from within canto-curses, ":add <URL>".
+
+- SBo weekly updates:
+
+  https://slackbuilds.org/rss/ChangeLog.rss
+
+- Slackware ChangeLogs:
+
+  https://mirrors.slackware.com/feeds/slackware64-15.0.rss
+  https://mirrors.slackware.com/feeds/slackware64-current.rss
+  https://mirrors.slackware.com/feeds/slackware-15.0.rss
+  https://mirrors.slackware.com/feeds/slackware-current.rss

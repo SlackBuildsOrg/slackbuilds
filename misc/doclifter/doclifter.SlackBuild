@@ -7,6 +7,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260224 bkw: update for v2.22, add CHECK=yes option.
 # 20240312 bkw: update for v2.21.
 
 # 20220110 bkw:
@@ -20,7 +21,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=doclifter
-VERSION=${VERSION:-2.21}
+VERSION=${VERSION:-2.22}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -39,6 +40,16 @@ OUTPUT=${OUTPUT:-/tmp}
 
 set -e
 
+CHECK="${CHECK:-no}"
+if [ "$CHECK" = "yes" ] && ! which pic2plot &>/dev/null; then
+  cat <<EOF
+***
+*** You have set CHECK=yes, but plotutils is not installed. Go install
+*** plotutils and try again, or else build without CHECK=yes.
+***
+EOF
+fi
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -46,8 +57,9 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p $PKGDOC/html $PKG/usr/man/man1 $PKG/usr/bin
@@ -55,11 +67,12 @@ mkdir -p $PKGDOC/html $PKG/usr/man/man1 $PKG/usr/bin
 for i in {doc,man}lifter; do
   install -m0755 $i $PKG/usr/bin
   gzip -9c < $i.1 > $PKG/usr/man/man1/$i.1.gz
-  xmlto xhtml-nochunks $i.xml
-  cp -a $i.html $PKGDOC/html
+  asciidoc -o- -b html $i.adoc > $PKGDOC/html/$i.html
 done
 
-cp -a COPYING README TODO PATCHES $PKGDOC
+[ "$CHECK" = "yes" ] && make -j1 check 2>&1 | tee $PKGDOC/make-check.txt
+
+cp -a COPYING* README* TODO* PATCHES* $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

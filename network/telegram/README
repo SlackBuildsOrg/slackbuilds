@@ -1,4 +1,10 @@
-Telegram
-
 Telegram is a cloud-based mobile and desktop messaging app with a
 focus on security and speed.
+
+NOTE: 
+In order to use Instant View, you need to have webkit2gtk4.1 installed
+
+If you are using NVidia proprietary driver and having issue with
+Instant View feature, add this into /etc/profile:
+export WEBKIT_DISABLE_DMABUF_RENDERER="1"
+and reboot your machine.

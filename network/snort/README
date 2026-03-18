@@ -16,5 +16,17 @@ sniffer like tcpdump(1), a packet logger (useful for network traffic
 debugging, etc), or as a full blown network intrusion detection and
 prevention system.
 
+You need to create a new UID/GID before building snort
+groupadd -g 395 snort
+useradd -u 395 -g 395 -d /var/log/snort snort
+
+If you need to port the old snort configuration files to new lua format,
+you can use snort2lua with -c parameter:
+    snort2lua -c snort.conf
+    or
+    snort2lua --conf-file snort.conf
+if you want to convert Snort 2 rules into Snort 3 rules, use:
+    Snort2lua -c snort2.rules -r snort3.rules
+
 For more information about running Snort on Slackware, please see
 README.SLACKWARE.

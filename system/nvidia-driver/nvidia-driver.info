@@ -1,20 +1,20 @@
 PRGNAM="nvidia-driver"
-VERSION="555.58.02"
+VERSION="590.48.01"
 HOMEPAGE="https://www.nvidia.com"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/555.58.02/NVIDIA-Linux-x86_64-555.58.02.run \
-                 https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-555.58.02.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-modprobe/nvidia-modprobe-555.58.02.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-persistenced/nvidia-persistenced-555.58.02.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-555.58.02.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-xconfig/nvidia-xconfig-555.58.02.tar.bz2"
-MD5SUM_x86_64="f6efa3d40fccc97fbac9b55fc81e30d7 \
-               5a49e808a0b4c50d55c5ca872d2a6a7d \
-               970de094a882199ccb56cf0da78600d7 \
-               d6966cbd1fdc0fbcaffe03cb20da4c25 \
-               c3eeac1cdd10577d9bbd11016c45dbf0 \
-               a63459dba8c8a056f664e7a0660b245f"
+DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/590.48.01/NVIDIA-Linux-x86_64-590.48.01.run \
+                 https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-590.48.01.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-modprobe/nvidia-modprobe-590.48.01.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-persistenced/nvidia-persistenced-590.48.01.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-590.48.01.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-xconfig/nvidia-xconfig-590.48.01.tar.bz2"
+MD5SUM_x86_64="7644d59c537041a5bbaa2212ac6619df \
+               563abd680cd2bd23877b2275289b369d \
+               b9b7dd1125f77a1c23d187ecbb2c3699 \
+               24f8c188a1d05b269fae3bc1a6b4aa63 \
+               c0abc81cb38cd6d56d3905eb70723443 \
+               53ba44695fc040ad256ab04a44317f56"
 REQUIRES="nvidia-kernel"
 MAINTAINER="Lenard Spencer"
 EMAIL="lenardrspencer@gmail.com"

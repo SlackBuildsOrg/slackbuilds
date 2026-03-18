@@ -1,4 +1,4 @@
-VERSION="1.8.2"
+VERSION="2.1.3"
 MODULE="v4l2loopback-dc"
 
 if [ -x /usr/bin/update-desktop-database ]; then

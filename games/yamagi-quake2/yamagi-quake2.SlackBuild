@@ -3,6 +3,7 @@
 # Slackware build script for yamagi-quake2
 
 # Copyright 2012 Dugan Chen Canada
+# Copyright 2020-2025 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,14 +28,14 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=yamagi-quake2
-VERSION=${VERSION:-8.20}
+VERSION=${VERSION:-8.60}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-CTFVER=${CTFVER:-1.09}
-XATRIXVER=${XATRIXVER:-2.11}
-ROGUEVER=${ROGUEVER:-2.10}
+CTFVER=${CTFVER:-1.12}
+XATRIXVER=${XATRIXVER:-2.16}
+ROGUEVER=${ROGUEVER:-2.15}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -88,27 +89,21 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release ..
-  make
-cd ..
+CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" \
+  make \
+  WITH_RPATH=no \
+  WITH_SYSTEMWIDE=yes
 
-mkdir -p $PKG/usr/{bin,share/quake2/{ctf,xatrix,rogue}}
-cp -r build/release/* $PKG/usr/share/quake2
-mkdir -p $PKG/usr/share/quake2/baseq2
-cp stuff/yq2.cfg $PKG/usr/share/quake2/baseq2
-mkdir -p $PKG/usr/share/pixmaps
-cp stuff/icon/Quake2.png $PKG/usr/share/pixmaps
-install -D -m 755 $CWD/quake2.sh $PKG/usr/bin/quake2
-mkdir -p $PKG/usr/share/applications
-cat $CWD/quake2.desktop > $PKG/usr/share/applications/quake2.desktop
+mkdir -pv $PKG/usr/{bin,share/games/quake2/{ctf,xatrix,rogue}}
+install -dm755 $PKG/usr/share/games/quake2
+cp -a release/* -t $PKG/usr/share/games/quake2
+install -Dm644 stuff/yq2.cfg -t $PKG/usr/share/games/quake2/baseq2
+install -Dm644 stuff/icon/Quake2.png -t $PKG/usr/share/pixmaps
+install -Dm644 stuff/icon/Quake2.svg -t $PKG/usr/share/icons/hicolor/scalable/apps
+install -Dm755 $CWD/quake2.sh $PKG/usr/bin/quake2
+install -Dm644 $CWD/quake2.desktop -t $PKG/usr/share/applications
 
-# CTF Support
+# CTF (Three Wave Capture the Flag) Support
 
 cd $TMP
 tar xvf $CWD/quake2-ctf-$CTFVER.tar.xz
@@ -121,19 +116,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release ..
-  make
-  cp -r Release/* $PKG/usr/share/quake2/ctf
-cd ..
-install -D -m 755 $CWD/ctf.sh $PKG/usr/bin/quake2-ctf
+CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" \
+  make \
+  WITH_RPATH=no \
+  WITH_SYSTEMWIDE=yes
 
-# Mission Pack 1 support
+install -Dm755 release/game.so -t $PKG/usr/share/games/quake2/ctf
+install -Dm755 $CWD/ctf.sh $PKG/usr/bin/quake2-ctf
+
+# Mission Pack 1 The Reckoning support
 
 cd $TMP
 tar xvf $CWD/quake2-xatrix-$XATRIXVER.tar.xz
@@ -146,20 +137,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release ..
-  make
-  cp -r Release/* $PKG/usr/share/quake2/xatrix
-cd ..
+CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" \
+  make \
+  WITH_RPATH=no \
+  WITH_SYSTEMWIDE=yes
 
-install -D -m 755 $CWD/xatrix.sh $PKG/usr/bin/quake2-xatrix
+install -Dm755 release/game.so -t $PKG/usr/share/games/quake2/xatrix
+install -Dm755 $CWD/xatrix.sh $PKG/usr/bin/quake2-xatrix
 
-# Mission Pack 2 support
+# Mission Pack 2 Ground Zero support
 
 cd $TMP
 tar xvf $CWD/quake2-rogue-$ROGUEVER.tar.xz
@@ -172,20 +158,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-mkdir -p build
-cd build
-  cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release ..
-  make
-  cp -r Release/* $PKG/usr/share/quake2/rogue
-cd ..
+CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" \
+  make \
+  WITH_RPATH=no \
+  WITH_SYSTEMWIDE=yes
 
-install -D -m 755 $CWD/rogue.sh $PKG/usr/bin/quake2-rogue
+install -Dm755 release/game.so -t $PKG/usr/share/games/quake2/rogue
+install -Dm755 $CWD/rogue.sh $PKG/usr/bin/quake2-rogue
 
-find $PKG/usr/share/quake2 -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 # Documentation
@@ -195,19 +176,19 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/{ctf-$CTFVER,quake2-xatrix-$XATRIXVER,qua
 cd $TMP
 
 cp -a \
-  quake2-$VERSION/{CHANGELOG,LICENSE,README.md,stuff/yq2.cfg} \
+  quake2-$VERSION/{CHANGELOG,LICENSE,README.md,stuff/yq2.cfg,doc} \
   $PKG/usr/doc/$PRGNAM-$VERSION
 
 cp -a \
-  quake2-ctf-$CTFVER/{CHANGELOG,LICENSE,README} \
+  quake2-ctf-$CTFVER/{CHANGELOG,LICENSE,README.md} \
   $PKG/usr/doc/$PRGNAM-$VERSION/ctf-$CTFVER
 
 cp -a \
-  quake2-xatrix-$XATRIXVER/{CHANGELOG,LICENSE,README} \
+  quake2-xatrix-$XATRIXVER/{CHANGELOG,LICENSE,README.md} \
   $PKG/usr/doc/$PRGNAM-$VERSION/quake2-xatrix-$XATRIXVER
 
 cp -a \
-  quake2-rogue-$ROGUEVER/{CHANGELOG,LICENSE,README} \
+  quake2-rogue-$ROGUEVER/{CHANGELOG,LICENSE,README.md} \
   $PKG/usr/doc/$PRGNAM-$VERSION/quake2-rogue-$ROGUEVER
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

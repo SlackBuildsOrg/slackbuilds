@@ -3,7 +3,7 @@
 # Slackware build script for re2
 
 # Copyright 2018-2020 Larry Hajali <larryhaja[at]gmail[dot]com>
-# Copyright 2024 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2024-2025 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=re2
-VERSION=${VERSION:-2024_04_01}
+VERSION=${VERSION:-2025_08_12}
 PKGVER=$(echo $VERSION | tr _ -)
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -78,6 +78,11 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Do not find Googletest and Benchmark. This SlackBuild is not making tests.
+# That is, reverse the following commit:
+# https://github.com/google/re2/commit/2b354c6ad0d0479dcff68dab23fb0d1143a482c2
+patch -p1 < $CWD/do-not-find-googletest-and-benchmark.patch
+
 CCICU="$(pkg-config icu-uc --cflags) -DRE2_USE_ICU" \
 LDICU=$(pkg-config icu-uc --libs) \
 CCPCRE="$(pkg-config libpcre --cflags) -DUSEPCRE" \
@@ -91,7 +96,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.a
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CONTRIBUTING.md LICENSE README SECURITY.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CONTRIBUTING.md LICENSE README.md SECURITY.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

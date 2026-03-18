@@ -1,2 +1,5 @@
 inspectrum is a tool for analysing captured signals, primarily from
 software-defined radio receivers.
+
+Building the software with i586 arch is currently broken. See
+https://github.com/miek/inspectrum/issues/248.

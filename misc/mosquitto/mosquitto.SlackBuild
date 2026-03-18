@@ -2,7 +2,7 @@
 
 # Slackware build script for mosquitto
 
-# Copyright 2011-2023  Christoph Willing,  Brisbane Australia
+# Copyright 2011-2026  Christoph Willing,  Sydney Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mosquitto
-VERSION=${VERSION:-2.0.18}
+VERSION=${VERSION:-2.1.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,6 +75,9 @@ sed -i -e 's:share/pkgconfig:lib${LIB_SUFFIX}/pkgconfig:g' CMakeLists.txt
 sed -i -e 's:libdir=${exec_prefix}/lib:libdir=${exec_prefix}/lib@LIB_SUFFIX@:' libmosquitto.pc.in
 sed -i -e 's:libdir=${exec_prefix}/lib:libdir=${exec_prefix}/lib@LIB_SUFFIX@:' libmosquittopp.pc.in
 
+# Copy some unfound .h files
+cp -p deps/ut*.h test/apps/ctrl/
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -85,6 +88,8 @@ find -L . \
 mkdir build
 cd build
   cmake ../ \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS $(pkg-config --libs ncurses)" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc \
@@ -93,9 +98,6 @@ cd build
   make
   make install DESTDIR=$PKG
 cd ..
-
-# Preserve existing mosquitto.conf during package installation
-mv $PKG/etc/mosquitto/mosquitto.conf $PKG/etc/mosquitto/mosquitto.conf.new
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -113,7 +115,6 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -11,9 +11,9 @@ doclifter:
 doclifter: doclifter lifts documents in nroff markup to XML-DocBook.
 doclifter: This package ships two Python scripts:
 doclifter: - doclifter translates documents written in troff macros (like man
-doclifter: pages) to DocBook, that can then be converted to other formats.
+doclifter:   pages) to DocBook, that can then be converted to other formats.
 doclifter: - manlifter is a mass-conversion script and test harness for
-doclifter: doclifter.
+doclifter:   doclifter.
 doclifter:
 doclifter: docfilter's author is Eric S. Raymond.
 doclifter:

@@ -7,3 +7,8 @@ NOTE:
   Therefore it will NOT be added to REQUIRES here.
 
   This change will not affect most python builds.
+
+NOTE: newer versions have a requirement for "packaging >= 24.0".  This
+      would require modifying every dependee script to use *-opt
+      packages.  If a newer version is needed I will look at this
+      again.

@@ -1,12 +1,12 @@
 PRGNAM="ttf-nerd-fonts-symbols"
-VERSION="3.2.1"
+VERSION="3.4.0"
 HOMEPAGE="https://github.com/ryanoasis/nerd-fonts"
-DOWNLOAD="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/NerdFontsSymbolsOnly.zip \
-          https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v3.2.1/10-nerd-font-symbols.conf"
-MD5SUM="236184d5517a1d00f78b4a1fc6f958b4 \
-        ae91a7feddea599611f5f7ad326bfcb1"
+DOWNLOAD="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/NerdFontsSymbolsOnly.zip \
+          https://raw.githubusercontent.com/ryanoasis/nerd-fonts/v3.4.0/10-nerd-font-symbols.conf"
+MD5SUM="a0caf173734e58937970550b8dcab9c8 \
+        be39a2d1d139d9da416482e701fa1e52"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""
-MAINTAINER="Isaac Yu"
-EMAIL="isaacyu@protonmail.com"
+MAINTAINER="Eugen Wissner"
+EMAIL="belka@caraus.de"

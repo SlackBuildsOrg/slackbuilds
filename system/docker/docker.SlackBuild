@@ -26,13 +26,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=docker
-VERSION=${VERSION:-27.1.1}
-GITHASH=${GITHASH:-cc13f95}
+VERSION=${VERSION:-29.2.1}
+GITHASH=${GITHASH:-6bc6209}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-SRCNAM=moby
+SRCNAM=moby-docker
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -56,9 +56,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
-cd $SRCNAM-$VERSION
+rm -rf $SRCNAM-v$VERSION
+tar xvf $CWD/$SRCNAM-v$VERSION.tar.gz
+cd $SRCNAM-v$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -66,19 +66,25 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p src/github.com/docker
-ln -sf "$(pwd)" src/github.com/docker/docker
+export AUTO_GOPATH=1
+export DOCKER_GITCOMMIT=$GITHASH
+export DOCKER_BUILDTAGS="seccomp"
+export DISABLE_WARN_OUTSIDE_CONTAINER=1
+VERSION=$VERSION ./hack/make.sh dynbinary
 
-AUTO_GOPATH=1 \
-GO111MODULE=off \
-DOCKER_GITCOMMIT=$GITHASH \
-DOCKER_BUILDTAGS="seccomp" \
-VERSION=$VERSION \
-GOPATH="$(pwd)" \
-./hack/make.sh dynbinary
+(
+  cd man
+  make
+
+  mkdir -p $PKG/usr/man/man8
+  install -m 0644 ./man8/dockerd.8 $PKG/usr/man/man8
+)
 
 install -D -m 0755 bundles/dynbinary-daemon/dockerd \
   $PKG/usr/bin/dockerd
+
+install -D -m 0755 bundles/dynbinary-daemon/docker-proxy \
+  $PKG/usr/bin/docker-proxy
 
 # Integrate required components.
 ln -s runc $PKG/usr/bin/docker-runc
@@ -91,9 +97,8 @@ install -D -m 0644 $CWD/config/docker.default $PKG/etc/default/docker.new
 install -D -m 0644 $CWD/config/docker.logrotate $PKG/etc/logrotate.d/docker.new
 install -D -m 0644 $CWD/config/rc.docker $PKG/etc/rc.d/rc.docker.new
 
-# Install udev rules.
-install -D -m 0644 contrib/udev/80-docker.rules \
-  $PKG/lib/udev/rules.d/80-docker.rules
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE NOTICE README.md $PKG/usr/doc/$PRGNAM-$VERSION

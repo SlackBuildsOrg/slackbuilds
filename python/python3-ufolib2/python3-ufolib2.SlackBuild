@@ -2,7 +2,7 @@
 
 # Slackware build script for python3-ufolib2
 
-# Copyright 2023-2024 Vijay Marcel
+# Copyright 2023-2025 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,14 +22,26 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Changelog for python3-ufolib2 SlackBuild Script
+# --------------------------------------------------------------------
+
+# 15/06/2023: submitted to slackbuilds.org
+# 11/09/2023: Downgrading to version 0.13.1.
+# 25/02/2024: Upgraded to version 0.16.0
+# 21/08/2024: Sphinx is now an optional dependency
+# Bump the build no.
+# 18/02/2025: updated to version 0.17.1
+# 11/09/2025: updated to version 0.18.1
+# ----------------------------------------------------------------------
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-ufolib2
-VERSION=${VERSION:-0.16.0}
+VERSION=${VERSION:-0.18.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-SRCNAM=${SRCNAM:-ufoLib2}
+SRCNAM=${SRCNAM:-ufolib2}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -79,20 +91,18 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
+
 python3 -m build --wheel  --no-isolation
 PYTHONPYCACHEPREFIX="${PWD}/.cache/cpython/" python3 -m installer --destdir="$PKG" dist/*.whl
 
-cd docs
-mkdir -pv build
-sphinx-build -M singlehtml source build
-cd ..
-
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+  | cut -f 1 -d : | xargs strip --strip-unneeded --remove-section=.comment --remove-section=.note 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE README.md  $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a docs/build/singlehtml $PKG/usr/doc/$PRGNAM-$VERSION
+#cp -a docs/build/singlehtml $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 find $PKG/usr/doc/$PRGNAM-$VERSION -type f -exec chmod 0644 {} \+
 
@@ -100,4 +110,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

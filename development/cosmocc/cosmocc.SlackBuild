@@ -7,6 +7,10 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251116 bkw: BUILD=2, make 'cosmocc --help' work.
+# 20250128 bkw: update for v4.0.2.
+# 20240909 bkw: update for v3.8.0.
+
 # 20240312 bkw:
 # - update for v3.3.2.
 # - use wrapper script rather than symlinks for /usr/bin/* since the
@@ -21,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cosmocc
-VERSION=${VERSION:-3.3.2}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-4.0.2}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}		
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -59,7 +63,7 @@ find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
 mkdir -p $PKG/opt/$PRGNAM/scripts $PKG/usr/bin
 install -m0755 -oroot -groot $CWD/scripts/* $PKG/opt/$PRGNAM/scripts
 
-for i in bin include x86_64-linux-cosmo aarch64-linux-cosmo libexec; do
+for i in bin include x86_64-linux-cosmo aarch64-linux-cosmo libexec lib; do
   mv $i $PKG/opt/$PRGNAM
 done
 
@@ -81,6 +85,9 @@ PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p $PKGDOC
 cp -a LICENSE.*gpl* README.md $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
+
+# 20251116 bkw: 'cosmocc --help' just pipes this file thru less.
+ln -s ../../usr/doc/$PRGNAM-$VERSION/README.md $PKG/opt/cosmocc
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

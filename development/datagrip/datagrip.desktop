@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Path=/opt/datagrip
+Exec=datagrip %f
+Name=DataGrip
+GenericName=DataGrip
+Comment=Tool for multiple databases
+Icon=datagrip
+StartupNotify=true
+Terminal=false
+Categories=Development;IDE;

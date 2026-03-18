@@ -2,7 +2,7 @@
 
 # Slackware build script for chafa
 
-# Copyright 2022-2024  Vijay Marcel
+# Copyright 2022-2026  Vijay Marcel
 
 # All rights reserved.
 #
@@ -11,6 +11,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -23,14 +27,33 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#---------------------------Changelog-------------------------------------------#
+
+# 20/08/2022: Added to slackbuilds.org
+# 11/05/2023: updated to version 1.12.4
+# 05/12/2023: updated to version  1.12.5
+# During compilation chafa fails to build because of error in libwebp
+# saying error adding symbols: DSO missing from command line
+# to avoid this modify the CFLAGS to CFLAGS="$SLKCFLAGS $(pkg-config --libs libwebp)"
+# Thanks to Christoph Willing for the solution.
+# 05/02/2024: updated to version 1.14.0 libavif is an optional dependency.
+# This slackbuild builds without avif support.
+# 18/08/2024: Updated to version 1.14.2
+# 11/09/2024: Opdated to version 1.14.4
+# 20/11/2024: Updated to version 1.14.5
+# 10/06/2025: updated to version 1.16.1
+# 25/07/2025: updated to version 1.16.2
+# 11/11/2025: updated to version 1.18.0
+# 9/3/2026: updated tp version 1.18.1
+#-----------------------------------------------------------------------------------------#
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=chafa
-VERSION=${VERSION:-1.14.0}
+VERSION=${VERSION:-1.18.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -40,9 +63,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -78,9 +98,9 @@ cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
 CPPFLAGS="-D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS" \
 CFLAGS="$SLKCFLAGS $(pkg-config --libs libwebp)" \
@@ -98,7 +118,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-gtk-doc \
   --disable-gtk-doc-html \
   --disable-gtk-doc-pdf \
-  --without-avif \
   --with-gnu-ld \
   --build=$ARCH-slackware-linux
 
@@ -107,10 +126,10 @@ make install DESTDIR=$PKG
 /sbin/ldconfig
 
 # Don't ship .la files:
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+  | cut -f 1 -d : | xargs strip --strip-unneeded --remove-section=.comment --remove-section=.note 2> /dev/null || true
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
@@ -123,4 +142,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

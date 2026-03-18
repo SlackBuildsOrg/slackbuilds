@@ -1,0 +1,153 @@
+pages:
+  - name: Home
+  # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
+    # hide-desktop-navigation: true
+    columns:
+      - size: small
+        widgets:
+          - type: calendar
+            first-day-of-week: monday
+
+          - type: rss
+            title: Slackware News
+            limit: 15
+            collapse-after: 5
+            cache: 1h
+            feeds:
+              - url: https://slackbuilds.org/rss/ChangeLog.rss
+                title: SlackBuilds.org
+              - url: https://slackware.uk/people/alien/slackbuilds/ChangeLog.rss
+                title: AlienBob
+              - url: https://reddoglinux.ddns.net/linux/gnome/49.x/x86_64/ChangeLog.rss
+                title: GNOME for Slackware
+              - url: https://slackware.lngn.net/pub/aarch64/slackwareaarch64-current/ChangeLog.rss
+                title: slackaroni aarch64
+              - url: https://slackware.lngn.net/pub/x86_64/slackware64-current/ChangeLog.rss
+                title: slackaroni x86_64
+
+          - type: releases
+            title: Slackware Ecosystem
+            cache: 12h
+            # Without authentication the Github API allows for up to 60 requests per hour. You can create a
+            # read-only token from your Github account settings and use it here to increase the limit.
+            # token: ...
+            repositories:
+              - rizitis/DownTube
+              - rizitis/linux-zen
+              - rizitis/slacklog
+              - glanceapp/glance
+
+          - type: repository
+            repository: SlackBuildsOrg/slackbuilds
+            pull-requests-limit: 3
+            issues-limit: 3
+
+          - type: repository
+            repository: Ponce/slackbuilds
+            pull-requests-limit: 3
+            issues-limit: 3
+
+      - size: full
+        widgets:
+          - type: group
+            widgets:
+              - type: hacker-news
+              - type: lobsters
+
+          - type: videos
+            title: Slackware YouTube
+            channels:
+              - UCabC1NZDGA3FZXf2hQ-6uyA  # @slackwarearm
+              - UCHjFxmvTZ-zjL27jMlthAKA  # @linux-dev-labs
+              - UC05XpvbHZUQOfA6xk4dlmcw  # @CyberGizmo
+              - UChE448WMKQs46P5wjWlExww  # @slackernetuk938
+
+          - type: group
+            widgets:
+              - type: reddit
+                subreddit: slackware
+                show-thumbnails: true
+              - type: reddit
+                subreddit: linux
+                show-thumbnails: true
+              - type: reddit
+                subreddit: selfhosted
+                show-thumbnails: true
+              - type: reddit
+                subreddit: commandline
+                show-thumbnails: true
+
+      - size: small
+        widgets:
+          - type: weather
+            location: Chania, Greece
+            units: metric
+            hour-format: 24h
+
+          - type: bookmarks
+            groups:
+              - title: Slackware
+                links:
+                  - title: SlackBuilds.org
+                    url: https://slackbuilds.org/
+                  - title: Slackware Docs
+                    url: https://docs.slackware.com/
+                  - title: packages.slackware.com
+                    url: https://packages.slackware.com/
+                  - title: Slackware UK Mirror
+                    url: https://slackware.uk/
+                  - title: LQ Slackware
+                    url: https://www.linuxquestions.org/questions/slackware-14/
+              - title: Community
+                links:
+                  - title: 💬 Slackware Discord
+                    url: https://discord.gg/vpRfb6BWZF
+              - title: Tools
+                links:
+                  - title: Repology
+                    url: https://repology.org/
+                  - title: pkgs.org
+                    url: https://pkgs.org/
+
+          - type: rss
+            title: Desktop Environments
+            limit: 8
+            collapse-after: 3
+            cache: 3h
+            feeds:
+              - url: https://planet.kde.org/index.xml
+                title: Planet KDE
+              - url: https://www.xfce.org/feed?lang=en
+                title: XFCE
+              - url: https://planet.gnome.org/rss20.xml
+                title: Planet GNOME
+              - url: https://thisweek.gnome.org/index.xml
+                title: This Week in GNOME
+
+          - type: rss
+            title: Linux & Kernel
+            limit: 8
+            collapse-after: 3
+            cache: 3h
+            feeds:
+              - url: https://www.kernel.org/feeds/kdist.xml
+                title: Kernel Releases
+              - url: https://www.phoronix.com/rss.php
+                title: Phoronix
+              - url: https://lwn.net/headlines/rss
+                title: LWN.net
+
+# Add more pages here:
+  # - name: Your page name
+  #   columns:
+  #     - size: small
+  #       widgets:
+  #         # Add widgets here
+
+  #     - size: full
+  #       widgets:
+  #         # Add widgets here
+
+  #     - size: small
+  #       widgets:
+  #         # Add widgets here

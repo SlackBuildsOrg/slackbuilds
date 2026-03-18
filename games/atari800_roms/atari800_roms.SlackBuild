@@ -10,10 +10,12 @@
 # No need for ARCH detection or LIBDIRSUFFIX stuff.
 # Too bad I can't put m6502 for $ARCH...
 
+# 20260105 bkw: add pcxf380.zip, which adds a few more disk images.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=atari800_roms
-VERSION=${VERSION:-20140424}
+VERSION=${VERSION:-20260105}
 
 ARCH=noarch
 BUILD=${BUILD:-1}
@@ -32,32 +34,35 @@ OUTPUT=${OUTPUT:-/tmp}
 set -e
 
 ZIPFILE=xf25.zip
-SHAREDIR=/usr/share/atari800
+ZIPFILE2=pcxf380.zip
+PKGSHARE=$PKG/usr/share/atari800
 
 rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT $PKG/$SHAREDIR/$PRGNAM $PKG/$SHAREDIR/disks
+mkdir -p $TMP $PKG $OUTPUT $PKGSHARE/$PRGNAM $PKGSHARE/disks
 cd $TMP
 rm -rf $PRGNAM-$VERSION
 mkdir $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 unzip -LL $CWD/$ZIPFILE
+unzip -LL -o $CWD/$ZIPFILE2 '*.atr' '*.xfd'
 
 # No find/chown/chmod, install everything with cat or with explicit perms.
 # The .exe and .doc files inside the zip file are useless.
-install -m0644 -oroot -groot *.rom $PKG/$SHAREDIR/$PRGNAM
-install -m0644 -oroot -groot *.atr *.xfd $PKG/$SHAREDIR/disks
+install -m0644 -oroot -groot *.rom $PKGSHARE/$PRGNAM
+install -m0644 -oroot -groot *.atr *.xfd $PKGSHARE/disks
 
 # These symlinks are here in case I ever package up Thor's OS++. It's an
 # open source replacement for the Atari ROMs, and the symlinks would allow
 # picking which ROM to use, like Slackware's /usr/bin/vi does for vim
 # and elvis.
 for rom in ataribas atariosb atarixl; do
-  ln -s $PRGNAM/$rom.rom $PKG/$SHAREDIR/$rom.rom
+  ln -s $PRGNAM/$rom.rom $PKGSHARE/$rom.rom
 done
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/README > $PKG/usr/doc/$PRGNAM-$VERSION/README
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cat $CWD/README > $PKGDOC/README
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

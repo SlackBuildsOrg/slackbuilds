@@ -9,12 +9,21 @@
 # Original had no license. This modified version is released under the
 # WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20250308 bkw:
+# - fix a race condition in src/sdl/Makefile, which was causing the
+#   build to randomly fail on systems with more cores than I have.
+
+# 20250222 bkw:
+# - fix build when libmodplug not installed.
+# - fix xfrotz build.
+
+# 20250216 bkw: updated for v2.55.
+# 20220613 bkw: updated for v2.54.
+
 # 20230330 bkw: upstream download file changed. In case you're
 # wondering, it's a one-line change in the Makefile (an extra
-# digit in the git has), which doesn't actually affect the
+# digit in the git hash), which doesn't actually affect the
 # compiled binaries. updated md5sum in .info, did not bump BUILD.
-
-# 20220613 bkw: updated for v2.54.
 
 # 20211007 bkw:
 # - updated for v2.53.
@@ -41,7 +50,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=frotz
-VERSION=${VERSION:-2.54}
+VERSION=${VERSION:-2.55}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -86,6 +95,13 @@ chown -R root:root .
 find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
         \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
 
+# 20250308 bkw: fix parallel builds. src/sdl/Makefile has a problem:
+# make only checks for file existence, it can't tell that another
+# make rule is still appending stuff to the file.
+# Without this patch, the build fails 50% of the time on at least
+# one system (though I couldn't get it to fail on mine).
+patch -p1 < $CWD/sdl.parallel.fix.diff
+
 # Fix typos:
 sed -i "s/\\(Unlike it\\)'s/\1s/" doc/dfrotz.6
 sed -i 's,forground,foreground,'  doc/frotz.6
@@ -98,6 +114,7 @@ sed -i -e 's,invocatio$,&n.,' \
 sed -i 's,frotz\.conf,/etc/&,' doc/$PRGNAM.6
 
 run_make() {
+  echo "=== run_make $@"
   make \
     PREFIX=/usr \
     SYSCONFDIR=/etc \
@@ -107,20 +124,24 @@ run_make() {
     MKFONTDIR=/bin/true \
     X11_FONTDIR=$PKG/usr/share/fonts/misc \
     DESTDIR=$PKG \
-    $1
+    $@
 }
 
+sed -i "s,-O3.*,$SLKCFLAGS," Makefile
+
 # No autodetection for libmodplug or SDL2_mixer, help it out.
-maintarg="nosound"; MP=no
 if pkg-config --exists libmodplug; then
-  maintarg="$PRGNAM"
+  run_make $PRGNAM install
   MP=yes
+else
+  run_make nosound install
+  MP=no
 fi
+
 # on post-14.2 -current and 15.0, sdl2 is part of a full install:
 pkg-config --exists sdl2 SDL2_mixer && extra="clean sdl install_sdl"
 
-sed -i "s,-O3.*,$SLKCFLAGS," Makefile
-for target in $maintarg install clean dumb install_dumb $extra; do
+for target in clean dumb install_dumb $extra; do
   run_make $target
 done
 
@@ -128,9 +149,11 @@ done
 XF=no
 if [ "${XFROTZ:-no}" = "yes" ]; then
   XF=yes
+  # the mkfontdir and xset go in doinst.sh.
+  sed -i '/MKFONTDIR\|XSET/d' fonts/Makefile
   run_make clean
   run_make x11
-  run_make install_x11
+  run_make install_x11 X11_ZORK_FONTDIR=$PKG/usr/share/fonts/misc
   mv $PKG/usr/bin/xfrotz $PKG/usr/games
   rmdir $PKG/usr/bin
 fi
@@ -166,7 +189,7 @@ cat $CWD/$PRGNAM.xml > $PKG/usr/share/mime/packages/$PRGNAM.xml
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 rm -f README.1st # don't need this in the package.
-cp -a AUTHORS CO* ChangeLog DUMB HOW_TO_PLAY README* TODO *.lsm \
+cp -a AUTHORS CO* ChangeLog DUMB HOW_TO_PLAY README* *.lsm \
       doc/$PRGNAM.conf* doc/$PRGNAM.txt \
       $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
@@ -176,6 +199,10 @@ sed -e "s,@MP@,$MP," \
     -e "s,@XF@,$XF," \
   $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+if [ "$XF" = "yes" ]; then
+  cat $CWD/doinst.xfonts >> $PKG/install/doinst.sh
+  cat $CWD/doinst.xfonts >  $PKG/install/douninst.sh
+fi
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

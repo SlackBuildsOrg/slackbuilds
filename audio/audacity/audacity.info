@@ -1,12 +1,12 @@
 PRGNAM="audacity"
-VERSION="3.5.1"
+VERSION="3.7.5"
 HOMEPAGE="https://www.audacityteam.org"
-DOWNLOAD="https://github.com/audacity/audacity/releases/download/Audacity-3.5.1/audacity-sources-3.5.1.tar.gz \
-          https://github.com/audacity/audacity/releases/download/Audacity-3.5.1/audacity-manual-3.5.1.tar.gz"
-MD5SUM="42d866855b2563dc0ec50b9c38476a0d \
-        237e90933f6367311dcc81a5dd53d075"
+DOWNLOAD="https://github.com/audacity/audacity/releases/download/Audacity-3.7.5/audacity-sources-3.7.5.tar.gz \
+          https://github.com/audacity/audacity/releases/download/Audacity-3.7.5/audacity-manual-3.7.5.tar.gz"
+MD5SUM="f15fc08de78aad33d4982af10e75f621 \
+        f65a4936c5b39ff97c59593753023d7d"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="libsbsms lilv portaudio portmidi portsmf rapidjson soxr suil wxWidgets"
+REQUIRES="libsbsms lilv portaudio portmidi portsmf rapidjson soundtouch soxr suil wxWidgets"
 MAINTAINER="Matteo Bernardini"
 EMAIL="ponce@slackbuilds.org"

@@ -1,0 +1,21 @@
+xnap
+====
+
+xnap is a simple and lightweight X11 utility that allows snapping the
+mouse cursor to specific screen regions using keyboard shortcuts.
+
+It is designed with minimalism in mind:
+- no daemon
+- no configuration files
+- no background services
+- small C codebase
+
+xnap works well with lightweight and traditional window managers such as
+twm, fvwm, pekwm, fluxbox, evilwm, and similar environments.
+
+Optional Xinerama support is enabled at build time to allow proper
+handling of multi-monitor setups.
+
+Homepage:
+  https://github.com/uint23/xnap
+

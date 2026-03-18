@@ -1,6 +1,6 @@
 #!/bin/bash
 # Slackware build script for luppp
-# Copyright 2019-22 Klaatu | Lawrence NZ | klaatu@member.fsf.org
+# Copyright 2019-25 Klaatu | Lawrence NZ | klaatu@member.fsf.org
 
 # GNU All-Permissive License
 # Copying and distribution of this file, with or without modification,
@@ -12,8 +12,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Luppp
 SRCNAM=openAV-$PRGNAM
-VERSION=${VERSION:-0a55b49}
-SRCVERSION=${SRCVERSION:-0a55b492955801f3c960dbdb4127fb56de26dfcf}
+VERSION=${VERSION:-78fb003}
+SRCVERSION=${SRCVERSION:-78fb003df542e752d43f8ea3e734a83de4e4f8a1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,11 +75,20 @@ cd build
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-    -DMAN_INSTALL_DIR=/usr/man \
     -DCMAKE_BUILD_TYPE=Release ..
   make
 make install DESTDIR=$PKG
 cd ..
+
+# move application icon into appropriate directories
+mkdir -p $PKG/usr/share/icons/hicolor/128x128/apps/
+mkdir -p $PKG/usr/share/icons/hicolor/scalable/apps/
+install -m644 -D resources/icons/luppp.png $PKG/usr/share/icons/hicolor/128x128/apps/
+install -m644 -D resources/icons/luppp.svg $PKG/usr/share/icons/hicolor/scalable/apps/
+
+# desktop file, added to SlackBuild for convenience
+mkdir -p $PKG/usr/share/applications/
+cp $CWD/$PRGNAM.desktop $PKG/usr/share/applications/
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -87,28 +96,6 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-# desktop file, added to SlackBuild for convenience
-mkdir -p $PKG/usr/share/applications/
-cp $CWD/$PRGNAM.desktop $PKG/usr/share/applications/
-
-if [ -x /usr/bin/convert ]; then
-    # generate icon for .desktop file
-    mkdir -p $PKG/usr/share/icons/hicolor/256x256/apps/
-    ICONPX=256x256
-    ICONDIR=$PKG/usr/share/icons/hicolor/$ICONPX/apps/
-    convert -size $ICONPX pattern:checkerboard +level-colors \#111,\#888 $ICONDIR/ch.png
-    convert -size $ICONPX xc:black \
-      -fill \#ff5100 -draw "roundrectangle 70,70 180,180 5,5" \
-      -matte -fill none -draw 'color 0,0 replace' $ICONDIR/rec.png
-
-    convert -size 33x33 xc:white -fill black -stroke black \
-	-draw "path 'M 33,33  L 33,0  L 13,16 L 33,33 Z' " -flop $ICONDIR/tri.png
-    composite -compose multiply -gravity center \
-	$ICONDIR/tri.png $ICONDIR/rec.png $ICONDIR/box.png
-    composite -gravity center $ICONDIR/box.png $ICONDIR/ch.png $ICONDIR/luppp.png
-    rm $ICONDIR/{b,c,r,t}*.png
-fi
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

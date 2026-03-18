@@ -1,0 +1,132 @@
+#!/bin/bash
+
+# Slackware build script for peazip
+
+# Copyright 2024 Marco Lavorini, Italy
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=peazip
+VERSION=${VERSION:-10.1.0}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+# Only x86_64 is supported
+if [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX=64
+else
+  echo Architecture $ARCH is unsupported
+  exit 1
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+
+ar -x $CWD/${PRGNAM}_$VERSION.LINUX.GTK2-1_amd64.deb
+tar xvf data.tar.xz -C $PKG
+cd $PKG
+
+rm -rf $PKG/usr/bin/$PRGNAM
+rm -rf $PKG/usr/lib/$PRGNAM/res/share
+
+if [ "$ARCH" = "x86_64" ]; then
+  mv $PKG/usr/lib $PKG/usr/lib$LIBDIRSUFFIX
+fi
+
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 700 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+
+mkdir -p $PKG/usr/share/icons
+cp -rf $PKG/usr/share/$PRGNAM/icons/*.png $PKG/usr/share/icons
+rm -Rf $PKG/usr/share/$PRGNAM/icons
+
+# remove foreign files
+rm -Rf $PKG/usr/share/$PRGNAM/batch/{bat,'macOS service menus',Windows}
+rm -Rf $PKG/usr/share/$PRGNAM/lang-wincontext
+rm -Rf $PKG/usr/share/$PRGNAM/readme
+
+# remove 32 bit binary
+if [ "$ARCH" = "x86_64" ]; then
+  rm -r $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res/bin/arc/
+  rm -r $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res/bin/lpaq/
+  rm -r $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res/bin/paq/
+fi
+
+# link 'arc' binary if exists
+if [ -x /usr/bin/arc ]; then
+  mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res/bin/arc/
+  ( cd $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res/bin/arc ; ln -sf /usr/bin/arc arc )
+fi
+
+# remove included 'zstd' binary who require glibc 2.34 (slackware 15.0 has glibc 2.33), link system 'zstd' binary
+# PeaZip hash checksum check will warn apropos 'zstd' hash incorrect
+if [ -x /usr/bin/zstd ]; then
+  rm -r $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res/bin/zstd/zstd
+  ( cd $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res/bin/zstd ; ln -sf /usr/bin/zstd zstd )
+fi
+
+# sbopkglint will be happy with stripped 'zpaq' but PeaZip hash checksum check will warn apropos 'zpaq' hash incorrect
+strip $PKG/usr/lib64/$PRGNAM/res/bin/zpaq/zpaq
+
+(cd $PKG/usr/bin ; rm -rf $PRGNAM)
+(cd $PKG/usr/bin ; ln -sf ../lib$LIBDIRSUFFIX/$PRGNAM/$PRGNAM $PRGNAM)
+
+(cd $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res ; rm -rf share)
+(cd $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/res ; ln -sf ../../../share/$PRGNAM share)
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a $PKG/usr/share/doc/$PRGNAM/* $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+rm -Rf $PKG/usr/share/doc
+cp -r $PKG/usr/share/$PRGNAM/copying/ $PKG/usr/doc/$PRGNAM-$VERSION
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

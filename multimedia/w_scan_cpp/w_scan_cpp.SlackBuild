@@ -26,13 +26,12 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=w_scan_cpp
 VERSION=${VERSION:-20231015}
-VERSION_vdr=${VERSION_vdr:-2.6.7}
+VERSION_vdr=${VERSION_vdr:-2.7.9}
 VERSION_satip=${VERSION_satip:-2.4.1}
-VERSION_wirbelscan=${VERSION_wirbelscan:-2023.10.15}
-BUILD=${BUILD:-2}
+VERSION_wirbelscan=${VERSION_wirbelscan:-2024.09.15}
+BUILD=${BUILD:-6}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-NUMJOBS=${NUMJOBS:-" -j$(nproc) "}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -95,11 +94,13 @@ find -L . \
 
 # Fix
 sed "s/satip.h/satip.c/" -i Library.cpp
-sed "/ParseLCN/s/false/true/" -i vdr/PLUGINS/src/wirbelscan/common.cpp
+
+# adds optional LCN to channel names (channels.conf: mplayer/vdr/xine)
+[ "${LCN:-no}" != "no" ] && patch -p0 -i $CWD/lcn.diff
 
 CFLAGS="$SLKCFLAGS -z muldefs" \
 CXXFLAGS="$SLKCFLAGS -z muldefs" \
-  make $NUMJOBS install DESTDIR=$PKG prefix=/usr
+  make install DESTDIR=$PKG prefix=/usr
 
 # Fix DIR
 mv $PKG/usr/share/man $PKG/usr

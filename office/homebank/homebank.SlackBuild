@@ -3,7 +3,8 @@
 # Slackware build script for homebank
 
 # Copyright 2009-2022  Erik W. Hanson, Minneapolis, MN, USA
-# Copyright 2022 Juan M. Lasca <juanmlasca@gmail.com>
+# Copyright 2022-2025 Juan M. Lasca <juanmlasca@gmail.com>
+# Copyright 2025 Olivier Brouckaert <olivier.b@i-services.be>, Brussels, Belgium
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=homebank
-VERSION=${VERSION:-5.7.3}
+VERSION=${VERSION:-5.9.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -89,6 +90,12 @@ CXXFLAGS="$SLKCFLAGS" \
 
 make
 make install DESTDIR=$PKG
+
+# fix a bug in homebank 5.9.2 : wrong directory
+#if [ -d $PKG/usr/\@DATADIRNAME\@ ]; then
+#  mv $PKG/usr/\@DATADIRNAME\@/* $PKG/usr/share/
+#  rmdir $PKG/usr/\@DATADIRNAME\@
+#fi
 
 # if it is not possible to fix icon of size 24x24 (originally of size 22x22),
 # delete it.

@@ -5,6 +5,9 @@
 # Copyright 2019-2024, Alexander Verbovetsky, Moscow, Russia
 # All rights reserved.
 #
+# New Maintainer:
+# Edward W. Koenig, Vancouver WA, USA <kingbeowulf@linuxgalaxy.org>
+#
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
 #
@@ -25,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=calibre-bin
-VERSION=${VERSION:-7.15.0}
+VERSION=${VERSION:-7.16.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

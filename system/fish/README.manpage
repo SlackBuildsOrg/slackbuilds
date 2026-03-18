@@ -1,0 +1,59 @@
+fish SlackBuild – manpages
+=========================
+
+fish manpage generation depends on Sphinx and Python, which is not
+practical to require on Slackware 15.0.
+
+For this reason, manpages are generated once on Slackware-current
+and shipped as static data.
+
+1) Manpage tarball
+------------------
+
+The file:
+
+  fish-<version>-manpages.tar.gz
+
+contains pre-generated manpages in the following layout:
+
+  man/
+    man1/
+      *.1
+
+These files are plain text and architecture-independent.
+
+2) How the manpages were generated
+----------------------------------
+
+Manpages were generated on Slackware-current from the fish build
+directory:
+
+  build/user_doc/man/
+
+The tarball was created from that directory:
+
+  $ cd build/user_doc
+  $ tar czf fish-<version>-manpages.tar.gz man
+
+3) Installation during the SlackBuild
+-------------------------------------
+
+During the SlackBuild, manpages are installed with:
+
+  tar xf fish-<version>-manpages.tar.gz -C $PKG/usr
+
+They are then compressed using the standard Slackware method.
+
+Any manpages that conflict with coreutils are removed.
+
+4) Updating to a new fish version
+---------------------------------
+
+When updating fish:
+
+  - Regenerate fish-<version>-manpages.tar.gz on Slackware-current
+  - Update checksums in fish.info
+
+The SlackBuild always installs pre-generated manpages and does not
+invoke Sphinx.
+

@@ -1,0 +1,7 @@
+C++ library with functions to receive Inmarsat-C signals
+
+Mostly based on Scytale-C source code
+(https://bitbucket.org/scytalec/scytalec/), rewritten in C++ with some
+optimizations
+
+Original code license: GNU General Public License 3, microp11 2017

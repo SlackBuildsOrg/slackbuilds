@@ -2,7 +2,7 @@
 #
 # Slackware build script for neomutt
 #
-# Copyright 2016-2022 Corrado Franco (https://corradofranco.it)
+# Copyright 2016-2026 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,28 +22,23 @@
 # You may have received a copy of the GNU General Public License along
 # with this program (most likely, a file named COPYING).  If not, see
 # <http://www.gnu.org/licenses/>.
-#
-# Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=neomutt
-VERSION=${VERSION:-20240425}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-20260105}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z ${ARCH:=""} ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
+    i?86) ARCH=i686 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -53,24 +48,22 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+if [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=pentium4 -mtune=generic"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
+  SLKCFLAGS="-O2 -march=x86-64 -mtune=generic -fPIC"
   LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
 fi
 
+[ ${USEKYOTOCABINET:-no} == 'yes' ] && KYOTOCABINET="--kyotocabinet" || KYOTOCABINET=""
 [ ${USELUA:-no} == 'yes' ] && LUA="--lua" || LUA=""
 [ ${USENOTMUCH:-no} == 'yes' ] && NOTMUCH="--notmuch" || NOTMUCH=""
 
-set -eu
+set -euo pipefail
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -104,11 +97,15 @@ CXXFLAGS="$SLKCFLAGS" \
   --sqlite \
   --full-doc \
   --idn2 \
-  --autocrypt \
   --lmdb  \
+  --lz4  \
+  --zlib \
+  --zstd  \
+  --autocrypt \
+  --ubsan \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux \
-  $NOTMUCH $LUA
+  $KYOTOCABINET $NOTMUCH $LUA
 
 make
 make DESTDIR=$PKG install
@@ -122,7 +119,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
-# install desktop file and icons
+# Install desktop file and icons
 install -Dm644 $CWD/files/$PRGNAM.desktop $PKG/usr/share/applications/$PRGNAM.desktop
 for i in 32 64 128 256; do
   install -Dm644 data/logo/$PRGNAM-$i.png $PKG/usr/share/icons/hicolor/${i}x${i}/apps/$PRGNAM.png

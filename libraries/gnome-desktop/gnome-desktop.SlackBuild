@@ -2,7 +2,7 @@
 
 # Slackware build script for gnome-desktop
 
-# Copyright 2019 Gustavo Brondani Schenkel Porto Alegre, Brazil
+# Copyright 2019-2025 Gustavo Brondani Schenkel, Brazil
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,12 +22,10 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Updated to version 40.2 by Igor Alexandrov <igor.alexandrov@outlook.com>
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnome-desktop
-VERSION=${VERSION:-41.1}
+VERSION=${VERSION:-41.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -72,7 +70,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \

@@ -2,7 +2,8 @@
 
 # Slackware build script for fastfetch
 
-# Copyright 2023-2024 Samuel Young, MO, USA
+# Copyright 2023-2025 Samuel Young, MO, USA
+# Copyright 2025-2026 K. Eugene Carlson, Tsukuba, JP
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fastfetch
-VERSION=${VERSION:-2.19.1}
+VERSION=${VERSION:-2.58.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,6 +78,27 @@ cd build
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DPACKAGES_DISABLE_AM=ON \
+    -DPACKAGES_DISABLE_APK=ON \
+    -DPACKAGES_DISABLE_CHOCO=ON \
+    -DPACKAGES_DISABLE_DPKG=ON \
+    -DPACKAGES_DISABLE_EMERGE=ON \
+    -DPACKAGES_DISABLE_EOPKG=ON \
+    -DPACKAGES_DISABLE_LINGLONG=ON \
+    -DPACKAGES_DISABLE_LPKG=ON \
+    -DPACKAGES_DISABLE_LPKGBUILD=ON \
+    -DPACKAGES_DISABLE_MACPORTS=ON \
+    -DPACKAGES_DISABLE_OPKG=ON \
+    -DPACKAGES_DISABLE_PACMAN=ON \
+    -DPACKAGES_DISABLE_PACSTALL=ON \
+    -DPACKAGES_DISABLE_PALUDIS=ON \
+    -DPACKAGES_DISABLE_PKG=ON \
+    -DPACKAGES_DISABLE_SCOOP=ON \
+    -DPACKAGES_DISABLE_SNAP=ON \
+    -DPACKAGES_DISABLE_SOAR=ON \
+    -DPACKAGES_DISABLE_SORCERY=ON \
+    -DPACKAGES_DISABLE_WINGET=ON \
+    -DPACKAGES_DISABLE_XBPS=ON \
     -DCMAKE_BUILD_TYPE=Release ..
   cmake --build .
   DESTDIR=$PKG cmake --install .
@@ -97,6 +119,13 @@ cp -a \
   CHANGELOG.md README.md LICENSE \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+# Only install fish shell completions if fish is installed; otherwise,
+# keep in the doc directory.
+if [ ! -e /usr/bin/fish ]; then
+  install -m 644 completions/$PRGNAM.fish $PKG/usr/doc/$PRGNAM-$VERSION
+  rm -rv $PKG/usr/share/fish
+fi
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

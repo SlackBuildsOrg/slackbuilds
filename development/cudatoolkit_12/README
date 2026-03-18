@@ -1,0 +1,25 @@
+CUDA Toolkit CUDA is NVIDIA's parallel computing architecture. It
+enables dramatic increases in computing performance by harnessing the
+power of the GPU.
+
+NOTE:
+- the binary file to download is 5.5 GB
+- the temporary package file will need 7 GB
+- the final package will be over 4 GB (7 GB when installed).
+Be sure to have enough free space before building this.
+
+By default, the available nsight components are not included in
+the final package. They may be enabled by setting the NSIGHT
+environment variable to yes when building the package e.g.
+    NSIGHT=yes bash cudatoolkit_12.SlackBuild
+
+This is version 12, which should be installable together with
+the default version 10.
+You can activate it by sourcing /etc/profile.d/cuda-12.9.sh
+
+NOTE:
+This build is beta. CUDA is large and complicated,
+suggestions welcome. If unsure, I suggest using the default
+CUDA 10.
+However, mpv and ffmpeg compile fine with this CUDA, and hardware
+accelerated video decoding works.

@@ -3,7 +3,7 @@
 # Slackware build script for dust
 
 # Copyright 2019-2021 Benjamin Trigona-Harany <slackbuilds@jaxartes.net>
-# Copyright 2021-2024 Erich Ritz, Jenks, Oklahoma, USA
+# Copyright 2021-2026 Erich Ritz, Jenks, Oklahoma, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dust
-VERSION=${VERSION:-1.0.0}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.2.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -152,11 +152,11 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-export PATH="/opt/rust16/bin:$PATH"
+export PATH="/opt/rust/bin:$PATH"
 if [ -z "$LD_LIBRARY_PATH" ]; then
-  export LD_LIBRARY_PATH="/opt/rust16/lib$LIBDIRSUFFIX"
+  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX"
 else
-  export LD_LIBRARY_PATH="/opt/rust16/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
+  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
 fi
 
 CARGO_HOME=.cargo \

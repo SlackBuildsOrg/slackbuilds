@@ -6,12 +6,12 @@ for selecting groups of messages.
 
 Optional dependencies:
 
+* kyotocabinet - fast key/value database
 * notmuch - fast mail indexer for maildir
-* lua53 - Powerful, fast, light-weight, embeddable scripting language
-  NOTE: this won't work if you have multiple versions of lua installed.
+* lua - Powerful, fast, light-weight, embeddable scripting language
 
 This script builds neomutt without optional support
 for idn2, notmuch, lua and kyotocabinet.
 You can be enabled with:
 
-# USENOTMUCH=yes USELUA=yes ./neomutt.SlackBuild
+# USEKYOTOCABINET=yes USENOTMUCH=yes USELUA=yes ./neomutt.SlackBuild

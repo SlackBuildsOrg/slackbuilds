@@ -1,0 +1,25 @@
+The essential tools for any Java developer, including a Java
+IDE, a CVS client, Git client, XML Editor, Mylyn, Maven
+integration and WindowBuilder.
+
+This package includes:
+
+    Eclipse Git Team Provider
+    Eclipse Java Development Tools
+    Maven Integration for Eclipse
+    Mylyn Task List
+    Code Recommenders Tools for Java Developers
+    WindowBuilder Core
+    Eclipse XML Editors and Tools
+
+**********
+UPGRADING:
+**********
+if you find an error during Eclipse initialisation, check
+these two files:
+
+/opt/eclipse-rcp/configuration/config.ini
+/opt/eclipse-rcp/eclipse.ini
+
+If you haven't made modifications to those files, overwrite
+them with config.ini.new and eclipse.ini.new.

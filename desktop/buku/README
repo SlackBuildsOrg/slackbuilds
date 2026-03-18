@@ -7,3 +7,6 @@ any user-provided comments and tags.
 All buku dependencies must be built with Python 3.
 
 Optional dependency: xsel
+
+Note: pre-commit will not be updated any further in Slackware 15.0
+since upstream have now dropped support for Python 3.9.

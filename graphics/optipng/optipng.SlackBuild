@@ -1,13 +1,29 @@
 #!/bin/bash
 
 # Slackware build script for OptiPNG
-# Written by Oleg O. Chukaev <oleg.chukaev@mail.ru>
+# Written by Oleg O. Chukaev
+# Modified by B. Watson <urchlay@slackware.uk>
+# Maintained by Lumin Etherlight <lumin+slackbuilds@etherlight.link>
+
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# 20251023 lumin:
+# - update for v7.9.1.
+# - use new cmake build system.
+# - remove txt/html/pdf man page copies.
+# 20240916 lumin:
+# - new maintainer.
+# - minor readme modification.
+# 20240905 bkw:
+# - new maintainer.
+# - update for v0.7.8.
+# - build with system libpng as well as zlib.
+# - run 'make test' by default, include results in doc dir.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=optipng
-VERSION=${VERSION:-0.7.7}
+VERSION=${VERSION:-7.9.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -20,9 +36,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -34,16 +47,12 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -55,30 +64,34 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
- -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
- -exec chmod 644 {} \;
+find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
+        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 
-./configure -with-system-zlib
-cd src
-  make CFLAGS="$SLKCFLAGS -W -Wall"
-  make install DESTDIR=$PKG prefix=/usr
-cd ..
+mkdir build
+pushd build
+cmake -D OPTIPNG_USE_SYSTEM_LIBS=ON    \
+      -D CMAKE_INSTALL_PREFIX=/usr     \
+      -D CMAKE_INSTALL_MANDIR=/usr/man \
+      ../
 
-find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+make CFLAGS="$SLKCFLAGS"
+[ "${MAKETEST:-yes}" = "yes" ] && \
+    make -s test &> maketest.txt
+make install DESTDIR=$PKG
+popd
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
+# Calling make install/strip doesn't seem to work
+# for some reason.  We do it ourselves instead.
+strip --strip-unneeded $PKG/usr/bin/optipng 2> /dev/null || true
+chmod 755 $PKG/usr/bin/optipng
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a \
-  AUTHORS.txt LICENSE.txt README.txt doc/history.txt doc/optipng.man.html \
-  doc/optipng.man.pdf doc/optipng.man.txt doc/png_optimization.html \
-  doc/todo.txt \
-  $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+gzip -9 $PKG/usr/man/man*/*
+
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a README.md AUTHORS.txt LICENSE.txt build/maketest.txt \
+   doc/{history.txt,png_optimization.html,todo.txt} $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

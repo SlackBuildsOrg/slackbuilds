@@ -17,3 +17,6 @@ Features
   comprehensive test and benchmark suite.
 * Compatible with the built-in bitwise operations in LuaJIT 2.0.
 * It's as fast as you can get with the standard Lua/C API.
+
+Optional dependency: lua51. If lua51 is installed at build time, this
+package will contain a module for Lua 5.1.

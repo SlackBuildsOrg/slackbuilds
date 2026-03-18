@@ -9,11 +9,11 @@
 unclutter: unclutter (x11 tool for removing mouse clutter from the screen)
 unclutter:
 unclutter: unclutter is a program which runs permanently in the background of an
-unclutter: X11 session.  It checks the X11 pointer (cursor) position every few
+unclutter: X11 session. It checks the X11 pointer (cursor) position every few
 unclutter: seconds, and when it has not moved (and no buttons are pressed on the
 unclutter: mouse, and the cursor is not in the root window), it creates a small
-unclutter: sub-window as a child of the window the cursor is in.  The new window
+unclutter: sub-window as a child of the window the cursor is in. The new window
 unclutter: installs a cursor of size 1x1 but a mask of all 0, i.e. an invisible
-unclutter: cursor.  This allows you to see all of the text in e.g. an xterm.
+unclutter: cursor. This allows you to see all of the text in e.g. an xterm.
 unclutter:
 unclutter:

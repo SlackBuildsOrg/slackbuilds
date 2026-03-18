@@ -1,15 +1,20 @@
-xbattmon is a simple battery status bar for X. It draws a 2 pixels bar
-at the edge of your screen, which shows battery status with different
+xbattmon is a simple battery status bar for X. It draws a thin (2-pixel)
+bar at the edge of the screen, indicating battery status using different
 colors.
 
-You can configure xbattmon at build time by passing the following
-variables to the script (VAR=<...> ./xbattmon.SlackBuild):
+xbattmon is configured at build time. The following variables can be
+passed to the SlackBuild script (VAR=<value> ./xbattmon.SlackBuild):
 
-COLOR_CHARGED=<color> (default: green)
-COLOR_LEFT2CHARGE=<color> (default: grey)
-COLOR_DRAINED=<color> (default: red)
-COLOR_LEFT2DRAIN=<color> (default: blue)
-RAISE=yes|no (default: no), the bar to be raised on top of other windows
-CRITICAL=<number> (default: 5), the charge level at which it starts
-blinking
-TRANSPARENT=yes|no (default: no)
+  COLOR_CHARGED=<color>       (default: green)
+  COLOR_LEFT2CHARGE=<color>   (default: grey)
+  COLOR_DRAINED=<color>       (default: red)
+  COLOR_LEFT2DRAIN=<color>    (default: blue)
+
+  RAISE=yes|no        (default: no)
+    Raise the bar above other windows.
+
+  CRITICAL=<number>   (default: 5)
+    Battery percentage at which the bar starts blinking.
+
+  TRANSPARENT=yes|no  (default: no)
+

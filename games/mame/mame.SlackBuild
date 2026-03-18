@@ -9,46 +9,37 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
-# 20240330 bkw: Updated for v0.264.
-# 20231031 bkw: Updated for v0.260, add WAYLAND option.
-# 20230710 bkw: Updated for v0.256.
-# 20230428 bkw: Updated for v0.254.
-# 20230103 bkw: Updated for v0.251.
-# 20220205 bkw: Updated for v0.240.
+# 20260304 bkw: Updated for v0.286 (no groovy yet).
+# 20260131 bkw: Updated for v0.285 (incl. groovy patch).
+# 20260103 bkw: Updated for v0.284 (incl. groovy patch).
+# 20251203 bkw: Updated for v0.283 (incl. groovy patch).
+# 20251111 bkw: Added groovy patch for v0.282, no other changes.
+# 20251103 bkw: Updated for v0.282. No groovy yet.
+# 20251008 bkw: Updated for v0.281, groovy patches have resumed!
+# 20250902 bkw: Updated for v0.280. Still no groovy patch.
+# 20250811 bkw: Updated for v0.279. No groovy patch this time, the
+#   groovymame developer hasn't released one since May (for 0.277).
+# - Only use ld.gold if it's installed (fixes -current build).
+# - Upstream added pipewire support, but 15.0's pipewire is too old,
+#   only try to build it if pipewire is >= v1.2.x.
 
-# 20211115 bkw:
-# - updated for v0.237 on -current aka 15.0rc1.
-# - new-style icons.
-# - update mame.ini (lots of new options, some old ones went away).
-# - include the new support stuff (hash, language, etc)
-# - rename mame's 'split' to 'mame-split' to avoid potential conflict
-#   with coreutils (if someone has /usr/games before /usr/bin in $PATH).
-# - include ini/{examples,presets} in the package (in the doc dir).
-# - make ccache work! finally! see README_ccache.txt if you care.
-# - make GroovyMAME support work again (upstream switched to github).
-# - remove gcc9 stuff. it was specific to Slackware 14.2.
+# 20250515 bkw: Updated for v0.277 (incl. groovy patch).
+# 20250405 bkw: Updated for v0.276 (incl. groovy patch).
+# 20250304 bkw: Updated for v0.275 (incl. groovy patch).
+# 20250210 bkw: Added groovy patch for v0.274, no other changes.
+# 20250205 bkw: Updated for v0.274 (no groovy yet)
+# 20241216 bkw: Updated for v0.272 (incl. groovy patch).
+# 20241101 bkw: Updated for v0.271 (incl. groovy patch).
+# 20241009 bkw:
+# - Updated for v0.270 (incl. groovy patch).
+# - Add SLKCFLAGS for aarch64, courtesy of stormtracknole.
 
-# 20191208 bkw: Updated for v0.214, after long hiatus. This isn't
-# actually the latest version, but it's the latest version that will
-# compile with any of the compilers available in Slackware 14.2:
-# gcc-5.5.0, llvm-3.8.0, llvm-8.0.1 (from /extra). It may still be
-# possible to patch 0.216 to build, or possibly 0.217 will have a fix for
-# llvm-8.0.1 (mame docs claim to support "clang version 5 and later").
-# Meanwhile this update is better than nothing. Special thanks for ponce
-# and chriswilling for doing test builds on much faster machines than
-# I currently have access to. Also, moved old comment log entries to
-# ChangeLog.old as it was getting ridiculously long.
-
-# 20181227 bkw: Updated for v0.205.
-# 20181130 bkw: Updated for v0.204, including compile fix for xavix.cpp.
-# 20181031 bkw: Updated for v0.203.
-# 20180928 bkw: Updated for v0.202.
-# 20180830 bkw: Updated for v0.201.
+# See ChangeLog.old for older history.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mame
-VERSION=${VERSION:-0.264}
+VERSION=${VERSION:-0.286}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,6 +68,8 @@ if [ "$ARCH" = "i586" ]; then
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-march=i686 -mtune=i686"
 elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-fPIC"
+elif [ "$ARCH" = "aarch64" ]; then
   SLKCFLAGS="-fPIC"
 else
   SLKCFLAGS=""
@@ -120,8 +113,8 @@ cd $DIRNAME
 chown -R root:root .
 
 # 20181201 bkw: Urchlay's personal template:
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
+        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 
 # OK, building modern mame is a bit of a PITA. It uses genie (written
 # in lua, a fork of premake), but you don't get to run genie directly,
@@ -227,6 +220,12 @@ fi
 
 # Using ld.gold is *much* faster, and I see no disadvantage to it.
 
+# 20250812 bkw: -current no longer has ld.gold. Anyway, the default linker
+# has improved. Only use gold if we have it.
+if [ -x /usr/bin/ld.gold ]; then
+  GOLDOPT='LDOPTS="-fuse-ld=gold"'
+fi
+
 # The point of the OVERRIDE_CC and friends is to make the build use $PATH
 # to find gcc (so ccache will be found if it's using the symlink method).
 
@@ -256,18 +255,37 @@ if [ "${USE_CCACHE:-yes}" = "yes" ]; then
   CC="/usr/bin/ccache /usr/bin/clang"
   CXX="/usr/bin/ccache /usr/bin/clang++"
 else
-  CC="${CC:-$( which gcc )}"
-  CXX="${CXX:-$( which g++ )}"
+  # 20250812 bkw: default to clang/clang++, not gcc/g++, if CC and CXX not set.
+  CC="${CC:-$( which clang )}"
+  CXX="${CXX:-$( which clang++ )}"
+fi
+
+# 20250811 bkw: 0.279 has support for pipewire, enabled by default,
+# but 15.0's default pipewire is too old for mame. The one in testing/
+# is OK. Note that the old pipewire doesn't even have a .pc file,
+# which is fine for this purpose (pkg-config returns failure status).
+
+PWOPT='NO_USE_PIPEWIRE=1'
+if [ "${PIPEWIRE:-yes}" = "yes" ]; then
+  if pkg-config libpipewire-0.3 --atleast-version 1.2; then
+    echo "===> libpipewire-0.3 at least 1.2, building with pipewire"
+    PWOPT=""
+  else
+    echo "===> libpipewire-0.3 missing or too old: $PWOPT"
+  fi
+else
+  echo "===> user set PIPEWIRE=no: $PWOPT"
 fi
 
 make USE_QTDEBUG=$QTOPT \
+     $GOLDOPT \
+     $PWOPT \
      USE_SYSTEM_LIB_EXPAT=1 \
      USE_SYSTEM_LIB_ZLIB=1 \
      USE_SYSTEM_LIB_JPEG=1 \
      USE_SYSTEM_LIB_FLAC=1 \
      PYTHON_EXECUTABLE="/usr/bin/python3 -S" \
      OPT_FLAGS="$SLKCFLAGS" \
-     LDOPTS="-fuse-ld=gold" \
      OVERRIDE_CC="$CC" \
      OVERRIDE_CXX="$CXX" \
      CC="$CC" \

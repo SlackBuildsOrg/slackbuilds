@@ -2,7 +2,7 @@
 
 # Slackware build script for nix
 
-# Copyright 2019-2024 Pouria Rezaei <Pouria.rz@outlook.com>
+# Copyright 2019-2025 Pouria Rezaei <Pouria.rz@outlook.com>
 # Copyright 2015 Pragmatic Cypher <slackbuilds@server.ky>
 # All rights reserved.
 #
@@ -47,7 +47,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nix
 VERSION=${VERSION:-2.17.2}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -97,16 +97,20 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-# - 20220325 bkw: patch from Debian, stops nix from installing
-#   /usr/bin/nix and its libraries during "make". spamming the real
-#   root partition is bad, m'kay? (Updated).
-# - The above patch was added thanks to Pragmatic Cypher, along with
-#   mdbook patch to make it disabled.
-# - Added global CFLAGS.
-# - Changed to ignore offset, since function hasn't still implemented
-#   in Slackware 15's sqlite.
-# - Pointed shell as not sandbox, fixed zsh only build.
-patch -p1 < $CWD/fix_nix_options.patch
+# - Point shell not sandboxed + fix zsh only build.
+# - Some clean parameters in source.
+# - Stop nix from spamming root parition during "make" process.
+# - Disable mdbook.
+# - Simply, use my toml11 now!
+# - Set to ignore offset, since function hasn't still implemented in
+#   Slackware 15's sqlite.
+# - Fix annoying warning for constructor (cpp20 syntax circus).
+patch -p1 < $CWD/config/fix_nix_options.patch
+
+# Whether don't use mdBook or do so
+if [ ! "${MDBOOK:-no}" = "yes" ]; then
+  patch -p1 < "$CWD/config/optional_mdbook.patch"
+fi
 
 autoreconf -vfim
 autoheader
@@ -118,7 +122,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --sysconfdir=/etc \
-  --enable-static=rapidcheck \
+  --localstatedir=/nix/var \
+  --disable-tests \
+  --enable-gc \
+  --enable-lto \
   --build=$ARCH-slackware-linux \
   --host=$ARCH-slackware-linux
 

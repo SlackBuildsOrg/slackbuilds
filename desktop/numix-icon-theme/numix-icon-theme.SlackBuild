@@ -4,7 +4,7 @@
 #
 # Copyright 2015-2018 Edinaldo P. Silva, Rio de Janeiro, Brazil.
 # Copyright 2020-2022 Isaac Yu <isaacyu1@isaacyu1.com>
-# Copyright 2023-2024 Edinaldo P. Silva, Rio de Janeiro, Brazil.
+# Copyright 2023-2025 Edinaldo P. Silva, Rio de Janeiro, Brazil.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,16 +27,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM="numix-icon-theme"
-VERSION=${VERSION:-23.12.02}
+VERSION=${VERSION:-25.01.31}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 ARCH=noarch
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0

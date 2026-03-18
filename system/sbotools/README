@@ -1,18 +1,26 @@
-sbotools (ports-like interface to slackbuilds.org)
+sbotools (ports-like interface to SlackBuilds.org)
 
-sbotools is a set of perl scripts providing a ports-like automation
-interface to slackbuilds.org. Its features include requirement handling
-and the ability to handle 32-bit and compat32 builds on multilib
-x86_64 systems.
+sbotools is a set of Perl scripts providing a ports-like automation
+interface to SlackBuilds.org. Features include dependency handling,
+using a custom git branch, generating 32-bit and compat32 builds on
+multilib systems, reverse dependency search and rebuild, dry run and
+batch modes, gpg verification, optional build logging, checks for
+missing shared object dependencies, and more.
 
-There are man pages for each of the sbo* commands, and more
-documentation, as well as online versions of the man pages, can be
-found at:
-http://pink-mist.github.io/sbotools/documentation/
+Most sbotools operations can be accomplished with sbotool, a dialog TUI
+with dynamic menus. Running the tools individually from the command line
+provides superior option control and efficiency, however.
 
-sbotools bundles the required Perl module Sort::Versions with it. This
-does not interfere with a copy installed from the CPAN, or from
-slackbuilds.org.
+Each included tool has a man page. See sbotools(1) for executive
+summaries and a startup guide. The modules are documented in man 3.
 
-sbotools is written and maintained by d4wnr4z0r, xocel, and pink_mist;
-we can be contacted in #sbotools on freenode.
+To blacklist scripts, notify sbotools of optional dependencies and
+request automatic reverse dependency rebuilds, see sbohints(1) or
+/etc/sbotools/sbotools.hints.
+
+Please note that this implementation of sbotools was forked from
+sbotools-2.7 and added to SlackBuilds.org in late 2024. A debt of
+gratitude is owed to original author Jacob Pipkin, longtime maintainer
+Andreas Guldstrand and major contributor Luke Williams.
+
+sbotools conflicts with system/sbotools2 (Legacy Sbotools).

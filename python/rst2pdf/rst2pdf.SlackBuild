@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rst2pdf
-VERSION=${VERSION:-0.101}
+VERSION=${VERSION:-0.103.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -63,7 +63,11 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-python3 setup.py install --prefix=/usr --root=$PKG --optimize=1
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
+
+CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" python3 -m build --wheel --no-isolation
+python3 -m installer --destdir "$PKG" dist/*.whl
 
 cd doc
 rst2man rst2pdf.rst rst2pdf.1
@@ -78,10 +82,9 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CHANGES.rst CODE_OF_CONDUCT.rst Contributors.txt LICENSE.txt MAINTAINERS.rst ISSUE_TEMPLATE.md CONTRIBUTING.rst README.rst $PKG/usr/doc/$PRGNAM-$VERSION
-cd doc
-cp -a manual.rst gen_docs.sh rst2html-manual.py  $PKG/usr/doc/$PRGNAM-$VERSION
-cd ..
+cp -av CHANGES.rst CODE_OF_CONDUCT.rst Contributors.txt LICENSE.txt MAINTAINERS.rst ISSUE_TEMPLATE.md CONTRIBUTING.rst README.rst $PKG/usr/doc/$PRGNAM-$VERSION
+cp -av doc $PKG/usr/doc/$PRGNAM-$VERSION
+rm -rvf $PKG/usr/doc/$PRGNAM-$VERSION/doc/output/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 find $PKG/usr/doc/$PRGNAM-$VERSION -type f -exec chmod 0644 {} \+
 

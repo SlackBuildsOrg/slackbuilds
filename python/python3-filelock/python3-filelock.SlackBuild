@@ -3,7 +3,7 @@
 # Slackware build script for python3-filelock
 
 # Copyright 2023 Isaac Yu <isaacyu1@isaacyu1.com>
-# Copyright 2023-2024 Jeremy Hansen <jebrhansen+SBo@gmail.com>
+# Copyright 2023-2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-filelock
 SRCNAM=filelock
-VERSION=${VERSION:-3.15.4}
+VERSION=${VERSION:-3.20.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -65,6 +65,9 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 export SETUPTOOLS_SCM_PRETEND_VERSION=$VERSION
+
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
 python3 -m build --no-isolation
 python3 -m installer -d "$PKG" dist/*.whl

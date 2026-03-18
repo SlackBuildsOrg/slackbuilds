@@ -3,7 +3,7 @@
 # Slackware build script for python3-fonttools
 
 # Copyright 2017-2019,2022 Andrew Clemons, Wellington New Zealand
-# Copyright 2023-2024 Vijay Marcel
+# Copyright 2023-2025 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-fonttools
 SRCNAM=fonttools
-VERSION=${VERSION:-4.51.0}
+VERSION=${VERSION:-4.60.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,10 +75,12 @@ cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" python3 -m build --wheel --no-isolation
 python3 -m installer --destdir "$PKG" dist/*.whl
 
@@ -88,16 +90,11 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mv -v  $PKG/usr/share/man $PKG/usr
 rm -rvf $PKG/usr/share
 
-cd Doc
-make man
-mv -v $TMP/$SRCNAM-$VERSION/Doc/build/man/fonttools.1  $PKG/usr/man/man1/
-cd ..
-
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CONTRIBUTING.md LICENSE.external LICENSE README.rst CODE_OF_CONDUCT.md NEWS.rst $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE.external LICENSE README.rst NEWS.rst $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 find $PKG/usr/doc/$PRGNAM-$VERSION -type f -exec chmod 0644 {} \+
 
@@ -105,4 +102,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

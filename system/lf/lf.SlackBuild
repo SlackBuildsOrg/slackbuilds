@@ -3,6 +3,7 @@
 # Slackware build script for lf
 
 # Copyright 2022, Damian Perticone, Berisso, Argentina
+# Copyright 2025 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lf
-VERSION=${VERSION:-r27}
+VERSION=${VERSION:-r41}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -106,7 +107,7 @@ install -vDm644 etc/lf.fish $PKG/usr/share/fish/vendor_completions.d/lf.fish
 install -vDm644 etc/lf.zsh $PKG/usr/share/zsh/site-functions/_lf
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a LICENSE *.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

@@ -4,3 +4,5 @@ Confuse is a configuration library for Python that uses YAML. It takes
 care of defaults, overrides, type checking, command-line integration,
 environment variable support, human-readable errors, and standard
 OS-specific locations.
+
+NOTE: 2.1.0 is the last version to support python-3.9

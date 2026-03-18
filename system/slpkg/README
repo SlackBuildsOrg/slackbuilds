@@ -1,5 +1,17 @@
-Slpkg is a software package manager that installs, updates and
-removes packages on Slackware-based systems. It automatically
-calculates dependencies and figures out what things need to
-happen to install packages. Slpkg makes it easier to manage
-groups of machines without the need for manual updates.
+Slpkg is a feature-rich package manager for Slackware-based systems.
+It installs, upgrades, removes, and builds packages from multiple
+repositories, including SlackBuilds.org (SBo, Ponce) and binary repositories.
+Slpkg automatically resolves and tracks dependencies, maintains a full
+installation history with transaction rollback, detects orphaned and
+foreign packages, and verifies the integrity of installed files.
+
+Additional features include reverse dependency analysis, package
+pinning and blacklisting, security auditing, file search within
+package indexes, and export/import of package lists.
+
+The tool follows the standards of the SlackBuilds.org organization and
+Slackware Linux's official procedures for package installation,
+upgrades, and removal.
+
+Optional dependency:
+  python3-pythondialog alternatives for dependency and package management.

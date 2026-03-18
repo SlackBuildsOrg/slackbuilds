@@ -1,0 +1,26 @@
+diff --git a/config.def.h b/config.def.h
+index c93242b..3bf94f8 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -54,6 +54,9 @@
+ /* The force redraw key. */
+ #define REDRAW KEY(L'l')
+ 
++/* clears the scrollback and everything */
++#define NUKE KEY(L'k')
++
+ /* The scrollback keys. */
+ #define SCROLLUP CODE(KEY_PPAGE)
+ #define SCROLLDOWN CODE(KEY_NPAGE)
+diff --git a/mtm.c b/mtm.c
+index 73c0cf5..96e7886 100644
+--- a/mtm.c
++++ b/mtm.c
+@@ -1098,6 +1098,7 @@ handlechar(int r, int k) /* Handle a single input character. */
+     DO(true,  VSPLIT,              split(n, VERTICAL))
+     DO(true,  DELETE_NODE,         deletenode(n))
+     DO(true,  REDRAW,              touchwin(stdscr); draw(root); redrawwin(stdscr))
++    DO(true,  NUKE,                wclear(n->s->win))
+     DO(true,  SCROLLUP,            scrollback(n))
+     DO(true,  SCROLLDOWN,          scrollforward(n))
+     DO(true,  RECENTER,            scrollbottom(n))

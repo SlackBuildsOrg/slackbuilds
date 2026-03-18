@@ -2,7 +2,7 @@
 
 # Slackware build script for libfabric
 
-# Copyright 2022-2024 Vijay Marcel
+# Copyright 2022-2026 Vijay Marcel
 
 # All rights reserved.
 #
@@ -11,6 +11,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -23,10 +27,27 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Changelog for libfabric SlackBuild Script
+# ---------------------------------------------------------------------------------
+
+# 03/09/2022: Added to slackbuilds.org
+# 18/02/2023: libfabric slackbuild script fixed by B.Watson
+# 16/05/2023: Updated to version 1.18.0 From this build onwards it will only build
+# on x86_64 platform only.
+# 19/02/2024: Updated to version 1.20.1
+# 23/04/2024: Updated to version 1.21.0
+# 18/08/2024: Updated to version 1.22.0
+# 18/02/2025: updated to version 2.0.0
+# 16/04/2025: updated to version 2.1.0
+# 25/07/2025: updated to version 2.2.0
+# 21/10/2025: updated to version 2.3.1
+# 30/01/2026: updated to version 2.4.0
+# ---------------------------------------------------------------------------------------
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libfabric
-VERSION=${VERSION:-1.21.0}
+VERSION=${VERSION:-2.4.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -67,9 +88,9 @@ cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
 ./autogen.sh
 CFLAGS="$SLKCFLAGS" \
@@ -89,7 +110,7 @@ make
 make install DESTDIR=$PKG
 
 # Don't ship .la files:
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
   | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded --remove-section=.comment --remove-section=.note 2> /dev/null || true
@@ -105,4 +126,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -8,13 +8,17 @@ try your hand at piracy, make your fortune trading between systems, or
 do missions for the various factions fighting for power, freedom or
 self-determination.
 
+When running a new version of Pioneer, saved games from previous
+versions are unplayable, and marked in red on the "Load game" screen.
+Users who wish to back up their saves before attempting recovery through
+the menu can copy $HOME/.local/share/pioneer (or $HOME/.pioneer, if
+applicable) to another location.
+
 To build with debugging support, use:
 
   DEBUG="yes" ./pioneer.SlackBuild
 
-OpenGL core profile version 3.1 or newer is a runtime dependency. To
+OpenGL core profile version 3.2 or newer is a runtime dependency. To
 determine what version of OpenGL is installed, use:
 
   glxinfo | grep "core profile version"
-
-lua52 is an optional dependency.

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Notepad++
+GenericName=Notepad++
+Comment=A powerful text editor from the Windows universe
+Exec=/opt/Notepad++/notepad++ "\\$@"
+Icon=notepad++
+Terminal=false
+Type=Application
+Categories=Development;IDE;
+StartupNotify=false

@@ -1,0 +1,32 @@
+Font configuration (Slackware)
+------------------------------
+
+This package does not modify system font configuration.
+
+To make Iosevka the default monospace font for applications that
+request the generic "monospace" family (for example terminal
+emulators, Geany, Firefox <pre> blocks, Dillo, or pekwm menus),
+create the file:
+
+  ~/.config/fontconfig/fonts.conf
+
+with the contents:
+
+  <?xml version="1.0"?>
+  <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+  <fontconfig>
+    <alias>
+      <family>monospace</family>
+      <prefer>
+        <family>Iosevka</family>
+      </prefer>
+    </alias>
+  </fontconfig>
+
+After creating the file, rebuild the font cache:
+
+  fc-cache -f
+
+This allows applications to use Iosevka without hardcoding font
+names in individual programs.
+

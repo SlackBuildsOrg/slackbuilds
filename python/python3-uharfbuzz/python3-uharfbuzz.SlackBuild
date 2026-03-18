@@ -2,7 +2,7 @@
 
 # Slackware build script for python3-uharfbuzz
 
-# Copyright 2023-2024 Vijay Marcel
+# Copyright 2023-2025 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,10 +22,26 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#---------------------------Changelog-----------------------------------------#
+
+# 10/06/2023: submitted to slackBuilds.org
+# 08/12/2023: Upgraded to version 0.37.3
+# Thanks to Nikos Glotis for testing this version
+# 25/02/2024: Updated to version 0.39.0
+# 24/05/2024: Updated to version 0.39.1
+# 21/08/2024: Updated to version 0.39.3
+# 11/09/2024: Updated to version 0.39.5
+# 11/10/2024: Updated to version 0.41.0
+# 18/02/2025: updated to version 0.45.0
+# 13/05/2025: updated to version 0.50.2
+# 12/09/2025: updated to version 0.51.4
+
+#-------------------------------------------------------------------------------# 
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-uharfbuzz
-VERSION=${VERSION:-0.39.1}
+VERSION=${VERSION:-0.51.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -70,17 +86,18 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $SRCNAM-$VERSION
-unzip $CWD/$SRCNAM-$VERSION.zip
-
+tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
-
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH="/opt/python$PYVER/site-packages:/opt/cython/python$PYVER/site-packages"
+export PATH="/opt/cython/bin:$PATH"
 CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" python3 -m build --wheel --no-isolation
 python3 -m installer --destdir "$PKG" dist/*.whl
 
@@ -89,6 +106,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE README.md  $PKG/usr/doc/$PRGNAM-$VERSION
+install -Dvm 0644  $CWD/example.py -t $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 find $PKG/usr/doc/$PRGNAM-$VERSION -type f -exec chmod 0644 {} \+
 
@@ -96,4 +114,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

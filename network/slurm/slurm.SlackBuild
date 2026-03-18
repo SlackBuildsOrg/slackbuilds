@@ -2,7 +2,7 @@
 
 # Slackware build script for Slurm
 
-# Copyright 2015-2024 Emmanuel N. Millan, Mendoza, Argentina.
+# Copyright 2015-2026 Emmanuel N. Millan, Mendoza, Argentina.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -29,13 +29,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=slurm
-VERSION=${VERSION:-23.11.6}
+VERSION=${VERSION:-25.11.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-DOCS="AUTHORS COPYING DISCLAIMER LICENSE.OpenSSL \
-      META NEWS README.rst RELEASE_NOTES"
+DOCS="AUTHORS COPYING CHANGELOG.md CONTRIBUTING.md DISCLAIMER LICENSE.OpenSSL \
+      META README.md RELEASE_NOTES.md SECURITY.md"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

@@ -2,7 +2,7 @@
 
 # Slackware build script for lxqt-admin
 
-# Copyright 2024 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2024-2025 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lxqt-admin
-VERSION=${VERSION:-1.3.0}
+VERSION=${VERSION:-2.3.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,14 +75,6 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-# Set bash shell default if available
-# See https://github.com/lxqt/lxqt-admin/pull/280
-patch -p1 < $CWD/bash-shell-default.patch
-
-# Various code improvements
-# See https://github.com/lxqt/lxqt-admin/pull/284
-patch -p1 < $CWD/code-improvements.patch
 
 mkdir build
 cd build

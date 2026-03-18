@@ -1,0 +1,8 @@
+# The kernel path to watch.
+#KERNEL=/boot/vmlinuz
+# The path to the EFI kernel.
+#EFI_KERNEL=/boot/efi/Slackware/vmlinuz
+# The path for the initial ram disk to install.
+#INITRD=/boot/initrd.gz
+# The path to the EFI's initial ram disk.
+#EFI_INITRD=/boot/efi/Slackware/initrd.gz

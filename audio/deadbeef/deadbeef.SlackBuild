@@ -3,6 +3,7 @@
 # Slackware build script for deadbeef
 #
 # Copyright 2010 AlexGAV
+# Copyright 2020-2025 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -29,7 +30,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=deadbeef
-VERSION=${VERSION:-1.9.5}
+VERSION=${VERSION:-1.10.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,14 +85,10 @@ find -L . \
 export CC=${CC:-clang}
 export CXX=${CXX:-clang++}
 
-# 20220323 bkw: the configure script always adds this anyway, if the
-# compiler supports it. trouble is, it doesn't properly pass it to
-# the subprojects it builds, specifically soundtouch, which makes the
-# build fail. putting it in our flags fixes it.
-# Note: if you're on an older CPU that really doesn't support SSE2,
-# deadbeef will likely compile and fail to run (Illegal instruction).
-# Me adding -msse2 here doesn't change that, for better or worse.
-SLKCFLAGS+=" -msse2"
+if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
+    SLKCFLAGS="$SLKCFLAGS -msse2"
+    IA32="--disable-soundtouch --disable-ffap"
+fi
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -101,6 +98,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --enable-shared \
   --disable-gtk2 \
+  $IA32 \
   --build=$ARCH-slackware-linux
 
 make V=1
@@ -109,7 +107,6 @@ make install DESTDIR=$PKG
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-# Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION

@@ -9,8 +9,8 @@ DOWNLOAD="https://github.com/fcitx/mozc/archive/ca82d39d08df3359fdf5c653a1f56b3e
           https://github.com/google/googletest/archive/703bd9caab50b139428cea1aaff9974ebee5742e/googletest-703bd9caab50b139428cea1aaff9974ebee5742e.zip \
           https://github.com/open-source-parsers/jsoncpp/archive/42e892d96e47b1f6e29844cc705e148ec4856448/jsoncpp-42e892d96e47b1f6e29844cc705e148ec4856448.zip \
           https://github.com/hiroyuki-komatsu/japanese-usage-dictionary/archive/e5b3425575734c323e1d947009dd74709437b684/japanese-usage-dictionary-e5b3425575734c323e1d947009dd74709437b684.zip \
-          https://gitlab.com/BrLi/brli-aur/-/raw/fcitx5-mozc-ut/jigyosyo-202110.zip \
-          https://gitlab.com/BrLi/brli-aur/-/raw/fcitx5-mozc-ut/x-ken-all-202110.zip \
+          https://slackware.uk/sbosrcarch/by-name/misc/fcitx5-mozc/jigyosyo-202110.zip \
+          https://slackware.uk/sbosrcarch/by-name/misc/fcitx5-mozc/x-ken-all-202110.zip \
           https://download.fcitx-im.org/fcitx-mozc/fcitx-mozc-icon.tar.gz"
 MD5SUM="257fcb244249a3c65c576cceb5cbb7c8 \
         699c5af5c6d7e19835afb5292d151f91 \

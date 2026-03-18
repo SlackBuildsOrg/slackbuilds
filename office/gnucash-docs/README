@@ -2,8 +2,8 @@ This is the documentation package for Gnucash.
 
 This builds the internal help and user guides for Gnucash.
 
-For the HTML help and user guides to read outside of the Gnucash
-application, pass HTML="yes" to the script.
+The internal docs are broken ATM, so the HTML docs will always be
+built.  You can find them in /usr/doc/gnucash-docs-5.xx/HTML.
 
 For the epub help and user guides, pass EPUB="yes" to the script.
 
@@ -24,10 +24,8 @@ de for German
 it for Italian
 pt for Portugese
 ja for Japanese (guide only, no help - defaults to C)
-NOTE: the Russian translation has been dropped
+zh for Chinese (guide only, no help - defaults to C)
 
 Note: This script builds the internal guides in all available
-languages, but the HTML guides are only in the spacified language
+languages, but the HTML guides are only in the specified language
 to save space and avoid excessive package bloat.
-
-Runtime dependencies are yelp and rarian.

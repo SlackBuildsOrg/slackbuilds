@@ -1,8 +1,7 @@
-maim (make image)
+maim (make screenshots of desktop)
 
-maim (make image) takes screenshots of your desktop. It has options
-to take only a region, and relies on slop to query for regions.
-maim is supposed to be an improved scrot.
+maim (make image) takes screenshots of your desktop. It has options to
+take only a region, and relies on slop to query for regions.
 
-If slop is installed, it can be used for selecting a region to
-screenshot.
+maim is meant to to overcome shortcomings of scrot and performs better
+in several ways.

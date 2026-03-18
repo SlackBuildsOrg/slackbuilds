@@ -1,3 +1,7 @@
 Beniget is a collection of Compile-time analyse on Python
 Abstract Syntax Tree (AST). It is a building block for writing static
 analyzer or compiler for Python.
+
+NOTE: Unable to support newer versions than 0.4.2.post1 due to other
+other packages on SBo not being able to be updated due to 15.0 being
+stuck with older versions of dependencies.

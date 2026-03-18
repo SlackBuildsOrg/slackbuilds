@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+   |-----handy-ruler------------------------------------------------------|
+buf: buf (The best way of working with Protocol Buffers.)
+buf:
+buf: The buf CLI is the best tool for working with Protocol Buffers. It
+buf: provides a linter, a breaking change detector, a generator,
+buf: a formatter, integration with the Buf Schema Registry, including full
+buf: dependency management.
+buf:
+buf: Homepage: https://buf.build/
+buf:
+buf:
+buf:

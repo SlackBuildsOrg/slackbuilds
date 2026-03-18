@@ -1,6 +1,13 @@
 Zotero is a free, easy-to-use tool to help you collect, organize,
 cite, and share research.
 
+For Libre Office users, the file you need to integrate Libre with
+zotero is Zotero_LibreOffice_Integration.oxt
+
+After installation, you can find this file in
+/opt/zotero/integration/libreoffice/
+
+From Zotero Website:
 Zotero is the only software that automatically senses research on
 the web. Need an article from JSTOR or a preprint from arXiv.org?
 A news story from the New York Times or a book from a library?

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=HeidiSQL
+Comment=Database management tool
+Exec=/usr/bin/HeidiSQL
+Icon=/usr/share/pixmaps/HeidiSQL.png
+Terminal=false
+Type=Application
+Categories=System;Development;GTK;

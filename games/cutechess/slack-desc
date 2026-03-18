@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+cutechess: cutechess (cross-platform tools for working with chess engines)
+cutechess:
+cutechess: Cute Chess is a graphical user interface and command-line interface
+cutechess: for playing chess. Cute Chess is written in C++ using the Qt
+cutechess: framework. The cutechess-cli command-line program allows for playing
+cutechess: games between chess engines.
+cutechess:
+cutechess: Cute Chess was written by Ilari Pihlajisto, Arto Jonsson and
+cutechess: contributors. https://cutechess.com/
+cutechess:
+cutechess:

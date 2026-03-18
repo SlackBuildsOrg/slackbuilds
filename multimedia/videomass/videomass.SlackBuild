@@ -22,15 +22,23 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# - updated for v5.0.16
-# - build method changed (python3 -m build, rather than setup.py)
-# - updated for v5.0.18
-# - Added python3-babel dependency to build MO files during build package.
+# updated for v5.0.16
+#   - build method changed (python3 -m build, rather than setup.py)
+# updated for v5.0.18
+#   - Added python3-babel dependency to build MO files during build package.
+# updated for v5.0.21
+#   - Removed python3-build from requirements as it is already included in python3-hatchling requirements
+#   - As reported by fourtysixandtwo I added two new lines to the SlackBuild:
+#        PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+#        export PYTHONPATH=/opt/python$PYVER/site-packages
+# updated for v6.1.12
+#   - The optional yt-dlp dependency is dropped.
+
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=videomass
-VERSION=${VERSION:-5.0.18}
+VERSION=${VERSION:-6.1.20}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -85,6 +93,9 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
 python3 -m build --no-isolation
 python3 -m installer --destdir "$PKG" dist/*.whl

@@ -2,7 +2,7 @@
 #
 # Slackware build script for webkit2gtk4.1
 #
-# Copyright 2022-2024 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2022-2026 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=webkit2gtk4.1
 SRCNAM=webkitgtk
-VERSION=${VERSION:-2.44.2}
+VERSION=${VERSION:-2.46.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -102,13 +102,16 @@ cd build
         -DUSE_LIBBACKTRACE=OFF \
 	-DUSE_JPEGXL=OFF \
         -DUSE_GSTREAMER_TRANSCODER=OFF \
+        -DUSE_SYSTEM_SYSPROF_CAPTURE=NO \
         -Wno-dev \
         -G Ninja \
         ..
 
 # The build might crash on high specs machines because ninja eat all
 # of the resources, so let's try to limit it to half the available ones
-"${NINJA:=ninja}" -j$(expr $(nproc) / 2)
+# 20241016 bkw: make sure we never get -j0, see webkit2gtk.SlackBuild
+# for detailed explanation.
+"${NINJA:=ninja}" -j$(expr '(' $(nproc) + 1 ')' / 2)
 DESTDIR=$PKG $NINJA -j1 install
 
 mkdir -p $PKG/usr/share/gtk-doc/html/webkit{2,dom}gtk-4.1

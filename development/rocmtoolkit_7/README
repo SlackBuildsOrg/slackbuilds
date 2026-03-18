@@ -1,0 +1,26 @@
+Radeon Open Compute platforM (ROCm) is a software stack, composed
+primarily of open-source software, that provides the tools for
+programming AMD Graphics Processing Units (GPUs), from low-level
+kernels to high-level end-user applications.
+
+Specifically, ROCm provides the tools for HIP (Heterogeneous-computing
+Interface for Portability), OpenCL and OpenMP. These include compilers,
+libraries for high-level functions, debuggers, profilers and runtimes.
+
+It is aimed for this to become a general toolkit for AMD GPU
+programming by using a subset of the latest of the 7.x.x series of ROCm
+components. Suggestions are therefore welcome regarding additional ROCm
+components to include in the SlackBuild (please email the maintainer).
+
+This SlackBuild uses precompiled blobs downloaded from the repo at
+radeon.com (much like the cudatoolkit* SlackBuilds which download and
+rearrange a precompiled blob from nvidia.com). Building these
+precompiled blobs from their source codes remains an exercise for the
+future.
+
+Building this SlackBuild will download over 6G of required files,
+which will be repackaged to create the final Slackware package, which
+will itself be nearly 5G (expanding to well over 20G when installed).
+
+This SlackBuild should not be installed at the same time as opencl-amd
+(from the libraries category) with which it is likely to conflict.

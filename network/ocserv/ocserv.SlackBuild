@@ -2,6 +2,7 @@
 
 # Slackware build script for ocserv
 
+# Copyright 2025-2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # Copyright 2024, Alexander Verbovetsky, Moscow, Russia
 # All rights reserved.
 #
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ocserv
-VERSION=${VERSION:-1.3.0}
+VERSION=${VERSION:-1.4.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -66,6 +67,13 @@ fi
 
 set -e
 
+if [ -z "$(getent group ocserv)" -o -z "$(getent passwd ocserv)" ]; then
+  echo "You must have a 'ocserv' user and group to run this script."
+  echo "  # groupadd -g 382 ocserv"
+  echo "  # useradd -u 382 -g 382 -s /sbin/nologin -M ocserv"
+  exit 1
+fi
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -88,7 +96,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --disable-static \
   --build=$ARCH-slackware-linux
 
 make

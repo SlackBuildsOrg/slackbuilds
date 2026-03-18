@@ -25,11 +25,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sdrpp
-VERSION=${VERSION:-1.0.4}
+VERSION=${VERSION:-20260111.65a0e11d}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -71,9 +70,9 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 
-rm -rf SDRPlusPlus-$VERSION
-tar xvf $CWD/SDRPlusPlus-$VERSION.tar.gz
-cd SDRPlusPlus-$VERSION
+rm -rf SDRPlusPlus-${VERSION##*.}*
+tar xvf $CWD/SDRPlusPlus-${VERSION##*.}*.tar.gz
+cd SDRPlusPlus-${VERSION##*.}*
 
 chown -R root:root .
 find -L . \
@@ -83,8 +82,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # Fix
-zcat $CWD/networking.diff.gz | patch -p0 || exit
-zcat $CWD/audio_sink.diff.gz | patch -p0 || exit
+sed "/volk_32fc_s32fc_x2_rotator2_32fc/s/phaseDelta/\&phaseDelta/" -i decoder_modules/dab_decoder/src/dab_dsp.h
 
 mkdir -p build
 cd build
@@ -92,26 +90,27 @@ cd build
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_LIBDIR=lib$LIBDIRSUFFIX \
     -DCMAKE_INSTALL_MANDIR=/usr/man \
     -DCMAKE_INSTALL_DOCDIR=/usr/doc/$PRGNAM-$VERSION \
     -DOPT_BUILD_AIRSPY_SOURCE=OFF \
     -DOPT_BUILD_AIRSPYHF_SOURCE=OFF \
-    -DOPT_BUILD_SDRPLAY_SOURCE=ON \
     -DOPT_BUILD_PLUTOSDR_SOURCE=OFF \
+    -DOPT_BUILD_SOAPY_SOURCE=ON \
     -DOPT_BUILD_NEW_PORTAUDIO_SINK=ON \
+    -DOPT_BUILD_ATV_DECODER=ON \
+    -DOPT_BUILD_DAB_DECODER=ON \
     -DOPT_BUILD_M17_DECODER=ON \
+    -DOPT_BUILD_RYFI_DECODER=ON \
+    -DOPT_BUILD_VOR_RECEIVER=ON \
+    -DOPT_BUILD_SCHEDULER=ON \
     -DCMAKE_BUILD_TYPE=Release ..
-  make $NUMJOBS
   make install/strip DESTDIR=$PKG
 cd ..
 
-# Fix (it seems that LIB_SUFFIX is not taken into account)
-[ -d $PKG/usr/lib -a ! -e $PKG/usr/lib$LIBDIRSUFFIX ] && mv $PKG/usr/lib $PKG/usr/lib$LIBDIRSUFFIX
-
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  license readme.md contributing.md \
+  contributing.md license readme.md \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 find $PKG/usr/doc -type f -exec chmod 644 {} \;

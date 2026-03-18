@@ -1,0 +1,49 @@
+.TH "PINBALL-CONFIG" "6" "November 2025" "@VERSION@" "SlackBuilds.org"
+.SH "NAME"
+pinball-config \- returns information about installed pinball libraries and
+binaries
+.SH SYNOPSIS
+.B pinball-config
+[OPTIONS]
+.SH DESCRIPTION
+The
+.B pinball-config
+shell script is designed to retrieve the configuration information about
+the libraries and binaries of the
+.B pinball
+package.
+.SH "OPTIONS"
+.TP
+\fB\-\-version\fR
+displays the pinball version number
+.TP
+\fB\-\-libs\fR
+lists libraries needed for building new levels
+.TP
+\fB\-\-cflags\fR
+lists additional compilation flags needed
+.TP
+\fB\-\-datadir\fR
+Display the installation datadir
+.TP
+\fB\-\-libdir\fR
+Display the installation libdir
+.TP
+\fB\-\-prefix\fR
+Display the installation prefix
+.TP
+\fB\-\-exec\-prefix\fR
+Display the installation exec-prefix
+.SH "SEE ALSO"
+.PP
+The \fBpinball\fR program's documentation can be found under
+.B /usr/doc/pinball-@VERSION@
+on Slackware Linux.
+.SH "AUTHOR"
+.PP
+This manual page was written by Jochen Friedrich <jochen@scram.de> for
+the
+.B Debian GNU/Linux
+system (but may be used by others).
+.PP
+It was modified by B. Watson <urchlay@slackware.uk> for use with Slackware Linux.

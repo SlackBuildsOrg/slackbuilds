@@ -1,0 +1,8 @@
+gf (a GDB frontend)
+
+Lightweight graphical frontend for GDB. The interface is nice and
+simple, quite confortable and responsive to use. It has panels for
+locals, watch expressions, stack walker, threads, profiling. The
+configuration is easy and flexible, you can also configure by
+project (using a local .project.gf file).
+It uses the "standard" debugger shortcuts (F5, F9, F10, F11).

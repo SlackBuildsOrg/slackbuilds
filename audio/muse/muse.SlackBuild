@@ -12,7 +12,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=muse
-VERSION=${VERSION:-3.1.1}
+VERSION=${VERSION:-4.2.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -25,9 +25,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -67,7 +64,7 @@ find -L . \
  -exec chmod 644 {} \;
 
 # Change the INSTALL_NAME or every path in the package is versioned
-sed -e "s/muse-3.1/muse/" -i CMakeLists.txt
+sed -e "s/muse-4.2/muse/" -i CMakeLists.txt
 
 mkdir -p build
 cd build
@@ -102,8 +99,8 @@ cat $CWD/doinst.sh > $PKG/install/doinst.sh
 if [ "${SETCAP:-yes}" = "yes" ]; then
   cat $CWD/setcap.sh >> $PKG/install/doinst.sh
   # Only allow execution by audio group
-  chown root:audio $PKG/usr/bin/muse3
-  chmod 0750 $PKG/usr/bin/muse3
+  chown root:audio $PKG/usr/bin/muse4
+  chmod 0750 $PKG/usr/bin/muse4
 fi
 
 cd $PKG

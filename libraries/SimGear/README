@@ -1,3 +1,7 @@
 SimGear is a set of open-source libraries designed to be used as
 building blocks for quickly assembling 3d simulations, games, and
 visualization applications.
+
+Note that the source has been moved from Sourceforge to Gitlab.
+
+BIG FAT NOTE: 2024.1.1 is the LAST version that will build in 15.0.

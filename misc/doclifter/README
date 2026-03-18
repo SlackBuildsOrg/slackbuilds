@@ -10,10 +10,15 @@ This package ships two Python scripts:
   It can find and convert _all_ man pages in your system with one simple
   command.
  
-See the man pages, also in HTML format in /usr/doc/docfilter*/html
+See the man pages, or the HTML versions at:
+/usr/doc/docfilter-$VERSION/html/
 
 docfilter's author is Eric S. Raymond.
 
 Optional runtime dependency: plotutils. This is required for
 converting PIC diagrams to SVG. Not many man pages actually require
 this.
+
+To run doclifter's self-test, build with CHECK=yes in the environment.
+This requires plotutils. The output from 'make check' will be included
+in the package, at "/usr/doc/doclifter-$VERSION/make-check.txt".

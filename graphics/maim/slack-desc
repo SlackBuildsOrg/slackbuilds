@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
     |-----handy-ruler------------------------------------------------------|
-maim: maim (make image)
+maim: maim (make screenshots of desktop)
 maim:
-maim: maim is a utility that takes screenshots of your desktop. It's meant
-maim: to overcome shortcomings of scrot and performs better in several ways
+maim: maim (make image) takes screenshots of your desktop. It has options to
+maim: take only a region, and relies on slop to query for regions.
+maim:
+maim: maim is meant to to overcome shortcomings of scrot and performs better
+maim: in several ways.
 maim:
 maim:
 maim:
 maim:
-maim:
-maim:
-maim: https://github.com/naelstrof/maim

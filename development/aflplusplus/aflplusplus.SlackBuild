@@ -6,11 +6,17 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251214 bkw: updated for v4.32c. This isn't the latest version, but
+# it's the latest version that will build on 15.0 *with* afl-clang-lto
+# support. >= 4.33c would need a newer clang. It wouldn't be utterly
+# useless without afl-clang-lto, but it's upstream's recommended way
+# to build fuzzable binaries, so I don't want to drop it.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=aflplusplus
 SRCNAM=AFLplusplus
-VERSION=${VERSION:-4.04c}
+VERSION=${VERSION:-4.32c}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -45,11 +51,17 @@ rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 DOCDIR=/usr/doc/$PRGNAM-$VERSION
 PKGDOC=$PKG/$DOCDIR
+
+# 20251214 bkw: someday we might need these:
+    #REAL_CC=gcc \
+    #REAL_CXX=g++ \
+# ...but they don't help with 4.33c or 4.34c.
 
 runmake() {
   make \
@@ -80,16 +92,15 @@ runmake() {
 runmake all
 runmake man
 
-# Make it use the qemu source provided by us, instead of doing a git
-# clone (which didn't work properly anyway). Also this disables -Werror
-# in the qemu build.
-patch -p1 < $CWD/build_qemu_support.diff
-
 # qemu mode is optional, only build if the source exists.
 QEMUVER="$( cat qemu_mode/QEMUAFL_VERSION )"
 QEMUSRC="$CWD/qemuafl-$QEMUVER.tar.xz"
+
 if [ -e "$QEMUSRC" ]; then
   echo "=== QEMU source found, building qemu_mode"
+  # Make it use the qemu source provided by us, instead of doing a git
+  # clone (which didn't work properly anyway).
+  patch -p1 < $CWD/build_qemu_support.diff
   WITHQEMU=WITH
   ( cd qemu_mode
     rm -rf qemuafl
@@ -110,6 +121,10 @@ find $PKG/usr/bin $PKG/usr/lib* -type f -print0 | \
   grep ELF | \
   cut -d: -f1 | \
   xargs strip --strip-unneeded 2> /dev/null || true
+
+# 20251214 bkw: for now, make this +x to shut sbopkglint up. The
+# correct solution will be to modify sbopkglint.
+chmod +x $PKG/usr/share/afl/testcases/others/elf/small_exec.elf
 
 gzip $PKG/usr/man/man8/*.8
 

@@ -5,9 +5,11 @@ distributed together with the Imlib 2 package itself, for licensing
 reasons. Currently, the only plugin is for XCF, which is the Gimp's
 native file format.
 
-Note: the version number of this build should match the version number
-of imlib2. If you find that this is not the case, please contact the
-maintainer so I can update this.
+Note: the version number of this does not have to match the version
+number of imlib2. The actual C code for imlib2_loaders hasn't changed
+since 2022; upstream releases a "new" version of imlib2_loaders
+whenever there's a new imlib2 release, but with no changes to the
+code. This may change in the future if the imlib2 API changes.
 
 Note: if you're trying to add .xcf file support to qiv, this package
 won't help. Install xcf-pixbuf-loader instead.

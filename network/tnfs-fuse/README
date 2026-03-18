@@ -6,3 +6,13 @@ such as 8-bit computers. It's simpler than NFS, SMB, or FTP. It's
 similar to TFTP, but has features TFTP lacks.
 
 This package is the Linux (and Mac, *BSD, etc) client.
+
+**Note**, the **correct** syntax for mounting a TNFS server with
+tnfs-fuse is:
+
+  tnfs-fuse -o address=hostname directory/
+
+*Do not* forget and say "tnfs-fuse hostname directory". You won't
+get an error message at mount time, but you'll get "invalid argument"
+errors when you try to access the mounted directory. This will drive
+you insane.

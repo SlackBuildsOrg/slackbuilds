@@ -2,13 +2,34 @@
 
 # Slackware build script for sfarkxtc
 
+# Originally by Ben Colliver. Rewritten and now maintained by B. Watson
+# (urchlay@slackware.uk).
+
+# Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# Note: there's a .sfark file to test with, here:
+# https://slackware.uk/~urchlay/src/OPL-3_FM_128M.sfArk
+# Originally downloaded from:
+# https://woolyss.com/chipmusic-soundfonts.php
+
+# 20260301 bkw:
+# - take over maintenance.
+# - add license (WTFPL).
+# - build from latest (2018) source rather than use a binary from 2007.
+# - add man page.
+# - since we're building from source, x86_64 is now supported.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sfarkxtc
-VERSION=${VERSION:-20070326}
+VERSION=${VERSION:-20181208}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+COMMIT=${COMMIT:-4ed577d5779a68422b816f96a40e8e4abe65894a}
+LIBNAM=sfArkLib
+LIBCOMMIT=${LIBCOMMIT:-c710d851a9b9c1759ac8597e12f55ea290a3f007}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -18,9 +39,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -30,36 +48,56 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+LIBDIR=/usr/lib
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-elif [ "$ARCH" = "x86_64" ]; then
+elif [ "$ARCH" = "x86_64" -o "$ARCH" = "aarch64" ]; then
   SLKCFLAGS="-O2 -fPIC"
+  LIBDIR=/usr/lib64
 fi
 
 set -e
 
-rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT
-cd $TMP
-rm -rf $PRGNAM-$VERSION
-mkdir $PRGNAM-$VERSION
-cd $PRGNAM-$VERSION
-tar xvf $CWD/${PRGNAM}_lx86.tar.gz
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+TOPDIR=$TMP/$PRGNAM-$VERSION-build
+
+rm -rf $PKG $TOPDIR
+mkdir -p $TOPDIR $PKGDOC $PKG/$LIBDIR $PKG/usr/bin $PKG/usr/include $OUTPUT
+cd $TOPDIR
+rm -rf $PRGNAM-$COMMIT $LIBNAM-$LIBCOMMIT
+tar xvf $CWD/$PRGNAM-$COMMIT.tar.gz
+tar xvf $CWD/$LIBNAM-$LIBCOMMIT.tar.gz
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
- -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
-find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+# First, the library:
+cd $LIBNAM-$LIBCOMMIT
+sed -i "/^CXXFLAGS/s,\$, $SLKCFLAGS," Makefile
+make
+strip libsfark.so.*.*
+make install DESTDIR=$PKG PREFIX=/usr LIBDIR=$LIBDIR
+# 'install' creates this +x, ugh.
+chmod 644 $PKG/usr/include/*.h
+cat README.md > $PKGDOC/$LIBNAM.md
 
-mkdir -p $PKG/usr/bin $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a sfarkxtc $PKG/usr/bin
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+# Now the program, link with the just-built library:
+cd $TOPDIR/$PRGNAM-$COMMIT
+make CXXFLAGS="$SLKCFLAGS -I$PKG/usr/include" LDFLAGS="-L$PKG/$LIBDIR"
+install -s $PRGNAM $PKG/usr/bin
+
+# Man page written by maintainer. Debian has a man page but it's
+# outdated (doesn't mention that the output-file is optional) and
+# almost content-free anyway.
+mkdir -p $PKG/usr/man/man1
+gzip -9c < $CWD/$PRGNAM.1 > $PKG/usr/man/man1/$PRGNAM.1.gz
+
+# Docs. The library's COPYING is identical, don't need 2 copies.
+cp -a COPYING* README* $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

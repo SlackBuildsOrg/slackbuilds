@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Slackware build script for termbin
+
+# Written by B. Watson (urchlay@slackware.uk)
+
+# Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=termbin
+VERSION=${VERSION:-0.1.0}
+COMMIT=${COMMIT:-97bcf3b08aa36dee23d9a34ed4ff75e0ed755c1a}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+ARCH=noarch
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+PKGBIN=$PKG/usr/bin
+EXE=$PKGBIN/$PRGNAM
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKGDOC $PKGBIN
+cd $PKG
+
+( cat $CWD/$PRGNAM 2>/dev/null || cat $CWD/"$PRGNAM?id=$COMMIT" ) > $EXE
+chmod +x $EXE
+$EXE --help > $PKGDOC/README
+
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

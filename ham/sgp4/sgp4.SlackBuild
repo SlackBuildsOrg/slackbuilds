@@ -25,11 +25,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sgp4
-VERSION=${VERSION:-20240428.6a448b48}
+VERSION=${VERSION:-20251104.d176906d}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -88,14 +87,13 @@ cd build
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -lserialdv" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -lserialdv" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_LIBDIR=lib$LIBDIRSUFFIX \
     -DMAN_INSTALL_DIR=/usr/man \
     -DCMAKE_BUILD_TYPE=Release ..
-  make $NUMJOBS
   make install/strip DESTDIR=$PKG
 cd ..
 
-# Fix (it seems that LIB_SUFFIX is not taken into account)
+# Fix (it seems that CMAKE_INSTALL_LIBDIR is not taken into account)
 [ -d $PKG/usr/lib -a ! -e $PKG/usr/lib$LIBDIRSUFFIX ] && mv $PKG/usr/lib $PKG/usr/lib$LIBDIRSUFFIX
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION

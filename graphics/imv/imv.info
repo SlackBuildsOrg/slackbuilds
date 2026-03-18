@@ -1,10 +1,12 @@
 PRGNAM="imv"
-VERSION="4.5.0"
+VERSION="5.0.1"
 HOMEPAGE="https://sr.ht/~exec64/imv/"
-DOWNLOAD="https://git.sr.ht/~exec64/imv/archive/v4.5.0.tar.gz"
-MD5SUM="854614e252c58588e0fbf4a9f75a6b0d"
+DOWNLOAD="https://git.sr.ht/~exec64/imv/archive/v5.0.1.tar.gz \
+          https://raw.githubusercontent.com/phoboslab/qoi/44b233a95eda82fbd2e39a269199b73af0f4c4c3/qoi.h"
+MD5SUM="f41dc2cf6c3b994dbb134a12918a9687 \
+        66e01cc3a58cef72892af016e2b5e570"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
+REQUIRES="libnsgif python3-meson-opt"
 MAINTAINER="B. Watson"
 EMAIL="urchlay@slackware.uk"

@@ -1,8 +1,10 @@
 PRGNAM="libavif"
-VERSION="1.0.4"
+VERSION="1.3.0"
 HOMEPAGE="https://github.com/AOMediaCodec/libavif"
-DOWNLOAD="https://github.com/AOMediaCodec/libavif/archive/v1.0.4/libavif-1.0.4.tar.gz"
-MD5SUM="8c786fd21f8757ace8cc011401e4d420"
+DOWNLOAD="https://github.com/AOMediaCodec/libavif/archive/v1.3.0/libavif-1.3.0.tar.gz \
+          https://github.com/kmurray/libargparse/archive/ee74d1b/libargparse-ee74d1b53bd680748af14e737378de57e2a0a954.tar.gz"
+MD5SUM="e180551c0989f7e096a4440b89d6282d \
+        e8f6d28aa9039973c40d31186ed22de7"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="aom dav1d svt-av1 libyuv"

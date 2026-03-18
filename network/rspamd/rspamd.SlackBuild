@@ -2,7 +2,7 @@
 
 # Slackware build script for Rspamd
 
-# Copyright 2018-2024 Ebben Aries <slackbuilds@dscp.org>
+# Copyright 2018-2025 Ebben Aries <slackbuilds@dscp.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,12 +22,19 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20241118 bkw: Modified by SlackBuilds.org:
+# - move PRINT_PACKAGE_NAME so it's before user/group check.
+# - redirect output from getent to /dev/null.
+
 # 20220320 bkw: Modified by SlackBuilds.org: fix 32-bit build.
+
+# 20241009 bkw: Modified by SlackBuilds.org, BUILD=2:
+# - Bump BUILD for luajit-2.1.x
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rspamd
-VERSION=${VERSION:-3.8.4}
+VERSION=${VERSION:-3.14.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -40,6 +47,11 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
 # 20220320 bkw: please don't make me run the script twice to see
 # both commands: show them both if either is missing.
 group_user_error() {
@@ -50,13 +62,8 @@ group_user_error() {
 }
 
 UIDGID=359
-getent group  $PRGNAM || group_user_error
-getent passwd $PRGNAM || group_user_error
-
-if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
-  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
-  exit 0
-fi
+getent group  $PRGNAM &>/dev/null || group_user_error
+getent passwd $PRGNAM &>/dev/null || group_user_error
 
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM

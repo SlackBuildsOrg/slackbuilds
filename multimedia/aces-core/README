@@ -1,0 +1,15 @@
+Core ctl libraries and helpful utilities for the Academy Color
+Encoding System (ACES). These are necessary for most common
+transforms to function.
+
+ACES helps ensure consistent color experience (the "look" of an image)
+through each phase of motion picture prodution (including initial image
+capture, editing, VFX, mastering, public presentation, archiving, and
+future remastering).
+
+## Recommended packages
+
+For this to be useful, you probably also need:
+
+* aces_container
+* ctl

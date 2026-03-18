@@ -1,0 +1,67 @@
+diff -U 1 -aur curlftpfs-0.9.2_orig/configure curlftpfs-0.9.2/configure
+--- curlftpfs-0.9.2_orig/configure	2008-04-23 15:38:00.000000000 +0400
++++ curlftpfs-0.9.2/configure	2026-01-24 00:33:04.814518747 +0400
+@@ -22427,7 +22427,7 @@
+ }
+ 
+ int
+-main ()
++main (void)
+ {
+   time_t t, delta;
+   int i, j;
+@@ -22437,31 +22437,36 @@
+      isn't worth using anyway.  */
+   alarm (60);
+ 
+-  for (time_t_max = 1; 0 < time_t_max; time_t_max *= 2)
+-    continue;
+-  time_t_max--;
+-  if ((time_t) -1 < 0)
+-    for (time_t_min = -1; (time_t) (time_t_min * 2) < 0; time_t_min *= 2)
+-      continue;
++  for (;;)
++    {
++      t = (time_t_max << 1) + 1;
++      if (t <= time_t_max)
++    break;
++      time_t_max = t;
++    }
++  time_t_min = - ((time_t) ~ (time_t) 0 == (time_t) -1) - time_t_max;
++
+   delta = time_t_max / 997; /* a suitable prime number */
+   for (i = 0; i < N_STRINGS; i++)
+     {
+       if (tz_strings[i])
+-	putenv (tz_strings[i]);
++    putenv ((char*) tz_strings[i]);
+ 
+       for (t = 0; t <= time_t_max - delta; t += delta)
+-	if (! mktime_test (t))
+-	  return 1;
++    if (! mktime_test (t))
++      return 1;
+       if (! (mktime_test ((time_t) 1)
+-	     && mktime_test ((time_t) (60 * 60))
+-	     && mktime_test ((time_t) (60 * 60 * 24))))
+-	return 1;
+-
+-      for (j = 1; 0 < j; j *= 2)
+-	if (! bigtime_test (j))
+-	  return 1;
+-      if (! bigtime_test (j - 1))
+-	return 1;
++         && mktime_test ((time_t) (60 * 60))
++         && mktime_test ((time_t) (60 * 60 * 24))))
++    return 1;
++
++      for (j = 1; ; j <<= 1)
++    if (! bigtime_test (j))
++      return 1;
++    else if (INT_MAX / 2 < j)
++      break;
++      if (! bigtime_test (INT_MAX))
++    return 1;
+     }
+   return ! (irix_6_4_bug () && spring_forward_gap () && year_2050_test ());
+ }

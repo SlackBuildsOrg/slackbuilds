@@ -1,8 +1,7 @@
 .. RST source for fujinet-pc(1) man page. Convert with:
 ..   rst2man.py fujinet-pc.rst > fujinet-pc.1
-.. rst2man.py comes from the SBo development/docutils package.
 
-.. |version| replace:: 2206.1
+.. |version| replace:: 1.5.2
 .. |date| date::
 
 ==========
@@ -36,7 +35,7 @@ most of the FujiNet's features with just an SIO2PC cable and a PC.
 
 FujiNet features that work with fujinet-pc:
 
-  - Disk drive (D:) emulation with support for ATR disk images and XEX files (no ATX yet)
+  - Disk drive (D:) emulation with support for ATR/ATX disk images and XEX files
   - Modem emulation (R:)
   - Printer emulation (P:)
   - APETIME protocol
@@ -44,10 +43,10 @@ FujiNet features that work with fujinet-pc:
   - Web interface to control program's settings, browse TNFS hosts and mount disk images
   - FujiNet network device (N:) with support for various network protocols:
     TCP, UDP, TNFS, HTTP, FTP, Telnet **[\*]**
+  - CP/M emulation
 
 Not (yet) working:
 
-  - CP/M emulation
   - SSH and SMB support for N:
   - SAM voice synthesizer
   - MIDIMaze support
@@ -84,16 +83,28 @@ FILES
 **~/.fujinet-pc/**
   The default directory for **fujinet-pc**, containing the following:
 
-**fnconfig.ini**
-  The default config file for **fujinet-pc**. This is where settings
-  are saved when they're changed with the web user interface. This file
-  can also be edited with a regular text editor.
+  **fnconfig.ini**
+    The default config file for **fujinet-pc**. This is where settings
+    are saved when they're changed with the web user interface. This file
+    can also be edited with a regular text editor.
 
-**SD/**
-  The FujiNet hardware device has a slot for a Micro-SD card. For fujinet-pc,
-  the contents of this directory will be available in the host list, under
-  the name **SD**. The default contents of this directory include a good
-  selection of DOS and utility disk images.
+  **SD/**
+    The FujiNet hardware device has a slot for a Micro-SD card. For fujinet-pc,
+    the contents of this directory will be available in the host list, under
+    the name **SD**. The default contents of this directory include a good
+    selection of DOS and utility disk images.
+
+    **SD/rs232dump**
+      Created when the Modem Sniffer option is enabled. Note that the "click here
+      to download modem sniffer log" link in the web UI doesn't work.
+
+    **SD/paper**
+      Created when the virtual printer (P: device) is used; contains the
+      printed output.
+
+  **data/**
+    A symlink to */usr/share/fujinet-pc/data/*, containing all the required
+    runtime files for **fujinet-pc** (including the HTML for the web UI).
 
 .. AUTHOR
 .. ======
@@ -112,6 +123,8 @@ SEE ALSO
 
 **atariserver**\(1), **tnfsd**\(1), **tnfs-fuse**\(1)
 
-The fujinet-pc homepage: https://github.com/FujiNetWIFI/fujinet-pc
+The fujinet-pc homepage:
+  https://github.com/FujiNetWIFI/fujinet-firmware
 
-The FujiNet documentation wiki: https://github.com/FujiNetWIFI/fujinet-platformio/wiki
+The FujiNet documentation wiki:
+  https://github.com/FujiNetWIFI/fujinet-platformio/wiki

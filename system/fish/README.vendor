@@ -1,0 +1,52 @@
+fish SlackBuild – vendored Rust dependencies
+===========================================
+
+This SlackBuild vendors Rust dependencies to allow a fully offline
+and reproducible build, as required by SlackBuilds.org.
+
+1) fish vendor tarball
+----------------------
+
+The file:
+
+  fish-<version>-vendor.tar.gz
+
+contains all Rust crates required by fish and was generated on a
+system with network access.
+
+Steps to regenerate (run in the fish source tree):
+
+  $ cargo vendor vendor
+  $ tar czf fish-<version>-vendor.tar.gz vendor
+
+During the SlackBuild, this tarball is unpacked and Cargo is forced
+to use it via:
+
+  .cargo/config.toml
+  CARGO_NET_OFFLINE=true
+
+This prevents any access to crates.io during the build.
+
+2) rust-pcre2
+-------------
+
+fish depends on rust-pcre2, which upstream fetches via git.
+To keep the build offline, rust-pcre2 is provided as a separate
+tarball:
+
+  rust-pcre2-0.2.9-utf32.tar.gz
+
+Cargo.toml is patched to use this local path instead of the git
+repository.
+
+3) Updating to a new fish version
+---------------------------------
+
+When updating fish:
+
+  - Update VERSION in the SlackBuild
+  - Regenerate fish-<version>-vendor.tar.gz
+  - Update checksums in fish.info
+
+No network access should be required when running the SlackBuild.
+

@@ -1,7 +1,7 @@
-if [ -x /usr/bin/xdg-desktop-menu ]; then
-  /usr/bin/xdg-desktop-menu install \
-    usr/share/desktop-directories/vice-org-vice-org.directory \
-    usr/share/applications/vice-org-*.desktop
+if [ -e usr/share/icons/hicolor/icon-theme.cache ]; then
+  if [ -x /usr/bin/gtk-update-icon-cache ]; then
+    /usr/bin/gtk-update-icon-cache -f usr/share/icons/hicolor >/dev/null 2>&1
+  fi
 fi
 
 if [ -x /usr/bin/update-desktop-database ]; then

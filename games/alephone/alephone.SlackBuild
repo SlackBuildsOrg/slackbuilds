@@ -6,6 +6,10 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20250903 bkw: update for 20250829, new dep asio, document optional deps
+# 20250605 bkw: update for 20250302, including patch for -current
+# 20241025 bkw: update for 20240822
+# 20240808 bkw: update for 20240712
 # 20240320 bkw: update for 20240119
 # 20230716 bkw: update for 20230529
 # 20230108 bkw: update for 20221126
@@ -17,10 +21,24 @@
 # - ffmpeg patches no longer needed
 # - move binary to /usr/games
 
+# 20250904 bkw: Note about dependencies: Upstream lists them in README.md,
+# and what they're for. I assume anyone wanting to play the marathon
+# games wants to be able to watch the in-game videos, so I made libyuv
+# a required dep (plus, this gives feature parity with older versions on
+# SBo, which supported video playback with Slackware's ffmpeg).
+#
+# "Film export" and "opening router ports" are less integral to the game,
+# so I made miniupnpc and libmatroska optional. libebml (mentioned in
+# README.md) is already a dep for libmatroska so I don't mention it in
+# my README.
+#
+# curl, vpx, and vorbis are already in Slackware so we always build
+# with them.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=alephone
-VERSION=${VERSION:-20240119}
+VERSION=${VERSION:-20250829}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -67,15 +85,12 @@ rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.bz2
 cd $SRCNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
-
-[ "${FFMPEG:-yes}" = "no" ] && EXTRAOPT=--without-ffmpeg
+find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
+        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS -fpermissive" \
 ./configure \
-  $EXTRAOPT \
   --bindir=/usr/games \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \

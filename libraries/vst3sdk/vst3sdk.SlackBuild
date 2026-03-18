@@ -2,7 +2,8 @@
 
 # Slackware build script for vst3sdk
 
-# Copyright Martin Bångens Sweden
+# Copyright 2024-2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2024 Martin Bångens Sweden
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,21 +26,22 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vst3sdk
-VERSION=${VERSION:-3.7.9}
-SDK_BUILD=${SDK_BUILD:-_build_61}
+VERSION=${VERSION:-3.8.0}
+SDK_BUILD=${SDK_BUILD:-_build_66}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 ARCH=noarch
 
 # git submodules
-BASE=4737789f52b4e2610a99257e9d93dcbe7717e72e
-CMAKE=3ad5b558e8f94a5825c5c4930a7ffd0760d68c43
-DOC=1a90e37662834a54aa5406eeaa8634027f7801f8
-PLUGINTERFACES=f0eeef7ca771f3cac2dfe1922dc5733349766c7b
-PUBLIC_SDK=e61ee76eb0f8771a05e99018bc4705ac1b603e48
-TUTORIALS=dc425c8e588a78147bc4c3616857b8918b809dcd
-VSTGUI=65c353fcad783dd6baa34a2b9dbe23bb9f88d035
+BASE=3d2e82f8e6bff59c1d8b7a27491a29c2286b5206
+CMAKE=de6e54eeaaab35b7145f5c32c279b5e892146e04
+DOC=6d4737c9e70750056e731d88d49aa06eefc8a1a4
+PLUGINTERFACES=31d6eeba6daaa3e2a8bfbe3e7a90ca0b7fbfbc1c
+PUBLIC_SDK=a3911a4615dabbfdfd9d181ee26b05c70c289a95
+TUTORIALS=33b73dfbb87f3fde3bce8c0a10cae934dc66ad34
+VSTGUI=9e9523b2baab3da9027ebaef8c946ae740c99917
+
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
 # the name of the created package would be, and then exit. This information
@@ -81,7 +83,6 @@ cp CMakeLists.txt $PKG/usr/include/vst3sdk
 cp -a \
   LICENSE.txt \
   README.md \
-  VST3_License_Agreement.pdf \
   VST3_Usage_Guidelines.pdf \
   index.html \
 $PKG/usr/doc/$PRGNAM-$VERSION

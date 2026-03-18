@@ -2,7 +2,7 @@
 Type=Application
 Name=Blake Stone
 GenericName=First Person Shooting Game
-Icon=/usr/share/pixmaps/bstone.png
+Icon=bstone
 Exec=/usr/games/bstone
 Terminal=false
 Categories=Game;ActionGame;

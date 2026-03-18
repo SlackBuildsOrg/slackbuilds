@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Slackware build script for aptdec
+# Slackware build script for dab_lib
 
 # Copyright 2023 Andrea Sacchetti Picchio Italy
 # All rights reserved.
@@ -25,11 +25,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dab_lib
-VERSION=${VERSION:-20240428.229149eb}
+VERSION=${VERSION:-20250329.dfacdcd3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -91,7 +90,6 @@ cd build
     -DLIB_SUFFIX=${LIBDIRSUFFIX} \
     -DMAN_INSTALL_DIR=/usr/man \
     -DCMAKE_BUILD_TYPE=Release ..
-  make $NUMJOBS
   make install/strip DESTDIR=$PKG
 cd ../..
 
@@ -99,9 +97,7 @@ cd ../..
 [ -d $PKG/usr/lib -a ! -e $PKG/usr/lib$LIBDIRSUFFIX ] && mv $PKG/usr/lib $PKG/usr/lib$LIBDIRSUFFIX
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp \
-  LICENSE README.md AUTHORS \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+install -m644  LICENSE README.md AUTHORS $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

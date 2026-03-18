@@ -13,9 +13,10 @@ interface.
    connectivity preferences.
  * UI translations for many languages.
 
-Optional dependencies, detected at compile time:
+If you find desktop notifications annoying/distracting, or use
+a non-desktop window manager, export NOTIFY=no in the script's
+environment to build without libappindicator.
 
-GeoIP - used to display country flags next to IP addresses.
-
-If you want to build without libappindicator (systray and
-notification) support, set NOTIFY=no in the script's environment.
+Note: previous versions of transmission-remote-gtk had GeoIP
+support. This has been dropped in version 1.7.0, apparently because it
+didn't work properly.

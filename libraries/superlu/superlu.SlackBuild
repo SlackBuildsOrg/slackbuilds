@@ -2,7 +2,7 @@
 
 # Slackware build script for superlu
 
-# Copyright 2022-2023 Bloyburt
+# Copyright 2022-2026 Bloyburt
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=superlu
-VERSION=${VERSION:-6.0.1}
+VERSION=${VERSION:-7.0.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

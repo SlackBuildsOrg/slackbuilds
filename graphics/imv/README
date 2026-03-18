@@ -7,22 +7,23 @@ managers. Features:
 * Support for dozens of image formats including:
   * PNG
   * JPEG
-  * Animated GIFs (requires FreeImage or libnsgif)
+  * Animated GIFs
   * SVG
   * TIFF
-  * Various RAW formats (requires FreeImage)
-  * Photoshop PSD files (requires FreeImage)
   * WEBP
+  * QOI
+  * BMP (requires libnsbmp)
   * HEIF/AVIF (requires libheif)
+  * JXL (requires libjxl)
 * Configurable key bindings and behaviour
 * Highly scriptable with IPC via imv-msg
 
 Optional dependencies (autodetected):
 
-- FreeImage (support for GIF, RAW, PSD formats)
-- libnsgif (support for GIF)
+- libnsbmp (support for BMP aka Windows bitmap)
 - libheif (support for HEIF/AVIF)
 - libjxl (support for JXL aka JPEG XL)
 
-If you don't have at least one of FreeImage or libnsgif, imv won't
-support GIF images at all.
+Note: Previous versions of imv supported RAW and PSD files, with
+the optional dependency FreeImage. The imv maintainer has removed
+FreeImage support, due to unpatched vulnerabilites.

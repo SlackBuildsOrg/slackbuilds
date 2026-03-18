@@ -2,7 +2,7 @@
 
 # Slackware build script for xfce4-alsa-plugin
 
-# Copyright 2023 Bloyburt
+# Copyright 2023-2026 Bloyburt
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xfce4-alsa-plugin
-VERSION=${VERSION:-0.3.0}
+VERSION=${VERSION:-0.4.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

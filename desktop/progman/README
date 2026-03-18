@@ -1,0 +1,25 @@
+progman (a simple window manager)
+
+progman is a simple window manager designed to handle the layout
+of windows with a focus on simplicity. It is lightweight, fast,
+and easy to configure, making it ideal for users who prefer
+minimalism.
+
+Some of the features include tiling window management,
+customizable keybindings, support for multiple monitors, and
+a small codebase that is easy to modify and extend.
+
+A sample configuration file is installed as:
+
+  /usr/doc/progman-1.0/progman.ini
+
+The configuration file is optional. To use it, copy it to:
+
+  ~/.config/progman/progman.ini
+
+Example:
+
+  $ mkdir -p ~/.config/progman
+  $ cp /usr/doc/progman-1.0/progman.ini \
+      ~/.config/progman/progman.ini
+

@@ -1,0 +1,10 @@
+FFUF - Fuzz Faster U Fool
+
+ffuf is a fast web fuzzer written in Go.
+For example use cases check the README.md in the
+/usr/share/doc/ffuf-<VERSION>/ folder.
+
+A configuration file ffufrc.example file is provided in the same folder.
+You can copy it as $HOME/.config/ffuf/ffufrc
+
+This script requires network access during build.

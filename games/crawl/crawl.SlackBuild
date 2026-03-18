@@ -22,11 +22,21 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20241020 bkw: Modified by SlackBuilds.org: BUILD=2
+# - build with lua51.
+# - use wrapper scripts, so the binaries can find the data files.
+# Note: This package is still broken.
+# - the crawl-ascii binary doesn't work (it didn't work in BUILD 1 either).
+# - it installs binaries to /usr/share/games/bin. binaries do not
+#   belong in /usr/share.
+# - it installs its data dirs directly to /usr/share/games, instead of
+#   a properly separated /usr/share/games/crawl dir.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=crawl
-VERSION=${VERSION:-0.31.0}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-0.33.1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 SRCNAM=stone_soup
@@ -81,30 +91,29 @@ cd source
   # Do not remove quotation marks from SAVEDIR='~/.crawl/'.
   # $SAVEDIR needs evaluating at runtime.
   make \
-    prefix=/usr \
+    prefix=/usr/share/games \
     COPY_FONTS=1 \
     DATADIR=/usr/share/games/crawl \
+    LUA_PACKAGE=lua51
     SAVEDIR='~/.crawl/' \
-    SDL2=1 \
     TILES=1
+  strip crawl
   make install \
-    prefix=/usr \
-    COPY_FONTS=1 \
-    DATADIR=/usr/share/games/crawl \
-    DESTDIR=$PKG \
-    SAVEDIR='~/.crawl/' \
-    SDL2=1 \
-    TILES=1
+    prefix=/usr/share/games \
+    DESTDIR=$PKG
   make clean
   make \
-    prefix=/usr \
+    prefix=/usr/share/games \
     DATADIR=/usr/share/games/crawl \
+    LUA_PACKAGE=lua51
     SAVEDIR='~/.crawl/'
-  cp crawl $PKG/usr/games/crawl-ascii
+  strip crawl
+  cp crawl $PKG/usr/share/games/bin/crawl-ascii
 cd ..
 
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+mkdir -p $PKG/usr/games
+install -oroot -groot -m0755 $CWD/wrapper.sh $PKG/usr/games/crawl
+ln -s crawl $PKG/usr/games/crawl-ascii
 
 mkdir -p $PKG/usr/man/man6
 gzip -9 -c docs/crawl.6 > $PKG/usr/man/man6/crawl.6.gz

@@ -1,2 +1,5 @@
 nbclient is a tool for running Jupyter Notebooks in different execution
 contexts.
+
+jupyter-nbclient 0.10.2 is the last available version for Slackware
+15.0. Newer versions require Python >= 3.10.

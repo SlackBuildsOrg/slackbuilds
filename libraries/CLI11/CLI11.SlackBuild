@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=CLI11
-VERSION=${VERSION:-2.4.2}
+VERSION=${VERSION:-2.6.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,6 +83,8 @@ cd build
     -DCMAKE_BUILD_TYPE=Release \
     -DCLI11_BUILD_TESTS=OFF \
     -DCLI11_BUILD_EXAMPLES=OFF \
+    -DCLI11_PRECOMPILED=ON \
+    -DCLI11_FULL_INSTALL=ON \
     ..
   make
   make install/strip DESTDIR=$PKG

@@ -2,7 +2,7 @@
 
 # Slackware build script for notepadqq
 
-# Copyright 2022 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2022-2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,10 +26,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=notepadqq
-VERSION=${VERSION:-1.4.0}
+VERSION=${VERSION:-20251218_5d2a96a}
 BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+TARBALL=${TARBALL:-5d2a96a2a828dbc68f4b04c5031150b8a1bcbe8c}
+
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -66,9 +68,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $PRGNAM-$TARBALL
+tar xvf $CWD/$PRGNAM-$TARBALL.tar.gz
+cd $PRGNAM-$TARBALL
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -79,13 +81,23 @@ find -L . \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
-  --prefix /usr \
+  --prefix /opt/notepadqq \
   --qmake /usr/lib$LIBDIRSUFFIX/qt5/bin/qmake
+
+# addressing https://github.com/notepadqq/notepadqq/issues/1135
+sed -i "s|bool BackupService::s_autosaveEnabled = false;|bool BackupService::s_autosaveEnabled = true;|g" src/ui/Sessions/backupservice.cpp
 
 make
 make install DESTDIR=$PKG INSTALL_ROOT=$PKG
 
-patch $PKG/usr/share/applications/notepadqq.desktop $CWD/notepadqq.desktop.patch
+mkdir -p $PKG/usr/share
+mv $PKG/opt/notepadqq/share/applications $PKG/usr/share/
+mv $PKG/opt/notepadqq/share/icons $PKG/usr/share/
+mv $PKG/opt/notepadqq/share/metainfo $PKG/usr/share/
+
+# clean-up sbopkglint complaints
+sed -e "s/Categories=Development;Utility;TextEditor;/Categories=Development;/" -i $PKG/usr/share/applications/notepadqq.desktop
+sed -e "s/OnlyShowIn=Unity;//" -i $PKG/usr/share/applications/notepadqq.desktop
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -93,6 +105,11 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a CONTRIBUTING.md COPYING README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+# Links
+mkdir -p $PKG/usr/bin
+( cd $PKG/usr/bin ; rm -rf notepadqq )
+( cd $PKG/usr/bin ; ln -s ../../opt/notepadqq/bin/notepadqq notepadqq )
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2014-2023 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2014-2025 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,7 +24,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=aegisub
 SRCNAM=Aegisub
-VERSION=${VERSION:-3.3.3}
+VERSION=${VERSION:-3.4.2}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,22 +75,45 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-# Patch for current
-patch -p1 < $CWD/boost-1.81.0.patch
+# Disable test to avoid downloading gtest
+sed -i "s|subdir('tests')||g" meson.build
 
-autoreconf -fiv
-LDFLAGS="$LDFLAGS -lz" \
-CFLAGS="$SLKCFLAGS" \
-CPPFLAGS+=' -DU_USING_ICU_NAMESPACE=1' \
-CXXFLAGS="$SLKCFLAGS" \
-FORCE_GIT_VERSION="TRUE" \
-./configure \
-  --prefix=/usr \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --build=$ARCH-slackware-linux
+# Thanks to Gentoo for this
+patch -p1 < $CWD/Fix-build-without-pch.patch
+cp $CWD/git_version.h .
 
-make
-make install DESTDIR=$PKG
+# Support for newer meson in stable and current
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+# for Stable 15.0
+if [ $PYVER == 3.9 ]; then
+  export PYTHONPATH=/opt/python$PYVER/site-packages
+fi
+
+# Don't depend on boost's system and regex modules
+# https://github.com/TypesettingTools/Aegisub/commit/86e8c45d91eae9ca9cd0bb9e384e8540788516f5.patch
+patch -p1 < $CWD/86e8c45d91eae9ca9cd0bb9e384e8540788516f5.patch
+
+export CXXFLAGS+=" -fpermissive"
+mkdir build
+cd build
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  meson .. \
+    --buildtype=release \
+    --infodir=/usr/info \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    -Dopenal=disabled \
+    -Dportaudio=disabled \
+    -Dsystem_luajit=true \
+    -Denable_update_checker=false \
+    -Dstrip=true
+  "${NINJA:=ninja}"
+  DESTDIR=$PKG $NINJA install
+cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

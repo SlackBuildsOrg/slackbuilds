@@ -2,7 +2,7 @@
 
 # Slackware build script for pmdk
 
-# Copyright 2022-2024 Vijay Marcel
+# Copyright 2022-2025 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,10 +22,25 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Changelog for pmdk SlackBuild Script
+# --------------------------------------------------------------------------------
+
+# 03/09/2022: Added to slackbuilds.org
+# 18/02/2023: pmdk slackbuild script fixed by B.Watson
+# 15/05/2023: Updated to version 1.13.0 From this build onwards
+# it will only build  on x86_64 platform only.
+# 19/02/2024: Updated to version 1.13.1
+# 14/08/2024: Updated to version 2.1.0
+# 16/04/2025: updated to version 2.1.1
+# 20/11/2025: updated to version 2.1.2
+# Github url changed to https://github.com/daos-stack/pmdk
+# see:https://github.com/pmem/pmdk 
+# ---------------------------------------------------------------------------------
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pmdk
-VERSION=${VERSION:-1.13.1}
+VERSION=${VERSION:-2.1.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -36,9 +51,6 @@ case "$sys_arch" in
 	     *) echo "This program will not build on $sys_arch platform" && exit 1 ;;
 esac
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -69,9 +81,9 @@ cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -83,11 +95,11 @@ make -C doc all
 make -C doc install DESTDIR=$PKG/usr/man/
 
 # Don't ship .la files:
-rm -rvf $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+rm -rvf $PKG/usr/lib${LIBDIRSUFFIX}/*.la
 
 # Remove static libs
 
-rm -rvf $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.a
+rm -rvf $PKG/usr/lib${LIBDIRSUFFIX}/*.a
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
   | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded --remove-section=.comment --remove-section=.note 2> /dev/null || true
@@ -100,7 +112,7 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a ChangeLog LICENSE README.md VERSION CODING_STYLE.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a ChangeLog LICENSE.txt README.md CONTRIBUTING.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

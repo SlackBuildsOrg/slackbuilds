@@ -1,0 +1,9 @@
+termbin (paste stdin or file(s) to termbin.com)
+
+termbin uses nc (netcat) to paste stdin to termbin.com, or pastes
+one or more files if <filename(s)> are given. Spits out paste URL on
+stdout. Also copies URL to the X clipboard if X is running and either
+xsel or xclip is installed.
+
+Note: if you have a termbin alias in your .bashrc or similar, it will
+take precedence. Remove it, or call /usr/bin/termbin.

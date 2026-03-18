@@ -2,7 +2,7 @@
 
 # Slackware build script for protobuf3
 
-# Copyright 2017-2024 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2017-2026 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=protobuf3
-VERSION=${VERSION:-27.2}
+VERSION=${VERSION:-33.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -99,8 +99,8 @@ cd build
 cd ..
 
 # Install the python bindings:
-tar xvf $CWD/$SRCNAM-5.$VERSION.tar.gz
-cd $SRCNAM-5.$VERSION
+tar xvf $CWD/$SRCNAM-6.$VERSION.tar.gz
+cd $SRCNAM-6.$VERSION
 LDFLAGS+=" -L$TMP/$SRCNAM-$VERSION/build" \
 PROTOC="$TMP/$SRCNAM-$VERSION/build/protoc" \
 python3 -m build --wheel --no-isolation

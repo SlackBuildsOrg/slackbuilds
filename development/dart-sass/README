@@ -1,0 +1,6 @@
+The reference implementation of Sass, written in Dart. Sass makes CSS
+fun again.
+
+Make sure /etc/profile.d/dart-sdk.sh is sourced before building this.
+
+Dart-sass 1.97.3 is the last version supported by dart-sdk 3.7.3.

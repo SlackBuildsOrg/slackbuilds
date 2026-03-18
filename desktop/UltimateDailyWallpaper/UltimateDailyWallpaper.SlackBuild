@@ -2,7 +2,7 @@
 
 # Slackware build script for UltimateDailyWallpaper
 
-# Copyright 2023 Patrice Coni
+# Copyright 2026 Patrice Coni
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=UltimateDailyWallpaper
-VERSION=${VERSION:-3.3.6}
+VERSION=${VERSION:-3.4.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -59,8 +59,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/ultimatedailywallpaper-$VERSION.tar.gz
-cd ultimatedailywallpaper-$VERSION
+tar xvf $CWD/ultimatedailywallpaper-v$VERSION.tar.gz
+cd ultimatedailywallpaper-v$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -68,39 +68,27 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Comment out QMAKE_POST_LINK in src/src.pro
+tocommentout="QMAKE_POST_LINK += lrelease \$\$TRANSLATIONS"
+sed -i "s/^$tocommentout$/#&/" src/src.pro
+
+# Compile the project
 lrelease-qt5 src/src.pro
 qmake-qt5
 make
 
-mkdir -p ${PKG}/usr/bin
-mkdir -p ${PKG}/usr/share/pixmaps
-mkdir -p ${PKG}/usr/share/applications
-mkdir -p ${PKG}/usr/${LIBDIR}/${PRGNAM}-plugins
-mkdir -p ${PKG}/usr/share/locale/ca/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/de/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/es/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/fi/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/fr/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/it/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/ru/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/uk/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/ko/LC_MESSAGES
-mkdir -p ${PKG}/usr/share/locale/pt/LC_MESSAGES
-cp language/${PRGNAM}_ca.qm ${PKG}/usr/share/locale/ca/LC_MESSAGES
-cp language/${PRGNAM}_de.qm ${PKG}/usr/share/locale/de/LC_MESSAGES
-cp language/${PRGNAM}_es.qm ${PKG}/usr/share/locale/es/LC_MESSAGES
-cp language/${PRGNAM}_fi.qm ${PKG}/usr/share/locale/fi/LC_MESSAGES
-cp language/${PRGNAM}_fr.qm ${PKG}/usr/share/locale/fr/LC_MESSAGES
-cp language/${PRGNAM}_it.qm ${PKG}/usr/share/locale/it/LC_MESSAGES
-cp language/${PRGNAM}_ru.qm ${PKG}/usr/share/locale/ru/LC_MESSAGES
-cp language/${PRGNAM}_uk.qm ${PKG}/usr/share/locale/uk/LC_MESSAGES
-cp language/${PRGNAM}_ko.qm ${PKG}/usr/share/locale/ko/LC_MESSAGES
-cp language/${PRGNAM}_pt.qm ${PKG}/usr/share/locale/pt/LC_MESSAGES
-cp src/icons/ultimatedesktopwallpaper_icon.png ${PKG}/usr/share/pixmaps
+# Preparation of the package
+mkdir -p ${PKG}/opt/${PRGNAM} \
+         ${PKG}/opt/${PRGNAM}/bin \
+         ${PKG}/opt/${PRGNAM}/plugins \
+         ${PKG}/opt/${PRGNAM}/translations \
+         ${PKG}/usr/share/applications
+cp language/*.qm ${PKG}/opt/${PRGNAM}/translations
+cp src/icons/ultimatedesktopwallpaper_icon.png ${PKG}/opt/${PRGNAM}
 cp ${PRGNAM}.desktop ${PKG}/usr/share/applications
-install -m 0755 bin/${PRGNAM} ${PKG}/usr/bin
-install -m 0755 plugins/libbing-wallpaper-downloader-*.so ${PKG}/usr/${LIBDIR}/${PRGNAM}-plugins
-install -m 0755 plugins/libwikimedia-commons-potd-*.so ${PKG}/usr/${LIBDIR}/${PRGNAM}-plugins
+install -m 0755 bin/${PRGNAM} ${PKG}/opt/${PRGNAM}/bin
+install -m 0755 plugins/libbing-wallpaper-downloader-*.so ${PKG}/opt/${PRGNAM}/plugins
+install -m 0755 plugins/libwikimedia-commons-potd-*.so ${PKG}/opt/${PRGNAM}/plugins
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

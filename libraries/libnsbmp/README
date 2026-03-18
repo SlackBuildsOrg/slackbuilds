@@ -1,0 +1,9 @@
+libnsbmp (BMP/ICO image file decoder)
+
+libnsbmp is a decoding library for BMP and ICO image file formats,
+written in C. It was developed as part of the NetSurf project and is
+available for use by other software under the MIT licence.
+
+If you want to run libnsbmp's test suite, pass TEST=yes in the
+SlackBuild's environment. The test results will be included in the
+package, as "/usr/doc/libnsbmp-$VERSION/test_results.txt".

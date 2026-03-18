@@ -32,6 +32,8 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
+DISTCOMMIT=db8397e321a2216196004f4a245d956bd4a442ac
+
 MUID=${MUID:-212}
 MGID=${MGID:-212}
 NTOPUSER=${NTOPUSER:-ntopng}
@@ -105,8 +107,8 @@ make
 
 export NDPI_HOME=$TMP/$PRGNAM2-$VERSION2
 
-rm -rf ntopng-dist-222d5a0e9ce7b60689b014898f3fc84b3c493687
-tar xvf $CWD/ntopng-dist-222d5a0e9ce7b60689b014898f3fc84b3c493687.tar.gz
+rm -rf ntopng-dist-$DISTCOMMIT
+tar xvf $CWD/ntopng-dist-$DISTCOMMIT.tar.gz
 
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
@@ -121,7 +123,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} +
 
 rmdir httpdocs/dist
-mv ../ntopng-dist-222d5a0e9ce7b60689b014898f3fc84b3c493687 httpdocs/dist
+mv ../ntopng-dist-$DISTCOMMIT httpdocs/dist
 
 ./autogen.sh
 CXX='ccache g++' \

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+pipes.sh: pipes.sh (animated pipes screensaver for terminal)
+pipes.sh:
+pipes.sh: pipes.sh is a small shell script that draws animated pipes
+pipes.sh: in the terminal using ANSI escape sequences.
+pipes.sh:
+pipes.sh: It is often used as a terminal screensaver or visual demo.
+pipes.sh:
+pipes.sh:
+pipes.sh: Homepage: https://github.com/pipeseroni/pipes.sh
+pipes.sh:
+pipes.sh:

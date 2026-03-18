@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-incremental
 SRCNAM=${PRGNAM#python3-*}
-VERSION=${VERSION:-24.7.0}
+VERSION=${VERSION:-24.11.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -64,9 +64,13 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages/
+export PYTHONPATH=/opt/python$PYVER/site-packages
+
 python3 -m build --no-isolation
 python3 -m installer -d "$PKG" dist/*.whl
+
+# Prevent incremental from messing up Slackware setuptools
+sed -i '/\[setuptools.fin/,/^incremental /d' $PKG/usr/lib*/python$PYVER/site-packages/incremental-$VERSION.dist-info/entry_points.txt
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

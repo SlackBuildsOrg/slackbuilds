@@ -2,9 +2,10 @@
 #
 # Slackware build script for TuxGuitar
 #
-# Copyright 2009-2013  Erik W. Hanson, Minneapolis, MN, USA
-# Copyright 2017       Ekin Akoglu, Erdemli, Mersin, Turkey
+# Copyright 2024-,     Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2024       Martin Bångens, Sweden
+# Copyright 2017       Ekin Akoglu, Erdemli, Mersin, Turkey
+# Copyright 2009-2013  Erik W. Hanson, Minneapolis, MN, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tuxguitar
-VERSION=${VERSION:-1.6.3}
+VERSION=${VERSION:-2.0.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -52,7 +53,7 @@ set -eu
 
 case "$ARCH" in
   i?86) exit 1 ;;
-  x86_64) BINARCH=amd64 ; LIBDIRSUFFIX=64 ;;
+  x86_64) BINARCH=amd64 ;;
 esac
 
 rm -rf $PKG
@@ -73,14 +74,17 @@ cd ..
 mv "$TMP/$PRGNAM-$VERSION-linux-swt-$BINARCH" "$PKG/opt/$PRGNAM"
 
 #link to /usr
-
 ln -sf "/opt/$PRGNAM/$PRGNAM.sh" "$PKG/usr/bin/$PRGNAM"
-
 ln -sf "/opt/$PRGNAM/share/applications/tuxguitar.desktop" \
         "$PKG/usr/share/applications/tuxguitar.desktop"
+ln -sf "/opt/$PRGNAM/share/pixmaps/tuxguitar.png" \
+        "$PKG/usr/share/pixmaps/tuxguitar.png"
 
-ln -sf "/opt/$PRGNAM/share/pixmaps/tuxguitar.xpm" \
-        "$PKG/usr/share/pixmaps/tuxguitar.xpm"
+# ensure we actually use zulu-openjdk21
+sed -i '4i source /etc/profile.d/zulu-openjdk21.sh' $PKG/opt/$PRGNAM/$PRGNAM.sh
+
+# ensure ELF binaries/libraries are executable
+chmod +x $PKG/opt/tuxguitar/lib/libtuxguitar-*.so
 
 find $PKG/opt/$PRGNAM/share/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/opt/$PRGNAM/share/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done

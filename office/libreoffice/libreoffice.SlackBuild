@@ -4,7 +4,7 @@
 
 # Copyright 2006.2007.2008,2009,2010  Robby Workman, Northport, Alabama, USA
 # Copyright 2010-2014 Niels Horn, Rio de Janeiro, RJ, Brazil
-# Copyright 2014-2024 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2014-2025 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libreoffice
-VERSION=${VERSION:-"24.2.5"}
+VERSION=${VERSION:-"25.8.4"}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -60,6 +60,15 @@ WJRE=${WJRE:-no}
 # form LibreOffice's java loader (this will not affect other apps), set this
 # variable to "YES"   Default is "NO"
 DISABLE_JAVA=${DISABLE_JAVA:-NO}
+
+GLIBC=`ldd --version | head -n 1 | cut -d ")" -f2`
+if [ $VERSION != "25.8.4" ]; then
+  if [ $GLIBC == "2.33" ]; then
+    echo "WARNING!!!!"
+    echo "You need to upgrade packages from testing/packages/binutils-gcc-glibc first"
+    exit 1
+  fi
+fi
 
 # Change source package name
 if [ "$ARCH" = "x86_64" ]; then
@@ -126,6 +135,7 @@ cd $PKG/usr/bin
       rm -f $FILE
       ln -sf ../../opt/libreoffice$SRCSHORT/program/$FILE $FILE ;
   done
+  ln -sf ../../opt/libreoffice$SRCSHORT/program/soffice libreoffice
 
 # The symlinks below are required to (directly) open documents
 # supported by libreoffice with Xfe file manager.

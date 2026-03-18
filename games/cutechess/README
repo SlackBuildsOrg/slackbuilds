@@ -1,0 +1,14 @@
+Cute Chess is a system to run chess engine-engine games and
+tournaments. It works with any chess engines that implement the chess
+engine communication protocol (CECP, also known as "xboard") or the
+universal chess interface (UCI). It includes a QT-based graphical user
+interface and a command line version, cutechess-cli, which is a very
+low overhead program suitable in headless environments. Cute Chess also
+supports chess variants (like Chess960), Polyglot  opening books, PGN
+collections as opening books, and white's time control can be
+different from black's.
+
+Two example engines that can be used are gnuchess (included in
+base Slackware) that uses the xboard protocol, and stockfish (in SBo)
+that uses the UCI protocol. Many more chess engines are available, see
+e.g. the list at https://www.chessprogramming.org/Engines

@@ -1,0 +1,12 @@
+mrustc (Mutabah's Rust Compiler)
+
+mrustc is a "simple" rust compiler written in C++ that is able to
+bootstrap a "recent" rustc.
+
+As mrustc's primary goal is bootstrapping rustc, and as such it
+tends to assume that the code it's compiling is valid (and any
+errors in the generated code are mrustc bugs). Code generation is
+done by emitting a high-level assembly (currently very ugly C, but
+LLVM/cretone/GIMPLE/... could work) and getting an external tool
+(i.e. gcc) to do the heavy-lifting of optimising and machine code
+generation.

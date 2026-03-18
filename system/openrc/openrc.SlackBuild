@@ -4,6 +4,7 @@
 # Based upon https://aur.archlinux.org/packages/openrc/
 
 # Copyright 2015-2019 Aaditya <aaditya_gnulinux@zoho.com>
+# Copyright 2024 Reza Talebi, Shahin Shahr, Iran.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -29,7 +30,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=openrc
-VERSION=${VERSION:-0.44.10}
+VERSION=${VERSION:-0.63}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,6 +74,7 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz || tar xvf $CWD/$VERSION.tar.gz
 cd $PRGNAM-$VERSION
+patch -p1 < $CWD/meson-patch.diff
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -80,25 +82,26 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-MAKEARGS+=(PREFIX=/usr)
-MAKEARGS+=(LIBNAME=lib${LIBDIRSUFFIX})
-MAKEARGS+=(LIBDIR=/usr/lib${LIBDIRSUFFIX})
-MAKEARGS+=(LIBEXECDIR=/usr/libexec/rc)
-#MAKEARGS+=(SYSCONFDIR=/etc)
-MAKEARGS+=(SYSCONFDIR=/etc/openrc)
-MAKEARGS+=(SBINDIR=/sbin)
-MAKEARGS+=(MANDIR=/usr/man)
-MAKEARGS+=(DOCDIR=/usr/doc/$PRGNAM-$VERSION)
-MAKEARGS+=(MKTERMCAP=ncurses)
-MAKEARGS+=(MKSYSVINIT=no)
-MAKEARGS+=(MKBASHCOMP=yes)
-MAKEARGS+=(MKZSHCOMP=yes)
-MAKEARGS+=(CFLAGS="$SLKCFLAGS -fcommon")
-#MAKEARGS+=(BRANDING="$(cat /etc/slackware-version)")
+# Use python3-meson-opt's meson just for this build
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
-make "${MAKEARGS[@]}"
+MESONARGS+=(--prefix /usr)
+MESONARGS+=(build)
+MESONARGS+=(--libdir /usr/lib${LIBDIRSUFFIX})
+MESONARGS+=(--libexecdir /usr/libexec)
+MESONARGS+=(--sysconfdir /etc/openrc)
+MESONARGS+=(--bindir /usr/bin)
+MESONARGS+=(--sbindir /usr/sbin)
+MESONARGS+=(--mandir /usr/man)
+MESONARGS+=(--datadir /usr/doc/${PRGNAM}-${VERSION})
+MESONARGS+=(-Dc_args="$SLKCFLAGS -fcommon '-DBRANDING=\"Slackware 15.0\"'")
 
-make install "${MAKEARGS[@]}" DESTDIR=$PKG
+meson setup "${MESONARGS[@]}"
+cd build
+meson compile
+meson install --destdir $PKG
+cd ..
 
 install -Dm 0644 "$CWD/$PRGNAM.logrotate" "$PKG/etc/logrotate.d/${PRGNAM}.new"
 
@@ -117,7 +120,7 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS ChangeLog HISTORY.md LICENSE NEWNET.md NEWS.md README.md TODO $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS HISTORY.md LICENSE NEWNET.md NEWS.md README.md TODO $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

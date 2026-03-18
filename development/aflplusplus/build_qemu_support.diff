@@ -1,6 +1,6 @@
-diff -Naur AFLplusplus-4.04c/qemu_mode/build_qemu_support.sh AFLplusplus-4.04c.patched/qemu_mode/build_qemu_support.sh
---- AFLplusplus-4.04c/qemu_mode/build_qemu_support.sh	2022-10-11 09:40:55.000000000 -0400
-+++ AFLplusplus-4.04c.patched/qemu_mode/build_qemu_support.sh	2022-12-29 17:08:26.492717555 -0500
+diff -Naur AFLplusplus-4.34c/qemu_mode/build_qemu_support.sh AFLplusplus-4.34c.patched/qemu_mode/build_qemu_support.sh
+--- AFLplusplus-4.34c/qemu_mode/build_qemu_support.sh	2025-10-01 03:45:10.000000000 -0400
++++ AFLplusplus-4.34c.patched/qemu_mode/build_qemu_support.sh	2025-12-14 03:15:04.302586646 -0500
 @@ -70,35 +70,7 @@
  
  echo "[*] Making sure qemuafl is checked out"
@@ -37,11 +37,3 @@ diff -Naur AFLplusplus-4.04c/qemu_mode/build_qemu_support.sh AFLplusplus-4.04c.p
  
  echo "[*] Making sure imported headers matches"
  cp "../../include/config.h" "./qemuafl/imported/" || exit 1
-@@ -239,7 +211,6 @@
-     --enable-debug-stack-usage \
-     --enable-debug-tcg \
-     --enable-qom-cast-debug \
--    --enable-werror \
-     "
- 
- else

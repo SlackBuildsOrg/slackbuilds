@@ -11,3 +11,11 @@ option).
 
 Sample report:
 https://abi-laboratory.pro/tracker/package_diff/libssh/0.6.5/0.7.0/report.html
+
+NOTE: Slackware 15.0's pkgtools added a pkgdiff command. It's
+installed to /sbin, whereas this pkgdiff goes in /usr/bin, so there's
+not a conflict. Non-root users generally don't have /sbin in $PATH,
+so they'll get this pkgdiff by default. Root's $PATH includes
+/sbin before /usr/bin by default, so root will get the Slackware
+pkgdiff. Either way, you can always run the command with the full path
+to select which pkgdiff you want.

@@ -2,7 +2,7 @@
 
 # Slackware build script for SmallBASIC
 
-# Copyright 2024 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2024-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,12 +26,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=SmallBASIC
-VERSION=${VERSION:-12.26}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-12.33}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-FLTKTARBALL=fltk-1.4.x-20240119-01f2f760
+FLTKTARBALL=fltk-1.4.3
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -52,16 +52,12 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -69,12 +65,19 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf /tmp/$FLTKTARBALL
-rm -rf $FLTKTARBALL $PRGNAM-$VERSION
+rm -rf $FLTKTARBALL ${PRGNAM}-${VERSION/./_}
 rm -rf $TMP/${VERSION/./_}
 
-tar xvfz $CWD/$FLTKTARBALL.tar.gz
-tar xvfz $CWD/${PRGNAM,,}-$VERSION.tar.gz
-unzip $CWD/${PRGNAM,,}_$VERSION.zip "${VERSION/./_}/examples/*"
+tar xvfz $CWD/$FLTKTARBALL-source.tar.gz
+tar xvfz $CWD/${PRGNAM}-${VERSION/./_}.tar.gz
+# Extract submodules
+(
+    cd ${PRGNAM}-${VERSION/./_}/src/lib
+    tar xvf $CWD/jsmn-25647e692c7906b96ffd2b05ca54c097948e879c.tar.gz --strip-components=1 -C jsmn
+    tar xvf $CWD/lodepng-17d08dd26cac4d63f43af217ebd70318bfb8189c.tar.gz  --strip-components=1 -C lodepng
+    tar xvf $CWD/miniaudio-350784a9467a79d0fa65802132668e5afbcf3777.tar.gz  --strip-components=1 -C miniaudio
+    tar xvf $CWD/stb-f58f558c120e9b32c217290b80bad1a0729fbb2c.tar.gz  --strip-components=1 -C stb
+)
 
 fixperms() {
     chown -R root:root .
@@ -85,31 +88,34 @@ fixperms() {
     -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 }
 
+export CFLAGS="$SLKCFLAGS"
+export CXXFLAGS="$SLKCFLAGS"
 # Build statical FLTK libraries
 (
     cd $FLTKTARBALL
     fixperms
     ./autogen.sh
     ./configure --prefix=/tmp/$FLTKTARBALL
-    make -j1
+    make
     make install
 )
-
-cd ${PRGNAM,,}-$VERSION
+cd ${PRGNAM}-${VERSION/./_}
 fixperms
 
+# patch lambda by-copy capture default
+patch src/ui/textedit.cpp $CWD/textedit.cpp.patch
+
 # Build Console Version
+./autogen.sh
 ./configure
-make -j1
+make
 make install DESTDIR=$PKG
 
 # Build SDL Version
 make clean
 ./configure --enable-sdl
-make -j1
+make
 make install DESTDIR=$PKG
-mv $PKG/usr/local/share/applications/io.github.smallbasic.desktop $PKG/usr/local/share/applications/smallbasic-sdl.desktop
-sed -i -e "s/SmallBASIC/SmallBASIC (SDL)/" $PKG/usr/local/share/applications/smallbasic-sdl.desktop
 
 # Build FLTK Version
 make clean
@@ -117,20 +123,16 @@ export PATH=/tmp/$FLTKTARBALL/bin:$PATH
 CFLAGS="-I/tmp/$FLTKTARBALL/include" LDFLAGS="-L/tmp/$FLTKTARBALL/lib" ./configure --enable-fltk
 make
 make install DESTDIR=$PKG
-mv $PKG/usr/local/share/applications/io.github.smallbasic.desktop $PKG/usr/local/share/applications/smallbasic-fltk.desktop
-sed -i -e "s/SmallBASIC/SmallBASIC (FLTK)/" $PKG/usr/local/share/applications/smallbasic-fltk.desktop
 
 # Place files at the correct locations
-mkdir -p $PKG/usr/bin -p $PKG/usr/share/pixmaps $PKG/usr/share/applications $PKG/usr/share/$PRGNAM
-mv $PKG/usr/local/bin/* $PKG/usr/bin
-mv $PKG/usr/local/share/icons/hicolor/128x128/apps/sb-desktop-128x128.png $PKG/usr/share/pixmaps
-mv $PKG/usr/local/share/applications/* $PKG/usr/share/applications
-mv $TMP/${VERSION/./_}/examples $PKG/usr/share/$PRGNAM
+mkdir -p $PKG/usr/share
+mv $PKG/usr/local/bin $PKG/usr
+mv $PKG/usr/local/share/icons $PKG/usr/share
+mv $PKG/usr/local/share/applications $PKG/usr/share
 
 # Clean-up
 rm -rf $PKG/usr/local
 rm -rf /tmp/$FLTKTARBALL
-rm -rf $TMP/${VERSION/./_}
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

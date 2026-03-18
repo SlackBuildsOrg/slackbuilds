@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+freeplane: freeplane (Mind Mapping, Knowledge Management, Project Management)
+freeplane:
+freeplane: Freeplane is a free and open source software application that supports
+freeplane: thinking, sharing information, getting things done at work, in school 
+freeplane: and at home. It provides you a set of tools for mind mapping and  
+freeplane: navigating the mapped information. Freeplane's capabilities will 
+freeplane: appeal to power users, but for the typical user is also a more robust
+freeplane: alternative to Xmind, Mindmeister, and similar mind mapping software.
+freeplane:
+freeplane: Homepage: https://docs.freeplane.org
+freeplane:

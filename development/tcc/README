@@ -14,3 +14,10 @@ https://github.com/TinyCC/tinycc
 By default, both native and cross compilers for various systems (Win32,
 Win64, ARM, OSX, etc) are built. If you want to skip the cross
 compilers, pass CROSS=no to the script.
+
+If you want to run the tcc test suite, pass TEST=yes to the script. The
+test results will be packaged as "/usr/doc/tcc-$VERSION/make_test.txt".
+
+By default, tcc is compiled with gcc. You can set CC in the
+environment to another compiler. If you already have tcc installed,
+you can bootstrap it with CC=tcc, for instance.

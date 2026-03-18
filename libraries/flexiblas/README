@@ -1,0 +1,15 @@
+flexiblas (BLAS and LAPACK wrapper library)
+
+FlexiBLAS is a wrapper library that enables the exchange of the BLAS
+(Basic Linear Algebra System) and LAPACK (Linear Algebra PACKage)
+implementation used in an executable without recompiling or
+re-linking it.
+
+The FlexiBLAS library provides a GNU Fortran compatible interface to
+all functions and subroutines provided by the Netlib reference
+implementations.
+
+As backends FlexiBLAS can employ all BLAS and LAPACK implementations
+which consist of a single shared library directly. Other variants
+like the Intel MKL or ATLAS that use multiple files are integrated
+by FlexiBLAS by wrapping all files into a single surrogate library.

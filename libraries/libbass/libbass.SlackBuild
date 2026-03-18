@@ -91,7 +91,7 @@ else
   cp libs/$ARCH/$PRGNAM.so $PKG/usr/lib${LIBDIRSUFFIX}
 fi
 
-install -D -m644 $SRCNAM.h $PKG/usr/include/$SRCNAM.h
+install -D -m644 c/$SRCNAM.h $PKG/usr/include/$SRCNAM.h
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

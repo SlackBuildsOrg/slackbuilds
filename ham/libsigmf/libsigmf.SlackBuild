@@ -25,10 +25,9 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libsigmf
-VERSION=${VERSION:-20240428.299dc8f9}
+VERSION=${VERSION:-20260111.299dc8f9}
 SRCVERSION=${SRCVERSION:-299dc8f9725f1733e5cc1ce8a69fbcf7f18a2f58}
 VERSION_flatbuffers=${VERSION_flatbuffers:-d8210d5a83faa345046648e520d82b54ea724e35}
-VERSION_json=${VERSION_json:-9cca280a4d0ccf0c08f47a99aa71d1b0e52f8d03}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,9 +78,6 @@ cd $PRGNAM-$SRCVERSION
 unzip $CWD/flatbuffers-$VERSION_flatbuffers.zip
 rm -rf external/flatbuffers
 mv flatbuffers-$VERSION_flatbuffers external/flatbuffers
-unzip $CWD/json-$VERSION_json.zip
-rm -rf external/json
-mv json-$VERSION_json external/json
 
 chown -R root:root .
 find -L . \
@@ -96,17 +92,14 @@ cd build
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DLIB_SUFFIX=${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_LIBDIR=lib$LIBDIRSUFFIX \
     -DMAN_INSTALL_DIR=/usr/man \
-    -DUSE_SYSTEM_JSON=OFF \
+    -DUSE_SYSTEM_JSON=ON \
     -DUSE_SYSTEM_FLATBUFFERS=OFF \
     -DENABLE_EXAMPLES=ON ..
   make
   make install/strip DESTDIR=$PKG
 cd ..
-
-# Fix (it seems that LIB_SUFFIX is not taken into account)
-[ -d $PKG/usr/lib -a ! -e $PKG/usr/lib$LIBDIRSUFFIX ] && mv $PKG/usr/lib $PKG/usr/lib$LIBDIRSUFFIX
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Slackware build script for flac123
-# Copyright 2017 Klaatu, Wellington NZ
+# Copyright 2017 Klaatu, Lawrence NZ
 # Copyright 2008-2009  Andrew Strong  (http://www.andrews-corner.org)
 # All rights reserved.
 #
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=flac123
-VERSION=${VERSION:-0.0.12}
+VERSION=${VERSION:-2.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,9 +38,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -70,7 +67,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION-release.tar.gz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -84,20 +81,17 @@ CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --mandir=/usr/man \
   --build=$ARCH-slackware-linux
-
-#patch out hardcoded aclocal and automake versions
-sed -i 's/aclocal-1.11/aclocal/g' Makefile
-sed -i 's/automake-1.11/automake/g' Makefile
-
 make
 make install DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+gzip $PKG/usr/man/man1/flac123.1
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS BUGS ChangeLog COPYING INSTALL NEWS README* \
+cp -a AUTHORS BUGS ChangeLog COPYING NEWS README* \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

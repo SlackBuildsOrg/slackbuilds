@@ -16,3 +16,6 @@ use cdrkit from SBo and uninstall cdrtools.
 
 xorriso comes with Slackware so there is no need to install
 it from AlienBob's repository
+
+youtube-dl or yt-dlp is only needed if you are downloading
+videos using acetoneiso.

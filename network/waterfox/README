@@ -1,0 +1,21 @@
+waterfox (a fast and private web browser)
+
+Waterfox is is built with privacy in mind. It does not track you,
+and it doesn't make money from your data.
+Waterfox has search partnerships. So it survives by making the
+default search on Waterfox monetized. If you search with it,
+Waterfox gets a share of the revenue.
+You are under no obligation to use the default search - but if you
+like what Waterfox does and want to support the project,
+please consider using it.
+
+This package installs to /opt/waterfox
+
+In Slackware the annoying auto-update message can be disable using
+a policies.json (installed at /opt/waterfox/distribution) by
+passing "POLICIES=yes" to the build script like this:
+
+    chmod +x waterfox.SlackBuild
+    POLICIES=yes ./waterfox.SlackBuild
+
+If uninstalling remember to manually remove $HOME/.waterfox

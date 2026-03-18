@@ -22,11 +22,13 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20241017 bkw: Modified by SlackBuilds.org, BUILD=2: update for lua 5.4.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=conky
-VERSION=${VERSION:-1.21.5}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-1.22.2}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -123,6 +125,9 @@ cd build
   make
   make install DESTDIR=$PKG
 cd ..
+
+# Delete the duplicate, and wrong location, vim and nano syntax files.
+rm -rf $PKG/{vim,nano}
 
 # Don't ship .a files:
 find $PKG -type f -iname '*.a' -exec rm -rf {} \+

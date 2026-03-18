@@ -1,4 +1,3 @@
-
 Droidcam Slackware
 
 Probably the camera and microphone modules of the cell 
@@ -20,5 +19,3 @@ if [ -x /usr/lib/dkms/dkms_autoinstaller ]; then
   echo "Running DKMS autoinstaller"
   /usr/lib/dkms/dkms_autoinstaller start
 fi
-
-

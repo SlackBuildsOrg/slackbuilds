@@ -1,0 +1,27 @@
+ishmael (EBook dumper)
+
+ishmael is a Perl program that can read and dump the contents of
+various popular (and unpopular) ebook formats. It originally only
+dumped the formatted text contents of an ebook, but has since grown to
+be able to dump metadata, images, and more.
+
+ishmael currently supports the following ebook formats:
+- EPUB
+- MOBI
+- KF8/AZW3
+- AZW
+- HTML/XHTML
+- PDF
+- FictionBook2
+- PalmDoc
+- zTXT
+- Comic Book Archives (cbr, cbz, cb7)
+- Microsoft Compiled HTML Help (CHM)
+- Zip
+- Text
+
+Optional dependencies:
+- unrar/unrar-free: CBR support
+- p7zip: CB7 support
+- elinks: Alternative HTML formatter
+- w3m: Alternative HTML formatter

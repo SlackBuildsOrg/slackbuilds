@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fcron
-VERSION=${VERSION:-3.3.1}
+VERSION=${VERSION:-3.4.0}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -99,6 +99,8 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+cat $CWD/fcron-install-relative-path-bug.patch | patch -p1 -b
+
 ./configure \
   --with-username=$FCRON_USER \
   --with-groupname=$FCRON_GROUP \
@@ -123,8 +125,8 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 
 install -D -m 0644 $CWD/rc.fcron $PKG/etc/rc.d/rc.fcron.new
 
-cp -a README                  $PKG/usr/doc/$PRGNAM-$VERSION
-cp $CWD/README             $PKG/usr/doc/$PRGNAM-$VERSION/README.slackware
+cp -a README.md               $PKG/usr/doc/$PRGNAM-$VERSION
+cp $CWD/README                $PKG/usr/doc/$PRGNAM-$VERSION/README.slackware
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 cp $CWD/sample-root-fcrontab.txt $PKG/usr/doc/$PRGNAM-$VERSION
 

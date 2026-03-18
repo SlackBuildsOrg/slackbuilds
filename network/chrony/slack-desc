@@ -14,6 +14,6 @@ chrony: clocks (e.g. GPS receiver), and manual input using wristwatch and
 chrony: keyboard. It can also operate as an NTPv4 (RFC 5905) server and peer
 chrony: to provide a time service to other computers in the network.
 chrony:
-chrony: Homepage: https://chrony.tuxfamily.org/
+chrony: Homepage: https://chrony-project.org/
 chrony:
 chrony:

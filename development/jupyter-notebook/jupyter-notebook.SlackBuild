@@ -3,7 +3,7 @@
 # Slackware build script for jupyter-notebook
 
 # Copyright 2017-2021 Benjamin Trigona-Harany <slackbuilds@jaxartes.net>
-# Copyright 2022-2024 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2022-2026 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jupyter-notebook
-VERSION=${VERSION:-6.5.4}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-7.5.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -65,17 +65,18 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Fix traitlets warning and error:
-# https://github.com/jupyter/notebook/pull/7051
-patch -p1 < $CWD/fix-traitlets-error.patch
+# jupyter-notebook should not ask for more dependencies
+python3 -m build --no-isolation --skip-dependency-check
+python3 -m installer -d "$PKG" dist/*.whl
 
-python3 setup.py install --root=$PKG
+# Fix /etc/jupyter path
+mv $PKG/{usr/,}etc
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CHANGELOG.md CONTRIBUTING.rst LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CHANGELOG.md CONTRIBUTING.md LICENSE README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

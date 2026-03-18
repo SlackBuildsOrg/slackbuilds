@@ -1,18 +1,35 @@
 #!/bin/bash
 #
-# Slackware build script for <sbotools>
+# Slackware build script for sbotools
+#
 # Written by Jacob Pipkin <j@dawnrazor.net>
-# Licensed under the WTFPL <http://sam.zoy.org/wtfpl/COPYING>
+# Copyright 2024-2025 K. Eugene Carlson <kvngncrlsn@gmail.com>
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sbotools
-VERSION=${VERSION:-2.7}
+VERSION=${VERSION:-4.1.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-
-SRCNAM=$PRGNAM
 
 ARCH=noarch
 
@@ -33,9 +50,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
-cd $SRCNAM-$VERSION
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -43,12 +60,10 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# we set INSTALLMAN3DIR=none to elide the Sort::Versions.3 man page so that we
-# don't clobber one from perl-Sort-Versions or Sort::Versions.
 ( cd SBO-Lib
 	/usr/bin/perl Makefile.PL \
 	  PREFIX=/usr \
-	  INSTALLDIRS=site \
+	  INSTALLDIRS=vendor \
 	  INSTALLVENDORMAN1DIR=/usr/man/man1 \
 	  INSTALLVENDORMAN3DIR=/usr/man/man3 \
 	  INSTALLMAN3DIR=none
@@ -57,18 +72,52 @@ find -L . \
 	make install DESTDIR=$PKG
 )
 
-SCRIPTS="check clean config find install remove snap upgrade"
-MANS="man1 man5"
+SCRIPTS="check clean config find hints install remove upgrade tool"
+ANYONE="check config find hints install upgrade tool"
+MANS="man1 man3 man5"
 
-mkdir -p $PKG/usr/sbin
+mkdir -p $PKG/usr/sbin \
+         $PKG/usr/share/zsh/site-functions \
+         $PKG/usr/share/bash-completion/completions
 for i in $SCRIPTS; do
-  cp sbo$i $PKG/usr/sbin/sbo$i
+  install -m 0755 sbo$i $PKG/usr/sbin
+  install -m 0644 completions/zsh/_sbo$i $PKG/usr/share/zsh/site-functions
+  install -m 0644 completions/bash/sbo$i $PKG/usr/share/bash-completion/completions/sbo$i
 done
+# sbofind and parts of most other scripts can be used without root
+mkdir -p $PKG/usr/bin
+(
+cd $PKG/usr/bin
+for i in $ANYONE; do
+  ln -s ../sbin/sbo$i $PKG/usr/bin
+done
+)
+
+# sbosnap compatibility completions
+install -m 0644 completions/zsh/_sbosnap $PKG/usr/share/zsh/site-functions
+install -m 0644 completions/bash/sbosnap $PKG/usr/share/bash-completion/completions/sbosnap
 
 for i in $MANS; do
   mkdir -p $PKG/usr/man/$i
-  cp $i/* $PKG/usr/man/$i/
+  install -m 0644 $i/* $PKG/usr/man/$i
 done
+
+# Make the sbosnap compatibility symlinks
+(
+cd $PKG/usr/sbin
+ln -s sbocheck sbosnap
+cd $PKG/usr/man/man1
+ln -s sbocheck.1 sbosnap.1
+)
+
+mkdir -p $PKG/usr/share/sbotools
+install -m 0644 contrib/* $PKG/usr/share/sbotools
+
+mkdir -p $PKG/etc/sbotools
+cp etc/{obsolete,perl_vers} $PKG/etc/sbotools
+cp etc/sbotools.conf $PKG/etc/sbotools/sbotools.conf.new
+cp etc/sbotools.hints $PKG/etc/sbotools/sbotools.hints.new
+cp etc/sbotools.colors $PKG/etc/sbotools/sbotools.colors.new
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz; rm $i ; done
@@ -78,11 +127,13 @@ find $PKG -name perllocal.pod -o -name ".packlist" -o -name "*.bs" | xargs rm -f
 find $PKG -depth -type d -empty -delete || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/SBO-Lib
-cp -a SBO-Lib/README SBO-Lib/Changes $PKG/usr/doc/$PRGNAM-$VERSION/SBO-Lib
+cp -a SBO-Lib/README SBO-Lib/ChangeLog.md $PKG/usr/doc/$PRGNAM-$VERSION/SBO-Lib
+cp -a LICENSE THANKS $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

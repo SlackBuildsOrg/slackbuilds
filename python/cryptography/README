@@ -3,3 +3,6 @@ recipes and primitives.
 
 It's available under either the Apache Software License, Version 2.0,
 or the BSD license.
+
+NOTE: Cryptography 46.x is the last version working on Slackware 15.0.
+Newer version will drop support for OpenSSL < 3.0.

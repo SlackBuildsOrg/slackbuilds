@@ -1,8 +1,10 @@
 PRGNAM="shiboken2"
-VERSION="5.15.10"
+VERSION="5.15.18"
 HOMEPAGE="https://wiki.qt.io/Qt_for_Python"
-DOWNLOAD="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-5.15.10-src/pyside-setup-opensource-src-5.15.10.tar.xz"
-MD5SUM="60441c2baeccb932ee0636034989ae57"
+DOWNLOAD="https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-5.15.18-src/pyside-setup-opensource-src-5.15.18.tar.xz  \
+          https://ftp.debian.org/debian/pool/main/p/pyside2/pyside2_5.15.18-1.debian.tar.xz"
+MD5SUM="ec63438b7b253574a1524e0d18f09415 \
+        679e3e345aa69e14e8b1721e4dfb73d3"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

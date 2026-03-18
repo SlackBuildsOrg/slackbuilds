@@ -1,2 +1,3 @@
 jsonschema is an implementation of JSON Schema for Python.
-(supporting Python 3).
+
+NOTE: 4.25.1 is the last version to support python-3.9

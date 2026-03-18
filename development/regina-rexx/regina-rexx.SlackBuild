@@ -6,7 +6,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=regina-rexx
-VERSION=${VERSION:-3.9.6}
+VERSION=${VERSION:-3.9.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -20,9 +20,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -61,11 +58,13 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# remove gcc -O3 override and let the SLCKFLAGS set the optimization
+cp -p configure{,.orig}
+sed -i 's/ -O3//' configure
+
 if [ "$FLAVOR" = "static" ]; then
   SLKCFLAGS="$SLKCFLAGS -static"
-  mv -f configure configure.orig
-  sed -e 's/STATIC_LDFLAGS=""/STATIC_LDFLAGS="-static"/' <configure.orig >configure
-  chmod 744 configure
+  sed -i 's/STATIC_LDFLAGS=""/STATIC_LDFLAGS="-static"/' configure
 fi
 
 CFLAGS="$SLKCFLAGS" \
@@ -93,7 +92,7 @@ mkdir -p                                $PKG/usr/doc/$PRGNAM-$VERSION/
 install -m0644 doc/regina.pdf           $PKG/usr/doc/$PRGNAM-$VERSION/regina-$VERSION.pdf
 install -m0644 doc/regutil.pdf          $PKG/usr/doc/$PRGNAM-$VERSION/regutil-$VERSION.pdf
 install -m0644 regutil/README           $PKG/usr/doc/$PRGNAM-$VERSION/README.regutil
-install -m0644 BUGS COPYING-LIB HACKERS.txt INSTALL README* TODO \
+install -m0644 BUGS COPYING-LIB HACKERS.txt README* TODO \
                                         $PKG/usr/doc/$PRGNAM-$VERSION
 install -m0644 $CWD/README              $PKG/usr/doc/$PRGNAM-$VERSION/README.slackware
 install -m0644 $CWD/$PRGNAM.SlackBuild  $PKG/usr/doc/$PRGNAM-$VERSION

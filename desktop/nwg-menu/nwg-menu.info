@@ -1,10 +1,10 @@
 PRGNAM="nwg-menu"
-VERSION="0.1.3"
+VERSION="0.1.9"
 HOMEPAGE="https://github.com/nwg-piotr/nwg-menu/"
-DOWNLOAD="https://github.com/nwg-piotr/nwg-menu/archive/v0.1.3/nwg-menu-0.1.3.tar.gz \
-          https://slackware.lngn.net/pub/source/nwg-menu/nwg-menu-vendor-0.1.3.tar.xz"
-MD5SUM="542ffe1db1cc93dc2791f431d8b5d132 \
-        974c0ed73c0b57150cd9474e94f48a88"
+DOWNLOAD="https://github.com/nwg-piotr/nwg-menu/archive/v0.1.9/nwg-menu-0.1.9.tar.gz \
+          https://slackware.lngn.net/pub/source/nwg-menu/nwg-menu-vendor-0.1.9.tar.xz"
+MD5SUM="7739ba6d2bc1c2949543c74a67fe3c75 \
+        f02159028131453d35b4cf45954f0d15"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="google-go-lang gtk-layer-shell"

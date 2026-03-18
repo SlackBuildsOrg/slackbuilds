@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+     |-----handy-ruler------------------------------------------------------|
+xmenu: xmenu (short description)
+xmenu:
+xmenu: XMenu is a desktop menu utility for the X11 window system.
+xmenu: XMenu receives a menu specification in stdin, shows a menu for
+xmenu: the user to select one of the options, and outputs the selected
+xmenu: option to stdout.
+xmenu:
+xmenu:
+xmenu: Homepage: https://github.com/phillbush/xmenu
+xmenu:
+xmenu:

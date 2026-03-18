@@ -2,7 +2,7 @@
 
 # Slackware build script for SVT-AV1
 
-# Copyright 2022-2024 Vijay Marcel
+# Copyright 2022-2025 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,14 +22,33 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Changelog for SVT-AV1 SlackBuild Script
+# --------------------------------------------------------------------
+
+# 27/08/2022: Added to slackbuilds.org
+# 26/11/2022: Gitlab tag handling fixed by Andrew Clemons
+# 18/02/2023: Slackbuild script template fixed by B.Watson
+# 12/05/2023: Updated to version 1.5.0
+# 06/02/2024: Updated to version 1.8.0
+# 23/04/2024: Updated to version 2.0.0
+# 14/08/2024: Updated to version 2.1.2
+# 04/09/2024: Updated to version 2.2.1
+# 20/11/2024: Updated to version 2.3.0
+# 18/04/2025: updated to version 3.0.2
+# 12/09/2025: svt-av1 for now compiles and works on 32-bit,support for it
+# will be dropped by upstream in future.cpuinfo is no longer a dependency.
+# updated to version 3.1.2
+
+# -----------------------------------------------------------------------
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=svt-av1
-VERSION=${VERSION:-2.0.0}
+VERSION=${VERSION:-3.1.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-DIR=${DIR:-SVT-AV1-v2.0.0}
+DIR=${DIR:-SVT-AV1-v3.1.2}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -75,28 +94,26 @@ cd $DIR
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-
-export LDFLAGS+=' -Wl,-z,noexecstack'
 cmake -B build -S $TMP/$DIR \
         -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     	-DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
         -DCMAKE_BUILD_TYPE:STRING=Release \
         -DCMAKE_INSTALL_PREFIX:PATH=/usr \
         -DCMAKE_INSTALL_LIBDIR:PATH=/usr/lib${LIBDIRSUFFIX} \
-        -Wno-dev
+        -DUSE_CPUINFO=SYSTEM
 
 make -C build
 make -C build install DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
-  | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+  | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded --remove-section=.comment --remove-section=.note 2> /dev/null || true
 
 # Don't ship .la files:
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a CONTRIBUTING.md CHANGELOG.md PATENTS.md LICENSE.md LICENSE-BSD2.md STYLE.md README.md Docs   $PKG/usr/doc/$PRGNAM-$VERSION
@@ -106,4 +123,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

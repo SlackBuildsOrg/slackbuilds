@@ -1,8 +1,10 @@
 PRGNAM="openclonk"
 VERSION="8.1"
 HOMEPAGE="http://www.openclonk.org/"
-DOWNLOAD="https://github.com/openclonk/openclonk/archive/v8.1/openclonk-8.1.tar.gz"
-MD5SUM="7b05d434e070257beb62e908557c1d0e"
+DOWNLOAD="https://github.com/openclonk/openclonk/archive/v8.1/openclonk-8.1.tar.gz \
+          https://github.com/openclonk/openclonk/commit/5737af90d8054c27147e5cdcb1c57b75746518a8.patch"
+MD5SUM="7b05d434e070257beb62e908557c1d0e \
+        bab8b5e7b940e89023e3aa7bb8f6ca60"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="freealut miniupnpc"

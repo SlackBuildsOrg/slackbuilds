@@ -2,7 +2,7 @@
 
 # Slackware build script for b2 BBC Micro Emulator
 
-# Copyright 2023 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2023-2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,11 +25,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=b2
-VERSION=${VERSION:-20240710_232859_844adac}
+VERSION=${VERSION:-20250808_172419_959a8ab}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=${TARBALL:-b2-20240710-232859-844adac}
+TARBALL=${TARBALL:-b2-20250808-172419-959a8ab}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

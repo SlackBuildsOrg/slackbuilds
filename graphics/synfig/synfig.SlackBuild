@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=synfig
-VERSION=${VERSION:-1.5.3}
+VERSION=${VERSION:-1.5.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -97,6 +97,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp AUTHORS COPYING NEWS README TODO $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/$PRGNAM.info > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.info
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

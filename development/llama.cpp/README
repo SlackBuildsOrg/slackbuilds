@@ -1,0 +1,16 @@
+llama.cpp, a C/C++ implementation of LLaMA-based large language 
+models that provides state-of-the-art performance on a wide range of 
+hardware.
+
+GPU acceleration options 
+WITH_CUDA=yes, WITH_HIP=yes, WITH_SYCL=yes, WITH_VULKAN=yes 
+WITH_OPENCL=yes. Mathematical library optimization WITH_BLAS=yes 
+
+For OPENCL you also need
+export OPENCL_VENDOR_PATH=/etc/OpenCL/vendors/mesa.icd
+In my system OpenCL had no benefit.
+
+llama.cpp has releases every hours. Maybe you want to build
+the latest release.
+
+Optional requirement: OpenBLAS. (in my system no benefit)

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+PRGNAM=katifetch
+VERSION=${VERSION:-13.1}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+rm -rf $TMP $PKG
+mkdir -p $TMP $PKG
+
+cd $TMP
+tar xvf $OLDPWD/13.1.tar.gz
+
+cd katifetch-13.1
+
+mkdir -p $PKG/usr/bin
+install -m 755 katifetch.sh $PKG/usr/bin/katifetch
+
+cd $PKG
+/sbin/makepkg -c n $OUTPUT/$PRGNAM-$VERSION-noarch-$BUILD$TAG.txz

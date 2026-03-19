@@ -2,7 +2,7 @@
 
 # Slackware build script for lastpass-cli
 
-# Copyright 2019 Michael Edie Orlando, FL USA
+# Copyright 2019-2026 Michael Edie, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lastpass-cli
-VERSION=${VERSION:-1.3.3}
+VERSION=${VERSION:-1.6.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,16 +83,19 @@ export CFLAGS+="$SLKCFLAGS -fcommon"
 
 make
 make install DESTDIR=$PKG
-make install-doc MANDIR=$PKG/usr/man
-
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+if command -v a2x >/dev/null 2>&1; then
+  make install-doc MANDIR=$PKG/usr/man
+fi
 
 mkdir -p $PKG/usr/bin
 cp build/lpass $PKG/usr/bin
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+strip --strip-unneeded $PKG/usr/bin/lpass 2> /dev/null || true
+
+if [ -d $PKG/usr/man ]; then
+  find $PKG/usr/man -type f -exec gzip -9 {} \;
+  for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+fi
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a CHANGELOG.md README.md COPYING CONTRIBUTING LICENSE.OpenSSL $PKG/usr/doc/$PRGNAM-$VERSION

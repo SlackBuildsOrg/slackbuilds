@@ -467,27 +467,6 @@ index 4cf4f52bdb92..95544c85b34b 100644
  }
  
  static void
-@@ -2319,16 +2319,16 @@ mini_preview_update (gboolean has_preview, signal_user_data_t *ud)
-     if (ghb_dict_get_bool(ud->prefs, "ShowMiniPreview") && has_preview)
-     {
-         widget = ghb_builder_widget("summary_image");
--        gtk_widget_hide(widget);
-+        gtk_widget_set_visible(widget, FALSE);
-         widget = ghb_builder_widget("summary_preview_image");
--        gtk_widget_show(widget);
-+        gtk_widget_set_visible(widget, TRUE);
-     }
-     else
-     {
-         widget = ghb_builder_widget("summary_image");
--        gtk_widget_show(widget);
-+        gtk_widget_set_visible(widget, TRUE);
-         widget = ghb_builder_widget("summary_preview_image");
--        gtk_widget_hide(widget);
-+        gtk_widget_set_visible(widget, FALSE);
-     }
- }
- 
 @@ -3916,7 +3916,7 @@ ghb_countdown_dialog_show (const gchar *message, const gchar *action,
  
      g_signal_connect(dialog, "response",

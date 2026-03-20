@@ -2,7 +2,7 @@
 
 # Slackware build script for NordPass
 
-# Copyright 2023 Slackjeff <slackjeff@riseup.net>
+# Copyright 2023 Slackjeff <slackjeff@slackjeff.com.br>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,11 +28,12 @@
 # IMPORTANT: update this if you change this script!)
 #########################################################################
 # 2.0   18-MARC-2025 UPGRADE (Version: 5.29.7)
+# 2.1   19-MARC-2026 UPGRADE (Version: 7.5.6)
 
 cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=nordpass
-VERSION=${VERSION:-5.29.7}
+VERSION=${VERSION:-7.5.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -44,7 +45,7 @@ PKGTYPE=${PKGTYPE:-tgz}
 # jq -r '."channel-map"[].download.url'
 #######################################################
 SNAPID='00CQ2MvSr0Ex7zwdGhCYTa0ZLMw3H6hf'
-SNAPREV='197'
+SNAPREV='218'
 
 ARCH="${ARCH:-$(uname -m)}"
 if [ "$ARCH" != "x86_64" ]; then

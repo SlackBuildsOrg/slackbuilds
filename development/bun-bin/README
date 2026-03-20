@@ -5,4 +5,7 @@ for NodeJs.It reduces startup times and reduces memory usage.
 
 Note:
 This is the binary version of bun from upstream for
-Slackware Linux. This is x86-64 bit only.
+Slackware Linux. This is x86-64 bit only. The downloaded
+source in sbopkg cache folder needs to deleted before 
+running a update to newer version.
+

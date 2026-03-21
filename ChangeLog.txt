@@ -1,3 +1,113 @@
+Sat Mar 21 00:46:19 UTC 2026
+accessibility/magnus: Update script.
+audio/python3-pyalsaaudio: Added (Python Module).
+audio/reaper: Updated for version 7.65
+audio/tauonmb: Update script.
+audio/xmms2: Updated for version 0.9.7.
+business/ledger: Updated for version 3.4.1
+desktop/caffeine-ng: Update script.
+desktop/gromit-mpx: Updated for version 1.9.0.
+desktop/mint-themes: New Maintainer.
+desktop/standard-notes-bin: Updated for version 3.201.21
+desktop/sun: Updated for version 2.1.0.
+development/HeidiSQL: Fix sbolint warnings.
+development/a68g: Updated for version 3.10.14
+development/antigravity: Updated for version 1.20.5
+development/aws-cdk: Updated for version 2.1112.0.
+development/bruno: Updated for version 3.2.0.
+development/bun-bin:update to version 1.3.11
+development/cppcms: Updated for version 2.0.1.
+development/deno-bin:update to version 2.7.7
+development/diffoscope: updated for version 314
+development/diffuse: Updated for version 0.11.0.
+development/electron-bin: Updated for version 41.0.2
+development/github-cli: Updated for version 2.88.1
+development/jupyter_server_terminals: Update for 0.5.4
+development/kaaedit: Update script.
+development/kotlin: Updated for version 2.3.20.
+development/litehtml: Added (HTML Rendering Engine).
+development/mongodb-shell: Updated for version 2.8.1.
+development/rubymine: Added (IDE for Ruby).
+development/sbt: Updated for version 1.12.6
+development/sourcegit: Updated for version 2026.06
+development/vscode-bin: Updated for version 1.112.0.
+development/vscodium: Updated for version 1.112.01907.
+games/lutris: Updated for version 0.5.22
+games/ut99: New Maintainer
+games/ut99: fix README lines length
+graphics/blender: Version bump to 5.1.0
+graphics/vips: Updated for version 8.18.1.
+ham/qlog: Updated for version 0.49.1.
+libraries/Botan3: Updated for version 3.11.0.
+libraries/SDL3_ttf: Added (SDL TTF Library).
+libraries/libcoap: Updated for version 4.3.5a.
+libraries/libebml: Build with the newer cmake.
+libraries/libmseed: Updated for version 3.2.4.
+libraries/libupnp: Updated for version 1.14.30
+libraries/qt-avif-image-plugin: Updated for version 0.10.2.
+misc/lastpass-cli: Updated for version 1.6.1.
+misc/nordpass: Updated for version 7.5.6.
+misc/nuclei: Added (Vulnerability Scanner).
+multimedia/HandBrake: Version bump to 1.11.0
+network/3proxy: Updated for version 0.9.5.
+network/brave-browser: update 1.88.132
+network/cloudflared-bin: Added (Cloudflare Tunnel Client).
+network/copyparty: updated for version 1.20.12
+network/deltachat-desktop: Updated for version 2.43.0.
+network/discord: Version bump to 0.0.129
+network/dokuwiki: Updated for version 20250514b.
+network/dropbox: Updated for version 244.4.6580.
+network/gallery-dl: Updated for version 1.31.10
+network/hydra: Updated for version 9.6.
+network/kubectl-bin: Updated for version 1.34.6.
+network/kubectl: update to 1.34.6
+network/librewolf: Updated for version 148.0.2_3
+network/mullvadvpn-app: Updated for version 2026.1.
+network/opera: Updated for version 128.0.5807.77
+network/persepolis: Update script.
+network/signal-desktop: Reverted to version 8.1.0.
+network/tinyproxy: Updated for version 1.11.3.
+network/vivaldi: Updated for version 7.9.3970.41.
+network/warpinator: Update script.
+network/zen-browser: Updated for version 1.19.3b
+office/ledger-live: Updated for version 2.145.0
+office/libreoffice-helppack: Updated for version 25.8.5.
+office/libreoffice-langpack: Updated for version 25.8.5.
+office/libreoffice: Updated for version 25.8.5.
+office/pageEdit: Updated for version 2.7.6
+office/qownnotes: Updated for version 26.3.15.
+office/sigil: Updated for version 2.7.6
+office/wps-office-dicts: Updated for version 26.2.2.2
+perl/perl-YAML-Syck: Updated for version 1.37.
+python/pyOpenSSL: Updated for version 26.0.0.
+python/python2-nuitka: Updated for version 4.0.5
+python/python3-geventhttpclient: Updated for version 2.3.9.
+python/python3-nuitka: Updated for version 4.0.5
+python/python3-odfdo: Updated for version 3.22.0
+python/python3-pynacl: Update for 1.6.2
+python/python3-pypdf: Updated for version 6.9.0
+python/python3-reportlab:update to version 4.4.10
+python/python3-setproctitle: Added (Python Module).
+python/rst2pdf:update to version 0.105
+python/ruff-bin: Updated for version 0.15.6
+python/ty-bin: Updated for version 0.0.23
+system/firejail: Updated for version 0.9.80.
+system/fscrypt: Update for 0.3.6
+system/lightdm-settings: Update script.
+system/limine: Updated for version 10.8.5
+system/mbuffer: updated for version 20260301
+system/mongo-tools: Updated for version 100.15.0.
+system/mongodb: Updated for version 8.2.6.
+system/nvidia-legacy390-driver: Orphaned.
+system/nvidia-legacy390-kernel: Update to support Kernel 6.12.
+system/nvidia-legacy580-driver: Updated for version 580.142.
+system/nvidia-legacy580-kernel: Updated for version 580.142.
+system/nwipe: Updated for version 0.40.
+system/openrazer-daemon: Update script.
+system/readpe: Updated for version 20260312_d9a4c7a
+system/slpkg: Updated for version 6.1.3.
+system/usbguard: Updated for version 1.1.4.
++--------------------------+
 Sat Mar 14 11:38:03 UTC 2026
 academic/gcompris-qt: Updated for version 26.1.
 academic/zotero: update 8.0.4

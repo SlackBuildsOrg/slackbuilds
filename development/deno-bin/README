@@ -5,4 +5,6 @@ Deno is fully compatible with Node and npm.This is the
 repackage of Binary from upstream for Slackware Linux.
 
 Note: This conflicts with the version of deno in SBo
-This works only on x86-64 bit.
+This works only on x86-64 bit.The downloaded
+source in sbopkg cache folder needs to deleted before
+running a update to newer version.

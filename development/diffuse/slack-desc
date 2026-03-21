@@ -14,6 +14,6 @@ diffuse: adjust line matching and directly edit files.
 diffuse: Support Bazaar, CVS, Darcs, Git, Mercurial,Monotone, RCS,
 diffuse: Subversion, and SVK repositories for comparison and merging.
 diffuse:
-diffuse: Homepage: http://diffuse.sourceforge.net
+diffuse: Homepage: https://mightycreak.github.io/diffuse/
 diffuse:
-diffuse: forked from unmaintained: https://sourceforge.net/projects/diffuse/
+diffuse: forked from unmaintained: https://diffuse.sourceforge.net/

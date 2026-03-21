@@ -26,5 +26,5 @@ MD5SUM_x86_64="d564c4a0f57eb7715a5f11ed8da17b6c \
                70c481fc124052d0c20907c4dd0e57ec \
                3ff8e45fa66fd00ef824c3e8d297c3e6"
 REQUIRES="nvidia-legacy390-kernel"
-MAINTAINER="Lenard Spencer"
-EMAIL="lenardrspencer@gmail.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

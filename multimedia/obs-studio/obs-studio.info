@@ -1,14 +1,12 @@
 PRGNAM="obs-studio"
-VERSION="29.1.3"
+VERSION="32.0.4"
 HOMEPAGE="https://obsproject.com/"
-DOWNLOAD="https://sourceforge.net/projects/slackbuildsdirectlinks/files/obs/obs-studio-c58e511813c33e93da7637d50aa431ae0cddda0c.tar.gz \
-		https://cef-builds.spotifycdn.com/cef_binary_101.0.18+g367b4a0+chromium-101.0.4951.67_linux32_minimal.tar.bz2"
-MD5SUM="400a82a711ccee33a691661ee896da5f \
-		1dbd673789f79432e618d477c49df135"
-DOWNLOAD_x86_64="https://sourceforge.net/projects/slackbuildsdirectlinks/files/obs/obs-studio-c58e511813c33e93da7637d50aa431ae0cddda0c.tar.gz \
-		https://cdn-fastly.obsproject.com/downloads/cef_binary_4638_linux64.tar.bz2"
-MD5SUM_x86_64="400a82a711ccee33a691661ee896da5f \
-		34fb1c611b3e278ca4d0d1d50e7bfb9b"
-REQUIRES="luajit libfdk-aac mbedtls vlc nlohmann_json"
+DOWNLOAD="https://master.dl.sourceforge.net/project/slackbuildsdirectlinks/obs/obs-studio-32.0.4.tar.lz"
+MD5SUM="0c0cc63644478b6fd665078107dd1da8"
+DOWNLOAD_x86_64="https://master.dl.sourceforge.net/project/slackbuildsdirectlinks/obs/obs-studio-32.0.4.tar.lz \
+        https://cdn-fastly.obsproject.com/downloads/cef_binary_6533_linux_x86_64_v6.tar.xz"
+MD5SUM_x86_64="0c0cc63644478b6fd665078107dd1da8 \
+        bd1ba35d0cb1cf403329ade2d2a619e2"
+REQUIRES="luajit libfdk-aac mbedtls vlc nlohmann_json onevpl uthash simde"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

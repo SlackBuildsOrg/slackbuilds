@@ -1,0 +1,49 @@
+--- obs-studio.orig/frontend/cmake/os-linux.cmake	2026-01-07 08:54:18.000000000 +0100
++++ obs-studio/frontend/cmake/os-linux.cmake	2026-03-21 22:19:04.948281016 +0100
+@@ -10,7 +10,11 @@
+   obs-studio
+   PRIVATE OBS_INSTALL_PREFIX="${OBS_INSTALL_PREFIX}" $<$<BOOL:${ENABLE_PORTABLE_CONFIG}>:ENABLE_PORTABLE_CONFIG>
+ )
+-target_link_libraries(obs-studio PRIVATE Qt::GuiPrivate Qt::DBus)
++target_link_libraries(obs-studio PRIVATE Qt::DBus)
++if(Qt6_VERSION AND Qt6_VERSION VERSION_GREATER_EQUAL "6.10.0")
++  find_package(Qt6 COMPONENTS GuiPrivate REQUIRED)
++endif()
++target_link_libraries(obs-studio PRIVATE Qt::GuiPrivate)
+ 
+ find_package(Libpci REQUIRED)
+ target_link_libraries(obs-studio PRIVATE Libpci::pci)
+--- obs-studio.orig/frontend/plugins/decklink-output-ui/CMakeLists.txt	2026-01-07 08:54:18.000000000 +0100
++++ obs-studio/frontend/plugins/decklink-output-ui/CMakeLists.txt	2026-03-21 22:21:57.436411374 +0100
+@@ -38,8 +38,13 @@
+     Qt::Widgets
+     "$<$<PLATFORM_ID:Darwin>:$<LINK_LIBRARY:FRAMEWORK,Cocoa.framework>>"
+     $<$<PLATFORM_ID:Linux,FreeBSD,OpenBSD>:X11::X11>
+-    $<$<PLATFORM_ID:Linux,FreeBSD,OpenBSD>:Qt::GuiPrivate>
+ )
++if(Qt6_VERSION AND Qt6_VERSION VERSION_GREATER_EQUAL "6.10.0")
++  find_package(Qt6 COMPONENTS GuiPrivate REQUIRED)
++endif()
++if(OS_LINUX OR OS_FREEBSD OR OS_OPENBSD)
++  target_link_libraries(decklink-output-ui PRIVATE Qt::GuiPrivate)
++endif()
+ 
+ if(OS_WINDOWS)
+   configure_file(cmake/windows/obs-module.rc.in decklink-output-ui.rc)
+--- obs-studio.orig/frontend/plugins/frontend-tools/CMakeLists.txt	2026-01-07 08:54:18.000000000 +0100
++++ obs-studio/frontend/plugins/frontend-tools/CMakeLists.txt	2026-03-21 22:21:21.068304366 +0100
+@@ -65,8 +65,13 @@
+     Qt::Widgets
+     "$<$<PLATFORM_ID:Darwin>:$<LINK_LIBRARY:FRAMEWORK,Cocoa>>"
+     $<$<PLATFORM_ID:Linux,FreeBSD,OpenBSD>:X11::X11>
+-    $<$<PLATFORM_ID:Linux,FreeBSD,OpenBSD>:Qt::GuiPrivate>
+ )
++if(Qt6_VERSION AND Qt6_VERSION VERSION_GREATER_EQUAL "6.10.0")
++  find_package(Qt6 COMPONENTS GuiPrivate REQUIRED)
++endif()
++if(OS_LINUX OR OS_FREEBSD OR OS_OPENBSD)
++  target_link_libraries(frontend-tools PRIVATE Qt::GuiPrivate)
++endif()
+ 
+ add_subdirectory("${CMAKE_SOURCE_DIR}/shared/obs-scripting" "${CMAKE_BINARY_DIR}/shared/obs-scripting")
+ 

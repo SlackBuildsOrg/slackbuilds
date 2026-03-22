@@ -4,6 +4,7 @@
 #
 # Copyright 2015 Gethyn ThomasQuail <gethyn@bloodbathsoftworks.com>
 # Copyright 2016-2024 Christoph Willing,  Sydney Australia
+# Copyright 2026 Akram Abdeslem Chaima <akram@riseup.net>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,15 +24,11 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# 20241009 bkw: Modified by SlackBuilds.org, BUILD=2:
-# - Bump BUILD for luajit-2.1.x
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=obs-studio
-VERSION=${VERSION:-29.1.3}
-COMMIT=c58e511813c33e93da7637d50aa431ae0cddda0c
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-32.0.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -55,18 +52,24 @@ OUTPUT=${OUTPUT:-/tmp}
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
-  CEF_ROOT=cef_binary_101.0.18+g367b4a0+chromium-101.0.4951.67_linux32_minimal
+  ENABLE_BROWSER=OFF
+  CEF_OPTS=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
   LIBDIRSUFFIX=""
-  CEF_ROOT=cef_binary_101.0.18+g367b4a0+chromium-101.0.4951.67_linux32_minimal
+  ENABLE_BROWSER=OFF
+  CEF_OPTS=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
-  CEF_ROOT=cef_binary_4638_linux64
+  ENABLE_BROWSER=ON
+  CEF_ROOT=cef_binary_6533_linux_x86_64
+  CEF_OPTS="-DCEF_ROOT_DIR=../../$CEF_ROOT"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
+  ENABLE_BROWSER=OFF
+  CEF_OPTS=""
 fi
 
 set -e
@@ -74,28 +77,21 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$COMMIT
-tar xvf $CWD/$PRGNAM-$COMMIT.tar.gz
-tar xvf $CWD/$CEF_ROOT.tar.bz2
-cd $CEF_ROOT
-  strip -v Release/*.so
-  if [ "$ARCH" = "i686" -o "$ARCH" = "i586" ]; then
-    echo "Making 32bit libcef_dll_wrapper ..."
-    cmake \
-      -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-      -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-      -DCMAKE_BUILD_TYPE=Release .
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.lz
 
-    make libcef_dll_wrapper
-  fi
-  cd ..
-
-cd $PRGNAM-$COMMIT
-sed -i -e '/OBS_VERSION_CANONICAL/ s=^=#=' CMakeLists.txt
-if [ "$ARCH" = "i686" -o "$ARCH" = "i586" ]; then
-  echo "Patching 32bit fix"
-  patch -p1 < $CWD/0011-Fix-FTBFS-on-32bit-archs.patch
+if [ "$ENABLE_BROWSER" = "ON" ]; then
+  tar xvf $CWD/${CEF_ROOT}_v6.tar.xz
+  cd $CEF_ROOT
+    strip -v Release/*.so
+    cd ..
 fi
+
+cd $PRGNAM-$VERSION
+
+echo "Applying Qt6 6.10 fix"
+patch -p1 < $CWD/0011-fix-build-with-qt-6.10.patch
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -103,34 +99,47 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-
 mkdir -p build
 cd build
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DOBS_MULTIARCH_SUFFIX="$LIBDIRSUFFIX" \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib${LIBDIRSUFFIX} \
     -DOBS_VERSION_OVERRIDE=${VERSION} \
-    -DUNIX_STRUCTURE=ON \
     -DENABLE_JACK=ON \
     -DENABLE_LIBFDK=ON \
     -DENABLE_NEW_MPEGTS_OUTPUT=OFF \
     -DENABLE_AJA=OFF \
     -DENABLE_WEBSOCKET=OFF \
-    -DBUILD_BROWSER=ON \
-    -DCEF_ROOT_DIR="../../$CEF_ROOT" \
+    -DENABLE_WEBRTC=OFF \
+    -DENABLE_BROWSER=$ENABLE_BROWSER \
+    $CEF_OPTS \
     -DCMAKE_BUILD_TYPE=Release ..
   make
   make install DESTDIR=$PKG
 cd ..
 
+# Fix permissions on CEF libraries
+if [ "$ENABLE_BROWSER" = "ON" ]; then
+  chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/obs-plugins/libEGL.so
+  chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/obs-plugins/libGLESv2.so
+  chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/obs-plugins/libcef.so
+  chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/obs-plugins/libvk_swiftshader.so
+  chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/obs-plugins/libvulkan.so.1
+  chmod 755 $PKG/usr/lib${LIBDIRSUFFIX}/obs-plugins/chrome-sandbox
+fi
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CONTRIBUTING* COPYING INSTALL README* $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CONTRIBUTING* COPYING README* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

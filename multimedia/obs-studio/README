@@ -2,3 +2,11 @@ This project is a rewrite of what was formerly known as "Open
 Broadcaster Software", software originally designed for recording and
 streaming live video content, efficiently.
 
+This build requires the Chromium Embedded Framework (CEF) for browser
+source support on x86_64.
+
+32-bit (i586/i686) builds are supported but without browser source
+support, as no 32-bit CEF binary is available for obs-studio 32.x.
+Browser source support is automatically disabled on 32-bit systems.
+
+Homepage: https://obsproject.com/

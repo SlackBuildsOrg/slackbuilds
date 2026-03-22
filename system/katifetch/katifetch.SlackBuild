@@ -1,0 +1,41 @@
+#!/bin/sh
+set -e
+
+PRGNAM=katifetch
+VERSION=${VERSION:-13.1}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+ARCH=${ARCH:-noarch}
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+rm -rf $TMP $PKG
+mkdir -p $TMP $PKG
+
+cd $TMP
+tar xvf $CWD/$VERSION.tar.gz
+
+cd $PRGNAM-$VERSION || exit 1
+
+# Install
+mkdir -p $PKG/usr/bin
+install -m 755 katifetch.sh $PKG/usr/bin/katifetch
+
+# Documentation
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a README* $PKG/usr/doc/$PRGNAM-$VERSION 2>/dev/null
+cp -a $CWD/slack-desc $PKG/usr/doc/$PRGNAM-$VERSION
+
+# Fix permissions
+find $PKG -type f -exec chmod 644 {} \;
+find $PKG -type d -exec chmod 755 {} \;
+chmod 755 $PKG/usr/bin/katifetch
+
+# Ownership
+chown -R root:root $PKG
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz

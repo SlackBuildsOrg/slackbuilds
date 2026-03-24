@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=element-desktop
 WEBNAM=element-web
-VERSION=${VERSION:-1.12.12}
+VERSION=${VERSION:-1.12.13}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -96,6 +96,11 @@ tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 tar xvf $CWD/$WEBNAM-$VERSION.tar.gz
 tar xvf $CWD/$PRGNAM-$VERSION-vendored-sources.tar.xz
 
+corepack install --global --cache-only $COREPACK_HOME/pm.tgz
+mkdir -p $COREPACK_HOME/bin
+corepack enable --install-directory $COREPACK_HOME/bin
+export PATH=$COREPACK_HOME/bin:$PATH
+
 cd $WEBNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -104,19 +109,12 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-corepack install --global --cache-only $COREPACK_HOME/pm.tgz
-mkdir -p $COREPACK_HOME/bin
-corepack enable --install-directory $COREPACK_HOME/bin
-export PATH=$COREPACK_HOME/bin:$PATH
 pnpm config set store-dir "$XDG_CONFIG_HOME/pnpm-store"
-
-pushd apps/web
-  pnpm install --frozen-lockfile \
-               --offline
-  VERSION=$VERSION \
-  NX_TUI=false \
-    pnpm run build
-popd
+pnpm install --frozen-lockfile \
+             --offline
+VERSION=$VERSION \
+NX_TUI=false \
+  pnpm -C apps/web run build
 
 cd ../$PRGNAM-$VERSION
 chown -R root:root .

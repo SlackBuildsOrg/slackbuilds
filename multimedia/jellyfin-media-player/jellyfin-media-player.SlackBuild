@@ -29,7 +29,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jellyfin-media-player
 WCPRGNAM=jellyfin-web
-VERSION=${VERSION:-1.11.1}
+VERSION=${VERSION:-1.12.0}
+TARNAM=jellyfin-desktop-$VERSION
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -72,6 +73,7 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+mv $TARNAM $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \

@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sbozyp
 DISTNAM=App-$PRGNAM
-VERSION=${VERSION:-1.6.0}
+VERSION=${VERSION:-1.7.1}
 ARCH=${ARCH:-noarch}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -50,8 +50,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$DISTNAM-$VERSION.tar.gz
-cd $DISTNAM-$VERSION
+tar xvf $CWD/$DISTNAM-v$VERSION.tar.gz
+cd $DISTNAM-v$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

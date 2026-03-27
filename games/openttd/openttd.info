@@ -1,12 +1,12 @@
 PRGNAM="openttd"
-VERSION="14.1"
+VERSION="15.2"
 HOMEPAGE="http://www.openttd.org"
-DOWNLOAD="https://cdn.openttd.org/openttd-releases/14.1/openttd-14.1-source.tar.xz \
-          https://cdn.openttd.org/opengfx-releases/7.1/opengfx-7.1-all.zip \
+DOWNLOAD="https://cdn.openttd.org/openttd-releases/15.2/openttd-15.2-source.tar.xz \
+          https://cdn.openttd.org/opengfx-releases/8.0/opengfx-8.0-all.zip \
           https://cdn.openttd.org/openmsx-releases/0.4.2/openmsx-0.4.2-all.zip \
           https://cdn.openttd.org/opensfx-releases/1.0.3/opensfx-1.0.3-all.zip"
-MD5SUM="cb708ae418a12175385267e0dd74b4f6 \
-        f3cd9de89db7caf37a2e5c4c70fb1304 \
+MD5SUM="7107556d4017610e73efa7a315ed8e66 \
+        8e4098870ba520f9f615a7b57208c922 \
         7f853e6b6e673268165a09265ed284b0 \
         4cd2a4f8b2e160f8754736beb4d31ccd"
 DOWNLOAD_x86_64=""

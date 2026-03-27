@@ -1,0 +1,4 @@
+This is a library for resolving JSON pointers according to RFC 6901.
+
+On Slackware 15.0, later versions of python3-jsonpointer (i.e. >= 3.1.0)
+require a newer python (>= 3.10).

@@ -20,8 +20,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=typescript
-VERSION=${VERSION:-5.9.3}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-6.0.2}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 SRCNAM=${SRCNAM:-TypeScript}
@@ -111,5 +111,5 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
 

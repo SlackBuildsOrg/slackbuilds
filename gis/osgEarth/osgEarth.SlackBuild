@@ -3,7 +3,7 @@
 # Slackware build script for osgEarth
 
 # Copyright 2012 Alexander Bruy <alexander.bruy@gmail.com>
-# Copyright 2018-2023 Christoph Willing, Brisbane Australia
+# Copyright 2018-2026 Christoph Willing, Brisbane Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=osgEarth
 SRCNAM=osgearth
-VERSION=${VERSION:-3.5}
+VERSION=${VERSION:-3.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -40,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -71,8 +68,8 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.lz
 cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -85,7 +82,7 @@ mkdir -p build
 cd build
   cmake .. \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -lX11" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release
 

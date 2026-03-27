@@ -1,0 +1,20 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+     |-----handy-ruler------------------------------------------------------|
+sdate: sdate 0.7 never ending September date
+sdate:
+sdate: This program wraps the libc locatime() and gmtime() functions to
+sdate: output the eternal September 1993 date. The epoch month is
+sdate: configurable (new in version 0.3).
+sdate:
+sdate: sdate works like fakeroot (on which its code is based) by setting
+sdate: LD_PRELOAD to a wrapper library.
+sdate:
+sdate: http://www.catb.org/~esr/jargon/html/S/September-that-never-ended.html
+sdate: https://www.df7cb.de/projects/sdate
+       https://www.df7cb.de/projects/sdate

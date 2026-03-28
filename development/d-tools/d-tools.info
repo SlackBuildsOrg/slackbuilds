@@ -1,10 +1,10 @@
 PRGNAM="d-tools"
 VERSION="2.112.0"
 HOMEPAGE="https://dlang.org"
-DOWNLOAD="https://download.dlackware.com/hosted-sources/d-tools/tools-2.112.0.tar.gz \
-          https://download.dlackware.com/hosted-sources/d-tools/DCD-0.16.2.tar.xz \
-          https://download.dlackware.com/hosted-sources/d-tools/D-Scanner-0.15.2.tar.xz \
-          https://download.dlackware.com/hosted-sources/d-tools/dub-1.40.0.tar.gz"
+DOWNLOAD="https://mirrors.caraus.tech/hosted-sources/d-tools/tools-2.112.0.tar.gz \
+          https://mirrors.caraus.tech/hosted-sources/d-tools/DCD-0.16.2.tar.xz \
+          https://mirrors.caraus.tech/hosted-sources/d-tools/D-Scanner-0.15.2.tar.xz \
+          https://mirrors.caraus.tech/hosted-sources/d-tools/dub-1.40.0.tar.gz"
 MD5SUM="a2721431f4860082d72784b928b104ef \
         36e0704071a9111c90675fcf8c2d5a4f \
         2b805ef7e3c2d0951d0c27cb479be67a \

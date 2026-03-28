@@ -26,9 +26,9 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=piavpn-app
 SRCNAM=pia-linux
-SRCVER=3.7-08412
-VERSION=${VERSION:-3.7_08412}
-BUILD=${BUILD:-2}
+SRCVER=3.7.2-08420
+VERSION=${VERSION:-3.7.2_08420}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

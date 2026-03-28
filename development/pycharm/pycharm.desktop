@@ -6,4 +6,4 @@ Exec=pycharm
 Icon=pycharm
 Type=Application
 Terminal=false
-Categories=Development;TextEditor;
+Categories=Development;TextEditor;Utility

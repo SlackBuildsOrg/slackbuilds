@@ -2,7 +2,7 @@
 
 # Slackware build script for the SimH 3.X classic stream
 
-# Copyright 2023 Antonio Leal, Oeiras Porto Salvo, Portugal
+# Copyright 2023-2026 Antonio Leal, Oeiras Porto Salvo, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=simh-classic
 VERSION=${VERSION:-3.12_5}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 BASENAME=${BASENAME:-simhv312-5}
@@ -46,16 +46,12 @@ fi
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -79,6 +75,14 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# cat makefile | grep -A 12 "ALL ="
+simulators="pdp1 pdp4 pdp7 pdp8 pdp9 pdp15 pdp11 pdp10 \
+        vax vax780 nova eclipse i1401 i1620 \
+        altair gri i7094 id16 uc15 \
+        id32 sds lgp h316 sigma"
+
+export CFLAGS="$SLKCFLAGS"
+export CXXFLAGS="$SLKCFLAGS"
 # make the simulators
 # Randomly fails with more than one job so use -j1
 #make -j1 pdp11
@@ -90,53 +94,11 @@ install -Dsv -m 0755 BIN/* -t $PKG/opt/$PRGNAM/bin || true
 
 # create program symlinks
 mkdir -p $PKG/usr/bin
-( cd $PKG/usr/bin ; rm -rf simh-classic-altair )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/altair simh-classic-altair )
-( cd $PKG/usr/bin ; rm -rf simh-classic-eclipse )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/eclipse simh-classic-eclipse )
-( cd $PKG/usr/bin ; rm -rf simh-classic-gri )
-( cd $PKG/usr/bin ; rm -rf ../..simh-classic-h316 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/h316 simh-classic-h316 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-i1401 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/i1401 simh-classic-i1401 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-i1620 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/i1620 simh-classic-i1620 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-i7094 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/i7094 simh-classic-i7094 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-id16 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/id16 simh-classic-id16 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-id32 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/id32 simh-classic-id32 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-lgp )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/lgp simh-classic-lgp )
-( cd $PKG/usr/bin ; rm -rf simh-classic-nova )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/nova simh-classic-nova )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp1 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp1 simh-classic-pdp1 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp10 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp10 simh-classic-pdp10 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp11 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp11 simh-classic-pdp11 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp15 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp15 simh-classic-pdp15 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp4 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp4 simh-classic-pdp4 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp7 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp7 simh-classic-pdp7 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp8 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp8 simh-classic-pdp8 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-pdp9 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/pdp9 simh-classic-pdp9 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-sds )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/sds simh-classic-sds )
-( cd $PKG/usr/bin ; rm -rf simh-classic-sigma )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/sigma simh-classic-sigma )
-( cd $PKG/usr/bin ; rm -rf simh-classic-uc15 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/uc15 simh-classic-uc15 )
-( cd $PKG/usr/bin ; rm -rf simh-classic-vax )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/vax simh-classic-vax )
-( cd $PKG/usr/bin ; rm -rf simh-classic-vax780 )
-( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/vax780 simh-classic-vax780 )
+for s in `echo $simulators`
+do
+    ( cd $PKG/usr/bin ; rm -rf simh-classic-$s )
+    ( cd $PKG/usr/bin ; ln -sf ../../opt/simh-classic/bin/$s simh-classic-$s )
+done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 mv $BUILDDIR/doc/* $PKG/usr/doc/$PRGNAM-$VERSION

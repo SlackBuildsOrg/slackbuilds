@@ -1,3 +1,140 @@
+Sat Mar 28 04:38:24 UTC 2026
+academic/bcftools:Update to version 1.23.1
+academic/pspp: Updated for version 2.1.1.
+academic/samtools: Update to version 1.23.1
+audio/pyalsaaudio: Updated for version 0.9.2
+audio/qtractor: Updated for version 1.5.12.
+audio/reaper: Updated for version 7.66
+desktop/sun: Updated for version 2.3.0.
+desktop/sun: Updated for version 2.4.0.
+development/a68g: Updated for version 3.11.0
+development/antigravity: Updated for version 1.20.6
+development/aws-cdk: Updated for version 2.1114.1.
+development/bbcsdl: Updated for version 1.44a.
+development/claude-code: Updated for version 2.1.77
+development/d-tools: Update download url
+development/deno: Updated for version 2.7.9.
+development/diffoscope: updated for version 315
+development/dkms: Updated for version 3.4.0
+development/electron-bin: Updated for version 41.0.3
+development/golangci-lint: Updated for version 2.11.3.
+development/jupyter-notebook: Update for 7.5.5
+development/jupyterlab: Update for 4.5.6
+development/mongodb-shell: Updated for version 2.8.2.
+development/nodejs22: Updated for version 22.22.2.
+development/notepad++: Updated for version 8.9.3
+development/pcb2gcode: Updated for version 3.0.3.
+development/pnpm: Updated for version 10.32.1.
+development/pycharm: Updated for version 2025.3.3
+development/rustup: Updated for version 1.29.0.
+development/sbt: Updated for version 1.12.8
+development/terraform-ls: Updated for version 0.38.5.
+development/typescript: Updated for version 6.0.2.
+development/universal-ctags: Update download url
+development/vstudio: Updated for version 17.2
+development/zizmor: Updated for version 1.23.1.
+games/kmuddy: Added (MUD Client).
+games/protontricks: Version bump to 1.14.0
+games/puzzles: Updated for version 20260309.06e37f1.
+gis/osgEarth: Fix permission.
+gis/osgEarth: Updated for version 3.8
+graphics/converseen: Updated for version 0.15.2.2.
+graphics/synfig: Updated for version 1.5.5
+graphics/synfigstudio: Updated for version 1.5.5
+graphics/ximaging: Updated for version 1.9.1.
+ham/gridtracker2: Updated for version 2.260323.0.
+libraries/ETL: Updated for version 1.5.5.
+libraries/aqbanking: Updated for version 6.9.1.
+libraries/htslib: Update to version 1.23.1
+libraries/libopenshot-audio: Updated for version 0.6.0
+libraries/libopenshot: Updated for version 0.6.0
+libraries/process-cpp: Version bump to 3.1.0
+libraries/qt-installer-script: Updated for version 4.11.0
+libraries/setproctitle: Removed (renamed to python3-setproctitle)
+misc/simh-classic: Updated script
+multimedia/MediathekView: Updated for version 14.5.0.
+multimedia/freetube: Updated for version 0.23.15.
+multimedia/jellyfin-bin: Updated for version 10.11.6.
+multimedia/obs-studio-legacy: Added (Record and Stream Live Video).
+multimedia/obs-studio: Fix permission.
+multimedia/obs-studio: Updated for version 30.1.2
+multimedia/openshot: Updated for version 3.5.0
+network/Electrum: Update dependency.
+network/amneziawg-kernel: Updated for version 1.0.20260322.
+network/brave-browser: Updated for version 1.88.136.
+network/copyparty: updated for version 1.20.13
+network/discord: Version bump to 0.0.130
+network/element-desktop-bin: Updated for version 1.12.13.
+network/element-desktop: Updated for version 1.12.13.
+network/haproxy: Updated for version 3.2.15.
+network/imapfilter: Updated for version 2.8.5.
+network/librewolf: Updated for version 149.0_1
+network/maildrop: Updated for version 3.3.0
+network/nginx: Updated for version 1.28.3
+network/opera: Updated for version 129.0.5823.15
+network/piavpn-app: Updated for version 3.7.2_08420.
+network/protonmail-bridge: Updated for version 3.23.1.
+network/rclone-src: Updated for version 1.73.3
+network/rclone: Updated for version 1.73.3.
+network/static-web-server: Updated for version 2.42.0.
+network/tailscale: Updated for version 1.96.2.
+network/tor-browser: Updated for version 15.0.8.
+network/vivaldi: Updated for version 7.9.3970.45.
+network/waterfox: Updated for version 6.6.10
+network/zoom-linux: Updated for version 7.0.0.1666
+obsidian/development: updated for version 1.12.7
+office/Joplin: Updated for version 3.5.13.
+office/LibreOffice: Updated for version 26.2.2.2
+office/libreoffice-helppack: Updated for version 25.8.6.
+office/libreoffice-langpack: Updated for version 25.8.6.
+office/libreoffice: Updated for version 25.8.6.
+office/novelWriter: Updated for version 2.8.2.
+office/pandoc-bin: Updated for version 3.9.0.2.
+office/qownnotes: Updated for version 26.3.22.
+perl/perl-ExtUtils-Install: Updated for version 2.22
+perl/perl-File-Save-Home: Updated for version 0.12
+perl/perl-Gtk3-ImageView: Updated for version 12
+perl/perl-Locale-Codes: Updated for version 3.87
+perl/perl-Mojolicious: Updated for version 9.42.
+perl/perl-PDF-Builder: Updated for version 3.028
+perl/perl-YAML-Tiny: Updated for version 1.76
+perl/zef: Updated for version 1.1.0
+python/cryptography: Updated for version 46.0.6.
+python/python2-nuitka: Updated for version 4.0.6
+python/python3-boto3: Updated for version 1.42.73, New Maintainer
+python/python3-configargparse: Updated for version 1.7.5.
+python/python3-jsonpatch: Added (JSON Patches).
+python/python3-jsonpointer: Added (JSON Pointer).
+python/python3-narwhals: Update for 2.18.1
+python/python3-nuitka: Updated for version 4.0.6
+python/python3-odfdo: Updated for version 3.22.1
+python/python3-pypdf: Updated for version 6.9.2
+python/python3-voluptuous: Added (Data Validation Library).
+python/python3-xmltodict: Version bump to 1.0.4
+python/subliminal: Version bump to 2.6.0
+ruby/ruby-build: Updated for version 20260317.
+system/7zip: Updated to 26.00
+system/docker-buildx: Updated for version 0.32.1.
+system/docker-cli: Updated for version 29.3.0.
+system/docker: Updated for version 29.3.0.
+system/fd: Updated for version 10.4.2.
+system/fwupd: Updated for version 1.9.34.
+system/fzf: Updated for version 0.70.0.
+system/jenkins: Updated for version 2.541.3.
+system/kitty: Update download url
+system/kubectx: Updated for version 0.11.0.
+system/limine: Updated for version 11.0.0
+system/onefetch: Updated for version 2.27.1.
+system/openrazer-daemon: Updated for version 3.12.0.
+system/openrazer-kernel: Updated for version 3.12.0.
+system/osquery-bin: Updated for version 5.22.1.
+system/pcp: Update dependency.
+system/rdiff-backup: Update download url
+system/runc: Updated for version 1.3.5.
+system/sbozyp: Updated for version 1.7.1
+system/slpkg: Updated for version 6.1.4.
+system/xfile: Updated for version 1.0.4.
++--------------------------+
 Sat Mar 21 00:46:19 UTC 2026
 accessibility/magnus: Update script.
 audio/python3-pyalsaaudio: Added (Python Module).

@@ -16,7 +16,7 @@ rm -rf obs-studio
 git clone https://github.com/obsproject/obs-studio.git
 
 ( cd obs-studio && \
-  git co "$OBS_TAG" && \
+  git checkout "$OBS_TAG" && \
   git submodule init && \
   git submodule update
 )

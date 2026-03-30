@@ -19,5 +19,5 @@ The following plugins will not be built unless these optional
 dependencies are found:
 
   The clamd plugin requires clamav.
-  The fancy plugin requires webkitgtk.
+  The fancy plugin requires webkit2gtk4.1.
   The gdata plugin requires gdata.

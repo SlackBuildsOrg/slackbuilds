@@ -1,12 +1,12 @@
 PRGNAM="tailscale"
-VERSION="1.96.2"
+VERSION="1.96.4"
 HOMEPAGE="https://tailscale.com/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://pkgs.tailscale.com/stable/tailscale_1.96.2_amd64.tgz \
-                 https://github.com/tailscale/tailscale/archive/refs/tags/v1.96.2/tailscale-1.96.2.tar.gz"
-MD5SUM_x86_64="e28e35ed9c0977ac98fe1afd8a25ef22 \
-               46c5e4a9c9ea25468dce23d491941214"
+DOWNLOAD_x86_64="https://pkgs.tailscale.com/stable/tailscale_1.96.4_amd64.tgz \
+                 https://github.com/tailscale/tailscale/archive/refs/tags/v1.96.4/tailscale-1.96.4.tar.gz"
+MD5SUM_x86_64="d2a827f98a4f4aabcd72f6619258ae1b \
+               328eb42012768675bf2a285a141f1223"
 REQUIRES=""
 MAINTAINER="Andrew Payne"
 EMAIL="phalange@komputermatrix.com"

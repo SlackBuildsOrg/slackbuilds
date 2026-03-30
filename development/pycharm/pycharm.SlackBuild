@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pycharm
-VERSION=${VERSION:-2025.3.3.253.31033.139}
+VERSION=${VERSION:-2025.3.4}
 SRCVER=$( echo $VERSION | cut -c1-8 )
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -66,10 +66,9 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs -d $'\n' sh -c 'for arg do strip --strip-unneeded "$arg" 2> /dev/null; \
     chmod +x "$arg"; done' || true
 
-# hard to fix !?
 if [[ -x "$PKG/opt/pycharm/lib/async-profiler/aarch64/libasyncProfiler.so" ]]
 then
-    echo "libasyncProfiler.so (1) already executable"
+    echo "libasyncProfiler.so (1) is executable"
 else
     chmod +x "$PKG/opt/pycharm/lib/async-profiler/aarch64/libasyncProfiler.so";
     echo "libasyncProfiler.so (1) made executable"

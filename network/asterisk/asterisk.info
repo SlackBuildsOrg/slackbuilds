@@ -1,7 +1,7 @@
 PRGNAM="asterisk"
-VERSION="22.5.1"
+VERSION="22.8.2"
 HOMEPAGE="https://www.asterisk.org"
-DOWNLOAD="https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-22.5.1.tar.gz \
+DOWNLOAD="https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-22.8.2.tar.gz \
           https://downloads.asterisk.org/pub/telephony/sounds/releases/asterisk-core-sounds-en-alaw-1.6.1.tar.gz \
           https://downloads.asterisk.org/pub/telephony/sounds/releases/asterisk-core-sounds-en-alaw-1.6.1.tar.gz.sha1 \
           https://downloads.asterisk.org/pub/telephony/sounds/releases/asterisk-core-sounds-en-g722-1.6.1.tar.gz \
@@ -38,7 +38,7 @@ DOWNLOAD="https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-22.5.1.
           https://raw.githubusercontent.com/asterisk/third-party/master/libjwt/1.15.3/libjwt-1.15.3.tar.gz \
           https://raw.githubusercontent.com/asterisk/third-party/master/pjproject/2.15.1/pjproject-2.15.1.tar.bz2 \
           http://ponce.cc/slackware/sources/repo/imap.tar.Z"
-MD5SUM="352fa507ec44b51464918023927ebf21 \
+MD5SUM="5f8c0c10cfaa4993d3b7654fca46fbae \
         d90e24e30d707e2932cf419cfccff25a \
         3c071029c1ab648367666d1e384394bb \
         e4a9ee348028fc0e47148f783e7f945b \

@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=incus
-VERSION=${VERSION:-6.22}
+VERSION=${VERSION:-6.23}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -55,9 +55,9 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
-cd $PRGNAM-$VERSION
-#patch -p0 < $CWD/install_sh.diff
+echo "Unpacking source tarball ..."
+tar xf $CWD/$PRGNAM-${VERSION}.0.tar.gz
+cd $PRGNAM-${VERSION}.0
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -69,10 +69,28 @@ find -L . -type f|xargs sed -i -e "s:ubuntu/22.04:slackware/15.0:"
 # Ensure google-go-lang is used
 . /etc/profile.d/go.sh
 
-# Build
-export GOFLAGS="-buildmode=pie -modcacherw"
+#export GOFLAGS="-buildmode=pie -modcacherw"
+export GOFLAGS="-buildmode=pie -modcacherw -trimpath -mod=vendor"
+export GO_LDFLAGS="-compressdwarf=false -linkmode external"
 export CGO_LDFLAGS_ALLOW="-Wl,-z,now"
-GO_LDFLAGS="-compressdwarf=false -linkmode external"
+
+export CGO_LDFLAGS="${LDFLAGS}"
+export CGO_CFLAGS="${SLKCFLAGS}"
+export CGO_CPPFLAGS="${SLKCFLAGS}"
+
+# Build
+if [ -r "$CWD"/"$PRGNAM"-"${VERSION}"-vendor.tar.xz ]; then
+  echo "Unpacking vendor tarball ..."
+  tar xf $CWD/$PRGNAM-$VERSION-vendor.tar.xz
+else
+  echo "Creating vendorball ..."
+  go mod vendor
+  tar cvf - vendor | xz -c > "$CWD"/"$PRGNAM"-"$VERSION"-vendor.tar.xz
+  echo "Created vendorball - run this script again"
+  exit 0
+fi
+
+
 CGO_LDFLAGS="-static" go build -v -tags "agent" -o bin/ ./cmd/incus-agent/...
 go build -v -ldflags "${GO_LDFLAGS}" -tags "netgo" -o bin/ ./cmd/incus-migrate/...
 for tool in fuidshift incus lxc-to-incus lxd-to-incus incusd incus-benchmark incus-user; do
@@ -108,8 +126,7 @@ for i in $( find $PKG/usr/man/man1 -type l ) ; do ln -s $( readlink $i ).gz $i.g
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  AUTHORS CONTRIBUTING* COPYING README* SECURITY* \
-  doc/html/reference/manpages/* \
+  AUTHORS CONTRIBUTING* COPYING README* SECURITY* doc/reference \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

@@ -1,10 +1,9 @@
-Qmmp is an audio-player, written with help of Qt library.
-The user interface is similar to winamp or xmms.
+Qmmp is a lightweight audio player based on the Qt framework, designed to provide a classic media player experience similar to Winamp and XMMS.
 
-Qmmp can optionally use the following applications:
-libmms, libmpcdec, soxr + jack, libmodplug, faad2,
-libbs2b, libprojectM, and libenca.
+It features a simple and efficient user interface, with support for multiple interface styles. Alternative user interfaces are also available:
+https://qmmp.ylsoftware.com/screenshots.php
 
-You need soxr and jack to enable JACK support.
+Qmmp supports a wide range of audio formats through optional dependencies. Additional functionality can be enabled by installing:
+libmms, libmpcdec, soxr (with JACK support), libmodplug, faad2, libbs2b, libprojectM, and libenca.
 
-Untested, another optional package is sid[whatever]
+Note: Both soxr and JACK are required to enable JACK audio output support.

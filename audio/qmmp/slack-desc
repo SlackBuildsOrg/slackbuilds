@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
     |-----handy-ruler------------------------------------------------------|
-qmmp: qmmp (QT based multimedia player)
+qmmp: qmmp (Qt-based audio player similar to Winamp)
 qmmp:
-qmmp: Qmmp is a QT based multimedia player.
+qmmp: Qmmp is a lightweight audio player built with the Qt framework.
+qmmp: It provides a classic user interface similar to Winamp and XMMS.
 qmmp:
-qmmp: Homepage: http://qmmp.ylsoftware.com/
+qmmp: Qmmp supports multiple audio formats through plugins and offers
+qmmp: features such as playlists, equalizer, and visualizations.
 qmmp:
-qmmp:
-qmmp:
-qmmp:
+qmmp: Homepage: https://qmmp.ylsoftware.com/
 qmmp:
 qmmp:

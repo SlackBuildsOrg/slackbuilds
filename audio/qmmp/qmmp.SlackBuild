@@ -28,10 +28,6 @@ VERSION=${VERSION:-2.3.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-# Allow parallel compilation
-# You can override this by running:
-# NUMJOBS=4 ./qmmp.SlackBuild
-NUMJOBS=${NUMJOBS:-$(nproc)} 
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -91,7 +87,7 @@ cmake \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release ..
-make -j$NUMJOBS
+make
 make install DESTDIR=$PKG
 cd ..
 

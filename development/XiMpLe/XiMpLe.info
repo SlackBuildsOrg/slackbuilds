@@ -1,0 +1,14 @@
+PRGNAM="XiMpLe"
+VERSION="1.6.2603.14891"
+HOMEPAGE="http://www.ximple.cz"
+DOWNLOAD="https://www.ximple.cz/files.net4/XiMpLe(32bit).exe \
+          http://www.ximple.cz/files/XiMpLe.pdf"
+MD5SUM="484ae30f506153266750f1ab9dbf596b \
+        18db17c45c601b24e4e7ac21382bc68e"
+DOWNLOAD_x86_64="https://www.ximple.cz/files.net4/XiMpLe.exe \
+                 http://www.ximple.cz/files/XiMpLe.pdf"
+MD5SUM_x86_64="1622aec379b6c9186cebc32df259e4c5 \
+               18db17c45c601b24e4e7ac21382bc68e"
+REQUIRES="wine"
+MAINTAINER="Antonio Leal"
+EMAIL="antonioleal@yahoo.com"

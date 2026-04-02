@@ -25,12 +25,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ytdlp-gui
-VERSION=${VERSION:-3.1.2}
+VERSION=${VERSION:-3.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-SRCNAM64=ytdlp-gui_3.1.2-1_amd64
+SRCNAM64=ytdlp-gui_3.2.0-1_amd64
 SRCNAM32=
 COMPRESS=deb
 
@@ -88,6 +88,7 @@ if [[ $COMPRESS = "deb" ]]; then
     tar --use-compress-program=unzstd -xf data.tar.zst -C "$PKG" 2>/dev/null || \
     tar -xzf data.tar.gz -C "$PKG" 2>/dev/null || \
     { echo "No valid archive found!"; exit 1; }
+rm data.tar.* || true
 cd "$PKG"
 # Everything extracted in $PKG/ and you are in $PKG/ also.
 elif
@@ -136,7 +137,7 @@ exit 1
 fi
 
 chown -R root:root .
-find -L . \
+find . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \

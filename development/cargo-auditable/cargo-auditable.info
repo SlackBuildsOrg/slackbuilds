@@ -1,7 +1,7 @@
 PRGNAM="cargo-auditable"
-VERSION="0.7.2"
+VERSION="0.7.4"
 HOMEPAGE="https://github.com/rust-secure-code/cargo-auditable"
-DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.2/cargo-auditable-0.7.2.tar.gz \
+DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.2/cargo-auditable-0.7.4.tar.gz \
           https://static.crates.io/crates/adler2/adler2-2.0.1.crate \
           https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.4.crate \
           https://static.crates.io/crates/autocfg/autocfg-1.5.0.crate \
@@ -38,7 +38,7 @@ DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.2/car
           https://static.crates.io/crates/linux-raw-sys/linux-raw-sys-0.11.0.crate \
           https://static.crates.io/crates/memchr/memchr-2.7.6.crate \
           https://static.crates.io/crates/miniz_oxide/miniz_oxide-0.8.9.crate \
-          https://static.crates.io/crates/num-conv/num-conv-0.1.0.crate \
+          https://static.crates.io/crates/num-conv/num-conv-0.2.0.crate \
           https://static.crates.io/crates/num-traits/num-traits-0.2.19.crate \
           https://static.crates.io/crates/object/object-0.37.3.crate \
           https://static.crates.io/crates/once_cell/once_cell-1.21.3.crate \
@@ -74,9 +74,9 @@ DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.2/car
           https://static.crates.io/crates/thiserror/thiserror-2.0.17.crate \
           https://static.crates.io/crates/thiserror-impl/thiserror-impl-1.0.69.crate \
           https://static.crates.io/crates/thiserror-impl/thiserror-impl-2.0.17.crate \
-          https://static.crates.io/crates/time/time-0.3.44.crate \
-          https://static.crates.io/crates/time-core/time-core-0.1.6.crate \
-          https://static.crates.io/crates/time-macros/time-macros-0.2.24.crate \
+          https://static.crates.io/crates/time/time-0.3.47.crate \
+          https://static.crates.io/crates/time-core/time-core-0.1.8.crate \
+          https://static.crates.io/crates/time-macros/time-macros-0.2.27.crate \
           https://static.crates.io/crates/toml/toml-0.8.23.crate \
           https://static.crates.io/crates/toml_datetime/toml_datetime-0.6.11.crate \
           https://static.crates.io/crates/toml_edit/toml_edit-0.22.27.crate \
@@ -97,7 +97,7 @@ DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.2/car
           https://static.crates.io/crates/winsafe/winsafe-0.0.19.crate \
           https://static.crates.io/crates/wit-bindgen/wit-bindgen-0.46.0.crate \
           https://static.crates.io/crates/xml-rs/xml-rs-0.8.28.crate"
-MD5SUM="6ab4cea5a1def73f70e932dec8118cc8 \
+MD5SUM="c5283a28b27dbdcce2a636ad57997001 \
         873036bd52f5fd829bd41b3c2ca0bc08 \
         2fb8e2b2c327d642027d27dd82160195 \
         3e70bb53cab36a3ef2a02dfce21bc472 \
@@ -134,7 +134,7 @@ MD5SUM="6ab4cea5a1def73f70e932dec8118cc8 \
         5e2165f6a9d5646d361d7aabe3d9be7c \
         09ea9959a92a4b020eaf12d2aae7a2b5 \
         dc106924da0261fec2bb0fe52fcbd9e6 \
-        5b5de6cffe4726037a5ec6d6931c80f3 \
+        5b58e4f18091c0fa3579419f24cfaef9 \
         e092b3abcc54806f2a35889d725bf95f \
         5c16a07e83766851ccb68168ebab6e65 \
         76f8e4dcc29ab304e065cced86a344d2 \
@@ -170,9 +170,9 @@ MD5SUM="6ab4cea5a1def73f70e932dec8118cc8 \
         6e01ab006629a393105a1d90effffe64 \
         a4bb1b92a5b098fdaa5694733ea73e7a \
         efa0b14bd1721494cf1ab2be65053004 \
-        e72d3aef2a3a3708d3312879def15e7a \
-        306a4e27a7ec0538cf7c47eaa4321011 \
-        042ee6e64fd5ece03a9a09ae15def637 \
+        c78def4c8f29cd4fe7009412d6963258 \
+        b1bb3a822a8b3650a7401dbc737764f0 \
+        764181663f005b307e662dc71451ee12 \
         dd13a960969bcf5f6313c0c2fa10f392 \
         164cf92f7f964bd2d7f5623027bda9f9 \
         d83a24872d4be600c418f3b9be08dabe \

@@ -1,7 +1,7 @@
 PRGNAM="HandBrake"
-VERSION="1.11.0"
+VERSION="1.11.1"
 HOMEPAGE="https://handbrake.fr/"
-DOWNLOAD="https://github.com/HandBrake/HandBrake/releases/download/1.11.0/HandBrake-1.11.0-source.tar.bz2 \
+DOWNLOAD="https://github.com/HandBrake/HandBrake/releases/download/1.11.1/HandBrake-1.11.1-source.tar.bz2 \
           https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/AMF-headers-v1.5.0.tar.gz \
           https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/SVT-AV1-v4.0.1.tar.gz \
           https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/dav1d-1.5.3.tar.bz2 \
@@ -13,7 +13,7 @@ DOWNLOAD="https://github.com/HandBrake/HandBrake/releases/download/1.11.0/HandBr
           https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/libvpl-2.16.0.tar.gz \
           https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/x265-snapshot-20260216-13309.tar.gz \
           https://github.com/HandBrake/HandBrake-contribs/releases/download/contribs2/zimg-snapshot-20250624.tar.gz"
-MD5SUM="5fc0a53c0fa5c0f7719fc052c62fc2db \
+MD5SUM="3d0f6d8c0091d4faff0d149233dd8c6b \
         16eb4e0b99f600da040309dff00fc09c \
         5fa483ea82c8bcc70cae897dd0fe87e9 \
         1488bbeb92834c5f12de9a16298afeee \

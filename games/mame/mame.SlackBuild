@@ -9,6 +9,9 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260403 bkw: Updated for v0.287 (incl. groovy patch).
+# - had to add ARCHOPTS=-latomic to get it to build on 32-bit.
+
 # 20260304 bkw: Updated for v0.286 (no groovy yet).
 # 20260131 bkw: Updated for v0.285 (incl. groovy patch).
 # 20260103 bkw: Updated for v0.284 (incl. groovy patch).
@@ -39,7 +42,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mame
-VERSION=${VERSION:-0.286}
+VERSION=${VERSION:-0.287}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -278,6 +281,7 @@ else
 fi
 
 make USE_QTDEBUG=$QTOPT \
+     ARCHOPTS=-latomic \
      $GOLDOPT \
      $PWOPT \
      USE_SYSTEM_LIB_EXPAT=1 \

@@ -1,7 +1,7 @@
 PRGNAM="yabause"
 VERSION="0.9.15"
 HOMEPAGE="http://yabause.org/"
-DOWNLOAD="https://download.tuxfamily.org/yabause/releases/0.9.15/yabause-0.9.15.tar.gz"
+DOWNLOAD="http://free.downloads.tuxfamily.net/yabause/releases/0.9.15/yabause-0.9.15.tar.gz"
 MD5SUM="efcf00e038ec24c8310285f87e61d579"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

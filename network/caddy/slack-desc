@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+caddy: caddy (caddy is an extensible server platform and uses TLS by default)
+caddy:
+caddy: Caddy is most often used as an HTTPS server, but it is suitable
+caddy: for any long-running Go program. First and foremost, it is a platform
+caddy: to run Go applications. Caddy apps are just Go programs that are
+caddy: implemented as Caddy modules. Two apps -- tls and http -- ship 
+caddy: standard with Caddy.
+caddy:
+caddy: Homepage: https://caddyserver.com
+caddy:
+caddy:

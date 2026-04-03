@@ -1,0 +1,32 @@
+Fooyin is a music player built around customization. It provides a variety of widgets
+to help you manage and play your local collection. It's highly extensible with a 
+plugin system and includes FooScript, a scripting language for advanced configuration
+of widgets.
+
+You can fully customize the user interface by entering a layout editing mode, 
+starting from scratch or using a preset layout.
+
+Features:
+
+- Playback of all major formats: FLAC, MP3, MP4, Vorbis, Opus, WavPack, WAV, AIFF,
+  MKA, Musepack, Monkey’s Audio
+- Native support for VGM and tracker module formats
+- Gapless playback
+- Play files directly from archives
+- Full CUE sheet support (including embedded cues)
+- ReplayGain support (including calculation)
+- Waveform seekbar
+
+Optional:
+
+- KDSingleApplication - will use 3rd party dep if not present on system
+- QCoro - will use 3rd party dep if not present on system
+- libsndfile - for the sndfile audio input plugin
+- OpenMPT - for the OpenMPT audio input plugin
+- Game Music Emu - for the GME audio input plugin
+- libarchive - for the archive support plugin
+- libebur128 - for the ReplayGain scanner plugin
+- SoundTouch - for the SoundTouch DSP plugin
+- SoXR (libsoxr) - for the SoX resampler DSP plugin
+
+Homepage: https://github.com/fooyin/fooyin

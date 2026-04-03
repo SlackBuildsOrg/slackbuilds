@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+      |-----handy-ruler------------------------------------------------------|
+fooyin: Fooyin is a Linux music player with plugin support.
+fooyin: Fully customizable UI, FooScript scripting, archive playback.
+fooyin: Supports FLAC, MP3, MP4, Vorbis, Opus, WavPack, WAV, AIFF.
+fooyin: Tracker formats, VGM, CUE sheets, gapless playback, ReplayGain.
+fooyin:
+fooyin:
+fooyin: Optional plugins: OpenMPT, libarchive, Game Music Emu, SoundTouch.
+fooyin:
+fooyin: Homepage: https://github.com/fooyin/fooyin
+fooyin:
+fooyin:

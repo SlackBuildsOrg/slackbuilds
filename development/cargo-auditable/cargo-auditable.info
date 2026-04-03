@@ -1,7 +1,7 @@
 PRGNAM="cargo-auditable"
 VERSION="0.7.4"
 HOMEPAGE="https://github.com/rust-secure-code/cargo-auditable"
-DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.2/cargo-auditable-0.7.4.tar.gz \
+DOWNLOAD="https://github.com/rust-secure-code/cargo-auditable/archive/v0.7.4/cargo-auditable-0.7.4.tar.gz \
           https://static.crates.io/crates/adler2/adler2-2.0.1.crate \
           https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.4.crate \
           https://static.crates.io/crates/autocfg/autocfg-1.5.0.crate \

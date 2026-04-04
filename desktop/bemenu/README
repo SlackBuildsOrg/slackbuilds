@@ -1,2 +1,2 @@
-Dynamic is a  menu library and client program inspired by dmenu.
-useful for tilling window managers or desktop.
+bemenu is a dynamic menu library and client program inspired by dmenu.
+It is compatible with ncurses, x11 and Wayland.

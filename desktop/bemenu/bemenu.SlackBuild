@@ -2,7 +2,8 @@
 
 # Slackware build script for bemenu
 
-# Copyright 2022 adcdam, Berisso,Argentina
+# Copyright 2022 adcdam, Berisso, Argentina
+# Copyright 2026 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -29,8 +30,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bemenu
-VERSION=${VERSION:-0.6.7}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-0.6.23}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -80,19 +81,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-zcat $CWD/GNUmakefile.patch | patch -p1 || exit 1
-
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 make
-make install DESTDIR=$PKG
-
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+make install DESTDIR=$PKG PREFIX=/usr libdir=/lib$LIBDIRSUFFIX mandir=/man/man1
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-gzip -9 $PKG/usr/man/man*/*
+gzip -9 $PKG/usr/man/man1/$PRGNAM.1
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE-CLIENT LICENSE-LIB README.md VERSION $PKG/usr/doc/$PRGNAM-$VERSION

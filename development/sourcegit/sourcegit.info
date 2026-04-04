@@ -1,11 +1,11 @@
 PRGNAM="sourcegit"
-VERSION="2026.06"
+VERSION="2026.07"
 HOMEPAGE="https://github.com/sourcegit-scm/sourcegit"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/sourcegit-scm/sourcegit/archive/v2026.06/sourcegit-2026.06.tar.gz \
+DOWNLOAD_x86_64="https://github.com/sourcegit-scm/sourcegit/archive/v2026.07/sourcegit-2026.07.tar.gz \
                  https://github.com/love-linger/AvaloniaEdit/archive/87e83c5c0e4c3886d5db9acf3d0b37366690f762/AvaloniaEdit-87e83c5c0e4c3886d5db9acf3d0b37366690f762.tar.gz"
-MD5SUM_x86_64="20d6113fce4f6ba092f011f16d7b8073 \
+MD5SUM_x86_64="af09e44787c22a273a975334cbb7254b \
                a9d08f87ae9974d4ec93d8515ef94a41"
 REQUIRES="dotnet-runtime-10.0 dotnet-sdk-10.0"
 MAINTAINER="Antonio Leal"

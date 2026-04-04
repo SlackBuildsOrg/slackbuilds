@@ -1,0 +1,11 @@
+sdate 0.7 never ending September date
+
+This program wraps the libc locatime() and gmtime() functions to
+output the eternal September 1993 date. The epoch month is
+configurable (new in version 0.3).
+
+sdate works like fakeroot (on which its code is based) by setting
+LD_PRELOAD to a wrapper library.
+
+http://www.catb.org/~esr/jargon/html/S/September-that-never-ended.html
+https://www.df7cb.de/projects/sdate

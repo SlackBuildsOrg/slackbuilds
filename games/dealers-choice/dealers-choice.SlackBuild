@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dealers-choice
-VERSION=${VERSION:-0.0.9}
+VERSION=${VERSION:-0.0.10}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,9 +92,6 @@ cd build
   ninja
   DESTDIR=$PKG ninja install
 cd ..
-
-# Remove unneeded miniaudio static libraries
-rm -f $PKG/usr/lib*/libminiaudio*.a
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

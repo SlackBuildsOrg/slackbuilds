@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+pdf-bunny: pdf-bunny (PDF viewer)
+pdf-bunny:
+pdf-bunny: pdf-bunny formerly known as gospel-pdf-viewer.
+pdf-bunny: This is a poppler based simple pdf viewer written in pyqt5
+pdf-bunny: It aims at short startup time and can be used as an
+pdf-bunny: alternative to various pdf reader.
+pdf-bunny:
+pdf-bunny:
+pdf-bunny: Homepage:https://github.com/ksharindam/pdf-bunny
+pdf-bunny:
+pdf-bunny:

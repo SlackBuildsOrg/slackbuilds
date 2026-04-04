@@ -2,7 +2,7 @@
 
 # Slackware build script for pybind11
 
-# Copyright 2019-2025 Christoph Willing,  Sydney Australia
+# Copyright 2019-2026 Christoph Willing,  Sydney Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pybind11
-VERSION=${VERSION:-2.11.1}
+VERSION=${VERSION:-3.0.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -58,6 +58,9 @@ else
   SLKCFLAGS="-O2"
 fi
 
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH=/opt/python$PYVER/site-packages
+
 set -e
 
 rm -rf $PKG
@@ -74,30 +77,12 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 mkdir build
-
-python3 setup.py build
-
-(
-  cd build
-  cmake .. \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DPYTHON_EXECUTABLE=/usr/bin/python3 \
-    -DPYBIND11_TEST=OFF \
-
-  make
-)
-
-python3 setup.py install --prefix=/usr --root="$PKG" --install-headers=/usr/include/pybind11 --skip-build
-
-(
-  cd build
-  make install DESTDIR=$PKG
-)
+python3 -m build --wheel --no-isolation
+python3 -m pip install dist/*.whl --root=$PKG --prefix=/usr --no-deps
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+find $PKG -name \*.pyc -exec rm -f {} \;
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

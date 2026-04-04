@@ -1,0 +1,79 @@
+untrusted comment: verify with openbsd-78-base.pub
+RWS3/nvFmk4SWfGqpW/3/yNz3LQCJH3Mopwhx8UTHap84mDOSM67MrCB+EDofQAk8WGfpSc4/xBE85/dtISENCr7AJXnONYjzQ0=
+
+OpenBSD 7.8 errata 026, March 27, 2026:
+
+In smtpd(8), an LF character in the username or password could stop
+proc tables, causing a denial of service.
+
+Apply by doing:
+    signify -Vep /etc/signify/openbsd-78-base.pub -x 026_smtpd.patch.sig \
+        -m - | (cd /usr/src && patch -p0)
+
+And then rebuild and install smtpd
+    cd /usr/src/usr.sbin/smtpd
+    make obj
+    make
+    make install
+
+Index: usr.sbin/smtpd/smtp_session.c
+===================================================================
+RCS file: /cvs/src/usr.sbin/smtpd/smtp_session.c,v
+diff -u -p -u -r1.444 smtp_session.c
+--- usr.sbin/smtpd/smtp_session.c	13 May 2025 14:52:42 -0000	1.444
++++ usr.sbin/smtpd/smtp_session.c	23 Mar 2026 14:37:39 -0000
+@@ -1960,6 +1960,8 @@ smtp_rfc4954_auth_plain(struct smtp_sess
+ 		if (user == NULL || user >= buf + len - 2)
+ 			goto abort;
+ 		user++; /* skip NUL */
++		if (user[strcspn(user, "\r\n")] != '\0')
++			goto abort;
+ 		if (strlcpy(s->username, user, sizeof(s->username))
+ 		    >= sizeof(s->username))
+ 			goto abort;
+@@ -1968,6 +1970,8 @@ smtp_rfc4954_auth_plain(struct smtp_sess
+ 		if (pass == NULL || pass >= buf + len - 1)
+ 			goto abort;
+ 		pass++; /* skip NUL */
++		if (pass[strcspn(pass, "\r\n")] != '\0')
++			goto abort;
+ 
+ 		m_create(p_lka,  IMSG_SMTP_AUTHENTICATE, 0, 0, -1);
+ 		m_add_id(p_lka, s->id);
+@@ -2010,6 +2014,9 @@ smtp_rfc4954_auth_login(struct smtp_sess
+ 				  sizeof(s->username) - 1) == -1)
+ 			goto abort;
+ 
++		if (s->username[strcspn(s->username, "\r\n")] != '\0')
++			goto abort;
++
+ 		smtp_enter_state(s, STATE_AUTH_PASSWORD);
+ 		smtp_reply(s, "334 UGFzc3dvcmQ6");
+ 		return;
+@@ -2018,6 +2025,9 @@ smtp_rfc4954_auth_login(struct smtp_sess
+ 		memset(buf, 0, sizeof(buf));
+ 		if (base64_decode(arg, (unsigned char *)buf,
+ 				  sizeof(buf)-1) == -1)
++			goto abort;
++
++		if (buf[strcspn(buf, "\r\n")] != '\0')
+ 			goto abort;
+ 
+ 		m_create(p_lka,  IMSG_SMTP_AUTHENTICATE, 0, 0, -1);
+Index: usr.sbin/smtpd/table_proc.c
+===================================================================
+RCS file: /cvs/src/usr.sbin/smtpd/table_proc.c,v
+diff -u -p -u -r1.23 table_proc.c
+--- usr.sbin/smtpd/table_proc.c	28 May 2024 07:10:30 -0000	1.23
++++ usr.sbin/smtpd/table_proc.c	23 Mar 2026 14:37:39 -0000
+@@ -227,6 +227,10 @@ table_proc_lookup(struct table *table, e
+ 		res = "check-result";
+ 	}
+ 
++	/* k cannot contain newlines */
++	if (k[strcspn(k, "\r\n")] != '\0')
++		return (-1);
++
+ 	table_proc_send(table, req, s, k);
+ 	r = table_proc_recv(table, res);
+ 

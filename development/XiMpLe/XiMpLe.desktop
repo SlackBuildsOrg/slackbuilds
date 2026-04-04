@@ -1,0 +1,12 @@
+[Desktop Entry]
+Categories=Development;
+Comment=XML IDE
+Exec=wine /opt/XiMpLe/XiMpLe.exe
+GenericName=XiMpLe
+Icon=XiMpLe
+MimeType=
+Name=XiMpLe
+StartupNotify=true
+Terminal=false
+Type=Application
+

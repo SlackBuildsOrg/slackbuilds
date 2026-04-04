@@ -1,0 +1,12 @@
+PRGNAM="caddy"
+VERSION="2.11.2"
+HOMEPAGE="https://caddyserver.com"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://github.com/caddyserver/caddy/archive/v2.11.2/caddy-2.11.2.tar.gz \
+		 https://github.com/caddyserver/dist/archive/v2.11.2/dist-2.11.2.tar.gz"
+MD5SUM_x86_64="4e2df53986b85e965de164faa435517c \
+	       c62e3ced25cfc2b77dedfd7e989392c3"
+REQUIRES="google-go-lang"
+MAINTAINER="Rodrigo Lira"
+EMAIL="eurodrigolira@gmail.com"

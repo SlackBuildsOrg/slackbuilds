@@ -2,3 +2,6 @@ This library is provided to allow standard python logging to output
 log data as json objects. With JSON we can make our logs more
 readable by machines and we can stop writing custom parsers for
 syslog type records.
+
+On Slackware 15.0, newer versions of python3-json-logger (>= 4.1.0)
+require a newer Python (>= 3.10).

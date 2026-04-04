@@ -1,3 +1,146 @@
+Sat Apr  4 02:50:16 UTC 2026
+academic/gmsh: Updated for version 4.15.2.
+academic/openboard: Updated for version 1.7.7.
+audio/deadbeef: Updated for version 1.10.2.
+audio/dopamine-bin: Updated for version 3.0.3
+audio/ocenaudio-bin: Updated for version 3.17.3
+audio/reaper: Updated for version 7.67
+desktop/bemenu: Update for 0.6.23 (+new maintainer)
+desktop/hsetroot: update to 1.0.5
+desktop/nwg-hello: Updated for version 0.4.4.
+desktop/nwg-shell-config: Updated for version 0.5.63.
+desktop/nwg-shell: Updated for version 0.5.50.
+desktop/wmclockmon: Updated for version 1.0.0.
+development/JAForth: Updated for version 20260330_06a913e
+development/XiMpLe: Added (XML and JSON Editor).
+development/antigravity: Updated for version 1.21.6
+development/aws-cdk: Updated for version 2.1116.0.
+development/buf: Updated for version 1.67.0.
+development/cargo-auditable: Updated for version 0.7.4
+development/deno-bin: Updated for version 2.7.10.
+development/deno: Updated for version 2.7.11.
+development/electron-bin: Updated for version 41.1.0
+development/fortitude-bin: Updated for version 0.8.0
+development/gcli: Updated for version 2.11.0.
+development/github-cli: Updated for version 2.89.0
+development/gitify-bin: Updated for version 6.19.0
+development/gnulib: Fix download link.
+development/gnuradio: Change pybind11 requirement to pybinbd11-lsgacy
+development/goland: Updated for version 2026.1.
+development/golangci-lint: Updated for version 2.11.4.
+development/jujutsu: Updated for version 0.40.0.
+development/kForth-32: Updated for version 2.6.1
+development/lm-studio-bin: Updated for version 0.4.8.1
+development/lua-language-server: Updated for version 3.18.0.
+development/nodejs24-bin: Updated for version 24.14.1.
+development/pycharm: Updated for version 2025.3.4
+development/sbcl: Updated for version 2.6.3.
+development/scala3: Updated for version 3.8.3.
+development/sourcegit: Updated for version 2026.07
+development/terraform-ls: Updated for version 0.38.6.
+development/xmake: Updated for version 3.0.8.
+development/zxbasicstudio: Updated for version 1.8.0_beta2
+games/dealers-choice: Updated for version 0.0.10.
+games/mame: Updated for version 0.287.
+games/ppsspp: Updated for version 1.20.3.
+games/protontricks: Version bump to 1.14.1
+games/scummvm: Updated for version 2026.2.0
+games/yabause: Update source tarball to valid site
+gis/google-earth: Updated for version 7.3.7.1094.
+graphics/FreeCAD: Change pybind11 requirement to pybind11-legacy
+graphics/SweetHome3D: Support passing filename when launching via CLI
+graphics/vips: Updated for version 8.18.2.
+ham/gr-gsm: Added (GSM Receiver).
+ham/gridtracker2: Updated for version 2.260330.2.
+ham/sdrangel: Updated for version 7.24.0.
+libraries/Botan3: Updated for version 3.11.1.
+libraries/openvino: Change pybind11 requirement to pybind11-legacy
+libraries/qt-avif-image-plugin: Updated for version 0.10.3.
+libraries/qt-jpegxl-image-plugin: Updated for version 0.8.3.
+libraries/tree-sitter: Updated for version 0.26.8.
+misc/ollama: Updated for version 0.20.0.
+multimedia/HandBrake: Version bump to 1.11.1
+multimedia/obs-studio-legacy: Replace local alias in download script
+multimedia/obs-studio: Replace alias in download script
+network/amneziawg-kernel: Updated for version 1.0.20260329.2.
+network/asterisk: Updated for version 22.8.2.
+network/caddy: Added (Server Platform).
+network/claws-mail: Updated for version 4.4.0.
+network/discord: Version bump to 0.0.131
+network/dnsproxy-bin: Updated for version 0.81.0.
+network/dooble: Updated for version 2026.03.31
+network/dropbox: Updated for version 246.4.3513.
+network/grafana: Update UID/GID.
+network/iptv-analyzer: Added (MPEG2 TS Analyzer).
+network/jitsi-meet-desktop: Updated for version 2026.4.0
+network/mullvad-browser: Added (Web Browser).
+network/newsraft: Updated for version 0.36
+network/opensmtpd: Update script.
+network/opera: Updated for version 129.0.5823.28
+network/sslscan: Updated for version 2.2.2.
+network/tailscale: update 1.96.4
+network/telegram: Updated for version 6.7.0.
+network/telegram: Updated for version 6.7.1.
+network/telegram: Updated for version 6.7.2.
+network/vivaldi: Updated for version 7.9.3970.47.
+network/wifitui: update to 0.12.0
+network/yt-dlp-bin: Updated for version 2026.03.17.
+network/zen-browser: Updated for version 1.19.5b
+office/OpenAudible-bin: Updated for version 4.7.4
+office/PortfolioPerformance-bin: Updated to 0.82.1
+office/gospel-pdf-viewer: Removed (use pdf-bunny)
+office/ishmael: Updated for version 2.04
+office/ledger-live: Updated for version 4.0.0
+office/pdf-bunny: Added (PDF Viewer).
+office/qownnotes: Updated for version 26.4.2.
+perl/MoarVM: Updated for version 2026.03
+perl/nqp: Updated for version 2026.03
+perl/perl-Device-SerialPort: New maintainer
+perl/perl-Email-Date-Format: Updated for version 1.008 by new maintainer
+perl/perl-Locale-Codes: Updated for version 3.88
+perl/perl-MIME-Lite: Updated for version 3.038 by new maintainer
+perl/perl-Mail-DMARC: Updated for version 1.20260306.
+perl/perl-Module-Pluggable: Updated for version 6.3
+perl/perl-Module-ScanDeps: Updated for version 1.37
+perl/rakudo: Updated for version 2026.03
+perl/zef: Updated for version 1.1.1
+python/colored: Updated for version 2.3.2.
+python/jsonpatch: Removed (renamed to python3-jsonpatch)
+python/jsonpointer: Removed (renamed to python3-jsonpointer)
+python/pybind11-legacy: Added (C++ Types in Python).
+python/pybind11: Updated for version 3.0.2
+python/python2-nuitka: Updated for version 4.0.7
+python/python3-boto3: Updated for version 1.42.79
+python/python3-json-logger: Update README
+python/python3-meson-opt: Updated for version 1.10.2.
+python/python3-nuitka: Updated for version 4.0.7
+python/python3-odfdo: Updated for version 3.22.3
+python/python3-pyosmium: Change pybind11 requirement to pybind11-legacy
+python/python3-yarl: Revert to version 1.22.0 due to breakage with python 3.9.
+ruby/ruby-build: Updated for version 20260327.
+system/FreeFileSync: Updated for version 14.9
+system/Iosevka-aile: Updated for version 34.3.0.
+system/Iosevka-core: update to 34.3.0
+system/Iosevka-etoile: Updated for version 34.3.0.
+system/Iosevka-slab: Updated for version 34.3.0
+system/Iosevka: Updated for version 34.3.0
+system/apparmor: Updated for version 4.1.7.
+system/conky: Updated for version 1.22.3.
+system/incus-ui: Fix permission.
+system/incus-ui: Updated for version 20260320_f02a5013
+system/incus: Updated for version 6.23
+system/limine: Updated for version 11.1.0
+system/nvidia-driver: Updated for version 595.58.03.
+system/nvidia-kernel: Updated for version 595.58.03.
+system/sarasa-gothic: Updated for version 1.0.37.
+system/sboui: Updated for version 2.4.1.
+system/sdate: Added (Library Wrapper).
+system/torrent-file-editor: Updated for version 1.0.2.
+system/usermin: Updated for version 2.530.
+system/webmin: Updated for version 2.630.
+system/yq: Updated for version 4.52.5.
+system/yubico-piv-tool: Updated for version 2.7.3.
++--------------------------+
 Sat Mar 28 04:38:24 UTC 2026
 academic/bcftools:Update to version 1.23.1
 academic/pspp: Updated for version 2.1.1.

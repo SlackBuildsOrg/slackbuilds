@@ -33,8 +33,8 @@ PKGTYPE=${PKGTYPE:-tgz}
 
 GRAFANAUSER=${GRAFANAUSER:-grafana}
 GRAFANAGROUP=${GRAFANAGROUP:-grafana}
-GRAFANAUID=${GRAFANAUID:-387}
-GRAFANAGID=${GRAFANAGID:-387}
+GRAFANAUID=${GRAFANAUID:-397}
+GRAFANAGID=${GRAFANAGID:-397}
 
 if [ "$(grep ^$GRAFANAUSER: /etc/passwd)" = "" -o "$(grep ^$GRAFANAGROUP: /etc/group)" = "" ] ; then
     echo "  You must have a \"$GRAFANAGROUP\" group and user to run this script."

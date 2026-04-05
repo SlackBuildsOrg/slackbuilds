@@ -1,0 +1,55 @@
+dfm (Dylan's File Manager)
+
+A powerful, simple and snappy terminal file manager with minimal
+resource usage.
+Written in C99 with no dependencies outside of POSIX/libc.
+
+FEATURES
+--------
+  * Tiny binary (~90KiB small, ~40KiB tiny, ~150KiB static)
+  * No dynamic memory allocation (~1.5MiB static)
+  * No dependencies outside of POSIX/libc
+  * Vim-like keybindings
+  * Incremental as-you-type search (startswith and substring modes)
+  * Multiple sort modes (name, extension, size, mtime, reverse)
+  * Multiple view modes (name, size, permissions, mtime, all)
+  * Multi-entry marking with foreach, bulk and shell operations
+  * Bookmarks (DFM_BOOKMARK_0 through DFM_BOOKMARK_9)
+  * Filesystem change watching
+  * CD on exit
+  * UTF-8 support
+  * Customizable keybindings and commands at compile-time
+  * Efficient low-bandwidth partial rendering
+
+
+OPTIONAL
+--------
+  * chafa  -- image preview support (DFM_IMG_MODE=chafa)
+  * kitty  -- image preview support (DFM_IMG_MODE=kitty)
+
+
+ENVIRONMENT VARIABLES
+---------------------
+Set these in ~/.bashrc or ~/.profile to customize runtime behavior.
+
+  DFM_OPENER         Program used to open files (default: xdg-open).
+                     For terminal editors, use a wrapper script:
+
+                         export DFM_OPENER="xterm -e nvi"
+
+  DFM_BOOKMARK_[0-9] Directory bookmarks.
+                         export DFM_BOOKMARK_0="$HOME/projects"
+
+  DFM_COPYER         Clipboard tool, fed data via stdin.
+                         export DFM_COPYER=xclip
+
+  DFM_TRASH          Program used to trash files.
+
+  DFM_TRASH_DIR      Path to the trash directory.
+
+  DFM_SU             Privilege escalation tool (sudo, doas, etc).
+                         export DFM_SU=doas
+
+  DFM_IMG_MODE       Image preview mode: 'chafa' or 'kitty'.
+                         export DFM_IMG_MODE=chafa
+

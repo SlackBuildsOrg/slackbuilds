@@ -1,0 +1,2 @@
+Dumps .doc, .docx, .xls, .xlsx, .pptx, and .pdf files to your terminal as markdown.
+To a tty it syntax-highlights and pages (using bat); piped, it gives you plain text.

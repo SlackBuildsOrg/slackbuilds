@@ -1,0 +1,25 @@
+From d6aeefa7bbfc5ce8709be65acb59a5e34136e42b Mon Sep 17 00:00:00 2001
+From: letsfindaway <me@letsfindaway.de>
+Date: Thu, 2 Apr 2026 15:44:26 +0200
+Subject: [PATCH] fix: add missing include
+
+---
+ src/document/UBDocumentVersionConverter.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/document/UBDocumentVersionConverter.h b/src/document/UBDocumentVersionConverter.h
+index 9c05970f..1ceccc7b 100644
+--- a/src/document/UBDocumentVersionConverter.h
++++ b/src/document/UBDocumentVersionConverter.h
+@@ -25,6 +25,8 @@
+ 
+ #include <QObject>
+ 
++#include <memory>
++
+ 
+ // forward
+ class UBDocumentProxy;
+-- 
+2.51.0
+

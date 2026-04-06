@@ -2,7 +2,7 @@
 
 # Slackware build script for Gridcoin-Research
 
-# Copyright 2018-2021 Edward W. Koenig, Vancouver, WA, USA
+# Copyright 2018-2026 Edward W. Koenig, Vancouver, WA, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Gridcoin-Research
-VERSION=${VERSION:-5.4.9.0}
+VERSION=${VERSION:-5.5.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,42 +80,51 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 if [ "${QRENC:-yes}" = "yes" ]; then
-  useqr="--with-qrencode"
+  useqr="-DENABLE_QRENCODE=ON"
 else
-  useqr="--without-qrencode"
+  useqr="-DENABLE_QRENCODE=OFF"
 fi
 
 if [ "${UPNP:-no}" = "yes" ]; then
-  usepnp="--with-miniupnpc"
+  usepnp="-DENABLE_UPNP=ON -DDEFAULT_UPNP=ON"
 else
-  usepnp="--without-miniupnpc"
+  usepnp="-DENABLE_UPNP=OFF -DDEFAULT_UPNP=OFF"
 fi
 
-./autogen.sh
+if [ "${DDOCS:-no}" = "yes" ]; then
+  usedoc="-DENABLE_DOCS=ON"
+else
+  usedoc="-DENABLE_DOCS=OFF"
+fi
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --with-gui=yes \
-  $useqr \
-  $usepnp \
-  --build=$ARCH-slackware-linux
+rm -rf build
+cmake -B build \
+    -DCMAKE_C_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX="/usr" \
+    -DCMAKE_INSTALL_LIBDIR="/usr/lib${LIBDIRSUFFIX}" \
+    -DCMAKE_INSTALL_SYSCONFDIR="/etc" \
+    -DCMAKE_INSTALL_SHAREDSTATEDIR="/var" \
+    -DCMAKE_INSTALL_MANDIR="/usr/man" \
+    -DCMAKE_INSTALL_DOCDIR="/usr/doc/$PRGNAM-$VERSION" \
+    -DENABLE_GUI=ON \
+    $useqr \
+    -DUSE_DBUS=ON \
+    $usepnp \
+    -USE_QT6=OFF \
+    -DENABLE_PIE=ON \
+    $usedoc \
+    -DENABLE_TESTS=OFF \
+    -DENABLE_DEBUG_LOCKORDER=OFF \
+    -DCMAKE_BUILD_TYPE=Release
 
-make
-make install DESTDIR=$PKG
+cmake --build build
+( cd build
+  make install DESTDIR=$PKG
+)
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-# get the man pages
-install -D -m 644 $TMP/$PRGNAM-$VERSION/doc/gridcoinresearch.1 $PKG/usr/man/man1/gridcoinresearch.1
-install -D -m 644 $TMP/$PRGNAM-$VERSION/doc/gridcoinresearchd.1 $PKG/usr/man/man1/gridcoinresearchd.1
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
@@ -124,18 +133,29 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 mkdir -p $PKG/etc/$PRGNAM
 cp -a $CWD/gridcoinresearch.conf $PKG/etc/$PRGNAM
 
-mkdir -p $PKG/usr/share/pixmaps $PKG/usr/share/applications
-cp -a $TMP/$PRGNAM-$VERSION/share/pixmaps/* $PKG/usr/share/pixmaps
-
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/doc
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   COPYING CHANGELOG.md README.md SECURITY.md CONTRIBUTING.md \
   $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a doc/* $PKG/usr/doc/$PRGNAM-$VERSION/doc
+cp -a doc/* $PKG/usr/doc/$PRGNAM-$VERSION
+
+if [ "$DDOCS" = "yes" ]; then
+  mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/html
+  cp -a $TMP/$PRGNAM-$VERSION/build/doc/html/* $PKG/usr/doc/$PRGNAM-$VERSION/html
+fi
+
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-# we can delete the redundant man pages
-rm -f $PKG/usr/doc/$PRGNAM-$VERSION/gridcoinresearch.*
-rm -f $PKG/usr/doc/$PRGNAM-$VERSION/gridcoinresearchd.*
+# we can delete the redundant man pages and other build docs
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/gridcoinresearch.1
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/gridcoinresearchd.1
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/build*
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/ci_cd.md
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/cmake-options.md
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/CMakeLists.txt
+rm -f $PKG/usr/doc/$PRGNAM-$VERSION/Doxyfile.in
+
+# remove unused systemd service.
+rm -rf $PKG/usr/lib
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

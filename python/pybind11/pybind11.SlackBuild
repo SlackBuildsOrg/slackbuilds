@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pybind11
 VERSION=${VERSION:-3.0.2}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -48,12 +48,14 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+LIBDIRSUFFIX=""
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX=64
 else
   SLKCFLAGS="-O2"
 fi
@@ -79,6 +81,11 @@ find -L . \
 mkdir build
 python3 -m build --wheel --no-isolation
 python3 -m pip install dist/*.whl --root=$PKG --prefix=/usr --no-deps
+
+install -d -m755 "${PKG}/usr"/{include,lib${LIBDIRSUFFIX}/{cmake,pkgconfig}}
+ln -s "/usr/lib${LIBDIRSUFFIX}/python${PYVER}/site-packages/pybind11/include/pybind11" "${PKG}/usr/include/pybind11"
+ln -s "/usr/lib${LIBDIRSUFFIX}/python${PYVER}/site-packages/pybind11/share/cmake/pybind11" "${PKG}/usr/lib${LIBDIRSUFFIX}/cmake/pybind11"
+ln -s "/usr/lib${LIBDIRSUFFIX}/python${PYVER}/site-packages/pybind11/share/pkgconfig/pybind11.pc" "${PKG}/usr/lib${LIBDIRSUFFIX}/pkgconfig/pybind11.pc"
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

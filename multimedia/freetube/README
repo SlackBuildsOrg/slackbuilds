@@ -3,3 +3,17 @@ FreeTube is a YouTube client.
 This script builds a Slackware package using the official binary.
 The download is an AppImage which is placed in /opt
 however source is also available on github.
+
+NOTE: THERE HAS BEEN A SIGNIFICANT CHANGE IN THE FREETUBE FEATURE
+SET AS OF v0.24.0 Beta. As stated by the developers, "The built-in
+download feature has been removed. This functionality was already
+partially broken and became completely unusable following the
+introduction of SABR. In its existing state, it lacked many features
+users typically expect from a YouTube downloader, and restoring it
+would have required a significant rewrite just to bring it back to a
+minimal, maintenance-level condition. Given the scope of work required
+and the availability of more robust, dedicated tools such as yt-dlp
+and various online download services, we determined that removing the
+built-in downloader was the most practical decision." (See version
+"Summary" https://github.com/FreeTubeApp/FreeTube/releases/tag/
+v0.24.0-beta.)

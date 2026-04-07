@@ -6,3 +6,4 @@ It installs to /usr/lib64 by default (like Firefox) but you can
 install it anywhere you want with the INSTALLDIR variable.
 
 Example: INSTALLDIR="/opt" ./floorp-bin.SlackBuild
+

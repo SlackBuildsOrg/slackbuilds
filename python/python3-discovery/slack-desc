@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                 |-----handy-ruler------------------------------------------------------|
+python3-discovery: python3-discovery (Python interpreter discovery)
+python3-discovery:
+python3-discovery: python-discovery is a library for discovering Python interpreters
+python3-discovery: installed on your machine. You may have multiple Python versions
+python3-discovery: from system packages, pyenv, mise, asdf, uv, or the Windows registry
+python3-discovery: (PEP 514). This library finds the right one for you.
+python3-discovery:
+python3-discovery: Give it a requirement like python3.12 or >=3.11,<3.13, and it searches
+python3-discovery: all known locations, verifies each candidate, and returns detailed
+python3-discovery: metadata about the match. Results are cached to disk so repeated
+python3-discovery: lookups are fast.

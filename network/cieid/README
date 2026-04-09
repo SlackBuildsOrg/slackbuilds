@@ -1,0 +1,22 @@
+CIE ID, also named Software CIE, is the middleware released by the
+Italian government agency Istituto Poligrafico e Zecca dello Stato on
+behalf of Ministero dell'Interno (the Italian Ministry of Interior),
+needed to use the digital services associated with the Italian
+electronic identity card (CIE).
+This application allows:
+1) access to digital services of government websites that require eID
+   authentication with level 1, 2, 3, using a web browser
+2) sign digital documents usingh your digital identity
+3) verify the signature of documents with digital signature
+4) change the PIN (Personal Identification Number) code associated to
+   your CIE
+5) unlock your card by resetting your PIN code using the PUK (Personal
+   Unblocking Key) released with your card.
+   
+Use of these services by a personal computer requires a smart card
+lector NFC (Near Field Communication), also named contactless,
+connected via USB port.
+
+pcsc-tools is an optional dependency.
+
+The graphical frontend (CIE ID) includes also an user manual.

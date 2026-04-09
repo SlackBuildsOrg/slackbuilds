@@ -35,6 +35,10 @@ To have the qemu-bridge-helper installed setuid root, allowing regular
 users to use extended networking capabilities, do this:
 
   BRIDGE_HELPER_SETUID=yes ./qemu.SlackBuild
+  
+To enable user mode networking, install libslirp, then compile qemu:
+
+  SLIRP=yes ./qemu.SlackBuild
 
 Don't forget to load the 'kvm-intel' or 'kvm-amd' module (depending on
 your processor) prior to launching qemu-system-ARCH with kvm enabled.
@@ -47,13 +51,11 @@ glusterfs, and vde2, numactl. sphinx-rtd-theme and Sphinx (to build
 documentation) are optional dependencies that will be automatically
 detected during compilation, if present (all avialable on SBo).
 
-To enable user mode networking, install libslirp, then compile qemu:
-
-SLIRP=yes ./qemu.SlackBuild
-
 NOTES:
   This version breaks some backward compatibility with earlier versions.
   Consult the official changelogs for details.
+  
+  Refer to README.Slackware for additional dependency information.
 
   If there are problems after upgrading with missing or wrong versioned
   libraries please try uninstalling any previous versions before

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+           |-----handy-ruler------------------------------------------------------|
+libgrapheme: libgrapheme (Unicode string library)
+libgrapheme:
+libgrapheme: Freestanding C99 library for Unicode string handling per standard
+libgrapheme: 17.0.0. Provides grapheme cluster, word, sentence and line break
+libgrapheme: segmentation, plus case detection and conversion on UTF-8 strings
+libgrapheme: and codepoint arrays.
+libgrapheme:
+libgrapheme: Requires no standard library at runtime, suitable for bare metal.
+libgrapheme: Smaller and faster than ICU, libunistring and libutf8proc.
+libgrapheme:
+libgrapheme: Homepage: https://libs.suckless.org/libgrapheme/

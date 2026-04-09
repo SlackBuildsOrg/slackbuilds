@@ -23,4 +23,5 @@ preserve_perms() {
 }
 
 preserve_perms etc/rc.d/rc.tinc.new
+config etc/rc.d/rc.tinc
 config etc/logrotate.d/tinc.new

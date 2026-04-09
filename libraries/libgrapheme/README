@@ -1,0 +1,19 @@
+libgrapheme - Unicode string library
+
+A simple freestanding C99 library for Unicode string handling per
+standard 17.0.0. Offers:
+
+  - grapheme cluster segmentation
+  - word and sentence segmentation
+  - line break detection
+  - case detection and conversion
+
+Works on UTF-8 strings and codepoint arrays, null-terminated or not.
+Lookup-tables are auto-generated and compressed. Includes 10,000+
+conformance tests. Requires only a C99 compiler, no standard library
+at runtime. Suitable for bare metal applications.
+
+Smaller and faster than ICU, libunistring and libutf8proc.
+
+Homepage:
+https://libs.suckless.org/libgrapheme/

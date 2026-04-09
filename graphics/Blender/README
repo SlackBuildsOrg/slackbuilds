@@ -7,14 +7,22 @@ range of essential tools for the creation of 3D content, including
 modeling, uv-mapping, texturing, particle and other simulation,
 scripting, rendering, compositing, post-production and game creation.
 
-
 This SlackBuild builds Blender from source code using prepackaged
 support libraries which don't provide libraries for i*86,
 therefore 32bit builds are no longer supported.
 
+NB! Since version 5.1.0, compilation of the blender source code
+requires gcc >= 14, so now has a dependency on gcc14. The new gcc14
+may be installed alongside the default gcc (11.2.0 in Slackware 15.0)
+without any known problems. The gcc14 SlackBuild is only required for
+building Blender (also associated libs, if building them from source
+code). It is not required for running Blender i.e. gcc14 may be removed
+after building Blender.
+
 The prepackaged libraries can themselves be built from source code if
 desired and provided sufficient resources (disk space, cpu, time) are
-available. See the README.libs file.
+available. Building these libraries also require the gcc14 package.
+See the README.libs file.
 
 If targeting hardware rendering with Nvidia GPU, it is necessary to
 first install the cudatoolkit_12 package, in which case additional

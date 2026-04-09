@@ -14,12 +14,17 @@ environment variable to yes when building the package e.g.
     NSIGHT=yes bash cudatoolkit_12.SlackBuild
 
 This is version 12, which should be installable together with
-the default version 10.
-You can activate it by sourcing /etc/profile.d/cuda-12.9.sh
+other cudatoolkits. This one may be activated by sourcing
+/etc/profile.d/cuda-12.9.sh
 
 NOTE:
-This build is beta. CUDA is large and complicated,
-suggestions welcome. If unsure, I suggest using the default
-CUDA 10.
-However, mpv and ffmpeg compile fine with this CUDA, and hardware
-accelerated video decoding works.
+This SlackBuild has been constructed primarily to enable compilation
+of Blender and its libraries from source code. Blender 5.1.0 requires
+gcc & g++ of at least 14.2.0 and this toolkit will be configured to
+use that (based on the required gcc14 dependency). If different
+compilers are required for whatever reason, they can be specified in
+environment variables CUDA_CC and CUDA_CXX when running this SlackBuild
+e.g.
+    CUDA_CC=/usr/local/bin/gcc-12.3.5 CUDA_CXX=/usr/local/bin/g++-gcc-12.3.5 bash cudatoolkit_12.SlackBuild
+If these are not set and gcc14 is not installed, cuda compilers will
+be set to the default installed gcc & g++.

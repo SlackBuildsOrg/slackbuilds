@@ -31,7 +31,7 @@ PRGNAM=cudatoolkit_12
 FILENAME=cuda
 VERSION=${VERSION:-12.9.1}
 DRIVER=${DRIVER:-575.57.08}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -112,11 +112,26 @@ find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-# lwf: arch does this, not sure if this is required
 # Define compilers for CUDA to use.
-# This allows us to use older versions of GCC if we have to.
-ln -s /usr/bin/gcc-11.2.0 "${PKG}/opt/${CPREFIX}"/bin/gcc
-ln -s /usr/bin/g++-gcc-11.2.0 "${PKG}/opt/${CPREFIX}"/bin/g++
+# This allows us to use different versions of GCC if we have to.
+# Need gcc14 for Blender-5.1.0 so we default to that
+# but also allow some other compiler CUDA_CC & CUDA_CC
+#
+if [ -n "$CUDA_CC" -a -n "$CUDA_CXX" ]; then
+  echo "Using user-specified compilers $CUDA_CC and $CUDA_CXX"
+  ln -s "$CUDA_CC" "${PKG}/opt/${CPREFIX}"/bin/gcc
+  ln -s "$CUDA_CXX" "${PKG}/opt/${CPREFIX}"/bin/g++
+elif [ -d /opt/gcc14-14.2.0/bin ]; then
+  # This is the expected case: use gcc14
+  echo "Using GCC14 as CUDA compiler"
+  ln -s /opt/gcc14-14.2.0/bin/gcc-14.2.0 "${PKG}/opt/${CPREFIX}"/bin/gcc
+  ln -s /opt/gcc14-14.2.0/bin/g++-gcc-14.2.0 "${PKG}/opt/${CPREFIX}"/bin/g++
+else
+  # Use default Slackware-15.0 compilers
+  echo "Using default gcc 11.2.0 as CUDA compiler"
+  ln -s /usr/bin/gcc "${PKG}/opt/${CPREFIX}"/bin/gcc
+  ln -s /usr/bin/g++ "${PKG}/opt/${CPREFIX}"/bin/g++
+fi
 
 # lwf: arch does this, not sure if this is needed.
 # Add a symlink lib->lib64 as some libraries might expect that (FS#76951)

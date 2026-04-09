@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+     |-----handy-ruler------------------------------------------------------|
+lchat: lchat (line chat frontend)
+lchat:
+lchat: lchat is a line oriented front end for ii-like chat programs. It
+lchat: handles keyboard input and output file in parallel, so you can type
+lchat: while new chat lines arrive. Focused on usability and simplicity.
+lchat:
+lchat: Supports: ii (IRC), ratox (Tox), sj/jj (XMPP), icb (ICB).
+lchat:
+lchat:
+lchat:
+lchat: Homepage: https://tools.suckless.org/lchat/

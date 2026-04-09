@@ -1,0 +1,15 @@
+lchat - line chat frontend
+
+lchat (line chat) is a line oriented front end for ii-like chat
+programs. It handles input from keyboard and output file in parallel,
+allowing you to type messages while new chat lines are arriving.
+Its main focus is on usability and simplicity.
+
+lchat can be used as frontend for the following programs and protocols:
+  - ii    for IRC
+  - ratox for Tox
+  - sj/jj for XMPP
+  - icb   for ICB
+
+Homepage:
+https://tools.suckless.org/lchat/

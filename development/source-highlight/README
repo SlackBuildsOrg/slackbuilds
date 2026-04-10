@@ -1,26 +1,45 @@
 GNU Source-highlight
+====================
 
-This program, given a source file, produces a document with syntax
-highlighting. It also provides a C++ highlight library.
+Source-highlight generates syntax-highlighted documents from source files.
+It also provides a C++ highlight library.
 
-Source-highlight reads source language specifications dynamically,
-thus it can be easily extended (without recompiling the sources) for
-handling new languages. It also reads output format specifications
-dynamically, and thus it can be easily extended (without recompiling
-the sources) for handling new output formats. The syntax for these
-specifications is quite easy (take a look at the manual).
+Language and output format specifications are loaded dynamically, so new
+languages and formats can be added without recompiling.
 
-Source-highlight is a command line program, and it can also be used as
-a CGI.
+Usage
+-----
 
-Notice that source-highlight can also be used as a formatter (i.e.,
-without highlighting): you can, for instance, format a txt file in
-HTML (and it will take care of translating special characters, such
-as, <, >, &).
+Basic example:
 
-A common example:
-  less /usr/src/linux/kernel/panic.c
+  source-highlight -s c -f esc sourcefile.c | less -R
 
-to tune the less, add in your .bash_profile these lines:
+View any source file with syntax highlighting through less:
+
   export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
-  export LESS=' -R '
+  export LESS='-R'
+
+Add those lines to your ~/.bash_profile for permanent effect.
+
+Use -f esc256 instead of -f esc if your terminal supports 256 colors.
+
+Added Languages
+---------------
+
+This build adds YAML and Markdown support (upstream bug #62751):
+
+  - yaml, yml            -> YAML files
+  - md, mkd, markdown    -> Markdown files
+
+Test examples:
+
+  curl -s https://raw.githubusercontent.com/git/git/master/.github/workflows/main.yml \
+    | source-highlight -s yaml -f esc | less -R
+
+  curl -s https://raw.githubusercontent.com/git/git/master/README.md \
+    | source-highlight -s md -f esc | less -R
+
+Homepage
+--------
+
+  https://www.gnu.org/software/src-highlite/

@@ -1,0 +1,136 @@
+# markdown.lang -- GNU Source-highlight language definition for Markdown
+# @title Markdown
+# @matchext md
+# @matchext mkd
+# @matchext markdown
+#
+# Author: Ricardson <r1w1s1@fastmail.com>
+# Tested with GNU Source-highlight 3.1.9
+#
+# Usage:
+#   source-highlight -s markdown -f esc    < file.md
+#   source-highlight -s markdown -f esc256 < file.md
+#
+# Colour mapping (using default.style):
+#   keyword  -> headings, bold+italic, link brackets, image brackets
+#   type     -> bold, blockquotes, table separator rows
+#   comment  -> italic
+#   string   -> fenced code blocks, inline code
+#   symbol   -> list markers, horizontal rules, table rows
+#   url      -> link/image URLs, autolinks, bare URLs
+
+# -----------------------------------------------------------------
+# Fenced code blocks  ``` ... ```  or  ~~~ ... ~~~
+# Must come first so inner content is not parsed for other elements.
+# -----------------------------------------------------------------
+string delim '(^```)[^\n]*' '^```' multiline
+string delim '(^~~~)[^\n]*' '^~~~' multiline
+
+# -----------------------------------------------------------------
+# Headings -- ATX style  # H1  ## H2  ...  ###### H6
+# -----------------------------------------------------------------
+keyword = '^#{1,6}[[:blank:]]+[^\n]+'
+
+# -----------------------------------------------------------------
+# Headings -- Setext style (underline with === only; --- is ambiguous
+# with horizontal rules so we leave it to the hr rule below)
+# -----------------------------------------------------------------
+keyword = '^[=]{2,}[[:blank:]]*$'
+
+# -----------------------------------------------------------------
+# Blockquotes  > text
+# -----------------------------------------------------------------
+type = '^[[:blank:]]*>[^\n]*'
+
+# -----------------------------------------------------------------
+# Horizontal rules  ---  ***  ___  (3 or more chars, whole line)
+# -----------------------------------------------------------------
+symbol = '^[[:blank:]]*([-*_][[:blank:]]?){3,}[[:blank:]]*$'
+
+# -----------------------------------------------------------------
+# Tables (GFM) -- separator row  |---|---|  and data rows  |...|
+# Separator highlighted as type, data rows as symbol.
+# -----------------------------------------------------------------
+type   = '^[[:blank:]]*\|[-|: ]+\|[[:blank:]]*$'
+symbol = '^[[:blank:]]*\|[^\n]+'
+
+# -----------------------------------------------------------------
+# Unordered list markers  -  *  +
+# -----------------------------------------------------------------
+symbol = '^[[:blank:]]*[-*+][[:blank:]]'
+
+# -----------------------------------------------------------------
+# Ordered list markers  1.  2.  etc.
+# -----------------------------------------------------------------
+symbol = '^[[:blank:]]*[[:digit:]]+\.[[:blank:]]'
+
+# -----------------------------------------------------------------
+# Task list checkboxes  [ ]  [x]  [X]
+# -----------------------------------------------------------------
+keyword = '\[[ xX]\]'
+
+# -----------------------------------------------------------------
+# Bold+italic  ***text***  or  ___text___
+# -----------------------------------------------------------------
+environment keyword delim '\*\*\*' '\*\*\*' begin
+  normal = '.'
+end
+environment keyword delim '___' '___' begin
+  normal = '.'
+end
+
+# -----------------------------------------------------------------
+# Bold  **text**  or  __text__
+# -----------------------------------------------------------------
+environment type delim '\*\*' '\*\*' begin
+  normal = '.'
+end
+environment type delim '__' '__' begin
+  normal = '.'
+end
+
+# -----------------------------------------------------------------
+# Italic  *text*  or  _text_
+# -----------------------------------------------------------------
+environment comment delim '\*' '\*' begin
+  normal = '.'
+end
+
+# -----------------------------------------------------------------
+# Inline code  `code`
+# -----------------------------------------------------------------
+environment string delim '`' '`' begin
+  normal = '.'
+end
+
+# -----------------------------------------------------------------
+# Images  ![alt](url)  -- must come before links
+# -----------------------------------------------------------------
+(keyword,url,keyword,url,keyword) = `(!\[)([^\]]*?)(\]\()([^)]*?)(\))`
+
+# -----------------------------------------------------------------
+# Inline links  [text](url)
+# -----------------------------------------------------------------
+(keyword,keyword,keyword,url,keyword) = `(\[)([^\]]*?)(\]\()([^)]*?)(\))`
+
+# -----------------------------------------------------------------
+# Reference-style link definitions  [ref]: url
+# -----------------------------------------------------------------
+(keyword,keyword,keyword,url) = `(^\[)([^\]]+)(\]:[[:blank:]]+)([^[:blank:]"]+)`
+
+# -----------------------------------------------------------------
+# Reference-style link usage  [text][ref]
+# -----------------------------------------------------------------
+(keyword,keyword,keyword,keyword,keyword) = `(\[)([^\]]+)(\]\[)([^\]]+)(\])`
+
+# -----------------------------------------------------------------
+# Autolinks  <email@example.com>  <https://url>
+# -----------------------------------------------------------------
+url = '<[[:alnum:]._+-]+@[[:alnum:]._-]+\.[[:alpha:]]+>'
+url = '<[[:alpha:]]+://[^>[:blank:]]+>'
+
+# -----------------------------------------------------------------
+# Bare URLs  https://...  http://...
+# -----------------------------------------------------------------
+include "url.lang"
+

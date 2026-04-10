@@ -4,7 +4,7 @@
 
 # Copyright 2017 Nikolay Nikolov <nikobnikolov[at]gmail[dot]com>
 # All rights reserved.
-# Copyright 2019-2024 Christoph Willing  Sydney, Australia
+# Copyright 2019-2026 Christoph Willing  Sydney, Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pcl
 VERSION=${VERSION:-1.14.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -40,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -72,14 +69,22 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$PRGNAM-$VERSION.tar.gz
+
+echo "Unpacking source tarball ... "
+tar xf $CWD/$PRGNAM-$PRGNAM-$VERSION.tar.gz
+echo
+
 cd $PRGNAM-$PRGNAM-$VERSION
+
+echo "Sanitizing source code ... "
+sed -i -e '/#include "object.h"/a#include <iostream>' outofcore/include/pcl/outofcore/visualization/geometry.h
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+echo
 
 mkdir -p build
 cd build

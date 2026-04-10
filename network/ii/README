@@ -1,5 +1,12 @@
-Irc it is a minimalist FIFO and filesystem-based IRC client. It creates
-an irc directory tree with server, channel and nick name directories. In
-every directory a FIFO in file and a normal out file is created. The in
-files are used to communicate with servers and the out files contain
-server messages. This allows IRC communication from the command line.
+ii - minimalist IRC client
+==========================
+
+ii is a FIFO and filesystem-based IRC client. It creates a directory
+tree with server, channel and nick directories. Each directory gets
+an input FIFO (in) and an output file (out):
+
+  - in   write to this to send messages to the server or channel
+  - out  contains incoming messages from the server or channel
+
+This allows IRC communication entirely from the command line using
+standard tools like echo, cat and tail.

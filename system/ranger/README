@@ -16,3 +16,4 @@ highlight (for coloured previews)
 
 (Note that highlight is used by default. Pygments requires editing the
 preview script 'scope.sh')
+

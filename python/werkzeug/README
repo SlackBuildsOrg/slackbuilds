@@ -22,3 +22,5 @@ NOTE:
 IMPORTANT:
 -Conflicts with werkzeug-legacy1 and both cannot be installed at the
  same time.
+
+NOTE: 3.1.x is last version to support python-3.9

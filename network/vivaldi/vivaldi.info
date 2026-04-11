@@ -1,12 +1,12 @@
 PRGNAM="vivaldi"
-VERSION="7.9.3970.47"
+VERSION="7.9.3970.50"
 HOMEPAGE="https://vivaldi.com"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://downloads.vivaldi.com/stable/vivaldi-stable_7.9.3970.47-1_amd64.deb \
-                 https://update.vivaldi.com/update/1.0/relnotes/7.9.3970.47.html"
-MD5SUM_x86_64="524870eb745cb9532c4aa4fa54ca5d1e \
-               f7dbbafc3d19e284465d312cdcd81982"
+DOWNLOAD_x86_64="https://downloads.vivaldi.com/stable/vivaldi-stable_7.9.3970.50-1_amd64.deb \
+                 https://update.vivaldi.com/update/1.0/relnotes/7.9.3970.50.html"
+MD5SUM_x86_64="a23411b1ed6d090b7a710dc72b2d6e56 \
+               d4d2b9296b86baee59162baacfe3f32a"
 REQUIRES=""
 MAINTAINER="Ruari Oedegaard"
 EMAIL="sbo@ruari.com"

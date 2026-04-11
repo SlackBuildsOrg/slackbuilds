@@ -23,9 +23,6 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# 20241009 bkw: Modified by SlackBuilds.org, BUILD=2:
-# - Bump BUILD for luajit-2.1.x
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=obs-studio
@@ -64,6 +61,7 @@ else
   LIBDIRSUFFIX=""
 fi
 
+
 set -e
 
 # Ensure correct cmake is used on 15.0
@@ -83,6 +81,14 @@ cd $PRGNAM-$VERSION
 sed -i -e '/OBS_VERSION_CANONICAL/ s=^=#=' CMakeLists.txt
 sed -i -e 's/qrcodegen.hpp/QrCode.hpp/' \
     plugins/obs-websocket/src/forms/ConnectInfo.cpp
+
+# Deal with GCC toolset 15.2.0 from testing
+GCC_VERSION=$(g++ --version |head -1|cut -d' ' -f3)
+if [ $GCC_VERSION == "15.2.0" ]; then
+  SLKCFLAGS="${SLKCFLAGS} -Wno-calloc-transposed-args"
+  sed -i -e '/#include <cmath>/a#include <cstdint>' \
+     deps/json11/json11.cpp
+fi
 
 chown -R root:root .
 find -L . \

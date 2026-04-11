@@ -1,2 +1,6 @@
 This package contains a single module, which implements a platform
 independent file lock in Python.
+
+NOTE: Unable to support newer versions due to requiring newer version
+of python than is available in Slackware 15.0 (python 3.10).
+

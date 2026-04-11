@@ -28,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=php84
-VERSION=${VERSION:-8.4.19}
+VERSION=${VERSION:-8.4.20}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -189,7 +189,10 @@ make
 make install INSTALL_ROOT=$PKG
 
 mkdir -p $PKG/etc/rc.d
-cp sapi/fpm/init.d.php-fpm $PKG/etc/rc.d/rc.php-fpm-${VERSION_SUFFIX}.new
+awk -v suffix=${VERSION_SUFFIX} \
+  -e '/^php_fpm_BIN=/{ print $0"-"suffix; next }' \
+  -e '{ sub("php-fpm.pid", "php-fpm-"suffix".pid") } 1' \
+  sapi/fpm/init.d.php-fpm > $PKG/etc/rc.d/rc.php-fpm-${VERSION_SUFFIX}.new
 chmod 644 $PKG/etc/rc.d/rc.php-fpm-${VERSION_SUFFIX}.new
 
 # Strip ELF objects.

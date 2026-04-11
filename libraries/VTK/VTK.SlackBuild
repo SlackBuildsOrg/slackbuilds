@@ -4,7 +4,7 @@
 
 # Copyright 2013,2014 Youjie Zhou <jmpopush@gmail.com>
 # All rights reserved.
-# Copyright 2016-2025 Christoph Willing,  Sydney Australia
+# Copyright 2016-2026 Christoph Willing,  Sydney Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,8 +28,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=VTK
-VERSION=${VERSION:-9.4.1}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-9.6.1}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -99,18 +99,22 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+echo -n "Unpacking source tarball ... "
+tar xf $CWD/$PRGNAM-$VERSION.tar.gz
+echo
 cd $PRGNAM-$VERSION
 
 patch -p1 < $CWD/include_limits.patch
 patch -p0 < $CWD/cstdint-for-gcc13.diff
 
+echo -n "Sanitizing source code ... "
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+echo
 
 sed -i '/include <QTextStream>/a #include <QPainterPath>' \
   Rendering/Qt/vtkQtLabelRenderStrategy.cxx \

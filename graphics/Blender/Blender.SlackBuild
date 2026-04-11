@@ -25,15 +25,17 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Blender
-VERSION=${VERSION:-5.0.1}
-BUILD=${BUILD:-4}
-LIBS_BUILD=${LIBS_BUILD:-2}
+VERSION=${VERSION:-5.1.0}
+BUILD=${BUILD:-1}
+LIBS_BUILD=${LIBS_BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 SRCNAM=blender
 CONTINUE=${CONTINUE:-"no"}
 INSTALL_PATH=${INSTALL_PATH:-/opt/$PRGNAM-$VERSION}
+GCC14_VERSION=${GCC14_VERSION:-"14.2.0"}
+GCC14_PATH=${GCC14_PATH:-"/opt/gcc14-${GCC14_VERSION}"}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -61,6 +63,14 @@ elif [ "$ARCH" = "x86_64" ]; then
 else
   SLKCFLAGS="-O2"
 fi
+SLKCFLAGS="$SLKCFLAGS $(pkg-config --libs numa)"
+
+# (Blender 5.1.x needs at least gcc-14.0.0)
+#
+if [ -d "${GCC14_PATH}" ]; then
+  export CC=${GCC14_PATH}/bin/gcc-${GCC14_VERSION}
+  export CXX=${GCC14_PATH}/bin/g++-gcc-${GCC14_VERSION}
+fi
 
 with_cuda=""
 [ -x /etc/profile.d/cuda-12.*.sh ] && {
@@ -84,11 +94,9 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 if [ "$CONTINUE" = "yes" ]; then
-#rm -rf $SRCNAM-$VERSION
-#tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
   echo "CONTINUE mode"
 else
-  echo "Unpacking source tarball ..."
+  echo "Unpacking source tarball ... "
   rm -rf $SRCNAM-$VERSION
   tar xf $CWD/$SRCNAM-$VERSION.tar.xz
 fi
@@ -98,7 +106,7 @@ if [ "$CONTINUE" = "yes" ]; then
   echo "CONTINUE mode"
 else
   if [ -r "$CWD"/"$SRCNAM"-libs-"${VERSION}"."$LIBS_BUILD".tar.lz ]; then
-    echo "Unpacking  -libs tarball ..."
+    echo "Unpacking  -libs tarball ... "
     (cd lib && tar xf $CWD/$SRCNAM-libs-$VERSION.$LIBS_BUILD.tar.lz)
   else
     echo ; echo "Generate the $SRCNAM-libs-$VERSION.$LIBS_BUILD.tar.lz tarball; then run build script again."
@@ -115,20 +123,21 @@ find -L . \
 mkdir -p build
 cd build
   cmake .. \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS $(pkg-config --libs numa)" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -Wno-uninitialized" \
     -DCMAKE_BUILD_TYPE=Release \
     -DLIBDIR:PATH=$(pwd)/../lib/linux_x64 \
     -DCMAKE_EXE_LINKER_FLAGS_RELEASE=-ldrm \
     -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
     -DWITH_INSTALL_PORTABLE:BOOL=ON \
     -DWITH_BUILDINFO:BOOL=ON \
+    -DWITH_STATIC_LIBS=ON \
     $with_cuda \
     $with_rocm \
     $with_optix \
 
-  # From https://projects.blender.org/blender (Release: Bump to 5.0.1)
-  COMMIT_HASH="a3db93c5b2"
+  # From https://projects.blender.org/blender (Release: Bump to 5.1.0)
+  COMMIT_HASH="adfe2921d5"
   COMMIT_TIMESTAMP=$(stat -c "%Y %n" ../source/blender/blenkernel/BKE_blender_version.h |cut -d' ' -f1) 
   sed -i \
       -e "s|MY_WC_HASH \"unknown\"|MY_WC_HASH \"$COMMIT_HASH\"|" \
@@ -146,17 +155,6 @@ find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-mkdir -p $PKG/etc/profile.d
-cat > $PKG/etc/profile.d/${PRGNAM}.sh <<EOF
-#!/bin/bash
-export PATH="\${PATH}:${INSTALL_PATH}"
-EOF
-cat > $PKG/etc/profile.d/${PRGNAM}.csh <<EOF
-#!/bin/bash
-setenv PATH "\${PATH}:${INSTALL_PATH}"
-EOF
-chmod a+x $PKG/etc/profile.d/${PRGNAM}.*sh
-
 mkdir -p $PKG/usr/share/applications
 (cd $PKG/usr/share/applications && ln -s $INSTALL_PATH/blender.desktop)
 mkdir -p $PKG/usr/share/icons/hicolor/scalable/apps
@@ -169,6 +167,22 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+# In case gcc14 is removed after building,
+# include updated libstdc++
+(  cd $PKG/$INSTALL_PATH/lib && \
+   cp -p ${GCC14_PATH}/lib64/libstdc++.so.6.0.33 . && \
+   ln -s libstdc++.so.6.0.33 libstdc++.so.6
+)
+
+mkdir $PKG/usr/bin
+cat >$PKG/usr/bin/blender <<EOF
+#!/bin/bash
+export LD_LIBRARY_PATH=$INSTALL_PATH/lib
+exec $INSTALL_PATH/blender
+EOF
+chmod a+x $PKG/usr/bin/blender
+
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

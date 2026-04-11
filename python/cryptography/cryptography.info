@@ -1,10 +1,10 @@
 PRGNAM="cryptography"
-VERSION="46.0.6"
+VERSION="46.0.7"
 HOMEPAGE="https://cryptography.io/"
-DOWNLOAD="https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-46.0.6.tar.gz \
-	  https://sbo-source.s3.ap-southeast-1.amazonaws.com/cryptography-vendored-sources-46.0.6-1.tar.xz"
-MD5SUM="ce01432ce5191b30190477289c940b08 \
-	fe12b38c35e4bbf35a96ef8404529b79"
+DOWNLOAD="https://files.pythonhosted.org/packages/source/c/cryptography/cryptography-46.0.7.tar.gz \
+	  https://sbo-source.s3.ap-southeast-1.amazonaws.com/cryptography-vendored-sources-46.0.7-1.tar.xz"
+MD5SUM="c9c5834d6a4f3382ab97377c8fffd49b \
+	a6fc30a2910d205e05acd6bbd8238890"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="python3-maturin python3-cffi python3-typing-extensions"

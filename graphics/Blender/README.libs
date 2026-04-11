@@ -16,18 +16,19 @@ along the lines of:
 Then run:
 -  git clone https://projects.blender.org/blender/blender.git
 -  cd blender
--  git checkout v5.0.1
+-  git checkout v5.1.0
 -  make update
 -  cd lib
--  tar cvf blender-5.0.1-libs.tar linux_x64
--  plzip -9 --output=blender-5.0.1-libs.tar.lz blender-5.0.1-libs.tar
+-  tar cvf blender-5.1.0-libs.tar linux_x64
+-  plzip -9 --output=blender-5.1.0-libs.tar.lz blender-5.1.0-libs.tar
 
 The resulting tarball was then uploaded to SourceForge from where
 it could be downloaded by anyone when executing the SlackBuild.
 
 Since then, the libraries have been compiled from source by the
-maintainer and uploaded to SourceForge. See below to build the
-libraries from source code locally.
+maintainer and uploaded to SourceForge. Anyone wishing to build
+these libraries from source code themselves may follow the
+instructions below.
 
 
 ###################################################
@@ -40,6 +41,11 @@ the necessary precompiled libraries from source code. Since this is an
 extremely resource expensive procedure (see Resources section below),
 it is not used by default but is described here for those wanting to use
 it.
+
+## NOTE ##
+For blender version 5.1.0 (including libraries building),
+minimum GCC version is 14.2.0
+
 
 Prerequisites (from SBo):
 -  cmake-opt

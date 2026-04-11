@@ -18,6 +18,10 @@ NOTE:
 
 - The source tarball has to be downloaded manually from the website.
   Choose STM32CubePrg-Lin package.
+- Unfortunately, ST site happens to change downloads names from time to
+  time. After being downloaded, the tarball has to follow the naming
+  scheme:
+    en.stm32cubeprg-lin-v{X}-{Y}-{Z}.zip
 - 7zip and zulu-openjdk* are only used for repackaging the upstream
   tarball and are not used during the run-time. Different version
   of JDK _might_ work as well (not tested.)

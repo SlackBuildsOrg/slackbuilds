@@ -2,3 +2,6 @@ python3-ujson (Ultra fast JSON encoder and decoder written in pure C)
 
 UltraJSON is an ultra fast JSON encoder and decoder written in pure C
 with bindings for Python 3.7+.
+
+NOTE: 5.11.0 is last version to support python-3.9
+

@@ -2,7 +2,7 @@
 
 # Slackware build script for STM32CubeProgrammer (STM32CubeProg)
 
-# Copyright 2024 Andrzej Telszewski, Koszalin
+# Copyright 2026 Andrzej Telszewski, Koszalin
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=stm32cubeprog
-VERSION=${VERSION:-2.19.0}
+VERSION=${VERSION:-2.22.0}
 SRCNAM=en.stm32cubeprg-lin-v$(echo $VERSION | tr . -).zip
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

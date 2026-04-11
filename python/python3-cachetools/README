@@ -3,3 +3,7 @@ python3-cachetools (Extensible memoizing collections and decorators)
 This module provides various memoizing collections and decorators,
 including variants of the Python Standard Library's @lru_cache
 function decorator.
+
+NOTE: Unable to support newer versions due to requiring newer version
+of python than is available in Slackware 15.0 (python 3.10).
+

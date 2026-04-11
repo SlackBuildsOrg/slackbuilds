@@ -1,3 +1,147 @@
+Sat Apr 11 16:50:40 UTC 2026
+academic/Gridcoin-Research: Updated for version 5.5.0.0
+academic/WolframEngine: Updated for version 14.3.0.
+academic/boinc: Updated for version 8.2.9
+academic/openboard: Fix build.
+academic/python3-scipy: Ignore newer pybind11 limits
+audio/dopamine-bin: Updated for version 3.0.4
+audio/reaper: Updated for version 7.68
+desktop/lxqt-panel: Updated for version 2.3.3.
+desktop/pekwm: Updated for version 0.4.4
+development/JAForth: Updated for version 20260404_e52cb98
+development/SQLAlchemy: Updated for version 2.0.49.
+development/actionlint: Updated for version 1.7.12.
+development/antigravity: Updated for version 1.21.9
+development/aws-cdk: Updated for version 2.1118.0.
+development/bruno: Updated for version 3.2.2.
+development/bun-bin:updated to version 1.3.12
+development/cudatoolkit_12: Enable compiler selection (gcc14 is default)
+development/deno-bin:updated to version 2.7.12
+development/deno: Updated for version 2.7.12.
+development/electron-bin: Updated for version 41.1.1
+development/gcc14: Added (GNU C Compiler).
+development/jupyter-nbconvert: Updated for version 7.17.1.
+development/lm-studio-bin: Updated for version 0.4.9.1
+development/lua-language-server: Updated for version 3.18.1.
+development/php84: Updated for version 8.4.20
+development/pnpm: Updated for version 10.33.0.
+development/sbt: Updated for version 1.12.9
+development/scite: Updated for version 5.6.1.
+development/source-highlight: Fix permission.
+development/source-highlight: update to 3.1.9
+development/stm32cubeprog: Updated for version 2.22.0
+development/unmake: Orphaned
+games/LucasChess: Updated for version R2.21.
+games/PrismLauncher: Updated for version 11.0.0.
+games/dealers-choice: Updated for version 0.0.11.
+games/shattered-pixel-dungeon: Updated for version 3.3.8.
+games/wesnoth: Fix md5sum
+games/wesnoth: Updated for version 1.18.6
+graphics/Blender: Updated for version 5.1.0
+graphics/OpenCASCADE: Updated for new VTK version
+graphics/paraview: Updated for version 6.1.0
+graphics/scantailor-advanced: Updated for version 1.1.1.
+graphics/vuescan: Updated for version 9.8.53.
+ham/gridtracker2: Updated for version 2.260405.5.
+libraries/SDL3: Updated for version 3.4.4
+libraries/VTK: Updated for version 9.6.1
+libraries/libgrapheme: Added (Unicode String Library).
+libraries/libopenshot: Updated vor version 0.7.0
+libraries/ospray_studio: Specify pybind11 version
+libraries/pcl: Update for new VTK version
+libraries/pyacoustid: Last py3.9 ver.
+misc/ollama: Updated for version 0.20.5.
+misc/tinytldr: Updated for version 1.2.1
+multimedia/exaile: Updated for version 4.2.2.
+multimedia/freetube: Fix permission.
+multimedia/freetube: Updated for version 0.24.0.
+multimedia/obs-studio: Deal with GCC 15 toolset from testing. Thanks to Vladislav Borisov
+multimedia/openshot: Updated for version 3.5.1
+multimedia/plexmediaserver: Updated for version 1.43.1.10576_06378bdcd.
+multimedia/ytdlp-gui: Updated for version 3.2.0
+network/bsky-desktop-bin: Updated for version 1.2.1
+network/cieid: Added (Software ICE).
+network/element-desktop-bin: Updated for version 1.12.15.
+network/element-desktop: Updated for version 1.12.15.
+network/floorp-bin: Updated for version 12.12.0.
+network/ii: update to 2.0
+network/kubectl-bin: Updated for version 1.35.3.
+network/lchat: Added (Line Chat Frontend).
+network/librewolf: Updated for version 149.0.2_1
+network/lldpd: Updated for version 1.0.21.
+network/mullvad-browser: Updated for version 15.0.9
+network/mumble-server: Updated for version 1.5.857
+network/mumble: Updated for version 1.5.857
+network/neomutt: Updated for version 20260406.
+network/opera: Updated for version 129.0.5823.44
+network/rclone-src: Updated for version 1.73.4
+network/rspamd: Updated for version 4.0.0
+network/telegram: Updated for version 6.7.5.
+network/tixati: Updated for version 3.42_1.
+network/tor-browser: Updated for version 15.0.9.
+network/transmission: Updated for version 4.1.1.
+network/urlwatch: Updated for version 2.29.
+network/vivaldi: Updated for version 7.9.3970.50.
+network/waterfox: Updated for version 6.6.11
+network/webex: Updated for version 46.4.0.34620
+network/wifitui: update to 0.13.0
+network/zen-browser: Updated for version 1.19.6b
+office/batdoc-bin: Added (Document to Markdown).
+office/jpdfbookmarks: Update script.
+office/krop: Fix MD5SUM.
+office/krop: Updated for version 0.7.0.
+office/pdfsam-basic: Updated for version 6.0.0.
+office/qownnotes: Updated for version 26.4.9.
+office/wps-office-dicts: Updated for version 26.2.3.1
+perl/perl-YAML-Syck: Updated for version 1.44.
+python/cryptography: Updated for version 46.0.7.
+python/pybind11: Added cmake & pkgconfig entries
+python/python3-anyio: Note on why we can't update
+python/python3-bitarray: Updated for version 3.8.1.
+python/python3-boto3: Updated for version 1.42.84
+python/python3-brotlicffi: Updated for version 1.2.0.1.
+python/python3-cachetools: Version bump to 6.2.6
+python/python3-cssselect: Note on why we can't update
+python/python3-discovery: Added (Python Interpreter Discovery).
+python/python3-dunamai: Updated for version 1.26.1.
+python/python3-evdev: Version bump to 1.9.3
+python/python3-filelock: Revert to 3.19.1 due to py3.9 support dropped
+python/python3-hatchling: Updated for version 1.29.0.
+python/python3-installer: Last py3.9 ver.
+python/python3-maturin: Updated for version 1.13.1.
+python/python3-more-itertools: Last py3.9 ver.
+python/python3-odfdo: Updated for version 3.22.4
+python/python3-pypdf: Updated for version 6.10.0
+python/python3-setuptools-rust-opt: Updated for version 1.12.1.
+python/python3-ujson: Last py3.9 ver.
+python/python3-virtualenv: Version bump to 21.2.0
+python/tzdata: Updated for version 2026.1.
+python/werkzeug: Updated for version 3.1.8.
+system/audit: Updated for version 4.1.4.
+system/dfm: Added (File Manager).
+system/docker-buildx: Updated for version 0.33.0.
+system/fio: Updated for version 3.42.
+system/fish: update to 4.6.0
+system/fzf: Updated for version 0.71.0.
+system/jnv-bin: Updated for version 0.7.1
+system/limine: Updated for version 11.2.1
+system/lxqt-config: Updated for version 2.3.2.
+system/mongo-tools: Updated for version 100.16.0.
+system/mongodb: Updated for version 8.2.7.
+system/netdata: Updated for version 2.10.0.
+system/netdata: Updated for version 2.10.1.
+system/openrazer-daemon: Updated for version 3.12.1.
+system/openrazer-kernel: Updated for version 3.12.1.
+system/oxker-bin: Updated for version 0.13.1
+system/qemu: Updated for version 10.2.2
+system/ranger: Updated HOMEPAGE and DOWNLOAD.
+system/rmw: Updated for version 0.9.5.
+system/ttygif: Updated for version 1.6.0.
+system/v4l2loopback: Updated for version 0.15.3
+system/witr: Updated for version 0.3.1
+system/xarchiver: Updated for version 0.5.4.26
+system/xfile: Updated for version 1.1.0.
++--------------------------+
 Sat Apr  4 02:50:16 UTC 2026
 academic/gmsh: Updated for version 4.15.2.
 academic/openboard: Updated for version 1.7.7.

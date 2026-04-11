@@ -24,6 +24,7 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260406 bkw: update for v4.1.1.
 # 20251103 bkw: BUILD=2: got a report that from j12i on libera IRC
 # that KDE doesn't display transmission's SVG icon on -current. easy
 # fix is to include upstream's PNG icon in the package.
@@ -57,8 +58,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=transmission
-VERSION=${VERSION:-4.0.6}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-4.1.1}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -141,17 +142,22 @@ for i in $( find . -maxdepth 2 -name 'transmission*.1' ); do
       $i
 done
 
-# 20240731 bkw: vendor miniupnpc src in wrong place...
-if [ ! -e third-party/miniupnpc/CMakeLists.txt ]; then
-  cp -a third-party/miniupnp/miniupnpc/* third-party/miniupnpc/
-fi
-
 # 20240731 bkw: USE_SYSTEM_*=OFF for everything that ships in the
 # third-party/ dir. Avoids surprises (aka hidden dependencies), and
 # also, makes transmission use the versions it was tested with.
+# 20260406 bkw: had to add RUN_CLANG_TIDY=OFF, clang-tidy was
+# segfaulting and killing the build. It's a developer option
+# anyway, it shouldn't be enabled for user builds. Also added
+# ENABLE_TESTS=OFF to stop it building & using its bundled
+# googletest, which speeds up the build. Went ahead and
+# added ENABLE_WERROR=OFF too: it defaults to off already, but
+# some future transmission version may change that...
 mkdir -p build
 cd build
   cmake \
+    -DRUN_CLANG_TIDY=OFF \
+    -DENABLE_TESTS=OFF \
+    -DENABLE_WERROR=OFF \
     -DREBUILD_WEB=OFF \
     -DUSE_SYSTEM_EVENT2=OFF \
     -DUSE_SYSTEM_DEFLATE=OFF \

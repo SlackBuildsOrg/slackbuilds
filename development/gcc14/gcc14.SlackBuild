@@ -1,0 +1,334 @@
+#!/bin/bash
+
+# Slackware build script for gcc14
+
+# Copyright 2026 Christoph Willing  Sydney, Australia
+# All rights reserved.
+# Based largely on Slackware's gcc.SlackBuild by Patrick J. Volkerding
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=gcc14
+SRCNAM=gcc
+VERSION=${VERSION:-14.2.0}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+INSTALL_PATH=${INSTALL_PATH:-/opt/$PRGNAM-$VERSION}
+
+if [ -z "$ARCH" ]; then
+  case "$(uname -m)" in
+    i?86) ARCH=i586 ;;
+    arm*) readelf /usr/bin/file -A | egrep -q "Tag_CPU.*[4,5]" && ARCH=arm || ARCH=armv7hl ;;
+    *) ARCH=$(uname -m) ;;
+  esac
+  export ARCH
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+  LIB_ARCH=i386
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686"
+  LIBDIRSUFFIX=""
+  LIB_ARCH=i386
+elif [ "$ARCH" = "s390" ]; then
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+  LIB_ARCH=s390
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+  LIB_ARCH=amd64
+elif [ "$ARCH" = "armv7hl" ]; then
+  SLKCFLAGS="-O3 -march=armv7-a -mfpu=vfpv3-d16"
+  LIBDIRSUFFIX=""
+  LIB_ARCH=armv7hl
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+  LIB_ARCH=$ARCH
+fi
+
+case "$ARCH" in
+    arm*) TARGET=$ARCH-slackware-linux-gnueabi ;;
+    *)    TARGET=$ARCH-slackware-linux ;;
+esac
+
+set -e
+
+LANGS_DEFAULT="ada,c,c++,d,fortran,go,lto,objc,obj-c++"
+if [ ! -n $USER_LANGS ]; then
+  LANGS="${USER_LANGS}"
+else
+  LANGS="${LANGS_DEFAULT}"
+fi
+echo "Building $PRGNAM with ${LANGS}"
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+echo -n "Cleaning work space ... "
+rm -rf $SRCNAM-$VERSION
+echo
+echo -n "Unpacking source tarball ... "
+tar xf $CWD/$SRCNAM-$VERSION.tar.xz
+echo
+cd $SRCNAM-$VERSION
+echo -n "Sanitizing source code - could take a while ... "
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+echo
+
+
+( mkdir gcc.build.lnx
+  cd gcc.build.lnx
+
+  # I think it's incorrect to include this option (as it'll end up set
+  # to i586 on x86 platforms), and we want to tune the binary structure
+  # for i686, as that's where almost all of the optimization speedups
+  # are to be found.
+  # Correct me if my take on this is wrong.
+  #  --with-cpu=$ARCH
+
+  if [ "$ARCH" != "x86_64" ]; then
+    GCC_ARCHOPTS="--with-arch=$ARCH"
+  else
+    GCC_ARCHOPTS="--disable-multilib"
+  fi
+
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  ../configure --prefix=$INSTALL_PATH \
+     --libdir=$INSTALL_PATH/lib$LIBDIRSUFFIX \
+     --mandir=$INSTALL_PATH/man \
+     --infodir=$INSTALL_PATH/info \
+     --enable-shared \
+     --enable-bootstrap \
+     --enable-languages=$LANGS \
+     --enable-threads=posix \
+     --enable-checking=release \
+     --enable-objc-gc \
+     --with-system-zlib \
+     --enable-libstdcxx-dual-abi \
+     --with-default-libstdcxx-abi=new \
+     --disable-libstdcxx-pch \
+     --disable-libunwind-exceptions \
+     --enable-__cxa_atexit \
+     --disable-libssp \
+     --enable-gnu-unique-object \
+     --enable-plugin \
+     --enable-lto \
+     --disable-install-libiberty \
+     --disable-werror \
+     --with-gnu-ld \
+     --with-isl \
+     --verbose \
+     --with-arch-directory=$LIB_ARCH \
+     --disable-gtktest \
+     --enable-clocale=gnu \
+     $GCC_ARCHOPTS \
+     --target=${TARGET} \
+     --build=${TARGET} \
+     --host=${TARGET} || exit 1
+
+  # Start the build:
+
+  # Include all debugging info (for now):
+  make $NUMJOBS bootstrap || exit 1
+
+  ( cd gcc
+    make $NUMJOBS gnatlib GNATLIBCFLAGS="$SLKCFLAGS" || exit 1
+    # This wants a shared -ladd2line?
+    #make gnatlib-shared || exit 1
+
+    CFLAGS="$SLKCFLAGS" \
+    CXXFLAGS="$SLKCFLAGS" \
+    make $NUMJOBS gnattools || exit 1
+  ) || exit 1
+  make info || exit 1
+
+  # Set GCCCHECK=something to run the tests
+  if [ ! -z $GCCCHECK ]; then
+    make $NUMJOBS check || exit 1
+  fi
+
+  make install DESTDIR=$PKG || exit 1
+
+  # Move gdb pretty printers to the correct place
+  mkdir -p $PKG/$INSTALL_PATH/share/gdb/auto-load/usr/lib$LIBDIRSUFFIX
+  mv $PKG/$INSTALL_PATH/lib$LIBDIRSUFFIX/*-gdb.py \
+    $PKG/$INSTALL_PATH/share/gdb/auto-load/usr/lib$LIBDIRSUFFIX/
+
+  # Be sure the "specs" file is installed.
+  if [ ! -r $PKG/usr/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/specs ]; then
+    cat stage1-gcc/specs > $PKG/$INSTALL_PATH/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/specs
+  fi
+
+  # Make our 64bit gcc look for 32bit gcc binaries in ./32 subdirectory:
+  if [ "$ARCH" = "x86_64" ]; then
+    sed -i 's#;.\(:../lib !m64 m32;\)$#;32\1#' \
+      $PKG/$INSTALL_PATH/lib${LIBDIRSUFFIX}/gcc/${TARGET}/${VERSION}/specs
+  fi
+
+  # make ada.install-common DESTDIR=$PKG1 || exit 1
+  # make install-gnatlib DESTDIR=$PKG1 || exit 1
+  make -i install-info DESTDIR=$PKG || exit 1
+
+  chmod 755 $PKG/$INSTALL_PATH/lib${LIBDIRSUFFIX}/libgcc_s.so.1
+
+  # Fix stuff up:
+  ( cd $PKG/$INSTALL_PATH/info ; rm dir ; gzip -9 * )
+
+  ( cd $PKG/$INSTALL_PATH/bin
+    mv g++ g++-gcc-$VERSION
+    mv gcc gcc-$VERSION
+    mv gcc-ar gcc-ar-$VERSION
+    mv gcc-nm gcc-nm-$VERSION
+    mv gcc-ranlib gcc-ranlib-$VERSION
+    mv cpp cpp-$VERSION
+    mv ${TARGET}-gfortran gfortran-gcc-$VERSION
+    ln -sf g++-gcc-$VERSION g++
+    ln -sf gcc-$VERSION gcc
+    ln -sf g++ c++
+    ln -sf gcc cc
+    ln -sf gcc-$VERSION ${TARGET}-cc
+    ln -sf gcc-$VERSION ${TARGET}-gcc
+    ln -sf gcc-$VERSION ${TARGET}-gcc-$VERSION
+    ln -sf gcc-ar-$VERSION ${TARGET}-gcc-ar
+    ln -sf gcc-nm-$VERSION ${TARGET}-gcc-nm
+    ln -sf gcc-ranlib-$VERSION ${TARGET}-gcc-ranlib
+    ln -sf g++-gcc-$VERSION ${TARGET}-c++
+    ln -sf g++-gcc-$VERSION ${TARGET}-g++
+    ln -sf gfortran-gcc-$VERSION gfortran
+    ln -sf gfortran-gcc-$VERSION ${TARGET}-gfortran
+    ln -sf gfortran-gcc-$VERSION ${TARGET}-gfortran-$VERSION
+    ln -sf gfortran-gcc-$VERSION ${TARGET}-g95
+    ln -sf gfortran g95
+    ln -sf gfortran f95
+    ln -sf gfortran-gcc-$VERSION ${TARGET}-g77
+    ln -sf gfortran g77
+    ln -sf gfortran f77
+    cat $CWD/c89.sh > c89-$VERSION
+    cat $CWD/c99.sh > c99-$VERSION
+    chmod 755 c89-$VERSION c99-$VERSION
+  )
+
+  ( cd $PKG/$INSTALL_PATH/man
+    gzip -9 */*
+    cd man1
+    ln -sf g++.1.gz c++.1.gz
+    ln -sf gcc.1.gz cc.1.gz
+  )
+
+# keep a log:
+) 2>&1 | tee gcc.build.log
+
+# Filter all .la files (thanks much to Mark Post for the sed script):
+( cd $PKG
+  for file in $(find . -type f -name "*.la") ; do
+    cat $file | sed -e 's%-L/gcc-[[:graph:]]* % %g' > $TMP/tmp-la-file
+    cat $TMP/tmp-la-file > $file
+  done
+  rm $TMP/tmp-la-file
+)
+
+# Don't ship .la files in /{,usr/}lib${LIBDIRSUFFIX}:
+rm -f $PKG/{,$INSTALL_PATH/}lib${LIBDIRSUFFIX}/*.la
+
+# Strip bloated binaries and libraries:
+( cd $PKG
+  find . -name "lib*so*" -exec strip --strip-unneeded "{}" \; ||true
+  find . -name "lib*so*" -exec patchelf --remove-rpath "{}" \; ||true
+  find . -name "lib*a" -exec strip -g "{}" \; ||true
+  strip --strip-unneeded $INSTALL_PATH/bin/* 2> /dev/null ||true
+  find . | xargs file | grep "executable" | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null ||true
+  find . | xargs file | grep "shared object" | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null ||true
+)
+
+rm -f $PKG/$INSTALL_PATH/info/dir
+gzip -9 $PKG/$INSTALL_PATH/info/*.info*
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  COPYING* ChangeLog* LAST_UPDATED \
+  MAINTAINERS NEWS README* \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+# We will keep part of these, but they are really big...
+if [ -r ChangeLog ]; then
+  cat ChangeLog | head -n 1000 > $PKG/usr/doc/$PRGNAM-$VERSION/ChangeLog
+  touch -r ChangeLog $PKG/usr/doc/$PRGNAM-$VERSION/ChangeLog
+fi
+if [ -r NEWS ]; then
+  cat NEWS | head -n 1500 > $PKG/usr/doc/$PRGNAM-$VERSION/NEWS
+  touch -r NEWS $PKG/usr/doc/$PRGNAM-$VERSION/NEWS
+fi
+mkdir -p $PKG/usr/doc/$PRGNAM-${VERSION}/gcc
+( cd gcc || exit 0
+  cp -a \
+    ABOUT* COPYING* DATESTAMP DEV-PHASE LANG* ONEWS README* \
+  $PKG/usr/doc/$PRGNAM-$VERSION/gcc
+)
+
+mkdir -p ${PKG}/etc/profile.d
+cat >${PKG}/etc/profile.d/$PRGNAM.sh <<EOF
+export CC=gcc-$VERSION
+export CPP=cpp-$VERSION
+export CXX=g++-$VERSION
+export AR=gcc-ar-$VERSION
+export NM=gcc-nm-$VERSION
+export RANLIB=gcc-ranlib-$VERSION
+export PATH="/opt/$PRGNAM-$VERSION/bin:\$PATH"
+EOF
+cat >${PKG}/etc/profile.d/$PRGNAM.csh <<EOF
+setenv CC     gcc-$VERSION
+setenv CPP    cpp-$VERSION
+setenv CXX    g++-$VERSION
+setenv AR     gcc-ar-$VERSION
+setenv NM     gcc-nm-$VERSION
+setenv RANLIB gcc-ranlib-$VERSION
+setenv PATH   "/opt/$PRGNAM-$VERSION/bin:\$PATH"
+EOF
+
+mkdir -p $PKG/etc/ld.so.conf.d
+echo "$INSTALL_PATH/lib${LIBDIRSUFFIX}" >  $PKG/etc/ld.so.conf.d/${PRGNAM}.conf
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

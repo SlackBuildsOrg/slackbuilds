@@ -32,7 +32,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=OpenCASCADE
 VERSION=${VERSION:-7.7.0}
-BUILD=${BUILD:-5}
+BUILD=${BUILD:-6}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -116,13 +116,17 @@ cd build
     -DUSE_GL2PS=${WITH_GL2PS:-OFF} \
     -DUSE_TBB=${WITH_TBB:-OFF} \
     -DUSE_VTK=ON \
-    -D3RDPARTY_VTK_INCLUDE_DIR=/usr/include/vtk-9.4 \
+    -D3RDPARTY_VTK_INCLUDE_DIR=/usr/include/vtk-9.6 \
     -D3RDPARTY_VTK_LIBRARY_DIR=/usr/lib${LIBDIRSUFFIX} \
     -DCMAKE_BUILD_TYPE=Release ..
 
   make
   make install DESTDIR=$PKG
 cd ..
+
+# CI's sbopkg complains about these, so move them away
+mkdir -p $PKG/usr/share/opencascade
+mv $PKG/usr/bin/{custom,custom_gcc_64,env}.sh $PKG/usr/share/opencascade/
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

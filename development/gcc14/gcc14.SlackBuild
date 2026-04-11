@@ -211,12 +211,6 @@ echo
 
   # Fix stuff up:
   ( cd $PKG/$INSTALL_PATH/info ; rm dir ; gzip -9 * )
-  ( cd $PKG
-    # *not* ${LIBDIRSUFFIX}
-    mkdir -p lib
-    cd lib
-    ln -sf $INSTALL_PATH/bin/cpp .
-  )
 
   ( cd $PKG/$INSTALL_PATH/bin
     mv g++ g++-gcc-$VERSION
@@ -284,9 +278,6 @@ rm -f $PKG/{,$INSTALL_PATH/}lib${LIBDIRSUFFIX}/*.la
   find . | xargs file | grep "shared object" | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null ||true
 )
 
-find $PKG/$INSTALL_PATH/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/$INSTALL_PATH//man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
 rm -f $PKG/$INSTALL_PATH/info/dir
 gzip -9 $PKG/$INSTALL_PATH/info/*.info*
 
@@ -305,11 +296,11 @@ if [ -r NEWS ]; then
   cat NEWS | head -n 1500 > $PKG/usr/doc/$PRGNAM-$VERSION/NEWS
   touch -r NEWS $PKG/usr/doc/$PRGNAM-$VERSION/NEWS
 fi
-mkdir -p $PKG/usr/doc/gcc-${VERSION}/gcc
+mkdir -p $PKG/usr/doc/$PRGNAM-${VERSION}/gcc
 ( cd gcc || exit 0
   cp -a \
     ABOUT* COPYING* DATESTAMP DEV-PHASE LANG* ONEWS README* \
-  $PKG/usr/doc/gcc-$VERSION/gcc
+  $PKG/usr/doc/$PRGNAM-$VERSION/gcc
 )
 
 mkdir -p ${PKG}/etc/profile.d

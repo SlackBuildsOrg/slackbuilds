@@ -3,7 +3,7 @@
 # Slackware build script for libcec
 
 # Copyright 2011-2020 Larry Hajali <larryhaja[at]gmail[dot]com>
-# Copyright 2024      Jeremy Hansen <jebrhansen+SBo@gmail.com>
+# Copyright 2024-2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libcec
-VERSION=${VERSION:-6.0.2}
+VERSION=${VERSION:-7.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -105,7 +105,7 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  AUTHORS COPYING README.md debian/changelog.in \
+  AUTHORS ChangeLog LICENSE.md README.md debian/changelog.in \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

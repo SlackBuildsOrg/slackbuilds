@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=claude-code
-VERSION=${VERSION:-2.1.77}
+VERSION=${VERSION:-2.1.101}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,12 +80,10 @@ if [ "${ARCH:-}" = "x86_64" ]; then
     -type d -exec rm -rf {} +
 fi
 
-find "$PKG/usr/lib64/node_modules/@anthropic-ai/claude-code/vendor" \
-  -name "*.node" -exec chmod +x {} +
-
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
+ELF_FILES=$(find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
+  | grep ELF | cut -f 1 -d :)
+echo "$ELF_FILES" | xargs chmod +x 2>/dev/null || true
+echo "$ELF_FILES" | xargs strip --strip-unneeded 2>/dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

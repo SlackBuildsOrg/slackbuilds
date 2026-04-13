@@ -5,6 +5,6 @@ DOWNLOAD="https://sbo-source.s3.ap-southeast-1.amazonaws.com/FileZilla_3.70.0.1_
 MD5SUM="1f0f6fc8b2fc78953bfe2605576a05fc"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="wxWidgets libfilezilla fzssh"
+REQUIRES="wxWidgets fzssh"
 MAINTAINER="Willy Sudiarto Raharjo"
 EMAIL="willysr@slackbuilds.org"

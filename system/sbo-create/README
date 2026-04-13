@@ -1,16 +1,22 @@
-sbo-create it's a tool that creates easy, fast and safe SlackBuilds
-file scripts.
+sbo-create is a command-line tool for creating and maintaining
+SlackBuilds.org packages. It covers the entire package lifecycle
+from file generation to submission.
 
 Features
+________
 
-- Preloaded SlackBuilds templates.
-- Checking for already SlackBuilds in the repository and the 
-  distribution.
-- Autocorrect the quote marks for the .info file.
-- Auto-importing the SlackBuild script name.
-- Auto-importing the text from the slack-desc file into the README.
-- Auto-importing the maintainer data to the .SlackBuild script.
-- Auto-importing the version to the .SlackBuild script.
-- Auto-importing and checking the checksum signature to the .info
-  file.
-- Auto-create all the necessary files for your SlackBuild package.
+- Generates .SlackBuild, .info, slack-desc and README from official SBo
+  templates; supports interactive mode with arrow-key template selection.
+- Validates .info fields, MD5SUMs, REQUIRES dependencies and SBo submission
+  guidelines, with auto-fix for common issues.
+- Bumps version, updates DOWNLOAD URLs, re-downloads sources and recomputes
+  MD5 checksums in one step.
+- Fetches packages from the SBo repository or a local clone; shows unified
+  diffs, browses and reads individual files.
+- Resolves recursive dependencies and reverse dependencies (rdeps) using the
+  local package index or a local SBo clone.
+- Packages for submission and submits via git commit/push or the SBo web form.
+- Queries repology.org for package version status by maintainer e-mail.
+- Syncs the local SBo git repository and manages working branches.
+- Bash and zsh shell completion included.
+

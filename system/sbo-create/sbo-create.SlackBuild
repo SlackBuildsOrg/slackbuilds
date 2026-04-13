@@ -2,7 +2,7 @@
 
 # Slackware build script for sbo-create
 
-# Copyright 2022-2024 Dimitris Zlatanidis Orestiada, Greece
+# Copyright 2022-2026 Dimitris Zlatanidis Orestiada, Greece
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sbo-create
-VERSION=${VERSION:-2.0.8}
+VERSION=${VERSION:-2.1.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -81,6 +81,18 @@ find -L . \
 
 python3 -m build --wheel --no-isolation
 python3 -m installer --destdir "$PKG" dist/*.whl
+
+mkdir -p $PKG/usr/man/man1
+gzip -9 -c man/sbo-create.1 > $PKG/usr/man/man1/sbo-create.1.gz
+
+mkdir -p $PKG/etc/bash_completion.d
+install -m 0644 completions/sbo-create.bash $PKG/etc/bash_completion.d/sbo-create
+
+mkdir -p $PKG/usr/share/zsh/site-functions
+install -m 0644 completions/_sbo-create $PKG/usr/share/zsh/site-functions/_sbo-create
+
+mkdir -p $PKG/usr/libexec/sbo-create
+install -m 0755 shell_completion.py $PKG/usr/libexec/sbo-create/
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

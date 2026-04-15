@@ -31,7 +31,7 @@ PRGNAM=cudatoolkit_12
 FILENAME=cuda
 VERSION=${VERSION:-12.9.1}
 DRIVER=${DRIVER:-575.57.08}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -78,11 +78,11 @@ rm -r NVIDIA*.run bin
 
 # legal stuff
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-mv EULA.txt version.json $PKG/usr/doc/$PRGNAM-$VERSION
-mv cuda_documentation/{CUDA_Toolkit_Release_Notes.txt,DOCS,README} $PKG/usr/doc/$PRGNAM-$VERSION/
-mv cuda_documentation/EULA.txt $PKG/usr/doc/$PRGNAM-$VERSION/EULA-doc.txt
-mv cuda_documentation/tools/* $PKG/usr/doc/$PRGNAM-$VERSION/
-rm -rf cuda_documentation
+cp  EULA.txt version.json $PKG/usr/doc/$PRGNAM-$VERSION
+cp  cuda_documentation/{CUDA_Toolkit_Release_Notes.txt,DOCS,README} $PKG/usr/doc/$PRGNAM-$VERSION/
+cp  cuda_documentation/EULA.txt $PKG/usr/doc/$PRGNAM-$VERSION/EULA-doc.txt
+cp  cuda_documentation/tools/* $PKG/usr/doc/$PRGNAM-$VERSION/
+rm -rf EULA.txt version.json cuda_documentation
 
 # extras
 mkdir -p ${PKG}/opt/${CPREFIX}/extras
@@ -112,20 +112,24 @@ find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+# Use supplied doinst.sh as a base - we may be adding more
+cat $CWD/doinst.sh > doinst.sh
+
 # Define compilers for CUDA to use.
 # This allows us to use different versions of GCC if we have to.
 # Need gcc14 for Blender-5.1.0 so we default to that
 # but also allow some other compiler CUDA_CC & CUDA_CC
 #
+GCC14_VERSION=$(find /opt -type d -name gcc14\* |cut -d'-' -f2)
 if [ -n "$CUDA_CC" -a -n "$CUDA_CXX" ]; then
   echo "Using user-specified compilers $CUDA_CC and $CUDA_CXX"
   ln -s "$CUDA_CC" "${PKG}/opt/${CPREFIX}"/bin/gcc
   ln -s "$CUDA_CXX" "${PKG}/opt/${CPREFIX}"/bin/g++
-elif [ -d /opt/gcc14-14.2.0/bin ]; then
+elif [ -d /opt/gcc14-${GCC14_VERSION}/bin ]; then
   # This is the expected case: use gcc14
   echo "Using GCC14 as CUDA compiler"
-  ln -s /opt/gcc14-14.2.0/bin/gcc-14.2.0 "${PKG}/opt/${CPREFIX}"/bin/gcc
-  ln -s /opt/gcc14-14.2.0/bin/g++-gcc-14.2.0 "${PKG}/opt/${CPREFIX}"/bin/g++
+  ln -s /opt/gcc14-${GCC14_VERSION}/bin/gcc-${GCC14_VERSION} "${PKG}/opt/${CPREFIX}"/bin/gcc
+  ln -s /opt/gcc14-${GCC14_VERSION}/bin/g++-gcc-${GCC14_VERSION} "${PKG}/opt/${CPREFIX}"/bin/g++
 else
   # Use default Slackware-15.0 compilers
   echo "Using default gcc 11.2.0 as CUDA compiler"
@@ -152,7 +156,7 @@ rm -rf "${PKG}/opt/${CPREFIX}"/gds/usr
 sed -i "/.*unsupported GNU version.*/d" "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
 sed -i "/.*unsupported clang version.*/d" "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
 
-  # Fix Makefile paths to CUDA
+# Fix Makefile paths to CUDA
 for f in $(find "${PKG}/opt/${CPREFIX}" -name Makefile); do
   sed -i "s|/usr/local/cuda|/opt/${CPREFIX}|g" "$f"
 done
@@ -167,6 +171,8 @@ mkdir -p "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/
 cp "$CWD"/pkgconfig/*.pc "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/
 sed -i "s|Version: 11.0|Version: $SHORT_VERSION|g" "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
 sed -i "s|cudaroot=/opt/cuda|cudaroot=/opt/$CPREFIX|g" "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
+chown root:root "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
+chmod 0644 $PKG/opt/"${CPREFIX}"/lib64/pkgconfig/*
 
 # Register application NVVP and NSIGHT (if enabled)
 mkdir -p $PKG/usr/share/applications
@@ -175,12 +181,16 @@ sed -i "s|/usr/share/cuda|/opt/$CPREFIX|g" $PKG/usr/share/applications/*.desktop
 if [ "${NSIGHT:-no}" = "no" ]; then
   rm $PKG/usr/share/applications/nsight.desktop
 fi
+chown root:root $PKG/usr/share/applications
+chmod 0644 $PKG/usr/share/applications/*
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+chown root:root $PKG/usr/doc/$PRGNAM-$VERSION/*
+chmod 0644 $PKG/usr/doc/$PRGNAM-$VERSION/*
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n --compress -1 $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

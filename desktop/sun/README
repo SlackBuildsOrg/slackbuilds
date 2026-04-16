@@ -14,3 +14,4 @@ Note: FTP mirrors are not supported.
 Optional dependency: qt5-styleplugins (from SlackBuilds.org)
 Required for GTK theme integration on non-KDE desktops (XFCE, Openbox, etc.).
 See README_THEME.md for setup instructions.
+

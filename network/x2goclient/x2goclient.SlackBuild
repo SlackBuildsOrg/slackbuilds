@@ -24,9 +24,9 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cd $(dirname $0) ; CWD=$(pwd)
-
+# x2goclient-4.1.2.3.tar.gz
 PRGNAM=x2goclient
-VERSION=${VERSION:-4.1.2.2}
+VERSION=${VERSION:-4.1.2.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,8 +84,9 @@ find -L . \
 [[ "$(pkg-config --modversion libssh)" > "0.8" ]] && \
   sed -i "s| -lssh_threads||" x2goclient.pro
 
-sed -i -e '/^QMAKE_BINARY=/s@qmake-qt4@qmake@' Makefile
-sed -i -e '/^LRELEASE_BINARY=/s@lrelease-qt4@lrelease@' Makefile
+sed -i -e '/^QT_VERSION ?=/s/.*/QT_VERSION ?= 5/' Makefile
+sed -i -e '/QMAKE_BINARY ?= qmake$/s@qmake@/usr/lib64/qt5/bin/qmake@' Makefile
+sed -i -e '/LRELEASE_BINARY ?= lrelease$/s@lrelease@/usr/lib64/qt5/bin/lrelease@' Makefile
 
 make
 

@@ -13,7 +13,7 @@ aws-cdk: development framework to define cloud infrastructure in code and
 aws-cdk: provision it through AWS CloudFormation.
 aws-cdk:
 aws-cdk:
-aws-cdk: Project URL: https://github.com/aws/aws-cdk
+aws-cdk: Project URL: https://github.com/aws/aws-cdk-cli
 aws-cdk:
 aws-cdk:
 aws-cdk:

@@ -1,0 +1,11 @@
+Positron unifies exploration and production work in one free, AI
+assisted environment, empowering the full spectrum of data science in
+Python and R.
+
+See http://positron.posit.co
+
+NOTE:
+Positron only supports 64-bit systems. 
+
+At the moment, the script just repackages the Ubuntu/Debian binaries,
+provided by upstream.

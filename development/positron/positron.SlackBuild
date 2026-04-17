@@ -1,0 +1,111 @@
+#!/bin/bash
+
+# Slackware build script for <appname>
+
+# Copyright <year> <you> <where you live>
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=positron			# replace with name of program
+DEB_PRGNAM=Positron	
+VERSION=${VERSION:-2026.04.0_269}	# replace with version of program
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+if [ "$ARCH" != "x86_64" ]; then
+  printf "\n\n$ARCH is not supported... \n"
+  exit 1
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "x86_64" ]; then
+  PACKAGESUFFIX="x64"
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-${VERSION/_/-}
+cd $PKG
+
+ar p $CWD/${DEB_PRGNAM}-${VERSION/_/-}-${PACKAGESUFFIX}.deb data.tar.xz | tar Jxv
+
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# Create symlinks in /usr/bin for the program's executables.
+mkdir -p $PKG/usr/bin
+ln -sf /usr/share/positron/bin/positron $PKG/usr/bin
+
+chmod -x $PKG/usr/share/applications/positron.desktop
+
+# Fix executable permissions on ELF binaries (per sboppkglint)
+QUARTO_DIR=$PKG/usr/share/positron/resources/app/quarto/bin/tools/x86_64/
+POSITRON_EXT_DIR=$PKG/usr/share/positron/resources/app/extensions/
+chmod +x $QUARTO_DIR/typst-gather
+chmod +x $QUARTO_DIR/deno_dom/libplugin.so
+chmod +x $QUARTO_DIR/dart-sass/src/sass.snapshot
+chmod +x $POSITRON_EXT_DIR/positron-python/python_files/lib/ipykernel/py3/debugpy/_vendored/pydevd/pydevd_attach_to_process/attach_linux_amd64.so
+chmod +x $POSITRON_EXT_DIR/microsoft-authentication/dist/msal-node-runtime.node
+chmod +x $POSITRON_EXT_DIR/microsoft-authentication/dist/libmsalruntime.so
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+

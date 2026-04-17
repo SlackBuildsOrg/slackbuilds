@@ -1,0 +1,12 @@
+PRGNAM="codex"
+VERSION="0.120.0"
+HOMEPAGE="https://github.com/openai/codex"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://registry.npmjs.org/@openai/codex/-/codex-0.120.0.tgz \
+                 https://registry.npmjs.org/@openai/codex/-/codex-0.120.0-linux-x64.tgz"
+MD5SUM_x86_64="d3ee2c8df82fd53835435fd9ac12a371 \
+               4006c27cdeb897b51c4400aefbebc937"
+REQUIRES="nodejs22"
+MAINTAINER="Nicholas B. Hubbard"
+EMAIL="nicholashubbard@posteo.net"

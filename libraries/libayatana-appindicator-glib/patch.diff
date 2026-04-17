@@ -1,0 +1,40 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -10,6 +10,8 @@
+ option (ENABLE_TESTS "Enable all tests and checks" OFF)
+ option (ENABLE_WERROR "Treat all build warnings as errors" OFF)
+ option (ENABLE_COVERAGE "Enable coverage reports (enables all tests and checks)" OFF)
++option (ENABLE_BINDINGS_VALA "Build Vala bindings" ON)
++option (ENABLE_GTKDOC "Build documentation" ON)
+ 
+ if (ENABLE_COVERAGE)
+     set (ENABLE_TESTS ON)
+@@ -37,8 +39,14 @@
+ # Build
+ 
+ add_subdirectory (src)
+-add_subdirectory (bindings)
+-add_subdirectory (doc)
++
++if (ENABLE_BINDINGS_VALA)
++    add_subdirectory (bindings)
++endif ()
++
++if (ENABLE_GTKDOC)
++    add_subdirectory (doc)
++endif ()
+ 
+ if (ENABLE_TESTS)
+     include (CTest)
+
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -117,7 +117,8 @@ install (TARGETS "ayatana-appindicator-glib" LIBRARY DESTINATION "${CMAKE_INS
+ install (TARGETS "ayatana-appindicator-glib" LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}")
+ # AyatanaAppIndicatorGlib-2.0.gir
+ 
+-find_package (GObjectIntrospection REQUIRED)
++find_program (INTROSPECTION_SCANNER NAMES g-ir-scanner REQUIRED)
++find_program (INTROSPECTION_COMPILER NAMES g-ir-compiler REQUIRED)
+ 
+ add_custom_command (

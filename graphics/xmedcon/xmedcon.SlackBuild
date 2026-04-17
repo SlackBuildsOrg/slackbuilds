@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xmedcon
-VERSION=${VERSION:-0.26.1}
+VERSION=${VERSION:-0.26.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -100,6 +100,7 @@ do
 done
 
 rm -f $PKG/usr/lib$LIBDIRSUFFIX/libmdc.la
+
 
 mkdir -p $PKG/usr/share/applications
 install -m644 $CWD/xmedcon.desktop $PKG/usr/share/applications/xmedcon.desktop

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                       |-----handy-ruler------------------------------------------------------|
+cisco-secure-client-vpn: cisco-secure-client-vpn (Cisco Secure Client VPN)
+cisco-secure-client-vpn:
+cisco-secure-client-vpn: Cisco Secure Client (formerly AnyConnect) is a unified endpoint
+cisco-secure-client-vpn: security agent that provides secure remote access via VPN and ZTNA,
+cisco-secure-client-vpn: integrated with advanced endpoint protection. It simplifies security
+cisco-secure-client-vpn: by combining multiple modules—including VPN, DNS-layer security,
+cisco-secure-client-vpn: and posture check—into one agent to protect users on any network.
+cisco-secure-client-vpn: This slackbuild installs the VPN app only.
+cisco-secure-client-vpn:
+cisco-secure-client-vpn: https://www.cisco.com
+cisco-secure-client-vpn:

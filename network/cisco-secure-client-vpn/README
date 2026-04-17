@@ -1,0 +1,19 @@
+Cisco Secure Client (formerly AnyConnect) is a unified endpoint security agent that provides secure remote access via VPN and ZTNA,
+integrated with advanced endpoint protection. It simplifies security by combining multiple modules—including VPN, DNS-layer security (Umbrella),
+and posture check—into one agent to protect users on any network.
+
+This slackbuild installs the VPN app only.
+
+IMPORTANT NOTE:
+This package requires libsystemd.so.0 which is part of systemd, which doesn't come with Slackware.
+So you MUST use libelogind to provide libsystemd compatibility.
+
+After installation,
+
+After installation:
+1. Create this symlink: ln -sf /lib64/libelogind.so.0 /lib64/libsystemd.so.0
+2. Make the rc script executalbe: chmod +x /etc/rc.d/rc.cisco-secure-client-vpn
+3. Start the rc script as root: /etc/rc.d/rc.cisco-secure-client-vpn start
+4. Run the app from the app launcher.
+
+To start the agent at boot, add the rc script to /etc/rc.d/rc.local.

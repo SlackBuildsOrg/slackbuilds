@@ -25,11 +25,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=JAForth
-VERSION=${VERSION:-20260404_e52cb98}
+VERSION=${VERSION:-20260407_82541e7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=e52cb98d9e55ac4da0bc1564d7a86fa49415aa8a
+TARBALL=82541e7ed12eca17fe1803a3c657cd9f36f1f2d8
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

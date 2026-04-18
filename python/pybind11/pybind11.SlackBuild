@@ -26,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pybind11
-VERSION=${VERSION:-3.0.2}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-3.0.3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -90,6 +90,7 @@ ln -s "/usr/lib${LIBDIRSUFFIX}/python${PYVER}/site-packages/pybind11/share/pkgco
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 find $PKG -name \*.pyc -exec rm -f {} \;
+find $PKG -name __pycache__ -exec rm -rf {} \; || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

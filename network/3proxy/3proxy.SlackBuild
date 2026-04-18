@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=3proxy
-VERSION=${VERSION:-0.9.5}
+VERSION=${VERSION:-0.9.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,6 +83,9 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# fix detecting libs for plugins
+sed -i 's/echo/echo -e/g' Makefile.Linux
+
 CFLAGS="$SLKCFLAGS" \
 make -f Makefile.Linux
 make -f Makefile.Linux install DESTDIR=$PKG \
@@ -108,6 +111,7 @@ mv $PKG/usr/man/man8/proxy.8 $PKG/usr/man/man8/htproxy.8
 touch $PKG/var/lib/$PRGNAM/conf/passwd
 for file in $PKG/var/lib/$PRGNAM/conf/*; do mv "$file" "$file.new"; done
 mv $PKG/var/lib/$PRGNAM/conf/add3proxyuser.sh.new $PKG/var/lib/$PRGNAM/conf/add3proxyuser.sh
+sed -i 's|/bin|/usr/bin|' $PKG/var/lib/$PRGNAM/conf/add3proxyuser.sh
 chown -R proxy:proxy $PKG/var/lib/$PRGNAM
 chmod 0440 $PKG/var/lib/$PRGNAM/conf/*
 chmod 0550 $PKG/var/lib/$PRGNAM/{,conf,conf/add3proxyuser.sh}

@@ -8,3 +8,6 @@ avoids creating yet another extension mechanism by building on top
 of setuptools entry points. The code for managing entry points tends
 to be repetitive, though, so stevedore provides manager classes for
 implementing common patterns for using dynamically loaded extensions.
+
+NOTE: Unable to support newer versions due to requiring newer version
+of python than is available in Slackware 15.0 (python 3.10).

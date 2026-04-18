@@ -4,3 +4,4 @@ the PATTERN.
 
 The expression will be highlighted if stdout refers to a tty
 and that tty is ANSI-compatible.
+

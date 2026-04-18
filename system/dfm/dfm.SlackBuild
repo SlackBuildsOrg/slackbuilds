@@ -41,12 +41,16 @@ fi
 
 if [ "$ARCH" = i586 ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
 elif [ "$ARCH" = i686 ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
 elif [ "$ARCH" = x86_64 ]; then
   SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
 fi
 
 if [ -n "$PRINT_PACKAGE_NAME" ]; then
@@ -76,9 +80,18 @@ cd $PRGNAM-$VERSION
 
 chown -R root:root .
 
+if [ "${NOCOLOR:-no}" = "yes" ]; then
+    COLOR_OPT="-DDFM_NO_COLOR"
+fi
+
+if [ "${CLEAREXIT:-no}" = "yes" ]; then
+    CLEAR_OPT="-DDFM_CLEAR_EXIT"
+fi
+
 CFLAGS="$SLKCFLAGS -flto"
 ./configure \
-  --prefix=/usr
+  --prefix=/usr \
+  CFLAGS="$SLKCFLAGS $COLOR_OPT $CLEAR_OPT"
 
 make
 

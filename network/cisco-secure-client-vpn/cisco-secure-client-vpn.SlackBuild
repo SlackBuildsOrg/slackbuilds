@@ -1,0 +1,100 @@
+#!/bin/bash
+#
+# Slackware build script for Cisco Secure Client VPN
+#
+# Copyright 2026 Reza Talebi, Shahin Shahr, Iran.
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=cisco-secure-client-vpn
+SRCNAM=cisco-secure-client
+VERSION=${VERSION:-5.1.16.194}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  ARCH=$( uname -m )
+fi
+
+if [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX="64"
+  SRCARCH="linux64"
+else
+  echo "Package for $ARCH architecture is not available."
+  exit 1
+fi
+
+if [ -n "$PRINT_PACKAGE_NAME" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+TGZ="$CWD/${SRCNAM}-${SRCARCH}-${VERSION}-predeploy-rpm-k9.tgz"
+RPM="$PKG/${PRGNAM}-${VERSION}-1.${ARCH}.rpm"
+
+rm -rf "$PKG"
+mkdir -p "$TMP" "$PKG" "$OUTPUT"
+
+cd "$PKG"
+tar -xvf $TGZ
+
+if [ ! -r "$RPM" ]; then
+  echo "Missing source RPM: $RPM"
+  exit 1
+fi
+
+rpm2cpio "$RPM" | cpio -idmv
+
+rm -rf "$PKG/usr/lib/systemd"
+
+mkdir -p "$PKG/etc/rc.d"
+install -m 0755 "$CWD/rc.$PRGNAM" "$PKG/etc/rc.d/rc.$PRGNAM"
+
+mkdir -p "$PKG/usr/doc/$PRGNAM-$VERSION"
+if [ -r "$PKG/usr/share/licenses/$PRGNAM/license.txt" ]; then
+  cp -a "$PKG/usr/share/licenses/$PRGNAM/license.txt" \
+    "$PKG/usr/doc/$PRGNAM-$VERSION/"
+fi
+cp -a "$CWD/$PRGNAM.SlackBuild" "$PKG/usr/doc/$PRGNAM-$VERSION/"
+[ -r "$CWD/README" ] && cp -a "$CWD/README" \
+  "$PKG/usr/doc/$PRGNAM-$VERSION/README"
+
+mkdir -p "$PKG/install"
+install -m 0644 "$CWD/slack-desc" "$PKG/install/slack-desc"
+[ -r "$CWD/doinst.sh" ] && install -m 0644 "$CWD/doinst.sh" "$PKG/install/doinst.sh"
+
+chown -R root:root "$PKG"
+find "$PKG" -type d -exec chmod 755 {} \;
+find "$PKG" -type f -exec chmod 644 {} \;
+chmod 755 "$PKG/etc/rc.d/rc.$PRGNAM"
+find "$PKG/opt/cisco/secureclient" -type f \( -perm -0100 -o -name '*.sh' -o -path '*/bin/*' -o -path '*/vpn/*' \) -exec chmod 755 {} \;
+[ -d "$PKG/usr/share/applications" ] && chmod 644 "$PKG/usr/share/applications"/*.desktop || true
+[ -d "$PKG/usr/share/icons" ] && find "$PKG/usr/share/icons" -type f -exec chmod 644 {} \;
+
+cd "$PKG"
+/sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

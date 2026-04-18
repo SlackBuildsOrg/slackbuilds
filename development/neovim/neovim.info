@@ -1,34 +1,34 @@
 PRGNAM="neovim"
-VERSION="0.11.6"
+VERSION="0.12.0"
 HOMEPAGE="https://neovim.io"
-DOWNLOAD="https://github.com/neovim/neovim/archive/v0.11.6/neovim-0.11.6.tar.gz \
-          https://github.com/LuaJIT/LuaJIT/archive/538a821/LuaJIT-538a82133ad6fddfd0ca64de167c4aca3bc1a2da.tar.gz \
-          https://github.com/luvit/luv/releases/download/v1.50.0-0/luv-v1.50.0-0.tar.gz \
+DOWNLOAD="https://github.com/neovim/neovim/archive/v0.12.0/neovim-0.12.0.tar.gz \
+          https://github.com/luajit/luajit/archive/fbb36bb/LuaJIT-fbb36bb6bfa88716a47c58bcf9ce9f2ef752abac.tar.gz \
+          https://github.com/luvit/luv/releases/download/1.52.1-0/luv-1.52.1-0.tar.gz \
           https://github.com/lunarmodules/lua-compat-5.3/archive/v0.13/lua-compat-5.3-0.13.tar.gz \
-          https://github.com/tree-sitter/tree-sitter/archive/v0.25.6/tree-sitter-0.25.6.tar.gz \
+          https://github.com/tree-sitter/tree-sitter/archive/v0.26.7/tree-sitter-0.26.7.tar.gz \
           https://github.com/tree-sitter/tree-sitter-c/archive/v0.24.1/tree-sitter-c-0.24.1.tar.gz \
-          https://github.com/tree-sitter-grammars/tree-sitter-lua/archive/v0.4.0/tree-sitter-lua-0.4.0.tar.gz \
-          https://github.com/tree-sitter-grammars/tree-sitter-markdown/archive/v0.5.0/tree-sitter-markdown-0.5.0.tar.gz \
-          https://github.com/neovim/tree-sitter-vimdoc/archive/v4.0.0/tree-sitter-vimdoc-4.0.0.tar.gz \
-          https://github.com/tree-sitter-grammars/tree-sitter-query/archive/v0.6.2/tree-sitter-query-0.6.2.tar.gz \
-          https://github.com/tree-sitter-grammars/tree-sitter-vim/archive/v0.7.0/tree-sitter-vim-0.7.0.tar.gz \
+          https://github.com/tree-sitter-grammars/tree-sitter-lua/archive/v0.5.0/tree-sitter-lua-0.5.0.tar.gz \
+          https://github.com/tree-sitter-grammars/tree-sitter-markdown/archive/v0.5.3/tree-sitter-markdown-0.5.3.tar.gz \
+          https://github.com/neovim/tree-sitter-vimdoc/archive/v4.1.0/tree-sitter-vimdoc-4.1.0.tar.gz \
+          https://github.com/tree-sitter-grammars/tree-sitter-query/archive/v0.8.0/tree-sitter-query-0.8.0.tar.gz \
+          https://github.com/tree-sitter-grammars/tree-sitter-vim/archive/v0.8.1/tree-sitter-vim-0.8.1.tar.gz \
           https://github.com/neovim/unibilium/archive/v2.1.2/unibilium-2.1.2.tar.gz \
           https://www.inf.puc-rio.br/~roberto/lpeg/lpeg-1.1.0.tar.gz \
-          https://github.com/JuliaStrings/utf8proc/archive/v2.10.0/utf8proc-2.10.0.tar.gz"
-MD5SUM="eed80441dc30027eb2d55abef73248c4 \
-        89bd4d1644f5194c7cc6b3cf1dce02d4 \
-        a23bfdd0e9255e99b772f5da42c8d2c5 \
+          https://github.com/JuliaStrings/utf8proc/archive/v2.11.3/utf8proc-2.11.3.tar.gz"
+MD5SUM="38af91274a8e671781ddcf8020e953ae \
+        59c4cb07854b268f07d07c1edc44ea72 \
+        5b3db31f692ebc94686218f46beb0f30 \
         4b53edbd6222230a50f58ca8f9a98d18 \
-        673e7e50f8fae333fde3963c6f239522 \
+        857b225a5119c7f3112254290aabedc9 \
         e399309a829fa3bcb09609c9de2472f2 \
-        666cf9e91e3bb3e780b69758cf1d4b9a \
-        cc8f2e2b5f2202a45e1dd63c473d38e2 \
-        62c3b047c6fe9fac8792d708c4c2ffc3 \
-        34ddb47fba9ff70c53a489422df66679 \
-        c267a0b056214551b5739b8693b6750d \
+        0deb6e0992e299cbb14cf97047418117 \
+        ef4da5026c35aad69b137de0c3279499 \
+        ae7a33135da79891cca389dd86711ccb \
+        1b85950e4496d5e349c71f055ad247c6 \
+        088a8b2c1b0679254ed19434ef1374cb \
         17b8829b88da2da72a083b06389be009 \
         842a538b403b5639510c9b6fffd2c75b \
-        faa0bbe8f5763da45f2dfb5f863f0400"
+        09773a9a9c4029b1e547fe398e555411"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="msgpack-c-c"

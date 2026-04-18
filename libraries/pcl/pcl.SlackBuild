@@ -27,8 +27,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pcl
-VERSION=${VERSION:-1.14.0}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.15.1}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -70,13 +70,13 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$PRGNAM-$VERSION
 
-echo "Unpacking source tarball ... "
+echo -n "Unpacking source tarball ... "
 tar xf $CWD/$PRGNAM-$PRGNAM-$VERSION.tar.gz
 echo
 
 cd $PRGNAM-$PRGNAM-$VERSION
 
-echo "Sanitizing source code ... "
+echo -n "Sanitizing source code ... "
 sed -i -e '/#include "object.h"/a#include <iostream>' outofcore/include/pcl/outofcore/visualization/geometry.h
 chown -R root:root .
 find -L . \
@@ -101,11 +101,50 @@ cd ..
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+# In case building with gcc14 (required when building with cudatoolkit_12)
+# and gcc14 is removed after building, include a private libstdc++.
+#
+# First initialize these to a known (empty) state
+echo -n "" > $CWD/doinst.sh
+echo -n "" > $CWD/douninst.sh
+if [ -d /opt/gcc14-14.2.0 ]; then
+  ( mkdir -p $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM  
+    cd $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM && \
+    cp -p /opt/gcc14-14.2.0/lib64/libstdc++.so.6.0.33 . && \
+    ln -s libstdc++.so.6.0.33 libstdc++.so.6 && \
+    ln -s libstdc++.so.6.0.33 libstdc++.so
+
+    cat >$CWD/doinst.sh << EOF
+echo "/usr/lib${LIBDIRSUFFIX}/$PRGNAM" > etc/ld.so.conf.d/${PRGNAM}.conf
+ldconfig
+EOF
+
+    cat >$CWD/douninst.sh <<EOF
+if [ -f etc/ld.so.conf.d/${PRGNAM}.conf ]; then
+  rm etc/ld.so.conf.d/${PRGNAM}.conf
+  ldconfig
+fi
+EOF
+  )
+  # Tell executables where to find updated libstdc++.so.6
+  find $PKG/usr/bin -name pcl\* -print0 | xargs -0 file | grep -e "executable" |grep ELF \
+    | cut -f 1 -d : |xargs patchelf --force-rpath --set-rpath "/usr/lib64/pcl"
+fi
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+# If no longer empty i.e. modified above, add these
+# (then restore original content)
+if [ ! $(stat -c "%s" $CWD/doinst.sh) = 0 ]; then
+  echo "Adding doinst.sh"
+  ls -l $CWD/doinst.sh
+  cat $CWD/doinst.sh > $PKG/install/doinst.sh
+  cat $CWD/douninst.sh > $PKG/install/douninst.sh
+fi
+echo "empty" > $CWD/doinst.sh; echo "empty" > $CWD/douninst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

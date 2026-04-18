@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=gcc14
 SRCNAM=gcc
 VERSION=${VERSION:-14.2.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -307,7 +307,7 @@ mkdir -p ${PKG}/etc/profile.d
 cat >${PKG}/etc/profile.d/$PRGNAM.sh <<EOF
 export CC=gcc-$VERSION
 export CPP=cpp-$VERSION
-export CXX=g++-$VERSION
+export CXX=g++-gcc-$VERSION
 export AR=gcc-ar-$VERSION
 export NM=gcc-nm-$VERSION
 export RANLIB=gcc-ranlib-$VERSION
@@ -316,19 +316,28 @@ EOF
 cat >${PKG}/etc/profile.d/$PRGNAM.csh <<EOF
 setenv CC     gcc-$VERSION
 setenv CPP    cpp-$VERSION
-setenv CXX    g++-$VERSION
+setenv CXX    g++-gcc-$VERSION
 setenv AR     gcc-ar-$VERSION
 setenv NM     gcc-nm-$VERSION
 setenv RANLIB gcc-ranlib-$VERSION
 setenv PATH   "/opt/$PRGNAM-$VERSION/bin:\$PATH"
 EOF
 
-mkdir -p $PKG/etc/ld.so.conf.d
-echo "$INSTALL_PATH/lib${LIBDIRSUFFIX}" >  $PKG/etc/ld.so.conf.d/${PRGNAM}.conf
+cat >doinst.sh <<EOF
+echo "$INSTALL_PATH/lib${LIBDIRSUFFIX}" >  etc/ld.so.conf.d/${PRGNAM}.conf
+/sbin/ldconfig
+EOF
+cat >douninst.sh <<EOF
+if [ -f etc/ld.so.conf.d/${PRGNAM}.conf ]; then
+  rm etc/ld.so.conf.d/${PRGNAM}.conf
+  /sbin/ldconfig
+fi
+EOF
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat doinst.sh > $PKG/install/doinst.sh
+cat douninst.sh > $PKG/install/douninst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

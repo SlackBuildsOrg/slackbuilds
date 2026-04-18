@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+              |-----handy-ruler------------------------------------------------------|
+helium-browser: helium-browser (web browser)
+helium-browser:
+helium-browser: Best privacy and unbiased ad-blocking by default.
+helium-browser: Handy features like native !bangs and split view.
+helium-browser: No adware, no bloat, no noise. Made for people, by people.
+helium-browser: Fully open source.
+helium-browser:
+helium-browser:
+helium-browser:
+helium-browser:
+helium-browser:

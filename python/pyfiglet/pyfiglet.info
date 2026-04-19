@@ -1,7 +1,7 @@
 PRGNAM="pyfiglet"
 VERSION="1.0.4"
 HOMEPAGE="https://github.com/pwaller/pyfiglet"
-DOWNLOAD=" https://github.com/pwaller/pyfiglet/archive/v1.0.4/pyfiglet-v1.0.4.tar.gz"
+DOWNLOAD="https://github.com/pwaller/pyfiglet/archive/v1.0.4/pyfiglet-1.0.4.tar.gz"
 MD5SUM="79f80e9445263edff577e677c44c27ce"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

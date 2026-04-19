@@ -2,7 +2,7 @@
 
 # Slackware build script for amneziawg-go
 
-# Copyright 2025 Vladislav 'fsLeg' Borisov, Moscow, Russia
+# Copyright 2025-2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=amneziawg-go
-VERSION=${VERSION:-0.2.16}
+VERSION=${VERSION:-0.2.17}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -62,7 +62,7 @@ GOPATH=$(pwd)/cache \
 GOCACHE=$(pwd)/cache \
 go build -v -mod=vendor
 
-install -Dm755 -t "$PKG/usr/bin" amneziawg-go
+install -Dm755 -t "$PKG/usr/sbin" amneziawg-go
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

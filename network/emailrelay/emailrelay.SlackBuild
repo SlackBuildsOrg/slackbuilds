@@ -3,7 +3,7 @@
 # Slackware build script for emailrelay
 
 # Copyright 2011,2013,2016-2022 Andrew Clemons, Wellington New Zealand
-# Copyright 2022-2024 Andrew Clemons, Tokyo Japan
+# Copyright 2022-2024,2026 Andrew Clemons, Tokyo Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=emailrelay
-VERSION=${VERSION:-2.6}
+VERSION=${VERSION:-2.6.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -102,7 +102,6 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-rm $PKG/usr/doc/$PRGNAM-$VERSION/INSTALL
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/etc/rc.d/

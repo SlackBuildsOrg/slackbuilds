@@ -30,16 +30,18 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-kernel
 VERSION=${VERSION:-595.58.03}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 KERNEL=${KERNEL:-$(uname -r)}
 KERNELPATH=${KERNELPATH:-/lib/modules/${KERNEL}/build}
 
+MAJVER="${MAJVER:-$(echo $KERNEL | cut -c 1-4)}"
+
 # The nvidia-uvm open module will not build on 5.15.x,
 # so we must force the proprietary build (no problems in -current):
-if [ "${MAJVER:-$(echo $KERNEL | cut -c 1-4)}" = "5.15" ]; then
+if [ "$MAJVER" = "5.15" ]; then
   OPEN=no
   echo "5.15 kernel detected!  Forcing PROPRIETARY build:"
   sleep 1
@@ -102,6 +104,10 @@ find -L . \
 # CC=${CC:-gcc} suppresses an otherwise harmless "compiler mismatch"
 # message.  If you custom-build your kernel with clang,
 # then pass CC=clang to this script.
+  if [ "$MAJVER" = "7.0." ];then
+    echo "nvidia.o: private objtool := true" >> Kbuild
+    echo "nvidia-modeset.o: private objtool := true" >> Kbuild
+  fi
   if [ "${DRM:-yes}" != "no" ]; then
     CC=${CC:-gcc} make SYSSRC=$KERNELPATH module || exit 1
   else

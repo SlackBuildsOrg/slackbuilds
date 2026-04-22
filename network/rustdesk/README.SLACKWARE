@@ -4,7 +4,7 @@ README.Slackware
 This file contains some specific instructions to complete the
 installation of rustdesk on Slackware.
 
-If you want to start grafana on system bootup, include these lines in
+If you want to start rustdesk on system bootup, include these lines in
 your /etc/rc.d/rc.local:
 
   # Start rustdesk

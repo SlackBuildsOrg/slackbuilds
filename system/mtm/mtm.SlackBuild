@@ -78,11 +78,10 @@ fi
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
 
-# Backport upstream commit 6af156e (Add nuke keystroke)
-patch -p1 < $CWD/mtm-1.2.1-nuke.patch
-
-# Add documentation for Ctrl+g k (nuke) keystroke to man page
-patch -p1 < $CWD/mtm-1.2.1-man-nuke.patch
+cat $CWD/patches/series | while read patch ; do
+  echo "*** Applying patch $patch"
+  cat $CWD/patches/$patch | patch -p1 --verbose || exit 1
+done || exit 1
 
 chown -R root:root .
 

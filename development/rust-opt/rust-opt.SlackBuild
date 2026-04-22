@@ -2,7 +2,7 @@
 
 # Slackware build script for rust-opt
 
-# Copyright 2024-2025 K. Eugene Carlson  Tsukuba, Japan
+# Copyright 2024-2026 K. Eugene Carlson  Tsukuba, Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=rust-opt
 SRCNAM=rust
 VERSION=${VERSION:-1.91.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -54,16 +54,6 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" ]; then
-  LIBDIRSUFFIX="64"
-else
-  LIBDIRSUFFIX=""
-fi
-
 if [ "$ARCH" = "arm" ]; then
   TRIPLET="$ARCH-unknown-linux-gnueabihf"
 else
@@ -86,7 +76,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-sed -i "s/PREFIX\/lib/PREFIX\/lib$LIBDIRSUFFIX/g" install.sh
 ./install.sh \
   --destdir=$PKG \
   --prefix="opt/$SRCNAM" \
@@ -100,8 +89,8 @@ rust-docs,\
 rust-docs-json-preview,\
 rustfmt-preview
 
-find $PKG/opt/$SRCNAM/lib$LIBDIRSUFFIX -type f -name "*.so" -exec chmod +x {} \; 2> /dev/null
-find $PKG/opt/$SRCNAM/lib$LIBDIRSUFFIX -type f -name "*.so*stable" -exec chmod +x {} \; 2> /dev/null
+find $PKG/opt/$SRCNAM/lib -type f -name "*.so" -exec chmod +x {} \; 2> /dev/null
+find $PKG/opt/$SRCNAM/lib -type f -name "*.so*stable" -exec chmod +x {} \; 2> /dev/null
 
 # Stripping the libraries causes memory faults on Slackware64-15.0.
 if [ $ARCH = "x86_64" ]; then
@@ -112,11 +101,11 @@ else
     | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 fi
 
-rm -f $PKG/opt/$SRCNAM/lib$LIBDIRSUFFIX/rustlib/uninstall.sh
-rm -f $PKG/opt/$SRCNAM/lib$LIBDIRSUFFIX/rustlib/install.log
-rm -f $PKG/opt/$SRCNAM/lib$LIBDIRSUFFIX/rustlib/manifest-*
-rm -f $PKG/opt/$SRCNAM/lib$LIBDIRSUFFIX/rustlib/rust-installer-version
-rm -f $PKG/opt/$SRCNAM/lib$LIBDIRSUFFIX/rustlib/components
+rm -f $PKG/opt/$SRCNAM/lib/rustlib/uninstall.sh
+rm -f $PKG/opt/$SRCNAM/lib/rustlib/install.log
+rm -f $PKG/opt/$SRCNAM/lib/rustlib/manifest-*
+rm -f $PKG/opt/$SRCNAM/lib/rustlib/rust-installer-version
+rm -f $PKG/opt/$SRCNAM/lib/rustlib/components
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

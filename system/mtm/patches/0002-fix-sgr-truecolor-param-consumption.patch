@@ -1,0 +1,39 @@
+From: r1w1s1 <r1w1s1@fastmail.com>
+Date: Wed, 22 Apr 2026
+Subject: Fix SGR parameter consumption for truecolor sequences
+
+SGR 38/48 can take either `;5;N` (256-color) or `;2;R;G;B` (truecolor).
+The old code assumed ;5;N and always skipped 2 params, so `;2;R;G;B`
+caused R, G, B to be reinterpreted as SGR codes, producing garbage
+attributes. Handle both forms and skip the correct number of params.
+Truecolor values are not rendered (ncurses pair limitation) but are
+now consumed cleanly.
+---
+--- a/mtm.c
++++ b/mtm.c
+@@ -449,7 +449,11 @@
+         case 35:  fg = COLOR_MAGENTA;                         doc = do8;   break;
+         case 36:  fg = COLOR_CYAN;                            doc = do8;   break;
+         case 37:  fg = COLOR_WHITE;                           doc = do8;   break;
+-        case 38:  fg = P0(i+1) == 5? P0(i+2) : s->fg; i += 2; doc = do256; break;
++        case 38:
++            if      (P0(i+1) == 5) { fg = P0(i+2); i += 2; doc = do256; }
++            else if (P0(i+1) == 2) { i += 4; }
++            else                     i += 1;
++            break;
+         case 39:  fg = -1;                                    doc = true;  break;
+         case 40:  bg = COLOR_BLACK;                           doc = do8;   break;
+         case 41:  bg = COLOR_RED;                             doc = do8;   break;
+@@ -459,7 +463,11 @@
+         case 45:  bg = COLOR_MAGENTA;                         doc = do8;   break;
+         case 46:  bg = COLOR_CYAN;                            doc = do8;   break;
+         case 47:  bg = COLOR_WHITE;                           doc = do8;   break;
+-        case 48:  bg = P0(i+1) == 5? P0(i+2) : s->bg; i += 2; doc = do256; break;
++        case 48:
++            if      (P0(i+1) == 5) { bg = P0(i+2); i += 2; doc = do256; }
++            else if (P0(i+1) == 2) { i += 4; }
++            else                     i += 1;
++            break;
+         case 49:  bg = -1;                                    doc = true;  break;
+         case 90:  fg = COLOR_BLACK;                           doc = do16;  break;
+         case 91:  fg = COLOR_RED;                             doc = do16;  break;

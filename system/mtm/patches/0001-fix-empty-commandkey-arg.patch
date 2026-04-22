@@ -1,0 +1,19 @@
+From: r1w1s1 <r1w1s1@fastmail.com>
+Date: Wed, 22 Apr 2026
+Subject: Reject empty argument to -c flag
+
+Without this check, `mtm -c ""` dereferences optarg[0] which is '\0',
+making CTL('\0') == 0 the command prefix. Every NUL byte in PTY input
+then triggers command mode. Ignore empty strings and keep the default.
+---
+--- a/mtm.c
++++ b/mtm.c
+@@ -665,7 +665,7 @@ main(int argc, char **argv)
+ 
+     int c = 0;
+     while ((c = getopt(argc, argv, "c:T:t:")) != -1) switch (c){
+-        case 'c': commandkey = CTL(optarg[0]);      break;
++        case 'c': if (optarg[0]) commandkey = CTL(optarg[0]); break;
+         case 'T': setenv("TERM", optarg, 1);        break;
+         case 't': term = optarg;                    break;
+         default:  quit(EXIT_FAILURE, USAGE);        break;

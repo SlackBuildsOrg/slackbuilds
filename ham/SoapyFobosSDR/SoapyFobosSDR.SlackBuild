@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=SoapyFobosSDR
-VERSION=${VERSION:-20260201.d2df4efa}
+VERSION=${VERSION:-20260418.1e2a33ba}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

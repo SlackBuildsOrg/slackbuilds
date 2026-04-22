@@ -43,19 +43,15 @@ it is not used by default but is described here for those wanting to use
 it.
 
 ## NOTE ##
-For blender version 5.1.0 (including libraries building),
+From blender version 5.1.0 onward (including libraries building),
 minimum GCC version is 14.2.0
 
 
 Prerequisites (from SBo):
--  cmake-opt
+-  gcc14
 -  cudatoolkit_12
-
-cmake-opt from SBo provides cmake version 3.30.5
-(Slackware 15.0's cmake version 3.21.4 is insufficient!)
-
-SlackBuild cudatoolkit_12 now exists to track the latest version
-of the 12.x.x series of official CUDA releases.
+-  cmake in testing/packages/graphics-updates
+   (provides 3.31.8 - Slackware 15.0's cmake version 3.21.4 is insufficient!)
 
 Run the blender-libs.sh script in this directory. The blender-libs.sh
 and blender-libs.defs files are based on standard SBo .SlackBuild and

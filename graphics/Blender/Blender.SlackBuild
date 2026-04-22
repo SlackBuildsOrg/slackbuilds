@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Blender
-VERSION=${VERSION:-5.1.0}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-5.1.1}
+BUILD=${BUILD:-1}
 LIBS_BUILD=${LIBS_BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -134,7 +134,7 @@ cd build
     $with_optix \
 
   # From https://projects.blender.org/blender (Release: Bump to 5.1.0)
-  COMMIT_HASH="adfe2921d5"
+  COMMIT_HASH="b70da489d7f"
   COMMIT_TIMESTAMP=$(stat -c "%Y %n" ../source/blender/blenkernel/BKE_blender_version.h |cut -d' ' -f1) 
   sed -i \
       -e "s|MY_WC_HASH \"unknown\"|MY_WC_HASH \"$COMMIT_HASH\"|" \

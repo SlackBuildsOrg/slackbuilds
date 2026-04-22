@@ -1,28 +1,28 @@
 PRGNAM="blender-libs"
-VERSION="5.1.0"
+VERSION="5.1.1"
 HOMEPAGE="https://blender.org"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.1.0.tar.xz \
+DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.1.1.tar.xz \
         https://github.com/madler/zlib/releases/download/v1.3.1/zlib-1.3.1.tar.gz \
         https://github.com/kcat/openal-soft/releases/download/1.23.1/openal-soft-1.23.1.tar.bz2 \
         http://prdownloads.sourceforge.net/libpng/libpng-1.6.50.tar.xz \
-        https://github.com/libjpeg-turbo/libjpeg-turbo/archive/refs/tags/2.1.3/libjpeg-turbo-2.1.3.tar.gz \
-        https://github.com/Blosc/c-blosc/archive/refs/tags/v1.21.1/blosc-1.21.1.tar.gz \
+        https://github.com/libjpeg-turbo/libjpeg-turbo/archive/libjpeg-turbo-2.1.3.tar.gz \
+        https://github.com/Blosc/c-blosc/archive/blosc-1.21.1.tar.gz \
         http://prdownloads.sourceforge.net/pthreads4w/pthreads4w-code-v3.0.0.zip \
-        https://github.com/AcademySoftwareFoundation/openexr/archive/v3.4.3/openexr-3.4.3.tar.gz \
+        https://github.com/AcademySoftwareFoundation/openexr/releases/download/v3.4.3/openexr-3.4.3.tar.gz \
         http://prdownloads.sourceforge.net/freetype/freetype-2.13.3.tar.gz \
         https://github.com/anholt/libepoxy/archive/refs/tags/1.5.10/libepoxy-1.5.10.tar.gz \
         https://github.com/alembic/alembic/archive/refs/tags/1.8.3/alembic-1.8.3.tar.gz \
-        https://github.com/PixarAnimationStudios/OpenSubdiv/archive/refs/tags/v3_7_0/opensubdiv-v3_7_0.tar.gz \
+        https://github.com/PixarAnimationStudios/OpenSubdiv/archive/refs/tags/v3_7_0/OpenSubdiv-3_7_0.tar.gz \
         https://www.libsdl.org/release/SDL2-2.28.2.tar.gz \
         https://github.com/AcademySoftwareFoundation/OpenColorIO/archive/refs/tags/v2.5.0/OpenColorIO-2.5.0.tar.gz \
         https://github.com/zlib-ng/minizip-ng/archive/refs/tags/4.0.10/minizip-ng-4.0.10.tar.gz \
         https://github.com/llvm/llvm-project/releases/download/llvmorg-20.1.8/llvm-project-20.1.8.src.tar.xz \
         https://github.com/AcademySoftwareFoundation/OpenImageIO/archive/refs/tags/v3.1.7.0/OpenImageIO-v3.1.7.0.tar.gz \
         http://download.osgeo.org/libtiff/tiff-4.7.0.tar.gz \
-        https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/releases/download/v1.14.7.0/OpenShadingLanguage-1.14.7.0.tar.gz \
-        https://www.python.org/ftp/python/3.11.13/Python-3.13.9.tar.xz \
+        https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/releases/download/v1.14.7.0/OSL-1.14.7.0.tar.gz \
+        https://www.python.org/ftp/python/3.13.9/Python-3.13.9.tar.xz \
         https://github.com/uxlfoundation/oneTBB/archive/refs/tags/v2022.3.0/oneTBB-v2022.3.0.tar.gz \
         https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v13.0.0/openvdb-13.0.0.tar.gz \
         https://github.com/cython/cython/releases/download/3.0.11-1/cython-3.0.11.tar.gz \
@@ -37,7 +37,7 @@ DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.1.0.tar.xz \
         https://archive.mozilla.org/pub/opus/opus-1.3.1.tar.gz \
         https://code.videolan.org/videolan/x264/-/archive/35fe20d1ba49918ec739a5b068c208ca82f977f7/x264-35fe20d1ba49918ec739a5b068c208ca82f977f7.tar.gz \
         https://bitbucket.org/multicoreware/x265_git/get/3cf6c1e53037eb9e198860365712e1bafb22f7c6.tar.gz \
-        https://github.com/uclouvain/openjpeg/archive/refs/tags/v2.5.3/openjpeg-v2.5.3.tar.gz \
+        https://github.com/uclouvain/openjpeg/archive/refs/tags/v2.5.4/openjpeg-2.5.4.tar.gz \
         http://ffmpeg.org/releases/ffmpeg-7.1.1.tar.bz2 \
         http://www.fftw.org/fftw-3.3.10.tar.gz \
         http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.16.tar.gz \
@@ -104,10 +104,10 @@ DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.1.0.tar.xz \
         https://github.com/KhronosGroup/SPIRV-Tools/archive/19042c8921f35f7bec56b9e5c96c5f5691588ca8.tar.gz \
         https://github.com/KhronosGroup/SPIRV-Headers/archive/01e0577914a75a2569c846778c2f93aa8e6feddd.tar.gz \
         https://github.com/KhronosGroup/glslang/archive/d213562e35573012b6348b2d584457c3704ac09b.tar.gz \
-        https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v1.3.296/Vulkan-Headers-1.4.328.tar.gz \
-        https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v1.3.296/Vulkan-Loader-1.4.328.tar.gz \
-        https://github.com/KhronosGroup/Vulkan-Utility-Libraries/archive/refs/tags/v1.3.296/Vulkan-Utility-Libraries-1.4.328.tar.gz \
-        https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.3.296.0/SPIRV-Headers-1.4.328.tar.gz \
+        https://github.com/KhronosGroup/Vulkan-Headers/archive/refs/tags/v1.4.328/Vulkan-Headers-1.4.328.tar.gz \
+        https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v1.4.328/Vulkan-Loader-1.4.328.tar.gz \
+        https://github.com/KhronosGroup/Vulkan-Utility-Libraries/archive/refs/tags/v1.4.328/Vulkan-Utility-Libraries-1.4.328.tar.gz \
+        https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-1.4.328.0/SPIRV-Headers-1.4.328.tar.gz \
         https://github.com/KhronosGroup/SPIRV-Reflect/archive/refs/tags/vulkan-sdk-1.4.309.0/SPIRV-Reflect-1.4.309.0.tar.gz \
         https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/archive/refs/tags/v3.2.1/Vulkan-Memory-Allocator-3.2.1.tar.gz \
         https://github.com/pybind/pybind11/archive/refs/tags/v3.0.1/pybind-v3.0.1.tar.gz \
@@ -115,14 +115,14 @@ DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.1.0.tar.xz \
         https://github.com/GPUOpen-LibrariesAndSDKs/HIPRT/archive/606b4886efabce918dd0634ef71c06615a47c83b.tar.gz \
         https://github.com/wjakob/nanobind/archive/refs/tags/v2.1.0/nanobind-v2.1.0.tar.gz \
         https://github.com/elalish/manifold/archive/refs/tags/v3.2.1/Manifold-v3.2.1.tar.gz \
+        https://breakfastquay.com/files/releases/rubberband-4.0.0.tar.bz2 \
         https://github.com/aous72/OpenJPH/archive/refs/tags/0.25.2/openjph-0.25.2.tar.gz \
         https://github.com/thorvg/thorvg/releases/download/v1.0-pre31/thorvg.tar.gz \
         https://github.com/strukturag/libheif/releases/download/v1.20.2/libheif-1.20.2.tar.gz \
         https://github.com/abseil/abseil-cpp/releases/download/20250814.1/abseil-cpp-20250814.1.tar.gz \
         https://gitlab.com/libeigen/eigen/-/archive/8a1083e9bf41b91fdea6546681f806154efdc25a/eigen-8a1083e9bf41b91fdea6546681f806154efdc25a.tar.gz \
-        https://github.com/ceres-solver/ceres-solver/archive/0c70ed3a1a2d6ba47c06c7e8b3b040880bc474db.tar.gz \
-        https://breakfastquay.com/files/releases/rubberband-4.0.0.tar.bz2"
-MD5SUM_x86_64="2e09430d3c3becb552d19cce63fc53b5 \
+        https://github.com/ceres-solver/ceres-solver/archive/0c70ed3a1a2d6ba47c06c7e8b3b040880bc474db.tar.gz"
+MD5SUM_x86_64="88a15d8cf090545e9de23f9f721755d0 \
         9855b6d802d7fe5b7bd5b196a2271655 \
         58a73698288d2787451b61f8f4431513 \
         e583e61455c4f40d565d85c0e9a2fbf9 \
@@ -156,7 +156,7 @@ MD5SUM_x86_64="2e09430d3c3becb552d19cce63fc53b5 \
         d7c07db796d21c9cf1861e0c2b0c0617 \
         ab8e72efce0878f45f58a312eb7f5c66 \
         6fd4c8e5c84a407d8e30e4a8bd309d07 \
-        12ae257cb21738c41b5f6ca977d01081 \
+        6160de075bb5191e482bc0f024b375e4 \
         af1873e543460808f90c02e1a4e60d27 \
         8ccbf6a5ea78a16dbc3e1306e234cc5c \
         7d2a800b952942bb2880efb00cfd524c \
@@ -234,13 +234,13 @@ MD5SUM_x86_64="2e09430d3c3becb552d19cce63fc53b5 \
         4bb933c2cf284257625b782d571c02a0 \
         363e96957741869bb16ff983c042e72f \
         5618cc9685b15a0b7ba4783589c1ae7c \
+        93bf3159eb91048e76eba35cf1bf766f \
         bfe027e7b55fd13d5d319d1d777f09e8 \
         b1d13e7ffb96961c5d2e3cb07dca4676 \
         5d0442f7197a34b7aaf95bdffabb51e9 \
         d4d3c25f78e28d61ad83e54cd1116933 \
         4f54f74f1cb1de572ade8c5cf99e33e5 \
-        93135cb1b8f2772b0e114013cd23d44f \
-        93bf3159eb91048e76eba35cf1bf766f"
-REQUIRES="cmake-opt, cudatoolkit_12"
+        93135cb1b8f2772b0e114013cd23d44f"
+REQUIRES="cudatoolkit_12, gcc14"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

@@ -1,12 +1,12 @@
 PRGNAM="Blender"
-VERSION="5.1.0"
+VERSION="5.1.1"
 HOMEPAGE="https://blender.org"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.1.0.tar.xz \
-        https://sourceforge.net/projects/slackbuildsdirectlinks/files/Blender/blender-libs-5.1.0.1.tar.lz"
-MD5SUM_x86_64="2e09430d3c3becb552d19cce63fc53b5 \
-        be88e91236bc3f868e407bc24105e6b6"
+DOWNLOAD_x86_64="https://download.blender.org/source/blender-5.1.1.tar.xz \
+        https://sourceforge.net/projects/slackbuildsdirectlinks/files/Blender/blender-libs-5.1.1.1.tar.lz"
+MD5SUM_x86_64="88a15d8cf090545e9de23f9f721755d0 \
+        e78dca43eaf3accf10a15307ac71eab7"
 REQUIRES="gcc14 numactl"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

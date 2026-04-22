@@ -30,7 +30,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=blender-libs
 SRCNAM=blender
-VERSION=${VERSION:-5.1.0}
+VERSION=${VERSION:-5.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -70,14 +70,15 @@ echo "PATH = $PATH"
 # Ensure updated versions of some system packages are installed
 # Slackware 15.0 stock cmake version is 3.21.4 (NOT usable)
 # Slackware 15.0 also has version 3.31.8 in testing (usable)
-# SBo has cmake-opt with version 3.30.5 (usable)
+# SBo has cmake-opt with version 3.30.5 (not usable for 5.1.1 onward)
 # Slackware -current has 4.x.x
-#REQUIRED_CMAKE_VERSION=3.31.8
-REQUIRED_CMAKE_VERSION=3.30.5
+#REQUIRED_CMAKE_VERSION=3.30.5
+REQUIRED_CMAKE_VERSION=3.31.8
 
 # If cmake-opt is installed, ensure its newer cmake is found first
-[ -x /opt/cmake-opt/bin/cmake ] && \
-  export PATH="/opt/cmake-opt/bin:${PATH}"
+# (no longer usable for blender version 5.1.1 onward)
+#[ -x /opt/cmake-opt/bin/cmake ] && \
+#  export PATH="/opt/cmake-opt/bin:${PATH}"
 
 installed_cmake_version=$(cmake --version | head -1 |cut -d' ' -f3)
 if [ ! "$REQUIRED_CMAKE_VERSION" = "$installed_cmake_version" ]; then
@@ -86,14 +87,8 @@ if [ ! "$REQUIRED_CMAKE_VERSION" = "$installed_cmake_version" ]; then
   exit 2
 fi
 
-GCC14_VERSION=${GCC14_VERSION:-"14.2.0"}
-
-GCC14_PATH=${GCC14_PATH:-"/opt/gcc14-${GCC14_VERSION}"}
-if [ -d "${GCC14_PATH}" ]; then
-  export CC=${GCC14_PATH}/bin/gcc-${GCC14_VERSION}
-  export CXX=${GCC14_PATH}/bin/g++-gcc-${GCC14_VERSION}
-fi
-
+# gcc14 is required for blender 5.1.0 onward
+. /etc/profile.d/gcc14.sh
 
 
 # Obtain sources
@@ -149,7 +144,6 @@ find -L . \
 [ -x "$ROCM_PATH"/bin/hipcc ] || \
   sed -i -e 's/DOIDN_DEVICE_HIP=ON/DOIDN_DEVICE_HIP=OFF/' \
   build_files/build_environment/cmake/openimagedenoise.cmake
-
 
 # Copy source files to where blender expects them
 # (where make deps would download them to)

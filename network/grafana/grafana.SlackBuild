@@ -26,15 +26,16 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=grafana
-VERSION=${VERSION:-12.3.4}
+VERSION=${VERSION:-13.0.1}
+RELVER=24542347077
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 GRAFANAUSER=${GRAFANAUSER:-grafana}
 GRAFANAGROUP=${GRAFANAGROUP:-grafana}
-GRAFANAUID=${GRAFANAUID:-397}
-GRAFANAGID=${GRAFANAGID:-397}
+GRAFANAUID=${GRAFANAUID:-387}
+GRAFANAGID=${GRAFANAGID:-387}
 
 if [ "$(grep ^$GRAFANAUSER: /etc/passwd)" = "" -o "$(grep ^$GRAFANAGROUP: /etc/group)" = "" ] ; then
     echo "  You must have a \"$GRAFANAGROUP\" group and user to run this script."
@@ -67,7 +68,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION.linux-amd64
-tar xvf $CWD/$PRGNAM-$VERSION.linux-amd64.tar.gz
+tar xvf $CWD/$PRGNAM\_$VERSION\_$RELVER\_linux_amd64.tar.gz
+#tar xvf $CWD/$PRGNAM-$VERSION.linux-amd64.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \

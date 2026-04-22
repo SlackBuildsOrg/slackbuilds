@@ -13,8 +13,8 @@ the 'grafana' user and group. The script won't run if these do not exist.
 
 The suggested UID and GID is , but you can change this as needed:
 
-  # groupadd -g 397 grafana
-  # useradd -u 397 -g grafana -d /dev/null -s /bin/false grafana
+  # groupadd -g 387 grafana
+  # useradd -u 387 -g grafana -d /dev/null -s /bin/false grafana
 
 If you want to start grafana on system bootup, include these lines in
 your /etc/rc.d/rc.local:

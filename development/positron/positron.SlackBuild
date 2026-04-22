@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Slackware build script for positron
+# Slackware build script for <appname>
 
-# Copyright 2026
+# Copyright <year> <you> <where you live>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,9 +24,9 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
-PRGNAM=positron
-DEB_PRGNAM=Positron
-VERSION=${VERSION:-2026.04.0_269}
+PRGNAM=positron			# replace with name of program
+DEB_PRGNAM=Positron	
+VERSION=${VERSION:-2026.04.1_10}	# replace with version of program
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -40,6 +40,9 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0

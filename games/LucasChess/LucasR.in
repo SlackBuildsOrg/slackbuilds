@@ -1,4 +1,7 @@
 #!/bin/bash
 export QT_LOGGING_RULES='*=false'
+if [ ! -d /opt/LucasChess-VERSION/UserData ]; then
+    ln -s ~/.LucasChess /opt/LucasChess-VERSION/UserData
+fi
 cd /opt/LucasChess-VERSION/bin
 ./LucasR

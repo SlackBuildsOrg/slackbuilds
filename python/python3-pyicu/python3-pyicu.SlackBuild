@@ -25,12 +25,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-pyicu
-VERSION=${VERSION:-2.8}
+VERSION=${VERSION:-2.16.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-SRCNAM=PyICU
+SRCNAM=pyicu
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

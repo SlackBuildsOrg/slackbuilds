@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nchat
-VERSION=${VERSION:-5.13.17}
+VERSION=${VERSION:-5.14.44}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,9 +71,11 @@ find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
 
 mkdir -p $PKG/usr/bin
 cp -a bin/nchat $PKG/usr/bin
+strip --strip-unneeded $PKG/usr/bin/nchat
 
 mkdir -p $PKG/usr/lib64
 cp -a lib/*.so $PKG/usr/lib64
+strip --strip-unneeded $PKG/usr/lib64/*.so
 
 mkdir -p $PKG/usr/share/$PRGNAM
 cp -a share/$PRGNAM/themes $PKG/usr/share/$PRGNAM

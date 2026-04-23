@@ -26,7 +26,7 @@ cd "$(dirname "$0")" ; CWD="$(pwd)"
 
 PRGNAM=rclone-src
 SRCNAM=rclone
-VERSION=${VERSION:-1.73.4}
+VERSION=${VERSION:-1.73.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,7 +71,9 @@ rm -rf "$PKG"
 mkdir -p "$TMP" "$PKG" "$OUTPUT"
 cd "$TMP"
 rm -rf "$SRCNAM"-"$VERSION"
-tar xvf "$CWD"/"$SRCNAM"-"$VERSION".tar.gz
+echo -n "Unpacking source tarball ... "
+tar xf "$CWD"/"$SRCNAM"-"$VERSION".tar.gz
+echo
 cd "$SRCNAM"-"$VERSION"
 chown -R root:root .
 find -L . \
@@ -89,7 +91,9 @@ export CGO_CFLAGS="${SLKCFLAGS}"
 export CGO_CPPFLAGS="${SLKCFLAGS}"
 
 if [ -r "$CWD"/"$SRCNAM"-"${VERSION}"-vendor.tar.xz ]; then
-  tar xvf $CWD/$SRCNAM-$VERSION-vendor.tar.xz
+  echo -n "Unpacking vendorball ... "
+  tar xf $CWD/$SRCNAM-$VERSION-vendor.tar.xz
+  echo
 else
   echo "Creating vendorball"
   go mod vendor

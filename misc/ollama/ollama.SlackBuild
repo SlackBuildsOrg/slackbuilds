@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ollama
-VERSION=${VERSION:-0.20.5}
+VERSION=${VERSION:-0.21.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,12 +79,10 @@ find -L . \
 # disabling ggml-vulkan until we have vulkan-sdk >= 1.4
 sed -i '/find_package(Vulkan)/ d' CMakeLists.txt
 
-sed -i "/lib\/ollama/ s/lib/lib${LIBDIRSUFFIX}/g" CMakeLists.txt
 cmake -B build \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_INSTALL_PREFIX=/usr \
-  -DLIB_SUFFIX=${LIBDIRSUFFIX} \
   -DMAN_INSTALL_DIR=/usr/man \
   -DCMAKE_BUILD_TYPE=Release
 cmake --build build
@@ -101,8 +99,6 @@ fi
 if [ "${ROCM:-OFF}" = "ON" ]; then
     DESTDIR=$PKG cmake --install build --component HIP
 fi
-
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

@@ -3,7 +3,7 @@
 # Slackware build script for zulu-openjdk8
 
 # Copyright (c) 2017-2018, Sébastien Ballet <slacker6896 at gmail.com>
-# Copyright (c) 2022-2025, Andrew Clemons, Tokyo Japan
+# Copyright (c) 2022-2026, Andrew Clemons, Tokyo Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=zulu-openjdk8
-VERSION=${VERSION:-8.0.472}
-ZULUVERSION=${ZULUVERSION:-8.90.0.19}
+VERSION=${VERSION:-8.0.492}
+ZULUVERSION=${ZULUVERSION:-8.94.0.17}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -61,6 +61,9 @@ elif  [ "$ARCH" = "arm" ]; then
   ZULU_ARCH=aarch32hf
   LIBDIRSUFFIX=""
   JVMLIBARCH="aarch32"
+  # arm32 hf latest version not yet published to the community
+  VERSION=8.0.482
+  ZULUVERSION=8.92.0.21
 elif  [ "$ARCH" = "aarch64" ]; then
   ZULU_ARCH=aarch64
   LIBDIRSUFFIX="64"

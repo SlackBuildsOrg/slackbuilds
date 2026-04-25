@@ -1,0 +1,39 @@
+From a5f760fa0ed3e6e8a04675d7cfa97cdb75791efd Mon Sep 17 00:00:00 2001
+From: Laslo Hunhold <dev@frign.de>
+Date: Thu, 7 Sep 2017 11:01:10 +0200
+Subject: [PATCH 2/8] Correctly handle files that contain no slides
+
+Otherwise, on reloading sent would segfault. Move the check-logic to
+load() rather than doing it in main() to prevent other misuses of it in
+the future.
+---
+ sent.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/sent.c b/sent.c
+index 0da2bff..c50a572 100644
+--- a/sent.c
++++ b/sent.c
+@@ -457,6 +457,9 @@ load(FILE *fp)
+ 		if (!p)
+ 			break;
+ 	}
++
++	if (!slidecount)
++		die("sent: No slides in file");
+ }
+ 
+ void
+@@ -695,9 +698,6 @@ main(int argc, char *argv[])
+ 	load(fp);
+ 	fclose(fp);
+ 
+-	if (!slidecount)
+-		usage();
+-
+ 	xinit();
+ 	run();
+ 
+-- 
+2.54.0
+

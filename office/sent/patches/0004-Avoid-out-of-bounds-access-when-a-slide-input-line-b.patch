@@ -1,0 +1,37 @@
+From 2649e8d5334f7e37a1710c60fb740ecfe91b9f9e Mon Sep 17 00:00:00 2001
+From: Chris Down <chris@chrisdown.name>
+Date: Wed, 13 May 2020 12:20:53 +0100
+Subject: [PATCH 4/8] Avoid out-of-bounds access when a slide input line begins
+ with \0
+
+If we read in a line with \0 at the beginning, blen will be 0. However,
+we then try to index our copy of the buffer with
+s->lines[s->linecount][blen-1], we'll read (and potentially write if the
+data happens to be 0x0A) outside of strdup's allocated memory, and may
+crash.
+
+Fix this by just rejecting lines with a leading \0. Lines with nulls
+embedded in other places don't invoke similar behaviour, since the
+length is still >0.
+---
+ sent.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/sent.c b/sent.c
+index c50a572..9534fca 100644
+--- a/sent.c
++++ b/sent.c
+@@ -428,6 +428,10 @@ load(FILE *fp)
+ 		maxlines = 0;
+ 		memset((s = &slides[slidecount]), 0, sizeof(Slide));
+ 		do {
++			/* if there's a leading null, we can't do blen-1 */
++			if (buf[0] == '\0')
++				continue;
++
+ 			if (buf[0] == '#')
+ 				continue;
+ 
+-- 
+2.54.0
+

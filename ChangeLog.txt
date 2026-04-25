@@ -1,3 +1,152 @@
+Sat Apr 25 07:29:26 UTC 2026
+academic/plus42: Updated for version 1.3.14.
+audio/ocenaudio-bin: Updated for version 3.18.0.
+audio/pavucontrol-qt: Update for 2.4.0
+desktop/dwmblocks: Update for 20260418 (+edit README)
+desktop/libqt6xdg: Update for 4.4.0
+desktop/lxqt-menu-data: Update for 2.4.0
+desktop/lxqt-panel: Update for 2.4.0
+desktop/lxqt-runner: Update for 2.4.0
+desktop/lxqt-themes: Update for 2.4.0
+desktop/menulibre: Update script.
+desktop/sun: Updated for version 2.5.1.
+development/a68g: Updated for version 3.11.3.
+development/antigravity: Updated for version 1.23.2.
+development/async-profile: Updated for version 4.4.
+development/aws-cdk: Updated for version 2.1119.0.
+development/bruno: Updated for version 3.3.0.
+development/buf: Updated for version 1.68.4.
+development/cudatoolkit_13: Updated for version 13.2.1.
+development/cudnn: Updated for version 9.21.1.3_13.
+development/electron-bin: Updated for version 41.2.1.
+development/github-cli: Updated for version 2.91.0
+development/google-go-lang: Updated for version 1.25.9.
+development/kotlin: Updated for version 2.3.21.
+development/lm-studio-bin: Updated for version 0.4.12.1.
+development/mongodb-compass: Updated for version 1.49.5.
+development/mysql-workbench: Updated for version 8.0.47.
+development/pnpm: Updated for version 10.33.2.
+development/pycharm: Updated for version 2026.1
+development/rust-opt: Do not use lib64.
+development/sourcegit: Updated for version 2026.09.
+development/terraform: Updated for version 1.14.9
+development/tflint: Updated for version 0.62.0.
+development/valgrind: Updated for version 3.27.0.
+development/zed-editor-bin: Added (Code Editor).
+development/zizmor: Updated for version 1.24.1.
+development/zulu-openjdk11: Updated for version 11.0.31.
+development/zulu-openjdk17: Updated for version 17.0.19.
+development/zulu-openjdk21: Updated for version 21.0.11.
+development/zulu-openjdk25: Updated for version 25.0.3.
+development/zulu-openjdk8: Updated for version 8.0.492.
+games/LucasChess: Update script.
+games/dealers-choice: Updated for version 0.0.13.
+games/fheroes2: Updated for version 1.1.15.
+git/ci: Update CI dependencies.
+graphics/Blender: Updated for version 5.1.1
+graphics/kgeotag: Updated README.
+graphics/lximage-qt: Update for 2.4.0
+graphics/screengrab: Update for 3.2.0
+ham/SoapyFobosSDR: Updated for version 20260418.1e2a33ba.
+ham/gridtracker2: Updated for version 2.260421.1.
+ham/libfobos-sdr-agile: Added (SDR Receiver).
+ham/sdrpp: Updated for version 20260418.a6df4d58.
+libraries/libdbusmenu-lxqt: Update for 0.4.0
+libraries/libfilezilla: Updated for version 0.55.4.
+libraries/libfm-qt6: Update for 2.4.0
+libraries/libjcat: Updated for version 0.2.6.
+libraries/liblxqt: Update for 2.4.0
+libraries/libxmlb: Updated for version 0.3.26.
+libraries/lxqt-build-tools-qt6: Update for 2.4.0
+libraries/lxqt-notificationd: Update for 2.4.0
+libraries/lxqt-qt6plugin: Update for 2.4.0
+libraries/lxqt-sudo: Update for 2.4.0
+libraries/pytaglib: Updated for version 2.0.0.
+misc/dos2unix: Updated for version 7.5.5.
+misc/fcitx5-gtk: Updated for version 5.1.6.
+misc/fcitx5-mcbopomofo: Updated for version 3.0.
+misc/fcitx5-table-extra: Updated for version 5.1.11.
+misc/fcitx5-table-other: Updated for version 5.1.6.
+misc/ollama: Updated for version 0.21.1.
+network/amneziawg-go: Updated for version 0.2.17.
+network/brave-browser: Updated for version 1.89.137.
+network/discord: Version bump to 0.0.114
+network/dropbox: Fix MD5SUM.
+network/emailrelay: Updated for version 2.6.1.
+network/floorp-bin: Updated for version 12.12.2.
+network/gallery-dl: Updated for version 1.32.0.
+network/helium-browser: Updated for version 0.11.3.2.
+network/librewolf: Updated for version 150.0_1.
+network/microsoft-edge: Updated for version 147.0.3912.72.
+network/mullvad-browser: Updated for version 15.0.10.
+network/nchat: Updated for version 5.14.44.
+network/newsboat: Updated for version 2.43.
+network/nicotine+: Updated for version 3.3.10.
+network/opera: Updated for version 130.0.5847.41.
+network/rclone-src: Updated for version 1.73.5
+network/rclone: Updated for version 1.73.5.
+network/rustdesk: Update script.
+network/telegram: Updated for version 6.7.8.
+network/teleport-connect: Updated for version 18.7.4.
+network/tgpt: Updated for version 2.11.1.
+network/tor-browser: Updated for version 15.0.10.
+network/vivaldi: Updated for version 7.9.3970.59.
+network/waterfox: Updated for version 6.6.12.
+network/webex: Updated for version 46.4.0.34752
+network/x2goclient: Updated for version 4.1.2.3.
+network/x2goserver: Updated for version 20230525_a166907.
+office/OpenAudible-bin: Updated for version 4.8.1.
+office/ledger-live: Updated for version 4.2.0.
+office/qownnotes: Updated for version 26.4.21.
+perl/perl-Devel-NYTProf: Updated for version 6.15.
+perl/perl-YAML-Syck: Updated for version 1.45.
+python/pyOpenSSL: Updated for version 26.1.0.
+python/pybind11: Updated for version 3.0.4
+python/pyfiglet: Fix URL.
+python/python-mysql-replication: Updated for version 1.0.14.
+python/python-precis-i18n: Updated for version 1.1.2.
+python/python3-PyGithub: Version bump to 2.9.1
+python/python3-boto3: Updated for version 1.42.92.
+python/python3-lxml: Version bump to 6.1.0
+python/python3-narwhals: Update for 2.20.0
+python/python3-odfdo: Updated for version 3.22.6.
+python/python3-pandas: Fix building with newer meson
+python/python3-plotly: Update for 6.7.0
+python/python3-prometheus_client: Update for 0.25.0
+python/python3-pyicu: Updated for version 2.16.2.
+python/python3-pypdf: Updated for version 6.10.2.
+python/python3-qtawesome: Update for 1.4.2
+ruby/ruby-build: Updated for version 20260422.
+system/Iosevka-aile: Updated for version 34.4.0.
+system/Iosevka-core: Updated for version 34.4.0.
+system/Iosevka-etoile: Updated for version 34.4.0.
+system/TLP: Updated for version 1.10.0.
+system/docker-cli: Updated for version 29.4.1.
+system/docker: Updated for version 29.4.1.
+system/hplip-plugin: Updated for version 3.25.8.
+system/jenkins: Updated for version 2.555.1.
+system/lxqt-about: Update for 2.4.0
+system/lxqt-admin: Update for 2.4.0
+system/lxqt-archiver: Update for 2.4.0
+system/lxqt-config: Update for 2.4.0
+system/lxqt-globalkeys: Update for 2.4.0
+system/lxqt-openssh-askpass: Update for 2.4.0
+system/lxqt-policykit: Update for 2.4.0
+system/lxqt-powermanagement: Update for 2.4.0
+system/lxqt-session: Update for 2.4.0
+system/mtm: add patches/ layout with series file
+system/nvidia-kernel: Support New Kernel.
+system/nvidia-legacy470-kernel: Support New Kernel.
+system/nvidia-legacy580-kernel: Support New Kernel.
+system/pcmanfm-qt: Update for 2.4.0
+system/qps: Update for 2.4.0
+system/qtxdg-tools: Update for 2.4.0
+system/sbo-create: Updated for version 2.3.0.
+system/slpkg: Updated for version 6.1.5.
+system/ventoy: Added (Bootable USB Tool).
+system/xrdp: Version bump to 0.10.6
+system/zellij-bin: Added (Terminal Workspace).
++--------------------------+
 Sat Apr 18 01:04:11 UTC 2026
 academic/FreeFem: Updated for version 4.16.
 academic/gwyddion: Updated for version 2.71.

@@ -1,0 +1,13 @@
+zellij-bin
+
+zellij-bin provides a prebuilt 64-bit binary of Zellij, a terminal
+workspace and multiplexer for managing multiple shells and terminal
+applications within a single session.
+
+Features include tabbed sessions, tiled, stacked, and floating panes,
+layout configuration, session management, collaborative sharing, and a
+plugin system based on WebAssembly.
+
+Usage: zellij
+
+Homepage: https://zellij.dev/

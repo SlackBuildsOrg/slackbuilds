@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dealers-choice
-VERSION=${VERSION:-0.0.12}
+VERSION=${VERSION:-0.0.13}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -63,6 +63,13 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
+
+# Read the .info and make sure the md5sum matches.
+if ! echo "$(grep '^MD5SUM=' $CWD/$PRGNAM.info | cut -d'"' -f2)  $CWD/$PRGNAM-$VERSION.tar.xz" | md5sum -c - ; then
+  echo "ERROR: MD5 checksum mismatch for $PRGNAM-$VERSION.tar.xz" >&2
+  exit 1
+fi
+
 tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
 chown -R root:root .

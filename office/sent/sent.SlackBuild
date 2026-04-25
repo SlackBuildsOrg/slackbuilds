@@ -71,15 +71,14 @@ mkdir $PRGNAM-$VERSION
 
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz -C $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
+
+cat $CWD/patches/series | while read patch ; do
+  echo "*** Applying patch $patch"
+  cat $CWD/patches/$patch | patch -p1 --verbose || exit 1
+done || exit 1
+
 chown -R root:root .
 chmod 644 *
-
-# apply patches if variable PATCHES is 'yes'
-if [ "${PATCHES:-no}" = "yes" ]; then
- for p in $CWD/patches/*; do
-  patch --verbose -p1 < $p
- done
-fi
 
 CFLAGS="$SLKCFLAGS" \
 make

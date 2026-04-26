@@ -1,20 +1,24 @@
 PRGNAM="wego"
-VERSION="2.3"
+VERSION="2.4"
 HOMEPAGE="https://github.com/schachmat/wego"
-DOWNLOAD="https://github.com/schachmat/wego/archive/2.3/wego-2.3.tar.gz \
-          https://github.com/mattn/go-colorable/archive/v0.1.13/go-colorable-0.1.13.tar.gz \
-          https://github.com/mattn/go-runewidth/archive/v0.0.14/go-runewidth-0.0.14.tar.gz \
+DOWNLOAD="https://github.com/schachmat/wego/archive/2.4/wego-2.4.tar.gz \
+          https://github.com/mattn/go-colorable/archive/v0.1.14/go-colorable-0.1.14.tar.gz \
+          https://github.com/mattn/go-runewidth/archive/v0.0.23/go-runewidth-0.0.23.tar.gz \
+          https://github.com/muesli/mango/archive/v0.2.0/mango-0.2.0.tar.gz \
+          https://github.com/muesli/roff/archive/v0.1.0/roff-0.1.0.tar.gz \
           https://github.com/schachmat/ingo/archive/a4bdc07/ingo-a4bdc0729a3fda62cc4069b6e490fc657fd54e33.tar.gz \
-          https://github.com/mattn/go-isatty/archive/v0.0.19/go-isatty-0.0.19.tar.gz \
-          https://github.com/rivo/uniseg/archive/v0.4.4/uniseg-0.4.4.tar.gz \
-          https://github.com/golang/sys/archive/v0.8.0/sys-0.8.0.tar.gz"
-MD5SUM="b716f853c11e24f869c61fcbc8e8f618 \
-        ac74020d881d4966e33ab6580f509aeb \
-        c41abbf9dc5def08ef8e6999efbe2c8c \
+          https://github.com/clipperhouse/uax29/archive/v2.2.0/uax29-2.2.0.tar.gz \
+          https://github.com/mattn/go-isatty/archive/v0.0.20/go-isatty-0.0.20.tar.gz \
+          https://github.com/golang/sys/archive/v0.29.0/sys-0.29.0.tar.gz"
+MD5SUM="ef761eaab388baf06fdc31fb8c25a586 \
+        64851c950c3a650f5aa2968c55e5bae8 \
+        ad00e5984ee50619596344514cfd0aaa \
+        c93ef832c2fb2beb63755dd6bcc3e105 \
+        49bc0f537b0f7faca462800ffb15f385 \
         6077da012ebc665f84b9baf79b56c0b6 \
-        e10ea58c2288fbef0d8ea37dea93718a \
-        4e272ceb8899ee895e425f16347d10a6 \
-        4bd786fbbcf550e794db58cc7ece443c"
+        a9fa336f274e3f0f88dd513ee41ef8e9 \
+        0e9df2fea5b77d464d518a6c60ce8ba2 \
+        b1240d4a436cf3beaa74f391972015c0"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="google-go-lang"

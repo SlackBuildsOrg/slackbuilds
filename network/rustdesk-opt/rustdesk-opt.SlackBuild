@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rustdesk-opt
 SRCNAM=rustdesk
-VERSION=${VERSION:-1.4.4}
+VERSION=${VERSION:-1.4.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -56,8 +56,8 @@ LIBDIRSUFFIX="64"
 
 set -e
 
-if [ ! -e $CWD/vcpkg-2023.04.15.tar.gz ]; then
-  echo "File vcpkg-2023.04.15.tar.gz not found in $CWD"
+if [ ! -e $CWD/vcpkg-2026.03.18.tar.gz ]; then
+  echo "File vcpkg-2026.03.18.tar.gz not found in $CWD"
   exit 1
 fi
 
@@ -77,13 +77,13 @@ cd $TMP
 
 # vcpkg
 
-rm -rf vcpkg-2023.04.15
-tar -xvzf $CWD/vcpkg-2023.04.15.tar.gz
+rm -rf vcpkg-2026.03.18
+tar -xvzf $CWD/vcpkg-2026.03.18.tar.gz
 
-./vcpkg-2023.04.15/bootstrap-vcpkg.sh --disableMetrics
+./vcpkg-2026.03.18/bootstrap-vcpkg.sh --disableMetrics
 
-export VCPKG_ROOT=$TMP/vcpkg-2023.04.15
-./vcpkg-2023.04.15/vcpkg --disable-metrics install libvpx libyuv opus aom
+export VCPKG_ROOT=$TMP/vcpkg-2026.03.18
+./vcpkg-2026.03.18/vcpkg --disable-metrics install libvpx libyuv opus aom
 
 # rustdesk
 

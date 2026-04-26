@@ -1,13 +1,13 @@
 PRGNAM="rustdesk-opt"
-VERSION="1.4.4"
+VERSION="1.4.6"
 HOMEPAGE="https://www.rustdesk.com"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/microsoft/vcpkg/archive/2023.04.15/vcpkg-2023.04.15.tar.gz \
-                 https://github.com/rustdesk/rustdesk/archive/1.4.4/rustdesk-1.4.4.tar.gz \
+DOWNLOAD_x86_64="https://github.com/microsoft/vcpkg/archive/2026.03.18/vcpkg-2026.03.18.tar.gz \
+                 https://github.com/rustdesk/rustdesk/archive/1.4.6/rustdesk-1.4.6.tar.gz \
                  https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so"
-MD5SUM_x86_64="e57e6e2dd75d71fa96829e6c14eeb6e4 \
-               8d0f600cf00df79d5743e0421338cc93 \
+MD5SUM_x86_64="ff1347f435ce6d90cae803cf4212810f \
+               7e97019ef5eb91cb62cbd5bf4ebec65d \
                91a95f199569afe4fbf9e433853f8f97"
 REQUIRES="cmake-opt rust-opt xdotool"
 MAINTAINER="Olivier Brouckaert"

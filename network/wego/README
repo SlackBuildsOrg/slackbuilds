@@ -1,4 +1,5 @@
 wego is a weather app for the terminal.
 
-Usage requires registering for an API (ex. OpenWeatherMap).
-See the github page for more details.
+For usage without an API key, select Open-Meteo or SMHI as the backend.
+Otherwise, registration for an API key is required.
+Please read the github page for more details.

@@ -1,0 +1,14 @@
+Catclock is a modified version of the classic X11 xclock with support
+for an additional "cat mode". In this mode, the clock displays an
+animated cat with moving eyes and a swinging tail, inspired by the
+Kit-Cat clock.
+
+The program can also display time in analog and digital formats,
+similar to the original xclock. It is lightweight and uses standard
+X Toolkit libraries, making it suitable for minimal X11 environments.
+
+This SlackBuild builds the program as "catclock" to avoid conflicts
+with the system xclock binary.
+
+This SlackBuild was generated as a starting point and must be reviewed
+and adjusted before use or submission.

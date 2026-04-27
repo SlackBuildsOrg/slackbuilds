@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+        |-----handy-ruler------------------------------------------------------|
+catclock: catclock (X11 cat clock based on xclock)
+catclock:
+catclock: Catclock is a modified version of the classic X11 xclock with
+catclock: an additional "cat mode" inspired by the Kit-Cat clock. It
+catclock: displays time in analog, digital, or animated cat form with
+catclock: moving eyes and swinging tail.
+catclock:
+catclock: It is lightweight and uses standard X Toolkit libraries.
+catclock:
+catclock: Homepage: https://github.com/BarkyTheDog/catclock
+catclock:

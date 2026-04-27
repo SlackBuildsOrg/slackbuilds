@@ -116,9 +116,10 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 cat $CWD/doinst.sh > doinst.sh
 
 # Define compilers for CUDA to use.
-# This allows us to use different versions of GCC if we have to.
+# This allows use of different versions of GCC if necessary.
 # Need gcc14 for Blender-5.1.0 so we default to that
 # but also allow some other compiler CUDA_CC & CUDA_CC
+# (where CUDA_CC & CUDA_CC are absolute paths).
 #
 GCC14_VERSION=$(find /opt -type d -name gcc14\* |cut -d'-' -f2)
 if [ -n "$CUDA_CC" -a -n "$CUDA_CXX" ]; then
@@ -128,13 +129,13 @@ if [ -n "$CUDA_CC" -a -n "$CUDA_CXX" ]; then
 elif [ -d /opt/gcc14-${GCC14_VERSION}/bin ]; then
   # This is the expected case: use gcc14
   echo "Using GCC14 as CUDA compiler"
-  ln -s /opt/gcc14-${GCC14_VERSION}/bin/gcc-${GCC14_VERSION} "${PKG}/opt/${CPREFIX}"/bin/gcc
-  ln -s /opt/gcc14-${GCC14_VERSION}/bin/g++-gcc-${GCC14_VERSION} "${PKG}/opt/${CPREFIX}"/bin/g++
+  ln -s "$(readlink -f /opt/gcc14-${GCC14_VERSION}/bin/gcc)" "${PKG}/opt/${CPREFIX}"/bin/gcc
+  ln -s "$(readlink -f /opt/gcc14-${GCC14_VERSION}/bin/g++)" "${PKG}/opt/${CPREFIX}"/bin/g++
 else
   # Use default Slackware-15.0 compilers
-  echo "Using default gcc 11.2.0 as CUDA compiler"
-  ln -s /usr/bin/gcc "${PKG}/opt/${CPREFIX}"/bin/gcc
-  ln -s /usr/bin/g++ "${PKG}/opt/${CPREFIX}"/bin/g++
+  echo "Using installed gcc ($(readlink /usr/bin/gcc)) as CUDA compiler"
+  ln -s "$(readlink -f /usr/bin/gcc)" "${PKG}/opt/${CPREFIX}"/bin/gcc
+  ln -s "$(readlink -f /usr/bin/g++)" "${PKG}/opt/${CPREFIX}"/bin/g++
 fi
 
 # lwf: arch does this, not sure if this is needed.

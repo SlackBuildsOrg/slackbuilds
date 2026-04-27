@@ -116,11 +116,11 @@ rm "${PKG}"/opt/"${CPREFIX}"/lib64/lib64
 # Add a symlink lib->lib64 as some libraries might expect that (FS#76951)
 ( cd "${PKG}"/opt/"${CPREFIX}"  && ln -sr lib64 lib)
 
-# lwf: arch does this, not sure if this is required
 # Define compilers for CUDA to use.
-# This allows us to use older versions of GCC if we have to.
-ln -s /usr/bin/gcc-11.2.0 "${PKG}"/opt/"${CPREFIX}"/bin/gcc
-ln -s /usr/bin/g++-gcc-11.2.0 "${PKG}"/opt/"${CPREFIX}"/bin/g++
+# This allows use of different versions of GCC if necessary
+# (although still locked to compilers available when running this SlackBuild)
+ln -s "$(readlink -f /usr/bin/gcc)" "${PKG}"/opt/"${CPREFIX}"/bin/gcc
+ln -s "$(readlink -f /usr/bin/g++)" "${PKG}"/opt/"${CPREFIX}"/bin/g++
 
 # Fix Makefile paths to CUDA
 for f in $(find "$PKG"/opt/"${CPREFIX}" -name Makefile); do

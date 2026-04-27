@@ -76,7 +76,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 mkdir -p $PKG/opt
 cd $PKG/opt
-7z x $CWD/$ARCHIVE -y
+7z x $CWD/$ARCHIVE -y 
 mv LucasChessR $PRGNAM-$VERSION
 
 # Fix permissions. Note: some files had 770, which would make it unusable for

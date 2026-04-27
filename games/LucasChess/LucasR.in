@@ -1,7 +1,6 @@
 #!/bin/bash
 export QT_LOGGING_RULES='*=false'
-if [ ! -d /opt/LucasChess-VERSION/UserData ]; then
-    ln -s ~/.LucasChess /opt/LucasChess-VERSION/UserData
-fi
+ln -s ~/.LucasChess /opt/LucasChess-VERSION/UserData
 cd /opt/LucasChess-VERSION/bin
 ./LucasR
+rm -f /opt/LucasChess-VERSION/UserData  # so other users can create their own symlink

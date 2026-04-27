@@ -28,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM="perl-Net-CIDR"
-VERSION=${VERSION:-0.17}
+VERSION=${VERSION:-0.27}
 BUILD=${BUILD:-1}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -65,7 +65,7 @@ elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
 fi
 
-DOCS="Changes COPYING README"
+DOCS="ChangeLog COPYING README"
 
 rm -fr $TMP/$SRCNAM-$VERSION $PKG
 mkdir -p $TMP $PKG $OUTPUT

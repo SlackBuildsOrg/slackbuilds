@@ -1,11 +1,11 @@
 This packaging of NumPy with Python 3.x is pegged at version 1.24.4.
-It installs into opt/python3-numpy-legacy/usr/lib$LIBDIRSUFFIX and
-should therefore not conflict with other numpy installations.
+It installs into /opt/python3.x/site-packages with the intent that
+it should not conflict with the default python3-numpy installation.
 
 To use this installation in another SlackBuild, just before any call
-to python3 setup.py build or install, add the line:
-    export PYTHONPATH=/opt/python3-numpy-legacy/usr/lib$LIBDIRSUFFIX/
-
+to python3 setup.py build or install, add the lines:
+    PYVER=${PYVER:-$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')}
+    export PYTHONPATH=/opt/python$PYVER/site-packages
 
 NumPy is a general-purpose array-processing package designed to
 efficiently manipulate large multi-dimensional arrays of arbitrary

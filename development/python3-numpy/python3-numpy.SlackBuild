@@ -2,7 +2,7 @@
 
 # Slackware build script for python3-numpy
 
-# Copyright 2015-2024 Christoph Willing  Sydney, Australia
+# Copyright 2015-2026 Christoph Willing  Sydney, Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -29,8 +29,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-numpy
 SRCNAM=numpy
-VERSION=${VERSION:-1.26.3}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-2.0.2}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -65,6 +65,10 @@ which python$PYVER 2>/dev/null 1>/dev/null
   echo "Can't find python$PYVER. Exiting now ..."
   exit 1
 }
+
+PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+export PYTHONPATH="/opt/python$PYVER/site-packages:/opt/cython/python$PYVER/site-packages"
+export PATH="/opt/cython/bin:$PATH"
 
 set -e
 
@@ -136,14 +140,9 @@ else
 fi
 
 mkdir -p $PKG/usr/include
-cd $PKG/usr/include
-  # Location varies according to VERSION in 15.0 & -current
-  if [ -x /usr/bin/gcc-11.* ]; then
-    ln -s $(ls -d /usr/lib${LIBDIRSUFFIX}/python$PYVER/site-packages)/numpy/core/include/numpy
-  else
-    ln -s $(ls -d /usr/lib${LIBDIRSUFFIX}/python$PYVER/site-packages)/numpy/_core/include/numpy
-  fi
-cd -
+( cd $PKG/usr/include && \
+  ln -s $(ls -d /usr/lib${LIBDIRSUFFIX}/python$PYVER/site-packages)/numpy/_core/include/numpy
+)
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a CITATION.bib INSTALL.rst LICENSE.txt README.md THANKS.txt \

@@ -1,0 +1,34 @@
+--- plastid/genomics/map_factories.pyx.orig	2022-05-06 01:28:40.000000000 +1000
++++ plastid/genomics/map_factories.pyx	2026-04-26 12:16:41.336464129 +1000
+@@ -146,12 +146,12 @@
+ INT    = np.int
+ FLOAT  = np.float
+ DOUBLE = np.double
+-LONG   = np.long
++LONG   = np.longlong
+ 
+ ctypedef np.int_t    INT_t
+ ctypedef np.float_t  FLOAT_t
+ ctypedef np.double_t DOUBLE_t
+-ctypedef np.long_t   LONG_t
++ctypedef np.longlong_t   LONG_t
+ 
+ 
+ #===============================================================================
+--- ./plastid/genomics/roitools.pyx.orig	2022-05-06 01:28:40.000000000 +1000
++++ ./plastid/genomics/roitools.pyx	2026-04-26 12:17:21.269832042 +1000
+@@ -177,12 +177,12 @@
+ INT    = numpy.int
+ FLOAT  = numpy.float
+ DOUBLE = numpy.double
+-LONG   = numpy.long
++LONG   = numpy.longlong
+ 
+ ctypedef numpy.int_t    INT_t
+ ctypedef numpy.float_t  FLOAT_t
+ ctypedef numpy.double_t DOUBLE_t
+-ctypedef numpy.long_t   LONG_t
++ctypedef numpy.longlong_t   LONG_t
+ 
+ # cdef class SegmentChain
+ # cdef class Transcript(SegmentChain)

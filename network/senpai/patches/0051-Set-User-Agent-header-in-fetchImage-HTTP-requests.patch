@@ -1,0 +1,93 @@
+From 21079b04f6c573324ea1b854255e73d6f6188979 Mon Sep 17 00:00:00 2001
+From: delthas <delthas@dille.cc>
+Date: Thu, 19 Mar 2026 17:12:57 +0100
+Subject: [PATCH 51/54] Set User-Agent header in fetchImage HTTP requests
+
+Image fetching timed out on some hosts (e.g. catbox.moe) because Go's
+default HTTP client sends "Go-http-client/2.0" as the User-Agent when
+HTTP/2 is negotiated, which certain servers silently block by never
+sending response headers.
+
+Set a "senpai/<version>" (or "senpai") User-Agent on all HTTP requests
+in fetchImage (HEAD, HTML GET, and image GET). Also close the HEAD
+response body and fix minor whitespace.
+
+Fixes: https://todo.sr.ht/~delthas/senpai/230
+---
+ app.go | 25 +++++++++++++++++++++----
+ 1 file changed, 21 insertions(+), 4 deletions(-)
+
+diff --git a/app.go b/app.go
+index 697ffbd..e781c0f 100644
+--- a/app.go
++++ b/app.go
+@@ -243,7 +243,7 @@ func NewApp(cfg Config) (app *App, err error) {
+ }
+ 
+ func (app *App) Close() {
+-	app.win.Exit()       // tell all instances of app.ircLoop to stop when possible
++	app.win.Exit() // tell all instances of app.ircLoop to stop when possible
+ 	app.postEvent(event{ // tell app.eventLoop to stop
+ 		src:     "*",
+ 		content: nil,
+@@ -1204,6 +1204,11 @@ var patternOpenGraphImage = regexp.MustCompile(`<meta property="og:image" conten
+ var patternOpenGraphVideo = regexp.MustCompile(`<meta property="og:video"`)
+ 
+ func (app *App) fetchImage(link string) (image.Image, error) {
++	userAgent := "senpai"
++	if v, ok := BuildVersion(); ok {
++		userAgent = "senpai/" + v
++	}
++
+ 	if u, err := url.Parse(link); err == nil {
+ 		changed := true
+ 		switch u.Host {
+@@ -1220,10 +1225,16 @@ func (app *App) fetchImage(link string) (image.Image, error) {
+ 	cHead := http.Client{
+ 		Timeout: 1500 * time.Millisecond,
+ 	}
+-	res, err := cHead.Head(link)
++	req, err := http.NewRequest("HEAD", link, nil)
++	if err != nil {
++		return nil, err
++	}
++	req.Header.Set("User-Agent", userAgent)
++	res, err := cHead.Do(req)
+ 	if err != nil {
+ 		return nil, err
+ 	}
++	res.Body.Close()
+ 	if res.StatusCode != http.StatusOK {
+ 		return nil, fmt.Errorf("unexpected status code: %d", res.StatusCode)
+ 	}
+@@ -1244,11 +1255,12 @@ func (app *App) fetchImage(link string) (image.Image, error) {
+ 		if err != nil {
+ 			return nil, err
+ 		}
++		req.Header.Set("User-Agent", userAgent)
+ 		var previewSize int64 = 10 * 1024
+ 		if res.Header.Get("Accept-Ranges") == "bytes" {
+ 			req.Header.Set("Range", fmt.Sprintf("bytes=0-%v", previewSize))
+ 		}
+-		res, err = cHead.Get(link)
++		res, err = cHead.Do(req)
+ 		if err != nil {
+ 			return nil, err
+ 		}
+@@ -1270,7 +1282,12 @@ func (app *App) fetchImage(link string) (image.Image, error) {
+ 	cGet := http.Client{
+ 		Timeout: 5 * time.Second,
+ 	}
+-	res, err = cGet.Get(link)
++	req, err = http.NewRequest("GET", link, nil)
++	if err != nil {
++		return nil, err
++	}
++	req.Header.Set("User-Agent", userAgent)
++	res, err = cGet.Do(req)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-- 
+2.54.0
+

@@ -1,0 +1,31 @@
+From 9a0fd3db337912a6a09255c5667c9b7687bdccd1 Mon Sep 17 00:00:00 2001
+From: delthas <git@delthas.fr>
+Date: Mon, 20 Apr 2026 18:38:30 +0200
+Subject: [PATCH 53/54] Fix member list highlight below last member
+
+Clicking and holding below the last member in the vertical member list
+would highlight the last member due to clamping in the draw function.
+Remove the clamp so out-of-range memberClicked values simply highlight
+nothing.
+---
+ ui/ui.go | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/ui/ui.go b/ui/ui.go
+index 80a188c..94e83ac 100644
+--- a/ui/ui.go
++++ b/ui/ui.go
+@@ -936,10 +936,6 @@ func (ui *UI) drawVerticalMemberList(vx *Vaxis, x0, y0, width, height int, b *bu
+ 		return
+ 	}
+ 
+-	if ui.memberClicked >= len(members) {
+-		ui.memberClicked = len(members) - 1
+-	}
+-
+ 	if len(members) > 0 {
+ 		var memberString string
+ 		if len(members) > 1 {
+-- 
+2.54.0
+

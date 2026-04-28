@@ -1,0 +1,49 @@
+From b209af17265907093988732c478025a37d2d1395 Mon Sep 17 00:00:00 2001
+From: delthas <delthas@dille.cc>
+Date: Tue, 10 Mar 2026 19:27:03 +0100
+Subject: [PATCH 38/54] Fix nicks with brackets becoming invisible after
+ restart
+
+s.nickCf was computed at RPL_WELCOME (001) using the default casemap
+(rfc1459), but ISUPPORT (005) arrives after and may change the casemap
+to ascii. For nicks containing brackets (e.g. [mynick]), rfc1459
+casemapping converts [ to { and ] to }, while ascii does not. This
+caused IsMe() to fail for all subsequent JOINs, so channels were never
+added to the buffer list.
+
+Recompute s.nickCf and rekey s.users when the casemap changes in
+ISUPPORT.
+
+Fixes: https://todo.sr.ht/~delthas/senpai/231
+---
+ irc/session.go | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/irc/session.go b/irc/session.go
+index e4bd917..e34fd40 100644
+--- a/irc/session.go
++++ b/irc/session.go
+@@ -2211,12 +2211,20 @@ func (s *Session) updateFeatures(features []string) {
+ 		case "BOUNCER_NETID":
+ 			s.netID = value
+ 		case "CASEMAPPING":
++			oldNickCf := s.nickCf
+ 			switch value {
+ 			case "ascii":
+ 				s.casemap = CasemapASCII
+ 			default:
+ 				s.casemap = CasemapRFC1459
+ 			}
++			s.nickCf = s.casemap(s.nick)
++			if oldNickCf != s.nickCf {
++				if u, ok := s.users[oldNickCf]; ok {
++					delete(s.users, oldNickCf)
++					s.users[s.nickCf] = u
++				}
++			}
+ 		case "CHANMODES":
+ 			// We only care about the first four params
+ 			types := strings.SplitN(value, ",", 5)
+-- 
+2.54.0
+

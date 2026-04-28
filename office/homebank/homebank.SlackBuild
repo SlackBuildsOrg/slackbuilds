@@ -4,7 +4,7 @@
 
 # Copyright 2009-2022  Erik W. Hanson, Minneapolis, MN, USA
 # Copyright 2022-2025 Juan M. Lasca <juanmlasca@gmail.com>
-# Copyright 2025 Olivier Brouckaert <olivier.b@i-services.be>, Brussels, Belgium
+# Copyright 2025-2026 Olivier Brouckaert <olivier.b@i-services.be>, Brussels, Belgium
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=homebank
-VERSION=${VERSION:-5.9.7}
+VERSION=${VERSION:-5.10}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -70,6 +70,11 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+
+if [ -d $PRGNAM-$VERSION.0 ]; then
+  mv $PRGNAM-$VERSION.0 $PRGNAM-$VERSION
+fi
+
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \

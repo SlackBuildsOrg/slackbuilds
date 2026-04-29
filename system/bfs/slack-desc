@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+   |-----handy-ruler------------------------------------------------------|
+bfs: bfs (breadth-first version of the UNIX find command)
+bfs:
+bfs: bfs is a variant of the UNIX find command that operates breadth-first
+bfs: rather than depth-first, typically locating files faster by listing
+bfs: shallower paths before descending into deeper subtrees. It is mostly
+bfs: compatible with POSIX, GNU, FreeBSD, OpenBSD, NetBSD, and macOS find,
+bfs: and adds quality-of-life improvements like colored output, helpful
+bfs: error messages, and operators such as -exclude and -hidden.
+bfs:
+bfs: Homepage: https://tavianator.com/projects/bfs.html
+bfs:

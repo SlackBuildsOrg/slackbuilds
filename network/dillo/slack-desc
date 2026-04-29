@@ -5,7 +5,7 @@
 # You must make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':' except on otherwise blank lines.
 
-     |-----handy-ruler------------------------------------------------------|
+      |-----handy-ruler------------------------------------------------------|
 dillo: dillo (dillo web browser)
 dillo:
 dillo: Dillo is a multi-platform graphical web browser, known for its
@@ -13,7 +13,7 @@ dillo: its speed and small footprint, that is developed with a focus
 dillo: on personal security and privacy. It is built with the FLTK 1.3
 dillo: GUI toolkit. Dillo is free GPL-3.0 licensed software.
 dillo:
-dillo: Homepage: https://dillo-browser.github.io/
+dillo: Homepage: https://dillo-browser.org/
 dillo:
 dillo:
 dillo:

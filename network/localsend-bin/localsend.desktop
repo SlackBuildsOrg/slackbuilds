@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=LocalSend
+GenericName=Local network communication app
+Exec=localsend
+Icon=localsend
+Categories=Network;

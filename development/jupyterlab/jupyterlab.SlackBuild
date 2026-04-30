@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jupyterlab
-VERSION=${VERSION:-4.5.6}
+VERSION=${VERSION:-4.5.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -61,6 +61,12 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# Fix runtime error on Slackware 15.0
+# The problem is that packaging < 23.2 does not include the InvalidName class
+# This patch does not need to be installed on Slackware-current (its packaging is >= 23.2)
+PACKAGING_VER=$(python3 -c 'import packaging; print(float(packaging.__version__))')
+[[ $PACKAGING_VER < 23.2 ]] && patch -p1 < $CWD/pypi_extension_manager_fix.patch
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH=/opt/python$PYVER/site-packages

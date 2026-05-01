@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=element-desktop
 WEBNAM=element-web
-VERSION=${VERSION:-1.12.15}
+VERSION=${VERSION:-1.12.17}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,10 +83,11 @@ export npm_config_offline=true
 export COREPACK_HOME=$BASE_TMP_DIR/corepack
 export COREPACK_ENABLE_NETWORK=0
 export XDG_CACHE_HOME=$BASE_TMP_DIR/electron-cache
-export XDG_CONFIG_HOME="$BASE_TMP_DIR"
+export XDG_CONFIG_HOME=$BASE_TMP_DIR
 export CARGO_HOME=$BASE_TMP_DIR/cargo
 export CFLAGS="$SLKCFLAGS"
 export CXXFLAGS="$SLKCFLAGS"
+export NX_TUI=false
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -112,7 +113,6 @@ pnpm config set store-dir "$XDG_CONFIG_HOME/pnpm-store"
 pnpm install --frozen-lockfile \
              --offline
 VERSION=$VERSION \
-NX_TUI=false \
   pnpm -C apps/web run build
 
 cd apps/desktop

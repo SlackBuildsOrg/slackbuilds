@@ -1,12 +1,12 @@
 PRGNAM="LibreOffice"
-VERSION="26.2.2.2"
+VERSION="26.2.3.2"
 HOMEPAGE="https://www.libreoffice.org"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://download.documentfoundation.org/libreoffice/src/26.2.2/libreoffice-26.2.2.2.tar.xz \
-          https://sourceforge.net/projects/slackbuildsdirectlinks/files/LibreOffice/libreoffice-26.2.2.2-srcs.tar.xz"
-MD5SUM_x86_64="acaa63689cc524173d0a79dcadb83367 \
-        e3edc18cc7e7dfb0599a1fb535ef7903"
+DOWNLOAD_x86_64="https://download.documentfoundation.org/libreoffice/src/26.2.3/libreoffice-26.2.3.2.tar.xz \
+          https://sourceforge.net/projects/slackbuildsdirectlinks/files/LibreOffice/libreoffice-26.2.3.2-srcs.tar.xz"
+MD5SUM_x86_64="87c0ed3db32e2f11617d0708a452fe1d \
+        05134b8673663567cbd3730f47fbaad9"
 REQUIRES="zulu-openjdk17 apache-ant perl-Archive-Zip libcdr libfreehand liblangtag libmspub libzmf python3-meson-opt"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

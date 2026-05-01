@@ -1,12 +1,12 @@
 PRGNAM="element-desktop"
-VERSION="1.12.15"
+VERSION="1.12.17"
 HOMEPAGE="https://element.io/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/element-hq/element-web/archive/v1.12.15/element-web-1.12.15.tar.gz \
-                 https://sbo.t-rg.ws/element-desktop-1.12.15-vendored-sources.tar.xz"
-MD5SUM_x86_64="473489fd9d5cdba56991b5c5df965596 \
-               e95a142e7697604ba1348a9ed2c6e48f"
+DOWNLOAD_x86_64="https://github.com/element-hq/element-web/archive/v1.12.17/element-web-1.12.17.tar.gz \
+                 https://sbo.t-rg.ws/element-desktop-1.12.17-vendored-sources.tar.xz"
+MD5SUM_x86_64="10be836a621cca459eca80d93b6999d8 \
+               2c412c118c4ae132334cf3efb4acd7b0"
 REQUIRES="sqlcipher rust-opt nodejs22"
 MAINTAINER="Vladislav 'fsLeg' Borisov"
 EMAIL="fsleg@t-rg.ws"

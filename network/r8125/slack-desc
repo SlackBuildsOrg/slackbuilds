@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+r8125: r8125 (Realtek RTL8125 2.5GbE Linux kernel driver)
+r8125:
+r8125: This is the out-of-tree Linux kernel driver for Realtek RTL8125/
+r8125: RTL8125B 2.5 Gigabit Ethernet controllers with PCI-Express interface.
+r8125: It provides full support for 2.5Gbps operation not found in the
+r8125: in-tree r8169 driver for this hardware revision.
+r8125:
+r8125: Features include EEE (Energy Efficient Ethernet), Wake-on-LAN,
+r8125: jumbo frames up to 9KB, VLAN offloading, and NAPI support.
+r8125:
+r8125: Homepage: https://www.realtek.com/

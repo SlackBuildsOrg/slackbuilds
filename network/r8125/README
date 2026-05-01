@@ -1,0 +1,41 @@
+r8125 is the out-of-tree Linux kernel driver for Realtek RTL8125 and
+RTL8125B 2.5 Gigabit Ethernet controllers with PCI-Express interface.
+It provides complete 2.5Gbps support not available in the in-tree r8169
+driver for this hardware revision.
+
+The resulting package is specific to the kernel it was built against.
+You must rebuild this package whenever you upgrade your kernel.
+
+BUILDING
+--------
+To build for the currently running kernel:
+
+  ./r8125.SlackBuild
+
+To build for a different kernel (e.g. one you have just installed but
+not yet booted):
+
+  KERNEL=6.1.0 ./r8125.SlackBuild
+
+The KERNEL variable must match the directory name under /lib/modules/
+and the kernel build tree must exist at /lib/modules/$KERNEL/build.
+
+CONFLICT WITH r8169
+-------------------
+The in-tree r8169 driver may also bind to RTL8125 hardware. This package
+installs a blacklist file to prevent r8169 from loading:
+
+  /etc/modprobe.d/r8169_blacklist.conf
+
+If the file already exists and has been modified, the new version will
+be installed as r8169_blacklist.conf.new for you to review and merge.
+
+NVCHECKER
+---------
+An nvchecker configuration file is installed alongside this README at:
+
+  /usr/doc/r8125-VERSION/r8125.nvchecker
+
+nvchecker (https://github.com/lilydjwg/nvchecker) is a tool for checking
+new versions of software. Copy or include this file in your nvchecker
+configuration to be notified when Realtek publishes a new r8125 release.

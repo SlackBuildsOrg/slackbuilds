@@ -1,0 +1,56 @@
+Pritunl Client
+==============
+
+Pritunl Client is an open source OpenVPN client.
+
+Documentation and additional information are available from the
+official project website:
+
+  https://client.pritunl.com/
+
+
+Service
+-------
+
+Before using Pritunl Client, the pritunl-client service must be
+started. Without this service running, Pritunl Client will not work.
+
+To start the service manually, run:
+
+  /etc/rc.d/rc.pritunl-client start
+
+
+Starting the Service at Boot
+----------------------------
+
+To start the pritunl-client service automatically at boot, add the
+following to /etc/rc.d/rc.local:
+
+  if [ -x /etc/rc.d/rc.pritunl-client ]; then
+    # Start pritunl-client service:
+    /etc/rc.d/rc.pritunl-client start
+  fi
+
+
+Stopping the Service at Shutdown
+--------------------------------
+
+To stop the pritunl-client service automatically during shutdown, add
+the following to /etc/rc.d/rc.local_shutdown:
+
+  if [ -x /etc/rc.d/rc.pritunl-client ]; then
+    # Stop pritunl-client service:
+    /etc/rc.d/rc.pritunl-client stop
+  fi
+
+
+Slackware Package Notes
+-----------------------
+
+The package installer will add the necessary rc.d service commands to
+both /etc/rc.d/rc.local and /etc/rc.d/rc.local_shutdown.
+
+The pritunl-client service must be started before using Pritunl Client.
+
+For the Slackware package, `npm audit fix --force` is applied during the
+build process. This differs from the upstream build procedure.

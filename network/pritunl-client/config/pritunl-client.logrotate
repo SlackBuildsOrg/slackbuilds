@@ -1,0 +1,9 @@
+/var/log/pritunl-client.log {
+    daily
+    rotate 7
+    copytruncate
+    delaycompress
+    compress
+    notifempty
+    missingok
+}

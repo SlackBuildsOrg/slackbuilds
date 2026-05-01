@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# Pritunl Client Service startup script for Slackware Linux
+#
+# Pritunl Client is an open source openvpn client.
+# Documentation and more information can be found at
+# the home page client.pritunl.com .
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+BASE=pritunl-client-service
+DAEMON=/usr/bin/daemon
+SERVICE=/usr/bin/${BASE}
+SERVICE_LOG=/var/log/pritunl-client.log
+
+# Check if service is present.
+if [ ! -x "${SERVICE}" ]; then
+  echo "${SERVICE} not present or not executable"
+  exit 1
+fi
+
+service_start() {
+  echo -n "Starting ${BASE} ..."
+  "${DAEMON}" -n "${BASE}" -O "${SERVICE_LOG}" -E "${SERVICE_LOG}" -- "${SERVICE}"
+  echo " done"
+}
+
+service_stop() {
+  if "${DAEMON}" -n "${BASE}" --running >/dev/null 2>&1 ; then
+    echo -n "Stopping ${BASE} ..."
+    "${DAEMON}" -n "${BASE}" --stop
+    echo " done"
+  else
+    echo "${BASE} is not running"
+  fi
+}
+
+service_restart() {
+  service_stop
+  sleep 5
+  service_start
+}
+
+service_status() {
+  if "${DAEMON}" -n "${BASE}" --running >/dev/null 2>&1 ; then
+    echo "Status of ${BASE}: running"
+  else
+    echo "Status of ${BASE}: stopped"
+  fi
+}
+
+case "$1" in
+  start)
+    service_start
+    ;;
+  stop)
+    service_stop
+    ;;
+  restart)
+    service_restart
+    ;;
+  status)
+    service_status
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+    ;;
+esac
+
+exit 0

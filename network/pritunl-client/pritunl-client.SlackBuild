@@ -1,0 +1,171 @@
+#!/bin/bash
+
+# Slackware build script for pritunl-client
+
+# Copyright 2026 Dimitar Nikov <dimitar@nikov.net>
+# All rights reserved.
+#
+# Permission to use, copy, modify, and distribute this software for any purpose
+# with or without fee is hereby granted, provided that the above copyright
+# notice and this permission notice appear in all copies.
+#
+# THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED WARRANTIES,
+# INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+# FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# AUTHORS AND COPYRIGHT HOLDERS AND THEIR CONTRIBUTORS BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=pritunl-client
+VERSION=${VERSION:-1.3.4566.62}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "${ARCH}" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=${TMP}/package-${PRGNAM}
+OUTPUT=${OUTPUT:-/tmp}
+GOPATH=${CWD}/go
+
+export GOPATH=${GOPATH}
+
+set -e
+
+rm -rf ${PKG}
+mkdir -p ${TMP} ${PKG} ${OUTPUT}
+cd ${TMP}
+rm -rf ${PRGNAM}-${VERSION}
+tar xvf $CWD/${PRGNAM}-${VERSION}.tar.gz
+
+cd ${PRGNAM}-${VERSION}
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+cd service
+go get
+go install
+
+cd ../cli
+go get
+go install
+
+cd ../client
+npm install
+npm audit fix --force
+./node_modules/.bin/electron-rebuild
+./node_modules/.bin/electron-packager ./ Pritunl --platform=linux --arch=x64 --out=${PKG}
+
+chmod +x ${PKG}/Pritunl-linux-x64/libffmpeg.so
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/info
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/travis-gh-pages
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/ajv/scripts/prepare-tests
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/delayed-call.coffee
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/delayed-require.coffee
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/difference.coffee
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/performance-now/test/scripts/initial-value.coffee
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/sshpk/bin/sshpk-verify
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/sshpk/bin/sshpk-sign
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/sshpk/bin/sshpk-conv
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/mustache/bin/mustache
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/uuid/bin/uuid
+rm -f ${PKG}/Pritunl-linux-x64/resources/app/node_modules/mkdirp/bin/cmd.js
+
+cd ..
+
+mkdir -p ${PKG}/usr/share/applications
+cp resources_linux/pritunl-client-electron.desktop ${PKG}/usr/share/applications/pritunl-client-electron.desktop
+echo "OnlyShowIn=KDE;XFCE;" >> ${PKG}/usr/share/applications/pritunl-client-electron.desktop
+sed -i -e 's/usr\/lib/usr\/lib64/g' ${PKG}/usr/share/applications/pritunl-client-electron.desktop
+
+mkdir -p ${PKG}/usr/bin
+mkdir -p ${PKG}/usr/lib64
+mv ${PKG}/Pritunl-linux-x64 ${PKG}/usr/lib64/pritunl_client_electron
+chmod 755 ${PKG}/usr/lib64/pritunl_client_electron
+chmod 4755 ${PKG}/usr/lib64/pritunl_client_electron/chrome-sandbox
+
+install -D -m0755 ${GOPATH}/bin/service ${PKG}/usr/bin/pritunl-client-service
+install -D -m0755 ${GOPATH}/bin/cli ${PKG}/usr/bin/pritunl-client
+
+mkdir -p ${PKG}/var/lib/pkgtools/douninst.sh
+
+cat > ${PKG}/var/lib/pkgtools/douninst.sh/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG} << 'EOF'
+#!/bin/sh
+
+RC_SCRIPT=/etc/rc.d/rc.pritunl-client
+RC_NEW=/etc/rc.d/rc.pritunl-client.new
+
+if [ -f "${RC_SCRIPT}" ]; then
+  if [ -f "${RC_NEW}" ]; then
+    if cmp -s "${RC_SCRIPT}" "${RC_NEW}"; then
+      rm -f "${RC_SCRIPT}"
+    fi
+  else
+    rm -f "${RC_SCRIPT}"
+  fi
+fi
+
+LOGROTATE_SHIM=/etc/logrotate.d/pritunl-client
+
+if [ -f ${LOGROTATE_SHIM} ]; then
+  rm -f "${LOGROTATE_SHIM}"
+fi
+
+SYMLINK=/usr/bin/pritunl-client-electron
+rm -f ${SYMLINK}
+
+EOF
+
+chmod 755 ${PKG}/var/lib/pkgtools/douninst.sh/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}
+
+rm -fr ${GOPATH}
+
+mkdir -p ${PKG}/usr/share/icons
+mv resources_linux/icons ${PKG}/usr/share/icons/hicolor
+find ${PKG}/usr/share/icons -type d -exec chmod 755 {} \;
+find ${PKG}/usr/share/icons -type f -exec chmod 644 {} \;
+
+mkdir -p ${PKG}/var/log
+touch ${PKG}/var/log/pritunl-client.log
+touch ${PKG}/var/log/pritunl-client.log.1
+
+install -D -m0644 ${CWD}/config/pritunl-client.logrotate ${PKG}/etc/logrotate.d/pritunl-client.new
+install -D -m0644 ${CWD}/config/rc.pritunl-client ${PKG}/etc/rc.d/rc.pritunl-client.new
+
+find ${PKG} -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p ${PKG}/usr/doc/${PRGNAM}-${VERSION}
+cp -a \
+  CHANGES LICENSE README.md \
+  ${PKG}/usr/doc/${PRGNAM}-${VERSION}
+cat $CWD/${PRGNAM}.SlackBuild > ${PKG}/usr/doc/${PRGNAM}-${VERSION}/${PRGNAM}.SlackBuild
+
+mkdir -p ${PKG}/install
+cat $CWD/slack-desc > ${PKG}/install/slack-desc
+cat $CWD/doinst.sh > ${PKG}/install/doinst.sh
+
+cd ${PKG}
+/sbin/makepkg -l y -c n ${OUTPUT}/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}

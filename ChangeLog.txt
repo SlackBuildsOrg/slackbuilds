@@ -1,3 +1,137 @@
+Sat May  2 17:43:25 UTC 2026
+academic/R: Updated for version 4.6.0.
+academic/zotero: Updated for version 9.0.1.
+accessibility/xdotool: Updated for version 4.20260303.1.
+audio/ocenaudio-bin: Updated for version 3.18.2.
+audio/reaper: Updated for version 7.70.
+desktop/catclock: Added (X11 xclock).
+desktop/sxhkd: Updated for version 0.6.3.
+development/HeidiSQL: Updated for version 12.17.
+development/aws-cdk: Updated for version 2.1120.0.
+development/buf: Updated for version 1.69.0.
+development/bun-bin: Updated for version 1.3.13.
+development/cmake-opt: Updated for version 3.31.12.
+development/cudatoolkit_12: Don't hard code compiler version
+development/cudatoolkit_13: Don't hard code compiler version
+development/deno-bin: Updated for version 2.7.14.
+development/deno: Updated for version 2.7.14.
+development/difftastic: Updated for version 0.69.0.
+development/dub: Added (package manager).
+development/electron-bin: Updated for version 41.3.0
+development/github-cli: Updated for version 2.92.0.
+development/gitify-bin: Updated for version 6.20.0.
+development/jupyter-notebook: Updated for version 7.5.6.
+development/jupyterlab: Updated for version 4.5.7.
+development/mongodb-shell: Updated for version 2.8.3.
+development/nodejs24-bin: Updated for version 24.15.0.
+development/notepad++: Updated for version 8.9.4
+development/positron: Updated for version 2026.04.1_10.
+development/python3-numpy-legacy: Updated for version 1.26.3
+development/python3-numpy: Updated for version 2.0.2
+development/qb64pe: Updated for version 4.5.0
+development/rider: Updated for version 2026.1.1.
+development/sbt: Updated for version 1.12.10
+development/terraform: Updated for version 1.15.0.
+development/tfenv: Updated for version 3.2.2.
+development/vscodium: Updated for version 1.116.02821.
+development/vstudio: Updated for version 17.3.1.
+development/zed-editor-bin: Updated for version 0.233.10.
+development/zed-editor-bin: Updated for version 1.0.0.
+ham/SoapyFobosSDR: Update script.
+ham/qlog: Updated for version 0.50.0.
+libraries/KDSingleApplication: Updated for version 1.2.1.
+libraries/SDL3: Updated for version 3.4.6.
+libraries/nx-libs: Updated for version 3.5.99.27.
+libraries/plastid: Patch for updated python3-numpy-legacy
+libraries/uriparser: Updated for version 1.0.1.
+misc/open-simh: Updated for version 20260430_45f1ce7.
+misc/yara: Updated for version 4.5.5.
+multimedia/plexmediaserver: Updated for version 1.43.1.10611_1e34174b1.
+multimedia/qprompt: Added (teleprompter).
+multimedia/w_scan_cpp: Update dependencies.
+multimedia/x265: Updated for version 4.2.
+network/brave-browser: Updated for version 1.89.143.
+network/dillo: Updated for version 3.3.0.
+network/discord: Version bump to 0.0.134
+network/discord: Version bump to 0.0.135
+network/dnsproxy-bin: Updated for version 0.81.2.
+network/dropbox: Updated for version 250.4.3245.
+network/element-desktop-bin: Updated for version 1.12.17.
+network/element-desktop: Updated for version 1.12.17.
+network/exim: Updated for version 4.99.2.
+network/filen-desktop-bin: Added (cloud storage).
+network/grafana: Updated for version 13.0.1.
+network/helium-browser: Updated for version 0.11.5.1
+network/librespeed-cli: Updated for version 1.0.13.
+network/librewolf: Updated for version 150.0.1_1.
+network/llhttp: Updated for version 9.4.1.
+network/localsend-bin: Added (Secure Communication).
+network/mullvad-browser: Updated for version 15.0.11
+network/opera: Updated for version 130.0.5847.92
+network/qodem: Update download.
+network/r8125: Added (Network driver).
+network/repology-cli: Added (cli for repology).
+network/rustdesk-opt: Removed (FTBFS).
+network/senpai: update to 0.4.1
+network/slack: Updated for version 4.47.69.
+network/tor-browser: Updated for version 15.0.11.
+network/vivaldi: Updated for version 7.9.3970.60.
+network/wego: Update for 2.4
+network/wireshark: Updated for version 4.6.5.
+network/x2goserver: Updated for version 20201227_08aa5e6.
+network/zen-browser: Updated for version 1.19.10b
+office/LibreOffice: Updated for version 26.2.3.2
+office/homebank: Updated for version 5.10.
+office/ledger-live: Updated for version 4.0.0
+office/qownnotes: Updated for version 26.5.0.
+office/sent: update to 1
+office/wps-office-dicts: Updated for version 26.2.3.2
+perl/MoarVM: Updated for version 2026.04.
+perl/nqp: Updated for version 2026.04.
+perl/perl-Crypt-URandom: Added (Perl Module).
+perl/perl-CryptX: Updated for version 0.088.
+perl/perl-File-Find-Rule: Updated for version 0.35.
+perl/perl-Net-CIDR-Lite: Updated for version 0.23.
+perl/perl-Net-CIDR: Updated for version 0.27.
+perl/rakudo: Updated for version 2026.04.
+python/numexpr: Updated for version VERSION:-2.10.0
+python/python3-boto3: Updated for version 1.42.97
+python/python3-meson-opt: Updated for version 1.11.1.
+python/python3-numba: Updated for version 0.60.0
+python/python3-opencv: Require python3-numpy-legacy
+python/python3-packaging-opt: Updated for version 26.2.
+python/python3-pathspec: Updated for version 1.1.1.
+python/python3-pdm: Version bump to 2.26.8
+python/python3-pydantic-core: Updated for version 2.46.3.
+python/python3-pydantic: Updated for version 2.13.3.
+python/python3-pypandoc: Update for 1.17 (+orphan maintenance)
+python/python3-pyzmq: Updated for version 27.1.0
+python/python3-setuptools-scm-opt: README updated.
+python/python3-trove-classifiers: Updated for version 2026.4.28.13.
+python/tzdata: Updated for version 2026.2.
+ruby/ruby-build: Updated for version 20260501.
+system/aufs-dir-tools: Added (AUFS File Management).
+system/bfs: Added (breadth-first find command).
+system/containerd: Updated for version 1.7.31.
+system/distrobox: Updated for version 1.8.2.5.
+system/docker-cli: Updated for version 29.4.2.
+system/docker: Strip binaries.
+system/docker: Updated for version 29.4.2.
+system/fzf-bin: Updated from version 0.72.0.
+system/fzf: Updated for version 0.72.0.
+system/mongo-tools: Updated for version 100.16.1.
+system/nerdctl: Updated for version 2.2.2
+system/netdata: Updated for version 2.10.3.
+system/plymouth-slackware-theme: Update script.
+system/prometheus: Updated for version 3.11.2
+system/qdirstat: Updated for version 2.0.
+system/sbo-maintainer-tools: Updated for version 0.9.4.
+system/sbozyp: Updated for version 1.7.2
+system/slackrepo-hints: Updated for version 20260502.
+system/slackrepo: Updated for version 20260502.
+system/ventoy: Fix permission.
+system/ventoy: Updated for version 1.1.12
++--------------------------+
 Sat Apr 25 07:29:26 UTC 2026
 academic/plus42: Updated for version 1.3.14.
 audio/ocenaudio-bin: Updated for version 3.18.0.

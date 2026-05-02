@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+   |-----handy-ruler------------------------------------------------------|
+dub: dub (Package and build management system for D )
+dub:
+dub: DUB emerged as a more general replacement for vibe.d's pkg manager.
+dub: It does not imply a dependency to vibe.d for packages and was
+dub: extended to not only directly build projects, but also to generate
+dub: project files (currently VisualD). Mono-D also supports the use of
+dub: dub.json (dub's package description) as the project file.
+dub:
+dub: Central package registry located at http://code.dlang.org
+dub: https://opencollective.com/dlang
+dub: https://github.com/dlang/dub

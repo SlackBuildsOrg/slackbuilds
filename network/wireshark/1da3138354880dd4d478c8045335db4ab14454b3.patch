@@ -1,0 +1,38 @@
+From 1da3138354880dd4d478c8045335db4ab14454b3 Mon Sep 17 00:00:00 2001
+From: John Thacker <johnthacker@gmail.com>
+Date: Wed, 21 Jan 2026 08:59:05 -0500
+Subject: [PATCH] CMake: Require C++14
+
+We haven't supported any OS or platform with a compiler that doesn't
+support C++14 since 3.6. Qt 6 and stratoshark require C++17. To make
+development and backporting easier, narrow the difference between what
+is supported in the legacy Qt 5 build Qt 6.
+
+AI-Assisted: no
+
+(backported from 88631d7dc3160e9c9b2fefe3b8a56ad8f370c840)
+---
+ CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 69b9c3544db..f818db1fb5e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -72,11 +72,11 @@ include( CMakeOptions.txt )
+ set(CMAKE_C_STANDARD 11)
+ set(CMAKE_C_STANDARD_REQUIRED ON)
+ 
+-# We require minimum C++11. libscap and libsinsp require C++ 17.
++# We require minimum C++14. libscap and libsinsp require C++ 17.
+ if(BUILD_stratoshark OR BUILD_falcodump)
+ 	set(CMAKE_CXX_STANDARD 17)
+ else()
+-	set(CMAKE_CXX_STANDARD 11)
++	set(CMAKE_CXX_STANDARD 14)
+ endif()
+ set(CMAKE_CXX_STANDARD_REQUIRED ON)
+ set(CMAKE_CXX_EXTENSIONS OFF)
+-- 
+GitLab
+

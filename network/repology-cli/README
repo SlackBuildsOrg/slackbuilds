@@ -1,0 +1,4 @@
+repology is a command line interface for Repology.org written in D.
+some examples:
+repology --maintainer rizitis@gmail.com --repo slackbuilds
+repology --repo slackbuilds vlc dmd google-go-lang

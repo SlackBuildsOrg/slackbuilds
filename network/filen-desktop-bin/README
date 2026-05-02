@@ -1,0 +1,8 @@
+filen-desktop-bin (end-to-end encrypted cloud storage client)
+
+Filen is a zero-knowledge, client-side encrypted cloud storage
+provider based in Germany. This GUI client offers automatic syncing
+in different modes, network drive mounting, secure notes with
+collaboration, end-to-end encrypted chats, and more.
+
+This is a repackaging of the official binary .deb package.

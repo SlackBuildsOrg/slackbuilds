@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+            |-----handy-ruler------------------------------------------------------|
+repology-cli: repology-cli (Command line interface for Repology.org)
+repology-cli:
+repology-cli: repology will attempt to autodetect your operating system for
+repology-cli: selecting a repository when --repo is not specified.
+repology-cli: This autodetection works for the BSDs, macOS, and Windows.
+repology-cli: Autodetection works partially for Linux-based operating systems.
+repology-cli: Currently, Alpine, Debian, Fedora, and Ubuntu are autodetected.
+repology-cli: Autodetection works partially for Illumos-based operating systems.
+repology-cli: Currently, OpenIndiana is autodetected.
+repology-cli:
+repology-cli: https://github.com/ibara/repology

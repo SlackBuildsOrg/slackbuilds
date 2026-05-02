@@ -82,9 +82,11 @@ VERSION=$VERSION ./hack/make.sh dynbinary
 
 install -D -m 0755 bundles/dynbinary-daemon/dockerd \
   $PKG/usr/bin/dockerd
+strip --strip-unneeded $PKG/usr/bin/dockerd
 
 install -D -m 0755 bundles/dynbinary-daemon/docker-proxy \
   $PKG/usr/bin/docker-proxy
+strip --strip-unneeded $PKG/usr/bin/docker-proxy
 
 # Integrate required components.
 ln -s runc $PKG/usr/bin/docker-runc

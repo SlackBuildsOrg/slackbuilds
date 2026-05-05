@@ -4,3 +4,4 @@ terminal emulator.
 
 libavif,libheif and libjxl are optional dependencies, if
 present it will support these formats as well.
+

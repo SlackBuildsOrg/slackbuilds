@@ -15,7 +15,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=brlcad
-VERSION=${VERSION:-7.38.2}
+VERSION=${VERSION:-7.42.0}
 SRCVER=rel-${VERSION//./-}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -75,18 +75,17 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-# thanks arch maintainers.
-# fixes build on i586.
-patch -p1 < $CWD/brlcad-skip-gstep.patch
-sed -i 's%#define OPENNURBS_INC_IN_PROGRESS%#define OPENNURBS_INC_IN_PROGRESS\n\n#define ON_'${ENDIAN}'_ENDIAN%' src/other/openNURBS/opennurbs.h
-
+if [ $(cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
+    echo "export PATH for cmake-opt"
+    export PATH="/opt/cmake-opt/bin/:$PATH"
+fi
 
 mkdir -p build
 cd build
 # There is a "known issue" according to the guys on #brlcad and we need
 # the cmake define "-DBRLCAD_ENABLE_STRICT=OFF" for now
 cmake \
-    -DBRLCAD_BUNDLED_LIBS=AUTO \
+    -DBRLCAD_BUNDLED_LIBS=ON \
     -DBRLCAD_ENABLE_OPENGL=ON \
     -DBRLCAD_ENABLE_RUNTIME_DEBUG=${BRLCAD_ENABLE_RUNTIME_DEBUG:-ON} \
     -DBRLCAD_FLAGS_DEBUG=OFF \

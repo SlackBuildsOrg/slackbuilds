@@ -1,0 +1,4 @@
+Recommended before build libcamera to install qt6 (for Slackware 15.0)
+This will give full support to project (qcam etc..)
+
+Usage: /usr/bin/cam --help

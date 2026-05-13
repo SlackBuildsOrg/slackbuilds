@@ -1,13 +1,13 @@
 PRGNAM="MuseScore"
-VERSION="4.6.5"
+VERSION="4.7.0"
 HOMEPAGE="https://github.com/musescore/MuseScore"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/musescore/MuseScore/archive/v4.6.5/MuseScore-4.6.5.tar.gz \
-                 https://raw.githubusercontent.com/musescore/muse_deps/main/harfbuzz/7.1.0/harfbuzz_src.7z \
-                 https://raw.githubusercontent.com/musescore/muse_deps/main/harfbuzz/7.1.0/harfbuzz.cmake"
-MD5SUM_x86_64="f173f3ef81d020ef75f972d449e5d2c9 \
-               695d5daec954dc62409ba85b040b5092 \
+DOWNLOAD_x86_64="https://github.com/musescore/MuseScore/archive/v4.7.0/MuseScore-4.7.0.tar.gz \
+                 https://raw.githubusercontent.com/musescore/muse_deps/main/harfbuzz/12.3.0/harfbuzz_src.7z \
+                 https://raw.githubusercontent.com/musescore/muse_deps/main/harfbuzz/12.3.0/harfbuzz.cmake"
+MD5SUM_x86_64="a5f567798f73cb6f7d084dd1558c8ca6 \
+               b41936599688a524da12adb69c189365 \
                cf9148f6e09761dbe15e3de38e6baced"
 REQUIRES="cmake-opt p7zip MuseScore-Libraries"
 MAINTAINER="Antonio Leal"

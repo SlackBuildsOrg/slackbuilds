@@ -1,0 +1,25 @@
+Post-instllation steps for Slackware
+------------------------------------
+
+1. Copy the content of the example website into the direcory from which you will host your website (using Apache's DocumentRoot as an example): 
+
+   # cp -r /usr/doc/mkws-5.0.0/www.example.com/* /srv/httpd/htdocs/
+
+2. Create your first template named index.upphtml:
+
+   # cd /srv/httpd/htdocs
+   # cat << EOF > index.upphtml
+   <p>
+   #!
+   echo "hello, world"
+   #!
+   </p>
+   EOF
+
+3. Generate your first static site from within the directory:
+
+   # mkws https://example.com
+
+4. Additional information
+
+For more information, including on themes, visit: https://mkws.sh/. 

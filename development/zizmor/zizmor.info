@@ -1,7 +1,7 @@
 PRGNAM="zizmor"
-VERSION="1.25.1"
+VERSION="1.25.2"
 HOMEPAGE="https://github.com/zizmorcore/zizmor"
-DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.25.1/zizmor-1.25.1.tar.gz \
+DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.25.2/zizmor-1.25.2.tar.gz \
           https://static.crates.io/crates/Inflector/Inflector-0.11.4.crate \
           https://static.crates.io/crates/addr2line/addr2line-0.25.1.crate \
           https://static.crates.io/crates/adler2/adler2-2.0.1.crate \
@@ -21,8 +21,8 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.25.1/zizmor-1.25.1.tar
           https://static.crates.io/crates/async-trait/async-trait-0.1.89.crate \
           https://static.crates.io/crates/atomic-waker/atomic-waker-1.1.2.crate \
           https://static.crates.io/crates/autocfg/autocfg-1.5.0.crate \
-          https://static.crates.io/crates/aws-lc-rs/aws-lc-rs-1.15.3.crate \
-          https://static.crates.io/crates/aws-lc-sys/aws-lc-sys-0.36.0.crate \
+          https://static.crates.io/crates/aws-lc-rs/aws-lc-rs-1.17.0.crate \
+          https://static.crates.io/crates/aws-lc-sys/aws-lc-sys-0.41.0.crate \
           https://static.crates.io/crates/backtrace/backtrace-0.3.76.crate \
           https://static.crates.io/crates/base64/base64-0.21.7.crate \
           https://static.crates.io/crates/base64/base64-0.22.1.crate \
@@ -231,7 +231,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.25.1/zizmor-1.25.1.tar
           https://static.crates.io/crates/quote/quote-1.0.45.crate \
           https://static.crates.io/crates/r-efi/r-efi-5.3.0.crate \
           https://static.crates.io/crates/r-efi/r-efi-6.0.0.crate \
-          https://static.crates.io/crates/rand/rand-0.9.2.crate \
+          https://static.crates.io/crates/rand/rand-0.9.4.crate \
           https://static.crates.io/crates/rand_chacha/rand_chacha-0.9.0.crate \
           https://static.crates.io/crates/rand_core/rand_core-0.9.3.crate \
           https://static.crates.io/crates/redox_syscall/redox_syscall-0.5.18.crate \
@@ -253,7 +253,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.25.1/zizmor-1.25.1.tar
           https://static.crates.io/crates/rustls-pki-types/rustls-pki-types-1.12.0.crate \
           https://static.crates.io/crates/rustls-platform-verifier-android/rustls-platform-verifier-android-0.1.1.crate \
           https://static.crates.io/crates/rustls-platform-verifier/rustls-platform-verifier-0.6.1.crate \
-          https://static.crates.io/crates/rustls-webpki/rustls-webpki-0.103.10.crate \
+          https://static.crates.io/crates/rustls-webpki/rustls-webpki-0.103.13.crate \
           https://static.crates.io/crates/rustls/rustls-0.23.34.crate \
           https://static.crates.io/crates/rustversion/rustversion-1.0.22.crate \
           https://static.crates.io/crates/ryu/ryu-1.0.20.crate \
@@ -461,7 +461,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.25.1/zizmor-1.25.1.tar
           https://static.crates.io/crates/zerovec-derive/zerovec-derive-0.11.1.crate \
           https://static.crates.io/crates/zerovec/zerovec-0.11.4.crate \
           https://static.crates.io/crates/zmij/zmij-1.0.2.crate"
-MD5SUM="971d7eb938aa2f36abe79b64594cee6c \
+MD5SUM="17c4f3320042fa1c1c3b9e30fa3ecc71 \
         b7f1a4cd029f5b6ffbc31b3acd5ae605 \
         6185be920ab1302a8b29a5ed44875324 \
         873036bd52f5fd829bd41b3c2ca0bc08 \
@@ -481,8 +481,8 @@ MD5SUM="971d7eb938aa2f36abe79b64594cee6c \
         d29971a331ab6d870ba90d0c019d0c06 \
         6a44afda654777d2930b93366bdfc7f3 \
         3e70bb53cab36a3ef2a02dfce21bc472 \
-        74a1e55fb6071edc7675d6742a9b7b98 \
-        1b7a24af2f146f40f575bd130217cf2e \
+        7450b5cf66eff75aff0da5a5ecf5d931 \
+        4af62b99a77a9f68d51cd005af6ec69c \
         0234fbff6a32192b355625a61e32bcfe \
         5a5f45206802441161524e1be576da1f \
         20084c4c04bcc06fd3d7ff662deca706 \
@@ -691,7 +691,7 @@ MD5SUM="971d7eb938aa2f36abe79b64594cee6c \
         22f52663e9f197191126dd37d9b2669c \
         751468b1f120283e4f6f266867a03837 \
         c8388734c6f93046c31072bea90175df \
-        a6290a543b60d161a9817d1592189855 \
+        f3cde9083d8e495b9e39f25713be42bf \
         6072cecb286422299a2fd6c98319bd0d \
         6ddf5a0e650e6353cb187ec1c474db51 \
         56eeea4cebc8f0fe1d09207656f78ece \
@@ -713,7 +713,7 @@ MD5SUM="971d7eb938aa2f36abe79b64594cee6c \
         4d1e637c5145662898eb9df01ddd3c71 \
         fe89b5c8ce7887d299d9e50042234eb2 \
         50dbd64540d9039c74f14aa09953088c \
-        af1f9cba0945d5ffbc8859ad65540f0d \
+        a8025edd3295abe8a700956d156ccca6 \
         167bc20882c4e36c4850c58bde1c2546 \
         e662b1464700d377cb89a8a9b59bd8c0 \
         dc3cd3d0dc142df381bc6728ef740748 \

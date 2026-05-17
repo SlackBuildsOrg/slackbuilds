@@ -1,14 +1,14 @@
 PRGNAM="yamagi-quake2"
-VERSION="8.60"
+VERSION="8.70"
 HOMEPAGE="https://www.yamagi.org/quake2/"
-DOWNLOAD="https://deponie.yamagi.org/quake2/quake2-8.60.tar.xz \
-	  https://deponie.yamagi.org/quake2/quake2-ctf-1.12.tar.xz \
-	  https://deponie.yamagi.org/quake2/quake2-rogue-2.15.tar.xz \
-	  https://deponie.yamagi.org/quake2/quake2-xatrix-2.16.tar.xz"
-MD5SUM="baa58a288a895fd6c0bed0aa9fc64278 \
-	e559f49a31dfc570f85eae6b3b327864 \
-	dad359e95f9d3fb5872dd1a8fa321170 \
-	f6c5e80b9e6d1ca1a04b99333aad8d9f"
+DOWNLOAD="https://deponie.yamagi.org/quake2/quake2-8.70.tar.xz \
+          https://deponie.yamagi.org/quake2/quake2-ctf-1.13.tar.xz \
+          https://deponie.yamagi.org/quake2/quake2-rogue-2.16.tar.xz \
+          https://deponie.yamagi.org/quake2/quake2-xatrix-2.17.tar.xz"
+MD5SUM="7237f8a94ccd22a0d67d651db0117e75 \
+        3d432a68a1a5438aed07821992d8bba1 \
+        b47168b5f0d434fb24027e28a5114417 \
+        0047b5fdc3eed8017ec19a1cbb243d0f"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

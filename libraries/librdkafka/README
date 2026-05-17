@@ -1,0 +1,2 @@
+librdkafka is a standalone C library compile time
+it has no dependency on the Kafka broker.

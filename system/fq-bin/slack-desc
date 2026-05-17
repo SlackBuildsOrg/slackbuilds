@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+      |-----handy-ruler------------------------------------------------------|
+fq-bin: fq-bin (jq for binary formats)
+fq-bin:
+fq-bin: fq is inspired by the jq tool and language and allows you to work
+fq-bin: with binary formats in the same way. In addition to using jq
+fq-bin: expressions it can also present decoded tree structures, transform,
+fq-bin: slice and concatenate binary data. It supports nested formats and
+fq-bin: features an interactive REPL with auto-completion.
+fq-bin:
+fq-bin: Originally designed to query and debug media codecs and containers
+fq-bin: like MP4, FLAC, JPEG but supports many more formats.
+fq-bin: Homepage: https://github.com/wader/fq

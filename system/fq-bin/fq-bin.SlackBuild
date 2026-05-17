@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Slackware build script for fq-bin
+
+# 2026 Ioannis Anagnostakis
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=fq-bin
+VERSION="${VERSION:-0.17.0}"
+SRCNAM=fq_"$VERSION"_linux_amd64
+ARCH="${ARCH:-$(uname -m)}"
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+# Only x86_64 is supported (pre-built binary)
+case "$ARCH" in
+  x86_64) ;;
+  *) echo "ERROR: Only x86_64 is supported (pre-built binary)." ; exit 1 ;;
+esac
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+rm -rf $PKG
+mkdir -p $PKG/usr/bin/
+
+# The upstream tarball contains just the fq binary
+cd $PKG/usr/bin/
+tar xvf $CWD/$SRCNAM.tar.gz
+chown root:root fq
+chmod 0755 fq
+
+# Docs (not in binary tarball)
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/LICENSE > $PKG/usr/doc/$PRGNAM-$VERSION/LICENSE
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

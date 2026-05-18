@@ -32,7 +32,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=OpenCASCADE
 VERSION=${VERSION:-7.7.0}
-BUILD=${BUILD:-6}
+BUILD=${BUILD:-7}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -126,7 +126,7 @@ cd ..
 
 # CI's sbopkg complains about these, so move them away
 mkdir -p $PKG/usr/share/opencascade
-mv $PKG/usr/bin/{custom,custom_gcc_64,env}.sh $PKG/usr/share/opencascade/
+mv $PKG/usr/bin/{custom,custom_gcc_*,env}.sh $PKG/usr/share/opencascade/
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

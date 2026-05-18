@@ -1,10 +1,10 @@
 #!/bin/bash
-
+#
 # Slackware build script for ee
-
-# Based on http://slackbuilds.org/template.SlackBuild
-
+#
 # Copyright 2014-2017 Thorn Inurcide USA
+# Copyright 2026 r1w1s1
+#
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ee
 EPRGNAM=easyedit
-VERSION=${VERSION:-1.4.6}
+VERSION=${VERSION:-1.5.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -41,13 +41,12 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
 fi
+
+set -e
 
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
@@ -68,14 +67,12 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e
-
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.src.tgz
-cd $EPRGNAM-$VERSION
+tar xvf $CWD/${EPRGNAM}-v${VERSION}.tar.gz || tar xvf $CWD/v$VERSION.tar.gz
+cd $EPRGNAM-v$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -83,17 +80,14 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-CFLAGS="$SLKCFLAGS -w -Wl,--allow-multiple-definition" \
-LD_LIBS=-lm \
-make -j1
+make || exit 1
+make install \
+  DESTDIR=$PKG \
+  PREFIX=/usr || exit 1
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a Artistic Changes ee.i18n.guide README.ee $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a examples Changes ee.i18n.guide README.* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-mkdir -p $PKG/usr/bin $PKG/usr/man/man1
-install -m0755 ee $PKG/usr/bin/
-install -m0644 ee.1 $PKG/usr/man/man1/
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done

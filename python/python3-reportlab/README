@@ -24,3 +24,4 @@ So you have to install reportlab first and then extract the source
 to some $DIR and then cd to $DIR/reportlab-$VER/docs and then
 run python3 genAll.py it will generate a pdf file, which you can copy it
 to some other convenient location.
+

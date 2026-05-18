@@ -15,3 +15,4 @@ To save the generated font in a different
 directory run
 
 fontmake -u MyFontFamily.ufo -o ttf --output-dir $DIR/ttf
+

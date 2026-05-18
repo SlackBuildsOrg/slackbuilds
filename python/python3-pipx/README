@@ -6,3 +6,7 @@ Easily list, upgrade, and uninstall packages that were installed
 with pipx.pipx runs with regular user permissions never calling
 sudo pip install
 
+Note:
+This is the last version supported in slackware 15.0.pipx can
+no longer be updated due to Python 3.9 reaching EOL.
+

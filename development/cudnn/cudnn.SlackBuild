@@ -4,6 +4,8 @@
 
 # Copyright 2016 Nikolay Nikolov <nikobnikolov[at]gmail[dot]com>
 # All rights reserved.
+# Copyright 2026 Christoph Willing	Sydney, Australia
+# All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -26,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cudnn
 VERSION=${VERSION:-9.21.1.3_13}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -42,9 +44,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -62,6 +61,7 @@ cd $TMP
 rm -rf $BASENAME
 tar xvf $CWD/$BASENAME.tar.xz
 cd $BASENAME
+tar xf $CWD/cudnn_samples-source-$CUDNN_VERSION-archive.tar.xz
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -69,24 +69,54 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p $PKG/usr/share/cuda/include
+mkdir -p $PKG/usr/include/$PRGNAM
 cp -P \
   include/* \
-$PKG/usr/share/cuda/include
+$PKG/usr/include/$PRGNAM
 
-mkdir -p $PKG/usr/share/cuda/lib64
+mkdir -p $PKG/usr/lib64/$PRGNAM
 cp -P \
   lib/libcudnn* \
-$PKG/usr/share/cuda/lib64
+$PKG/usr/lib64/$PRGNAM
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -p LICENSE $PKG/usr/doc/$PRGNAM-$VERSION
+cp $CWD/cudnn_test.c $PKG/usr/doc/$PRGNAM-$VERSION
+cp $CWD/README.slackware $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mv cudnn_samples-source-$CUDNN_VERSION-archive/src/cudnn_samples_v9 $PKG/usr/doc/$PRGNAM-$VERSION
+cp -p cudnn_samples-source-$CUDNN_VERSION-archive/LICENSE $PKG/usr/doc/$PRGNAM-$VERSION/cudnn_samples_v9
+
+mkdir -p $PKG/usr/share/pkgconfig
+sed \
+  -e "s:@PROJECT_NAME@:$PRGNAM:g" \
+  -e "s:@PROJECT_VERSION@:$VERSION:g" \
+  -e "s:@PROJECT_DESCRIPTION@:CUDA Deep Neural Network library:g" \
+  -e "s:@INSTALL_PREFIX@:/usr:g" \
+  -e "s:@LIBDIRSUFFIX@:64:g" \
+  $CWD/${PRGNAM}.pc.in \
+  > $PKG/usr/share/pkgconfig/${PRGNAM}.pc
+chmod 0644 $PKG/usr/share/pkgconfig/${PRGNAM}.pc
+
+cat >doinst.sh <<EOF
+echo "/usr/lib64/$PRGNAM" >  etc/ld.so.conf.d/${PRGNAM}.conf
+/sbin/ldconfig
+EOF
+cat >douninst.sh <<EOF
+if [ -f etc/ld.so.conf.d/${PRGNAM}.conf ]; then
+  rm etc/ld.so.conf.d/${PRGNAM}.conf
+  /sbin/ldconfig
+fi
+EOF
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat doinst.sh > $PKG/install/doinst.sh
+cat douninst.sh > $PKG/install/douninst.sh
 
 cd $PKG
-/sbin/makepkg -l n -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

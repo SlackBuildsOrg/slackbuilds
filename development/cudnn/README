@@ -4,10 +4,8 @@ provides highly tuned implementations for standard routines such
 as forward and backward convolution, pooling, normalization, and
 activation layers. cuDNN is part of the NVIDIA Deep Learning SDK.
 
-You will need to register for NVIDIA developer account to download the
-source.
+Only x86_64 systems are supported by this SlackBuild.
 
-Make sure you create the CUDA_HOME environment variable and add it to
-your ~/.bashrc. The default should be
+You may need to register for NVIDIA developer account to download the
+source tarball.
 
-CUDA_HOME=/usr/share/cuda

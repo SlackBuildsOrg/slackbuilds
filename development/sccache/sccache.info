@@ -1,12 +1,12 @@
 PRGNAM="sccache"
 VERSION="0.15.0"
 HOMEPAGE="https://github.com/mozilla/sccache"
-DOWNLOAD="UNSUPPORTED"
-MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/mozilla/sccache/archive/v0.15.0/sccache-0.15.0.tar.gz \
+DOWNLOAD="https://github.com/mozilla/sccache/archive/v0.15.0/sccache-0.15.0.tar.gz \
 	https://sourceforge.net/projects/slackbuildsdirectlinks/files/sccache/sccache-0.15.0-vendor.tar.xz"
-MD5SUM_x86_64="99270f72dabcef9cdfd31e27d1ccd466 \
+MD5SUM="99270f72dabcef9cdfd31e27d1ccd466 \
 	b3d60f4dcd7dbecd033b78ec3299e1b0"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
 REQUIRES="rust-opt"
 MAINTAINER="Alan Alberghini"
 EMAIL="414n@slacky.it"

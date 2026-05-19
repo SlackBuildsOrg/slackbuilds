@@ -33,3 +33,6 @@ Alternatively you can use the environment variable RUSTC_WRAPPER:
 
   export RUSTC_WRAPPER=/path/to/sccache
   cargo build
+
+NOTE: the sccache-dist binary is only built on x86_64, as other
+architectures are unsupported upstream.

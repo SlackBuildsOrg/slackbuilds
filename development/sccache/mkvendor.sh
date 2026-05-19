@@ -1,4 +1,6 @@
 #!/bin/sh
+# Use this script to package up vendored dependencies for sccache.
+# It should be run inside an unpacked sccache source tarball root dir.
 
 PWD="$CWD"
 OUTDIR=${OUTDIR:-/tmp}

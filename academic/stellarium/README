@@ -7,3 +7,12 @@ acceleration.
 
 gpsd is an optional dependency for enabling location detection through
 a GPS device.
+
+qt6 is another optional dependency. It should enable speech and the sky
+culture converter component. To enable building using qt6, set the QT6
+variable before building:
+
+  QT6=yes sh stellarium.SlackBuild
+
+NOTE: for the qt6 build to work, you need to build BOTH the CalcMySky
+and QXlsx dependencies with qt6 too.

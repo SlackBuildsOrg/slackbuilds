@@ -5,6 +5,6 @@ DOWNLOAD="https://pypi.io/packages/source/l/language-data/language_data-1.4.0.ta
 MD5SUM="cf1dfdaaff5e7b6bd4c09b2896e0414c"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-wheel python3-poetry-core python3-marisa-trie"
+REQUIRES="python3-wheel python3-poetry-core python3-marisa-trie python3-setuptools-scm-opt python3-setuptools-opt"
 MAINTAINER="Vijay Marcel"
 EMAIL="vijaymarcel@outlook.com"

@@ -5,3 +5,4 @@ Example:
 
 print(jaconv.alphabet2kana('mamisan'))
 まみさん
+

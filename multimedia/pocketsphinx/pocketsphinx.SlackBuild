@@ -2,8 +2,7 @@
 
 # Slackware build script for pocketsphinx
 
-# Copyright 2022-2025  Vijay Marcel
-
+# Copyright 2022-2026  Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -11,6 +10,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -27,25 +30,22 @@
 # --------------------------------------------------------------------
 
 # 03/09/2022: Added to SBo
-
 # 14/07/2023: Updated to github commit id 8221706.This version joins Opencv4 and lensfun
 # in not compiling with FFmpeg. FFmpeg will detect pocketsphinx but it will eventually
 # run into error during compilation.This seems to be FFmpeg upstream problem so
 # don't enable pocketsphinx in FFmpeg when you try to recompile it.
-
 # 19/02/2024: Updated to version 5.0.3. Removed python plugin.
 # one of the reasons why pocketsphinx fails to build with FFmpeg is due to
 # intentional API break in pocketsphinx. This is an upstream FFmpeg
 # problem see https://trac.ffmpeg.org/ticket/10520
-
 # 18/02/2025: Updated to version 5.0.4
-
+# 20/05/2026: updated to version 5.1.0
 # ----------------------------------------------------------------------------------------
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pocketsphinx
-VERSION=${VERSION:-5.0.4}
+VERSION=${VERSION:-5.1.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -67,21 +67,17 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-march=i586 -mtune=i686 -pipe -O2 -fPIC"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-march=i686 -mtune=i686 -pipe -O2 -fPIC"
+if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-march=$ARCH -mtune=i686 -pipe -O2 -fPIC"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-march=x86-64 -mtune=generic -pipe -O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
-  SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
+  echo "This SlackBuild will not run on $ARCH" && exit 1
 fi
 
-set -e
+set -euo pipefail
 trap 'echo "$0 FAILED at line $LINENO!" | tee -a $OUTPUT/error-${PRGNAM}.log' ERR
 
 rm -rf $PKG
@@ -90,15 +86,18 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
-
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-cmake -B build -S $TMP/$PRGNAM-$VERSION   \
+export PATH=/opt/cmake-opt/bin:/opt/cmake-opt/share/cmake-3.31/Modules:/opt/cmake-opt/share/aclocal:$PATH
+
+cmake --version
+
+cmake -B build -S $TMP/$PRGNAM-$VERSION \
     -DCMAKE_C_FLAGS="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -135,4 +134,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

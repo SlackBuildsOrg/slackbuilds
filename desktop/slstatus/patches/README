@@ -42,3 +42,16 @@ the SlackBuild script.
   characters; the format specifier %12[a-zA-Z ] reads up to 12 chars
   plus a NUL terminator (13 bytes) into a 12-byte buffer. Increases
   state buffer to 13 in both battery_state() and battery_remaining().
+
+05-fmt-human-no-space.patch
+  local patch
+  Author: Ricardson Williams <r1w1s1@fastmail.com>
+  Date:   Thu, 14 May 2026
+
+  Remove the space between the numeric value and unit prefix in
+  fmt_human() output:
+
+    "2.4 Gi" -> "2.4Gi"
+
+  This produces more compact status output, which is useful for
+  narrow status bars and minimalist desktop setups.

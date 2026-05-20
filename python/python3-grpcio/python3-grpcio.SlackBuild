@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-grpcio
-VERSION=${VERSION:-1.78.0}
+VERSION=${VERSION:-1.80.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -80,6 +80,10 @@ PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH="/opt/python$PYVER/site-packages:/opt/cython/python$PYVER/site-packages"
 export PATH="/opt/cython/bin:$PATH"
 
+# Reference:
+# https://gitlab.archlinux.org/archlinux/packaging/packages/grpc/-/blob/main/fix-python-system-abseil.patch
+patch -p1 < $CWD/fix-python-system-abseil.patch
+
 # Build python3-grcpio
 GRPC_PYTHON_CFLAGS="-fvisibility=hidden -fno-wrapv -fno-exceptions $(pkg-config --cflags protobuf) -std=c++17" \
   python3 setup.py install --root=$PKG
@@ -89,6 +93,7 @@ sed -r -i \
     -e '/^CC_FILES=\[/,/\]/{/^CC_FILES=\[/n;/\]/!d;}' \
     -e '/^CC_INCLUDES=\[/,/\]/{/^CC_INCLUDES=\[/n;/\]/!d;}' \
     -e "s@^(PROTO_INCLUDE=')[^']+'@\1/usr/include'@" \
+    -e "s@^(\s*').*/(google/protobuf/.*\.proto',?)\$@\1\2@" \
     -e '/^PROTOBUF_SUBMODULE_VERSION=/d' \
     tools/distrib/python/grpcio_tools/protoc_lib_deps.py
 ln -s ../../../.. tools/distrib/python/grpcio_tools/grpc_root

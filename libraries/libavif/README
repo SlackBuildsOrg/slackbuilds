@@ -24,4 +24,3 @@ avifdec -h  will show help
 avifenc [-options] input.jpg|jpeg|png|y4m  output.avif
 
 avifenc -h  will show help
-

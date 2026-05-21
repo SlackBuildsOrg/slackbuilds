@@ -17,4 +17,3 @@ passed to the SlackBuild script (VAR=<value> ./xbattmon.SlackBuild):
     Battery percentage at which the bar starts blinking.
 
   TRANSPARENT=yes|no  (default: no)
-

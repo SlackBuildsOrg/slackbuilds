@@ -16,5 +16,3 @@ The modules that the application package provides are:
     system - interaction with the underlying operating system.
     notification - an application wide notification system.
     version - manage version numbers for applications and packages.
-
-

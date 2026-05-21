@@ -37,6 +37,7 @@ SoapySDR, SoapyRemote
 
 Optional features can be enabled installing:
 aptdec, cm256cc, dab_lib, mbelib, serialDV, dsdcc, sgp4, libsigmf,
-ggmorse, rnnoise, inmarsatc
+ggmorse, rnnoise, inmarsatc, cspice
+(not all available at slackbuilds.org)
 
 SERVER=yes|no (Default is no) to compile also the server variant

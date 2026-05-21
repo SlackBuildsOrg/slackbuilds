@@ -5,4 +5,3 @@ This is an implementation written in C. The game rules are defined with
 ruleset files and are therefore somewhat flexible. There is a computer
 player and an X interface, but both are optional. Network play is not
 supported.
-

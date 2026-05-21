@@ -8,4 +8,3 @@ FEATURES:
  o Full and numbered levels of incremental backup (acts like "dump")
  o Compression and buffering options for all backup types
  o Does remote filesystems over SSH
-

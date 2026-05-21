@@ -5,4 +5,3 @@ GObject-Introspectable language.
 
 Template-GLib allows you to access properties on GObjects as well as
 call simple methods via GObject-Introspection.
-

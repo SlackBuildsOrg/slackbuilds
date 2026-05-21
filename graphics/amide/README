@@ -32,5 +32,3 @@ FEATURES:
 * Alignment of data sets is supported using fiducial markers.
 * A profile tool is included that can calculate gaussian fits and
   FWHM's of the generated line profiles.
-
-

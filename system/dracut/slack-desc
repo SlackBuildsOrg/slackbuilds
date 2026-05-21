@@ -10,9 +10,9 @@ dracut: dracut (creates an initrd for the kernel)
 dracut:
 dracut: dracut contains tools to create bootable initrds for the Linux kernel.
 dracut: dracut will include the needed Linux kernel modules which are then
-dracut: loaded by the event-based udev. 
+dracut: loaded by the event-based udev.
 dracut:
-dracut: Homepage: https://github.com/dracut-ng/dracut-ng/wiki
+dracut: Homepage: https://github.com/dracut-ng/dracut/
 dracut:
 dracut:
 dracut:

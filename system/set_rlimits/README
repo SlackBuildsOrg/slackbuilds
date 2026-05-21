@@ -5,4 +5,3 @@ limits rather than just those related to realtime priorities.
 
 set_rlimits was developed by Jonathan Woithe 
 http://www.physics.adelaide.edu.au/~jwoithe/
-

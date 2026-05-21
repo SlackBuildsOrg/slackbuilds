@@ -10,4 +10,3 @@ Test that QUIC works by
 curl-quic -v --http3-only https://cloudflare-quic.com
 
 or any other QUIC-enabled website.
-

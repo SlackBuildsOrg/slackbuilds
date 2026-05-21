@@ -18,4 +18,3 @@ mimic real-world conditions, leading to zero false positives.
 
 Only the nuclei binary will be linked in /usr/bin. All the other
 binaries will be available in /opt/nuclei/bin
-

@@ -43,4 +43,3 @@ use openmp, it is best to build mpb with the same option. You may
 also need to install mpi4py using pip.  If you do not want python 
 support, specify "--without-python", and in this case installing mpb 
 is not necessary.
-

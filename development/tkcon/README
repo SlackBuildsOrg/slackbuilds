@@ -3,4 +3,3 @@ and works on all platforms where Tcl/Tk is available. It is meant
 primarily to aid one when working with the little details inside  
 tcl and tk, giving Unix users the GUI console provided by default 
 int the Mac and Windows Tk implementations.
-

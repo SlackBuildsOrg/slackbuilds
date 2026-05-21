@@ -19,4 +19,3 @@ By default, the menu entries grouped in a submenu folder
 (multilevel menu entry). If you want to disable this, do:
 
 SUBMENU="NO" ./openoffice.org.SlackBuild
-

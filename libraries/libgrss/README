@@ -7,4 +7,3 @@ utility.
 LibGRSS is written in C.
 
 Tracker can use libgrss to parse feeds.
-

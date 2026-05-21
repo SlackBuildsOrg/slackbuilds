@@ -17,4 +17,3 @@ architectures with a environment variable as following:
 Optional:
  - protobuf-c (for tracing support)
  - hdf5
-

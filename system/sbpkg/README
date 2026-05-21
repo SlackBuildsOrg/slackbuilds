@@ -14,4 +14,3 @@ Simple, fast and full-featured SlackBuilds.org package manager written in Rust.
 - Clean the build directory
 - Lock file to prevent multiple simultaneous instances
 - Color output support
-

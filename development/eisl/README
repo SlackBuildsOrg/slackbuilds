@@ -12,5 +12,3 @@ under a BSD license, featuring:
   linear algebra, combinatorics, GNU Plot interop, lazy evaluation
   (delay / force, l*), Tcl/Tk interop, TCP sockets, Unicode support,
   prolog interpreter, etc.
-
-

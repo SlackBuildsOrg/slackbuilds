@@ -10,4 +10,3 @@ If you're an application developer looking to add support for some
 kind of fingerprinting to your software, libfprint is exactly what 
 you are looking for. It provides a simple API for you to enroll 
 fingerprints and then identify users later on. 
-

@@ -16,4 +16,3 @@ The following are optional dependancies:
   - capstone
   - jsonschema
   - s3fs-fuse
-

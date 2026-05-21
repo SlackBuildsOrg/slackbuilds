@@ -16,4 +16,3 @@ NOTE: Will need to have PYTHONPATH set to use as slackware's tomli
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH=/opt/python$PYVER/site-packages
-

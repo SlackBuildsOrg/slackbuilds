@@ -8,4 +8,3 @@ will have to install the dependency and pass the build the following
 environment variable to allow building against libsoup3:
 
  SOUP3=true
-

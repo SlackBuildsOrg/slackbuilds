@@ -7,4 +7,3 @@ the Diffie-Hellman key exchange with 1536 bits group size, and the
 SHA-1/SHA-256 hash functions.
 
 Its primary purpose is to be a dependency for the Blink SIP client.
-

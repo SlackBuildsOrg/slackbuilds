@@ -42,4 +42,3 @@ IMPORTANT: The version installed by this SlackBuild does NOT include the
            modules please consider the numpy-legacy SlackBuild which
            is available for python2 only and does not conflict with this
            installation of numpy.
-

@@ -14,4 +14,3 @@ Compound (struct), variable length (vlen) and enumerated (enum) data
 types are supported, but not the opaque data type. Mixtures of compound,
 vlen and enum data types (such as compound types containing enums, or
 vlens containing compound types) are not supported.
-

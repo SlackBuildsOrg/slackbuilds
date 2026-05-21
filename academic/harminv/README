@@ -11,4 +11,3 @@ This package requires: lapack
 If the build script can find the ATLAS libraries, it will
 adapt the configure options to use them rather than the 
 default lapack.
-

@@ -24,4 +24,3 @@ GStreamer and helper libraries.
 
   * `vaapioverlay` is a accelerated compositor that blends or
     composite different video streams.
-

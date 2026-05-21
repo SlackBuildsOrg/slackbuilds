@@ -26,4 +26,3 @@ As required by maxima's internal help facility:
 - The info files are not gzipped.
 - Two .lisp files install to /usr/info.
 These will trigger errors and warnings from sbopkglint.
-

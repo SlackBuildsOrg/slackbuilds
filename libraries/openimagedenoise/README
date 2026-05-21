@@ -33,4 +33,3 @@ is not mandatory to use these. To optimize a filter for a specific
 renderer, sample count, content type, scene, etc., it is possible to
 train the model using the included training toolkit and user-provided
 image datasets.
-

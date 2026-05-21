@@ -1,4 +1,3 @@
 Sysprof is a sampling profiler that uses a kernel module to generate
 stacktraces which are then interpreted by the userspace program
 "sysprof".
-

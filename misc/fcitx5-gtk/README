@@ -12,4 +12,3 @@ beforehand. For example:
 
     GTK_PATH=/your/install/path/lib/gtk-3.0 gtk-query-immodules-3.0 \
         --update-cache
-

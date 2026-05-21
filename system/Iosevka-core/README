@@ -22,4 +22,3 @@ This package conflicts with the full "Iosevka" package available at:
 
 Both packages install files with the same names. Only one of them
 should be installed at a time.
-

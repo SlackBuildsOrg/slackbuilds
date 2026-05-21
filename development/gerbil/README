@@ -10,4 +10,3 @@ also provides a full-blown module system, similar to PLT Scheme's
 (sorry, Racket's) modules. The main difference from Racket is that
 Gerbil modules are single instantiation, supporting high performance
 ahead of time compilation and compiled macros.
-

@@ -17,5 +17,3 @@ as ldmtool does not update the LDM metadata in any way.
 This means Windows will have no way to determine that the partitions
 are not synchronised when it subsequently mounted,
 which may result in corruption.
-
-

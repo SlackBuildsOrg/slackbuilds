@@ -11,4 +11,3 @@ and group files, etc.
  To get started, see schroot.conf(5) and schroot-setup(5).
 
  This package will link against Linux-PAM if it is present.
-

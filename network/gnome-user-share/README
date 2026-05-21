@@ -19,4 +19,3 @@ to talk to systemd and will not start/stop the daemon. Instead, the
 daemon can be run directly from its installed path of:
 
  /usr/libexec/gnome-user-share-webdav
-

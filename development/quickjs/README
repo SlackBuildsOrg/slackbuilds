@@ -34,4 +34,3 @@ e.g.:
   cc -I /usr/include/quickjs out.c -o executable -lquickjs
 I believe this is the less intrussive set of changes to achieve those
 goals.
-

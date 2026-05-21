@@ -12,4 +12,3 @@ using coverage run this plugin does some extras:
 All features offered by the coverage package should work, either
 through pytest-cov’s command line options or through coverage’s
 config file.
-

@@ -24,4 +24,3 @@ used if available at build time:
    (other Java varieties probably also work)
  - apache-ant Java build tool
   (only relevant if Java is also detected)
-

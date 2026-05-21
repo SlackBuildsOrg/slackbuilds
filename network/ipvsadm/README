@@ -7,4 +7,3 @@ server cluster is fully transparent to end users, and the users
 interact as if it were a single high-performance virtual server. 
 
 ipvsadm is the admin tool for the Linux Virtual Server
-

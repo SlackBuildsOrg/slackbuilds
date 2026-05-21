@@ -6,4 +6,3 @@ easily as from a Unix shell script but with a perl-ish feel
 (contextual output). So this is not a universal module for running
 external programs (like IPC::Run) but instead a simpler interface for
 a common style of external programs.
-

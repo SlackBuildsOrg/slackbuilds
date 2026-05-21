@@ -10,4 +10,3 @@ variable flip.
 
   Optional building mode set with environment variables:
   - TESTS=yes (performs tests, requires dimod)
-

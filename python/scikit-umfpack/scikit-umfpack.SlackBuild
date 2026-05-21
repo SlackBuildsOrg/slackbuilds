@@ -22,8 +22,10 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#### 20230515 bkw: Modified by SlackBuilds.org. See section beginning
-#### with "NOT ALLOWED", below.
+# 20260521 bkw: Modified by SlackBuild.org:
+# - get rid of hack that patched files in /usr/include/umfpack, since
+#   it's no longer needed.
+# - abort on error (set -e).
 
 cd $(dirname $0) ; CWD=$(pwd)
 
@@ -64,7 +66,7 @@ else
   LIBDIRSUFFIX=""
 fi
 
-#set -e
+set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -79,24 +81,12 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-#### 20230515 bkw: This is NOT ALLOWED. Modifying files in the real
-#### /usr, outside of $PKG, is forbidden. SlackBuilds may not do this.
-#### Fix this. Ideally, get the umfpack maintainer to fix it in that
-#### build, since system headers should not use "blah.h" for includes.
- ( if [ -f /usr/include/umfpack/umfpack.h ]; then
-  echo "umfpack detected."
-  echo
-  echo "The umfpack.h needs to be patched before building to ensure that"
-  echo "the scikit-umfpack has amd module and its amd.h include is found."
-  echo
-  cd /usr/include/umfpack
-    find . -type f -name "umfpack.h" -print0 | xargs -0 sed -i 's/#include "amd.h"/#include <amd\/amd.h>/g'
-fi )
-
 # Python 2.7 will be dropped in the future.
 python2 setup.py install --root=$PKG
 
-python3 setup.py install --root=$PKG
+# 20260521 bkw: allow this to fail (README doesn't document how to get
+# it to work anyway).
+python3 setup.py install --root=$PKG || true
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

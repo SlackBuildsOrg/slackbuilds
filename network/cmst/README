@@ -6,4 +6,3 @@ interfaces with that daemon. You can see what technologies and
 services connman has found, and for wifi services an agent is 
 registered to assist in obtaining the information from you necessary 
 to logon to the wifi service.
-

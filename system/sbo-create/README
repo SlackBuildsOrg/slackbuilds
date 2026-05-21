@@ -15,4 +15,3 @@ from file generation to submission.
 - Packages for submission and submits via git commit/push or the SBo web form.
 - Queries repology.org for package version status by maintainer e-mail.
 - Syncs the local SBo git repository and manages working branches.
-

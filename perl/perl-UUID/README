@@ -5,4 +5,3 @@ servers without communication between the servers, and without fear
 of a name clash.
 The generated UUIDs can be reasonably expected to be unique within a
 system, and unique across all systems.
-

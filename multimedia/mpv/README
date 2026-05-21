@@ -32,4 +32,3 @@ BUILD_OPTS="-Dopenal=enabled -Dsdl2=enabled -Djavascript=disabled" \
 Runtime support for youtube videos requires installation of youtube-dl
 (available from SBo). Watch with something like:
   mpv https://www.youtube.com/watch?v=mAFMJ1LnQu8
-

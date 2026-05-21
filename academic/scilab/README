@@ -15,4 +15,3 @@ environments, try delete/rename $HOME/.Scilab to resolve.
 zulu-openjdk8, openjdk8 or jdk are optional. Scilab will use the
 system-wide installed java if found. Otherwise, scilab will use
 its own internal jre.
-

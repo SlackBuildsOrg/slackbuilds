@@ -11,4 +11,3 @@ Can use either static or dynamic memory allocation The library doesn't
 impose any constraints on memory management.
 
 ISC license You can use it freely, even for commercial purposes.
-

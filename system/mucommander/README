@@ -16,4 +16,3 @@ Here's a non-exhaustive list of what you'll find:
 Optional dependency: android-tools (to connect to Android devices,
 make sure the adb server is running. You can start it by running
 `adb start-server' from the command line).
-

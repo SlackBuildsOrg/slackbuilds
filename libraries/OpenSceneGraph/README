@@ -18,4 +18,3 @@ recommended for building a fully featured OpenSceneGraph. However,
 note that you may not want support for three distinct widget toolkits
 (fltk, fox-toolkit, wxGTK3) in addition to the default GTK & SDL2
 viewers.
-

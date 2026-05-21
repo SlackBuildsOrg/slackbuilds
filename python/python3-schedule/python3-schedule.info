@@ -1,5 +1,5 @@
 PRGNAM="python3-schedule"
-VERSION="1.2.0"
+VERSION="1.2.1"
 HOMEPAGE="https://github.com/dbader/schedule"
 DOWNLOAD="https://files.pythonhosted.org/packages/29/22/9dd374cbf76a42ece1f1f41cc8f4957f0ad512577372527cd3dd52758241/schedule-1.2.1.tar.gz"
 MD5SUM="ecb436a797e1a149bac4643330b268ca"

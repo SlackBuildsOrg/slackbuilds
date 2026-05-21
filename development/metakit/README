@@ -17,4 +17,3 @@ This script builds libmk4, Mk4tcl (bindings for Tcl) and Mk4py
 (bindings for Python)
 If Mk4Py is not desired, the user may set WITH_PYTHON to "NO", e.g.:
   WITH_PYTHON="NO" ./Mk4tcl.SlackBuild
-

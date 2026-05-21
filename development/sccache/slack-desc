@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+sccache: sccache (Shared Compilation Cache)
+sccache:
+sccache: sccache is a ccache-like tool. It is used as a compiler wrapper and
+sccache: avoids compilation when possible. Sccache has the capability to
+sccache: utilize caching in remote storage environments, including various
+sccache: cloud storage options, or alternatively, in local storage.
+sccache:
+sccache:
+sccache: Homepage:
+sccache:
+sccache: https://github.com/mozilla/sccache

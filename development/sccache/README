@@ -1,0 +1,35 @@
+sccache - Shared Compilation Cache
+
+sccache is a ccache-like compiler caching tool. It is used as a compiler
+wrapper and avoids compilation when possible, storing cached results
+either on local disk or in one of several cloud storage backends.
+
+sccache includes support for caching the compilation of Assembler, C/C++
+code, Rust, as well as NVIDIA's CUDA using nvcc, and clang, AMD's ROCm
+HIP.
+
+sccache also provides icecream-style distributed compilation (automatic
+packaging of local toolchains) for all supported compilers (including
+Rust). The distributed compilation system includes several security
+features that icecream lacks such as authentication, transport layer
+encryption, and sandboxed compiler execution on build servers. See the
+distributed quickstart guide for more information.
+
+Running sccache is like running ccache: prefix your compilation commands
+with it, like so:
+
+  sccache gcc -o foo.o -c foo.c
+
+If you want to use sccache for caching Rust builds you can define
+build.rustc-wrapper in the cargo configuration file. For example, you
+can set it globally in $HOME/.cargo/config.toml by adding:
+
+  [build]
+  rustc-wrapper = "/path/to/sccache"
+
+Note that you need to use cargo 1.40 or newer for this to work.
+
+Alternatively you can use the environment variable RUSTC_WRAPPER:
+
+  export RUSTC_WRAPPER=/path/to/sccache
+  cargo build

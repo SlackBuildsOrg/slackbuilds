@@ -7,4 +7,3 @@ packaged into a single Authentication-Results header.
 
 It can also DKIM and ARC sign messages and output the corresponding
 signature header fields.
-

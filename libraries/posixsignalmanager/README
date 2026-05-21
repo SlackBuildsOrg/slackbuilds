@@ -1,4 +1,3 @@
 Library safe, synchronous and asynchronous handling of posix signals
 for Qt applications and libraries.This library offers an interface
 where multiple parts of an application can share access to signals.
-

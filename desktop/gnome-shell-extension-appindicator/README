@@ -10,4 +10,3 @@ Features:
   - Legacy tray icons
   - Middle mouse click an icon to send a 'SecondaryActivate' event to 
     the application. Support needs to be implemented in the application
-

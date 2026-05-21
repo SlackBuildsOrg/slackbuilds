@@ -24,4 +24,3 @@ Some users have experienced problems when Tests component is
 enabled, so is now turned off by default. It may be reenabled by
 setting the environment variable
     TESTS=yes
-

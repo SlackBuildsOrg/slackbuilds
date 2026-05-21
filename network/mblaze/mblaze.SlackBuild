@@ -27,7 +27,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 PRGNAM=mblaze
-VERSION=${VERSION:-1.3}
+VERSION=${VERSION:-1.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

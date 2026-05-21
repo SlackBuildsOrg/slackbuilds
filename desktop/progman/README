@@ -22,4 +22,3 @@ Example:
   $ mkdir -p ~/.config/progman
   $ cp /usr/doc/progman-1.0/progman.ini \
       ~/.config/progman/progman.ini
-

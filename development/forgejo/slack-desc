@@ -1,0 +1,12 @@
+        |-----handy-ruler------------------------------------------------------|
+forgejo: forgejo (self-hosted lightweight software forge)
+forgejo:
+forgejo: Forgejo is a self-hosted lightweight software forge.
+forgejo: It provides Git repository hosting, issues, pull requests,
+forgejo: wiki, releases, packages, and optional CI integration.
+forgejo:
+forgejo: This SlackBuild builds Forgejo from source.
+forgejo:
+forgejo: Homepage: https://forgejo.org
+forgejo:
+forgejo:

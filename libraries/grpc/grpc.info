@@ -7,6 +7,6 @@ MD5SUM="dc3e0cbfb480db5ea814b9741ac37138 \
         0b208800a68548cbf2d4bff763c050a2"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="protobuf3 re2"
+REQUIRES="protobuf3 re2 abseil-cpp"
 MAINTAINER="Isaac Yu"
 EMAIL="isaacyu@protonmail.com"

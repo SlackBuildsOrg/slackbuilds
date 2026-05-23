@@ -1,9 +1,9 @@
-cudaroot=/opt/cuda
+cudaroot=@CUDA_ROOT@
 libdir=${cudaroot}/targets/x86_64-linux/lib
 includedir=${cudaroot}/targets/x86_64-linux/include
 
-Name: cufft
+Name: @PROJECT_NAME@
 Description: CUDA Fast Fourier Transform
-Version: 11.0
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lcufft
 Cflags: -I${includedir}

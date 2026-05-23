@@ -31,7 +31,7 @@ PRGNAM=cudatoolkit_12
 FILENAME=cuda
 VERSION=${VERSION:-12.9.1}
 DRIVER=${DRIVER:-575.57.08}
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-4}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -65,12 +65,13 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 mkdir -p $PRGNAM-$VERSION
 
-echo -n "Unpacking .run file ..."
+echo -n "Unpacking .run file ... "
 sh $CWD/"${FILENAME}"_"${VERSION}"_"${DRIVER}"_linux.run --extract=$(readlink -f $PRGNAM-$VERSION)
 echo
 
 cd $PRGNAM-$VERSION
 
+echo -n "Installing into final locations ... "
 # Clean unused files & directories
 find . -name cuda-uninstaller -delete
 find . -name .lock -delete
@@ -78,10 +79,10 @@ rm -r NVIDIA*.run bin
 
 # legal stuff
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp  EULA.txt version.json $PKG/usr/doc/$PRGNAM-$VERSION
-cp  cuda_documentation/{CUDA_Toolkit_Release_Notes.txt,DOCS,README} $PKG/usr/doc/$PRGNAM-$VERSION/
-cp  cuda_documentation/EULA.txt $PKG/usr/doc/$PRGNAM-$VERSION/EULA-doc.txt
-cp  cuda_documentation/tools/* $PKG/usr/doc/$PRGNAM-$VERSION/
+mv EULA.txt version.json $PKG/usr/doc/$PRGNAM-$VERSION
+mv cuda_documentation/{CUDA_Toolkit_Release_Notes.txt,DOCS,README} $PKG/usr/doc/$PRGNAM-$VERSION/
+mv cuda_documentation/EULA.txt $PKG/usr/doc/$PRGNAM-$VERSION/EULA-doc.txt
+mv cuda_documentation/tools/* $PKG/usr/doc/$PRGNAM-$VERSION/
 rm -rf EULA.txt version.json cuda_documentation
 
 # extras
@@ -101,8 +102,18 @@ else
   rm -rf nsight_compute nsight_systems nsightee_plugins
 fi
 for component in *; do
-  cp -alr --force "$component"/* "${PKG}/opt/${CPREFIX}/"
+  cp -alr --force "$component"/* "${PKG}"/opt/"${CPREFIX}"/
+  rm -rf $component
 done
+
+# Add a symlink lib->lib64 as some libraries might expect that (FS#76951)
+( cd "${PKG}"/opt/"${CPREFIX}" && ln -sr lib64 lib)
+
+# Define compilers for CUDA to use.
+# This allows use of different versions of GCC if necessary
+# (although still locked to compilers available when running this SlackBuild)
+ln -s "$(readlink -f /usr/bin/gcc)" "${PKG}"/opt/"${CPREFIX}"/bin/gcc
+ln -s "$(readlink -f /usr/bin/g++)" "${PKG}"/opt/"${CPREFIX}"/bin/g++
 
 # Ensure shared objects are executable
 find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
@@ -112,35 +123,6 @@ find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-# Use supplied doinst.sh as a base - we may be adding more
-cat $CWD/doinst.sh > doinst.sh
-
-# Define compilers for CUDA to use.
-# This allows use of different versions of GCC if necessary.
-# Need gcc14 for Blender-5.1.0 so we default to that
-# but also allow some other compiler CUDA_CC & CUDA_CC
-# (where CUDA_CC & CUDA_CC are absolute paths).
-#
-GCC14_VERSION=$(find /opt -type d -name gcc14\* |cut -d'-' -f2)
-if [ -n "$CUDA_CC" -a -n "$CUDA_CXX" ]; then
-  echo "Using user-specified compilers $CUDA_CC and $CUDA_CXX"
-  ln -s "$CUDA_CC" "${PKG}/opt/${CPREFIX}"/bin/gcc
-  ln -s "$CUDA_CXX" "${PKG}/opt/${CPREFIX}"/bin/g++
-elif [ -d /opt/gcc14-${GCC14_VERSION}/bin ]; then
-  # This is the expected case: use gcc14
-  echo "Using GCC14 as CUDA compiler"
-  ln -s "$(readlink -f /opt/gcc14-${GCC14_VERSION}/bin/gcc)" "${PKG}/opt/${CPREFIX}"/bin/gcc
-  ln -s "$(readlink -f /opt/gcc14-${GCC14_VERSION}/bin/g++)" "${PKG}/opt/${CPREFIX}"/bin/g++
-else
-  # Use default Slackware-15.0 compilers
-  echo "Using installed gcc ($(readlink /usr/bin/gcc)) as CUDA compiler"
-  ln -s "$(readlink -f /usr/bin/gcc)" "${PKG}/opt/${CPREFIX}"/bin/gcc
-  ln -s "$(readlink -f /usr/bin/g++)" "${PKG}/opt/${CPREFIX}"/bin/g++
-fi
-
-# lwf: arch does this, not sure if this is needed.
-# Add a symlink lib->lib64 as some libraries might expect that (FS#76951)
-( cd "${PKG}/opt/${CPREFIX}" && ln -sr lib64 lib)
 
 rm "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/include
 rm "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/lib/lib64
@@ -148,12 +130,9 @@ rm -rf "${PKG}/opt/${CPREFIX}"/gds-tools
 rm -rf "${PKG}/opt/${CPREFIX}"/gds/usr
 
 
-# arch also does this.
-# not sure if this is a must, and Slackware's g++ is even 11.2
-# Allow newer compilers to work. This is not officially supported in the Arch package but
-# if users want to try, let them try.
+# Allow newer compilers to work. This is not officially supported - if users want to try, let them try.
 # See https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#system-requirements
-# for official requirements
+# Could be useful for -current
 sed -i "/.*unsupported GNU version.*/d" "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
 sed -i "/.*unsupported clang version.*/d" "${PKG}/opt/${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
 
@@ -162,18 +141,56 @@ for f in $(find "${PKG}/opt/${CPREFIX}" -name Makefile); do
   sed -i "s|/usr/local/cuda|/opt/${CPREFIX}|g" "$f"
 done
 
-# Install profile and ld.so.config files
+echo -n "Installing profile.d and pkgconfig files ... "
 install -Dm755 "${CWD}/profile/cuda.sh" "${PKG}/etc/profile.d/$CPREFIX.sh"
 install -Dm755 "${CWD}/profile/cuda.csh" "${PKG}/etc/profile.d/$CPREFIX.csh"
 sed -i "s|@VERSION@|$SHORT_VERSION|g" "${PKG}/etc/profile.d/$CPREFIX.sh" "${PKG}/etc/profile.d/$CPREFIX.csh"
 
-# Install pkgconfig
-mkdir -p "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/
-cp "$CWD"/pkgconfig/*.pc "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/
-sed -i "s|Version: 11.0|Version: $SHORT_VERSION|g" "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
-sed -i "s|cudaroot=/opt/cuda|cudaroot=/opt/$CPREFIX|g" "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
-chown root:root "$PKG"/opt/"${CPREFIX}"/lib64/pkgconfig/*
-chmod 0644 $PKG/opt/"${CPREFIX}"/lib64/pkgconfig/*
+# Generate and install pkgconfig files
+pkg_config_path="$PKG"/opt/"${CPREFIX}"/usr/share/pkgconfig
+mkdir -p $pkg_config_path
+for pcfile in "$CWD"/pkgconfig/*.pc.in ; do
+  project_name=$(basename $pcfile .pc.in)
+  find_result=$(find $PKG/opt/$CPREFIX/targets/x86_64-linux/lib/ -name lib$project_name.so.\*.\*)
+  if [ -z $find_result ]; then
+    # Not found in default libdir so check in stubs directory
+    find_result=$(find $PKG/opt/$CPREFIX/targets/x86_64-linux/lib/stubs -name lib$project_name.so)
+    if [ -z $find_result ]; then
+      # What to do? Library not found!
+      # Don't install this one
+      break
+    else
+      # Found in stubs directory
+      # i.e. no version info so use package version
+      project_version=$VERSION
+      stubslibdir=true
+    fi
+  else
+    # Found in default libdir - not in stubslibdir
+    stubslibdir=false
+    project_version=$(basename $(find $PKG/opt/$CPREFIX/targets/x86_64-linux/lib/ -name lib$project_name.so.\*.\*) |cut -d'.' -f3-)
+  fi
+  sed \
+    -e "s:@CUDA_ROOT@:/opt/$CPREFIX:" \
+    -e "s:@PROJECT_NAME@:$project_name:" \
+    -e "s:@PROJECT_VERSION@:$project_version:" \
+    $pcfile \
+    > $pkg_config_path/${project_name}.pc
+  # Adjust location for stubslibdir
+  if [ "$stubslibdir" = "true" ]; then
+    sed -i -e 's:{libdir}:{libdir}/stubs:' $pkg_config_path/${project_name}.pc
+  fi
+done
+# Also some strays in $PKG/opt/$CPREFIX/pkg-config/
+sed \
+  -e "/cudaroot=/ccudaroot=\/opt\/$CPREFIX" $PKG/opt/$CPREFIX/pkg-config/nvfatbin-"${SHORT_VERSION}".pc \
+  > $pkg_config_path/nvfatbin-"${SHORT_VERSION}".pc
+  # There is also nvjitlink-13.2.pc at the same location but no library for it so just ignore it
+  # -e "/cudaroot=/ccudaroot=\/opt\/$CPREFIX" $PKG/opt/$CPREFIX/pkg-config/nvjitlink-"${SHORT_VERSION}".pc \
+  # > $pkg_config_path/nvjitlink-"${SHORT_VERSION}".pc
+  rm -rf $PKG/opt/$CPREFIX/pkg-config
+echo
+
 
 # Register application NVVP and NSIGHT (if enabled)
 mkdir -p $PKG/usr/share/applications
@@ -191,7 +208,7 @@ chmod 0644 $PKG/usr/doc/$PRGNAM-$VERSION/*
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat doinst.sh > $PKG/install/doinst.sh
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n --compress -1 $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --compress -1 --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

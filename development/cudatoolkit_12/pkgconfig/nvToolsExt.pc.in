@@ -1,9 +1,9 @@
-cudaroot=/opt/cuda
+cudaroot=@CUDA_ROOT@
 libdir=${cudaroot}/targets/x86_64-linux/lib
 includedir=${cudaroot}/targets/x86_64-linux/include
 
-Name: nvToolsExt
+Name: @PROJECT_NAME@
 Description: NVIDIA Tools Extension
-Version: 11.0
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lnvToolsExt
 Cflags: -I${includedir}

@@ -1,9 +1,9 @@
-cudaroot=/opt/cuda
+cudaroot=@CUDA_ROOT@
 libdir=${cudaroot}/targets/x86_64-linux/lib
 includedir=${cudaroot}/targets/x86_64-linux/include
 
-Name: nvgraph
+Name: @PROJECT_NAME@
 Description: NVIDIA Accelerated Graph Analytics
-Version: 11.0
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lnvgraph
 Cflags: -I${includedir}

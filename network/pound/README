@@ -8,7 +8,7 @@ By default it is built in a minimal configuration. If you need
 advanced features, install the following packages prior to building it:
 
   adns         DNS-based dynamic backends
-  lua	       Lua extensions
+  lua          Lua extensions
   pcre2        Perl-compatible regular expressions
 
 Be sure to edit its configuration file /etc/pound.cfg to your liking.

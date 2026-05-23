@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Blender
 VERSION=${VERSION:-5.1.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 LIBS_BUILD=${LIBS_BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,10 +71,21 @@ SLKCFLAGS="$SLKCFLAGS $(pkg-config --libs numa)"
 /sbin/ldconfig
 
 with_cuda=""
-[ -x /etc/profile.d/cuda-12.*.sh ] && {
+if [ -x /etc/profile.d/cuda-13.*.sh ]; then
+  . /etc/profile.d/cuda-13.*.sh
+  with_cuda="-DWITH_CYCLES_DEVICE_CUDA=ON -DWITH_CYCLES_CUDA_BINARIES=ON "
+elif [ -x /etc/profile.d/cuda-12.*.sh ]; then
   . /etc/profile.d/cuda-12.*.sh
   with_cuda="-DWITH_CYCLES_DEVICE_CUDA=ON -DWITH_CYCLES_CUDA_BINARIES=ON "
-}
+fi
+if [ ! -z "$with_cuda" ]; then
+  # Set CUDA compiler to use gcc14 but save existing setting for later restoration
+  CUDA_GCC_DEFAULT=$(readlink -f ${CUDA_PATH}/bin/gcc)
+  CUDA_GXX_DEFAULT=$(readlink -f ${CUDA_PATH}/bin/g++)
+  ln -sf "$(readlink -f ${GCC14_PATH}/bin/gcc)" "${CUDA_PATH}"/bin/gcc
+  ln -sf "$(readlink -f ${GCC14_PATH}/bin/g++)" "${CUDA_PATH}"/bin/g++
+fi
+
 with_rocm=""
 [ -x /etc/profile.d/rocmtoolkit_6.sh ] && {
   . /etc/profile.d/rocmtoolkit_6.sh
@@ -86,7 +97,6 @@ with_optix=""
 }
 
 set -e
-
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -180,6 +190,11 @@ exec $INSTALL_PATH/blender
 EOF
 chmod a+x $PKG/usr/bin/blender
 
+# If one of the CUDA toolkits was used, restore its original compilers
+if [ ! -z "$with_cuda" ]; then
+  ln -sf "$CUDA_GCC_DEFAULT" "${CUDA_PATH}"/bin/gcc
+  ln -sf "$CUDA_GXX_DEFAULT" "${CUDA_PATH}"/bin/g++
+fi
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

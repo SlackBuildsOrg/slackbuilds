@@ -25,14 +25,15 @@ available. Building these libraries also require the gcc14 package.
 See the README.libs file.
 
 If targeting hardware rendering with Nvidia GPU, it is necessary to
-first install the cudatoolkit_12 package, in which case additional
-dedicated rendering binaries will be generated during the Blender
-build. In this case, it is also recommended to install the
-OptiX-Headers SlackBuild; this enables optix render kernels to be
-built into Blender.
+first install either the cudatoolkit_12 or cudatoolkit_13 SlackBuild,
+in which case additional dedicated rendering binaries will be generated
+during the Blender build. These cudatoolkits are not required to run
+Blender and can be removed after building if not needed for something
+else.
 
-For a comparison of bare CUDA and OptiX (which requires CUDA anyway)
-see:
+When building Blender with CUDA, it is also recommended to preinstall
+the OptiX-Headers SlackBuild. For a comparison of bare CUDA and OptiX
+(which requires CUDA anyway) see:
     https://yelzkizi.org/optix-vs-cuda/
 
 If targeting hardware rendering with AMD GPU, it is necessary to

@@ -11,8 +11,8 @@ cisco-secure-client-vpn:
 cisco-secure-client-vpn: Cisco Secure Client (formerly AnyConnect) is a unified endpoint
 cisco-secure-client-vpn: security agent that provides secure remote access via VPN and ZTNA,
 cisco-secure-client-vpn: integrated with advanced endpoint protection. It simplifies security
-cisco-secure-client-vpn: by combining multiple modules—including VPN, DNS-layer security,
-cisco-secure-client-vpn: and posture check—into one agent to protect users on any network.
+cisco-secure-client-vpn: by combining multiple modules-including VPN, DNS-layer security,
+cisco-secure-client-vpn: and posture check-into one agent to protect users on any network.
 cisco-secure-client-vpn: This slackbuild installs the VPN app only.
 cisco-secure-client-vpn:
 cisco-secure-client-vpn: https://www.cisco.com

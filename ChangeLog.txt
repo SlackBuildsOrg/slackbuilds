@@ -1,3 +1,539 @@
+Sat May 23 10:48:16 UTC 2026
+academic/aeskulap: Trim README blank line.
+academic/dwave-greedy: Trim README blank line.
+academic/gaiasky: Trim README blank line.
+academic/gdstk: Trim README blank line.
+academic/gem5: Trim README blank line.
+academic/h5utils: Fix README.
+academic/harminv: Trim README blank line.
+academic/itex2mml: Trim README blank line.
+academic/maxima: Trim README blank line.
+academic/meep: Trim README blank line.
+academic/scilab: Trim README blank line.
+academic/suitesparse: Trim README blank line.
+academic/xschem: Updated for version 3.4.7.
+accessibility/blugon: Trim README blank line.
+audio/JDSP4Linux: Trim README blank line.
+audio/Luppp: Trim README blank line.
+audio/callaudiod: Trim README blank line.
+audio/gnome-music: Trim README blank line.
+audio/mp3wrap: Trim README blank line.
+audio/ncspot: Updated for version 1.3.4.
+audio/ntk: Trim README blank line.
+audio/ogmtools: Trim README blank line.
+audio/reaper: Updated for version 7.73
+audio/retrovol: Trim README blank line.
+desktop/ComixCursors: Trim README blank line.
+desktop/ambiance-radiance-flat-colors-gtk-theme: Add "set -e".
+desktop/budgie-screensaver: Trim README blank line.
+desktop/calls: Trim README blank line.
+desktop/cutefish-core: Trim README blank line.
+desktop/cutefish-dock: Fix URL (double slash).
+desktop/cutefish-dock: Trim README blank line.
+desktop/cutefish-gtk-themes: Trim README blank line.
+desktop/cutefish-launcher: Trim README blank line.
+desktop/cutefish-screenlocker: Trim README blank line.
+desktop/cutefish-settings: Trim README blank line.
+desktop/cutefish-statusbar: Trim README blank line.
+desktop/cutefish-wallpapers: Trim README blank line.
+desktop/domterm: Trim README blank line.
+desktop/ee: update to 1.5.2
+desktop/gdm: Trim README blank line.
+desktop/gnome-browser-connector: Trim README blank line.
+desktop/gnome-clocks: Trim README blank line.
+desktop/gnome-connections: Trim README blank line.
+desktop/gnome-contacts: Trim README blank line.
+desktop/gnome-font-viewer: Trim README blank line.
+desktop/gnome-shell-extension-appindicator: Trim README blank line.
+desktop/gnome-shell: Trim README blank line.
+desktop/gnome-tour: Trim README blank line.
+desktop/happy-hacking-gnu: Trim README blank line.
+desktop/herbe: Trim README blank line.
+desktop/i3ipc-glib: Fix README.
+desktop/kbdd: Trim README blank line.
+desktop/mint-themes: Trim README blank line.
+desktop/mugshot: Trim README blank line.
+desktop/nwg-displays: Updated for version 0.4.3.
+desktop/nwg-look: Updated for version 1.1.1.
+desktop/nwg-panel: Updated for version 0.10.15.
+desktop/progman: Trim README blank line.
+desktop/qtpass: Updated for version 1.7.0.
+desktop/river: Fix README.
+desktop/slstatus: Trim README blank line.
+desktop/slstatus: update to 1.1
+desktop/sun: Trim README blank line.
+desktop/sushi: Trim README blank line.
+desktop/swayidle: Trim README blank line.
+desktop/vinagre: Trim README blank line.
+desktop/wbar: Trim README blank line.
+desktop/xapp-symbolic-icons: Updated for version 1.1.0
+desktop/xfce4-battery-plugin: Trim README blank line.
+desktop/xfce4-i3-workspaces-plugin: Trim README blank line.
+desktop/xfdashboard: Trim README blank line.
+development/Kiro: Updated for version 0.12.200.
+development/android-studio: Trim README blank line.
+development/android-tools: Trim README blank line.
+development/apache-maven: Updated for version 3.9.16.
+development/aspnetcore-runtime-10.0: Updated for version 10.0.8.
+development/aspnetcore-runtime-8.0: Updated for version 8.0.27.
+development/aspnetcore-runtime-9.0: Updated for version 9.0.16.
+development/aws-cdk: Updated for version 2.1124.1.
+development/bcc: Trim README blank line.
+development/bluefish: Fix README.
+development/bun-bin: Trim README blank line.
+development/bun-bin:update to version 1.3.14
+development/casperjs: Fix URL (double slash).
+development/cim: Trim README blank line.
+development/critcl: Trim README blank line.
+development/cudatoolkit_12.6: Removed (at maintainer's request).
+development/cudatoolkit_12: Remove gcc14 dependence. Fix pkgconfig
+development/cudatoolkit_13: Fix pkgconfig entries
+development/cudnn: New maintainer. Add samples & pkgconfig file.
+development/datagrip: Trim README blank line.
+development/deno-bin: Trim README blank line.
+development/diffoscope: updated for version 318
+development/dkms: Trim README blank line.
+development/dotnet-runtime-10.0: Updated for version 10.0.8.
+development/dotnet-runtime-8.0: Updated for version 8.0.27.
+development/dotnet-runtime-9.0: Updated for version 9.0.16.
+development/dotnet-sdk-10.0: Updated for version 10.0.300.
+development/dotnet-sdk-8.0: Updated for version 8.0.421.
+development/dotnet-sdk-9.0: Updated for version 9.0.314.
+development/dub: Updated for version 1.41.0.
+development/eisl: Fix README.
+development/electron-bin: Updated for version 42.1.0
+development/fortitude-bin: Updated for version 0.9.0.
+development/gedit: Fix README.
+development/gerbil: Trim README blank line.
+development/ghidra: Updated for version 12.1
+development/gnome-builder: Trim README blank line.
+development/gopls: Updated for version 0.22.0.
+development/gputils: Trim README blank line.
+development/hoppscotch: Updated for version 26.4.1.
+development/icecream-sundae: Trim README blank line.
+development/lm-studio-bin: Trim README blank line.
+development/lm-studio-bin: Updated for version 0.4.14.4.
+development/meld: Add missing "set -e".
+development/metakit: Trim README blank line.
+development/newlisp: Trim README blank line.
+development/nodeenv: Fix README.
+development/nodejs24-bin: Trim README blank line.
+development/notepad++: Updated for version 8.9.6
+development/p4: Fix md5sums.
+development/p4d: Fix md5sums.
+development/p4v: Trim README blank line.
+development/polyml: Trim README blank line.
+development/pulsar: Trim README blank line.
+development/python3-hylang: Trim README blank line.
+development/python3-numpy-legacy: Trim README blank line.
+development/python3-numpy: Trim README blank line.
+development/python3-numpy: Updated README
+development/quickjs: Trim README blank line.
+development/rebar3: Trim README blank line.
+development/sccache: Added (shared compilation cache).
+development/schroot: Trim README blank line.
+development/sourcegit: Updated for version 2026.11
+development/sysprof: Trim README blank line.
+development/terraform: Updated for version 1.15.4
+development/tkcon: Trim README blank line.
+development/ttk-themes: Trim README blank line.
+development/vala-language-server: Trim README blank line.
+development/valgrind: Updated for version 3.27.1.
+development/vscode-bin: Updated for version 1.121.0.
+development/vstudio: Updated for version 17.4.1
+development/xmake: Updated for version 3.0.9.
+development/zed-editor-bin: Updated for version 1.3.5.
+development/zed-editor-bin: Updated for version 1.3.6.
+development/zile: Trim README blank line.
+development/zizmor: Updated for version 1.25.2.
+development/zope.sqlalchemy: Trim README blank line.
+games/bluemoon: Trim README blank line.
+games/dfarc: Trim README blank line.
+games/endgame-singularity: Trim README blank line.
+games/fheroes2: Updated for version 1.1.16.
+games/fillets-ng-data: Trim README blank line.
+games/firestorm-opensim: Trim README blank line.
+games/fortune-dharma: Trim README blank line.
+games/freedink: Trim README blank line.
+games/gnugo: Trim README blank line.
+games/hnefatafl: Trim README blank line.
+games/ppsspp: Updated for version 1.20.4.
+games/protonup: Trim README blank line.
+games/puzzles: Updated for version 20260410.06e37f1.
+games/rocksndiamonds: Trim README blank line.
+games/vegastrike: Trim README blank line.
+games/vkBasalt: Trim README blank line.
+games/yamagi-quake2: Updated for version 8.70.
+gis/python3-netcdf4-python: Trim README blank line.
+graphics/Blender: Improved CUDA support
+graphics/OpenCASCADE: Fix 32bit build
+graphics/OpenSubdiv: Trim README blank line.
+graphics/amide: Fix README.
+graphics/converseen: Updated for version 0.15.2.4.
+graphics/dblatex: Trim README blank line.
+graphics/libplacebo: Trim README blank line.
+graphics/pdfsyntax: Trim README blank line.
+graphics/posterazor: Fix README.
+graphics/scrot: Clean up build.
+graphics/ueberzugpp: Updated for version 2.9.10.
+graphics/veles: Removed (Upstream archived)
+graphics/xfishtank: Trim README blank line.
+graphics/xnap: Trim README blank line.
+ham/js8call: Trim README blank line.
+ham/sdrangel: Updated for version 7.25.1.
+ham/sdrplay_apiService: Trim README blank line.
+haskell/cabal-install: Trim README blank line.
+libraries/OpenSceneGraph: Trim README blank line.
+libraries/PrettyTable: Trim README blank line.
+libraries/VTK: Trim README blank line.
+libraries/bsddialog: Trim README blank line.
+libraries/ceres-solver: Fix README.
+libraries/cppzmq: Trim README blank line.
+libraries/cutefish-kwin-plugins: Trim README blank line.
+libraries/cyrus-timezones: Trim README blank line.
+libraries/geshi: Trim README blank line.
+libraries/gom: Trim README blank line.
+libraries/grilo-plugins: Trim README blank line.
+libraries/grilo: Trim README blank line.
+libraries/grpc: Add abseil-cpp as dep.
+libraries/grpc: Update for 1.80.0
+libraries/gupnp-av: Trim README blank line.
+libraries/gupnp-dlna: Trim README blank line.
+libraries/highway: Trim README blank line.
+libraries/jsonrpc-glib: Trim README blank line.
+libraries/lib3mf: Trim README blank line.
+libraries/libavif:update to version 1.4.1
+libraries/libctl: Trim README blank line.
+libraries/libcurl-gnutls: Fix README.
+libraries/libevtx: Trim README blank line.
+libraries/libfprint: Trim README blank line.
+libraries/libgedit-amtk: Trim README blank line.
+libraries/libgit2: Updated for version 1.9.4
+libraries/libgnomekbd: Trim README blank line.
+libraries/libgrss: Trim README blank line.
+libraries/libldm: Fix README.
+libraries/libmediaart: Trim README blank line.
+libraries/librdkafka: Added (Standalone C Library).
+libraries/librime: Trim README blank line.
+libraries/librist:update to version 0.2.15
+libraries/libspiro: Trim README blank line.
+libraries/libticalcs2: Trim README blank line.
+libraries/libxc: Trim README blank line.
+libraries/libxdg-basedir: Trim README blank line.
+libraries/libxmlb: Updated for version 0.3.27.
+libraries/libzia: Trim README blank line.
+libraries/microsoft-gsl: Updated for version 4.2.2.
+libraries/mlt-bindings: Trim README blank line.
+libraries/nDPI: Fix README.
+libraries/nvidia-vaapi-driver: Trim README blank line.
+libraries/openimagedenoise: Trim README blank line.
+libraries/pam_usb: Updated for version 0.9.0
+libraries/posixsignalmanager: Trim README blank line.
+libraries/ptex: Trim README blank line.
+libraries/pylibpcap: Trim README blank line.
+libraries/qwt: Trim README blank line.
+libraries/simdjson: Trim README blank line.
+libraries/simdjson:update to version 4.6.4
+libraries/simdutf: Trim README blank line.
+libraries/sofia-sip: Trim README blank line.
+libraries/srt: Trim README blank line.
+libraries/tclsoap: Trim README blank line.
+libraries/template-glib: Trim README blank line.
+libraries/tepl: Trim README blank line.
+libraries/tksvg: Fix README.
+libraries/totem-pl-parser: Trim README blank line.
+libraries/tree-sitter: Updated for version 0.26.9
+libraries/tuiwidgets: Trim README blank line.
+misc/cups-pk-helper: Trim README blank line.
+misc/exploitdb: Trim README blank line.
+misc/fcitx5-gtk: Trim README blank line.
+misc/fcitx5-mozc: Trim README blank line.
+misc/fcitx5: Trim README blank line.
+misc/gnome-user-docs: Trim README blank line.
+misc/ibus-rime: Trim README blank line.
+misc/libime: Trim README blank line.
+misc/moodbar: Trim README blank line.
+misc/nuclei: Trim README blank line.
+misc/ollama: Updated for version 0.24.0.
+misc/pam-u2f: Trim README blank line.
+misc/rmlint: Trim README blank line.
+misc/xhidecursor: Trim README blank line.
+multimedia/MuseScore: Updated for version 4.7.1
+multimedia/RenameMyTVSeries: Trim README blank line.
+multimedia/amarok: Trim README blank line.
+multimedia/droidcam: Trim README blank line.
+multimedia/ffmpegfs: Trim README blank line.
+multimedia/gnome-video-effects: Trim README blank line.
+multimedia/gstreamer-vaapi: Trim README blank line.
+multimedia/haruna: Trim README blank line.
+multimedia/mpv: Trim README blank line.
+multimedia/nrg2iso: Trim README blank line.
+multimedia/plexmediaserver: Updated for version 1.43.2.10687_563d026ea.
+multimedia/pocketsphinx:update to version 5.1.0
+multimedia/qprompt: Trim README blank line.
+multimedia/rygel: Trim README blank line.
+multimedia/svt-av1:update to version 4.1.0
+multimedia/totem: Trim README blank line.
+multimedia/tsduck: Updated for version 3.40.4165.
+multimedia/uavs3e: Trim README blank line.
+multimedia/vokoscreenNG-QT5: Trim README blank line.
+network/AdGuardHome: Updated for version 0.107.76.
+network/DownTube: Trim README blank line.
+network/acme.sh: Trim README blank line.
+network/asuka: Trim README blank line.
+network/brave-browser: update 1.90.122
+network/castor: Trim README blank line.
+network/chawan: updated for version 0.4.0
+network/cloudflared-bin: Updated for version 2026.5.0.
+network/cmst: Trim README blank line.
+network/copyparty: updated for version 1.20.14
+network/curl-quic: Trim README blank line.
+network/darkhttpd: Trim README blank line.
+network/ddclient: Trim README blank line.
+network/deskflow: Trim README blank line.
+network/dino: Trim README blank line.
+network/dnsproxy-bin: Updated for version 0.81.4.
+network/dooble: Updated for version 2026.05.15
+network/dropbox: Updated for version 252.4.3485.
+network/epiphany: Trim README blank line.
+network/fdns: Trim README blank line.
+network/firehol: Trim README blank line.
+network/floorp-bin: Trim README blank line.
+network/floorp-bin: Updated for version 12.14.2.
+network/gnome-remote-desktop: Trim README blank line.
+network/gnome-user-share: Trim README blank line.
+network/haproxy: Updated for version 3.2.19.
+network/helium-browser: Updated for version 0.12.3.1
+network/ipvsadm: Trim README blank line.
+network/landrun: Trim README blank line.
+network/librewolf: Updated for version 151.0_1
+network/mblaze: update to 1.4
+network/memcached: Updated for version 1.6.42.
+network/microsoft-edge: Updated for version 148.0.3967.70.
+network/mullvad-browser: Updated for version 15.0.14
+network/mumble: Trim README blank line.
+network/ngrok: Updated for version 3.39.2
+network/nordvpn-gui: Updated for version 4.6.0.
+network/nordvpn: Updated for version 4.6.0.
+network/opera: Updated for version 131.0.5877.55
+network/putty: Updated for version 0.84.
+network/rclone: update 1.74.1
+network/repology-cli: Updated for version 20260520.
+network/signal-desktop: Updated for version 8.11.0.
+network/snac2: Trim README blank line.
+network/syncthingtray-bin: Updated for version 2.1.0.
+network/tailscale: update 1.98.2
+network/tixati: Trim README blank line.
+network/tor-browser: Updated for version 15.0.14.
+network/unbound: Updated for version 1.25.1.
+network/urlwatch: Trim README blank line.
+network/vivaldi: Updated for version 8.0.4033.28.
+network/waterfox: Updated for version 6.6.13
+network/wireshark: Updated for version 4.6.6.
+network/xmrig: Trim README blank line.
+network/zabbix_frontend: Trim README blank line.
+network/zen-browser: Updated for version 1.19.13b
+network/zoom-linux: Updated for version 7.0.5.3034
+office/PortfolioPerformance-bin: Trim README blank line.
+office/batdoc-bin: Updated for version 1.4.0.
+office/catdvi: Trim README blank line.
+office/csbooks-bin: Updated for version 9.0.0.
+office/ding: Trim README blank line.
+office/hebcal: Trim README blank line.
+office/hunspell-russian-aot: Trim README blank line.
+office/hunspell-russian-kliukvin: Fix README.
+office/ispell-dict-russian-lebedev: Trim README blank line.
+office/ledger-live: Updated for version 4.4.0
+office/notes: Trim README blank line.
+office/onlyoffice-desktopeditors: Updated for version 9.4.0
+office/openoffice.org: Trim README blank line.
+office/qownnotes: Updated for version 26.5.14.
+office/tnote: Trim README blank line.
+office/vzic: Trim README blank line.
+office/wps-office-dicts: Updated for version 26.2.4.1
+office/zk: Trim README blank line.
+perl/perl-Archive-Zip: Trim README blank line.
+perl/perl-Class-Factory-Util: Trim README blank line.
+perl/perl-DBD-Pg: Updated for version 3.20.2.
+perl/perl-Digest-SHA-PurePerl: Trim README blank line.
+perl/perl-File-Download: Trim README blank line.
+perl/perl-Getopt-Long-Descriptive: Trim README blank line.
+perl/perl-Git-Sub: Trim README blank line.
+perl/perl-IO-Multiplex: Trim README blank line.
+perl/perl-IPC-DirQueue: Trim README blank line.
+perl/perl-Image-Size: Trim README blank line.
+perl/perl-Log-Log4perl: Trim README blank line.
+perl/perl-Module-Build-XSUtil: Trim README blank line.
+perl/perl-Mojolicious: Updated for version 9.43.
+perl/perl-Net-SSH: Trim README blank line.
+perl/perl-PPI: Trim README blank line.
+perl/perl-Proc-ProcessTable: Trim README blank line.
+perl/perl-Regexp-Common: Trim README blank line.
+perl/perl-Role-Tiny: Updated for version 2.002005.
+perl/perl-System-Command: Trim README blank line.
+perl/perl-System-Sub: Trim README blank line.
+perl/perl-Task-Weaken: Trim README blank line.
+perl/perl-UUID: Trim README blank line.
+perl/perl-gstreamer: Trim README blank line.
+perl/perl-html-tagset: Trim README blank line.
+perl/perl-net-ip: Trim README blank line.
+python/buildbot-badges: Trim README blank line.
+python/dpkt: Trim README blank line.
+python/feedparser: Trim README blank line.
+python/flake8: Trim README blank line.
+python/holidays: Trim README blank line.
+python/homebase: Trim README blank line.
+python/humanize: Trim README blank line.
+python/insipid-sphinx-theme: Trim README blank line.
+python/internetarchive: Updated for version 5.8.0.
+python/pyatspi: Trim README blank line.
+python/pycodestyle: Trim README blank line.
+python/pyfiglet: Trim README blank line.
+python/python-debian: Trim README blank line.
+python/python2-lockfile: Trim README blank line.
+python/python2-morbid: Trim README blank line.
+python/python2-pathlib2: Trim README blank line.
+python/python2-uuid: Fix README.
+python/python3-application: Fix README.
+python/python3-authheaders: Trim README blank line.
+python/python3-cachetools: Trim README blank line.
+python/python3-cffsubr:update to version 0.4.0
+python/python3-compreffor:update to version 0.6.0
+python/python3-desktop-notify: Trim README blank line.
+python/python3-dotenv: Trim README blank line.
+python/python3-filelock: Trim README blank line.
+python/python3-fontmake:update to version 3.11.1
+python/python3-fonttools:update to version 4.63.0
+python/python3-glad: Trim README blank line.
+python/python3-glyphslib:update to version 6.13.1
+python/python3-gnutls: Trim README blank line.
+python/python3-grpcio: Update for 1.80.0
+python/python3-h11: Trim README blank line.
+python/python3-jaconv:update to version 0.5.0
+python/python3-json5: Updated for version 0.14.0.
+python/python3-klepto: Trim README blank line.
+python/python3-klepto:update to version 0.2.8
+python/python3-langcodes: Trim README blank line.
+python/python3-langcodes:update to version 3.5.1
+python/python3-language-data: update to version 1.4.0
+python/python3-lockfile: Trim README blank line.
+python/python3-marisa-trie: Trim README blank line.
+python/python3-marisa_trie:update to version 1.4.1
+python/python3-mat2: Trim README blank line.
+python/python3-multivolumefile: Trim README blank line.
+python/python3-narwhals: Update README
+python/python3-opencv: Trim README blank line.
+python/python3-openstep-plist:update to version 0.5.2
+python/python3-otr: Trim README blank line.
+python/python3-outcome: Trim README blank line.
+python/python3-pathlib2: Trim README blank line.
+python/python3-pipx:update to version 1.11.1
+python/python3-pmw: Trim README blank line.
+python/python3-pox: Trim README blank line.
+python/python3-pox:update to version 0.3.7
+python/python3-progress: Trim README blank line.
+python/python3-pyflakes: Trim README blank line.
+python/python3-pypdf: Updated for version 6.12.0
+python/python3-pytest-cov: Trim README blank line.
+python/python3-pytube: Trim README blank line.
+python/python3-reportlab:update to version 4.5.1
+python/python3-rfc3986: Trim README blank line.
+python/python3-schedule: Trim README blank line, fix .info.
+python/python3-setuptools-git-versioning: Trim README blank line.
+python/python3-simple-term-menu: Trim README blank line.
+python/python3-sipclients3: Fix README.
+python/python3-tinydb: Trim README blank line.
+python/python3-trio: Trim README blank line.
+python/python3-trove-classifiers: Updated for version 2026.5.22.10.
+python/python3-ufo2ft:update to version 3.7.3
+python/python3-ujson: Trim README blank line.
+python/python3-userpath: Trim README blank line.
+python/python3-xapp: Updated for version 3.0.3
+python/python3-zeroconf: Change source download to pypi, fix MD5SUM
+python/python3-zeroconf: Fix rdlength overrun security vulnerability
+python/python3-zeroconf: Update README
+python/scikit-umfpack: Clean up build.
+python/sphinx-autobuild: Trim README blank line.
+python/sphinxcontrib-asyncio: Trim README blank line.
+python/sphinxcontrib-fulltoc: Trim README blank line.
+python/termcolor: Trim README blank line.
+ruby/wisper: Trim README blank line.
+system/B-em: Updated for version 20260521_05e762b
+system/Iosevka-aile: Updated for version 34.6.0.
+system/Iosevka-core: Trim README blank line.
+system/Iosevka-etoile: Updated for version 34.6.0.
+system/IoskeleyMono: Added (Monospace Font).
+system/Lmod: Updated for version 9.2.2.
+system/PeaZip: Updated for version 11.1.0.
+system/android-udev-rules: Updated for version 2026.04.23.
+system/blocaled: Trim README blank line.
+system/brother-hll2400d-cups: Trim README blank line.
+system/bzip3: Fix README.
+system/corectrl: Trim README blank line.
+system/cpuinfo: Trim README blank line.
+system/daemonize: Trim README blank line.
+system/docker-buildx: Updated for version 0.34.0.
+system/docker-buildx: Updated for version 0.34.1.
+system/dracut: updated for version 111
+system/eaglemode: Trim README blank line.
+system/em: Trim README blank line.
+system/epson-printer-utility: Trim README blank line.
+system/extundelete: Trim README blank line.
+system/flexbackup: Trim README blank line.
+system/fq-bin: Added (Binary data decoders).
+system/fr: Trim README blank line.
+system/fzf-bin: Trim README blank line.
+system/gnome-color-manager: Trim README blank line.
+system/gyre-fonts: Trim README blank line.
+system/heatshrink: Trim README blank line.
+system/ibus-typing-booster: Trim README blank line.
+system/libcloudproviders: Trim README blank line.
+system/libertinus-fonts: Fix README.
+system/mbuffer: updated for version 20260511
+system/memory-editor: Trim README blank line.
+system/memuse: Trim README blank line.
+system/mtm: Trim README blank line.
+system/mucommander: Trim README blank line.
+system/openrazer-daemon: Updated for version 3.12.2.
+system/openrazer-kernel: Updated for version 3.12.2.
+system/openzfs: upgraded for version 2.4.2
+system/otf-ibm-plex: Fix URL (double slash).
+system/oxker-bin: Updated for version 0.13.2.
+system/pass-otp: fix mandir
+system/pcp: Trim README blank line.
+system/pipes.sh: Trim README blank line.
+system/polychromatic: Trim README blank line.
+system/qemu-static: Trim README blank line.
+system/ranger: Fix DOWNLOAD & MD5SUM.
+system/ranger: Trim README blank line.
+system/rhvoice: Trim README blank line.
+system/sbo-create: Updated for version 2.3.1.
+system/sbo-maintainer-tools: Updated for version 0.9.5.
+system/sbpkg: Updated for version 2.0.1.
+system/sensord: Trim README blank line.
+system/set_rlimits: Trim README blank line.
+system/slackpkg-update-notify: Updated for version 1.0.
+system/slackrepo-hints: Updated for version 20260523.
+system/slackrepo: Updated for version 20260523.
+system/sleepd: Trim README blank line.
+system/slpkg: Updated for version 6.1.6.
+system/ttf-babelstone-latin: Trim README blank line.
+system/ttf-babelstone-tibetan: Trim README blank line.
+system/ttf-ibm-plex: Fix URL (double slash).
+system/ttf-sakalbharati: Trim README blank line.
+system/ttygif: Trim README blank line.
+system/unigine-heaven-benchmark: Trim README blank line.
+system/update-initrd: Trim README blank line.
+system/volatility3: Trim README blank line.
+system/watch-fs: Trim README blank line.
+system/waydroid: Trim README blank line.
+system/witr: Updated for version 0.3.2.
+system/xbattmon: Trim README blank line.
+system/xdg-desktop-portal-gnome: Trim README blank line.
+system/xosview: Fix README.
+system/yaze-ag: Trim README blank line.
+system/yelp: Trim README blank line.
++--------------------------+
 Sat May 16 09:40:05 UTC 2026
 academic/gpredict: updated for version 2.5.1
 academic/nco: Updated for version 5.3.9.

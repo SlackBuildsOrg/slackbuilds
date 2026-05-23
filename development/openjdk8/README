@@ -7,8 +7,9 @@ that you have already installed as they may cause conflicts with the
 PATH, JAVA_HOME and MANPATH variables (this includes the 'openjdk7'
 dependency package -- you may wish to remove it after you're done.)
 
-'zulu-openjdk7' and 'openjdk8' are alternatives to the 'openjdk7' dependency
-('openjdk8' in the case when you are compiling a newer version, for example.)
+'zulu-openjdk7' and 'openjdk8' are alternatives to the 'openjdk7'
+dependency ('openjdk8' in the case when you are compiling a newer
+version, for example.)
 
 After installing the package you will need to logout/login to your
 machine as it will add new files to the /etc/profile.d folder.

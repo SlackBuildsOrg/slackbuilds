@@ -23,11 +23,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260523 bkw: Modified by SlackBuilds.org, BUILD=2:
+# - add missing find/chmod after extracting.
+# - add missing "set -e".
+# - remove generic GNU INSTALL from doc dir.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=kaffeine-mozilla
 VERSION=${VERSION:-0.2}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -39,9 +44,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -65,6 +67,8 @@ else
   LIBDIRSUFFIX=""
 fi
 
+set -e
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -72,6 +76,9 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION
 chown -R root:root .
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 FLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -87,7 +94,7 @@ make
 make install-strip DESTDIR=$PKG
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING ChangeLog INSTALL README $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING ChangeLog README $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

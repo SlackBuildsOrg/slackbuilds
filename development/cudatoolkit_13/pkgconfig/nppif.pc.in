@@ -1,9 +1,9 @@
-cudaroot=/opt/cuda
+cudaroot=@CUDA_ROOT@
 libdir=${cudaroot}/targets/x86_64-linux/lib
 includedir=${cudaroot}/targets/x86_64-linux/include
 
-Name: nppif
+Name: @PROJECT_NAME@
 Description: NVIDIA Performance Primitives - Image Processing - Filters
-Version: 11.0
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lnppif
 Cflags: -I${includedir}

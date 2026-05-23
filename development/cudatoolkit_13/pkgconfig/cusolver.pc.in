@@ -1,9 +1,9 @@
-cudaroot=/opt/cuda
+cudaroot=@CUDA_ROOT@
 libdir=${cudaroot}/targets/x86_64-linux/lib
 includedir=${cudaroot}/targets/x86_64-linux/include
 
-Name: cusolver
+Name: @PROJECT_NAME@
 Description: A LAPACK-like library on dense and sparse linear algebra
-Version: 11.0
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -lcusolver
 Cflags: -I${includedir}

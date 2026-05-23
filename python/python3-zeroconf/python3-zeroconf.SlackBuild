@@ -30,7 +30,7 @@ BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-SRCNAM=python-zeroconf
+SRCNAM=zeroconf
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

@@ -2,7 +2,7 @@
 
 # SlackBuild build script for python3-zeroconf
 
-# Copyright 2025 Isaac Yu <isaacyu@protonmail.com>
+# Copyright 2025-2026 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-zeroconf
 VERSION=${VERSION:-0.148.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -63,6 +63,11 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# Backport security patch from python3-zeroconf 0.149.16
+# This patch bounds record payload reads against rdlength overruns. For more information, please read:
+# https://github.com/python-zeroconf/python-zeroconf/security/advisories/GHSA-qc2x-6f54-m6h9
+patch -p1 < $CWD/stop-read-string-rdlength-overruns.patch
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH="/opt/python$PYVER/site-packages:/opt/cython/python$PYVER/site-packages"

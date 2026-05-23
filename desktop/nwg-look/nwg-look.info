@@ -1,10 +1,10 @@
 PRGNAM="nwg-look"
-VERSION="1.0.6"
+VERSION="1.1.1"
 HOMEPAGE="https://github.com/nwg-piotr/nwg-look/"
-DOWNLOAD="https://github.com/nwg-piotr/nwg-look/archive/v1.0.6/nwg-look-1.0.6.tar.gz \
-          https://slackware.lngn.net/pub/source/nwg-look/nwg-look-vendor-1.0.6.tar.xz"
-MD5SUM="7845d343ca4b2dd2cf9ace7697a1468d \
-        e76dea3ef0a1ec81ece72fd3618d8607"
+DOWNLOAD="https://github.com/nwg-piotr/nwg-look/archive/v1.1.1/nwg-look-1.1.1.tar.gz \
+          https://slackware.lngn.net/pub/source/nwg-look/nwg-look-vendor-1.1.1.tar.xz"
+MD5SUM="4178f111851a0a05d3e288d2ea5596f1 \
+        24e99ad69c799007d6cc6c9181476960"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="google-go-lang xcur2png"

@@ -1,6 +1,6 @@
 PRGNAM="rtmpdump"
 VERSION="2.6"
-HOMEPAGE="httpx://rtmpdump.mplayerhq.hu/"
+HOMEPAGE="https://rtmpdump.mplayerhq.hu/"
 DOWNLOAD="https://ponce.cc/slackware/sources/repo/rtmpdump-2.6.tar.xz"
 MD5SUM="97b2813164b3f9ec92dc24db45053e4c"
 DOWNLOAD_x86_64=""

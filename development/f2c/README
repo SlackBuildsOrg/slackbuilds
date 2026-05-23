@@ -1,4 +1,3 @@
-
 f2c is a Fortran-to-C converter.
 
 This package includes libf2c, which must be linked to the resulting C

@@ -18,15 +18,16 @@ with the contents:
     <alias>
       <family>monospace</family>
       <prefer>
+        <family>Iosevka Term</family>
         <family>Iosevka</family>
       </prefer>
     </alias>
   </fontconfig>
 
-After creating the file, rebuild the font cache:
-
-  fc-cache -f
+Iosevka Term uses terminal-optimized spacing and is preferred here;
+plain Iosevka is listed as a fallback. The change takes effect the
+next time each application is started (reopen your terminal, Geany,
+Firefox, etc.).
 
 This allows applications to use Iosevka without hardcoding font
 names in individual programs.
-

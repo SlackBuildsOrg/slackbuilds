@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Iosevka-core
-VERSION=${VERSION:-34.5.0}
+VERSION=${VERSION:-34.6.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -74,4 +74,3 @@ install -m 644 "$CWD/doinst.sh" "$PKG/install/"
 
 cd "$PKG"
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
-

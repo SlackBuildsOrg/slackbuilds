@@ -12,7 +12,7 @@ Iosevka-core: Iosevka-core provides a minimal installation of the
 Iosevka-core: Iosevka monospace font family.
 Iosevka-core:
 Iosevka-core: It installs Regular, Bold, Italic and Bold Italic styles
-Iosevka-core: via TTC font collections for common monospace use cases.
+Iosevka-core: for common monospace use cases.
 Iosevka-core:
 Iosevka-core: Intended for terminals, editors and window managers.
 Iosevka-core:

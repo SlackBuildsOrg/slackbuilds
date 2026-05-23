@@ -1,4 +1,3 @@
-
 gmdb2 is the official GUI for mdbtools.
 It lets you open, inspect, and export Microsoft Access databases 
 (.mdb and .accdb files) on Mac and Unix machines.

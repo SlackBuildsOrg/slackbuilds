@@ -1,7 +1,7 @@
 PRGNAM="python-ipcalc"
 VERSION="1.99.0"
 HOMEPAGE="https://github.com/tehmaze/ipcalc"
-DOWNLOAD="https://github.com/tehmaze/ipcalc/archive/ipcalc-1.99.0.tar.gz"
+DOWNLOAD="https://github.com/tehmaze/ipcalc/archive/ipcalc-1.99.0/ipcalc-ipcalc-1.99.0.tar.gz"
 MD5SUM="8f8d7ff3b907479bcfdae6ecc6dcff0a"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

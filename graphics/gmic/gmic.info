@@ -2,7 +2,7 @@ PRGNAM="gmic"
 VERSION="2.9.4"
 HOMEPAGE="https://gmic.eu"
 DOWNLOAD="https://gmic.eu/files/source/gmic_2.9.4.tar.gz \
-          https://github.com/dtschump/gmic-community/archive/6e9a20ef40e1db99c9b761853ad493ee7439e1b7.zip"
+          https://github.com/dtschump/gmic-community/archive/6e9a20ef40e1db99c9b761853ad493ee7439e1b7/gmic-community-6e9a20ef40e1db99c9b761853ad493ee7439e1b7.zip"
 MD5SUM="e0d396ab6406c9baeb4929c1dd6a0d6a \
         75f88fa1423f253714e84905a05f37da"
 DOWNLOAD_x86_64=""

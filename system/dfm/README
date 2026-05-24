@@ -1,6 +1,8 @@
 dfm (Dylan's File Manager)
-A powerful, simple and snappy terminal file manager with minimal resource
-usage. Written in C99 with no dependencies outside of POSIX/libc.
+
+A powerful, simple and snappy terminal file manager with minimal
+resource usage. Written in C99 with no dependencies outside of
+POSIX/libc.
 
 FEATURES
 --------

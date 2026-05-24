@@ -1,7 +1,7 @@
 PRGNAM="libvmime"
 VERSION="5617460"
 HOMEPAGE="https://www.vmime.org/"
-DOWNLOAD="https://github.com/kisli/vmime/archive/561746081f633245b326e31e6ef0f2ef20b48ef6.zip"
+DOWNLOAD="https://github.com/kisli/vmime/archive/561746081f633245b326e31e6ef0f2ef20b48ef6/vmime-561746081f633245b326e31e6ef0f2ef20b48ef6.zip"
 MD5SUM="5529edd2ce85950fc51ad66cb6a30ed2"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

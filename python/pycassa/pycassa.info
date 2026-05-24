@@ -1,7 +1,7 @@
 PRGNAM="pycassa"
 VERSION="1.11.1"
 HOMEPAGE="https://github.com/pycassa/pycassa"
-DOWNLOAD="http://github.com/pycassa/pycassa/archive/v1.11.1/pycassa-1.11.1.tar.gz"
+DOWNLOAD="https://github.com/pycassa/pycassa/archive/v1.11.1/pycassa-1.11.1.tar.gz"
 MD5SUM="b87e4effd85384fde09f016b0b084039"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

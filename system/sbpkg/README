@@ -1,4 +1,5 @@
-Simple, fast and full-featured SlackBuilds.org package manager written in Rust.
+Simple, fast and full-featured SlackBuilds.org package manager written
+in Rust.
 
 - Sync the local SlackBuilds repository via rsync or git
 - Resolve and build package dependencies automatically

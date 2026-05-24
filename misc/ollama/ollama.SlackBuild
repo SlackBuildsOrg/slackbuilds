@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ollama
 VERSION=${VERSION:-0.24.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -77,7 +77,22 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # disabling ggml-vulkan until we have vulkan-sdk >= 1.4
-sed -i '/find_package(Vulkan)/ d' CMakeLists.txt
+if [ "${VULKAN:-OFF}" = "OFF" ]; then
+    sed -i '/find_package(Vulkan)/ d' CMakeLists.txt
+fi
+
+# Use lib64
+if [[ "${LIB64:-OFF}" = "ON" && "$ARCH" = "x86_64" ]]; then
+    sed -i \
+	-e "/set(OLLAMA_BUILD_DIR/s/lib/lib$LIBDIRSUFFIX/" \
+	-e "s|{CMAKE_INSTALL_PREFIX}/lib|{CMAKE_INSTALL_PREFIX}/lib$LIBDIRSUFFIX|" \
+	CMakeLists.txt
+    sed -i -e "s/\"..\", \"lib\"/\"..\", \"lib$LIBDIRSUFFIX\"/" \
+	ml/path.go
+    sed -i -e "s|lib/ollama|lib$LIBDIRSUFFIX/ollama|" \
+	-e "/\"lib\", \"ollama\"/ s/\"..\", \"lib\"/\"..\", \"lib$LIBDIRSUFFIX\"/" \
+	ml/backend/ggml/ggml/src/ggml.go
+fi
 
 cmake -B build \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \

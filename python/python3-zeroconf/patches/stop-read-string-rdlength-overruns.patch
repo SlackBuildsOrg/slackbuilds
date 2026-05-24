@@ -1,6 +1,6 @@
 --- a/src/zeroconf/_protocol/incoming.py
 +++ b/src/zeroconf/_protocol/incoming.py
-@@ -260,12 +260,27 @@
+@@ -254,12 +254,27 @@
          """Reads a character string from the packet"""
          length = self.view[self.offset]
          self.offset += 1
@@ -28,7 +28,7 @@
          info = self.data[self.offset : self.offset + length]
          self.offset += length
          return info
-@@ -303,6 +318,19 @@
+@@ -297,6 +312,19 @@
                      self.data,
                      exc_info=True,
                  )
@@ -48,10 +48,9 @@
              if rec is not None:
                  self._answers.append(rec)
 
-
 --- a/tests/test_protocol.py
 +++ b/tests/test_protocol.py
-@@ -805,6 +805,89 @@
+@@ -807,6 +807,89 @@
      assert nsec_record.next_name == "MyHome54 (2)._meshcop._udp.local."
  
  

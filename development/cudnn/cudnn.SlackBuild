@@ -27,8 +27,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cudnn
-VERSION=${VERSION:-9.21.1.3_13}
-BUILD=${BUILD:-3}
+VERSION=${VERSION:-9.22.0.52_13}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -43,6 +43,10 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
+[ "$ARCH" = "x86_64" ] || {
+  echo "Only x86_64 architecture supported. Exiting now ... "
+  exit 1
+}
 
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

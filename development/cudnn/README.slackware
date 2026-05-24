@@ -5,24 +5,25 @@
 # copy that file to somewhere with write permission,
 # then compile and run it e.g.
 
-( cd /tmp && \
+( . /etc/profile.d/cuda-13*.sh && \
+  cd /tmp && \
   cp /usr/doc/cudnn-*/cudnn_test.c . && \
   gcc cudnn_test.c -o cudnn_test \
-    -I/opt/cuda-13.2/include \
+    $(pkg-config --cflags-only-I cuda) \
     $(pkg-config --cflags-only-I cudnn) \
     $(pkg-config --libs cudnn) && \
   ./cudnn_test
 )
 
-# (this assumes cudatoolkit is installed at /opt/cuda-13.2
-#  - adjust as required)
+# (this assumes cudatoolkit_13 is installed - adjust as required)
 #
 # Alternatively, in a system with cudnn installed, just run this
 # README.slackware file as a bash script i.e.
 #    bash /usr/doc/cudnn-*/README.slackware
 #
-# If all is OK, this should output something like:
-#     cuDNN runtime version: 92101
+# If all is OK, this should output something (depending on the
+# runtime version) like:
+#     cuDNN runtime version: 92200
 #     OK
 #
 # If something is wrong, the output will be something like:

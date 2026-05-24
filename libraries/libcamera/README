@@ -1,4 +1,7 @@
-An open source camera stack and framework for Linux, Android, and ChromeOS
+libcamera (camera support library)
 
-It's recommended to install Qt6 before building libcamera
-This will give full support to project.
+An open source camera stack and framework for Linux, Android, and
+ChromeOS.
+
+It's recommended to install Qt6 before building libcamera. This will
+give full support to the project.

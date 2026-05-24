@@ -1,7 +1,7 @@
 PRGNAM="openimageio"
 VERSION="2.5.18.0"
 HOMEPAGE="https://sites.google.com/site/openimageio/home"
-DOWNLOAD="https://github.com/OpenImageIO/oiio/archive/v2.5.18.0/OpenImageIO-2.5.18.0.tar.gz \
+DOWNLOAD="https://github.com/AcademySoftwareFoundation/OpenImageIO/archive/v2.5.18.0/OpenImageIO-2.5.18.0.tar.gz \
 	https://github.com/fmtlib/fmt/archive/7.1.3/fmt-7.1.3.tar.gz"
 MD5SUM="3975e5dc0970ad859244a58dc2b8e147 \
 	2522ec65070c0bda0ca288677ded2831"

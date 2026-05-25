@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=gcc14
 SRCNAM=gcc
 VERSION=${VERSION:-14.2.0}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -86,12 +86,12 @@ esac
 set -e
 
 LANGS_DEFAULT="ada,c,c++,d,fortran,go,lto,objc,obj-c++"
-if [ ! -n $USER_LANGS ]; then
+if [ ! -z $USER_LANGS ]; then
   LANGS="${USER_LANGS}"
 else
   LANGS="${LANGS_DEFAULT}"
 fi
-echo "Building $PRGNAM with ${LANGS}"
+echo "Building $PRGNAM with languages: ${LANGS}"
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -111,7 +111,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 echo
-
 
 ( mkdir gcc.build.lnx
   cd gcc.build.lnx
@@ -169,6 +168,8 @@ echo
   # Include all debugging info (for now):
   make $NUMJOBS bootstrap || exit 1
 
+# Only build gnatlib if ada has been requested
+if [[ "$LANGS" == *"ada"* ]]; then
   ( cd gcc
     make $NUMJOBS gnatlib GNATLIBCFLAGS="$SLKCFLAGS" || exit 1
     # This wants a shared -ladd2line?
@@ -179,6 +180,7 @@ echo
     make $NUMJOBS gnattools || exit 1
   ) || exit 1
   make info || exit 1
+fi
 
   # Set GCCCHECK=something to run the tests
   if [ ! -z $GCCCHECK ]; then

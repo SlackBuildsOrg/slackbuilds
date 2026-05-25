@@ -1,10 +1,10 @@
 PRGNAM="rclone-src"
-VERSION="1.74.1"
+VERSION="1.74.2"
 HOMEPAGE="https://rclone.org"
-DOWNLOAD="https://github.com/rclone/rclone/archive/v1.74.1/rclone-1.74.1.tar.gz \
-          https://sourceforge.net/projects/slackbuildsdirectlinks/files/rclone/rclone-1.74.1-vendor.tar.xz"
-MD5SUM="b1333a54bab332357d18ac67c3995bfd \
-        3ac307a795ea1238d45bd673004bed1f"
+DOWNLOAD="https://github.com/rclone/rclone/archive/v1.74.2/rclone-1.74.2.tar.gz \
+          https://sourceforge.net/projects/slackbuildsdirectlinks/files/rclone/rclone-1.74.2-vendor.tar.xz"
+MD5SUM="34828dda96522a7ca16cdf318378dfc3 \
+        71e285d140b6ce5692ebd4a269c2a4a2"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="google-go-lang"

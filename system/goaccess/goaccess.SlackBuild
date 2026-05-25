@@ -3,6 +3,7 @@
 # Slackware build script for goaccess
 
 # Copyright Dave Woodfall <dave@slackbuilds.org>
+# Copyright Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -29,8 +30,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=goaccess
-VERSION=${VERSION:-1.4.6}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.10.2}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -108,7 +109,7 @@ install -D -m644 config/goaccess.conf $PKG/etc/goaccess.conf.new
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 install -m0644 \
-  AUTHORS COPYING ChangeLog NEWS README TODO \
+  AUTHORS COPYING ChangeLog NEWS README.md TODO \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

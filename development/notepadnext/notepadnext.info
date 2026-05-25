@@ -3,9 +3,9 @@ VERSION="0.6.3"
 HOMEPAGE="https://github.com/dail8859/NotepadNext"
 DOWNLOAD="https://github.com/dail8859/NotepadNext/archive/v0.6.3/NotepadNext-0.6.3.tar.gz \
           https://github.com/alex-spataru/QSimpleUpdater/archive/62e0ce7dde4c76e7533f2f0ee53f19ee1690c8dd/QSimpleUpdater-62e0ce7dde4c76e7533f2f0ee53f19ee1690c8dd.tar.gz \
-          https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/archive/89ff0ad/Qt-Advanced-Docking-System-89ff0ad.tar.gz \
+          https://github.com/githubuser0xFFFF/Qt-Advanced-Docking-System/archive/89ff0ad311ec0cba7e7685c070d3be3a055cce71/Qt-Advanced-Docking-System-89ff0ad311ec0cba7e7685c070d3be3a055cce71.tar.gz \
           https://github.com/editorconfig/editorconfig-core-qt/archive/52820d59769fcba6d0ed94f685406c0383fe1a30/editorconfig-core-qt-52820d59769fcba6d0ed94f685406c0383fe1a30.tar.gz \
-          https://github.com/itay-grudev/SingleApplication/archive/d0c43a5/SingleApplication-d0c43a5.tar.gz \
+          https://github.com/itay-grudev/SingleApplication/archive/d0c43a51ad7d4f74ae5cff8d8cbf8aba0cf5e51c/SingleApplication-d0c43a51ad7d4f74ae5cff8d8cbf8aba0cf5e51c.tar.gz \
           https://gitlab.freedesktop.org/uchardet/uchardet/-/archive/ab1d2f1120297af6537f2a0d09dca589d4c3ea3b/uchardet-ab1d2f1120297af6537f2a0d09dca589d4c3ea3b.tar.gz"
 MD5SUM="8595b6a484ff76f6d3f468e481020dcd \
         e63ec431c53a6d00706974cbce8060ae \

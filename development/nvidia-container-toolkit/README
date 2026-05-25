@@ -1,6 +1,7 @@
-The NVIDIA Container Toolkit allows user to build and run GPU accelerated
-containers. The toolkit includes a container runtime library and utilities
-to automatically configure containers to leverage NVIDIA GPUs.
+The NVIDIA Container Toolkit allows user to build and run GPU
+accelerated containers. The toolkit includes a container runtime
+library and utilities to automatically configure containers to
+leverage NVIDIA GPUs.
 
 Warning: This SlackBuild requires network access when it runs, meaning
 it downloads files from the Internet with root access. You should

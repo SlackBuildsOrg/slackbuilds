@@ -1,11 +1,11 @@
-LibreOffice is a productivity suite that is compatible with other major
-office suites, and available on a variety of platforms. It is free
-software and therefore free to download, use and distribute.
+LibreOffice is a productivity suite that is compatible with other
+major office suites, and available on a variety of platforms. It is
+free software and therefore free to download, use and distribute.
 
-This script builds a Slackware package from the official binary (RPM's)
-distributed by The Document Foundation.  Everything needed by the
-application should be built statically into it, so there aren't any
-dependencies not satisfied by a normal installation.
+This script builds a Slackware package from the official binary
+(RPM's) distributed by The Document Foundation.  Everything needed by
+the application should be built statically into it, so there aren't
+any dependencies not satisfied by a normal installation.
 
 Be sure to look at the script for some optional things you can do when
 building.
@@ -15,13 +15,16 @@ See the separate SlackBuild script for the language packs.
 Avahi is only needed if you need to use Impress and Draw
 
 WARNING:
-LibreOffice 25.8.6 is the latest version working in Slackware 15.0 using
-normal Slackware stock packages. Newer version requires newer glibc.
+LibreOffice 25.8.6 is the latest version working in Slackware 15.0
+using normal Slackware stock packages. Newer version requires newer
+glibc.
 
-You can use this script to build for newer version, but for 15.0 users,
-you will need to upgrade packages from testing/packages/binutils-gcc-glibc.
+You can use this script to build for newer version, but
+for 15.0 users, you will need to upgrade packages from
+testing/packages/binutils-gcc-glibc.
 
-Place the new version source (eg. 26.2.1) in the same directory and run:
-VERSION=26.2.1 sh libreoffice.SlackBuild
+Place the new version source (eg. 26.2.1) in the same directory and
+run: VERSION=26.2.1 sh libreoffice.SlackBuild
 
-If you feel uncomfortable, please stick with the current 25.8.5 version
+If you feel uncomfortable, please stick with the current 25.8.5
+version

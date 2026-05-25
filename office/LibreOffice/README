@@ -58,8 +58,9 @@ as follows:
    MAKEFLAGS environment variable contains the -j option e.g.
        MAKEFLAGS=-j6
    then the SlackBuild will pass this to the LibreOffice build system
-   (via its --with-parallelism configure option). The number of parallel
-   jobs is further controlled by the PARALLEL environment variable e.g:
+   (via its --with-parallelism configure option). The number of
+   parallel jobs is further controlled by the PARALLEL environment
+   variable e.g:
        PARALLEL=1 sh LibreOffice.SlackBuild
    which would limit building to a single make process, overriding any
    value set with the -j option in MAKEFLAGS.
@@ -69,16 +70,16 @@ as follows:
    be reinstated by setting the USE_CCACHE environment to "yes" e.g.
        USE_CCACHE=yes sh LibreOffice.SlackBuild
 
-5. PyUNO is a Python interface to the LibreOffice API. It is disabled by
-   default due to interference with Openshot (therefore possibly other
-   packages). It may be enabled by setting the PYUNO environment
+5. PyUNO is a Python interface to the LibreOffice API. It is disabled
+   by default due to interference with Openshot (therefore possibly
+   other packages). It may be enabled by setting the PYUNO environment
    variable e.g.
        PYUNO=yes sh LibreOffice.SlackBuild
 
    Even without PyUNO enabled in this way, PyUNO scripts may still be
    executed by suitably extending the PYTHONPATH in the environment at
    runtime e.g.
-       PYTHONPATH=/usr/lib64/libreoffice/program my_python_uno_script.py
+     PYTHONPATH=/usr/lib64/libreoffice/program my_python_uno_script.py
 
 
 Spell checking of documents at runtime requires installation of a

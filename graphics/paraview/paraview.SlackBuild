@@ -26,9 +26,9 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=paraview
 SRCNAM=ParaView
-VERSION=${VERSION:-6.1.0}
+VERSION=${VERSION:-6.1.1}
 SHORT_VERSION=${SHORT_VERSION:-6.1}
-DOC_VERSION=${DOC_VERSION:-6.1.0}
+DOC_VERSION=${DOC_VERSION:-6.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,13 +77,15 @@ cd $SRCNAM-v$VERSION
 
 sed -e "s/@VERSION@/$VERSION/" $CWD/013_doc_path.diff.in | patch -p0
 sed -i -e 's/^Categories.*/&Development;Graphics;/' Clients/ParaView/org.paraview.ParaView.desktop.in
-chown -R root:root .
 
+echo -n "Sanitizing source code - please wait ... "
+chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+echo
 
 mkdir -p build
 cd build
@@ -128,4 +130,4 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

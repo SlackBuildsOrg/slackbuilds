@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pytorch
-VERSION=${VERSION:-2.5.1}
+VERSION=${VERSION:-2.12.0}
 COMMIT_QNNPACK=7d2a4e9931a82adc3814275b6219a03e24e36b4c
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -66,6 +66,8 @@ fi
 
 set -e
 
+SLKCFLAGS+=" -Wno-error=maybe-uninitialized -Wno-error=uninitialized -Wno-error=restrict"
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -86,24 +88,44 @@ ln -s QNNPACK-$COMMIT_QNNPACK QNNPACK
 sed -i c10/CMakeLists.txt \
   -e "s;DESTINATION lib;DESTINATION lib$LIBDIRSUFFIX;g"
 
+if [ $(cmake --version |head -1 |cut -f3 -d' ') == "3.21.4" ]; then
+    echo "export PATH for cmake-opt"
+    export PATH="/opt/cmake-opt/bin/:$PATH"
+fi
+
+export CC=gcc-14.2.0
+export CPP=cpp-14.2.0
+export CXX=g++-gcc-14.2.0
+export AR=gcc-ar-14.2.0
+export NM=gcc-nm-14.2.0
+export RANLIB=gcc-ranlib-14.2.0
+export PATH="/opt/gcc14-14.2.0/bin:$PATH"
+
 TMP_DIR=tmpxxx
 mkdir build
+mkdir $TMP_DIR
 cd build
-  unshare -n cmake \
-    -G Ninja \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_STANDARD=17 \
-    -DCMAKE_INSTALL_PREFIX="/usr" \
-    -DLIBSHM_INSTALL_LIB_SUBDIR="lib$LIBDIRSUFFIX" \
-    -DTORCH_INSTALL_LIB_DIR="lib$LIBDIRSUFFIX" \
-    -DPYTHON_EXECUTABLE=$(which python3) \
-    -DBUILD_CUSTOM_PROTOBUF=OFF \
-    -DBUILD_TEST=OFF \
-    -DUSE_GOLD_LINKER=ON \
-    -DUSE_OPENCL=ON \
-    -DUSE_VULKAN=ON \
-    -DCMAKE_BUILD_TYPE=Release ..
+ unshare -n cmake \
+   -G Ninja \
+     -DUSE_CUDA=OFF \
+     -DUSE_CUDNN=ON \
+     -DUSE_NCCL=OFF \
+   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+   -DCMAKE_CXX_STANDARD=20 \
+   -DCMAKE_INSTALL_PREFIX="/usr" \
+   -DLIBSHM_INSTALL_LIB_SUBDIR="lib$LIBDIRSUFFIX" \
+   -DTORCH_INSTALL_LIB_DIR="lib$LIBDIRSUFFIX" \
+   -DPYTHON_EXECUTABLE=$(which python3) \
+   -DBUILD_CUSTOM_PROTOBUF=OFF \
+   -DBUILD_TEST=OFF \
+   -DUSE_GOLD_LINKER=ON \
+   -DUSE_OPENCL=ON \
+   -DUSE_VULKAN=ON \
+   -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+   -DCUDA_TOOLKIT_ROOT_DIR=/usr/share/cuda \
+   -DUSE_TENSORPIPE=0 \
+   -DCMAKE_BUILD_TYPE=Release ..
   "${NINJA:=ninja}"
   DESTDIR=$TMP_DIR $NINJA install/strip
 

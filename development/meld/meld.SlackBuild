@@ -83,6 +83,7 @@ make prefix=/usr libdir=/usr/lib${LIBDIRSUFFIX} docdir=/usr/doc/$PRGNAM-$VERSION
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+rm -rf $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM
 
 rm -rf $PKG/usr/share/pixmaps
 

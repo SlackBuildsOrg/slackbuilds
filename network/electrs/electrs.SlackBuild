@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=electrs
-VERSION=${VERSION:-0.10.9}
+VERSION=${VERSION:-0.11.1}
 BUILD=${BUILD:-4}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -100,7 +100,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-cargo build --locked --release
+CXXFLAGS="-include cstdint" cargo build --locked --release
 strip target/release/electrs
 
 mkdir -p $PKG/usr/bin \
@@ -108,7 +108,7 @@ mkdir -p $PKG/usr/bin \
   $PKG/var/{lib,log,run}/$PRGNAM
 
 install -D -m 0755 $TMP/$PRGNAM-$VERSION/target/release/$PRGNAM $PKG/usr/bin/$PRGNAM
-install -D -m 0644 $CWD/config.toml $PKG/etc/$PRGNAM/config.toml
+install -D -m 0644 $CWD/config.toml $PKG/etc/$PRGNAM/config.toml.new
 install -D -m 0644 $CWD/rc.$PRGNAM $PKG/etc/rc.d/rc.$PRGNAM
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION

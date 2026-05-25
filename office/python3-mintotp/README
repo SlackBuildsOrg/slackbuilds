@@ -1,0 +1,16 @@
+python3-mintotp is a minimalist implementation of TOTP.
+
+You have probably seen how some obnoxious websites are not satisfied
+with you just entering a correct username and password to log in.
+They require something called "one-time pass", which is a seemingly
+random combination of 6 alphanums.
+
+mintotp is a tiny but self-contained implementation of those OTP
+codes, including a python library and a command-line utility.
+
+Use it just like
+echo "<your-seed>" | mintotp
+or mintotp < your-seed-file
+
+Of course, you need to store the seed somewhere, preferrably in an
+encrypted GnuPG file.

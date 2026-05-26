@@ -88,7 +88,6 @@ if [ "${CLEAREXIT:-no}" = "yes" ]; then
     CLEAR_OPT="-DDFM_CLEAR_EXIT"
 fi
 
-CFLAGS="$SLKCFLAGS -flto"
 ./configure \
   --prefix=/usr \
   CFLAGS="$SLKCFLAGS $COLOR_OPT $CLEAR_OPT"

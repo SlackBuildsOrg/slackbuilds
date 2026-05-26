@@ -1,0 +1,76 @@
+Hardware acceleration support for Blender is enabled if a CUDA toolkit
+is detected when Blender is being built. The CUDA toolkit is no longer
+required after Blender has been built; it is only required during
+building.
+
+The CUDA toolkit SlackBuilds which have been tested and are known to
+work are:
+    development/cudatoolkit_12
+    development/cudatoolkit_13.
+
+The main difference between the toolkits is the collection of compute
+capabilities that each one supports. This, in turn, determines the
+graphics cards able to be supported by the final Blender package.
+The relationship between compute capability and various graphics cards
+can be seen at:
+    https://developer.nvidia.com/cuda/gpus
+and
+	https://developer.nvidia.com/cuda/gpus/legacy
+
+With one of the CUDA toolkits installed, the range of supported
+architectures can be displayed by executing the command:
+    nvcc --list-gpu-arch
+
+The range of architectures (hence compute capabilities) supported by
+Blender itself may not support all those that are supported by a
+particular version toolkit.
+
+For instance, when building blender-5.1.2 with cudatoolkit_13, terminal
+output will show lines like:
+    CUDA binaries for sm_50 are no longer supported with CUDA 13.0+
+
+with similar lines for sm_52, sm_60, sm_61 and sm_70.
+
+This means that compute capabilities (CC's) 5.0, 5.2, 6.0, 6.1 and 7.0
+are not suppported. If your graphics card happens to fall into this
+category, build Blender with cudatoolkit_12 which still supports these
+older architectures.
+
+More information:
+    https://developer.nvidia.com/blog/navigating-gpu-architecture-support-a-guide-for-nvidia-cuda-developers/
+
+cudatoolkit_12: nvcc --list-gpu-arch
+compute_50
+compute_52
+compute_53
+compute_60
+compute_61
+compute_62
+compute_70
+compute_72
+compute_75
+compute_80
+compute_86
+compute_87
+compute_89
+compute_90
+compute_100
+compute_101
+compute_103
+compute_120
+compute_121
+
+cudatoolkit_13: nvcc --list-gpu-arch
+compute_75
+compute_80
+compute_86
+compute_87
+compute_88
+compute_89
+compute_90
+compute_100
+compute_110
+compute_103
+compute_120
+compute_121
+

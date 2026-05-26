@@ -80,7 +80,7 @@ installation of the rocmtoolkit_6 package.
 
 ## NOTE ##
 Even if not targeting the Nvidia GPU, the cudatoolkit_12 package is
-still mandatory.
+still mandatory for building the libraries (not Blender itself).
 
 
 ##################################################

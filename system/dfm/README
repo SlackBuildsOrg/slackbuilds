@@ -38,8 +38,8 @@ ENVIRONMENT VARIABLES
 Set these in ~/.bashrc or ~/.profile to customize runtime behavior.
 
   DFM_OPENER         Program used to open files (default: xdg-open).
-                     For terminal editors, use a wrapper script:
-                         export DFM_OPENER="xterm -e nvi"
+                         export DFM_OPENER=nvi
+                         export DFM_OPENER=vim
   DFM_BOOKMARK_[0-9] Directory bookmarks.
                          export DFM_BOOKMARK_0="$HOME/projects"
   DFM_COPYER         Clipboard tool, fed data via stdin.

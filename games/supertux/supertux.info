@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/SuperTux/supertux/releases/download/v0.7.0/SuperTux
 MD5SUM="39d9e5620ea738522432bfe7e0570677"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="physfs glm cmake-opt"
+REQUIRES="physfs glm cmake-opt fmt"
 MAINTAINER="Bloyburt"
 EMAIL="alexpen@startmail.com"

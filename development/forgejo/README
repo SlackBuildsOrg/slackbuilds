@@ -1,0 +1,13 @@
+Forgejo is a self-hosted lightweight software forge.
+
+It provides Git repository hosting, issues, pull requests, wiki,
+releases, packages, and optional CI integration.
+
+The default configuration uses SQLite. A MariaDB sample configuration is
+included for production use on Slackware because MariaDB is shipped in
+the official Slackware tree.
+
+After installation, read README.SBo for runtime user creation, database
+setup, LAN access, security notes, and Forgejo Actions information.
+
+NOTE: This script requires network access during building

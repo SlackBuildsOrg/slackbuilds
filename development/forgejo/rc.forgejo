@@ -1,0 +1,108 @@
+#!/bin/sh
+
+# /etc/rc.d/rc.forgejo
+# Slackware init script for Forgejo.
+
+FORGEJO_USER="git"
+FORGEJO_GROUP="git"
+FORGEJO_BIN="/usr/bin/forgejo"
+FORGEJO_CONFIG="/etc/forgejo/app.ini"
+FORGEJO_WORK_DIR="/var/lib/forgejo"
+FORGEJO_LOG_DIR="/var/log/forgejo"
+FORGEJO_RUN_DIR="/var/run/forgejo"
+FORGEJO_PID="$FORGEJO_RUN_DIR/forgejo.pid"
+FORGEJO_LOG="$FORGEJO_LOG_DIR/forgejo.log"
+
+forgejo_start() {
+  if [ ! -x "$FORGEJO_BIN" ]; then
+    echo "Forgejo binary not found: $FORGEJO_BIN"
+    exit 1
+  fi
+
+  if [ ! -f "$FORGEJO_CONFIG" ]; then
+    echo "Forgejo configuration not found: $FORGEJO_CONFIG"
+    echo "Create it from /etc/forgejo/app.ini.new and edit it first."
+    exit 1
+  fi
+
+  if [ -f "$FORGEJO_PID" ]; then
+    if kill -0 "$(cat "$FORGEJO_PID")" 2>/dev/null; then
+      echo "Forgejo is already running. PID: $(cat "$FORGEJO_PID")"
+      exit 0
+    else
+      rm -f "$FORGEJO_PID"
+    fi
+  fi
+
+  echo "Starting Forgejo..."
+
+  mkdir -p "$FORGEJO_RUN_DIR" "$FORGEJO_LOG_DIR" "$FORGEJO_WORK_DIR"
+  chown -R "$FORGEJO_USER:$FORGEJO_GROUP" "$FORGEJO_RUN_DIR" "$FORGEJO_LOG_DIR" "$FORGEJO_WORK_DIR"
+
+  su -s /bin/sh "$FORGEJO_USER" -c "cd '$FORGEJO_WORK_DIR' && '$FORGEJO_BIN' web --config '$FORGEJO_CONFIG' >> '$FORGEJO_LOG' 2>&1 & echo \$! > '$FORGEJO_PID'"
+
+  sleep 2
+
+  if [ -f "$FORGEJO_PID" ] && kill -0 "$(cat "$FORGEJO_PID")" 2>/dev/null; then
+    echo "Forgejo started. PID: $(cat "$FORGEJO_PID")"
+  else
+    echo "Forgejo failed to start. Check $FORGEJO_LOG"
+    exit 1
+  fi
+}
+
+forgejo_stop() {
+  if [ -f "$FORGEJO_PID" ]; then
+    PID="$(cat "$FORGEJO_PID")"
+    echo "Stopping Forgejo. PID: $PID"
+
+    kill "$PID" 2>/dev/null
+
+    for i in 1 2 3 4 5 6 7 8 9 10; do
+      if kill -0 "$PID" 2>/dev/null; then
+        sleep 1
+      else
+        break
+      fi
+    done
+
+    if kill -0 "$PID" 2>/dev/null; then
+      echo "Forgejo did not stop gracefully; forcing stop."
+      kill -9 "$PID" 2>/dev/null
+    fi
+
+    rm -f "$FORGEJO_PID"
+    echo "Forgejo stopped."
+  else
+    echo "Forgejo is not running or PID file is missing."
+  fi
+}
+
+forgejo_status() {
+  if [ -f "$FORGEJO_PID" ] && kill -0 "$(cat "$FORGEJO_PID")" 2>/dev/null; then
+    echo "Forgejo is running. PID: $(cat "$FORGEJO_PID")"
+  else
+    echo "Forgejo is not running."
+  fi
+}
+
+case "$1" in
+  start)
+    forgejo_start
+    ;;
+  stop)
+    forgejo_stop
+    ;;
+  restart)
+    forgejo_stop
+    sleep 2
+    forgejo_start
+    ;;
+  status)
+    forgejo_status
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+    ;;
+esac

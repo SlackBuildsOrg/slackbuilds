@@ -1,0 +1,213 @@
+Forgejo for Slackware
+=====================
+
+Build notes
+-----------
+
+This SlackBuild builds Forgejo from source using:
+
+  TAGS="bindata timetzdata sqlite sqlite_unlock_notify"
+
+The bindata tag embeds the web assets into the final binary and is used
+for production builds.
+
+Forgejo requires Go >= 1.24 and Node.js >= 20 with npm. On Slackware,
+/usr/bin/go may be gccgo. This SlackBuild tries to prefer the official
+Google Go toolchain installed by google-go-lang under paths such as:
+
+  /usr/lib64/goX.Y.Z/go/bin
+  /usr/lib/goX.Y.Z/go/bin
+
+On Slackware-current, google-go-lang and nodejs are available in the
+official Slackware tree. The REQUIRES line is intended for the Slackware
+15.0/SBo workflow.
+
+Runtime user
+------------
+
+Forgejo should run as a dedicated system user. Upstream uses a git user
+with /bin/bash because Git over SSH normally uses that OS user in clone
+URLs such as git@example.org:owner/repo.git.
+
+Create the git user and group if they do not exist:
+
+  groupadd -r git
+  useradd -r -g git -d /var/lib/forgejo -s /bin/bash \
+    -c "Git Version Control" git
+
+Then adjust permissions:
+
+  chown -R git:git /var/lib/forgejo /var/log/forgejo /var/run/forgejo
+  chown -R root:root /etc/forgejo
+  chmod 750 /var/lib/forgejo /var/log/forgejo
+  chmod 750 /etc/forgejo
+
+Configuration
+-------------
+
+The package installs these configuration templates:
+
+  /etc/forgejo/app.ini.new
+  /etc/forgejo/app.ini.mariadb.new
+
+Before starting Forgejo, copy one template to /etc/forgejo/app.ini and
+edit at least DOMAIN, ROOT_URL, database settings, SECRET_KEY and
+INTERNAL_TOKEN.
+
+Generate secrets with:
+
+  forgejo generate secret SECRET_KEY
+  forgejo generate secret INTERNAL_TOKEN
+
+Keep these secrets backed up safely. Losing SECRET_KEY can make encrypted
+Forgejo data, such as 2FA secrets, undecryptable.
+
+SQLite database
+---------------
+
+The default configuration installed as /etc/forgejo/app.ini.new uses
+SQLite. SQLite is suitable for small, personal, or low/moderate activity
+installations and is the easiest database to maintain.
+
+The sample enables:
+
+  SQLITE_JOURNAL_MODE = WAL
+
+WAL mode is recommended by the Forgejo documentation for better SQLite
+behavior.
+
+MariaDB database
+----------------
+
+For production usage on Slackware, MariaDB is a practical database option
+because MariaDB is included in the official Slackware tree. Forgejo uses
+DB_TYPE=mysql for MariaDB/MySQL connections.
+
+MariaDB itself is optional for this SlackBuild. It is not listed in
+REQUIRES because SQLite is the default database and MariaDB is a
+deployment choice, not a build requirement for Forgejo.
+
+A MariaDB example configuration is installed as:
+
+  /etc/forgejo/app.ini.mariadb.new
+
+To use a local MariaDB server on Slackware, initialize and start MariaDB
+according to Slackware's MariaDB documentation and rc.mysqld script.
+A typical database setup is:
+
+  mysql -u root -p
+
+Then inside the MariaDB shell:
+
+  SET old_passwords=0;
+  CREATE USER 'forgejo'@'localhost' IDENTIFIED BY 'change_this_password';
+  CREATE DATABASE forgejo CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_bin';
+  GRANT ALL PRIVILEGES ON forgejo.* TO 'forgejo'@'localhost';
+  FLUSH PRIVILEGES;
+  EXIT;
+
+The utf8mb4_bin collation is intentionally used because Forgejo expects a
+case-sensitive and accent-sensitive collation for MySQL/MariaDB.
+
+Then copy the MariaDB sample over the main configuration and edit the
+password, host, domain, ROOT_URL, and security secrets:
+
+  cp /etc/forgejo/app.ini.mariadb.new /etc/forgejo/app.ini
+  vi /etc/forgejo/app.ini
+
+PostgreSQL is also supported by Forgejo, but this SlackBuild ships a
+MariaDB sample because MariaDB is part of the official Slackware tree.
+
+Security and first setup
+------------------------
+
+INSTALL_LOCK=false allows the web installer to run. After the first setup,
+set INSTALL_LOCK=true in /etc/forgejo/app.ini and restart Forgejo.
+
+For a private instance, also review:
+
+  [service]
+  DISABLE_REGISTRATION = true
+  REQUIRE_SIGNIN_VIEW = true
+
+If Forgejo is exposed to the Internet, use HTTPS either directly in
+Forgejo or through a reverse proxy. When using a reverse proxy, set
+ROOT_URL to the public URL, for example:
+
+  ROOT_URL = https://git.example.org/
+
+Forgejo listens on port 3000 by default. A reverse proxy is commonly used
+when serving Forgejo on standard HTTPS port 443 or under a public domain.
+
+Running on a local network (LAN)
+--------------------------------
+
+Forgejo commonly listens on TCP port 3000 for the built-in web server.
+Accessing Forgejo with localhost only works from the same machine where
+Forgejo is running:
+
+  http://localhost:3000/
+  http://127.0.0.1:3000/
+
+Do not use localhost from another computer on the LAN. On a different
+computer, localhost points to that computer itself, not to the Forgejo
+server. For LAN access, use the Forgejo server IP address or a local DNS
+name instead:
+
+  http://192.168.1.50:3000/
+  http://git.lan:3000/
+
+For a private LAN-only Forgejo instance, set the server section in
+/etc/forgejo/app.ini to listen on all interfaces and use the machine IP
+or local DNS name in ROOT_URL. For example:
+
+  [server]
+  DOMAIN = 192.168.1.50
+  HTTP_ADDR = 0.0.0.0
+  HTTP_PORT = 3000
+  ROOT_URL = http://192.168.1.50:3000/
+
+HTTP_ADDR = 0.0.0.0 makes Forgejo listen on all network interfaces,
+including the LAN address. If HTTP_ADDR is set to 127.0.0.1, Forgejo
+will only accept local connections from the same machine.
+
+After editing the configuration, restart Forgejo:
+
+  /etc/rc.d/rc.forgejo restart
+
+Make sure the local firewall, if enabled, allows access to TCP port 3000
+from your trusted LAN only.
+
+Forgejo Actions
+---------------
+
+Forgejo Actions are enabled by default in recent Forgejo versions, but
+jobs are not executed by the Forgejo server itself. They require a
+separate Forgejo Runner installation and registration. Runners execute
+workflow code and must be treated as a security-sensitive component.
+
+If Actions are not needed, disable them in /etc/forgejo/app.ini:
+
+  [actions]
+  ENABLED = false
+
+Service
+-------
+
+Enable and start the service:
+
+  chmod +x /etc/rc.d/rc.forgejo
+  /etc/rc.d/rc.forgejo start
+
+Check status and logs:
+
+  /etc/rc.d/rc.forgejo status
+  tail -f /var/log/forgejo/forgejo.log
+
+To start Forgejo at boot, add this to /etc/rc.d/rc.local:
+
+  if [ -x /etc/rc.d/rc.forgejo ]; then
+    /etc/rc.d/rc.forgejo start
+  fi
+
+A full Forgejo restart is required after changing /etc/forgejo/app.ini.

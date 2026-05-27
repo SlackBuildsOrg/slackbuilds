@@ -1,5 +1,13 @@
 SuperTux is an open-source classic 2D jump-and-run sidescroller game,
 in a style similar to the original Super Mario games.
 
+Run and jump through multiple worlds, fighting off enemies by jumping
+on them, bumping them from below or tossing objects at them, grabbing
+power-ups and other stuff on the way.
+
+In addition to the Story Mode, there is a large amount of community
+contributed levels available as add-ons or in the forums. Everyone
+can contribute such content by using the integrated level editor.
+
 If you get slow performance, disable the use of OpenGL in the
 "Options" menu after SuperTux is started.

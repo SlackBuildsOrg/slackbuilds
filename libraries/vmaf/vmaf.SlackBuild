@@ -30,7 +30,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vmaf
 VERSION=${VERSION:-3.1.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -46,18 +46,14 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-march=i586 -mtune=i686 -pipe -O2 -fPIC"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-march=i686 -mtune=i686 -pipe -O2 -fPIC"
+if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-march=$ARCH -mtune=i686 -pipe -O2 -fPIC"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-march=x86-64 -mtune=generic -pipe -O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
-  SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
+   echo "This SlackBuild will not run on $ARCH" && exit 1
 fi
 
 if [ ! -z "${PRINT_PACKAGE_NAME}"  ]; then
@@ -88,6 +84,7 @@ patch --verbose --unified -p0 < $CWD/vmaf-i386.patch
 cd ..
 
 CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" meson build libvmaf \
+    --default-library=shared \
     -Dprefix=/usr \
     -Dlibdir=/usr/lib${LIBDIRSUFFIX} \
     -Dlocalstatedir=/var \
@@ -96,18 +93,14 @@ CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" meson build libvmaf \
     -Denable_tests=false \
     -Denable_docs=false \
     -Denable_avx512=false \
-    -Denable_tools=false \
     -Denable_nvcc=false \
+    -Denable_tools=true \
     -Denable_float=true \
     -Dbuildtype=release \
     -Dstrip=true
 
 ninja -v -C build
 DESTDIR=$PKG ninja -v -C build install
-
-# This version results in error when building the vmaf tools commenting out for now.
-# mkdir -pv $PKG/usr/bin
-# install -Dvm 0755 build/tools/vmaf -t $PKG/usr/bin
 
 # copy the models that compiled during our build
 # vmaf now use .json based model files.

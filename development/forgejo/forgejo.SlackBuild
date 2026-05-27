@@ -1,0 +1,190 @@
+#!/bin/bash
+
+# SlackBuild for Forgejo
+# Written by Antonio Henrique <your_email@example.com>
+#
+# Redistribution and use of this script, with or without modification,
+# is permitted under the terms of the MIT license.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=forgejo
+VERSION=${VERSION:-15.0.2}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+ARCH=${ARCH:-$(uname -m)}
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ ! -z "${PRINT_PACKAGE_NAME:-}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+if [ "$ARCH" != "x86_64" ]; then
+  echo "$ARCH is unsupported by this SlackBuild at this time."
+  exit 1
+fi
+
+set -e
+
+check_go_version() {
+  if ! command -v go >/dev/null 2>&1; then
+    echo "Go is required to build Forgejo."
+    exit 1
+  fi
+
+  GO_FULL_VERSION="$(go version)"
+
+  if echo "$GO_FULL_VERSION" | grep -qi "gccgo"; then
+    echo "Forgejo requires the official Google Go toolchain, not gccgo."
+    echo "Found: $GO_FULL_VERSION"
+    echo "Install google-go-lang and make sure its bin directory is before /usr/bin in PATH."
+    exit 1
+  fi
+
+  GO_VERSION="$(echo "$GO_FULL_VERSION" | awk '{print $3}' | sed 's/^go//')"
+  MIN_GO_VERSION="1.24"
+
+  if [ "$(printf '%s\n%s\n' "$MIN_GO_VERSION" "$GO_VERSION" | sort -V | head -n1)" != "$MIN_GO_VERSION" ]; then
+    echo "Forgejo requires Go >= $MIN_GO_VERSION. Found: $GO_VERSION"
+    exit 1
+  fi
+
+  echo "Go version OK: $GO_VERSION"
+}
+
+check_node_version() {
+  if ! command -v node >/dev/null 2>&1; then
+    echo "Node.js is required to build Forgejo."
+    exit 1
+  fi
+
+  if ! command -v npm >/dev/null 2>&1; then
+    echo "npm is required to build the Forgejo frontend."
+    exit 1
+  fi
+
+  NODE_VERSION="$(node -v | sed 's/^v//')"
+  MIN_NODE_VERSION="20.0.0"
+
+  if [ "$(printf '%s\n%s\n' "$MIN_NODE_VERSION" "$NODE_VERSION" | sort -V | head -n1)" != "$MIN_NODE_VERSION" ]; then
+    echo "Forgejo requires Node.js >= $MIN_NODE_VERSION. Found: $NODE_VERSION"
+    exit 1
+  fi
+
+  echo "Node.js version OK: $NODE_VERSION"
+}
+
+# Prefer Google's Go toolchain over gccgo when both are installed.
+# Slackware may install google-go-lang under /usr/lib64/goX.Y.Z/go/bin.
+if ls /usr/lib64/go*/go/bin/go >/dev/null 2>&1; then
+  GO_BIN_DIR="$(dirname "$(ls -1d /usr/lib64/go*/go/bin/go | sort -V | tail -n1)")"
+  export PATH="$GO_BIN_DIR:$PATH"
+elif ls /usr/lib/go*/go/bin/go >/dev/null 2>&1; then
+  GO_BIN_DIR="$(dirname "$(ls -1d /usr/lib/go*/go/bin/go | sort -V | tail -n1)")"
+  export PATH="$GO_BIN_DIR:$PATH"
+elif [ -x /usr/lib64/go/bin/go ]; then
+  export PATH="/usr/lib64/go/bin:$PATH"
+elif [ -x /usr/lib/go/bin/go ]; then
+  export PATH="/usr/lib/go/bin:$PATH"
+fi
+
+check_go_version
+check_node_version
+
+rm -rf "$PKG" "$TMP/$PRGNAM-$VERSION"
+mkdir -p "$TMP" "$PKG" "$OUTPUT"
+
+cd "$TMP"
+
+SOURCE="$CWD/v$VERSION.tar.gz"
+
+# Some browsers save Codeberg archives as forgejo-vX.Y.Z.tar.gz.
+# Accept both names to make local testing less brittle.
+if [ ! -f "$SOURCE" ]; then
+  if [ -f "$CWD/forgejo-v$VERSION.tar.gz" ]; then
+    SOURCE="$CWD/forgejo-v$VERSION.tar.gz"
+  else
+    echo "Missing source file: v$VERSION.tar.gz"
+    echo "Also checked for: forgejo-v$VERSION.tar.gz"
+    echo "Download it using the URL from $PRGNAM.info and place it in $CWD"
+    exit 1
+  fi
+fi
+
+mkdir -p "$TMP/$PRGNAM-$VERSION"
+tar xvf "$SOURCE" -C "$TMP/$PRGNAM-$VERSION" --strip-components=1
+cd "$TMP/$PRGNAM-$VERSION"
+
+chown -R root:root .
+find -L . \
+  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
+  -exec chmod 755 {} \; -o \
+  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
+  -exec chmod 644 {} \;
+
+export HOME="$TMP/$PRGNAM-home"
+export GOPATH="$TMP/go"
+export GOMODCACHE="$TMP/go/pkg/mod"
+export GOCACHE="$TMP/go/cache"
+export npm_config_cache="$TMP/npm-cache"
+export GOTOOLCHAIN=local
+export CGO_ENABLED=1
+export TAGS="${TAGS:-bindata timetzdata sqlite sqlite_unlock_notify}"
+
+mkdir -p "$HOME" "$GOPATH" "$GOMODCACHE" "$GOCACHE" "$npm_config_cache"
+
+# Codeberg release archives do not include the .git directory or tags.
+# Forgejo's build system needs a semver-compatible version; provide it
+# explicitly for source archive builds.
+printf '%s\n' "$VERSION" > VERSION
+
+make build
+
+BIN=""
+if [ -x ./forgejo ]; then
+  BIN="./forgejo"
+elif [ -x ./gitea ]; then
+  BIN="./gitea"
+elif [ -x ./dist/forgejo ]; then
+  BIN="./dist/forgejo"
+elif [ -x ./dist/gitea ]; then
+  BIN="./dist/gitea"
+fi
+
+if [ -z "$BIN" ]; then
+  echo "Unable to locate built Forgejo binary."
+  exit 1
+fi
+
+mkdir -p "$PKG/usr/bin"
+install -m 0755 "$BIN" "$PKG/usr/bin/forgejo"
+
+mkdir -p "$PKG/etc/forgejo"
+mkdir -p "$PKG/etc/rc.d"
+mkdir -p "$PKG/var/lib/forgejo"
+mkdir -p "$PKG/var/log/forgejo"
+mkdir -p "$PKG/var/run/forgejo"
+
+install -m 0644 "$CWD/app.ini.sample" "$PKG/etc/forgejo/app.ini.new"
+install -m 0644 "$CWD/app.ini.mariadb.sample" "$PKG/etc/forgejo/app.ini.mariadb.new"
+install -m 0644 "$CWD/rc.forgejo" "$PKG/etc/rc.d/rc.forgejo.new"
+
+mkdir -p "$PKG/usr/doc/$PRGNAM-$VERSION"
+cp -a   LICENSE* NOTICE* README*   "$PKG/usr/doc/$PRGNAM-$VERSION" 2>/dev/null || true
+install -m 0644 "$CWD/README.SBo" "$PKG/usr/doc/$PRGNAM-$VERSION/README.SBo"
+install -m 0644 "$CWD/$PRGNAM.SlackBuild" "$PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild"
+
+mkdir -p "$PKG/install"
+install -m 0644 "$CWD/slack-desc" "$PKG/install/slack-desc"
+install -m 0644 "$CWD/doinst.sh" "$PKG/install/doinst.sh"
+
+chown -R root:root "$PKG"
+chmod -R u+w,go+r-w,a-s "$PKG"
+
+cd "$PKG"
+/sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

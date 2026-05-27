@@ -1,0 +1,10 @@
+--- lightspark.desktop	2025-02-16 15:25:06.000000000 +0000
++++ lightspark-new.desktop	2026-05-25 17:58:15.697855051 +0100
+@@ -5,6 +5,6 @@
+ Exec=lightspark
+ Icon=lightspark
+ Type=Application
+-Categories=Multimedia;Game;AudioVideo;Video;Player;Viewer;
++Categories=X-Multimedia;Game;AudioVideo;Video;Player;Graphics;
+ MimeType=application/x-shockwave-flash;
+ StartupNotify=true

@@ -1,0 +1,13 @@
+VulkanSceneGraph (VSG), is a modern, cross platform, high performance
+scene graph library built upon Vulkan graphics/compute API. The
+software is written in C++17, and follows the CppCoreGuidelines and
+FOSS Best Practices. The source code is published under the MIT
+License, with the exception of vulkan.h, used for Vulkan extensions,
+which is under Apache License 2.0.
+
+This repository contains C++ headers and source and CMake build
+scripts to build the libvsg library. Additional support libraries and
+examples are provided in separate repositories, links to these are
+provided below. The software currently builds under Linux (desktops
+variants through to Jetson & Raspberry Pi), Windows (VisualStudio,
+MinGW & Cygwin), Android, and macOS & iOS (using MoltenVk).

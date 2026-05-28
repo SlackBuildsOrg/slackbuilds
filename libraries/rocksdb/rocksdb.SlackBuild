@@ -4,6 +4,8 @@
 
 # Copyright 2017 Andre Barboza, Belo Horizonte - Brazil
 # All rights reserved.
+# Copyright 2026 Christoph Willing	Sydney Australia
+# All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -25,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rocksdb
-VERSION=${VERSION:-5.7.3}
+VERSION=${VERSION:-7.10.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -79,72 +78,51 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+
 CXXFLAGS="-fdata-sections -ffunction-sections"
-LDFLGAS="-Wl,--gc-sections"
-if [ "$BUILD_TYPE" == "all" ] || [ "$BUILD_TYPE" != "lite" ] ; then
-  DEBUG_LEVEL=0 \
-  EXTRA_CXXFLAGS="$SLKCFLAGS $CXXFLAGS" \
-  EXTRA_LDFLAGS="$LDFLAGS" \
-  make shared_lib
+LDFLAGS="-Wl,--gc-sections"
 
-  if [ "${ENABLE_STATIC:-no}" == "yes" ]; then
-    INSTALL_PATH=$PKG/usr \
-    make install
-  else
-    INSTALL_PATH=$PKG/usr \
-    make install-shared
-  fi
-fi
+mkdir -p build
+cd build
+  cmake \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS $CXXFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DWITH_SNAPPY=ON \
+    -DWITH_CORE_TOOLS=ON \
+    -DWITH_TBB=ON \
+    -DWITH_ZLIB=ON \
+    -DWITH_ZSTD=ON \
+    -DCMAKE_BUILD_TYPE=Release ..
 
-# rocksdb lite
-if [ "$BUILD_TYPE" == "all" ] || [ "$BUILD_TYPE" == "lite" ]; then
-  DEBUG_LEVEL=0 \
-  EXTRA_CXXFLAGS="$SLKCFLAGS $CXXFLAGS" \
-  EXTRA_LDFLAGS="$LDFLAGS" \
-  OPT=-DROCKSDB_LITE=1 \
-  LIBNAME=librocksdb_lite \
-  make shared_lib
+  make
+  make install/strip DESTDIR=$PKG
 
-  if [ "${ENABLE_STATIC:-no}" == "yes" ]; then
-    OPT=-DROCKSDB_LITE=1 \
-    LIBNAME=librocksdb_lite \
-    INSTALL_PATH=$PKG/usr \
-    make install
-  else
-    OPT=-DROCKSDB_LITE=1 \
-    LIBNAME=librocksdb_lite \
-    INSTALL_PATH=$PKG/usr \
-    make install-shared
-  fi
-fi
-
-# fix lib dir
-[ ! -z "$LIBDIRSUFFIX" ] && mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}
-
-# build and install adm tools
-if [ "${INSTALL_TOOLS:-yes}" == "yes" ]; then
   DEBUG_LEVEL=0 \
   EXTRA_CXXFLAGS="$SLKCFLAGS $CXXFLAGS" \
   EXTRA_LDFLAGS="$LDFLAGS" \
   make tools
 
   mkdir -p $PKG/usr/bin
-  install -m755 db_repl_stress $PKG/usr/bin/db_repl_stress
-  install -m755 db_sanity_test $PKG/usr/bin/db_sanity_test
-  install -m755 db_stress      $PKG/usr/bin/db_stress
-  install -m755 ldb            $PKG/usr/bin/ldb
-  install -m755 rocksdb_dump   $PKG/usr/bin/rocksdb_dump
-  install -m755 rocksdb_undump $PKG/usr/bin/rocksdb_undump
-  install -m755 sst_dump       $PKG/usr/bin/sst_dump
-  install -m755 write_stress   $PKG/usr/bin/write_stress
-fi
+  install -m755 tools/db_repl_stress     $PKG/usr/bin/db_repl_stress
+  install -m755 tools/db_sanity_test     $PKG/usr/bin/db_sanity_test
+  install -m755 db_stress_tool/db_stress $PKG/usr/bin/db_stress
+  install -m755 tools/ldb                $PKG/usr/bin/ldb
+  install -m755 tools/rocksdb_dump       $PKG/usr/bin/rocksdb_dump
+  install -m755 tools/rocksdb_undump     $PKG/usr/bin/rocksdb_undump
+  install -m755 tools/sst_dump           $PKG/usr/bin/sst_dump
+  install -m755 tools/write_stress       $PKG/usr/bin/write_stress
+cd ..
+
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CONTRIBUTING.md DEFAULT_OPTIONS_HISTORY.md DUMP_FORMAT.md HISTORY.md INSTALL.md \
-      LANGUAGE-BINDINGS.md README.md ROCKSDB_LITE.md USERS.md WINDOWS_PORT.md AUTHORS \
+cp -a CONTRIBUTING.md DEFAULT_OPTIONS_HISTORY.md DUMP_FORMAT.md HISTORY.md \
+      LANGUAGE-BINDINGS.md README.md USERS.md WINDOWS_PORT.md AUTHORS \
       COPYING LICENSE.Apache LICENSE.leveldb TARGETS \
       $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
@@ -153,4 +131,4 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -16,4 +16,10 @@ places, Bitcoin Knots & Bitcoin Core interfere with each other.
 Also, While Bitcoin Knots will build and run on 32bit systems,
 it will not run at an efficient level.
 Therefore, 64bit is highly recomended as the optimal system.
+
+This new version requires a newer cmake than is in Slackware 15.0
+Therefore, cmake-opt is now required.
+https://slackbuilds.org/repository/15.0/development/cmake-opt/
+
+In addition, a small patch is include here to build with python 3.9
 ********************************************************************

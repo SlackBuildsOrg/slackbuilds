@@ -10,7 +10,7 @@ pkg: pkg (Simple and fast package manager for the SlackBuilds.org repo)
 pkg:
 pkg: Can download, build and install packages. Resolves dependencies and 
 pkg: manages the installed packages and blacklist. Can search for packages,
-pkg: and display them and their dependencies/dependees. 
+pkg: and display them and their dependencies/dependents. 
 pkg:
 pkg: You can specify the packages you actually use in /etc/pkg/pkg_list.txt
 pkg: and the (possibly changing) dependencies are managed automatically.

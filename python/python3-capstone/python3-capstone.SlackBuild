@@ -23,16 +23,11 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# 20220301 bkw: Modified by SlackBuilds.org, BUILD=2:
-# - fix 32-bit build (libraries in /usr/lib, not /usr/lib64).
-# - do not install compile instructions or empty files in doc dir.
-# - don't install a pkgconfig .pc file to /usr/share.
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-capstone
 SRCNAM=capstone
-VERSION=${VERSION:-5.0.7}
+VERSION=${VERSION:-5.0.9}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -54,19 +49,10 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
-else
-  SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
-fi
+case "$ARCH" in
+    x86_64) LIBDIRSUFFIX="64" ;;
+    *)       LIBDIRSUFFIX=""   ;;
+esac
 
 set -e
 
@@ -83,54 +69,35 @@ find . ! -type l -type d ! -perm 755 -exec chmod -f 755 {} +
 find . ! -type l -type f -perm /111 ! -perm 755 -exec chmod -f 755 {} +
 find . ! -type l -type f ! -perm /111 ! -perm 644 -exec chmod -f 644 {} +
 
-mkdir -p build
-cd build
-
-cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DINSTALL_LIB_DIR=/usr/lib$LIBDIRSUFFIX \
-    -DCAPSTONE_ARM_SUPPORT=1 \
-    -DCAPSTONE_ARM64_SUPPORT=1 \
-    -DCAPSTONE_M68K_SUPPORT=1 \
-    -DCAPSTONE_MIPS_SUPPORT=1 \
-    -DCAPSTONE_PPC_SUPPORT=1 \
-    -DCAPSTONE_SPARC_SUPPORT=1 \
-    -DCAPSTONE_SYSZ_SUPPORT=1 \
-    -DCAPSTONE_TMS320C64X_SUPPORT=1 \
-    -DCAPSTONE_X86_SUPPORT=1 \
-    -DCAPSTONE_X86_ATT_DISABLE=1 \
-    -DCAPSTONE_XCORE_SUPPORT=1 \
-    -DCAPSTONE_BUILD_STATIC=0 \
-    -DCMAKE_BUILD_TYPE=Release ..
-  make VERBOSE=1
-
-cd ..
-
 PYVER=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
 
 if [ "$PYVER" = "3.9" ]; then
     pushd bindings/python
         export SETUPTOOLS_USE_DISTUTILS=local
         sed -i 's/from setuptools.command.build import build/from distutils.command.build import build/' setup.py || exit 1
+        rm -rf prebuilt/
         python3 -m build --wheel --no-isolation
         python3 -m installer --destdir="$PKG" dist/*.whl
     popd
 else
     pushd bindings/python
+        rm -rf prebuilt/
         python3 -m build --wheel --no-isolation
         python3 -m installer --destdir="$PKG" dist/*.whl
     popd
 fi
 
+# Fix lib path on x86_64
+if [ -d "$PKG/usr/lib/python$PYVER" ] && [ "$LIBDIRSUFFIX" = "64" ]; then
+    mkdir -p "$PKG/usr/lib64"
+    mv "$PKG/usr/lib/python$PYVER" "$PKG/usr/lib64/"
+    rmdir "$PKG/usr/lib" 2>/dev/null || true
+fi
+
+# Remove bundled libcapstone.so
+rm -rf "$PKG/usr/lib$LIBDIRSUFFIX/python$PYVER/site-packages/capstone/lib"
+
 install -Dm 644 bindings/python/LICENSE.TXT -t $PKG/usr/doc/$PRGNAM-$VERSION
-
-
-find $PKG/usr/lib$LIBDIRSUFFIX -type f -name '*.so*' -exec file {} \; \
-    | grep 'not stripped' \
-    | cut -d: -f1 \
-    | xargs -r strip --strip-unneeded
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

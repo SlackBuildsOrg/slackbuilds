@@ -1,0 +1,21 @@
+spettro (music player with logarithmic spectrum display)
+
+Most spectrographic music players use a linear frequency axis,
+which dedicates the top half of the display to the top octave
+(11025Hz-22050Hz at CD-quality), the next quarter of the screen to the
+penultimate octave and so on, leaving all the musically interesting
+information crushed into the bottom few rows of the graphic.
+
+Spettro has a logarithmic frequency axis, which allocates the same
+amount of space to each octave.
+
+It can play most audio files (WAV, OGG, FLAC, MP3, M4A and even the
+soundtrack of videos) and shows a scrolling spectrogram of it with
+a vertical green one-pixel-wide line half way across the window to
+show the current playing position. It has the standard features you'd
+expect from a graphical music player, plus a few unique ones of its
+own.
+
+Unlike most spectrograph visualizers, spettro is actually useful for
+analying music. See the man page, particularly the -a, -g, and -k
+options.

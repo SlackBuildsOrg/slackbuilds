@@ -15,5 +15,5 @@ libgta: -  allows generic manipulations of array data
 libgta: -  allows conversion to and from other file formats
 libgta:
 libgta:
-libgta: This libgta package is an optional requirement for OpenSceneGraph.
+libgta:
 libgta:

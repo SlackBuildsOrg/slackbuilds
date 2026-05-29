@@ -1,6 +1,27 @@
-modemu2k adds telnet capability to a comm program. It can redirect
-telnet I/O to a pty so that a comm program can handle the pty as a tty
-with a real modem, and allows you to use a comm program's scripting
-and file transfer features over telnet. Now supports IPv6 connections.
+modemu2k (Hayes-style AT-command modem emulator)
 
-modemu2k is a fork of modemu, originally developed by Toru Egashira
+modemu2k bridges a serial-style interface to a TCP or Telnet
+endpoint. It ships as a C library (libmodemu2k) exposing the modem
+state machine, plus a small CLI built on top that allocates a PTY
+and either reads stdin/stdout directly, forks a comm program
+(minicom, picocom) on the slave, or accepts an incoming TCP
+connection as the TTY. IPv4 and IPv6 are supported.
+
+modemu2k is based on modemu, originally developed by Toru Egashira.
+
+Optional runtime helpers (not build-time requirements):
+
+  * minicom -- terminal program invoked by the m2k-minicom helper
+    script. In the stock Slackware package set.
+  * picocom -- alternative terminal program for the m2k-picocom
+    helper script. Available from SlackBuilds.org.
+  * lrzsz -- for ZModem/YModem/XModem file transfers initiated from
+    inside a comm program. In the stock Slackware package set.
+
+No special configuration is needed before or after installing.
+
+Build options:
+
+  TEST=yes    Run `meson test` after building. Results are logged
+              under /usr/doc/modemu2k-<version>/test_results.txt
+              inside the package. Default: no.

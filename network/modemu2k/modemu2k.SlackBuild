@@ -1,34 +1,36 @@
 #!/bin/bash
-#
+
 # Slackware build script for modemu2k
-#
-# Copyright 2022 / Andy Alt / United States                                                                                         [81/1847]
+
+# Copyright 2022-2026 Andy Alt / United States
 # All rights reserved.
-#
+
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
-#
-# 1. Redistributions of this script must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-#
-#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
-#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
-#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=modemu2k
-VERSION=${VERSION:-0.1.0}
+VERSION=${VERSION:-0.2.1}
+SOURCEARCHIVE=$PRGNAM-$VERSION.tar.xz
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+# Run `meson test` after build when TEST=yes is exported. Results are
+# logged into the package's documentation directory.
+TEST="${TEST:-no}"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -50,18 +52,16 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+LIBDIRSUFFIX=""
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" ]; then                                                                                                        [27/1847]
+elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -70,7 +70,14 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+
+# Read the .info and make sure the md5sum matches.
+if ! echo "$(grep '^MD5SUM=' $CWD/$PRGNAM.info | cut -d'"' -f2)  $CWD/$SOURCEARCHIVE" | md5sum -c - ; then
+  echo "ERROR: MD5 checksum mismatch for $SOURCEARCHIVE" >&2
+  exit 1
+fi
+
+tar xvf $CWD/$SOURCEARCHIVE
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -81,17 +88,26 @@ find -L . \
 
 mkdir build
 cd build
-  CFLAGS="$SLKCFLAGS" \
-  CXXFLAGS="$SLKCFLAGS" \
-  meson .. \
-    --buildtype=release \
-    -Dstrip=true \
-    --mandir=/usr/man \
-    --prefix=/usr \
-    --localedir=/usr/share/locale \
-    -Ddocdir=/usr/doc/$PRGNAM-$VERSION
-  ninja
-  DESTDIR=$PKG ninja install
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+meson setup .. \
+  --buildtype=release \
+  --strip \
+  --libdir="/usr/lib$LIBDIRSUFFIX" \
+  --mandir=/usr/man \
+  --prefix=/usr \
+  -Ddocdir=/usr/doc/$PRGNAM-$VERSION \
+  -Dgen-docs=true \
+  -Dhelper-scripts=true
+
+ninja
+
+if [ "$TEST" = "yes" ]; then
+  mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+  meson test --print-errorlogs 2>&1 | tee $PKG/usr/doc/$PRGNAM-$VERSION/test_results.txt
+fi
+
+meson install --destdir $PKG
 cd ..
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
@@ -101,6 +117,7 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

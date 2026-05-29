@@ -5,3 +5,7 @@ of connected systems.
 
 This SlackBuild builds gRPC in C++. python3-grpcio contains the Python 3
 build of gRPC.
+
+grpc is kept back at 1.80.0 on Slackware 15.0. The program version is
+meant to synchronize with python3-grpcio (which cannot be updated due to
+requiring Python >= 3.10).

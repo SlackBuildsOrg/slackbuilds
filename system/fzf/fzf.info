@@ -1,12 +1,12 @@
 PRGNAM="fzf"
-VERSION="0.72.0"
+VERSION="0.73.1"
 HOMEPAGE="https://github.com/junegunn/fzf"
-DOWNLOAD="https://github.com/junegunn/fzf/archive/v0.72.0/fzf-0.72.0.tar.gz \
+DOWNLOAD="https://github.com/junegunn/fzf/archive/v0.73.1/fzf-0.73.1.tar.gz \
           https://github.com/charlievieth/fastwalk/archive/v1.0.14/fastwalk-1.0.14.tar.gz \
           https://github.com/gdamore/encoding/archive/v1.0.1/encoding-1.0.1.tar.gz \
           https://github.com/gdamore/tcell/archive/v2.9.0/tcell-2.9.0.tar.gz \
           https://github.com/lucasb-eyer/go-colorful/archive/v1.2.0/go-colorful-1.2.0.tar.gz \
-          https://github.com/mattn/go-isatty/archive/v0.0.20/go-isatty-0.0.20.tar.gz \
+          https://github.com/mattn/go-isatty/archive/v0.0.22/go-isatty-0.0.22.tar.gz \
           https://github.com/mattn/go-runewidth/archive/v0.0.16/go-runewidth-0.0.16.tar.gz \
           https://github.com/junegunn/go-shellwords/archive/2aa3b3277741a6ad31883f223d770221a85e9dd0/go-shellwords-2aa3b3277741a6ad31883f223d770221a85e9dd0.tar.gz \
           https://github.com/rivo/uniseg/archive/v0.4.7/uniseg-0.4.7.tar.gz \
@@ -14,12 +14,12 @@ DOWNLOAD="https://github.com/junegunn/fzf/archive/v0.72.0/fzf-0.72.0.tar.gz \
           https://github.com/golang/sys/archive/v0.35.0/sys-0.35.0.tar.gz \
           https://github.com/golang/term/archive/v0.34.0/term-0.34.0.tar.gz \
           https://github.com/golang/text/archive/v0.28.0/text-0.28.0.tar.gz"
-MD5SUM="597fb4a657d7b0fc699fa48b0ce6438e \
+MD5SUM="f291011fd6b7d1ea800bbf5b8f983885 \
         784c49bdc1fdb890a721947d2329b90a \
         7230f9efe74e07a07b8dfbfaafbf9d0a \
         5992cf811ff765951cd51497190d2421 \
         191fe5cfcb58e480ff4045c82a06091a \
-        0e9df2fea5b77d464d518a6c60ce8ba2 \
+        24d1c37f98661402cc53ce93ee763dba \
         347363901ee230dd7964a1c82b3ad6b8 \
         85fedbc9f8ce9bfdbd06fc0b7fc3a57d \
         3751c82dd342cd5823703910b9da173d \

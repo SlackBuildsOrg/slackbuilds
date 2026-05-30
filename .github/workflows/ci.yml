@@ -14,14 +14,14 @@ concurrency:
 
 env:
   # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
-  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.4@sha256:c7c84bb146efb38fffb2c5e57e023439a4b7148ce9c4f0d88b45342f94d97a67
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:081534b874192dcd0a8a3218d63ac2ff8d71bb128f2377a8139bae0bfe48ec40
 
 permissions: {}
 
 jobs:
   changes:
     name: Detect changed SlackBuilds
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-slim
     permissions:
       contents: read
     outputs:
@@ -174,7 +174,7 @@ jobs:
 
   dependencies:
     name: Compute reverse dependencies
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-slim
     permissions:
       contents: read
       pull-requests: write # for peter-evans/create-or-update-comment

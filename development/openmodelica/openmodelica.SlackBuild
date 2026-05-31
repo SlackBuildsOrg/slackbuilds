@@ -81,7 +81,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} +
 
-
 tar -xzvf $CWD/OMCompiler-3rdParty-d19136844b49720ae3a8957f0fb1e137c7055b43.tar.gz --strip-components=1 -C OMCompiler/3rdParty
 tar -xzvf $CWD/OMOptim-e4f55f722185f7c71cfb12598a5a4e17373057b7.tar.gz --strip-components=1 -C OMOptim
 tar -xzvf $CWD/OMSens-8216eaefbb4ea2ff0c7a17a3487dcc2a8a17667d.tar.gz --strip-components=1 -C OMSens
@@ -104,16 +103,21 @@ find ../OMSens/ -iname '*.xml' -exec sed -i "s|usr/lib/omlibrary|usr/lib$LIBDIRS
 
 sed -i "s|/usr/lib/omc/|/usr/lib$LIBDIRSUFFIX/omc/|g" ../doc/manpages/omc.1
 
+sed -i "s|lzlib|lz|g" ../OMCompiler/Compiler/runtime/CMakeLists.txt
+sed -i "s|/lib/|/lib$LIBDIRSUFFIX/|g" ../OMCompiler/Compiler/Template/*
+
   cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -Wno-error=incompatible-pointer-types" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLIB_SUFFIX=${LIBDIRSUFFIX} \
     -DMAN_INSTALL_DIR=/usr/man \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
     -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
     -DCMAKE_C_COMPILER_LAUNCHER=ccache \
     -DCMAKE_BUILD_TYPE=Release ..
-  make
+  cmake --build .
   make install/strip DESTDIR=$PKG
 cd ..
 

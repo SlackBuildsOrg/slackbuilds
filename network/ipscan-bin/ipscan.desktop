@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Angry IP Scanner
+GenericName=Network Scanner
+GenericName[es]=Escáner de red
+Comment=Fast and friendly network scanner
+Comment[es]=Escáner de red rápido y amigable
+Exec=ipscan
+Icon=ipscan
+Terminal=false
+Type=Application
+Categories=Network;
+StartupNotify=true

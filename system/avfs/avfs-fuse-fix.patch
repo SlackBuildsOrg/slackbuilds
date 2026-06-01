@@ -1,0 +1,13 @@
+--- /fuse/avfsd.c	2026-03-01 09:49:44.000000000 +0100
++++ /fuse/avfsd.c	2026-05-31 16:10:51.427291885 +0200
+@@ -14,6 +14,10 @@
+ #  define FUSE_USE_VERSION 26
+ #endif
+
++#ifndef FUSE_FILL_DIR_DEFAULTS
++#define FUSE_FILL_DIR_DEFAULTS 0
++#endif
++
+ #include <fuse.h>
+ #include <virtual.h>
+ #include <stdio.h>

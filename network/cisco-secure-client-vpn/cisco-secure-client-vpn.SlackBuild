@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cisco-secure-client-vpn
 SRCNAM=cisco-secure-client
-VERSION=${VERSION:-5.1.16.194}
+VERSION=${VERSION:-5.1.17.3394}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,6 +71,21 @@ fi
 rpm2cpio "$RPM" | cpio -idmv
 
 rm -rf "$PKG/usr/lib/systemd"
+
+# Remove insecure /tmp RUNPATH from bundled OQS provider.
+OQSPROVIDER="$PKG/opt/cisco/secureclient/lib/ossl-modules/oqsprovider.so"
+BAD_RUNPATH="/tmp/build/workspace/ird-linux_proj_Raccoon_ciscossl8/third-party/openssl/o.linux.el8.x86_64/openssl/lib64"
+SAFE_RUNPATH='$ORIGIN/..'
+
+if [ -r "$OQSPROVIDER" ] && grep -aqF "$BAD_RUNPATH" "$OQSPROVIDER"; then
+  BAD_RUNPATH="$BAD_RUNPATH" SAFE_RUNPATH="$SAFE_RUNPATH" perl -0pi -e '
+    my $bad = $ENV{"BAD_RUNPATH"};
+    my $safe = $ENV{"SAFE_RUNPATH"};
+    die "SAFE_RUNPATH is longer than BAD_RUNPATH\n" if length($safe) > length($bad);
+    my $replacement = $safe . ("\0" x (length($bad) - length($safe)));
+    s/\Q$bad\E/$replacement/g;
+  ' "$OQSPROVIDER"
+fi
 
 mkdir -p "$PKG/etc/rc.d"
 install -m 0755 "$CWD/rc.$PRGNAM" "$PKG/etc/rc.d/rc.$PRGNAM"

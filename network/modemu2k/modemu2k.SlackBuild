@@ -22,7 +22,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=modemu2k
-VERSION=${VERSION:-0.2.1}
+VERSION=${VERSION:-0.2.2}
 SOURCEARCHIVE=$PRGNAM-$VERSION.tar.xz
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

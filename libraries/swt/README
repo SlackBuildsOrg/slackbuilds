@@ -1,0 +1,14 @@
+SWT (Eclipse Standard Widget Toolkit) is an open source widget toolkit
+for Java designed to provide efficient, portable access to the
+user-interface facilities of the operating systems on which it
+is implemented.
+
+This build script packages the pre-compiled SWT library components
+needed by Java applications like Angry IP Scanner or Eclipse.
+
+Please note that it only supports 64-bit systems (x86_64).
+32-bit architectures are not supported by the upstream developer
+for this version.
+
+A Java Runtime Environment (such as openjdk or zulu-openjdk) is 
+required to use this library.

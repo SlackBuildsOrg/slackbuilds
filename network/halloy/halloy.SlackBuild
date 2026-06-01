@@ -1,0 +1,163 @@
+#!/bin/bash
+
+# Slackware build script for halloy
+
+# Ioannis Anagnostakis 2026
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=halloy
+VERSION=${VERSION:-2026.7}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+
+  if [ "$ARCH" = "i586" ]; then
+    echo "UNSUPPORTED $ARCH"
+  exit 1
+  fi
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i686" ]; then
+  echo "UNSUPPORTED $ARCH"
+  exit 1
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+  CARGOTARGET="--target x86_64-unknown-linux-gnu"
+  TARGETDIR="x86_64-unknown-linux-gnu"
+else
+  echo "UNSUPPORTED $ARCH"
+  exit 1
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+
+# build offline
+# extract pre-vendored sources and configure cargo to use them
+tar xf $CWD/$PRGNAM-$VERSION-vendor.tar.xz
+mv vendor-out vendor
+mkdir -p .cargo
+cat << EOF >> .cargo/config.toml
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/iced-rs/cryoglyph.git?rev=53ba3e879539d19ed8162942126a977ec896cc3b"]
+git = "https://github.com/iced-rs/cryoglyph.git"
+rev = "53ba3e879539d19ed8162942126a977ec896cc3b"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/iced-rs/winit.git?rev=05b8ff17a06562f0a10bb46e6eaacbe2a95cb5ed"]
+git = "https://github.com/iced-rs/winit.git"
+rev = "05b8ff17a06562f0a10bb46e6eaacbe2a95cb5ed"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/squidowl/iced?rev=fcfa87cb35b615715919c8b4da408b6488f195de"]
+git = "https://github.com/squidowl/iced"
+rev = "fcfa87cb35b615715919c8b4da408b6488f195de"
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
+
+chown -R root:root .
+find . -type f \( -perm -4000 -o -perm -2000 \) -exec chmod -s {} +
+find . ! -type l -type d ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f -perm /111 ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f ! -perm /111 ! -perm 644 -exec chmod -f 644 {} +
+
+VERSION_CODENAME=$(grep "VERSION_CODENAME=" /etc/os-release 2>/dev/null | cut -d'=' -f2)
+if [ "$VERSION_CODENAME" = "stable" ]; then
+export PATH="/opt/rust/bin:$PATH"
+if [ -z "$LD_LIBRARY_PATH" ]; then
+  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX"
+else
+  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
+fi
+else
+export PATH="$PATH"
+fi
+
+CARGO_HOME=.cargo \
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+cargo auditable build --offline --release $CARGOTARGET
+
+appid="org.squidowl.halloy"
+
+mkdir -p "$PKG"/usr/bin/
+cp target/"$TARGETDIR"/release/halloy "$PKG"/usr/bin/
+
+mkdir -p "$PKG"/usr/share/applications/
+cp assets/linux/$appid.desktop  "$PKG"/usr/share/applications/
+
+mkdir -p "$PKG"/usr/share/metainfo/
+cp assets/linux/$appid.appdata.xml "$PKG"/usr/share/metainfo/
+
+fix_icons() {
+    local size
+
+    for size in 16 24 32 48 64 96 128 256 512; do
+        install -Dm644 \
+            "assets/linux/icons/hicolor/${size}x${size}/apps/${appid}.png" \
+            -t "${PKG}/usr/share/icons/hicolor/${size}x${size}/apps/"
+    done
+}
+fix_icons
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a -R \
+ docs/*md LICENSE *.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

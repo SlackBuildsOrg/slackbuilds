@@ -1,10 +1,23 @@
-EmulationStation Desktop Edition (ES-DE) is a frontend application for
-browsing and launching games from your multi-platform game collection.
-It comes preconfigured for use with RetroArch and a large selection of
-standalone emulators. It's also fully customizable so you can easily
-expand it to include emulators or applications not covered by the
-bundled configuration.
-ES-DE is true multi-platform and runs on numerous operating systems such
-as Windows, macOS, Ubuntu, SteamOS, Arch Linux, Raspberry Pi OS,
-Manjaro, Linux Mint, Fedora and FreeBSD.
-EmulationStation needs RetroArch.
+emulationstation-de (Game emulation frontend)
+
+ES-DE (EmulationStation Desktop Edition) is a frontend for browsing and
+launching games from your multi-platform game collection. It supports
+more than 100 game systems and features a built-in scraper for artwork
+and metadata, fully customizable themes, complete controller navigation,
+collections (favorites, last played, custom) and video previews.
+
+This package provides ES-DE version 2.2.1, the last release of the 2.x
+branch. It is specifically chosen for Slackware 15.0 compatibility, as
+it uses the ffmpeg 4.x API which matches the system ffmpeg (4.4.x)
+included in Slackware 15.0.
+
+NOTE: ES-DE 3.x requires ffmpeg 5.x or newer and is NOT compatible
+with Slackware 15.0's system ffmpeg. Use this 2.2.1 package for 15.0.
+For Slackware -current, the ES-DE 3.x SlackBuild is recommended instead.
+
+The application updater (checks for new releases on startup) is
+disabled in this build, as recommended for packaged distributions.
+
+After installation, ES-DE will look for ROMs in ~/ROMs by default.
+On first startup you will be prompted to set the ROM directory if
+no games are found. Configuration files are stored in ~/ES-DE/

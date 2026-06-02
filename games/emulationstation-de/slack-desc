@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
                    |-----handy-ruler------------------------------------------------------|
-emulationstation-de: emulationstation-de (Emulator frontend app)
+emulationstation-de: emulationstation-de (Game emulation frontend)
 emulationstation-de:
-emulationstation-de: Emulationstation-de is a is a frontend application for browsing and 
-emulationstation-de: launching games from your multi-platform game collection.
-emulationstation-de: It comes preconfigured for use with RetroArch and a large selection of
-emulationstation-de: standalone emulators.
+emulationstation-de: ES-DE (EmulationStation Desktop Edition) is a frontend for
+emulationstation-de: browsing and launching games from your multi-platform game
+emulationstation-de: collection. It supports more than 100 game systems and is
+emulationstation-de: available for Linux, macOS and Windows. Features include a
+emulationstation-de: built-in scraper for artwork and metadata, customizable themes,
+emulationstation-de: controller navigation, video previews and collections.
 emulationstation-de:
-emulationstation-de:
-emulationstation-de:
-emulationstation-de: Home: https://www.es-de.org/
+emulationstation-de: Homepage: https://es-de.org/
 emulationstation-de:

@@ -1,9 +1,9 @@
 PRGNAM="libavif"
-VERSION="1.4.1"
+VERSION="1.4.2"
 HOMEPAGE="https://github.com/AOMediaCodec/libavif"
-DOWNLOAD="https://github.com/AOMediaCodec/libavif/archive/v1.4.1/libavif-1.4.1.tar.gz \
+DOWNLOAD="https://github.com/AOMediaCodec/libavif/archive/v1.4.2/libavif-1.4.2.tar.gz \
           https://github.com/maryla-uc/libargparse/archive/81998ff/libargparse-81998ffafb9c2ac8cf488d31e536a2e6fd6b3fdf.tar.gz"
-MD5SUM="80cf307b9d7effa7cebd67423be8f5e2 \
+MD5SUM="10007cf6a4d1cb7304146161e5ebf4da \
         dfece779aeb1fddf9a742f4ae85573bd"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

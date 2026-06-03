@@ -35,12 +35,13 @@
 # 31/01/2025: updated to version 4.9.0
 # 10/06/2025: updated to version 4.9.1
 # 26/05/2026: updated to version 4.9.2
+# 03/06/2026: updated to version 4.9.3
 # -----------------------------------------------------------------------------------
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libslirp
-VERSION=${VERSION:-4.9.2}
+VERSION=${VERSION:-4.9.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

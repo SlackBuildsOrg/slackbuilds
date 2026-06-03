@@ -2,7 +2,8 @@
 #
 # Slackware build script for naps2.
 #
-# Copyright 2015-2017  Yanes Checcacci Balod, Rio de Janeiro, Brazil.
+# Copyright 2025 Yanes Checcacci Balod, Rio de Janeiro, Brazil.
+# Copyright 2026 Isaac Yu <isaacyu@protonmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,13 +26,14 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=naps2
-VERSION=${VERSION:-8.2.0}
+VERSION=${VERSION:-8.2.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
@@ -48,15 +50,18 @@ OUTPUT=${OUTPUT:-/tmp}
 
 set -e
 
-rm -rf $PKG $TMP/$PRGNAM
-mkdir -p $TMP/$PRGNAM $PKG $OUTPUT
-cd $TMP/$PRGNAM
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $PKG
 
 # open .deb package
-ar p $CWD/${PRGNAM}-${VERSION}-linux-*.deb data.tar.xz | tar -xJ ./usr
+ar p $CWD/$PRGNAM-$VERSION-linux-x64.deb data.tar.xz | tar -xJ ./usr -C $PKG
 
-# Remove LINK to binary (will be re-created later with "doinst.sh")
-rm    ./usr/bin/naps2
+# Rename /usr/lib folder to /usr/lib64
+mv $PKG/usr/lib $PKG/usr/lib64
+
+# Fix symlink
+ln -sf /usr/lib64/naps2/naps2 $PKG/usr/bin/naps2
 
 chown -R root:root .
 find -L . \
@@ -65,28 +70,20 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Strip ELF binaries
+strip -p $PKG/usr/lib64/naps2/libsosplugin.so
+strip -p $PKG/usr/lib64/naps2/libsos.so
+strip -p $PKG/usr/lib64/naps2/_linux/tesseract
+strip -p $PKG/usr/lib64/naps2/_linux/libpdfium.so
+strip -p $PKG/usr/lib64/naps2/System.Globalization.Native.so
+strip -p $PKG/usr/lib64/naps2/libdbgshim.so
 
-### final set !
-# Move ALL (./usr) to package DIR
-mv usr $PKG/
-
-# Go to root DIR
-cd $PKG
-mkdir    ./opt
-mkdir -p ./usr/doc/naps2-${VERSION}
-
-# Change LIB to OPT
-mv    ./usr/lib/naps2   ./opt/
-rmdir ./usr/lib
-
-# Pickup misc files and put in doc directory
-cp $CWD/README $CWD/naps2.SlackBuild   ./usr/doc/naps2-${VERSION}
-###
-
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
-# Create package
+cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

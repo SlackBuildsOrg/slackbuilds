@@ -53,12 +53,13 @@
 # 18/04/2025: updated to version 1.2.1
 # 13/05/2025: Updated to version 1.3.0
 # 20/05/2026: updated to version 1.4.1
+# 03/06/2026: updated to version 1.4.2
 # ---------------------------------------------------------------------------------
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libavif
-VERSION=${VERSION:-1.4.1}
+VERSION=${VERSION:-1.4.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

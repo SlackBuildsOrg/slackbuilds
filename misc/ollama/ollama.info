@@ -1,10 +1,18 @@
 PRGNAM="ollama"
-VERSION="0.24.0"
+VERSION="0.30.6"
 HOMEPAGE="https://github.com/ollama/ollama"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/ollama/ollama/archive/v0.24.0/ollama-0.24.0.tar.gz"
-MD5SUM_x86_64="7dd84cbf80d289bca5487f0d42bd081a"
-REQUIRES="google-go-lang"
+DOWNLOAD_x86_64="https://github.com/nlohmann/json/archive/v3.11.3/json-3.11.3.tar.gz \
+                 https://github.com/ggml-org/llama.cpp/archive/b9509/llama.cpp-b9509.tar.gz \
+                 https://github.com/ml-explore/mlx/archive/2165dc08d7b33258260aa849d39f087d50e62962/mlx-2165dc08d7b33258260aa849d39f087d50e62962.tar.gz \
+                 https://github.com/ml-explore/mlx-c/archive/fba4470b89073180056c9ea46c443051375f7399/mlx-c-fba4470b89073180056c9ea46c443051375f7399.tar.gz \
+                 https://github.com/ollama/ollama/archive/v0.30.6/ollama-0.30.6.tar.gz"
+MD5SUM_x86_64="d603041cbc6051edbaa02ebb82cf0aa9 \
+               ca5fee378c408221b833145b861dade9 \
+               f3b5be771241aa2012240495af492424 \
+               10642b4ae80e186dfe6160198ae2d5ca \
+               d80bf4371a19e9f248b374f1e049a146"
+REQUIRES="cmake-opt google-go-lang"
 MAINTAINER="Ruoh-Shoei LIN"
 EMAIL="lin.ruohshoei+sbo@gmail.com"

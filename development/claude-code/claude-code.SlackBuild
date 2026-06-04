@@ -22,15 +22,14 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=claude-code
-VERSION=${VERSION:-2.1.101}
+SRCNAM=claude-code
+VERSION=${VERSION:-2.1.161}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -39,7 +38,6 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
-
 
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
@@ -50,16 +48,23 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+if [ "$ARCH" = "x86_64" ]; then
+    SRCARCH=linux-x64
+elif [ "$ARCH" = "aarch64" ]; then
+    SRCARCH=linux-arm64
+else
+    echo "$PRGNAM: no upstream binary for $ARCH (x86_64 and aarch64 only)" >&2
+    exit 1
+fi
+
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-mkdir $PRGNAM-$VERSION
-cd $PRGNAM-$VERSION
-mkdir -p package
-tar -xzf $CWD/$PRGNAM-$VERSION.tgz -C package --strip-components=1
+rm -rf package
+tar xvf $CWD/$SRCNAM-$SRCARCH-$VERSION.tgz
+cd package
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -67,33 +72,19 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p $PKG/usr/lib64/node_modules/@anthropic-ai/
-cp -a package $PKG/usr/lib64/node_modules/@anthropic-ai/"$PRGNAM"
-
 mkdir -p $PKG/usr/bin
-cat $PKG/usr/lib64/node_modules/@anthropic-ai/claude-code/cli.js > $PKG/usr/bin/claude
-chmod +x $PKG/usr/bin/claude
+cp claude $PKG/usr/bin/
 
-if [ "${ARCH:-}" = "x86_64" ]; then
-  find "$PKG/usr/lib64/node_modules/@anthropic-ai/claude-code/vendor" \
-    -maxdepth 2 \( -name "arm64-*" -o -name "x64-darwin" -o -name "x64-win32" \) \
-    -type d -exec rm -rf {} +
-fi
-
-ELF_FILES=$(find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
-  | grep ELF | cut -f 1 -d :)
-echo "$ELF_FILES" | xargs chmod +x 2>/dev/null || true
-echo "$ELF_FILES" | xargs strip --strip-unneeded 2>/dev/null || true
+# Do NOT strip: 'claude' is a Bun-compiled single-file executable.
+# Stripping discards the embedded payload, leaving it to run as the
+# bare Bun runtime instead of Claude Code -- so it cannot be stripped
+# without breaking it. This is why sbopkglint's 20-arch test fails here.
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a \
-  package/*.md \
-  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -11,6 +11,13 @@ dependencies:
   development/cudatoolkit_13
   system/nvidia-driver or system/nvidia-legacy580-driver
 
+MLX=ON: building with MLX engine (requiring CUDA=ON),
+default is MLX=OFF, build and runtime dependencies:
+
+  development/cudnn
+  libraries/OpenBLAS
+  libraries/fmt
+
 ROCM=ON: building with ROCm, default is ROCM=OFF, build and runtime
 dependencies:
   development/rocmtoolkit_7
@@ -18,7 +25,7 @@ dependencies:
 LIB64=OFF: supporting LIBDIRSUFFIX, for x86_64, ollama libs will be
 installed to /usr/lib64/ollama, default is LIB64=OFF.
 
-VULKAN=OFF: building without vulkan, default is VULKAN=OFF. If you
+VULKAN=ON: building with vulkan, default is VULKAN=OFF. If you
 have vulkan-sdk >= 1.4, enable it with VULKAN=ON.
 
 Building ollama requires network and google-go-lang.

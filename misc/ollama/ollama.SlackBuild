@@ -25,10 +25,15 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ollama
-VERSION=${VERSION:-0.24.0}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-0.30.6}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+LLAMA_CPP_VERSION=${LLAMA_CPP_VERSION:-b9509}
+MLX_VERSION=${MLX_VERSION:-2165dc08d7b33258260aa849d39f087d50e62962}
+MLX_C_VERSION=${MLX_C_VERSION:-fba4470b89073180056c9ea46c443051375f7399}
+JSON_VERSION=${JSON_VERSION:-3.11.3}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -68,55 +73,125 @@ mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+tar xvf $CWD/llama.cpp-${LLAMA_CPP_VERSION}.tar.gz -C $PRGNAM-$VERSION
+tar xvf $CWD/mlx-${MLX_VERSION}.tar.gz -C $PRGNAM-$VERSION
+tar xvf $CWD/mlx-c-${MLX_C_VERSION}.tar.gz -C $PRGNAM-$VERSION
+tar xvf $CWD/json-${JSON_VERSION}.tar.gz -C $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+
+unset OPTS
+export GOPATH="$TMP/$PRGNAM-$VERSION"
+export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw '-ldflags=-linkmode=external -X=github.com/ollama/ollama/version.Version=$VERSION -X=github.com/ollama/ollama/server.mode=release'"
+
+sed -i 's/PRE_INCLUDE_REGEXES.*/PRE_INCLUDE_REGEXES = ""/' \
+    llama/server/CMakeLists.txt \
+    cmake/mlx/CMakeLists.txt
+# llama.cpp compatibility layer
+pushd llama.cpp-${LLAMA_CPP_VERSION}
+patch -Np1 -i $TMP/$PRGNAM-$VERSION/llama/compat/llama-cpp-hooks.patch
+patch -Np1 -i $TMP/$PRGNAM-$VERSION/llama/compat/models/llama-cpp-laguna.patch
+popd
 
 # disabling ggml-vulkan until we have vulkan-sdk >= 1.4
 if [ "${VULKAN:-OFF}" = "OFF" ]; then
     sed -i '/find_package(Vulkan)/ d' CMakeLists.txt
 fi
 
-# Use lib64
+# Use lib64 (experimental option)
 if [[ "${LIB64:-OFF}" = "ON" && "$ARCH" = "x86_64" ]]; then
     sed -i \
 	-e "/set(OLLAMA_BUILD_DIR/s/lib/lib$LIBDIRSUFFIX/" \
 	-e "s|{CMAKE_INSTALL_PREFIX}/lib|{CMAKE_INSTALL_PREFIX}/lib$LIBDIRSUFFIX|" \
 	CMakeLists.txt
+    sed -i \
+	-e "/set(OLLAMA_BUILD_DIR/s/lib/lib$LIBDIRSUFFIX/" \
+	cmake/mlx/CMakeLists.txt
     sed -i -e "s/\"..\", \"lib\"/\"..\", \"lib$LIBDIRSUFFIX\"/" \
 	ml/path.go
     sed -i -e "s|lib/ollama|lib$LIBDIRSUFFIX/ollama|" \
 	-e "/\"lib\", \"ollama\"/ s/\"..\", \"lib\"/\"..\", \"lib$LIBDIRSUFFIX\"/" \
-	ml/backend/ggml/ggml/src/ggml.go
+	ml/backend/ggml/ggml/src/ggml.go  llm/llama_binary.go x/mlxrunner/mlx/dynamic.go
+    OPTS+="-DOLLAMA_LIB_DIR=lib${LIBDIRSUFFIX}/ollama"
 fi
 
-cmake -B build \
+# ollama version
+sed -i -e 's|var Version string = "0.0.0"|var Version string = "${VERSION}"|g' \
+    version/version.go
+
+base_options=(
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DMAN_INSTALL_DIR=/usr/man \
-  -DCMAKE_BUILD_TYPE=Release
-cmake --build build
+  -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+  -DFETCHCONTENT_SOURCE_DIR_LLAMA_CPP="$TMP/$PRGNAM-$VERSION/llama.cpp-${LLAMA_CPP_VERSION}" \
+  -DLLAMA_BUILD_NUMBER="${LLAMA_CPP_VERSION#b}" \
+  -DOLLAMA_VERSION="$VERSION" \
+  -DCMAKE_BUILD_TYPE=Release \
+  $OPTS
+)
 
-export GOPATH="$TMP/$PRGNAM-$VERSION"
-export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw '-ldflags=-linkmode=external -X=github.com/ollama/ollama/version.Version=$VERSION -X=github.com/ollama/ollama/server.mode=release'"
-go build .
+# cpu
+cmake -S llama/server --preset cpu "${base_options[@]}"
+cmake --build build/llama-server-cpu
+DESTDIR=$PKG cmake --install build/llama-server-cpu --component llama-server --strip
+
+# cuda
+if [ "${CUDA:-OFF}" = "ON" ]; then
+    OPTS+=" -DCMAKE_CUDA_ARCHITECTURES='75;80;86;87;88;89;90;100;103;110;120;121;121-virtual'"
+    OPTS+=" -DOLLAMA_MLX_BACKENDS=cuda_v13"
+    cmake -S llama/server --preset llama_cuda_v13_linux "${base_options[@]}"
+    cmake --build build/llama-server-cuda_v13
+    DESTDIR=$PKG cmake --install build/llama-server-cuda_v13 --component llama-server --strip
+fi
+
+# rocm
+if [ "${ROCM:-OFF}" = "ON" ]; then
+    OPTS+=" -DAMDGPU_TARGETS=$(rocm-supported-gfx)"
+    cmake -S llama/server --preset rocm_v7_2_linux "${base_options[@]}"
+    cmake --build build/llama-server-rocm_v7_2
+    DESTDIR=$PKG cmake --install build/llama-server-rocm_v7_2 --component llama-server --strip
+fi
+
+# vulkan
+if [ "${VULKAN}" = "ON" ]; then
+    cmake -S llama/server --preset vulkan "${base_options[@]}"
+    cmake --build build/llama-server-vulkan
+    DESTDIR=$PKG cmake --install build/llama-server-vulkan --component llama-server --strip
+fi
+
+# mlx
+if [ "${MLX:-OFF}" = "ON" ];then
+    export OLLAMA_MLX_SOURCE="$TMP/$PRGNAM-$VERSION/mlx-${MLX_VERSION}"
+    export OLLAMA_MLX_C_SOURCE="$TMP/$PRGNAM-$VERSION/mlx-c-${MLX_C_VERSION}"
+    export json_SOURCE_DIR="$TMP/$PRGNAM-$VERSION/json-${JSON_VERSION}"
+    OPTS+="-DOLLAMA_SOURCE_DIR=$TMP/$PRGNAM-$VERSION"
+    # pass opts to ollama cmake
+    sed -i "28s|121-virtual\"|121-virtual\"\,\n\"FETCHCONTENT_SOURCE_DIR_JSON\": \"$TMP/$PRGNAM-$VERSION/json-${JSON_VERSION}\",\n\"USE_SYSTEM_FMT\":\ \"ON\",\n\"FETCHCONTENT_FULLY_DISCONNECTED\": \"ON\"|" cmake/mlx/CMakePresets.json
+    cmake -S . -B build/mlx_cuda_v13 -DOLLAMA_MLX_BACKENDS=cuda_v13 \
+	  -DOLLAMA_PAYLOAD_INSTALL_PREFIX=$PKG/usr \
+	  "${base_options[@]}"
+    cmake --build build/mlx_cuda_v13 --target ollama-mlx-cuda_v13
+fi
+
+# go
+go build -o ollama .
 install -Dm755 ollama "$PKG/usr/bin/ollama"
 
-DESTDIR=$PKG cmake --install build --component CPU
-if [ "${CUDA:-OFF}" = "ON" ]; then
-    DESTDIR=$PKG cmake --install build --component CUDA
-fi
-if [ "${ROCM:-OFF}" = "ON" ]; then
-    DESTDIR=$PKG cmake --install build --component HIP
-fi
+find $PKG/usr -type f -iname "*.so" -exec chmod 755 {} +
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# rpath
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs patchelf --remove-rpath 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

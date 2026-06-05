@@ -10,3 +10,6 @@ by default in /usr/lib/scala3.
 
 The lib directory is set dependent upon the package architecture:
 /usr/lib on x86 and /usr/lib64 on x86_64.
+
+The scala-cli binary bundled in the scala3 release is built for x86_64,
+so it is not included in the 32bit package.

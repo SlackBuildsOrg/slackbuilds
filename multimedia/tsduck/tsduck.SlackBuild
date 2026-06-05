@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tsduck
-VERSION=${VERSION:-3.40.4165}
+VERSION=${VERSION:-3.41.4299}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -81,6 +81,13 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Fix - the [[maybe_unused]] attribute is supported since gcc-13
+sed 's/\[\[maybe_unused\]\]//' -i src/*/{,*/{,*/{,*/}}}/*.{h,cpp}
+sed 's/-Wextra/-Wextra -Wno-unused/' -i scripts/make-config.sh
+
+# Fix - missing $(TABLES_DEST)
+sed '/install-tools/s/$(NAMES_DEST)/$(NAMES_DEST) $(TABLES_DEST)/' -i src/libtsduck/config/Makefile
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 make NOSTATIC=true \
@@ -91,7 +98,10 @@ make NOSTATIC=true \
   USELIB64=$LIBDIRSUFFIX \
   SYSPREFIX=/usr \
   SYSROOT=$PKG \
-  install-tools
+  install
+
+# Fix - ELF binaries/libraries should be executable
+chmod +x -R -P $PKG/usr/lib*
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

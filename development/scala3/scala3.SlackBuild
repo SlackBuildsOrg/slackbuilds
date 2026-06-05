@@ -9,7 +9,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scala3
-VERSION=${VERSION:-3.8.3}
+VERSION=${VERSION:-3.8.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -68,6 +68,10 @@ mv $TMP/$PRGNAM-$VERSION/{bin,lib,libexec,maven2,VERSION} $PKG/usr/lib$LIBDIRSUF
   ln -s ../lib$LIBDIRSUFFIX/$PRGNAM/bin/scaladoc scaladoc3
 )
 rm $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/bin/*.bat
+
+if [ "$ARCH" != "x86_64" ]; then
+  rm $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/libexec/scala-cli
+fi
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

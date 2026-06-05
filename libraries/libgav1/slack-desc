@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+libgav1: libgav1 (Google AV1 decoder)
+libgav1:
+libgav1: libgav1 is a Main profile (0), High profile (1) & Professional
+libgav1: profile (2) compliant AV1 decoder. AV1 is an open video codec
+libgav1: designed to provide high-quality video compression with greater
+libgav1: efficiency than previous codecs.
+libgav1:
+libgav1:
+libgav1:
+libgav1: Homepage:https://salsa.debian.org/multimedia-team/libgav1
+libgav1:

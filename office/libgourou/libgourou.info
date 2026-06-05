@@ -1,0 +1,12 @@
+PRGNAM="libgourou"
+VERSION="0.8.9"
+HOMEPAGE="https://forge.soutade.fr/soutade/libgourou/"
+DOWNLOAD="https://forge.soutade.fr/soutade/libgourou/archive/v0.8.9.tar.gz \
+          https://sourceforge.net/projects/slackbuildsdirectlinks/files/uPDFParser/uPDFParser-20240323_6060d12.tar.lz"
+MD5SUM="cf10f568862d3d45332c576e4b442917 \
+        1768dd57181bb4a1728fdbb1da38883f"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="pugixml"
+MAINTAINER="Matt Egger"
+EMAIL="matt.egger@gmail.com"

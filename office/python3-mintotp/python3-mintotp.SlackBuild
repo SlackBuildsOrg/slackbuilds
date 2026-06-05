@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Slackware build script for python3-mintotp
+# Slackware build script for <appname>
 
 # Copyright 2026, Lockywolf
 # All rights reserved.
@@ -41,6 +41,9 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -83,9 +86,19 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 python3 setup.py install --root=$PKG
+# chmod +x $PKG/usr/lib64/python3.9/site-packages/mintotp.py
+# mkdir -p $PKG/usr/bin/
+# (
+#   cd $PKG/usr/bin
+#   ln -sr ../lib64/python3.9/site-packages/mintotp.py ./mintotp
+#   chmod 755 ./mintotp
+# )
+
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a README.md CHANGES.md LICENSE.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  README.md CHANGES.md LICENSE.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

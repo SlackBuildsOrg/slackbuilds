@@ -1,29 +1,26 @@
 #!/bin/bash
 #
-#          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-#                   Version 2, December 2004
+# Slackware build script for landrun
 #
-# Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+# Copyright 2026 r1w1s1
+# All rights reserved.
 #
-# Everyone is permitted to copy and distribute verbatim or modified
-# copies of this license document, and changing it is allowed as long
-# as the name is changed.
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
 #
-#          DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-#  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
 #
-#
-# 0. You just DO WHAT THE FUCK YOU WANT TO.
-#
-# SlackBuild script for landrun
-# =============================
-# By:          r1w1s1 (https://fosstodon.org/@r1w1s1)
-# For:         landrun
-# Descr:       secure sandbox for running Linux processes using Landlock
-# URL:
-# Changelog:
-# v0.1.12:     25/Mar/2025 by r1w1s1 - Initial build from sources.
-# v0.1.14:     11/Jan/2026 by r1w1s1 - Update.
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
@@ -96,7 +93,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # Build the binary
-go build -o landrun cmd/landrun/main.go
+go build -trimpath -mod=readonly -ldflags="-s -w" -o landrun ./cmd/landrun
 
 # Install the binary to /usr/bin
 mkdir -p $PKG/usr/bin

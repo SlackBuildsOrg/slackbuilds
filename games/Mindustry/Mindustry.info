@@ -1,12 +1,12 @@
 PRGNAM="Mindustry"
-VERSION="157.4"
+VERSION="158.1"
 HOMEPAGE="https://mindustrygame.github.io/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/Anuken/Mindustry/releases/download/v157.4/Mindustry.jar \
-                 https://github.com/Anuken/Mindustry/releases/download/v157.4/server-release.jar"
-MD5SUM_x86_64="a7ce2f5165d681a72a404cb48c692f7c \
-               89f8c18a9fb025d959f6e34e4470b368"
+DOWNLOAD_x86_64="https://github.com/Anuken/Mindustry/releases/download/v158.1/Mindustry.jar \
+                 https://github.com/Anuken/Mindustry/releases/download/v158.1/server-release.jar"
+MD5SUM_x86_64="3b1be682dd0ffaa5b61b59d27475538f \
+               26c62b6b97173a3e38164955fd0af593"
 REQUIRES="zulu-openjdk17"
 MAINTAINER="Yth - Arnaud"
 EMAIL="yth@ythogtha.org"

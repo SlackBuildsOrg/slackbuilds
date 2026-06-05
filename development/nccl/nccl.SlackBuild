@@ -1,0 +1,121 @@
+#!/bin/bash
+
+# Slackware build script for nccl
+
+# Copyright 2026 Christoph Willing	Sydney, Australia
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=nccl
+VERSION=${VERSION:-2.30.4.1}
+SRCVERSION=${SRCVERSION:-$(echo ${VERSION} |rev|sed -e 's/\./-/'|rev)}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586
+          echo "Unsupported architecture. Exiting now ..."
+          exit 1
+          ;;
+    arm*) ARCH=arm
+          echo "Unsupported architecture. Exiting now ..."
+          exit 1
+          ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+CONTINUE=${CONTINUE:-"no"}
+
+LIBDIRSUFFIX=""
+if [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX="64"
+else
+  echo "Unsupported architecture. Exiting now ..."
+  exit 1
+fi
+
+if [ -f /etc/profile.d/cuda-13*.sh ]; then
+  . /etc/profile.d/cuda-13*.sh
+elif [ -f /etc/profile.d/cuda-12*.sh ]; then
+  . /etc/profile.d/cuda-12*.sh
+else
+  echo "No supported CUDA toolkit found. Exiting now ..."
+  exit 1
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$SRCVERSION
+tar xvf $CWD/$PRGNAM-$SRCVERSION.tar.gz
+cd $PRGNAM-$SRCVERSION
+ls -l
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+make src.build CUDA_HOME="$CUDA_PATH"
+
+mkdir -p "$PKG"/usr/lib"${LIBDIRSUFFIX}"/pkgconfig
+mkdir -p "$PKG"/usr/include
+mkdir -p "$PKG"/usr/bin
+cp -P -v build/lib/lib* "$PKG"/usr/lib"${LIBDIRSUFFIX}"/
+cp -P -v build/lib/pkgconfig/* "$PKG"/usr/lib"${LIBDIRSUFFIX}"/pkgconfig/
+cp -v -r build/include/* "$PKG"/usr/include/
+cp -v build/bin/ncclras "$PKG"/usr/bin/
+cp -v build/bin/ncclparam "$PKG"/usr/bin/
+
+sed -i \
+    -e "s:/local::" \
+    -e "s:/lib:/lib${LIBDIRSUFFIX}:" \
+  "$PKG"/usr/lib64/pkgconfig/nccl.pc
+
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CONTRIBUTING.md LICENSE.txt README.md ThirdPartyNotices.txt \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -22,6 +22,10 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260605 bkw: Modified by SlackBuilds.org, BUILD=3:
+# - fix GNU info file so it shows up in /usr/info/dir.
+# - no chroot for install-info in doinst.sh.
+
 # 20220411 bkw: Modified by SlackBuilds.org, BUILD=2:
 # - remove empty/useless docs (NEWS and INSTALL).
 # - stop configure script from writing outside of $TMP.
@@ -30,7 +34,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fileschanged
 VERSION=${VERSION:-0.6.9}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -84,6 +88,9 @@ find -L . \
 for datei in $( grep -Rl Werror * ); do
   sed -i 's@-Werror@@g' $datei
 done
+
+# 20260605 bkw:
+patch -p1 < $CWD/info_entry.diff
 
 # 20220411 bkw: the configure script does something purely evil: it
 # creates a file in /usr/lib with a long name, to see whether long

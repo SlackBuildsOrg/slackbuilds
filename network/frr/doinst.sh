@@ -26,9 +26,3 @@ preserve_perms etc/rc.d/rc.frr.new
 config etc/logrotate.d/frr.new
 config etc/frr/daemons.new
 config etc/frr/vtysh.conf.new
-
-if [ -x /usr/bin/install-info ]; then
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/frr-info.gz 2> /dev/null
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/frr-info-1.gz 2> /dev/null
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/frr-info-2.gz 2> /dev/null
-fi

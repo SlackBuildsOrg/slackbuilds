@@ -1,4 +1,4 @@
 if [ -x /usr/bin/install-info ]; then
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/sbcl.info.gz 2> /dev/null
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/asdf.info.gz 2> /dev/null
+  /usr/bin/install-info --info-dir=usr/info usr/info/sbcl.gz 1> /dev/null 2>&1
+  /usr/bin/install-info --info-dir=usr/info usr/info/asdf.gz 1> /dev/null 2>&1
 fi

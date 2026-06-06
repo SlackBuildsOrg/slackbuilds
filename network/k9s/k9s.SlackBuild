@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2025  Ricardson Williams <r1w1s1@fastmail.com>
+# Copyright 2026  Ricardson Williams <r1w1s1@fastmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -20,19 +20,13 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Homepage:    https://github.com/derailed/k9s
-# Description: A terminal UI to interact with your Kubernetes clusters.
-# Changelog:
-# v0.50.9:     24-Jul-2025 by r1w1s1 - initial build
-# v0.50.15:    09-Oct-2025 by r1w1s1 - update
-# v0.50.16:    27-Oct-2025 by r1w1s1 - update
 
 cd $(dirname $0); CWD=$(pwd)
 set -euo pipefail
 IFS=$'\n\t'
 
 PRGNAM=k9s
-VERSION=${VERSION:-0.50.18}
+VERSION=${VERSION:-0.51.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

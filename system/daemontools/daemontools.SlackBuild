@@ -25,7 +25,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=daemontools
 VERSION=${VERSION:-0.76}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -110,8 +110,8 @@ ln -s $here/src compile/src
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   src/{CHANGES,TODO} \
-  $CWD/README.SBo \
   $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/README.SBo > $PKG/usr/doc/$PRGNAM-$VERSION/README.SBo
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

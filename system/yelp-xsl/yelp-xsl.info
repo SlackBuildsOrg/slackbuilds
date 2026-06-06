@@ -5,6 +5,6 @@ DOWNLOAD="https://ftp.gnome.org/pub/GNOME/sources/yelp-xsl/49/yelp-xsl-49.0.tar.
 MD5SUM="78a347ceef497c9e83abf7f644a753b0"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-lxml python3-meson-opt"
+REQUIRES="python3-lxml"
 MAINTAINER="Willy Sudiarto Raharjo"
 EMAIL="willysr@slackbuilds.org"

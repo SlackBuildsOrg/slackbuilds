@@ -26,7 +26,7 @@ cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=LibreOffice
 SRCNAM=libreoffice
-VERSION=${VERSION:-26.2.3.2}
+VERSION=${VERSION:-26.2.4.2}
 SHORT_VERSION=${VERSION%.*.*}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -180,14 +180,6 @@ if pkg-config --exists mythes ; then mythes="--with-system-mythes" ; else mythes
 if test -x /usr/bin/odbc_config ; then odbc="--with-system-odbc" ; else odbc="" ; fi
 #if test -d /usr/lib${LIBDIRSUFFIX}/python3*/site-packages/lxml ; then lxml="--with-system-lxml" ; else lxml="" ; fi
 
-if pkg-config --exists xmlsec1 ; then
-  xmlsec="--with-system-xmlsec"
-else
-  xmlsec=""
-  # Also ensure correct nspr implementation is used if building libreoffice supplied xmlsec
-  sed -i -e 's:openssl:openssl --with-mozilla-ver=/usr:' external/xmlsec/ExternalProject_xmlsec.mk
-fi
-
 #if test -e /usr/share/ant/lib/rhino.jar ; then rhino="--with-system-rhino --with-rhino-jar=/usr/share/ant/lib/rhino.jar" ; else rhino="" ; fi
 if pkg-config --exists libvlc ; then vlc="--enable-vlc" ; else vlc="" ; fi
 # Building with vlc backend is marked as experimental so demand explicit indication via environment variable VLC to do it.
@@ -207,8 +199,6 @@ extwikipub="--enable-ext-wiki-publisher"; [ "${EXTWIKIPUB:-no}" != "yes" ]     &
 
 extnlpsolver="--enable-ext-nlpsolver"; [ "${EXTNLPSOLVER:-yes}" != "yes" ]     && extnlpsolver=""
 
-# Workaround for -current 20241116 (poppler version is too recent)
-if pkg-config --atleast-version 24.11.0 poppler ; then poppler="--without-system-poppler" ; else poppler="--with-system-poppler" ; fi
 
 # Workaround for -current 20251114 (needs system harfbuzz)
 if pkg-config --atleast-version 12.2.0 harfbuzz ; then harfbuzz="--with-system-harfbuzz --with-system-graphite" ; else harfbuzz="" ; fi
@@ -272,7 +262,9 @@ if pkg-config --atleast-version 12.2.0 harfbuzz ; then harfbuzz="--with-system-h
     --with-system-nss \
     --with-system-openldap \
     --with-system-openssl \
+    --with-system-poppler \
     --with-system-sane \
+    --with-system-xmlsec \
     --with-system-zlib \
     $coinmp \
     $cppunit \
@@ -301,12 +293,10 @@ if pkg-config --atleast-version 12.2.0 harfbuzz ; then harfbuzz="--with-system-h
     $libzmf \
     $lpsolve \
     $mythes \
-    $poppler \
     $postgresql \
     $valgrind \
     $ucpp \
     $odbc \
-    $xmlsec \
 
 
 
@@ -320,10 +310,6 @@ if [ "$HAVE_SRCS_TARBALL" = "0" ]; then
 fi
 
 patch -p0 < "$CWD"/no-check-if-root.diff
-
-# GCC10 requirements (Tx alienBOB)
-sed -i external/libebook/ExternalProject_libebook.mk \
-    -e '/configure /i \\t\t&& sed -i "s/TRUE/true/g" src/lib/EBOOKCharsetConverter.cpp \\'
 
 
 make build

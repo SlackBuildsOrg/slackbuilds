@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=codex
-VERSION=${VERSION:-0.120.0}
+VERSION=${VERSION:-0.136.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -76,10 +76,10 @@ find -L . \
 mkdir -p $PKG/usr/lib64/node_modules/@openai/
 cp -a package $PKG/usr/lib64/node_modules/@openai/"$PRGNAM"
 
-# Ensure native binaries are executable
-chmod +x $PKG/usr/lib64/node_modules/@openai/$PRGNAM/vendor/x86_64-unknown-linux-musl/codex/codex
-chmod +x $PKG/usr/lib64/node_modules/@openai/$PRGNAM/vendor/x86_64-unknown-linux-musl/path/rg
-chmod +x $PKG/usr/lib64/node_modules/@openai/$PRGNAM/bin/codex.js
+chmod +x \
+  $PKG/usr/lib64/node_modules/@openai/$PRGNAM/vendor/x86_64-unknown-linux-musl/bin/codex \
+  $PKG/usr/lib64/node_modules/@openai/$PRGNAM/vendor/x86_64-unknown-linux-musl/codex-path/rg \
+  $PKG/usr/lib64/node_modules/@openai/$PRGNAM/bin/codex.js
 
 mkdir -p $PKG/usr/bin
 ln -sf /usr/lib64/node_modules/@openai/$PRGNAM/bin/codex.js $PKG/usr/bin/codex

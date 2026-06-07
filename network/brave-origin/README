@@ -1,0 +1,6 @@
+Brave Origin is a free and open-source web browser developed by
+Brave Software, Inc. based on the Chromium web browser, but
+the Origin version is a debloated build.
+
+Note:
+This slackbuild repackages the debian binary.

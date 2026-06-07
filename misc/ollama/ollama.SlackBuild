@@ -116,7 +116,7 @@ if [[ "${LIB64:-OFF}" = "ON" && "$ARCH" = "x86_64" ]]; then
 	ml/path.go
     sed -i -e "s|lib/ollama|lib$LIBDIRSUFFIX/ollama|" \
 	-e "/\"lib\", \"ollama\"/ s/\"..\", \"lib\"/\"..\", \"lib$LIBDIRSUFFIX\"/" \
-	ml/backend/ggml/ggml/src/ggml.go  llm/llama_binary.go x/mlxrunner/mlx/dynamic.go
+	llm/llama_binary.go x/mlxrunner/mlx/dynamic.go
     OPTS+="-DOLLAMA_LIB_DIR=lib${LIBDIRSUFFIX}/ollama"
 fi
 

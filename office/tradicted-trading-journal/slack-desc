@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                         |-----handy-ruler------------------------------------------------------|
+tradicted-trading-journal: tradicted-trading-journal (Free open-source desktop trading journal)
+tradicted-trading-journal:
+tradicted-trading-journal: Tradicted Trading Journal is a free offline-first desktop trading
+tradicted-trading-journal: journal for Linux. Features include a trade log, analytics dashboard
+tradicted-trading-journal: with equity curve and performance metrics, a journal with calendar
+tradicted-trading-journal: view and psychology tags, multiple portfolio support, and a built-in
+tradicted-trading-journal: trading plan checklist. All data is stored locally with no account
+tradicted-trading-journal: required.
+tradicted-trading-journal:
+tradicted-trading-journal: Homepage: https://www.tradicted.com
+tradicted-trading-journal:

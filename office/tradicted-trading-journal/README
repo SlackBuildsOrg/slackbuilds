@@ -1,0 +1,13 @@
+Tradicted Trading Journal is a free offline-first desktop trading
+journal for Linux. Features include a trade log, analytics dashboard
+with equity curve and performance metrics, a journal with calendar
+view and psychology tags, multiple portfolio support, and a built-in
+trading plan checklist.
+All data is stored locally with no account required.
+
+After installation, the AppImage requires FUSE to run. Make sure the
+fuse kernel module is loaded:
+
+  modprobe fuse
+
+No other dependencies are required.

@@ -1,10 +1,10 @@
 PRGNAM="aptdec"
 VERSION="1.8.0"
 HOMEPAGE="https://github.com/Xerbo/aptdec/"
-DOWNLOAD="https://github.com/Xerbo/aptdec/archive/v1.8.0/aptdec-1.8.0.zip \
-          https://github.com/cofyc/argparse/archive/c612dc03/argparse-c612dc03958cdbd538ca306d61853b643a435933.zip"
-MD5SUM="9fe7078bc1d8be379be8641296bc14e1 \
-        5e8bdf58b31cee4cf34305cad9f6a288"
+DOWNLOAD="https://github.com/Xerbo/aptdec/archive/v1.8.0/aptdec-1.8.0.tar.gz \
+          https://github.com/cofyc/argparse/archive/c612dc03/argparse-c612dc03958cdbd538ca306d61853b643a435933.tar.gz"
+MD5SUM="3b0db5676288a8ec45888e9a899db4a2 \
+        5dec8985fe4eada76edb4b2f9e17f4da"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

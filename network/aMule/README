@@ -8,13 +8,18 @@ libupnp is a optional dependency.
 
 You can build optional features of aMule with following variables:
 
-DAEMON=yes Creates amuled
-CMD=yes Creates commandline client
-WEBSERVER=yes Creates webserver for remote control
-ALC=yes Creates aLinkCreator GUI version
-ALCC=yes Creates aLinkCreator CLI version
-XAS=yes Installs xChat statistic plugin
-GEOIP=yes Builds with GeoIP library support (needs GeoIP)
-MMAP=yes Uses mmap
-OPTIMIZE=no Don't use code optimizations
-GUI=yes Build remote GUI
+DAEMON=yes - amuled — headless daemon
+REMOTEGUI=yes - amulegui — remote control GUI
+WEBSERVER=yes - amuleweb — HTTP web interface
+AMULECMD=yes - amulecmd — CLI client for the daemon
+ED2K=yes - ed2k — eD2k link handler helper
+ALC=yes - alc — aMuleLinkCreator GUI
+ALCC=yes - alcc — aMuleLinkCreator console
+CAS=yes - cas — C statistics tool (Unix only)
+WXCAS=yes - wxcas — GUI statistics tool
+FILEVIEW=yes - fileview — console file viewer (experimental)
+TESTING=yes - Unit test suite
+NLS=yes - Native-language support (gettext)
+UPNP=yes - UPnP port forwarding
+IP2COUNTRY=yes - IP→country mapping (libmaxminddb)
+MMAP=yes - Use memory-mapped file I/O where supported

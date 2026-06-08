@@ -1,0 +1,14 @@
+icu4c-opt (International Components for Unicode)
+
+The International Components for Unicode (ICU) libraries provide
+robust and full-featured  Unicode services on a  wide variety of
+platforms.  This version is installed  to /opt/ to provide newer
+ICU libraries on Slackware stable.
+
+This version of the library is  installed to /opt, to help build
+software that requires a newer version than the one available in
+the Slackware base system.  To build against this version of the
+library,  you have  to  configure your  build system's  includes
+search path to find `*.h' files in /opt/icu/usr/include/unicode,
+and  set  RPATH to  link  against  the `*.so'  shared  libraries
+installed in /opt/icu/usr/lib64.

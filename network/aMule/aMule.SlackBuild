@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=aMule
-VERSION=${VERSION:-2.3.3}
+VERSION=${VERSION:-3.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -51,93 +51,102 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
-
-DAEMON=${DAEMON:-no}
-CMD=${CMD:-no}
-WEBSERVER=${WEBSERVER:-no}
-ALC=${ALC:-no}
-ALCC=${ALCC:-no}
-XAS=${XAS:-no}
-GEOIP=${GEOIP:-no}
-MMAP=${MMAP:-no}
-OPTIMIZE=${OPTIMIZE:-yes}
-PLASMAMULE=${PLASMAMULE:-no}
 
 if [ "$DAEMON" = "yes" ]; then
-  AMULE_DAEMON="enable"
+  AMULE_DAEMON="yes"
 else
-  AMULE_DAEMON="disable"
+  AMULE_DAEMON="no"
 fi
 
-if [ "$CMD" = "yes" ]; then
-  AMULE_CMD="enable"
+if [ "$REMOTEGUI" = "yes" ]; then
+  AMULE_REMOTEGUI="yes"
 else
-  AMULE_CMD="disable"
+  AMULE_REMOTEGUI="no"
 fi
 
 if [ "$WEBSERVER" = "yes" ]; then
-  AMULE_WEBSERVER="enable"
+  AMULE_WEBSERVER="yes"
 else
-  AMULE_WEBSERVER="disable"
+  AMULE_WEBSERVER="no"
+fi
+
+if [ "$CMD" = "yes" ]; then
+  AMULE_CMD="yes"
+else
+  AMULE_CMD="no"
+fi
+
+if [ "$ED2K" = "yes" ]; then
+  AMULE_ED2K="yes"
+else
+  AMULE_ED2K="no"
 fi
 
 if [ "$ALC" = "yes" ]; then
-  AMULE_ALC="enable"
+  AMULE_ALC="yes"
 else
-  AMULE_ALC="disable"
+  AMULE_ALC="no"
 fi
 
 if [ "$ALCC" = "yes" ]; then
-  AMULE_ALCC="enable"
+  AMULE_ALCC="yes"
 else
-  AMULE_ALCC="disable"
+  AMULE_ALCC="no"
 fi
 
-if [ "$XAS" = "yes" ]; then
-  AMULE_XAS="enable"
+if [ "$CAS" = "yes" ]; then
+  AMULE_CAS="yes"
 else
-  AMULE_XAS="disable"
+  AMULE_CAS="no"
 fi
 
-if  [ "$GEOIP" = "yes" ]; then
-  AMULE_GEOIP="enable"
+if [ "$WXCAS" = "yes" ]; then
+  AMULE_WXCAS="yes"
 else
-  AMULE_GEOIP="disable"
+  AMULE_WXCAS="no"
+fi
+
+if  [ "$FILEVIEW" = "yes" ]; then
+  AMULE_FILEVIEW="yes"
+else
+  AMULE_FILEVIEW="no"
+fi
+
+if [ "$TESTING" = "yes" ]; then
+  AMULE_TESTING="yes"
+else
+  AMULE_TESTING="no"
+fi
+
+if [ "$NLS" = "yes" ]; then
+  AMULE_NLS="yes"
+else
+  AMULE_NLS="no"
+fi
+
+if [ "$UPNP" = "yes" ]; then
+  AMULE_UPNP="yes"
+else
+  AMULE_UPNP="no"
+fi
+
+if [ "$IP2COUNTRY" = "yes" ]; then
+  AMULE_IP2COUNTRY="yes"
+else
+  AMULE_IP2COUNTRY="no"
 fi
 
 if [ "$MMAP" = "yes" ]; then
-  AMULE_MMAP="enable"
+  AMULE_MMAP="yes"
 else
-  AMULE_MMAP="disable"
-fi
-
-if [ "$OPTIMIZE" = "yes" ]; then
-  AMULE_OPTIMIZE="enable"
-else
-  AMULE_OPTIMIZE="disable"
-fi
-
-if [ "$PLASMAMULE" = "yes" ]; then
-  AMULE_PLASMAMULE="enable"
-else
-  AMULE_PLASMAMULE="disable"
-fi
-
-if [ "$GUI" = "yes" ]; then
-  AMULE_GUI="enable"
-else
-  AMULE_GUI="disable"
+  AMULE_MMAP="no"
 fi
 
 
@@ -146,9 +155,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
-cd $PRGNAM-$VERSION
+rm -rf ${PRGNAM,,}-$VERSION
+tar xvf $CWD/${PRGNAM,,}-$VERSION.tar.gz
+cd ${PRGNAM,,}-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -156,40 +165,52 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS -std=gnu++14" \
-./configure \
-  --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --with-wx-config=/usr/bin/wx-config \
-  --disable-debug \
-  --with-boost \
-  --$AMULE_GUI-amule-gui \
-  --$AMULE_DAEMON-amule-daemon \
-  --$AMULE_CMD-amulecmd \
-  --$AMULE_WEBSERVER-webserver \
-  --$AMULE_ALC-alc \
-  --$AMULE_ALCC-alcc \
-  --$AMULE_XAS-xas \
-  --$AMULE_GEOIP-geoip \
-  --$AMULE_MMAP-mmap \
-  --$AMULE_PLASMAMULE-plasmamule \
-  --$AMULE_OPTIMIZE-optimize \
-  --build=$ARCH-slackware-linux
+export CFLAGS="$SLKCFLAGS"
+export CXXFLAGS="$SLKCFLAGS -std=gnu++14"
 
-make
-make install DESTDIR=$PKG
+/opt/cmake-opt/bin/cmake -B build \
+    -DBUILD_MONOLITHIC=YES \
+    -DBUILD_DAEMON=$AMULE_DAEMON \
+    -DBUILD_REMOTEGUI=$AMULE_REMOTEGUI \
+    -DBUILD_WEBSERVER=$AMULE_WEBSERVER \
+    -DBUILD_AMULECMD=$AMULE_CMD \
+    -DBUILD_ED2K=$AMULE_ED2K \
+    -DBUILD_ALC=$AMULE_ALC \
+    -DBUILD_ALCC=$AMULE_ALCC \
+    -DBUILD_CAS=$AMULE_CAS \
+    -DBUILD_WXCAS=$AMULE_WXCAS \
+    -DBUILD_FILEVIEW=$AMULE_FILEVIEW \
+    -DBUILD_TESTING=$AMULE_TESTING \
+    -DENABLE_NLS=$AMULE_NLS \
+    -DENABLE_UPNP=$AMULE_UPNP \
+    -DENABLE_IP2COUNTRY=$AMULE_IP2COUNTRY \
+    -DENABLE_MMAP=$AMULE_MMAP
+#    -DBUILD_EVERYTHING=YES
+
+/opt/cmake-opt/bin/cmake --build build -j"$(nproc)"
+/opt/cmake-opt/bin/cmake --install build --prefix=$PKG
+
+# Crappy workaround to change "share" folder. Install prefix seems not to be working...
+mkdir -p $PKG/usr
+mv $PKG/share $PKG/usr/share
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+(
+    mkdir -p $PKG/usr/man/man1
+    cd $PKG/usr/share/man/man1
+    for f in `ls -1 *.1`
+    do
+        cat $f | gzip > $PKG/usr/man/man1/$f.gz
+    done
+    rm -rf $PKG/usr/share/man
+)
 
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/usr/share/doc/* $PKG/usr/doc/$PRGNAM-$VERSION
+rm -rf $PKG/usr/share/doc
+mv $PKG/usr/share/LICENSE.md $PKG/usr/doc/$PRGNAM-$VERSION/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

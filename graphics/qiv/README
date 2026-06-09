@@ -43,6 +43,14 @@ without rebuilding qiv.
 To easily build all the optional dependencies, use sbopkg with the
 qiv-allfmt.sqf in the SlackBuild directory.
 
+Build option: By default, qiv uses the filename extensions to
+decide which files are images, and only attempts to display files
+with recognized extensions such as .png, .jpg, etc. This can be
+disabled with qiv's -n option. If you'd prefer to have qiv ignore the
+extensions and try to display all files as images, export FILTER=no in
+the script's environment. You will be able to re-enable it at runtime
+with the -n option.
+
 Upgrade note: Starting with version 3.0.0, qiv no longer uses
 imlib2. If you have images that would display in qiv-2.3.x, but not in
 3.0.x, *please* contact the SlackBuild maintainer, so I can fix it!

@@ -15,5 +15,5 @@ qiv: mouse, rotate left/right, flip, delete (move to .qiv-trash/), jump to
 qiv: image x, jump forward/backward x images, filename filter, and you can
 qiv: use qiv to set your X11 desktop background.
 qiv:
-qiv:
+qiv: This package was built @WITHFILT@ filename extension filtering.
 qiv:

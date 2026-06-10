@@ -28,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=graphviz
-VERSION=${VERSION:-14.1.2}
+VERSION=${VERSION:-15.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -95,6 +95,7 @@ LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --mandir=/usr/man \
+  --enable-r=${GRAPHVIZ_ENABLE_R:-no} \
   --disable-static \
   --build=$ARCH-slackware-linux
 

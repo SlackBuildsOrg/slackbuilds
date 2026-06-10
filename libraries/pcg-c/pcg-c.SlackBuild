@@ -25,11 +25,20 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pcg-c
-VERSION=${VERSION:-0.94.1}
+VERSION=${VERSION:-0.94.2}
 SOURCEARCHIVE=$PRGNAM-$VERSION.tar.gz
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+# Set TEST=yes to build and run the test suite; results are shipped in the
+# package as /usr/doc/$PRGNAM-$VERSION/test_results.txt.
+TEST="${TEST:-no}"
+if [ "$TEST" = "yes" ]; then
+  BUILD_TESTS=true
+else
+  BUILD_TESTS=false
+fi
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -94,10 +103,15 @@ meson .. \
   --strip \
   --libdir="/usr/lib$LIBDIRSUFFIX" \
   --prefix=/usr \
+  -Dbuild_tests=$BUILD_TESTS \
   -Ddocdir=/usr/doc/$PRGNAM-$VERSION
 
 ninja
 meson install --destdir $PKG
+if [ "$TEST" = "yes" ]; then
+  meson test --print-errorlogs
+  cp meson-logs/testlog.txt $PKG/usr/doc/$PRGNAM-$VERSION/test_results.txt
+fi
 cd ..
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

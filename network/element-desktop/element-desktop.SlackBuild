@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=element-desktop
 WEBNAM=element-web
-VERSION=${VERSION:-1.12.20}
+VERSION=${VERSION:-1.12.21}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -110,24 +110,29 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 pnpm config set store-dir "$XDG_CONFIG_HOME/pnpm-store"
+
+# fail online fetching ASAP, everything's cached
+pnpm config set fetchRetries 0
+pnpm config set fetchTimeout 1000
+
 pnpm install --frozen-lockfile \
              --offline
 VERSION=$VERSION \
   pnpm -C apps/web run build
 
 cd apps/desktop
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # use vendored sources and prevent warnings
 patch -p1 < $CWD/yarn-offline.patch
 sed -i 's|yarn |yarn --offline |g
         s|cargo build |cargo build --frozen |' \
         .hak/hakModules/matrix-seshat/package.json
+
+# verifying electron requires network, so we don't
+sed -i '/npmRebuild/a\
+    electronDownload: {\
+        isVerifyChecksum: false,\
+    },' electron-builder.ts
 
 mkdir -p deploys
 mv ../web/webapp deploys/element-v$VERSION

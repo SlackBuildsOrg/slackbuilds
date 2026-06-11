@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Slackware build script for catgirl
-
+#
+# Copyright 2026 r1w1s1 <r1w1s1@fastmail.com>
+#
 # Copyright 2023 SlackBuilds.org Project. All rights reserved.
 # Written and currently maintained by naglfar[AT]rpblc.net
 #
@@ -27,8 +29,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=catgirl
-VERSION=${VERSION:-2.1}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-2.2a}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

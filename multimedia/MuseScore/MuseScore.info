@@ -1,9 +1,9 @@
 PRGNAM="MuseScore"
-VERSION="4.7.2"
+VERSION="4.7.3"
 HOMEPAGE="https://github.com/musescore/MuseScore"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/musescore/MuseScore/archive/v4.7.2/MuseScore-4.7.2.tar.gz \
+DOWNLOAD_x86_64="https://github.com/musescore/MuseScore/archive/v4.7.3/MuseScore-4.7.3.tar.gz \
                  https://raw.githubusercontent.com/musescore/muse_deps/main/harfbuzz/12.3.0/harfbuzz_src.7z \
                  https://raw.githubusercontent.com/musescore/muse_deps/main/harfbuzz/12.3.0/harfbuzz.cmake \
                  https://github.com/w3c-cg/mnx/archive/aedba3a3740ffbb6ae9befa2ef0bb3e0226e5f7c/mnx-aedba3a3740ffbb6ae9befa2ef0bb3e0226e5f7c.tar.gz \
@@ -11,7 +11,7 @@ DOWNLOAD_x86_64="https://github.com/musescore/MuseScore/archive/v4.7.2/MuseScore
                  https://github.com/rpatters1/mnxdom/archive/e7c947bf768caccf315426dcae0dfac02caf738b/mnxdom-e7c947bf768caccf315426dcae0dfac02caf738b.tar.gz \
                  https://github.com/jothepro/doxygen-awesome-css/archive/d52eafe3e9303399fda15661f3d7bb8fe3d7eabc/doxygen-awesome-css-d52eafe3e9303399fda15661f3d7bb8fe3d7eabc.tar.gz \
                  https://github.com/nlohmann/json/archive/e08b3cab6895835bc2e1f19079849bfc2422d0b6/json-e08b3cab6895835bc2e1f19079849bfc2422d0b6.tar.gz"
-MD5SUM_x86_64="7879a480c21e91f031471cd469078548 \
+MD5SUM_x86_64="279bc464c60ebed51f51681d5f2cd2bd \
                b41936599688a524da12adb69c189365 \
                cf9148f6e09761dbe15e3de38e6baced \
                949d509fc026b232409fdcb07d02a182 \

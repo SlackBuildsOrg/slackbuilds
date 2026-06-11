@@ -2,7 +2,7 @@
 
 # Slackware build script for saflashplayer-legacy
 
-# Copyright 2024-2025 Vladislav 'fsLeg' Borisov, Moscow, Russia
+# Copyright 2024-2026 Vladislav 'fsLeg' Borisov, Moscow, Russia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -37,10 +37,6 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
-
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -60,31 +56,29 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-# saflashplayer is a standalone static binary, so no compilation is needed
-
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
+rm -rf $PRGNAM-$VERSION
 
+mkdir $PRGNAM-$VERSION
+cd $PRGNAM-$VERSION
 tar xvf $CWD/flashplayer_11_sa.i386.tar.gz
-mkdir -p $PKG/usr/bin $PKG/usr/share/applications
-install flashplayer $PKG/usr/bin/saflashplayer
-cp -a $CWD/saflashplayer-legacy.desktop $PKG/usr/share/applications/com.adobe.flashplayer.desktop
 
-# Stripping the binary causes it to segfault
-
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -aR LGPL $PKG/usr/doc/$PRGNAM-$VERSION/
-
-chown -R root:root $PKG
-find -L $PKG \
+chown -R root:root .
+find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
  
+install -Dm755 flashplayer $PKG/usr/bin/saflashplayer
+install -Dm644 $CWD/saflashplayer-legacy.desktop $PKG/usr/share/applications/com.adobe.flashplayer.desktop
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -aR LGPL $PKG/usr/doc/$PRGNAM-$VERSION/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

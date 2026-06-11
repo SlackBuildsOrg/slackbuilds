@@ -1,4 +1,15 @@
-This is an super-light client for TLS-only Internet Relay Chat,
-that provides an curses based interface.
+catgirl is a lightweight IRC client for the terminal written by
+June McEnroe.
 
-It centred on the use of standard features.
+It provides tab completion, nickname coloring, URL detection,
+message filtering, chat logging, and TLS support through libtls.
+
+catgirl follows a simple Unix philosophy and intentionally avoids
+features such as built-in multi-network support, automatic
+reconnection, and dynamic configuration.
+
+Multiple networks can be handled by running multiple instances in
+tmux(1), screen(1), or separate terminal windows.
+
+Homepage:
+https://git.causal.agency/catgirl

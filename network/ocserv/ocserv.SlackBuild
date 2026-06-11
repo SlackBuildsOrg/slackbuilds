@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ocserv
-VERSION=${VERSION:-1.4.2}
+VERSION=${VERSION:-1.5.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -110,6 +110,9 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
+install -Dm755 $CWD/rc.ocserv $PKG/etc/rc.d/rc.ocserv.new
+install -Dm644 $CWD/ocserv.conf $PKG/etc/ocserv/ocserv.conf.new
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a AUTHORS CONTRIBUTING* COPYING NEWS README* \
   doc/README* doc/sample.* doc/scripts/ $PKG/usr/doc/$PRGNAM-$VERSION
@@ -118,10 +121,6 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
-
-mkdir -p $PKG/etc/{rc.d,ocserv}
-cat $CWD/rc.ocserv > $PKG/etc/rc.d/rc.ocserv.new
-cat $CWD/ocserv.conf > $PKG/etc/ocserv/ocserv.conf.new
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

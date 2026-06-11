@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=positron
 DEB_PRGNAM=Positron
-VERSION=${VERSION:-2026.05.2_3}
+VERSION=${VERSION:-2026.06.0_211}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,6 +78,10 @@ find -L . \
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# Remove ARM aarch64 binaries
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" |grep ELF \
+  | grep ARM |cut -f 1 -d : | xargs rm
 
 # Create symlinks in /usr/bin for the program's executables.
 mkdir -p $PKG/usr/bin

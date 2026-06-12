@@ -1,0 +1,30 @@
+nemo-share (Samba sharing extension for the Nemo file manager)
+
+nemo-share is a Nemo extension that allows you to quickly share
+folders using Samba (Windows file sharing) directly from the Nemo
+file manager context menu, without needing to manually edit the
+Samba configuration files.
+
+It is part of the nemo-extensions collection for the Cinnamon
+desktop environment.
+
+Homepage: https://github.com/linuxmint/nemo-extensions
+
+NOTE: The source tarball is the full nemo-extensions release archive.
+Only the nemo-share subdirectory is compiled and installed.
+
+REQUIRED DEPENDENCIES (available at SlackBuilds.org):
+  nemo             - https://github.com/linuxmint/nemo
+  cinnamon-desktop - https://github.com/linuxmint/cinnamon-desktop
+
+RUNTIME DEPENDENCY:
+  samba must be installed and configured for the sharing functionality
+  to work.  Samba is available in Slackware's Official and Extra repo.
+
+  The user must also belong to the 'sambashare' group. To add your
+  user to it (as root):
+
+    groupadd sambashare
+    usermod -aG sambashare <username>
+
+  A logout/login is required for the group change to take effect.

@@ -1,16 +1,16 @@
 PRGNAM="deno"
-VERSION="2.8.2"
+VERSION="2.8.3"
 HOMEPAGE="https://deno.com"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/denoland/deno/archive/v2.8.2/deno-2.8.2.tar.gz \
-                 https://github.com/denoland/rusty_v8/releases/download/v149.2.0/librusty_v8_simdutf_release_x86_64-unknown-linux-gnu.a.gz \
-                 https://github.com/denoland/rusty_v8/releases/download/v149.2.0/librusty_v8_simdutf_release_aarch64-unknown-linux-gnu.a.gz \
-                 https://slackware.uk/~fourtysixandtwo/src/deno-vendored-sources-2.8.2-1.tar.xz"
-MD5SUM_x86_64="a6b02976e0429326a9b40c0db97962ee \
-               ea85df6c3997d30a56a6eed56315f4f8 \
-               c19721653c676aaa3009f7479ab48a75 \
-               56c6e7b61ef8debc650861967603f835"
+DOWNLOAD_x86_64="https://github.com/denoland/deno/archive/v2.8.3/deno-2.8.3.tar.gz \
+                 https://github.com/denoland/rusty_v8/releases/download/v149.3.0/librusty_v8_simdutf_release_x86_64-unknown-linux-gnu.a.gz \
+                 https://github.com/denoland/rusty_v8/releases/download/v149.3.0/librusty_v8_simdutf_release_aarch64-unknown-linux-gnu.a.gz \
+                 https://slackware.uk/~fourtysixandtwo/src/deno-vendored-sources-2.8.3-1.tar.xz"
+MD5SUM_x86_64="18a0150d4f9d3e9f4e615a3896d035b6 \
+               0676574277306b4e269085b5ca0fe20c \
+               129e483c8f831a6173c76d2043679c78 \
+               982cbc0e43ecf182c4954fe28461d612"
 REQUIRES="rust-opt"
 MAINTAINER="fourtysixandtwo"
 EMAIL="fourtysixandtwo@sliderr.net"

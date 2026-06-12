@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=flameshot
 VERSION=${VERSION:-13.3.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -70,6 +70,10 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z
 cd $PRGNAM-$VERSION
 
+  # Make the post-capture desktop notification asynchronous so a missing
+  # notification daemon can't freeze the event loop (~25s) between captures.
+  patch -p1 < $CWD/flameshot-async-notification.patch
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -95,6 +99,9 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mv $PKG/usr/share/man $PKG/usr
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
+sed -i -e "/^libdir/clibdir=/usr/lib${LIBDIRSUFFIX}" \
+  $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig/QtColorWidgets.pc
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -r LICENSE README.md docs/ $PKG/usr/doc/$PRGNAM-$VERSION

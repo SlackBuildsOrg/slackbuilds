@@ -27,7 +27,8 @@ This file contains settings changed by the node while running, and
 settings stored in this file override the read-only settings in the
 gridcoinresearch.conf file (see changelog and documentation).
 
-2. This is a MANDATORY update.
-All mainnet nodes must upgrade before the v13 activation height
-(3,989,800, approximately 8 weeks after release). Nodes that do not
-upgrade will be unable to follow the chain past the fork height.
+2. This is a HOTFIX update.
+This is a hotfix release to fix the crash on mainnet due to a logic
+error in a divide by zero guard in the scraper/autogreylist code.
+While it is versioned as a leisure release, since there is no real
+change in consensus, it is effectively mandatory to avoid the crash.

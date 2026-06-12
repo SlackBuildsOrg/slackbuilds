@@ -20,7 +20,8 @@ request automatic reverse dependency rebuilds, see sbohints(1) or
 
 Please note that this implementation of sbotools was forked from
 sbotools-2.7 and added to SlackBuilds.org in late 2024. A debt of
-gratitude is owed to original author Jacob Pipkin, longtime maintainer
-Andreas Guldstrand and major contributor Luke Williams.
+gratitude is owed to original author and recent contributor
+Jacob Pipkin, longtime maintainer Andreas Guldstrand and major
+contributor Luke Williams.
 
 sbotools conflicts with system/sbotools2 (Legacy Sbotools).

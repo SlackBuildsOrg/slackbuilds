@@ -2,7 +2,7 @@
 
 # Slackware build script for limine
 
-# Copyright 2025 Antonio Leal <antonioleal@yahoo.com>
+# Copyright 2025-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2023 Ivan Kovmir <i@kovmir.eu>
 # All rights reserved.
 #
@@ -26,7 +26,7 @@
 cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=limine
-VERSION=${VERSION:-11.2.1}
+VERSION=${VERSION:-12.3.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

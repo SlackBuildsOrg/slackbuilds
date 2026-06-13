@@ -80,9 +80,6 @@ find -L . \
 # Thanks to fourtysixandtwo
 patch -p1 < $CWD/python3.9.patch
 
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-
 mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \

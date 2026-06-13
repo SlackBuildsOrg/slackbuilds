@@ -5,6 +5,6 @@ DOWNLOAD="https://gitlab.gnome.org/GNOME/libgit2-glib/-/archive/1.2.1/libgit2-gl
 MD5SUM="cda52c49cc6a3f3bcb863365f1e8196b"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="libgit2 gi-docgen python3-build python3-wheel"
+REQUIRES="libgit2 gi-docgen"
 MAINTAINER="Pouria Rezaei"
 EMAIL="Pouria.rz@outlook.com"

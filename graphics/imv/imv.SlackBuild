@@ -91,9 +91,6 @@ sed -i -e 's,/etc/imv_config,/etc/imv/imv_config,' \
        -e '/\/usr\/local\/etc/d' \
     src/imv.c doc/imv.1.txt
 
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-
 # 20251206 bkw: qoi is a 'header-only library', it's small, always include it.
 mkdir qoi
 cat $CWD/qoi.h > qoi/qoi.h

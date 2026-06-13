@@ -5,6 +5,6 @@ DOWNLOAD="https://code.videolan.org/videolan/dav2d/-/archive/0.0.1/dav2d-0.0.1.t
 MD5SUM="d86404317fdf8e1d619257a745901ee4"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-build python3-wheel"
+REQUIRES=""
 MAINTAINER="Vijay Marcel"
 EMAIL="vijaymarcel@outlook.com"

@@ -83,9 +83,6 @@ elif $(pkg-config --exists webkit2gtk-4.0); then
    WKIT2="webkit2gtk-4-0=true"
 fi
 
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-
 # cherr-picked from upstream commit
 patch -p1 < $CWD/d220aa2f754eed4e6a006a4acaa68b31892dea2b.patch
 

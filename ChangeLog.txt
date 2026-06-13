@@ -1,3 +1,237 @@
+Sat Jun 13 00:43:38 UTC 2026
+academic/Gridcoin-Research: Update for version 5.5.1.0 hotfix
+academic/gtypist: Fix doinst.sh.
+academic/maxima: Updated for version 5.49.0.
+academic/octave: Fix doinst.sh.
+academic/stellarium: Use correct github URLs.
+academic/zotero: update 9.0.4
+audio/ncmpc: Remove python3-meson-opt dep.
+audio/ocenaudio-bin: Updated for version 3.19.2
+audio/ocp: Fix doinst.sh.
+audio/reaper: Updated for version 7.74
+audio/volume.app: Change email address
+desktop/cnslock: Change email address
+desktop/fvwm3: Remove python3-meson-opt dep.
+desktop/picom: Remove python3-meson-opt dep.
+desktop/ratpoison: Fix doinst.sh.
+desktop/wmcpufreq: Change email address
+desktop/wmpinboard: Change email address
+desktop/wmstickynotes: Change email address
+desktop/wmwifi: Change email address
+desktop/xseticon: Wrap README at 72 columns.
+desktop/yaru-icon-theme: Remove python3-meson-opt dep.
+development/HeidiSQL: Updated for version 12.18.
+development/Kiro: Updated for version 0.12.333.
+development/a68g: Updated for version 3.12.2.
+development/abseil-cpp: Updated for version 20260526.0.
+development/codex: Updated for version 0.136.0
+development/dotnet-runtime-10.0: Wrap README at 72 columns.
+development/electron-bin: Updated for version 42.3.3.
+development/gf: Updated for version 56c97f66769ec8109a9aff2e475a86c9a6781742.
+development/github-cli: Updated for version 2.94.0
+development/halibut: Fix doinst.sh.
+development/lazarus: Updated for version 4.8
+development/lepton-eda: Fix doinst.sh, /usr/info.
+development/lm-studio-bin: Orphaned slackware 15.0 can not support it :(
+development/lm-studio-bin: Removed (Need newer glibc).
+development/meld3: Remove python3-meson-opt dep.
+development/mit-scheme: Fix doinst.sh, writes to /usr.
+development/notepad++: Updated for version 8.9.6.4.
+development/notepadnext: Use correct github URLs.
+development/nvidia-container-toolkit: Wrap README at 72 columns.
+development/positron: Updated for version 2026.06.0_211
+development/prek: Added (Pre-commit framework in Rust).
+development/python3-numpy: Wrap README at 72 columns.
+development/ropgadget: Wrap README at 72 columns.
+development/rustc-demangle: Added (Demangle Rust symbols).
+development/s9fes: Wrap README at 72 columns.
+development/sbcl: Fix doinst.sh.
+development/tinyscheme: Wrap README at 72 columns.
+development/vscode-bin: Updated for version 1.124.2.
+development/vstudio: Updated for version 17.5.
+development/zed-editor-bin: Updated for version 1.6.3.
+games/ZEsarUX: Updated for version 13.0
+games/aisleriot: Remove python3-meson-opt dep.
+games/boosteroid: Fix MD5SUM.
+games/dealers-choice: Updated for version 0.0.14 Removed python3-meson-opt references
+games/open-invaders: Update email address.
+games/sameboy: Updated for version 1.0.3, new maintainer.
+games/scid_vs_pc: Updated for version 4.27.
+games/tetrinet: Update email address.
+gis/foxtrotgps: Fix doinst.sh.
+graphics/barcode: Fix doinst.sh.
+graphics/brlcad: Use correct github URL.
+graphics/flameshot: Updated script
+graphics/gmic: Use correct github URL.
+graphics/graphviz: Updated for version 15.0.0
+graphics/imv: Remove python3-meson-opt dep.
+graphics/libplacebo: Remove python3-meson-opt dep.
+graphics/openimageio: Use correct github URL.
+graphics/openscad-gearbox: Use correct github URL.
+graphics/qiv: Updated for version 3.0.4, add FILTER=no option.
+graphics/trimage: Fix broken symlinks and github URL.
+graphics/vips: Updated for version 8.18.3.
+graphics/xnconvert-bin: Added (Image conversion tool).
+graphics/zgv: Fix doinst.sh.
+ham/aptdec: Update script.
+ham/ggmorse: Update script.
+ham/mbelib: Update script.
+ham/qlog: Updated for version 0.51.0.
+ham/sdrangel: Updated for version 7.26.1.
+ham/serialDV: Updated to use LIBDIRSUFFIX.
+libraries/Botan2: Wrap README at 72 olumns.
+libraries/boolstuff: Change email address
+libraries/cln: Fix doinst.sh.
+libraries/dav2d: Remove python3-meson-opt dep.
+libraries/fzssh: Remove python3-meson-opt dep.
+libraries/gtk-layer-shell: Remove python3-meson-opt dep.
+libraries/gupnp: Compress man pages.
+libraries/hidapi: Use correct github URL.
+libraries/hoedown: Use correct github URL.
+libraries/icu4c-opt: Added (Component for Unicode).
+libraries/kashmir: ARCH=noarch, use correct github URL.
+libraries/libbgcode: Added (G-code library).
+libraries/libcamera: Remove python3-meson-opt dep.
+libraries/libcamera: Wrap README at 72 columns.
+libraries/libgit2-glib: Remove python3-meson-opt dep.
+libraries/liblrdf: Use correct github URL.
+libraries/libnfc: Use correct github URL.
+libraries/librepfunc: Update script.
+libraries/libslirp: Remove python3-meson-opt dep.
+libraries/libsoup3: Remove python3-meson-opt dep.
+libraries/libvmime: Use correct github URL.
+libraries/libxml++5: Remove python3-meson-opt dep.
+libraries/libxmlb: Remove python3-meson-opt dep.
+libraries/mimalloc: Updated for version 3.3.2
+libraries/mpir: Fix doinst.sh.
+libraries/nanodbc: Use correct github URL.
+libraries/openimagedenoise: Fix slack-desc.
+libraries/pcg-c: Updated for version 0.94.2.
+libraries/python3-plumbum: Updated for version 2.0.1.
+libraries/spdlog: New maintainer
+libraries/tcl-promise: Add missing "set -e".
+libraries/udunits: Fix doinst.sh.
+libraries/utfcpp: Use correct github URL.
+libraries/vali: Remove python3-meson-opt dep.
+libraries/vcglib: Fix homepage/download URLs.
+misc/OSCAR: Updated for version 2.0.0
+misc/dos2unix: Updated for version 7.5.6.
+misc/ollama: Fix build when LIB64=ON.
+misc/ollama: Updated for version 0.30.6.
+misc/wmbday: Change email address
+multimedia/HandBrake: Remove python3-meson-opt dep.
+multimedia/MuseScore: Updated for version 4.7.3
+multimedia/aegisub: Remove python3-meson-opt dep.
+multimedia/saflashplayer-legacy: Fix a potential permission problem.
+multimedia/saflashplayer: Fix a potential permission problem.
+multimedia/sickchill: Fix README.
+multimedia/ytdlp-gui: Removed (Maintainer request)
+network/aMule: Updated for version 3.0.0
+network/amneziawg-kernel: Updated for version 1.0.20260611.
+network/brave-browser: update 1.91.168
+network/brave-origin: Added (Web Browser).
+network/catgirl: Updated for version 2.2a
+network/deltachat-desktop: Wrap README at 72 columns.
+network/dino: Remove python3-meson-opt dep.
+network/dropbox: Updated for version 256.4.3790.
+network/element-desktop-bin: Updated for version 1.12.21.
+network/element-desktop: Updated for version 1.12.21.
+network/frr: Fix doinst.sh.
+network/gallery-dl: Updated for version 1.32.2.
+network/helium-browser: Updated for version 0.13.1.1
+network/iptv-analyzer: Wrap README at 72 columns.
+network/k9s: Updated for version 0.51.0.
+network/kubectl-bin: Updated for version 1.36.2.
+network/kubectl: Updated for version 1.36.2.
+network/librewolf: Updated for version 151.0.3_1.
+network/mew: Fix doinst.sh.
+network/mumble-server: Wrap README at 72 columns.
+network/ngrok: Updated for version 3.39.7
+network/nordvpn-gui: Wrap README at 72 columns.
+network/ocserv: Updated for version 1.5.0.
+network/openrsync: Added (Alternative rsync implementation).
+network/opera: Updated for version 132.0.5905.22.
+network/rclone: update 1.74.3
+network/repology-cli: Updated for version 1.10.0
+network/repology-cli: Wrap README at 72 columns.
+network/rspamd: Updated for version 4.1.0.
+network/senpai: update to 0.5.0
+network/signal-desktop: Updated for version 8.14.0.
+network/slack: Updated for version 4.50.136.
+network/static-web-server: Updated for version 2.43.0
+network/tailscale: update 1.98.4
+network/telegram: Updated for version 6.9.2.
+network/transmission-remote-gtk: Remove python3-meson-opt dep.
+network/turbo-attack: Wrap README at 72 columns.
+network/weechat: Updated for version 4.9.1.
+network/wmget: Change email address
+network/wmnotify: Change email address
+network/zen-browser: Updated for version 1.20.2b.
+office/LibreOffice: Updated for version 26.2.4.2
+office/LibreOffice: Wrap README at 72 columns.
+office/PortfolioPerformance-bin: Updated for version 0.83.2
+office/ledger-live: Updated for version 4.8.0
+office/libreoffice: Wrap README at 72 columns.
+office/lout: Updated for version 4.34.4
+office/moneydance: Updated for version 2024.5253.
+office/pandoc-bin: update 3.10
+office/qownnotes: Updated for version 26.6.5.
+office/sigil: Updated for version 2.8.0
+office/tradicted-trading-journal: Added (Trading Journal).
+office/zathura-pdf-mupdf: Remove python3-meson-opt dep.
+office/zim: Use correct github URL.
+python/pybind11: Force reinstall in case of prior installation
+python/pycassa: Use correct github URL.
+python/pycld2: Use correct github URL.
+python/python-ipcalc: Use correct github URL.
+python/python-mysqlclient: Strip shared libs, fix github URLs.
+python/python-pbkdf2: Use correct github URLs.
+python/python2-django-legacy: Orphaned. Nothing seems to depend on this.
+python/python3-Flask-Cors: Updated for version 6.0.5.
+python/python3-cffi: Fix deps.
+python/python3-maturin: Updated for version 1.14.0.
+python/python3-meson-opt: Removed (no longer needed).
+python/python3-mesonpy: Fix deps.
+python/python3-mesonpy: Updated for version 0.20.0.
+python/python3-pypdf: Updated for version 6.13.0.
+ruby/rubygem-sass: Wrap README at 72 columns.
+system/arqiver: Updated for version 1.0.2.
+system/atarisio: Update email address.
+system/brave-origin-the-latest: Added (Check Brave).
+system/cluster-glue: Use correct github URLs.
+system/containerd: Updated for version 1.7.32.
+system/daemontools: Fix permissions on docs.
+system/dfm: Wrap README at 72 columns.
+system/docker-cli: Updated for version 29.5.3.
+system/docker: Updated for version 29.5.3.
+system/fileschanged: Fix /usr/info and doinst.sh.
+system/fonts-redhat: Fix symlink.
+system/fwupd: Remove python3-meson-opt dep.
+system/heatshrink: Updated script.
+system/isight-firmware-tools: Fix doinst.sh and man page.
+system/jnv-bin: Orphaned slackware-15.0 glibc unable to support it
+system/jnv-bin: Removed (Need newer glibc).
+system/kmscon: Remove python3-meson-opt dep.
+system/limine: Updated for version 12.3.3.
+system/loksh: Updated for version 7.9.
+system/nemo-share: Added (Samba sharing extension for Nemo).
+system/oksh: Updated for version 7.9.
+system/openrc: Remove python3-meson-opt dep.
+system/qemu-static: Remove python3-meson-opt dep.
+system/qemu: Remove python3-meson-opt dep.
+system/restic: Updated for version 0.19.0.
+system/runc: Updated for version 1.4.2.
+system/sbo-create: Wrap README at 72 columns.
+system/sbotools: Updated for version 4.2.
+system/sbpkg: Wrap README at 72 columns.
+system/slackpkg-update-notify: Tweak README.
+system/slpkg: Wrap README at 72 columns.
+system/virt-manager: Remove python3-meson-opt dep.
+system/wmfsm: Change email address
+system/yelp-xsl: Remove python3-meson-opt dep.
+system/yelp: Remove python3-meson-opt dep.
+system/yq: Updated for version 4.53.3.
++--------------------------+
 Sat Jun  6 00:53:04 UTC 2026
 audio/dopamine-bin: Updated for version 3.0.5
 audio/mpdscribble: Remove redundant doc dir.

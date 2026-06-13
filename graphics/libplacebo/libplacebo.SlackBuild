@@ -87,9 +87,6 @@ else
   RELEASE=plain
 fi
 
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages/
-
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 meson \

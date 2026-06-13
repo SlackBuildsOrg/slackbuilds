@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libayatana-appindicator-glib
-VERSION=${VERSION:-2.0.1}
+VERSION=${VERSION:-2.0.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -76,26 +76,18 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-patch -p1 < $CWD/patch.diff
-
 mkdir build
 cd build
 cmake \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-  -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_INSTALL_LIBDIR=lib$LIBDIRSUFFIX \
-  -DENABLE_BINDINGS_MONO=OFF \
-  -DENABLE_BINDINGS_VALA=OFF \
   -DENABLE_COVERAGE=OFF \
-  -DENABLE_GTKDOC=OFF \
   -DENABLE_TESTS=OFF \
   -DENABLE_WERROR=OFF \
-  -DFLAVOUR_GTK2=OFF \
-  -DFLAVOUR_GTK3=ON \
   -DGLIB_GENMARSHAL=/usr/bin/glib-genmarshal \
   -DGLIB_MKENUMS=/usr/bin/glib-mkenums \
-  -DGTKDOC=/usr/bin/gtkdoc-scan \
+  -DCMAKE_BUILD_TYPE=Release \
   ..
 make
 make install DESTDIR=$PKG
@@ -107,6 +99,8 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp AUTHORS ChangeLog COPYING* NEWS README.md $PKG/usr/doc/$PRGNAM-$VERSION
 chmod 644 $PKG/usr/doc/$PRGNAM-$VERSION/COPYING
+mv $PKG/usr/share/doc/libayatana-appindicator-glib-dev $PKG/usr/doc/$PRGNAM-$VERSION/
+rmdir $PKG/usr/share/doc/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

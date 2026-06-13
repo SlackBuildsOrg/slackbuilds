@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/libxmlplusplus/libxmlplusplus/archive/5.4.0/libxmlp
 MD5SUM="0eb5d961716d20d6283dee71ee02c1e8"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-build python3-wheel"
+REQUIRES=""
 MAINTAINER="Zhu Qun-Ying"
 EMAIL="zhu.qunying@gmail.com"

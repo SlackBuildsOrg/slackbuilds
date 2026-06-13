@@ -1,8 +1,8 @@
 GNU Source-highlight
 ====================
 
-Source-highlight generates syntax-highlighted documents from source files.
-It also provides a C++ highlight library.
+Source-highlight generates syntax-highlighted documents from source
+files. It also provides a C++ highlight library.
 
 Language and output format specifications are loaded dynamically, so new
 languages and formats can be added without recompiling.
@@ -33,10 +33,10 @@ This build adds YAML and Markdown support (upstream bug #62751):
 
 Test examples:
 
-  curl -s https://raw.githubusercontent.com/git/git/master/.github/workflows/main.yml \
+$ curl -s https://raw.githubusercontent.com/git/git/master/.github/workflows/main.yml \
     | source-highlight -s yaml -f esc | less -R
 
-  curl -s https://raw.githubusercontent.com/git/git/master/README.md \
+$ curl -s https://raw.githubusercontent.com/git/git/master/README.md \
     | source-highlight -s md -f esc | less -R
 
 Homepage

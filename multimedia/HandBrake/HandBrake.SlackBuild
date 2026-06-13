@@ -185,10 +185,6 @@ else
   patch -Rp1 < $CWD/revert-gtk-4.6-switch.patch
 fi
 
-# Requires newer meson than included with 15.0. Hopefully this works:
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-
 # libdovi and nvdec/nvenc currently don't compile successfully on my
 # machine. Feel free to send any suggestions/fixes.
 # libdovi fails if not forcefully disabled... disabling nvdec/nvenc

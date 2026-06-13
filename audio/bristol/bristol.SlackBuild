@@ -7,6 +7,12 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260613 bkw: BUILD=3
+# - fix build on -current (-std=gnu89, plus patches), thanks to n4dir
+#   on IRC for reporting this.
+# - also use rsvg-convert instead of ImageMagick's convert to render
+#   icons (because convert fails on -current).
+
 # 20211130 bkw: BUILD=2
 # - fix build on -current (again).
 # - new-style icons.
@@ -20,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bristol
 VERSION=${VERSION:-0.60.11}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -55,6 +61,8 @@ else
   LIBDIRSUFFIX=""
 fi
 
+SLKCFLAGS+=" -std=gnu89"
+
 set -e
 
 rm -rf $PKG
@@ -69,6 +77,10 @@ find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
 
 # Patch from Debian to fix alsa-lib API breakage.
 patch -p1 < $CWD/03-rm_alsa-iatomic.h.patch
+
+# 20260613 bkw: couple more patches from Debian, needed on -current.
+patch -p1 < $CWD/04-gcc_10.patch
+patch -p1 < $CWD/05-implicit-function-declaration.patch
 
 # Hard-coded /usr/lib and /usr/X11R6/lib sucks.
 sed -i "s,/usr/lib,/usr/lib$LIBDIRSUFFIX,g" \
@@ -105,7 +117,7 @@ for px in 16 32 48 64 128; do
   size=${px}x${px}
   dir=$PKG/usr/share/icons/hicolor/$size/apps
   mkdir -p $dir
-  convert -background none -resize $size bitmaps/bicon.svg $dir/$PRGNAM.png
+  rsvg-convert --width=$px --height=$px bitmaps/bicon.svg > $dir/$PRGNAM.png
 done
 
 mkdir -p $PKG/usr/share/icons/hicolor/scalable/apps

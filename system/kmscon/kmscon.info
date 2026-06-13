@@ -7,6 +7,6 @@ MD5SUM="133b39ca630a4a5cb709055488007bd6 \
         7468588f105651bc7eb400fd923d497a"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-build python3-wheel"
+REQUIRES=""
 MAINTAINER="B. Watson"
 EMAIL="urchlay@slackware.uk"

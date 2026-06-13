@@ -27,6 +27,6 @@ MD5SUM="3d0f6d8c0091d4faff0d149233dd8c6b \
         e97b457a54a83f72aedf413439728d0b"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-build python3-wheel libass x264 numactl"
+REQUIRES="libass x264 numactl"
 MAINTAINER="Jeremy Hansen"
 EMAIL="jebrhansen+SBo@gmail.com"

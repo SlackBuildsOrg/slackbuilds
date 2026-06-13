@@ -82,14 +82,6 @@ cd build
   CFLAGS="$SLKCFLAGS" \
   CXXFLAGS="$SLKCFLAGS" \
 
-if grep -q "current)" /etc/os-release; then
-echo ""
-else
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-export PATH=/opt/meson/bin:$PATH
-fi
-
   meson .. \
     --buildtype=release \
     --infodir=/usr/info \

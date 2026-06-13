@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dealers-choice
-VERSION=${VERSION:-0.0.14}
+VERSION=${VERSION:-0.0.15}
 SOURCEARCHIVE=$PRGNAM-$VERSION.tar.xz
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -80,11 +80,6 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-# To find the newer version of meson, which is required to build
-# (python3-meson-opt from the SBo repository)
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
 
 mkdir build
 cd build

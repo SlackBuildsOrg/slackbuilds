@@ -1,0 +1,19 @@
+diff -Naur gnome-characters-41.0/data/meson.build gnome-characters-41.0.patched/data/meson.build
+--- gnome-characters-41.0/data/meson.build	2021-09-21 09:39:34.940959700 -0400
++++ gnome-characters-41.0.patched/data/meson.build	2026-06-13 23:06:46.669517470 -0400
+@@ -47,7 +47,6 @@
+ desktop_conf.set('bindir', characters_bindir)
+ 
+ i18n.merge_file(
+-  'desktop-file',
+   type: 'desktop',
+   input: configure_file (
+     input: characters_name + '.desktop.in',
+@@ -61,7 +60,6 @@
+ )
+ 
+ appdata_file = i18n.merge_file(
+-  'appdata-file',
+   input: characters_name + '.appdata.xml.in',
+   output: characters_application_id + '.appdata.xml',
+   po_dir: po_dir,

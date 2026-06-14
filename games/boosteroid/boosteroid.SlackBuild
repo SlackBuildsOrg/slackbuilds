@@ -20,6 +20,12 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260613 bkw: Modified by SlackBuilds.org, BUILD=2:
+# - freeze the version, since upstream keeps changing the file we download,
+#   and the latest one requires a newer glibc than 15.0 has.
+# - clean up the package (sbopkglint).
+# - add a symlink to /usr/games for CLI users.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=boosteroid
@@ -57,8 +63,11 @@ chmod -R u+w,go+r-w,a-s .
 # Make sure top-level perms are correct:
 chmod 0755 .
 
-rm -rf $PKG/usr/local
-rm -rf $PKG/opt/BoosteroidGamesS.R.L./include
+rm -rf $PKG/usr/local $PKG/*.pc
+rm -rf $PKG/opt/BoosteroidGamesS.R.L./{include,lib}
+
+mkdir -p $PKG/usr/games
+ln -s ../../opt/BoosteroidGamesS.R.L./bin/Boosteroid $PKG/usr/games
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

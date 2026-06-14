@@ -1,7 +1,11 @@
 slock is a simple X display locker.
 
-Build with FAILCOLOR=yes to support upstream failcolor patch:
-http://tools.suckless.org/slock/patches/failcolor
+This build applies the DPMS patch by default:
+http://tools.suckless.org/slock/patches/dpms
 
-Build with OVERRIDEXFLOCK4=yes to add slock symlink to:
-/usr/local/bin/xflock4
+While the screen is locked, the monitor is powered off after a short
+idle timeout (monitortime in config.h). This saves power on laptops
+and does no harm on desktops, where it simply blanks the display.
+
+Any additional patches dropped into the patches/ directory are applied
+automatically at build time.

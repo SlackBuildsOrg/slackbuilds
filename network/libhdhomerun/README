@@ -1,0 +1,4 @@
+libhdhomerun (Library and CLI utility for HDHomeRun tuners)
+
+This library implements the libhdhomerun protocol for use with
+Silicondust HDHomeRun TV tuners.

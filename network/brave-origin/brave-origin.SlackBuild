@@ -2,8 +2,12 @@
 
 # Slackware build script for brave-origin
 
+# Copyright 2019-2026 Andrew Payne <phalange@komputermatrix.com>
+
+# Copyright 2026 Andrew Payne <phalange@komputermatrix.com> 
 # Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
-#    adapted from Andrew Payne and Donald Cooley scripts
+# Copyright 2019-2026 Andrew Payne <phalange@komputermatrix.com>
+# Copyright 2018-2019 Donald Cooley South Haven, Indiana USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +31,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=brave-origin
 PRCNAM=amd64
-VERSION=${VERSION:-1.91.168}
+VERSION=${VERSION:-1.91.172}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,14 +83,11 @@ find -L . \
 
 cp -apr * $PKG/
 
-# make ELF libraries executable
-for f in libvulkan.so.1 libqt6_shim.so libqt5_shim.so libGLESv2.so libEGL.so libvk_swiftshader.so
-do
-    chmod +x $PKG/opt/brave.com/brave-origin/$f
-done
-
 # Slackware doesn't ship GNOME desktop
 rm -rf $PKG/usr/share/gnome-control-center
+
+# no automatic updates
+rm -rf $PKG/etc
 
 # move man pages into place
 mv $PKG/usr/share/man $PKG/usr/man
@@ -99,6 +100,8 @@ cp -a \
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod 0755 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

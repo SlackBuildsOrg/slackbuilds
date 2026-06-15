@@ -6,12 +6,12 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
             |-----handy-ruler------------------------------------------------------|
-brave-origin: brave-origin (open source web browser, debloated)
+brave-origin: brave-origin (chromium-based web browser)
 brave-origin:
-brave-origin: Brave Origin is a free and open-source web browser developed by
-brave-origin: Brave Software, Inc. based on the Chromium web browser.
-brave-origin: Brave Origin is the debloated version of Brave.
+brave-origin: A minimalist browser that lets you manage (or totally remove)
+brave-origin: features found in the free version of Brave.
 brave-origin:
+brave-origin: Homepage: https://brave-origin.com
 brave-origin:
 brave-origin:
 brave-origin:

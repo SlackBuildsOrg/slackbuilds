@@ -1,12 +1,12 @@
 PRGNAM="halloy"
-VERSION="2026.7"
+VERSION="2026.7.2"
 HOMEPAGE="https://github.com/squidowl/halloy"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/squidowl/halloy/archive/2026.7/halloy-2026.7.tar.gz \
-https://f003.backblazeb2.com/file/sbo-src/halloy-2026.7-vendor.tar.xz"
-MD5SUM_x86_64="de33aa9c597219f35a71afb43f616269 \
-7be44909c60c0d1396aac40e2fdeb8c9"
+DOWNLOAD_x86_64="https://github.com/squidowl/halloy/archive/2026.7.2/halloy-2026.7.2.tar.gz \
+https://f003.backblazeb2.com/file/sbo-src/2026.7.2-vendor.tar.gz"
+MD5SUM_x86_64="b9695864a3d0f243746392ad865684c8 \
+b6cb9487285e07a4d454d2fa50b3d5f4"
 REQUIRES="rust-opt cargo-auditable"
 MAINTAINER="Ioannis Anagnostakis"
 EMAIL="rizitis@gmail.com"

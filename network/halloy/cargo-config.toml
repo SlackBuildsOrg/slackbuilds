@@ -1,0 +1,20 @@
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/iced-rs/cryoglyph.git?rev=53ba3e879539d19ed8162942126a977ec896cc3b"]
+git = "https://github.com/iced-rs/cryoglyph.git"
+rev = "53ba3e879539d19ed8162942126a977ec896cc3b"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/iced-rs/winit.git?rev=05b8ff17a06562f0a10bb46e6eaacbe2a95cb5ed"]
+git = "https://github.com/iced-rs/winit.git"
+rev = "05b8ff17a06562f0a10bb46e6eaacbe2a95cb5ed"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/squidowl/iced?rev=c04ada082b67ddb7e372fabe91ee3b3edc8c61b7"]
+git = "https://github.com/squidowl/iced"
+rev = "c04ada082b67ddb7e372fabe91ee3b3edc8c61b7"
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"

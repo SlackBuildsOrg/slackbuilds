@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=halloy
-VERSION=${VERSION:-2026.7}
+VERSION=${VERSION:-2026.7.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,31 +75,9 @@ cd $PRGNAM-$VERSION
 
 # build offline
 # extract pre-vendored sources and configure cargo to use them
-tar xf $CWD/$PRGNAM-$VERSION-vendor.tar.xz
-mv vendor-out vendor
+tar xvf $CWD/$VERSION-vendor.tar.gz
 mkdir -p .cargo
-cat << EOF >> .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/iced-rs/cryoglyph.git?rev=53ba3e879539d19ed8162942126a977ec896cc3b"]
-git = "https://github.com/iced-rs/cryoglyph.git"
-rev = "53ba3e879539d19ed8162942126a977ec896cc3b"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/iced-rs/winit.git?rev=05b8ff17a06562f0a10bb46e6eaacbe2a95cb5ed"]
-git = "https://github.com/iced-rs/winit.git"
-rev = "05b8ff17a06562f0a10bb46e6eaacbe2a95cb5ed"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/squidowl/iced?rev=fcfa87cb35b615715919c8b4da408b6488f195de"]
-git = "https://github.com/squidowl/iced"
-rev = "fcfa87cb35b615715919c8b4da408b6488f195de"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+cat $CWD/cargo-config.toml > .cargo/config.toml
 
 chown -R root:root .
 find . -type f \( -perm -4000 -o -perm -2000 \) -exec chmod -s {} +

@@ -13,7 +13,7 @@
  #backup-logs=true
  #dbus-service=true
  
-+sessions-directory=/usr/share/xsessions
++sessions-directory=/usr/share/xsessions:/usr/share/wayland-sessions
 +
  #
  # Seat configuration

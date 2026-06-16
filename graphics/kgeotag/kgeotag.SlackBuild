@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=kgeotag
 VERSION=${VERSION:-1.8.0}
-CVERSION=${CVERSION:-2.0.0}
+#CVERSION=${CVERSION:-2.0.0}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,10 +75,10 @@ else
 DBWQT6=ON
 fi
 
-if [ "$DBWQT6" = "ON" ]; then
-    VERSION=$CVERSION
-    export VERSION
-fi
+#if [ "$DBWQT6" = "ON" ]; then
+#    VERSION=$CVERSION
+#    export VERSION
+#fi
 
 set -e
 

@@ -2,7 +2,7 @@
 
 # Slackware build script for gitlab-cli
 
-# Copyright 2024 Diniz Bortolotto <diniz.bortolotto@gmail.com>
+# Copyright 2026 Andrew Clemons, Tokyo Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,25 +25,17 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gitlab-cli
-DEBNAM=glab
-VERSION=${VERSION:-1.51.0}
+VERSION=${VERSION:-1.102.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+COMMIT=${COMMIT:-b5a548b3}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
-  esac
-fi
-
-if [ -z "$DEBARCH" ]; then
-  case $ARCH in
-    i586) DEBARCH="386" ;;
-     arm) DEBARCH="$( uname -m )" ;;
-       *) DEBARCH="amd64" ;;
   esac
 fi
 
@@ -56,32 +48,16 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-set -e 
+set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
-
-cd $PKG
-ar p $CWD/${DEBNAM}_${VERSION}_linux_${DEBARCH}.deb data.tar.gz | tar xzv
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-mv $PKG/usr/share/man $PKG/usr/ && rmdir $PKG/usr/share
-
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
 cd $TMP
 rm -rf cli-v$VERSION
 tar xvf $CWD/cli-v$VERSION.tar.gz
 cd cli-v$VERSION
+# fails to build otherwise. And we probably expect this to be off anyway.
+patch -p1 < $CWD/remove-telemetry-hook.diff
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -89,9 +65,25 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+go build -ldflags "-s -w -X main.version=v$VERSION -X main.commit=$COMMIT" -o build/bin/glab ./cmd/glab/main.go
+install -D -m0755 build/bin/glab $PKG/usr/bin/glab
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+install -D -m644 <($PKG/usr/bin/glab completion --shell bash) $PKG/usr/share/bash-completion/completions/$PRGNAM
+install -D -m644 <($PKG/usr/bin/glab completion --shell fish) $PKG/usr/share/fish/vendor_completions.d/$PRGNAM.fish
+install -D -m644 <($PKG/usr/bin/glab completion --shell zsh) $PKG/usr/share/zsh/site-functions/_$PRGNAM
+
+go run ./cmd/gen-docs/docs.go --manpage --path ./build/man
+install -Dm644 build/man/*.1 -t $PKG/usr/man/man1/
+
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  CHANGELOG.md  CODE_OF_CONDUCT.md  CONTRIBUTING.md  README.md  SECURITY.md \
+  CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md LICENSE README.md SECURITY.md \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

@@ -1,14 +1,10 @@
 PRGNAM="gitlab-cli"
-VERSION="1.51.0"
+VERSION="1.102.0"
 HOMEPAGE="https://gitlab.com/gitlab-org/cli"
-DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.51.0/cli-v1.51.0.tar.gz \
-          https://gitlab.com/gitlab-org/cli/-/releases/v1.51.0/downloads/glab_1.51.0_linux_386.deb"
-MD5SUM="1c697c92c1e03a93995bc0c387bd7d1c \
-        e83adbc7dade508707538505f0546f62"
-DOWNLOAD_x86_64="https://gitlab.com/gitlab-org/cli/-/archive/v1.51.0/cli-v1.51.0.tar.gz \
-                 https://gitlab.com/gitlab-org/cli/-/releases/v1.51.0/downloads/glab_1.51.0_linux_amd64.deb"
-MD5SUM_x86_64="1c697c92c1e03a93995bc0c387bd7d1c \
-               5f2981d7b1a5335b69b62b49e09910db"
-REQUIRES=""
-MAINTAINER="Diniz Bortolotto"
-EMAIL="diniz.bortolotto@gmail.com"
+DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.102.0/cli-v1.102.0.tar.gz"
+MD5SUM="0f843ede8b9668f634707ff3feb43d52"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="google-go-lang"
+MAINTAINER="Andrew Clemons"
+EMAIL="andrew.clemons@gmail.com"

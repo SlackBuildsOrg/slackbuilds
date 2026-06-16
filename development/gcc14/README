@@ -21,4 +21,4 @@ Slackware 15.0, run the following commands:
     export RANLIB=gcc-ranlib-14.2.0
     export PATH=/opt/gcc14-14.2.0/bin:$PATH
 
-or source the appropriate /etc/default/gcc14.{sh,csh} file.
+or source the appropriate /etc/profile.d/gcc14.{sh,csh} file.

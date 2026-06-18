@@ -6,3 +6,6 @@ rich outputs, etc.) in a flexible and powerful user interface.
 Jupyter kernels are needed for JupyterLab to be fully functional. The
 following kernels are currently available as SlackBuilds:
 * jupyter-ipykernel
+
+NOTE: Unable to update jupyterlab to versions >= 4.6.0 on Slackware 15.0
+(due to requiring Python >= 3.10).

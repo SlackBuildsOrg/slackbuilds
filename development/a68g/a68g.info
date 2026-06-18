@@ -1,6 +1,6 @@
 PRGNAM="a68g"
 VERSION="3.12.2"
-HOMEPAGE="https://algol68genie.nl/en/algol-68-genie"
+HOMEPAGE="https://algol68genie.nl/en/algol-68-genie/"
 DOWNLOAD="https://algol68genie.nl/algol68g-3.12.2.tar.gz"
 MD5SUM="8d2e3847404562aae53fde91724245f2"
 DOWNLOAD_x86_64=""

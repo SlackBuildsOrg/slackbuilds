@@ -4,3 +4,7 @@ Project Jupyter.
 Jupyter kernels are needed for the notebook to be fully functional. The
 following kernels are currently available as SlackBuilds:
 * jupyter-ipykernel
+
+NOTE: Unable to update jupyter-notebook to versions >= 7.6.0 on
+Slackware 15.0 (due to requiring jupyterlab >= 4.6.0 which in turn
+requires Python >= 3.10).

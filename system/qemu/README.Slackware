@@ -7,11 +7,6 @@ find.  If you find additional examples, let the SBo maintainer know.
 Required dependencies not autodetected:
 
 device-tree-compiler (compile and run time)
-python3-meson-opt    (compile only)
-
-You can remove python3-meson-opt once the package is built. It's purpose
-is to provide a newer meson and allow off-line (non-network) builds.
-Note that this has a lengthy python3 dependency list.
 
 The qemu build system will autodetect most options (see README). Please
 let me know if you find any others, especially if already included in base

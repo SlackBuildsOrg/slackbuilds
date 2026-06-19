@@ -15,6 +15,7 @@ MLX=ON: building with MLX engine (requiring CUDA=ON),
 default is MLX=OFF, build and runtime dependencies:
 
   development/cudnn
+  development/nccl
   libraries/OpenBLAS
   libraries/fmt
 

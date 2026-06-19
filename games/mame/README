@@ -18,6 +18,12 @@ separate MESS build or binary.
 This build requires around 4GB of storage in /tmp (or whatever you
 set TMP to in the environment).
 
+Optionally, MAME can be be built with a Qt6-based debugger. If you
+just want to play the games, you don't need this. If you want to
+build it, install qt6 before running this script. If you have qt6
+installed but don't want to build MAME with it, export QTDEBUG=no in
+the script's environment.
+
 Optionally, MAME can be built with the GroovyMAME patch. Export
 GROOVY=yes in the script's environment. If it doesn't work, see
 README_groovy.txt for details.

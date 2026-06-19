@@ -9,6 +9,11 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260615 bkw: Updated for v0.288 (incl. groovy patch).
+# - switch compilers, use gcc. our old clang fails, hard.
+# - disable ccache, since it doesn't work with gcc and PCH.
+#   this matters less than it did, hardware has gotten faster.
+
 # 20260403 bkw: Updated for v0.287 (incl. groovy patch).
 # - had to add ARCHOPTS=-latomic to get it to build on 32-bit.
 
@@ -42,7 +47,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mame
-VERSION=${VERSION:-0.287}
+VERSION=${VERSION:-0.288}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,6 +88,14 @@ SHORTNAME=${PRGNAM}${VERSION/./}
 DIRNAME=$PRGNAM-$SHORTNAME
 
 set -e
+
+# 20260618 bkw: for 0.288, it's still possible to build with gcc-11.
+# Looking at upstream git, it looks like 0.289 may require gcc-14.
+#source /etc/profile.d/gcc14.sh
+
+# for now:
+export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++
 
 # 20200108 bkw: before doing ANYTHING else, check to make sure
 # our required deps are installed. This is helpful because if
@@ -181,14 +194,17 @@ sed -i 's,\.;ini,/etc,' src/osd/sdl/sdlmain.cpp
 #SDL_INI_PATH='$$HOME/.mame;/etc' \
 
 # 20211110 bkw: undocumented option. keep this Just In Case.
+QTOPT=0
 if [ "${QTDEBUG:-yes}" = "yes" ]; then
-  QTOPT=1
-else
-  QTOPT=0
+  which qmake-qt6 2>/dev/null && QTOPT=1
 fi
+echo "=== USE_QTDEBUG=$QTOPT"
 
 # 20211112 bkw: the rest of the GroovyMAME stuff.
 # The diffs look to be close to half a meg, so they're compressed.
+# 20260618 bkw: the diffs are closer to 6MB these days! the timestamp
+# stuff isn't needed right now (as ccache is disabled) but leave it
+# in place for when a new ccache makes it into Slackware stable.
 if [ "$GROOVY" = "yes" ]; then
   GROOVYDIFF="$( /bin/ls $CWD/gm${VERSION/./}*.diff.xz 2>/dev/null | tail -1 )"
   if [ -e "$GROOVYDIFF" ]; then
@@ -253,15 +269,19 @@ if [ "${WAYLAND:-no}" = "yes" ]; then
   WAYLOPT="USE_WAYLAND=1"
 fi
 
-# 20211111 bkw: build with ccache by default, now that it works.
-if [ "${USE_CCACHE:-yes}" = "yes" ]; then
-  CC="/usr/bin/ccache /usr/bin/clang"
-  CXX="/usr/bin/ccache /usr/bin/clang++"
-else
-  # 20250812 bkw: default to clang/clang++, not gcc/g++, if CC and CXX not set.
-  CC="${CC:-$( which clang )}"
-  CXX="${CXX:-$( which clang++ )}"
-fi
+# 20260617 bkw: ccache is disabled for now. It won't work with gcc and
+# precompiled headers. Anyway, hardware has caught up, a full mame build
+# without ccache only takes me 1.5 hours on my (rather modest) build box.
+### 20211111 bkw: build with ccache by default, now that it works.
+##if [ "${USE_CCACHE:-yes}" = "yes" ]; then
+##  CC="/usr/bin/ccache $( which gcc )"
+##  CXX="/usr/bin/ccache $( which g++ )"
+##else
+##  # 20250812 bkw: default to clang/clang++, not gcc/g++, if CC and CXX not set.
+##  # 20260616 bkw: switch back to gcc/g++, now that we require gcc14.
+##  CC="${CC:-$( which gcc )}"
+##  CXX="${CXX:-$( which g++ )}"
+##fi
 
 # 20250811 bkw: 0.279 has support for pipewire, enabled by default,
 # but 15.0's default pipewire is too old for mame. The one in testing/
@@ -281,7 +301,7 @@ else
 fi
 
 make USE_QTDEBUG=$QTOPT \
-     ARCHOPTS=-latomic \
+     ARCHOPTS="-std=c++20 -latomic" \
      $GOLDOPT \
      $PWOPT \
      USE_SYSTEM_LIB_EXPAT=1 \

@@ -25,12 +25,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ollama
-VERSION=${VERSION:-0.30.6}
+VERSION=${VERSION:-0.30.10}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-LLAMA_CPP_VERSION=${LLAMA_CPP_VERSION:-b9509}
+LLAMA_CPP_VERSION=${LLAMA_CPP_VERSION:-b9672}
 MLX_VERSION=${MLX_VERSION:-2165dc08d7b33258260aa849d39f087d50e62962}
 MLX_C_VERSION=${MLX_C_VERSION:-fba4470b89073180056c9ea46c443051375f7399}
 JSON_VERSION=${JSON_VERSION:-3.11.3}
@@ -94,8 +94,8 @@ sed -i 's/PRE_INCLUDE_REGEXES.*/PRE_INCLUDE_REGEXES = ""/' \
     cmake/mlx/CMakeLists.txt
 # llama.cpp compatibility layer
 pushd llama.cpp-${LLAMA_CPP_VERSION}
-patch -Np1 -i $TMP/$PRGNAM-$VERSION/llama/compat/llama-cpp-hooks.patch
-patch -Np1 -i $TMP/$PRGNAM-$VERSION/llama/compat/models/llama-cpp-laguna.patch
+patch -Np1 -i $TMP/$PRGNAM-$VERSION/llama/compat/001-llama-cpp-hooks.patch
+patch -Np1 -i $TMP/$PRGNAM-$VERSION/llama/compat/models/003-llama-cpp-laguna.patch
 popd
 
 # disabling ggml-vulkan until we have vulkan-sdk >= 1.4

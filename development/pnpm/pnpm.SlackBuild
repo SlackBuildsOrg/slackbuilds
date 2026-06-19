@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pnpm
-VERSION=${VERSION:-10.34.1}
+VERSION=${VERSION:-11.8.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,25 +77,25 @@ find -L . \
 
 # disable self-update / update checking
 cat << EOF | patch -p1
-diff -Naur package.bak/dist/pnpm.cjs package/dist/pnpm.cjs
---- package.bak/dist/pnpm.cjs	1985-10-26 17:15:00.000000000 +0900
-+++ package/dist/pnpm.cjs	2024-11-16 13:48:59.750269840 +0900
-@@ -116150,6 +116150,7 @@
-     var write_json_file_1 = __importDefault2(require_write_json_file());
-     var UPDATE_CHECK_FREQUENCY = 24 * 60 * 60 * 1e3;
-     async function checkForUpdates(config) {
-+      return; // disabled
-       const stateFile = path_1.default.join(config.stateDir, "pnpm-state.json");
-       let state;
-       try {
-@@ -220257,6 +220258,7 @@
-       });
-     }
-     async function handler(opts, params) {
-+      throw new error_1.PnpmError("CANT_SELF_UPDATE_IN_PKGTOOLS", "You should update pnpm with the slackbuild");
-       if ((0, cli_meta_1.isExecutedByCorepack)()) {
-         throw new error_1.PnpmError("CANT_SELF_UPDATE_IN_COREPACK", "You should update pnpm with corepack");
-       }
+diff -Naur package.orig/dist/pnpm.mjs package/dist/pnpm.mjs
+--- package.orig/dist/pnpm.mjs	1985-10-26 17:15:00.000000000 +0900
++++ package/dist/pnpm.mjs	2026-06-20 08:54:13.431316801 +0900
+@@ -136590,6 +136590,7 @@
+ // lib/checkForUpdates.js
+ import path47 from "node:path";
+ async function checkForUpdates(config2) {
++  return;
+   const stateFile = path47.join(config2.stateDir, "pnpm-state.json");
+   let state;
+   try {
+@@ -239973,6 +239974,7 @@
+   });
+ }
+ async function handler33(opts3, params) {
++  throw new error_1.PnpmError("CANT_SELF_UPDATE_IN_PKGTOOLS", "You should update pnpm with the slackbuild");
+   if (isExecutedByCorepack()) {
+     throw new PnpmError("CANT_SELF_UPDATE_IN_COREPACK", "You should update pnpm with corepack");
+   }
 EOF
 
 # don't need node-gyp
@@ -126,13 +126,13 @@ install -Dm644 dist/templates/completion.zsh $PKG/usr/share/zsh/site-functions/_
 rm -rf dist/templates
 
 install -Dm644 package.json -t $PKG/usr/lib$LIBDIRSUFFIX/node_modules/$PRGNAM
-install -Dm755 bin/pnpm.cjs bin/pnpx.cjs -t $PKG/usr/lib$LIBDIRSUFFIX/node_modules/$PRGNAM/bin
+install -Dm755 bin/pnpm.mjs bin/pnpx.mjs -t $PKG/usr/lib$LIBDIRSUFFIX/node_modules/$PRGNAM/bin
 
 cp -r dist $PKG/usr/lib$LIBDIRSUFFIX/node_modules/$PRGNAM/dist
 
 mkdir -p $PKG/usr/bin
-ln -sf ../lib$LIBDIRSUFFIX/node_modules/$PRGNAM/bin/pnpm.cjs $PKG/usr/bin/pnpm
-ln -sf ../lib$LIBDIRSUFFIX/node_modules/$PRGNAM/bin/pnpx.cjs $PKG/usr/bin/pnpx
+ln -sf ../lib$LIBDIRSUFFIX/node_modules/$PRGNAM/bin/pnpm.mjs $PKG/usr/bin/pnpm
+ln -sf ../lib$LIBDIRSUFFIX/node_modules/$PRGNAM/bin/pnpx.mjs $PKG/usr/bin/pnpx
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

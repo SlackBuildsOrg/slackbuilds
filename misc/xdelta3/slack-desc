@@ -11,7 +11,7 @@ xdelta3:
 xdelta3: Xdelta version 3 is a C library and command-line tool for delta
 xdelta3: compression using VCDIFF/RFC 3284 streams.
 xdelta3:
-xdelta3: Homepage: http://xdelta.org/
+xdelta3: Homepage: https://jmacd.github.io/xdelta/
 xdelta3:
 xdelta3:
 xdelta3:

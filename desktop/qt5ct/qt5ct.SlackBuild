@@ -3,6 +3,7 @@
 # Slackware build script for qt5ct
 
 # Copyright 2016-2023, Alexander Verbovetsky, Moscow, Russia
+# Copyright 2026, K. Eugene Carlson, Tsukuba, Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,13 +26,14 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=qt5ct
-VERSION=${VERSION:-1.8}
+VERSION=${VERSION:-1.9}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
+    i686) ARCH=i686 ;;
     i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
@@ -72,11 +74,18 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-qmake-qt5 \
-  QMAKE_CFLAGS="$SLKCFLAGS" \
-  QMAKE_CXXFLAGS="$SLKCFLAGS"
+mkdir build
+(
+cd build
+
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+cmake \
+  -DCMAKE_INSTALL_PREFIX="/usr" \
+..
 make
-make install INSTALL_ROOT=$PKG
+make install DESTDIR=$PKG
+)
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

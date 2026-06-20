@@ -26,5 +26,5 @@ MD5SUM_x86_64="8d286f7a2344fdc1353a43a3199ee2c9 \
                aacaa95b7d4c59c69bdac1f1b190a010 \
                17fdbb1aafcba64798048ce2cd21daff"
 REQUIRES="nodejs22 npm numactl intel-media-sdk cudatoolkit"
-MAINTAINER="Jake Day"
-EMAIL="jake@ninebysix.com"
+MAINTAINER="Orphaned - no maintainer"
+EMAIL="NOEMAIL"

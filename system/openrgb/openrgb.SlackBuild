@@ -21,6 +21,10 @@
 #  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# 20260620 bkw: Modified by SlackBuilds.org:
+# - remove source directory before extracting tarball.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=openrgb
@@ -62,15 +66,15 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-release_$VERSION
+rm -rf $SRCNAM-release_candidate_$VERSION
 tar xvf $CWD/$SRCNAM-release_candidate_$VERSION.tar.gz
 cd $SRCNAM-release_candidate_$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} + -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} +
 
 # Override default udev rule location since it would put it in a
 # non-standard location in Slackware

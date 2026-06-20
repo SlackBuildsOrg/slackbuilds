@@ -25,10 +25,15 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260620 bkw: Modified by SlackBuilds.org:
+# - updated for v5.3.105. this is not the latest bctoolbox, but it's
+#   the version Debian uses, and has a patch for, to allow building
+#   with mbedtls-3.6.6.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bctoolbox
-VERSION=${VERSION:-5.2.2}
+VERSION=${VERSION:-5.3.105}
 SRCDIRNAM=${PRGNAM}-${VERSION}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -42,9 +47,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -82,15 +84,20 @@ if [ "${SRCDIRNAM}" != "${PRGNAM}-${VERSION}" ]; then
 fi
 cd ${PRGNAM}-${VERSION}
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
+
+# 20260620 bkw: PSA crypto didn't even exist in previous versions
+# of bctoolbox. It won't build with mbedtls-3.6.6 anyway, so it's
+# got to be disabled. I don't think anyone will miss it.
+patch -p1 < $CWD/Disable-PSA-crypto.patch
 
 mkdir -p build
 cd build
   cmake \
+    -DENABLE_OPENSSL=OFF \
+    -DENABLE_MBEDTLS=ON \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -99,23 +106,20 @@ cd build
     -DCMAKE_SKIP_INSTALL_RPATH=ON \
     -DENABLE_STRICT=NO \
     -DENABLE_STATIC=NO \
-    -DENABLE_MBEDTLS=YES \
     -DENABLE_POLARSSL=NO \
     -DENABLE_TESTS=NO \
     -DENABLE_TESTS_COMPONENT=NO \
     -DCMAKE_BUILD_TYPE=Release ..
   make
-  make install DESTDIR=$PKG
+  make install/strip DESTDIR=$PKG
 cd ..
 
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a $DOCS  $PKG/usr/doc/$PRGNAM-$VERSION
-chown -R root:root $PKG/usr/doc/$PRGNAM-$VERSION
-chmod 0644 $PKG/usr/doc/$PRGNAM-$VERSION/*
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a $DOCS  $PKGDOC
+chown -R root:root $PKGDOC
+chmod 0644 $PKGDOC/*
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

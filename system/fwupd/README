@@ -2,19 +2,3 @@ fwupd - A simple daemon to allow session software to update firmware
 
 This project aims to make updating firmware on Linux automatic, safe and
 reliable.
-
-The following can be used to start/stop the daemon automatically:
-Add the following to /etc/rc.d/rc.local:
-
-  if [ -x /etc/rc.d/rc.fwupd ]; then
-    /etc/rc.d/rc.fwupd start
-  fi
-
-In /etc/rc.d/rc.local_shutdown, add following
-  if [ -x /etc/rc.d/rc.fwupd ]; then
-    /etc/rc.d/rc.fwupd stop
-  fi
-
-Warning: This SlackBuild requires network access when it runs, meaning
-it downloads files from the Internet with root access. You should
-decide for yourself whether or not you think this is a good idea.

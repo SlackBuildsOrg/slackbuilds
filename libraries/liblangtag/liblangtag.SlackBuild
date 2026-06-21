@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=liblangtag
-VERSION=${VERSION:-0.6.4}
+VERSION=${VERSION:-0.6.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -40,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -75,8 +72,8 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION
 
-sed -i -e '/#define __LANGTAG_H__/a#include <stdlib.h>' liblangtag/langtag.h
-sed -i -e '/#define __LT_TAG_H__/a#include <stdlib.h>' liblangtag/lt-tag.h
+sed -i -e '/#define __LANGTAG_H__/a#include <stdlib.h>' liblangtag/langtag.h || true
+sed -i -e '/#define __LT_TAG_H__/a#include <stdlib.h>' liblangtag/lt-tag.h || true
 
 chown -R root:root .
 find -L . \
@@ -87,8 +84,6 @@ find -L . \
 
 # Don't create the __pycache__ directory.
 export PYTHONDONTWRITEBYTECODE=1
-
-autoreconf -fi
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \

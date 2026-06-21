@@ -14,6 +14,3 @@ Currently supported are:
 - ZVR (simple compressed text format)
 
 To build the tests, install cppunit before running this script.
-
-To build the doxygen html documentation use:
-  DOC="yes" ./libe-book.SlackBuild

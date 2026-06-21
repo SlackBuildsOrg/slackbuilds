@@ -7,3 +7,11 @@ acceleration.
 
 gpsd is an optional dependency for enabling location detection through
 a GPS device.
+
+qt6 is another optional dependency. To enable building using qt6, set
+the QT6 variable before building:
+
+  QT6=yes sh stellarium.SlackBuild
+
+NOTE: for the qt6 build to work, you need to build the qt6 support for
+BOTH the CalcMySky and QXlsx dependencies too.

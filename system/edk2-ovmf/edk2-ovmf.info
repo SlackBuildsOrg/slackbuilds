@@ -1,10 +1,10 @@
 PRGNAM="edk2-ovmf"
-VERSION="202408"
+VERSION="202605"
 HOMEPAGE="https://github.com/tianocore/tianocore.github.io/wiki/OVMF"
-DOWNLOAD="https://kojipkgs.fedoraproject.org/packages/edk2/20240813/1.fc42/noarch/edk2-ovmf-20240813-1.fc42.noarch.rpm \
-          https://kojipkgs.fedoraproject.org/packages/edk2/20240813/1.fc42/noarch/edk2-ovmf-ia32-20240813-1.fc42.noarch.rpm"
-MD5SUM="1f03fb7954fd500ab8c30668286c3e0e \
-        626993e5b07fa8b11c4963bbb380e680"
+DOWNLOAD="https://kojipkgs.fedoraproject.org/packages/edk2/20260508/4.fc44/noarch/edk2-ovmf-20260508-4.fc44.noarch.rpm \
+          https://kojipkgs.fedoraproject.org/packages/edk2/20250523/6.fc43/noarch/edk2-ovmf-ia32-20250523-6.fc43.noarch.rpm"
+MD5SUM="2dcd07a1d60b93754c542a252e2d577b \
+        4bdd40619e65a53687ec0383338bc190"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

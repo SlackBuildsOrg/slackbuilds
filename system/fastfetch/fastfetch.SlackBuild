@@ -26,13 +26,14 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fastfetch
-VERSION=${VERSION:-2.58.0}
+VERSION=${VERSION:-2.64.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
+    i686) ARCH=i686 ;;
     i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
@@ -74,16 +75,18 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 mkdir -p build
+(
 cd build
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DPACKAGES_DISABLE_AM=ON \
     -DPACKAGES_DISABLE_APK=ON \
+    -DPACKAGES_DISABLE_CARDS=ON \
     -DPACKAGES_DISABLE_CHOCO=ON \
-    -DPACKAGES_DISABLE_DPKG=ON \
     -DPACKAGES_DISABLE_EMERGE=ON \
     -DPACKAGES_DISABLE_EOPKG=ON \
+    -DPACKAGES_DISABLE_HPKG=ON \
     -DPACKAGES_DISABLE_LINGLONG=ON \
     -DPACKAGES_DISABLE_LPKG=ON \
     -DPACKAGES_DISABLE_LPKGBUILD=ON \
@@ -92,6 +95,7 @@ cd build
     -DPACKAGES_DISABLE_PACMAN=ON \
     -DPACKAGES_DISABLE_PACSTALL=ON \
     -DPACKAGES_DISABLE_PALUDIS=ON \
+    -DPACKAGES_DISABLE_PISI=ON \
     -DPACKAGES_DISABLE_PKG=ON \
     -DPACKAGES_DISABLE_SCOOP=ON \
     -DPACKAGES_DISABLE_SNAP=ON \
@@ -102,7 +106,7 @@ cd build
     -DCMAKE_BUILD_TYPE=Release ..
   cmake --build .
   DESTDIR=$PKG cmake --install .
-cd ..
+)
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

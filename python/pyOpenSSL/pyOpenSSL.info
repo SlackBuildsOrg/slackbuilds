@@ -1,7 +1,7 @@
 PRGNAM="pyOpenSSL"
 VERSION="26.3.0"
 HOMEPAGE="https://pypi.python.org/pypi/pyOpenSSL"
-DOWNLOAD="https://files.pythonhosted.org/packages/1a/51/27a5ad5f939d08f690a326ef9582cda7140555180db71695f6fb747d6a36/pyopenssl-26.3.0.tar.gz"
+DOWNLOAD="https://files.pythonhosted.org/packages/source/p/pyopenssl/pyopenssl-26.3.0.tar.gz"
 MD5SUM="e5f600954bef8886e12a415c3a237f1f"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

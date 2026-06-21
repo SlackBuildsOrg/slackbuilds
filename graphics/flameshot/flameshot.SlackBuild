@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=flameshot
-VERSION=${VERSION:-13.3.0}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-14.0.0}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -88,10 +88,14 @@ cd build
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
     -DCMAKE_BUILD_TYPE=Release ..
   make VERBOSE=1
   make install DESTDIR=$PKG
 cd ..
+
+  sed -i -e "/^libdir/clibdir=/usr/lib${LIBDIRSUFFIX}" \
+    $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig/QtColorWidgets.pc
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -99,9 +103,6 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mv $PKG/usr/share/man $PKG/usr
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
-sed -i -e "/^libdir/clibdir=/usr/lib${LIBDIRSUFFIX}" \
-  $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig/QtColorWidgets.pc
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -r LICENSE README.md docs/ $PKG/usr/doc/$PRGNAM-$VERSION

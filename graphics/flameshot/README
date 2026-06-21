@@ -7,8 +7,3 @@ Features:
      Upload to Imgur.
 
 NOTE: this script download some content during build.
-
-to fix ~25s freeze modify this file:
-~/.config/flameshot/flameshot.ini
-[General]
-showDesktopNotification=false

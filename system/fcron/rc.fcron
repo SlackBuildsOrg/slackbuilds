@@ -1,21 +1,46 @@
 #!/bin/sh
 # Start fcron at boot time under Slackware
-# 
+#
 # default configuration file is /etc/fcron.conf
 #
-#2014-08-04 R Narron  Create for SlackBuild 
+#2014-08-04 R Narron  Create for SlackBuild
+#2026-06-20 R Narron  Add restart, use pkill
+
+#set -x
+
+fcron_start() {
+  if [ -x /usr/sbin/fcron ]; then
+    echo "Starting Fcron:"
+    /usr/sbin/fcron -b
+  else
+    echo "Error, /usr/sbin/fcron is not executable..."
+    exit 1
+  fi
+}
+
+fcron_stop() {
+  echo "Stopping Fcron"
+  /usr/bin/pkill -f /usr/sbin/fcron
+}
+
+fcron_restart() {
+  fcron_stop
+  sleep 1
+  fcron_start
+}
 
 case "$1" in
   start)
-    echo "Starting fcron"
-    /usr/sbin/fcron -b 
+    fcron_start
     ;;
   stop)
-    echo "Stopping fcron"
-    killall -TERM fcron
+    fcron_stop
+    ;;
+  restart)
+    fcron_restart
     ;;
   *)
-    echo "Usage: fcron start|stop"
+    echo "Usage: fcron start|stop|restart"
     exit 1
     ;;
 esac

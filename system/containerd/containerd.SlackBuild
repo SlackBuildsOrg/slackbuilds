@@ -71,8 +71,6 @@ sed -i \
   Makefile
 
 mkdir build
-mv vendor build/src
-ln -sf $TMP/$PRGNAM-$VERSION build/src/github.com/containerd/containerd
 
 GO111MODULE=auto \
 make \

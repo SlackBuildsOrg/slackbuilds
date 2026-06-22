@@ -26,11 +26,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bbcsdl
-VERSION=${VERSION:-1.44a}
+VERSION=${VERSION:-20260620_e869745}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=${TARBALL:-BBCSDL-483d7489af3b2d173db7231b5fbc546763321dd6}
+TARBALL=${TARBALL:-BBCSDL-e869745656ba824fa4a55ad4470fd082d6fadbe9}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -69,12 +69,13 @@ mv $TARBALL $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 
 # Patch makefiles
+patch bin/linux/makefile $CWD/patches/makefile.patch
 if [ "$ARCH" = "x86_64" ]; then
-    patch console/linux/makefile $CWD/makefile-console-64.patch
+    patch console/linux/makefile $CWD/patches/makefile-console-64.patch
 fi
 if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
-    patch console/linux/makefile $CWD/makefile-console-32.patch
-    patch bin/linux/makefile $CWD/makefile-sdl-32.patch
+    patch console/linux/makefile $CWD/patches/makefile-console-32.patch
+    patch bin/linux/makefile $CWD/patches/makefile-sdl-32.patch
 fi
 
 chown -R root:root .

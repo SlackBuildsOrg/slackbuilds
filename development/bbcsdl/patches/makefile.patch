@@ -1,0 +1,11 @@
+--- /tmp/SBo/bbcsdl-20260620_e869745/bin/linux/makefile	2026-06-22 20:43:40.619828215 +0100
++++ 0/patched/makefile.new	2026-06-22 20:44:28.841303882 +0100
+@@ -11,7 +11,7 @@
+ LBITS := $(shell getconf LONG_BIT)
+ 
+ VPATH = ../../src ../../include
+-CXX = gcc -Wall -pthread -I ../../include
++CXX = gcc -Wall -pthread -I ../../include -I/usr/include/SDL2
+ 
+ OBJ = bbmain.o bbexec.o bbeval.o bbcmos.o bbccli.o \
+       bbcvdu.o bbcvtx.o flood.o bbdata.o bbcsdl.o \

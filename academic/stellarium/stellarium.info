@@ -1,12 +1,10 @@
 PRGNAM="stellarium"
 VERSION="26.1"
 HOMEPAGE="http://www.stellarium.org"
-DOWNLOAD="https://github.com/Stellarium/stellarium/releases/download/v26.1/stellarium-26.1.tar.xz \
-https://github.com/QtExcel/QXlsx/archive/9f54593/QXlsx-9f545935a1effa0144ba76598e95a7597210553a.zip"
-MD5SUM="e02dbabf01fd3c2bf2e4f544856981c1 \
-f6c3b04e00b06886e7baa735cfc60e06"
+DOWNLOAD="https://github.com/Stellarium/stellarium/releases/download/v26.1/stellarium-26.1.tar.xz"
+MD5SUM="e02dbabf01fd3c2bf2e4f544856981c1"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="md4c nlopt libindi"
+REQUIRES="md4c nlopt libindi CalcMySky QXslx"
 MAINTAINER="Alan Alberghini"
 EMAIL="414N@slacky.it"

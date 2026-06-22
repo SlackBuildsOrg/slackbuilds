@@ -154,6 +154,9 @@ case $MAJVER in
   ;;
   "7.0.")
     patch70
+  ;;
+  "7.1.")
+    patch70
 esac
 
 # CC=${CC:-gcc} suppresses an otherwise harmless "compiler mismatch"

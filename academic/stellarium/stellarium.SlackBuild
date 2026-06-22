@@ -29,7 +29,7 @@ VERSION=${VERSION:-26.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-ENABLE_QT6=${ENABLE_QT6:-0}
+QT6="${QT6:-0}"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -60,6 +60,9 @@ elif [ "$ARCH" = "i686" ]; then
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
@@ -80,12 +83,14 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} +
 
-if [ "$ENABLE_QT6" = 1 ]
-then
+case "${QT6,,}" in
+1|true|on|yes)
 	qt6_opt="-DENABLE_QT6=ON"
-else
+	;;
+*)
 	qt6_opt="-DENABLE_QT6=OFF"
-fi
+	;;
+esac
 
 mkdir -p build
 cd build
@@ -115,6 +120,7 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   CREDITS.md COPYING ChangeLog README.md \
+  BACKERS.md MAINTAINER_BUSINESS.md CONTRIBUTING.md \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

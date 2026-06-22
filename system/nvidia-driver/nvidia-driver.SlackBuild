@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-driver
-VERSION=${VERSION:-595.80}
+VERSION=${VERSION:-595.84}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -233,6 +233,7 @@ cd $TMP/nvidia-settings-$VERSION
   install -m 644 doc/_out/Linux_$TARGET/nvidia-settings.1.gz $PKG/usr/man/man1/
   install -m 644 doc/nvidia-settings.desktop $PKG/usr/share/applications/
   install -m 644 doc/nvidia-settings.png $PKG/usr/share/pixmaps/
+  chmod 0644 $PKG/usr/share/icons/hicolor/128x128/apps/nvidia-settings.png
 # For nvidia-settings GUI support
   install -m 755 src/_out/Linux_$TARGET/libnvidia-gtk2.so $PKG/usr/lib$LIBDIRSUFFIX/libnvidia-gtk2.so.$VERSION
   install -m 755 src/_out/Linux_$TARGET/libnvidia-gtk3.so $PKG/usr/lib$LIBDIRSUFFIX/libnvidia-gtk3.so.$VERSION
@@ -324,9 +325,6 @@ if [ "${PERSISTENCED:-no}" = "yes" ]; then
   sed -i "s|__USER__|nvidia|" $PKG/etc/rc.d/rc.nvidia-persistenced
   chown nvidia:nvidia $PKG/var/run/nvidia-persistenced
 fi
-
-# Fix permission
-chmod 644 $PKG/usr/share/icons/hicolor/128x128/apps/nvidia-settings.png
 
 # We must now remove our custom nvidia-installer as it will no longer
 # work on an installed driver:

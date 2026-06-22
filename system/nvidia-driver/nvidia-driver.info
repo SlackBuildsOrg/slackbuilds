@@ -1,20 +1,20 @@
 PRGNAM="nvidia-driver"
-VERSION="595.80"
+VERSION="595.84"
 HOMEPAGE="https://www.nvidia.com"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/595.80/NVIDIA-Linux-x86_64-595.80.run \
-                 https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-595.80.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-modprobe/nvidia-modprobe-595.80.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-persistenced/nvidia-persistenced-595.80.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-595.80.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-xconfig/nvidia-xconfig-595.80.tar.bz2"
-MD5SUM_x86_64="9fb306bd24d63e0cc9cea08ce7670334 \
-               34f0f04dd1dda70804c4f2af5642618b \
-               644bed1c3da225fc4371d53ecdecc75d \
-               c63e40ab6eb94f9463579e902c7183be \
-               aaa33332d7d2f603846b707fe8ab7f31 \
-               e00250ee23990c40edd407b2a3e44950"
+DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/595.84/NVIDIA-Linux-x86_64-595.84.run \
+                 https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-595.84.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-modprobe/nvidia-modprobe-595.84.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-persistenced/nvidia-persistenced-595.84.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-595.84.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-xconfig/nvidia-xconfig-595.84.tar.bz2"
+MD5SUM_x86_64="c5c9a15e4a7c77af979755133122f9cf \
+               acc9173a469af6b010547e515d3aade1 \
+               b274fdaeaf70061766a97d2a17582089 \
+               afb1403b4d2eb6dd33a9db0986628125 \
+               c0444a11303ff252d67e44826be08761 \
+               bd79bc44043b0f0f025b0289269fbb53"
 REQUIRES="nvidia-kernel"
 MAINTAINER="Lenard Spencer"
 EMAIL="lenardrspencer@gmail.com"

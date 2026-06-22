@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=antigravity
-VERSION=${VERSION:-1.23.2}
+VERSION=${VERSION:-2.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -67,8 +67,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf Antigravity $PRGNAM-$VERSION
-tar xvf $CWD/Antigravity.tar.gz
-mv Antigravity $PRGNAM-$VERSION
+tar xvf "$CWD/Antigravity IDE.tar.gz"
+mv "Antigravity IDE" $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 
 chown -R root:root .
@@ -85,7 +85,7 @@ chmod +x $PKG/opt/$PRGNAM/resources/app/extensions/microsoft-authentication/dist
 
 mkdir -p $PKG/usr/bin
 ( cd $PKG/usr/bin ; rm -rf antigravity )
-( cd $PKG/usr/bin ; ln -sf ../../opt/antigravity/bin/antigravity antigravity )
+( cd $PKG/usr/bin ; ln -sf ../../opt/antigravity/bin/antigravity-ide antigravity )
 
 mkdir -p $PKG/usr/share/applications $PKG/usr/share/pixmaps
 cp resources/app/resources/linux/code.png $PKG/usr/share/pixmaps/antigravity.png

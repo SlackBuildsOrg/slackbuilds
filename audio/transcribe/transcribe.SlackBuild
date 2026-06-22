@@ -8,8 +8,8 @@
 
 # Notes:
 
-# Closed-source software, precompiled binaries for x86 and x86_64,
-# deps are all included in Slackware.
+# Closed-source software, precompiled binaries for x86_64 (and
+# formerly x86), deps are all included in Slackware.
 
 # Originally ported from Windows, so it expects to be run from its
 # own directory. We install to /usr/lib(64)?/transcribe, and a wrapper
@@ -24,6 +24,11 @@
 # so be careful that $VERSION matches the actual version number (found
 # in Help/About)... though starting with v8.80, I host the tarballs
 # and put $VERSION in the filenames.
+
+# 20260622 bkw: updated for v9.51.1 and 15.0. Since upstream dropped
+# 32-bit support, this build is now x86_64 only, and I've added a
+# new transcribe-legacy for 32-bit users. Added README section about
+# gstreamer sinks, too.
 
 # 20211127 bkw: updated for v8.80 and -current. This is the last
 # version that supports 32-bit. I tried the latest verion (9.10.0)
@@ -44,7 +49,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=transcribe
-VERSION=${VERSION:-8.80}
+VERSION=${VERSION:-9.51.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -66,21 +71,10 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
-  LIBDIRSUFFIX=""
-  BITS=32
-elif [ "$ARCH" = "x86_64" ]; then
-  LIBDIRSUFFIX="64"
-  BITS=64
-else
-  echo "*** Unsupported ARCH '$ARCH', only i586/i686/x86_64 supported."
+if [ "$ARCH" != "x86_64" ]; then
+  echo "*** Unsupported ARCH '$ARCH', only x86_64 is supported."
   exit 1
 fi
-
-# The dist tarball's filename has no connection whatsoever to the
-# actual name of the program... The -$VERSION was put there by me (I
-# renamed the file) to allow me to host multiple versions.
-TARNAME=xsc${BITS}setup-$VERSION.tar.gz
 
 set -e
 
@@ -88,24 +82,20 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM
-tar xvf $CWD/$TARNAME
+tar xvf $CWD/xscsetup-$VERSION.tar.gz
 cd $PRGNAM
 
-sed "s,/usr/lib,/usr/lib$LIBDIRSUFFIX,g" \
-    < $CWD/$PRGNAM.sh \
-	 > $PRGNAM.sh
-
-mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM \
+mkdir -p $PKG/usr/lib64/$PRGNAM \
          $PKG/usr/doc/$PRGNAM-$VERSION \
          $PKG/usr/bin \
          $PKG/install \
          $PKG/usr/share/applications \
          $PKG/usr/share/pixmaps
 
-install -oroot -groot -m0755 $PRGNAM $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/
-install -oroot -groot -m0644 xschelp.htb $PKG/usr/lib$LIBDIRSUFFIX/$PRGNAM/
+install -oroot -groot -m0755 $PRGNAM $PKG/usr/lib64/$PRGNAM/
+install -oroot -groot -m0644 xschelp.htb $PKG/usr/lib64/$PRGNAM/
 install -oroot -groot -m0644 readme_gtk.html $PKG/usr/doc/$PRGNAM-$VERSION/
-install -oroot -groot -m0755 $PRGNAM.sh $PKG/usr/bin/$PRGNAM
+install -oroot -groot -m0755 $CWD/$PRGNAM.sh $PKG/usr/bin/$PRGNAM
 
 for i in gtkicons/*.png; do
   px="$( basename $i | cut -dx -f3 | cut -d. -f1 )"
@@ -119,8 +109,8 @@ ln -s ../icons/hicolor/48x48/apps/$PRGNAM.png $PKG/usr/share/pixmaps/$PRGNAM.png
 
 # Starting with v8.70, a gstreamer plugin is included.
 if [ -e libgstvideosection.so ]; then
-  mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/gstreamer-1.0
-  install -m0755 libgstvideosection.so $PKG/usr/lib$LIBDIRSUFFIX/gstreamer-1.0
+  mkdir -p $PKG/usr/lib64/gstreamer-1.0
+  install -m0755 libgstvideosection.so $PKG/usr/lib64/gstreamer-1.0
 fi
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

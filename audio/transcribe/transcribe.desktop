@@ -3,6 +3,6 @@ Name=Transcribe!
 GenericName=Music Transcriber
 Type=Application
 Icon=transcribe
-Exec=transcribe
+Exec=transcribe %f
 Terminal=false
 Categories=AudioVideo;X-Sound;Audio;

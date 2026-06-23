@@ -1,0 +1,24 @@
+transcribe-legacy (music transcription tool)
+
+The Transcribe! application is an assistant for people who sometimes
+want to work out a piece of music from a recording, in order to
+write it out, or play it themselves, or both. It doesn't do the
+transcribing for you, but it is essentially a specialised player
+program which is optimised for the purpose of transcription. It has
+many transcription-specific features not found on conventional music
+players.
+
+Transcribe! is proprietary software. After installation, Transcribe!
+will be fully functional for a 30-day evaluation period. To buy the
+software, use the site at http://www.seventhstring.com/xscribe/buy.html.
+The Slackware package doesn't need to be changed or updated (just
+enter the license key).
+
+This is an older version of Transcribe! that still supports 32-bit
+x86. If you're on x86_64, you should probably install the regular
+transcribe instead... though if you run a mix of 32-bit and 64-bit
+machines, it might be more important to you to run the same version
+on all your hosts. In that case, you could use transcribe-legacy on
+x86_64 as well.
+
+Don't install both transcribe and transcribe-legacy; they conflict.

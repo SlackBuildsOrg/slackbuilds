@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+veroroute: veroroute (Veroboard/perfboard/PCB layout and routing)
+veroroute:
+veroroute: VeroRoute is a Qt-based application for designing and routing
+veroroute: stripboard (veroboard), perfboard, and simple 1- or 2-layer PCB
+veroroute: layouts. It automatically prevents short-circuits and checks for
+veroroute: open-circuits as you work.
+veroroute:
+veroroute: Netlists exported from TinyCAD and gEDA schematics can be imported
+veroroute: to drive a layout.
+veroroute:
+veroroute: Homepage: https://sourceforge.net/projects/veroroute/

@@ -4,6 +4,8 @@
 
 # Copyright 2011 David Spencer, Baildon, West Yorkshire, U.K.
 # All rights reserved.
+# Copyright 2026 Christoph Willing	Sydney, Australia
+# All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -25,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=grass
-VERSION=${VERSION:-7.8.0}
+VERSION=${VERSION:-8.4.2}
 SHRTVER=$( echo $VERSION | sed "s/\([0-9]*\).\([0-9]*\)..*/\1\2/" )
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -62,6 +64,10 @@ else
   LIBDIRSUFFIX=""
 fi
 
+if [ -f /etc/profile.d/cmake-opt.sh ]; then
+    . /etc/profile.d/cmake-opt.sh
+fi
+
 set -e
 
 rm -rf $PKG
@@ -77,84 +83,41 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Option handling:
-set -- $(echo $ENABLE | sed 's/,/ /g')
-
-patch -p1 < $CWD/gdal-3.3.patch
-
-while [ "$1" != "" ]; do
-  case "$1"
-  in
-  sqlite | \
-  netcdf | \
-  opencl )
-    WITHLIST="$WITHLIST --with-$1"
-    shift
-    ;;
-  # blas and lapack are both needed, so provide a single option ...
-  # (Maybe atlas would be better, but the docs are unclear about how the
-  # dependencies are used.)
-  gmath )
-    WITHLIST="$WITHLIST --with-blas --with-lapack"
-    shift
-    ;;
-  # ... but for compatibility with previous versions of this SlackBuild,
-  # allow blas and lapack to be enabled individually.
-  blas | lapack )
-    WITHLIST="$WITHLIST --with-$1"
-    shift
-    ;;
-  mysql | mariadb )
-    WITHLIST="$WITHLIST --with-mysql"
-    WITHLIST="$WITHLIST --with-mysql-includes=/usr/include/mysql"
-    shift
-    ;;
-  postgres | postgresql )
-    WITHLIST="$WITHLIST --with-postgres"
-    shift
-    ;;
-  unixODBC )
-    WITHLIST="$WITHLIST --with-odbc"
-    shift
-    ;;
-  libLAS | liblas )
-    WITHLIST="$WITHLIST --with-liblas"
-    shift
-    ;;
-  * )
-    shift
-    ;;
-  esac
-done
-
-# geos now always enabled: it's an indirect hard dep (via gdal), and makes grass nicer :-)
-
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS -fpermissive" \
 LDFLAGS="-ldl -lncurses" \
 ./configure \
   --prefix=/opt \
-  --exec-prefix=/wibble/usr \
   --enable-largefile \
+  --with-blas \
+  --with-bzlib \
   --with-cairo \
   --with-cxx \
   --with-fftw \
   --with-freetype \
   --with-freetype-includes=/usr/include/freetype2 \
   --with-geos \
+  --with-lapack \
+  --with-liblas=/usr/bin/liblas-config \
+  --with-libsvm \
   --with-nls \
+  --with-netcdf=/usr/bin/nc-config \
+  --with-opencl \
   --with-openmp \
-  --with-python \
   --with-pthread \
   --with-proj-share=/usr/share/proj \
   --with-readline \
-  --with-wxwidgets \
-  $WITHLIST \
+  --without-mysql \
+  --without-odbc \
+  --without-opendwg \
+  --without-postgres \
   --build=$ARCH-slackware-linux \
   --host=$ARCH-slackware-linux
 
 make
 make prefix=$PKG/opt exec_prefix=$PKG/usr install
+
+rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -162,22 +125,26 @@ find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
 # Install the pkgconfig file:
 install -D -m0644 grass.pc $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig/grass.pc
 
-# Create unversioned symlinks:
+# Create unversioned symlink:
 ( cd $PKG/opt ; ln -s $PRGNAM$SHRTVER $PRGNAM )
-( cd $PKG/usr/bin ; ln -s $PRGNAM$SHRTVER $PRGNAM )
 
 # Remove hardcoded version strings:
 sed -i -e "s/-${VERSION}//g" \
-  $PKG/usr/bin/$PRGNAM$SHRTVER \
   $PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig/grass.pc
 
 # Remove packaging directory pollution:
 sed -i -e "s;$PKG;;" \
-  $PKG/usr/bin/$PRGNAM$SHRTVER \
   $PKG/opt/$PRGNAM$SHRTVER/demolocation/.grassrc$SHRTVER \
   $PKG/opt/$PRGNAM$SHRTVER/etc/fontcap \
   $PKG/opt/$PRGNAM$SHRTVER/include/Make/Grass.make \
   $PKG/opt/$PRGNAM$SHRTVER/include/Make/Platform.make
+
+sed -i -e "s;${TMP}/package-${PRGNAM};;" $PKG/usr/bin/${PRGNAM}
+find $PKG -name "__pycache__" |xargs rm -rf
+for dir in $(find $PKG/opt/$PRGNAM$SHRTVER/demolocation/PERMANENT -type d -empty) ; do
+  echo "placeholder" >  $dir/placeholder
+done
+
 
 # Documentation:
 PKGOPTMAN=$PKG/opt/$PRGNAM$SHRTVER/docs/man
@@ -185,13 +152,12 @@ find $PKGOPTMAN -type f -exec gzip -9 {} \;
 for i in $( find $PKGOPTMAN -type l ) ; do \
   ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 mkdir -p $PKG/usr/man/man1
-cp -a \
-  $PKGOPTMAN/man1/grass7.1.gz \
-  $PKG/usr/man/man1/grass.1.gz
+cp -a $PKGOPTMAN/man1/grass.1.gz $PKG/usr/man/man1/
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  AUTHORS CHANGES COPYING GPL.TXT REQUIREMENTS.html README.md SUBMITTING* TODO \
+  AUTHORS CITATION.cff CITING CODE_OF_CONDUCT.md CONTRIBUTING.md \
+  COPYING GPL.TXT README.md REQUIREMENTS.md SECURITY.md TODO \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
@@ -205,12 +171,16 @@ cp -a \
 
 # Cleanup:
 rm -rf $PKG/opt/$PRGNAM/demolocation/PERMANENT/.tmp
-rm $PKG/opt/$PRGNAM/config.status
 rm -rf $PKG/opt/$PRGNAM/share/
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh  > $PKG/install/doinst.sh
+cat >> $PKG/install/doinst.sh <<EOF
+for placeholder in \$(find opt/$PRGNAM$SHRTVER/demolocation/PERMANENT -name placeholder) ; do
+  rm \$placeholder
+done
+EOF
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

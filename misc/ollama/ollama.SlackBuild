@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ollama
 VERSION=${VERSION:-0.30.10}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -153,7 +153,6 @@ fi
 
 # rocm
 if [ "${ROCM:-OFF}" = "ON" ]; then
-    OPTS+=" -DAMDGPU_TARGETS=$(rocm-supported-gfx)"
     cmake -S llama/server --preset rocm_v7_2_linux "${base_options[@]}"
     cmake --build build/llama-server-rocm_v7_2
     DESTDIR=$PKG cmake --install build/llama-server-rocm_v7_2 --component llama-server --strip

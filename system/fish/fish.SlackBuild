@@ -51,7 +51,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fish
-VERSION=${VERSION:-4.7.0}
+VERSION=${VERSION:-4.8.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -123,6 +123,21 @@ tar xf $CWD/fish-$VERSION-vendor.tar.gz
 mkdir -p .cargo
 cat > .cargo/config.toml << EOF
 [source.crates-io]
+replace-with = "vendored-sources"
+
+[source."git+https://codeberg.org/danielrainer/fluent-ftl-tools?rev=5917664c8f2e4928ef1e480ff5c13bbe1e226066"]
+git = "https://codeberg.org/danielrainer/fluent-ftl-tools"
+rev = "5917664c8f2e4928ef1e480ff5c13bbe1e226066"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/danielrainer/fluent-rs?rev=cf712bced280b217b6307edabc2089b3e57204ab"]
+git = "https://github.com/danielrainer/fluent-rs"
+rev = "cf712bced280b217b6307edabc2089b3e57204ab"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/fish-shell/rust-pcre2?tag=0.2.9-utf32"]
+git = "https://github.com/fish-shell/rust-pcre2"
+tag = "0.2.9-utf32"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]

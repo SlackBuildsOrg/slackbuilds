@@ -55,3 +55,27 @@ the SlackBuild script.
 
   This produces more compact status output, which is useful for
   narrow status bars and minimalist desktop setups.
+
+06-oss-volume-uninitialized.patch
+  commit 60b28d8a78b14ecc43f1c7d177cfa5f8597e2071
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Tue, 23 Jun 2026
+
+  Avoid using an uninitialized OSS mixer volume when no "vol" device is
+  present; return NULL with a warning instead.
+
+07-wifi-buffer-overflows.patch
+  commit 0dc0c59dbefbd38a8c59004e941260a26fe4bccf
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Tue, 23 Jun 2026
+
+  Bound-copy Linux wifi interface names and reserve space for SSID NUL
+  termination in the netlink response buffer.
+
+08-ip-getnameinfo-size.patch
+  commit 675c83912ea1aca9834448aaa87a040bc9990c52
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Tue, 23 Jun 2026
+
+  Pass the correct sockaddr size to getnameinfo() for IPv4 and skip
+  getnameinfo() for non-matching interfaces.

@@ -1,0 +1,45 @@
+commit 0dc0c59dbefbd38a8c59004e941260a26fe4bccf
+Author: drkhsh <me@drkhsh.at>
+Date:   Tue Jun 23 21:08:33 2026 +0200
+
+    fix wifi buffer overflows on Linux
+    
+    replace strcpy of interface name into ifr_name (IFNAMSIZ=16) with
+    bounds-checked snprintf. add one byte to resp buffer so NUL-terminating
+    the SSID at resp boundary does not write out of bounds.
+
+diff --git a/components/wifi.c b/components/wifi.c
+index 8b33baa..3a3df16 100644
+--- a/components/wifi.c
++++ b/components/wifi.c
+@@ -23,7 +23,7 @@
+ 
+ 	static int nlsock = -1;
+ 	static uint32_t seq = 1;
+-	static char resp[4096];
++	static char resp[4096 + 1];
+ 
+ 	static char *
+ 	findattr(int attr, const char *p, const char *e, size_t *len)
+@@ -109,7 +109,11 @@ ifindex(const char *interface)
+ 			return -1;
+ 		}
+ 		if (strcmp(ifr.ifr_name, interface) != 0) {
+-			strcpy(ifr.ifr_name, interface);
++			if (snprintf(ifr.ifr_name, sizeof(ifr.ifr_name),
++			             "%s", interface) >= (int)sizeof(ifr.ifr_name)) {
++				warn("interface name too long: '%s'", interface);
++				return -1;
++			}
+ 		}
+ 		if (ioctl(ifsock, SIOCGIFINDEX, &ifr) != 0) {
+ 			warn("ioctl 'SIOCGIFINDEX':");
+@@ -159,7 +163,7 @@ ssid(const char *interface)
+ 			warn("send 'AF_NETLINK':");
+ 			return NULL;
+ 		}
+-		r = recv(nlsock, resp, sizeof(resp), 0);
++		r = recv(nlsock, resp, sizeof(resp) - 1, 0);
+ 		if (r < 0) {
+ 			warn("recv 'AF_NETLINK':");
+ 			return NULL;

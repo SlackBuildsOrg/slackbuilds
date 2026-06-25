@@ -32,8 +32,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scummvm
-VERSION=${VERSION:-2026.2.0}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-2026.3.0}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

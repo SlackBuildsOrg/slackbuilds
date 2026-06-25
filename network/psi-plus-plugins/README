@@ -1,0 +1,29 @@
+This is a SlackBuild for the plugin collection included in the Psi+
+source snapshot. 
+It targets the SlackBuilds.org Psi+ package. 
+
+OMEMO needs signal-protocol-c:
+
+  WITH_OMEMO=YES sh psi-plus-plugins.SlackBuild
+
+OTR needs libotr:
+
+  WITH_OTR=YES sh psi-plus-plugins.SlackBuild
+
+The screenshot plugin needs Qxt, while psimedia and videostatus need 
+their respective multimedia dependencies. 
+Enable only after their dependencies are installed:
+
+  WITH_SCREENSHOT=YES sh psi-plus-plugins.SlackBuild
+  WITH_PSIMEDIA=YES sh psi-plus-plugins.SlackBuild
+  WITH_VIDEOSTATUS=YES sh psi-plus-plugins.SlackBuild
+
+FULL=YES enables psimedia and asks CMake to build every plugin.
+It is intentionally not the default: it will fail until every optional
+build dependency is present.
+
+  FULL=YES sh psi-plus-plugins.SlackBuild
+
+After installing the package, enable plugins in Psi+ through:
+
+  Options -> Plugins

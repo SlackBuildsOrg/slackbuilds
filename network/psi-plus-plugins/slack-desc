@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                |-----handy-ruler------------------------------------------------------|
+psi-plus-plugins: psi-plus-plugins (additional plugins for Psi+)
+psi-plus-plugins:
+psi-plus-plugins: This package builds the plugins shipped in the Psi+ source snapshot.
+psi-plus-plugins: The plugin snapshot version must match the installed psi-plus version.
+psi-plus-plugins:
+psi-plus-plugins: Plugins are installed in /usr/share/psi-plus/plugins.
+psi-plus-plugins:
+psi-plus-plugins: Homepage: https://psi-plus.com/
+psi-plus-plugins:
+psi-plus-plugins:
+psi-plus-plugins:

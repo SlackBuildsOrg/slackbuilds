@@ -28,12 +28,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cinelerra
-VERSION=${VERSION:-5.1.0.20251124}
+VERSION=${VERSION:-5.1.20260531}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-
-COMMIT=1914b32
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -77,14 +75,14 @@ fi
 
 set -e
 
+DIRVERSION=${VERSION%.*}
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-mkdir $PRGNAM-$VERSION
-cd $PRGNAM-$VERSION
-tar xvf $CWD/*tar.gz
-cd $PRGNAM-$COMMIT/cinelerra-5.1
+rm -rf $PRGNAM-$DIRVERSION
+tar xvf $CWD/*tgz
+cd $PRGNAM-$DIRVERSION
 
 chown -R root:root .
 find -L . \
@@ -115,6 +113,13 @@ install -D -m 0644 $CWD/$PRGNAM.desktop $PKG/usr/share/applications/$PRGNAM.desk
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find "$PKG"/usr/lib"$LIBDIRSUFFIX"/cin/ladspa/ -name '*.so' -exec strip --strip-unneeded {} \; 2> /dev/null
+strip --strip-unneeded $PKG/usr/bin/zmpeg3ifochk
+strip --strip-unneeded $PKG/usr/bin/zmpeg3cc2txt
+strip --strip-unneeded $PKG/usr/lib"$LIBDIRSUFFIX"/cin/mplexlo
+strip --strip-unneeded $PKG/usr/lib"$LIBDIRSUFFIX"/cin/mplex
+strip --strip-unneeded $PKG/usr/lib"$LIBDIRSUFFIX"/cin/mpeg2enc
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a COPYING README* *.txt $PKG/usr/doc/$PRGNAM-$VERSION

@@ -2,8 +2,6 @@
 
 # Slackware build script for brave-origin
 
-# Copyright 2019-2026 Andrew Payne <phalange@komputermatrix.com>
-
 # Copyright 2026 Andrew Payne <phalange@komputermatrix.com> 
 # Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2019-2026 Andrew Payne <phalange@komputermatrix.com>
@@ -31,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=brave-origin
 PRCNAM=amd64
-VERSION=${VERSION:-1.91.172}
+VERSION=${VERSION:-1.91.178}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

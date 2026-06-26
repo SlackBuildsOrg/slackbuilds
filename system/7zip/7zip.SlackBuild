@@ -24,8 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=7zip
-VERSION=${VERSION:-26.01}
-SRC_FILE="7z2601-src.tar.xz"
+VERSION=${VERSION:-26.02}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -59,8 +58,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-mkdir -p $PRGNAM-$VERSION/build
-tar xvf $CWD/$SRC_FILE -C $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chmod -R a=r,u+w,a+X .
 SRC_DIR=$TMP/$PRGNAM-$VERSION
@@ -85,6 +83,7 @@ cd $SRC_DIR
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp DOC/* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/$PRGNAM.info > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.info
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

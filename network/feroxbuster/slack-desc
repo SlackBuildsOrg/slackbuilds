@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+           |-----handy-ruler------------------------------------------------------|
+feroxbuster: feroxbuster (fast recursive content discovery tool)
+feroxbuster:
+feroxbuster: feroxbuster is a fast, simple, recursive content discovery tool
+feroxbuster: written in Rust. It performs forced browsing: brute forcing URLs
+feroxbuster: with a wordlist to find unlinked content such as directories,
+feroxbuster: files, backups, and other resources on web servers that are not
+feroxbuster: referenced by the application but remain accessible.
+feroxbuster:
+feroxbuster: Homepage: https://github.com/epi052/feroxbuster
+feroxbuster:
+feroxbuster:

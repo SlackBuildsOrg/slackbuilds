@@ -2,7 +2,7 @@
 
 # Slackware build script for aml
 
-# Copyright 2025 Ebben Aries <slackbuilds@dscp.org>
+# Copyright 2025-2026 Ebben Aries <slackbuilds@dscp.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=aml
-VERSION=${VERSION:-20250911_f7e3e84}
-GITHASH=${GITHASH:-f7e3e84faf9fb3337a71d54217b116af3d07de3a}
+VERSION=${VERSION:-20260225_ce4b82d}
+GITHASH=${GITHASH:-ce4b82d5888a87110054b95414bd3068224d2b91}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

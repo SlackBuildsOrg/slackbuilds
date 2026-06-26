@@ -1,0 +1,206 @@
+name: PR checks
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+concurrency:
+  group: forgejo-ci-${{ forgejo.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:ca21dea9c86ef80bdd08330d6e7b15e4d23b2bc036d2d0e419cbadcd55b85591
+
+jobs:
+  pr-checks:
+    name: PR checks
+    runs-on: codeberg-small
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 1
+
+      - name: Set up buildah
+        shell: bash
+        run: |
+          set -e
+          set -o pipefail
+
+          # no container runtime available on codeberg hosted runners.
+          # Install buildah and use chroot isolation.
+          # See https://codeberg.org/actions/buildah-simple
+          apt-get update
+          apt-get install -y buildah ca-certificates
+
+          echo root:1:65536 | tee /etc/subuid /etc/subgid
+
+          if [[ -f /etc/containers/storage.conf ]] ; then
+            mv /etc/containers/storage.conf /etc/containers/storage.conf.bak
+          fi
+
+          printf '[storage]\ndriver="vfs"\nrunroot="/run/containers/storage"\ngraphroot="/var/lib/containers/storage"\n' | tee /etc/containers/storage.conf
+
+      - name: Run checks and comment
+        shell: bash
+        env:
+          FORGEJO_TOKEN: ${{ secrets.PR_AUTOMATION_TOKEN }}
+          REPO_FULL_NAME: ${{ forgejo.repository }}
+          PR_NUMBER: ${{ forgejo.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+
+          api_url="${FORGEJO_API_URL:-${FORGEJO_SERVER_URL}/api/v1}"
+
+          api_get() {
+            if [[ -n "${FORGEJO_TOKEN:-}" ]] ; then
+              curl -fsS -H "Authorization: token $FORGEJO_TOKEN" "$@"
+            else
+              curl -fsS "$@"
+            fi
+          }
+
+          changed_projects="$(
+            page=1
+            while : ; do
+              resp="$(api_get "$api_url/repos/$REPO_FULL_NAME/pulls/$PR_NUMBER/files?page=$page&limit=50")"
+              count="$(jq 'length' <<< "$resp")"
+
+              if [[ "$count" -eq 0 ]] ; then
+                break
+              fi
+
+              jq -r '.[] | select(.status != "deleted") | .filename' <<< "$resp"
+
+              if [[ "$count" -lt 50 ]] ; then
+                break
+              fi
+
+              page=$((page + 1))
+            done | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -r -I xx dirname xx | sort -u
+          )"
+
+          if [[ -z "$changed_projects" ]] ; then
+            printf 'No changed SlackBuild directories detected\n'
+            exit 0
+          fi
+
+          find_comment_id() {
+            marker="$1"
+            page=1
+            while : ; do
+              resp="$(api_get "$api_url/repos/$REPO_FULL_NAME/issues/$PR_NUMBER/comments?page=$page&limit=50")"
+              count="$(jq 'length' <<< "$resp")"
+
+              if [[ "$count" -eq 0 ]] ; then
+                break
+              fi
+
+              id="$(jq -r --arg marker "$marker" '.[] | select((.body // "") | contains($marker)) | .id' <<< "$resp" | head -n1)"
+
+              if [[ -n "$id" ]] ; then
+                printf '%s\n' "$id"
+                return 0
+              fi
+
+              if [[ "$count" -lt 50 ]] ; then
+                break
+              fi
+
+              page=$((page + 1))
+            done
+          }
+
+          upsert_comment() {
+            marker="$1"
+            content_file="$2"
+
+            {
+              printf '%s\n' "$marker"
+              cat "$content_file"
+            } > comment-body
+
+            if [[ -z "${FORGEJO_TOKEN:-}" ]] ; then
+              printf 'No token available for PR comments\n'
+              cat comment-body
+              return 0
+            fi
+
+            comment_id="$(find_comment_id "$marker")"
+            payload="$(jq -Rs '{body: .}' < comment-body)"
+
+            if [[ -n "$comment_id" ]] ; then
+              curl -fsS -X PATCH \
+                -H "Authorization: token $FORGEJO_TOKEN" \
+                -H 'Content-Type: application/json' \
+                -d "$payload" \
+                "$api_url/repos/$REPO_FULL_NAME/issues/comments/$comment_id" > /dev/null
+            else
+              curl -fsS -X POST \
+                -H "Authorization: token $FORGEJO_TOKEN" \
+                -H 'Content-Type: application/json' \
+                -d "$payload" \
+                "$api_url/repos/$REPO_FULL_NAME/issues/$PR_NUMBER/comments" > /dev/null
+            fi
+          }
+
+          image="docker.io/$SBO_MAINTAINER_TOOLS_IMAGE"
+
+          buildah pull "$image"
+
+          sbo_ctr="$(buildah from "$image")"
+          buildah config --workingdir /work "$sbo_ctr"
+
+          while IFS= read -r project ; do
+            if [[ -z "$project" ]] ; then
+              continue
+            fi
+
+            set +e
+            buildah run --isolation chroot --volume "$(pwd):/work:z" "$sbo_ctr" sbolint "$project" 2>&1 | tee sbolint-output
+            sbolint_status="${PIPESTATUS[0]}"
+            set -e
+
+            {
+              if [[ "$sbolint_status" -eq 0 ]] ; then
+                printf '#### ✅ sbolint - %s ✅\n\n' "$project"
+              else
+                printf '#### ⛔️ sbolint - %s ⛔️\n\n' "$project"
+              fi
+
+              printf '```\n'
+              cat sbolint-output
+              printf '```\n'
+            } > comment-output
+
+            upsert_comment "<!-- ci:sbolint:${project//\//:} -->" comment-output
+
+            rm -f sbolint-output comment-output comment-body
+          done <<< "$changed_projects"
+
+          buildah rm "$sbo_ctr" > /dev/null
+
+          while IFS= read -r project ; do
+            if [[ -z "$project" ]] ; then
+              continue
+            fi
+
+            short_project="$(printf '%s\n' "$project" | cut -d/ -f2)"
+            response="$(wget -q -O - "https://slackbuilds.org/revdeps.php?q=$short_project" | sort || true)"
+
+            {
+              printf '#### reverse dependencies - %s\n\n' "$project"
+              if [[ -z "$response" ]] ; then
+                printf 'None\n'
+              else
+                printf '%s\n' "$response" | sort | sed 's/^/- [ ] /'
+              fi
+            } > comment-output
+
+            upsert_comment "<!-- ci:reverse-deps:${project//\//:} -->" comment-output
+
+            rm -f comment-output comment-body
+          done <<< "$changed_projects"

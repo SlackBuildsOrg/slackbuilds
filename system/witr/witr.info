@@ -1,12 +1,12 @@
 PRGNAM="witr"
-VERSION="0.3.2"
+VERSION="0.3.3"
 HOMEPAGE="https://github.com/pranshuparmar/witr"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/pranshuparmar/witr/releases/download/v0.3.2/witr-linux-amd64 \
-https://github.com/pranshuparmar/witr/releases/download/v0.3.2/witr.1"
-MD5SUM_x86_64="ca88ad80044c652882d8e73286c49604 \
-27fccaf6fe05d3202bf47b12410e38b2"
+DOWNLOAD_x86_64="https://github.com/pranshuparmar/witr/releases/download/v0.3.3/witr-linux-amd64 \
+https://github.com/pranshuparmar/witr/releases/download/v0.3.3/witr.1"
+MD5SUM_x86_64="0a03efeb243a8bc10ab14bfb80c661b4 \
+ce7b43598087c54038198260e3109803"
 REQUIRES=""
 MAINTAINER="Ioannis Anagnostakis"
 EMAIL="rizitis@gmail.com"

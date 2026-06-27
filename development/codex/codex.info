@@ -1,12 +1,12 @@
 PRGNAM="codex"
-VERSION="0.136.0"
+VERSION="0.142.3"
 HOMEPAGE="https://github.com/openai/codex"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://registry.npmjs.org/@openai/codex/-/codex-0.136.0.tgz \
-                 https://registry.npmjs.org/@openai/codex/-/codex-0.136.0-linux-x64.tgz"
-MD5SUM_x86_64="2b22d119b25c5c3273fc431568714104 \
-               73810cc0824657187291ff280147b57d"
+DOWNLOAD_x86_64="https://registry.npmjs.org/@openai/codex/-/codex-0.142.3.tgz \
+                 https://registry.npmjs.org/@openai/codex/-/codex-0.142.3-linux-x64.tgz"
+MD5SUM_x86_64="e9fbbcb45fcbc1960df3341dc80bf0b4 \
+               76cf850825924ced2b8ac767a647a0ac"
 REQUIRES="nodejs22"
 MAINTAINER="Nicholas B. Hubbard"
 EMAIL="nicholashubbard@posteo.net"

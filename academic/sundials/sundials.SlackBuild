@@ -92,8 +92,6 @@ sed -i \
   src/*/CMakeLists.txt \
   src/*/*/CMakeLists.txt
 
-export PATH=/opt/cmake-202x/bin:$PATH
-
 mkdir -p build
 cd build
   cmake \

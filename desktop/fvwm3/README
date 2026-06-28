@@ -19,4 +19,8 @@ FvwmAnimate --> Fvwm3Animate
 FvwmAuto --> Fvwm3Auto
 ...
 
+The Fvwm3 Perl modules can be found under /usr/share/fvwm3/perllib.
+Please note that the FVWM and General subdirectories are no longer
+renamed.
+
 google-go-lang is needed only at build time.

@@ -93,6 +93,7 @@ find . ! -type l    -a \
 # got to be disabled. I don't think anyone will miss it.
 patch -p1 < $CWD/Disable-PSA-crypto.patch
 
+export PATH="/opt/cmake-opt/bin/:$PATH"
 mkdir -p build
 cd build
   cmake \

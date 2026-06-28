@@ -1,6 +1,6 @@
 PRGNAM="crispy-doom"
 VERSION="7.1"
-HOMEPAGE="https://www.chocolate-doom.org/wiki/index.php/Crispy_Doom"
+HOMEPAGE="https://fabiangreffrath.github.io/crispy-homepage/"
 DOWNLOAD="https://github.com/fabiangreffrath/crispy-doom/archive/crispy-doom-7.1/crispy-doom-crispy-doom-7.1.tar.gz"
 MD5SUM="2f2654326b81382aaf9510e1e177b879"
 DOWNLOAD_x86_64=""

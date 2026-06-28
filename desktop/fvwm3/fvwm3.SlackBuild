@@ -3,7 +3,7 @@
 # Slackware build script for fvwm3
 
 # Copyright 2020-2024, Alexander Verbovetsky, Moscow, Russia
-# Copyright 2024-2025, K. Eugene Carlson, Tsukuba, Japan
+# Copyright 2024-2026, K. Eugene Carlson, Tsukuba, Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,13 +26,14 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fvwm3
-VERSION=${VERSION:-1.1.4}
+VERSION=${VERSION:-1.1.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
+    i686) ARCH=i686 ;;
     i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
@@ -57,6 +58,9 @@ elif [ "$ARCH" = "i686" ]; then
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
@@ -71,18 +75,10 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 
-# rename perl libraries to avoid collisions with the stock fvwm
-# borrowed from ALT Linux
-# https://git.altlinux.org/gears/f/fvwm3.git?a=blob_plain;f=0001-rename-perl-fvwm.patch
-#
-# KEC: Replaced previous to accommodate meson (2024-12-01)
-# KEC: Autotools removed (2025-06-03)
-zcat $CWD/renames.patch.gz | patch -p0
 # fix references to renamed man pages and binaries
-zcat $CWD/config-renames.patch.gz | patch -p0
-
-mv perllib/FVWM perllib/FVWM3
-mv perllib/General perllib/FVWM3General
+zcat $CWD/renames_1.1.5.patch.gz | patch -p0
+# stop fvwm3-perllib from complaining about -v and -V
+sed -i 's|use Getopt::Long|use Getopt::Long qw/ :config no_ignore_case_always /|' bin/fvwm-perllib.in
 
 (
 cd doc

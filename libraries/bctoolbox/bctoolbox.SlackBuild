@@ -88,6 +88,8 @@ find . ! -type l    -a \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
+sed -i '/cmake_minimum_required(/s,3.22,3.21,' CMakeLists.txt
+
 # 20260620 bkw: PSA crypto didn't even exist in previous versions
 # of bctoolbox. It won't build with mbedtls-3.6.6 anyway, so it's
 # got to be disabled. I don't think anyone will miss it.

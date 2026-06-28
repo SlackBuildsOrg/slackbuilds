@@ -28,13 +28,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=palemoon
-VERSION=${VERSION:-34.0.1}
+VERSION=${VERSION:-34.3.1}
 SRCNAM1=${SRCNAM1:-pale-moon}
 TARBALL1A=${TARBALL1A:-Pale-Moon-${VERSION}_Release}
 TARBALL1B=${TARBALL1B:-${VERSION}_Release}
 SRCNAM2=${SRCNAM2:-uxp}
-TARBALL2A=${TARBALL2A:-UXP-RB_20260121}
-TARBALL2B=${TARBALL2B:-RB_20260121}
+TARBALL2A=${TARBALL2A:-UXP-RB_20260624}
+TARBALL2B=${TARBALL2B:-RB_20260624}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -189,7 +189,7 @@ export BUILDING_RELEASE=1
 export MOZ_ADDON_SIGNING=
 export MOZ_REQUIRE_SIGNING=
 export MOZ_TELEMETRY_REPORTING=
-export PYTHON=/usr/bin/python2
+#export PYTHON=/usr/bin/python2
 
 # A stale DBUS_SESSION_BUS_ADDRESS var can cause build failures
 unset DBUS_SESSION_BUS_ADDRESS
@@ -255,6 +255,9 @@ rm -rf usr/lib${LIBDIRSUFFIX}/$PRGNAM-devel-$VERSION
 # however, appear to fail on Slackware.
 rm -f usr/lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION/$PRGNAM-bin
 
+# Avoid executables in /usr/include/...
+find usr/include/ -type f |xargs chmod 0644 
+
 # Use system provided Hunspell, if desired.
 if [ "${USE_SYSTEM_HUNSPELL}" = "yes" ]; then
   rm -rfv usr/lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION/dictionaries
@@ -277,8 +280,8 @@ cat $CWD/palemoon.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/UXP
 for docs in $DOCS; do
-  cp $TMP/${SRCNAM1}/$docs $PKG/usr/doc/$PRGNAM-$VERSION/ || true
-  cp $TMP/${SRCNAM1}/platform/$docs $PKG/usr/doc/$PRGNAM-$VERSION/UXP/ || true
+  cp $TMP/${SRCNAM1}-${VERSION}/$docs $PKG/usr/doc/$PRGNAM-$VERSION/ || true
+  cp $TMP/${SRCNAM1}-${VERSION}/platform/$docs $PKG/usr/doc/$PRGNAM-$VERSION/UXP/ || true
 done
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

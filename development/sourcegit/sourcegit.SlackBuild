@@ -27,11 +27,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sourcegit
-VERSION=${VERSION:-2026.13}
+VERSION=${VERSION:-2026.14}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-AvaloniaEdit=988266523608381a9af83f4d67508bb2e26d85f5
+AvaloniaEdit=3451f4e0bdfaf05d927446f63cde8359a5e79eca
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

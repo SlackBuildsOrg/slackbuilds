@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=incus
-VERSION=${VERSION:-7.1}
+VERSION=${VERSION:-7.2}
 PATCH_VERSION=${PATCH_VERSION:-0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -60,6 +60,12 @@ echo -n "Unpacking source tarball ... "
 tar xf $CWD/$PRGNAM-${VERSION}.${PATCH_VERSION}.tar.gz
 echo
 cd $PRGNAM-${VERSION}.${PATCH_VERSION}
+
+# nft on 15.0 segfaults when --terse option is used
+if [ "$(nft --version |cut -d' ' -f2)" = "v1.0.1" ]; then
+  sed -i -e 's/"nft", "--terse",/"nft",/g' internal/server/firewall/drivers/drivers_nftables.go
+fi
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -89,19 +95,20 @@ else
   echo "Creating vendorball ... "
   go mod vendor
   tar cvf - vendor | xz -c > "$CWD"/"$PRGNAM"-"$VERSION"."${PATCH_VERSION}"-vendor.tar.xz
-  echo "Created vendorball - run this script again"
-  exit 0
+  md5sum "$CWD"/"$PRGNAM"-"$VERSION"."${PATCH_VERSION}"-vendor.tar.xz
+  echo "MSG to self: Created vendorball - remember to upload it!"
+  sleep 5
 fi
 
 
 CGO_LDFLAGS="-static" go build -v -tags "agent" -o bin/ ./cmd/incus-agent/...
 go build -v -ldflags "${GO_LDFLAGS}" -tags "netgo" -o bin/ ./cmd/incus-migrate/...
-for tool in fuidshift incus lxc-to-incus lxd-to-incus incusd incus-benchmark incus-user; do
+for tool in fuidshift incus lxc-to-incus incusd incus-benchmark incus-user; do
   go build -v -ldflags "${GO_LDFLAGS}" -tags "libsqlite3" -o bin/ ./cmd/$tool
 done
 
 # Install
-for tool in fuidshift incus incus-agent incus-benchmark incus-migrate incus-user lxc-to-incus lxd-to-incus; do
+for tool in fuidshift incus incus-agent incus-benchmark incus-migrate incus-user lxc-to-incus ; do
   install -v -p -Dm755 "bin/$tool" "$PKG/usr/bin/$tool"
 done
 install -v -p -Dm755 "bin/incusd" "$PKG/usr/sbin/incusd"
@@ -122,7 +129,6 @@ help2man bin/fuidshift -n "uid/gid shifter" --no-info --no-discard-stderr > $PKG
 help2man bin/incus-benchmark -n "The container lightervisor - benchmark" --no-info --no-discard-stderr > $PKG/usr/man/man1/incus-benchmark.1
 help2man bin/incus-migrate -n "Physical to container migration tool" --no-info --no-discard-stderr > $PKG/usr/man/man1/incus-migrate.1
 help2man bin/lxc-to-incus -n "Convert LXC containers to Incus" --no-info --no-discard-stderr > $PKG/usr/man/man1/lxc-to-incus.1
-help2man bin/lxd-to-incus -n "LXD to Incus migration tool" --no-info --no-discard-stderr > $PKG/usr/man/man1/lxd-to-incus.1
 help2man bin/incus-agent -n "Incus virtual machine guest agent" --no-info --no-discard-stderr > $PKG/usr/man/man1/incus-agent.1
 find $PKG/usr/man/man1 -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man/man1 -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
@@ -138,6 +144,9 @@ mkdir -p $PKG/etc/default
 cat >$PKG/etc/default/incus.new <<EOF
 
 INCUSD_GROUP=$INCUSD_GROUP
+
+INCUSD_VERBOSE_OPT=""
+#INCUSD_VERBOSE_OPT="--verbose"
 
 EOF
 

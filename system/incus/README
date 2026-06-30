@@ -50,3 +50,10 @@ separately via the incus-ui package (64bit only).
 
 With the skopeo prerequisite, incus is capable of consuming docker
 images (or any images confoming to OCI format).
+
+A -vendor tarball is provided by the maintainer for downlopad from
+the slackbuildsdirect repository. Anyone wishing to generate their
+own -vendor tarball may do so by ensuring the provided version is
+not available  when running the SlackBuild. In this case, a new
+-vendor tarball will be generated when the SlackBuild is run
+(while continuing to complete building the package).

@@ -1,0 +1,17 @@
+--- /tmp/SBo/antares-0.9.1/scripts/antares_launcher.py	2026-06-27 12:33:48.980783211 +0100
++++ 0/patched/antares_launcher.py.new	2026-06-27 12:34:19.864113975 +0100
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # Copyright (C) 2017 The Antares Authors
+ # This file is part of Antares, a tactical space combat game.
+ # Antares is free software, distributed under the LGPL+. See COPYING.
+@@ -136,7 +136,7 @@
+     if FACTORY_SCENARIO:
+         args += ["--factory-scenario", FACTORY_SCENARIO]
+     print(" ".join(args))
+-    out = subprocess.check_output(args)
++    out = subprocess.check_output(args, text=True)
+     scenarios = []
+     for line in out.splitlines():
+         if not line[0].isspace():

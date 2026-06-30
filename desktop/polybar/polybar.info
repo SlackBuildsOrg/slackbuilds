@@ -10,5 +10,5 @@ MD5SUM="edd10b832951de562e5fb815371441d1 \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="xcb-util-xrm"
-MAINTAINER="Azure Zanculmarktum"
-EMAIL="zanculmarktum@gmail.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

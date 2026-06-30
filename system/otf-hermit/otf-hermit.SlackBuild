@@ -2,7 +2,8 @@
 
 # Slackware build script for hermit-font
 
-# written by Alex-P. Natsios <drakevr@2f30.org>
+# Written by Alex-P. Natsios <email removed>.
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>.
 #
 # All rights reserved.
 #
@@ -22,6 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260630 bkw: take over maintenance.
 # 20220210 bkw: Modified by SlackBuilds.org: updated for v2.0, as the
 # previous version's download disappeared.
 
@@ -46,20 +48,19 @@ OUTPUT=${OUTPUT:-/tmp}
 
 set -e
 
+OTFDIR=$PKG/usr/share/fonts/OTF
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+
 rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT
-cd $TMP
-rm -rf $PRGNAM-$VERSION
-mkdir -p $PKG/usr/share/fonts/OTF/
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz -C $PKG/usr/share/fonts/OTF/
-cd $PKG/usr/share/fonts/OTF/
+mkdir -p $TMP $OTFDIR $OUTPUT $PKGDOC
+cd $OTFDIR
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 chown -R root:root .
 chmod 644 *
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp $CWD/README $PKG/usr/doc/$PRGNAM-$VERSION
-mv $PKG/usr/share/fonts/OTF/LICENSE $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/README > $PKGDOC/README
+mv LICENSE $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

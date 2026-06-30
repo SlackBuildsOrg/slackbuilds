@@ -30,7 +30,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=antares
 VERSION=${VERSION:-0.9.1}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -80,7 +80,10 @@ sed -i 's|build/lib/bin/gn|gn|' build/lib/scripts/cfg.py
 # Revert: Update to python3 (scripts/antares_launcher.py)
 # Doesn't work with python3 and removed upstream.
 # https://github.com/arescentral/antares/commit/0137f46c58e26352b2ba88cb581974f3f263ba3f
-patch -R -p1 < $CWD/python.patch
+patch -R -p1 < $CWD/patches/python.patch
+
+# Added text=True so subprocess handles decoding automatically
+patch scripts/antares_launcher.py $CWD/patches/antares_launcher.py.patch
 
 # configure is a python script
 ./configure \

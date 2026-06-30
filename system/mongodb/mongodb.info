@@ -1,12 +1,12 @@
 PRGNAM="mongodb"
-VERSION="8.2.7"
+VERSION="8.2.11"
 HOMEPAGE="https://www.mongodb.org/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/8.2/multiverse/binary-amd64/mongodb-org-server_8.2.7_amd64.deb \
-		 https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/8.2/multiverse/binary-amd64/mongodb-org-mongos_8.2.7_amd64.deb"
-MD5SUM_x86_64="5b71fb9f639251433adaaf535ab895e4 \
-	       67c0efed9b1a5a5eddf135bc3bf270ac"
+DOWNLOAD_x86_64="https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/8.2/multiverse/binary-amd64/mongodb-org-server_8.2.11_amd64.deb \
+		 https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/8.2/multiverse/binary-amd64/mongodb-org-mongos_8.2.11_amd64.deb"
+MD5SUM_x86_64="0a8057479f6eb3fdcfdf1de7eca425ed \
+	       25fdc76dbd73fe503dfd11ad10803b01"
 REQUIRES=""
 MAINTAINER="Willy Sudiarto Raharjo"
 EMAIL="willysr@slackbuilds.org"

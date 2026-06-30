@@ -1,3 +1,5 @@
+fileschanged (File Alteration Monitor client)
+
 The fileschanged utility is a FAM (File Alteration Monitor) client.
 From the command line it monitors sets of files and shows you when they
 change. You can use fileschanged in shell scripts to take action when

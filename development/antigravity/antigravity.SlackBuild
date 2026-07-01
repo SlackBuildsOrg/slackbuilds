@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=antigravity
 VERSION=${VERSION:-2.1.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -67,6 +67,9 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf Antigravity $PRGNAM-$VERSION
+if [ -f "$CWD/Antigravity%20IDE.tar.gz" ]; then
+    mv "$CWD/Antigravity%20IDE.tar.gz" "$CWD/Antigravity IDE.tar.gz"
+fi
 tar xvf "$CWD/Antigravity IDE.tar.gz"
 mv "Antigravity IDE" $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION

@@ -2,7 +2,7 @@
 
 # Slackware build script for notepadqq
 
-# Copyright 2022-2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2018-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,11 +26,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=notepadqq
-VERSION=${VERSION:-20260622_d746c98}
+VERSION=${VERSION:-20260701_d416b04}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=${TARBALL:-d746c98166eee1018538193010b1690382cb62e5}
+TARBALL=${TARBALL:-d416b04e733e15cacdf7f18e730592f111e1da20}
 
 
 if [ -z "$ARCH" ]; then
@@ -52,16 +52,12 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -78,26 +74,30 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix /opt/notepadqq \
-  --qmake /usr/lib$LIBDIRSUFFIX/qt6/bin/qmake
+export CFLAGS="$SLKCFLAGS"
+export CXXFLAGS="$SLKCFLAGS"
 
-# addressing https://github.com/notepadqq/notepadqq/issues/1135
-sed -i "s|bool BackupService::s_autosaveEnabled = false;|bool BackupService::s_autosaveEnabled = true;|g" src/ui/Sessions/backupservice.cpp
+/opt/cmake-opt/bin/cmake --preset release
+/opt/cmake-opt/bin/cmake --build --preset release
+/opt/cmake-opt/bin/cmake --install build/release --prefix $PKG
 
-make
-make -j1 install DESTDIR=$PKG INSTALL_ROOT=$PKG
+mkdir -p $PKG/usr
+mv $PKG/share $PKG/usr/
+mv $PKG/usr/share/man $PKG/usr/
+gzip $PKG/usr/man/man1/notepadqq.1
 
-mkdir -p $PKG/usr/share
-mv $PKG/opt/notepadqq/share/applications $PKG/usr/share/
-mv $PKG/opt/notepadqq/share/icons $PKG/usr/share/
-mv $PKG/opt/notepadqq/share/metainfo $PKG/usr/share/
+mkdir -p $PKG/opt
+mv $PKG/bin $PKG/opt/notepadqq
+mv $PKG/usr/share/notepadqq $PKG/opt/notepadqq/appdata
 
-# clean-up sbopkglint complaints
-sed -e "s/Categories=Development;Utility;TextEditor;/Categories=Development;/" -i $PKG/usr/share/applications/notepadqq.desktop
-sed -e "s/OnlyShowIn=Unity;//" -i $PKG/usr/share/applications/notepadqq.desktop
+mkdir -p $PKG/usr/bin
+cat > "$PKG/usr/bin/notepadqq" <<EOF
+#!/bin/bash
+
+cd /opt/notepadqq
+./notepadqq "\$@"
+EOF
+chmod +x $PKG/usr/bin/notepadqq
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -105,11 +105,6 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a CONTRIBUTING.md COPYING README.md $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-# Links
-mkdir -p $PKG/usr/bin
-( cd $PKG/usr/bin ; rm -rf notepadqq )
-( cd $PKG/usr/bin ; ln -s ../../opt/notepadqq/bin/notepadqq notepadqq )
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

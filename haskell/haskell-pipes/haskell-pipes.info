@@ -8,5 +8,5 @@ MD5SUM="1e12cd828873ff53e7e47340f8bbba0b \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="haskell-fail haskell-mmorph haskell-void"
-MAINTAINER="Jan-willem De Bleser"
-EMAIL="jw@thescrapyard.org"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

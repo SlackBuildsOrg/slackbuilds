@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cisco-secure-client-vpn
 SRCNAM=cisco-secure-client
-VERSION=${VERSION:-5.1.17.3394}
+VERSION=${VERSION:-5.1.18.314}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -61,6 +61,7 @@ rm -rf "$PKG"
 mkdir -p "$TMP" "$PKG" "$OUTPUT"
 
 cd "$PKG"
+
 tar -xvf $TGZ
 
 if [ ! -r "$RPM" ]; then
@@ -70,7 +71,9 @@ fi
 
 rpm2cpio "$RPM" | cpio -idmv
 
-rm -rf "$PKG/usr/lib/systemd"
+rm -rf $PKG/*.rpm $PKG/*.pgp
+
+rm -rf "$PKG/usr/lib"
 
 # Remove insecure /tmp RUNPATH from bundled OQS provider.
 OQSPROVIDER="$PKG/opt/cisco/secureclient/lib/ossl-modules/oqsprovider.so"

@@ -23,6 +23,7 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260701 bkw: update for v7.9.
 # 20240322 bkw: update for v7.4.
 # 20220611 bkw: update for v7.1.
 # 20201020 bkw: update for v6.7.
@@ -38,7 +39,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cwm
-VERSION=${VERSION:-7.4}
+VERSION=${VERSION:-7.9}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

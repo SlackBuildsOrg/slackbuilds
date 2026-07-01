@@ -1,6 +1,6 @@
 PRGNAM="abiword"
 VERSION="3.0.8"
-HOMEPAGE="http://www.abisource.com"
+HOMEPAGE="https://gitlab.gnome.org/World/AbiWord"
 DOWNLOAD="https://gitlab.gnome.org/World/AbiWord/-/archive/release-3.0.8/AbiWord-release-3.0.8.tar.gz \
           https://ftp2.osuosl.org/pub/blfs/conglomeration/abiword/abiword-docs-3.0.2.tar.gz"
 MD5SUM="49720c3f4c0e5659a26e0bbcb01e952d \

@@ -1,3 +1,5 @@
+cflow (Flow graph generator for C projects)
+
 GNU cflow analyzes a collection of C source files and prints a graph,
 charting control flow within the program.
 

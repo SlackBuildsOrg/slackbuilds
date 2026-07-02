@@ -1,0 +1,13 @@
+sacd (Super Audio CD decoder)
+
+SACD decoder is a command-line application which takes a Super Audio
+CD source and extracts a 24-bit high resolution wave file. It handles
+both DST and DSD streams.
+
+The application reads the following input:
+
+* SACD image files (*.iso)
+* Sony DSF files (*.dsf)
+* Philips DSDIFF files (*.dff)
+
+Supported output sample rates: 88.2KHz, 96KHz, 176.4KHz, 192KHz

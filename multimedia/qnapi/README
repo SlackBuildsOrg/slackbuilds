@@ -1,0 +1,12 @@
+QNapi is a Qt-based subtitle downloader for movie files. It can search
+several subtitle databases, including NapiProjekt, OpenSubtitles, and
+Napisy24, and provides both GUI and command-line modes.
+
+QNapi needs 7z or 7za at runtime to unpack downloaded subtitles.
+SlackBuilds.org includes p7zip; if QNapi does not detect it
+automatically, set the 7zip path in QNapi's preferences.
+
+The OpenSubtitles.org API used by old applications has been deprecated,
+so some providers may work better than others. Test real subtitle
+downloads after installation, especially if you depend on a
+specific provider.

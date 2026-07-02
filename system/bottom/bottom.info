@@ -1,9 +1,9 @@
 PRGNAM="bottom"
-VERSION="0.14.1"
+VERSION="0.14.3"
 HOMEPAGE="https://github.com/ClementTsang/bottom"
-DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.tar.gz \
-          https://github.com/ClementTsang/bottom/releases/download/0.14.1/completion.tar.gz \
-          https://github.com/ClementTsang/bottom/releases/download/0.14.1/manpage.tar.gz \
+DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.3/bottom-0.14.3.tar.gz \
+          https://github.com/ClementTsang/bottom/releases/download/0.14.3/completion.tar.gz \
+          https://github.com/ClementTsang/bottom/releases/download/0.14.3/manpage.tar.gz \
           https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.4.crate \
           https://static.crates.io/crates/allocator-api2/allocator-api2-0.2.21.crate \
           https://static.crates.io/crates/anstream/anstream-0.6.21.crate \
@@ -82,11 +82,12 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/instability/instability-0.3.12.crate \
           https://static.crates.io/crates/is_terminal_polyfill/is_terminal_polyfill-1.70.2.crate \
           https://static.crates.io/crates/itertools/itertools-0.14.0.crate \
+          https://static.crates.io/crates/itertools/itertools-0.15.0.crate \
           https://static.crates.io/crates/itoa/itoa-1.0.17.crate \
           https://static.crates.io/crates/kasuari/kasuari-0.4.11.crate \
           https://static.crates.io/crates/lazy_static/lazy_static-1.5.0.crate \
           https://static.crates.io/crates/lazycell/lazycell-1.3.0.crate \
-          https://static.crates.io/crates/libc/libc-0.2.180.crate \
+          https://static.crates.io/crates/libc/libc-0.2.186.crate \
           https://static.crates.io/crates/libloading/libloading-0.8.9.crate \
           https://static.crates.io/crates/libm/libm-0.2.16.crate \
           https://static.crates.io/crates/libredox/libredox-0.1.12.crate \
@@ -96,19 +97,19 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/lock_api/lock_api-0.4.14.crate \
           https://static.crates.io/crates/log/log-0.4.29.crate \
           https://static.crates.io/crates/lru/lru-0.18.0.crate \
-          https://static.crates.io/crates/mach2/mach2-0.5.0.crate \
           https://static.crates.io/crates/mach2/mach2-0.6.0.crate \
           https://static.crates.io/crates/memchr/memchr-2.7.6.crate \
           https://static.crates.io/crates/mio/mio-1.1.1.crate \
           https://static.crates.io/crates/nix/nix-0.28.0.crate \
           https://static.crates.io/crates/nix/nix-0.30.1.crate \
+          https://static.crates.io/crates/nix/nix-0.31.3.crate \
           https://static.crates.io/crates/normalize-line-endings/normalize-line-endings-0.3.0.crate \
           https://static.crates.io/crates/ntapi/ntapi-0.4.2.crate \
           https://static.crates.io/crates/num-conv/num-conv-0.2.0.crate \
           https://static.crates.io/crates/num-traits/num-traits-0.2.19.crate \
           https://static.crates.io/crates/num_threads/num_threads-0.1.7.crate \
-          https://static.crates.io/crates/nvml-wrapper/nvml-wrapper-0.11.0.crate \
-          https://static.crates.io/crates/nvml-wrapper-sys/nvml-wrapper-sys-0.9.0.crate \
+          https://static.crates.io/crates/nvml-wrapper/nvml-wrapper-0.12.1.crate \
+          https://static.crates.io/crates/nvml-wrapper-sys/nvml-wrapper-sys-0.9.1.crate \
           https://static.crates.io/crates/objc2/objc2-0.6.3.crate \
           https://static.crates.io/crates/objc2-core-foundation/objc2-core-foundation-0.3.2.crate \
           https://static.crates.io/crates/objc2-encode/objc2-encode-4.1.0.crate \
@@ -144,7 +145,7 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/regex-automata/regex-automata-0.4.14.crate \
           https://static.crates.io/crates/regex-syntax/regex-syntax-0.8.9.crate \
           https://static.crates.io/crates/roff/roff-0.2.2.crate \
-          https://static.crates.io/crates/rustc-hash/rustc-hash-2.1.1.crate \
+          https://static.crates.io/crates/rustc-hash/rustc-hash-2.1.2.crate \
           https://static.crates.io/crates/rustc_version/rustc_version-0.4.1.crate \
           https://static.crates.io/crates/rustix/rustix-1.1.3.crate \
           https://static.crates.io/crates/rustversion/rustversion-1.0.22.crate \
@@ -159,7 +160,7 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/serde_derive/serde_derive-1.0.228.crate \
           https://static.crates.io/crates/serde_derive_internals/serde_derive_internals-0.29.1.crate \
           https://static.crates.io/crates/serde_json/serde_json-1.0.149.crate \
-          https://static.crates.io/crates/serde_spanned/serde_spanned-1.0.4.crate \
+          https://static.crates.io/crates/serde_spanned/serde_spanned-1.1.1.crate \
           https://static.crates.io/crates/serial2/serial2-0.2.33.crate \
           https://static.crates.io/crates/shared_library/shared_library-0.1.9.crate \
           https://static.crates.io/crates/shell-words/shell-words-1.1.1.crate \
@@ -167,7 +168,7 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/signal-hook-mio/signal-hook-mio-0.2.5.crate \
           https://static.crates.io/crates/signal-hook-registry/signal-hook-registry-1.4.8.crate \
           https://static.crates.io/crates/smallvec/smallvec-1.15.1.crate \
-          https://static.crates.io/crates/starship-battery/starship-battery-0.10.3.crate \
+          https://static.crates.io/crates/starship-battery/starship-battery-0.11.0.crate \
           https://static.crates.io/crates/static_assertions/static_assertions-1.1.0.crate \
           https://static.crates.io/crates/strsim/strsim-0.11.1.crate \
           https://static.crates.io/crates/strum/strum-0.27.2.crate \
@@ -176,7 +177,7 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/strum_macros/strum_macros-0.28.0.crate \
           https://static.crates.io/crates/syn/syn-2.0.114.crate \
           https://static.crates.io/crates/sysctl/sysctl-0.7.1.crate \
-          https://static.crates.io/crates/sysinfo/sysinfo-0.39.3.crate \
+          https://static.crates.io/crates/sysinfo/sysinfo-0.39.5.crate \
           https://static.crates.io/crates/tempfile/tempfile-3.24.0.crate \
           https://static.crates.io/crates/terminal_size/terminal_size-0.4.3.crate \
           https://static.crates.io/crates/termtree/termtree-0.5.1.crate \
@@ -188,17 +189,17 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/time-core/time-core-0.1.8.crate \
           https://static.crates.io/crates/time-macros/time-macros-0.2.27.crate \
           https://static.crates.io/crates/timeless/timeless-0.0.14-alpha.crate \
-          https://static.crates.io/crates/toml_datetime/toml_datetime-0.7.5+spec-1.1.0.crate \
-          https://static.crates.io/crates/toml_edit/toml_edit-0.24.0+spec-1.1.0.crate \
-          https://static.crates.io/crates/toml_parser/toml_parser-1.0.6+spec-1.1.0.crate \
-          https://static.crates.io/crates/toml_writer/toml_writer-1.0.6+spec-1.1.0.crate \
+          https://static.crates.io/crates/toml_datetime/toml_datetime-1.1.1+spec-1.1.0.crate \
+          https://static.crates.io/crates/toml_edit/toml_edit-0.25.12+spec-1.1.0.crate \
+          https://static.crates.io/crates/toml_parser/toml_parser-1.1.2+spec-1.1.0.crate \
+          https://static.crates.io/crates/toml_writer/toml_writer-1.1.1+spec-1.1.0.crate \
           https://static.crates.io/crates/typenum/typenum-1.19.0.crate \
-          https://static.crates.io/crates/unicode-ellipsis/unicode-ellipsis-0.4.0.crate \
+          https://static.crates.io/crates/unicode-ellipsis/unicode-ellipsis-0.5.0.crate \
           https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.22.crate \
-          https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.13.2.crate \
+          https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.13.3.crate \
           https://static.crates.io/crates/unicode-truncate/unicode-truncate-2.0.1.crate \
           https://static.crates.io/crates/unicode-width/unicode-width-0.2.2.crate \
-          https://static.crates.io/crates/uom/uom-0.37.0.crate \
+          https://static.crates.io/crates/uom/uom-0.38.0.crate \
           https://static.crates.io/crates/utf8parse/utf8parse-0.2.2.crate \
           https://static.crates.io/crates/wait-timeout/wait-timeout-0.2.1.crate \
           https://static.crates.io/crates/walkdir/walkdir-2.5.0.crate \
@@ -229,13 +230,13 @@ DOWNLOAD="https://github.com/ClementTsang/bottom/archive/0.14.1/bottom-0.14.1.ta
           https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.53.1.crate \
           https://static.crates.io/crates/windows_x86_64_gnullvm/windows_x86_64_gnullvm-0.53.1.crate \
           https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.53.1.crate \
-          https://static.crates.io/crates/winnow/winnow-0.7.14.crate \
+          https://static.crates.io/crates/winnow/winnow-1.0.3.crate \
           https://static.crates.io/crates/winreg/winreg-0.10.1.crate \
           https://static.crates.io/crates/wrapcenum-derive/wrapcenum-derive-0.4.1.crate \
           https://static.crates.io/crates/zmij/zmij-1.0.19.crate"
-MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
-        18e415654c6019061164b370768c2bf4 \
-        4c71b77db04840a9d140f3e66f011cc2 \
+MD5SUM="cc2e26bf1bad18fbc950e47fd90e5f3c \
+        41025d7aecc01b8798b930d40b8d2220 \
+        58052dabe33b6ede55ba8245ebc1b962 \
         2fb8e2b2c327d642027d27dd82160195 \
         a4cce839af1f5a83a1bf73de16819a75 \
         082b8b397447a875d587f5f6447092db \
@@ -314,11 +315,12 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         8cebd2d64367e7285b2d3e54d830eb63 \
         164c3046a7f9720ce6c4240a8433a923 \
         46ad4f3e5384660617259ff0e3ff902b \
+        59ecf11bd4fc92531f7e29deb4111a20 \
         7adb8a4c6ab02e9b85282feb836ab048 \
         d5654f979160014e342d18e5dd8e3c6d \
         bb0c20f6e3faaa647d9c463c5501a8e0 \
         23cc9e52c52465f5b225e62ab7cc3457 \
-        023d47313f3d4b5a79426b37ddd8d38d \
+        39a9421fa4b66196a3b6527211f694f8 \
         606f51fd52eefaa3fefcb9722f6a09a8 \
         0cd2b5d61e8f18c95abc97fc4e39ccd8 \
         7700f05c27a07f60e516b311ca036365 \
@@ -328,19 +330,19 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         3e106da1aa25437329bf9cab094e6216 \
         421029191180ccd11cd28d7186a0640a \
         6956c712cfc587aa80c29a33e8c95671 \
-        f101e587dfc3145a6e849915ef3574ba \
         6f28227dfe8cadd804c2ee0e93c0e2aa \
         09ea9959a92a4b020eaf12d2aae7a2b5 \
         d994b2a95f55266d239b5b2791c76dcd \
         fef6cd95c83025d64b8cb50171a4bb74 \
         87955f326fc2aa9627d446518454080f \
+        e22164bec3bb7764a31ef7317a0ddbee \
         f9ddf92ded75c1df47b2dd1379a482fd \
         ac48290bdb9ceb8c29443dbf99580988 \
         5b58e4f18091c0fa3579419f24cfaef9 \
         e092b3abcc54806f2a35889d725bf95f \
         4578b5cccbe636b7e5becdf5543b3802 \
-        7c8bdfda753e427eff1e11bb972866d3 \
-        c245df1917e3f71596e7e4b1a9ec550c \
+        9088baa02a8eef4b6587d0340cb9e702 \
+        e290a7371612c64d229c1448996b84b1 \
         8eb47450fc77283b887265c5b16215a0 \
         03ac333203202f17d0eb0b3eeed8215a \
         5d9728c30b0b7db1def672b428b6e6b2 \
@@ -376,7 +378,7 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         dbb01350ea9e84a75a25118f9fa9ef80 \
         5fc5d8e0268839cbb4acbe56629b3b5b \
         2a194c1dc8c6637a908b37f63e5c637d \
-        9f5da5d4deefacf77ae9ca3cbe5c7c6a \
+        e3f6e9ab7d8108a8d0376889a974b293 \
         3dcd0f89abb6723ee3ddc24a7673a9c0 \
         ad77627a08324de6cddb4f66813f3219 \
         e662b1464700d377cb89a8a9b59bd8c0 \
@@ -391,7 +393,7 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         45ca53c87e6fb9748e740a9298e2c14c \
         f8b8723abf5753b03245135866b694b0 \
         10164f24ab04c289c629028667a273ca \
-        15603a17a0d683c7c50d4b7db22ddf58 \
+        46dd8cd0e18f848edbdc3104820c8edf \
         47bea315c2a1d77c4e46293a7a096e92 \
         e0a0f1fa737110ffd0b04af8d1062edd \
         baea6ab0ad0e707176e0852b62342432 \
@@ -399,7 +401,7 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         b1bc9e5d82774814a4357bc250fe060f \
         7a11a8c075b55ab9b8c7771520f95352 \
         bff9f5bd01b620680a98b1c59d92df7c \
-        4dfdb018a33ad8f679bb3ff9cf2a9cc0 \
+        4cea9dbf9ad78d46410983bc4ca2cc94 \
         c9defe80406280bcfce4ecf31c0200b3 \
         fbe5da24bd1beef6125107ee41118187 \
         2a64ea5600895fa56e33c4b4e49677e8 \
@@ -408,7 +410,7 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         c72947ce2548e831a994be74c742f64d \
         ebe57a18889cf2f2bea7618a91acd735 \
         81ba5975832832c50280c347052ad216 \
-        b99355035d1a53bca0572e6d160a0268 \
+        3281d3d00f01298dee59af7457214c25 \
         1cd5c4ca4c47e7643a521d5842b20bcc \
         bb56b7d479e9fa872a035b46f04a3fbd \
         d4e8c84dde0eb032cc9eaa4121614822 \
@@ -420,17 +422,17 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         b1bb3a822a8b3650a7401dbc737764f0 \
         764181663f005b307e662dc71451ee12 \
         ecf278847fadd270ec25a1ce6d94162d \
-        9bf537e7d26a16e35156d3a4b5c9338b \
-        935e04d6e3dc1e2094ec551f92c0386f \
-        d68794323cd4f09c15e561fff26ac5cd \
-        3aace232a48239015af2b93472c71e3e \
+        2af706984c49313b205ac89d6f65feac \
+        c30b0564535160b0c07898ae3ffc7092 \
+        f5e10886101af4899b55c75955234d70 \
+        08946b01f9cbec3b250e3e1085c29646 \
         f9d969cfb6e7f4deafcb270dd18464d9 \
-        df4f3a57c69e29d1d294e0e22a2fdafe \
+        2cde2e3fa6fb68ab3104cb932afcb92f \
         a1a21f38fccf487fac84ad67e8ae7be3 \
-        2bb1c805605062830054cd91fbbd98c8 \
+        5a3bece02b50bc9927b77ac026abb884 \
         884b4e6ead60b1eef1c1f88b739b8092 \
         2a4b3962d2e873cc03ad5bd46fee8896 \
-        3b6b91476f4acb480d69518dced28e26 \
+        0368003a331a0011f5b9427f286203f3 \
         470f527a51d3921895bd2583fce8d9c4 \
         d37681de7eb8a22e94064570778e479a \
         f38b27b8c9625110a51293658f1cc014 \
@@ -461,7 +463,7 @@ MD5SUM="84b13ca38db1638e69d5cf59e134cab6 \
         4bfd23c349359d9c45430c723d03df97 \
         60ee7d4891a496a45390bede684f8770 \
         ae65c2e2e666c0e6183014d48b278604 \
-        3d8503aea1fd88138c875d6ead04905f \
+        7c58dc84bc11da2e6d4dee7512169f90 \
         8aa3cbf525ad9e68c3619664a3401dbe \
         02079cc0b41cb07f6a601a9f54992aa5 \
         d2f08b51cc1371cb70ff353a8660ced0"

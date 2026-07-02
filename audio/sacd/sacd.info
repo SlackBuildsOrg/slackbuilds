@@ -1,0 +1,14 @@
+PRGNAM="sacd"
+VERSION="19.7.16.37"
+HOMEPAGE="https://github.com/Sound-Linux-More/sacd"
+DOWNLOAD="https://github.com/Sound-Linux-More/sacd/commit/6cfc988eca603c770788b3fd489b192ae5d264e5.patch \
+          https://github.com/Sound-Linux-More/sacd/commit/f9008ac07468c01542ec9de5f4f075f395d62891.patch \
+          https://github.com/Sound-Linux-More/sacd/archive/19.7.16.37/sacd-19.7.16.37.tar.gz"
+MD5SUM="2495da3e16c172cfeb169a869b799633 \
+        8b6324750fa27416a02e7a61e7f5bbbb \
+        3c29546256e722d378e111ac5a6bd3a5"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

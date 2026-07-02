@@ -8,5 +8,5 @@ MD5SUM="e5c4223f7556b57984b20d70606f50ab \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="antlr2 zulu-openjdk8"
-MAINTAINER="Marcel Steinbeck"
-EMAIL="marcel dot steinbeck at googlemail dot com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

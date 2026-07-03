@@ -1,18 +1,18 @@
 PRGNAM="ollama"
-VERSION="0.30.10"
+VERSION="0.31.1"
 HOMEPAGE="https://github.com/ollama/ollama"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://github.com/nlohmann/json/archive/v3.11.3/json-3.11.3.tar.gz \
-                 https://github.com/ggml-org/llama.cpp/archive/b9672/llama.cpp-b9672.tar.gz \
-                 https://github.com/ml-explore/mlx/archive/2165dc08d7b33258260aa849d39f087d50e62962/mlx-2165dc08d7b33258260aa849d39f087d50e62962.tar.gz \
+                 https://github.com/ggml-org/llama.cpp/archive/b9840/llama.cpp-b9840.tar.gz \
+                 https://github.com/ml-explore/mlx/archive/548dd80e87454f6e4c1c7736ce09551d145c11d5/mlx-548dd80e87454f6e4c1c7736ce09551d145c11d5.tar.gz \
                  https://github.com/ml-explore/mlx-c/archive/fba4470b89073180056c9ea46c443051375f7399/mlx-c-fba4470b89073180056c9ea46c443051375f7399.tar.gz \
-                 https://github.com/ollama/ollama/archive/v0.30.10/ollama-0.30.10.tar.gz"
+                 https://github.com/ollama/ollama/archive/v0.31.1/ollama-0.31.1.tar.gz"
 MD5SUM_x86_64="d603041cbc6051edbaa02ebb82cf0aa9 \
-               5d183d897eea07d4cd003518e5bb25f8 \
-               f3b5be771241aa2012240495af492424 \
+               097036e1bd8a13ac0be762039e41b425 \
+               e43203e5a5052fb1ae6f41bdcc73ad1e \
                10642b4ae80e186dfe6160198ae2d5ca \
-               d197189b80763e65282e587ea50386db"
+               dac36bf2e0134651e018c4327bed9b44"
 REQUIRES="cmake-opt google-go-lang"
 MAINTAINER="Ruoh-Shoei LIN"
 EMAIL="lin.ruohshoei+sbo@gmail.com"

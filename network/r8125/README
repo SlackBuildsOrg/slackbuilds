@@ -20,6 +20,16 @@ not yet booted):
 The KERNEL variable must match the directory name under /lib/modules/
 and the kernel build tree must exist at /lib/modules/$KERNEL/build.
 
+LOADING THE MODULE
+------------------
+After installing the package, load the driver without rebooting:
+
+  modprobe r8125
+
+To verify it loaded:
+
+  lsmod | grep r8125
+
 CONFLICT WITH r8169
 -------------------
 The in-tree r8169 driver may also bind to RTL8125 hardware. This package
@@ -29,6 +39,11 @@ installs a blacklist file to prevent r8169 from loading:
 
 If the file already exists and has been modified, the new version will
 be installed as r8169_blacklist.conf.new for you to review and merge.
+
+If r8169 is currently loaded, unload it before loading r8125:
+
+  modprobe -r r8169
+  modprobe r8125
 
 NVCHECKER
 ---------

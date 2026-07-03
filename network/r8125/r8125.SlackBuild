@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=r8125
-VERSION=${VERSION:-9.016.01}
+VERSION=${VERSION:-9.018.00}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -83,8 +83,11 @@ find -L . \
   unset ARCH
   cd /lib/modules/$KERNEL/build
 
+  # Disable DASH: EXTRA_CFLAGS override drops -DENABLE_DASH_SUPPORT but still
+  # builds r8125_dash.o, breaking the build. DASH is out-of-band mgmt, unneeded.
   make \
     M="$TMP/$PRGNAM-$VERSION/src" \
+    ENABLE_DASH_SUPPORT=n \
     EXTRA_CFLAGS="$SLKCFLAGS" \
     modules
 )

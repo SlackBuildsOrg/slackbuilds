@@ -61,6 +61,7 @@ rm -rf "$PKG"
 mkdir -p "$TMP" "$PKG" "$OUTPUT"
 
 cd "$PKG"
+
 tar -xvf $TGZ
 
 if [ ! -r "$RPM" ]; then
@@ -70,7 +71,9 @@ fi
 
 rpm2cpio "$RPM" | cpio -idmv
 
-rm -rf "$PKG/usr/lib/systemd"
+rm -rf $PKG/*.rpm $PKG/*.pgp
+
+rm -rf "$PKG/usr/lib"
 
 # Remove insecure /tmp RUNPATH from bundled OQS provider.
 OQSPROVIDER="$PKG/opt/cisco/secureclient/lib/ossl-modules/oqsprovider.so"

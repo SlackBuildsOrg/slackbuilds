@@ -10,7 +10,7 @@ dieharder: dieharder (A random number generator testing suite)
 dieharder:
 dieharder: Dieharder is a random number generator (RNG) testing suite,
 dieharder: designed to make it easy to time and test RNGs implemented in
-dieharder: both software and hardware.  It makes extensive use of the GNU
+dieharder: both software and hardware. It makes extensive use of the GNU
 dieharder: Scientific Library (GSL), and includes a battery of pseudorandom
 dieharder: number generators (PRNG) and testing algorithms for research and
 dieharder: cryptographic applications.

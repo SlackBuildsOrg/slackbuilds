@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # SlackBuild for dieharder, 5 January 2017
-# awg <awg@cock.li>
+# awg <email removed>
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification,
@@ -25,6 +26,11 @@
 ## dieharder itself remains a copyrighted work under the terms of the
 ## GNU GPL v2 (with beverage provision).  Please see the file COPYING
 ## in the dieharder source distribution for more on this.
+
+# 20260703 bkw:
+# - take over maintenance.
+# - get rid of MANPDF option; it's broken.
+# - stop writing to /usr/share/aclocal during the build!
 
 # 20220211 bkw: Modified by SlackBuilds.org: add -j1 to the make commands
 # because parallel builds are broken.
@@ -74,20 +80,23 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tgz
+# 20260703 bkw: the --exclude= here is because the tarball contains symlinks
+# to the files in /usr/share/aclocal, and extracting the tarball modifies
+# the timestamps of the files in /usr! turns out, they're not even needed,
+# excluding them here just means they'll get copied by autoreconf.
+tar xvf $CWD/$PRGNAM-$VERSION.tgz --exclude='*/m4/*'
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \+ -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # apply patches, mostly to appease crusty autoconf.
 patch -p1 < $CWD/$PRGNAM.patch
 mkdir -p manual/m4  # a stub.
 
-./autogen.sh
+# 20260703 bkw: don't use autogen.sh, it runs ./configure with no args.
+autoreconf -i
 
 CFLAGS="$SLKCFLAGS -D_GNU_SOURCE -fcommon" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -107,13 +116,16 @@ make -j1 install-strip DESTDIR=$PKG
 rm -f $PKG/usr/lib*/*.la
 gzip -9 $PKG/usr/man/man*/*
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING NOTES AUTHORS $PKG/usr/doc/$PRGNAM-$VERSION
-if [ "${MANPDF:-no}" = "yes" ]; then
-  ( cd manual; make pdf )
-  cp -a manual/dieharder.pdf $PKG/usr/doc/$PRGNAM-$VERSION
-fi
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a COPYING NOTES AUTHORS $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
+
+# 20260703 bkw: this stuff is broken, just dike it out.
+## if [ "${MANPDF:-no}" = "yes" ]; then
+##   ( cd manual; make -j1 pdf )
+##   cp -a manual/dieharder.pdf $PKGDOC
+## fi
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

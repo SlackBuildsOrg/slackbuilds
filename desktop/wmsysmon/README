@@ -1,3 +1,16 @@
-wmsysmon is a small dock application for use with
-Window Maker (windowmaker.org) to show system information
-on interrupt activity, memory use, swap use, and IO.
+wmsysmon (dockapp to monitor CPU, RAM, swap, uptime, and more)
+
+wmsysmon is a program designed for use with the Window Maker window
+manager for the X Window System. It monitors the following system
+information: Memory usage, swap usage, I/O throughput, system uptime,
+hardware interrupts, paging and swap activity.
+
+There is no man page. Run "wmsysmon --help" for usage.
+
+Note: in the unlikely event that you're using a non-SMP (single core,
+single CPU) system, the package will be built differently. If you
+build on an SMP machine and install the package on a non-SMP one
+(or vice versa), wmsysmon may not work correctly. You can force SMP
+support to be enabled or disabled with SMP=yes or SMP=no. The default
+is to autodetect, which is what you want if you're going to install
+the package on the machine you built it on.

@@ -2,7 +2,8 @@
 
 # Slackware build script for wmsysmon
 
-# Copyright 2020 fondfire (fondfire@gmail.com)
+# Copyright 2020 fondfire <email removed>.
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>.
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,28 +23,34 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260703 bkw:
+# - take over maintenance.
+# - update for v0.8.1. the previous version (0.7.8) segfaults on startup,
+#   on Slackware 15.0.
+# - add REQUIRES=libdockapp since 0.8.1 needs it.
+# - fix ARCH typo, i465 => i586.
+# - add SMP=no option (unlikely to ever be used...)
+# - replace README and slack-desc with text from upstream's README.md.
+
 # version 1.0 - 2020/03/29
 # - initial creation
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=wmsysmon
-VERSION=${VERSION:-0.7.8}
+VERSION=${VERSION:-0.8.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i456 ;;
+    i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
     *) ARCH=$( uname -m ) ;;
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -55,19 +62,14 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i456" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -78,29 +80,47 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 \
-  -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
-export CFLAGS="$SLKCFLAGS -fcommon"
-cd src
-mkdir -p $PKG/usr/bin
-make
-make install DESTDIR=$PKG
-cd ..
+sed -i "s,-Wall,& $SLKCFLAGS," src/Makefile
 
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+# 20260703 bkw: autodetect SMP but allow override. This seems kinda
+# over-engineered, but it's hopefully not user-hostile.
+case "${SMP:-auto}" in
+  yes) ;;
+  no)  ;;
+  auto) if [ "$(nproc)" = "1" ]; then
+          SMP=no
+        else
+          SMP=yes
+        fi ;;
+  *) cat <<EOF 2>&1
+$( basename $0): invalid value for SMP variable. Use "yes", "no", or "auto".
+EOF
+     exit 1 ;;
+esac
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING ChangeLog README $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+WITHSMP=with
+if [ "$SMP" = "no" ]; then
+  sed -i 's,-DHI_INTS,,' src/Makefile
+  WITHSMP=without
+fi
+
+echo "===> SMP='$SMP', WITHSMP='$WITHSMP'"
+
+make -C src
+strip src/$PRGNAM
+make -C src install DESTDIR=$PKG
+
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a COPYING ChangeLog README* $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
-cat $CWD/slack-desc > $PKG/install/slack-desc
+sed "s,@WITHSMP@,$WITHSMP," < $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

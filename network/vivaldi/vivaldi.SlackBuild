@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vivaldi
-VERSION=${VERSION:-8.0.4033.54}
+VERSION=${VERSION:-8.0.4033.57}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

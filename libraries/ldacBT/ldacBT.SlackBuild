@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ldacBT
-VERSION=${VERSION:-2.0.2.3}
+VERSION=${VERSION:-2.0.2.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -69,23 +69,17 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-# The directory name inside of the archive does not include version.
-rm -rf $PRGNAM
+rm -rf $PRGNAM-$VERSION
+# No subdirectory in upstream's tarball.
+mkdir $PRGNAM-$VERSION
+cd $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-# Allow building with CMake 4.0.0+ on Slackware current by updating
-#     cmake_minimum_required(VERSION 3.0)
-# Need at least 3.5, but using 3.10 to avoid a warning about deprecation.
-# Specifying -DCMAKE_POLICY_VERSION_MINIMUM=3.10 has similar effect but prints a
-# warning on Slackware 15.0 about unused variable.
-sed -i '1s/3.0/3.10/' CMakeLists.txt
 
 mkdir -p build
 cd build

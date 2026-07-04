@@ -13,16 +13,18 @@ concurrency:
 
 env:
   # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
-  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:ca21dea9c86ef80bdd08330d6e7b15e4d23b2bc036d2d0e419cbadcd55b85591
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:a313639001e6498de247b8012792756e84c5b8ca681bb2777f82ea27bb7c1f12
 
 jobs:
   pr-checks:
     name: PR checks
     runs-on: codeberg-small
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: https://code.forgejo.org/actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
+          show-progress: false
           fetch-depth: 1
+          persist-credentials: false
 
       - name: Set up buildah
         shell: bash
@@ -146,6 +148,15 @@ jobs:
                 "$api_url/repos/$REPO_FULL_NAME/issues/$PR_NUMBER/comments" > /dev/null
             fi
           }
+
+          changed_count="$(printf '%s\n' "$changed_projects" | grep -c .)"
+          if [[ "$changed_count" -gt 10 ]] ; then
+            printf 'This PR contains too many changed packages (more than 10). Skipping normal PR checks.\n' > comment-output
+            upsert_comment "<!-- ci:too-many-changes -->" comment-output
+            rm -f comment-output comment-body
+            printf 'Too many changed packages (%s); skipping checks\n' "$changed_count"
+            exit 0
+          fi
 
           image="docker.io/$SBO_MAINTAINER_TOOLS_IMAGE"
 

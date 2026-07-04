@@ -4,4 +4,8 @@ kind of system via the sysfs hwmon interface (/sys/class/hwmon). It is
 designed to eat as little CPU power as possible.
 
 Before using /etc/rc.d/rc.thinkfan, make sure to create and configure a
-/etc/thinkfan.conf file or the daemon will not start.
+/etc/thinkfan.conf file or the daemon will not start. See the doc
+directory for an explanation/example of a yaml-based configuration file.
+
+Upstream may remove support for legacy (non-yaml) configuration files in
+future.

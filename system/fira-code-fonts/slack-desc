@@ -15,5 +15,5 @@ fira-code-fonts: ASCII-compatible. This helps to read and understand code faster
 fira-code-fonts: some frequent sequences like .. or //, ligatures allow us to correct
 fira-code-fonts: spacing.
 fira-code-fonts:
-fira-code-fonts:
-fira-code-fonts:
+fira-code-fonts: Author: Nikita Prokopov
+fira-code-fonts: Homepage: https://github.com/tonsky/FiraCode

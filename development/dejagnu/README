@@ -1,3 +1,5 @@
+dejagnu (Framework for testing other programs)
+
 DejaGnu is a framework for testing other programs. Its purpose is
 to provide a single front end for all tests. Think of it as a custom
 library of Tcl procedures crafted to support writing a test harness. A

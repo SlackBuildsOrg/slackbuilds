@@ -1,10 +1,12 @@
 PRGNAM="wqy-microhei-font-ttf"
 VERSION="0.2.0_beta"
-HOMEPAGE="http://wenq.org/"
-DOWNLOAD="http://sourceforge.net/projects/wqy/files/wqy-microhei/0.2.0-beta/wqy-microhei-0.2.0-beta.tar.gz"
-MD5SUM="a124c5c6606f4f3b733d3477380e9d2f"
+HOMEPAGE="https://sourceforge.net/projects/wqy"
+DOWNLOAD="https://sourceforge.net/projects/wqy/files/wqy-microhei/0.2.0-beta/wqy-microhei-0.2.0-beta.tar.gz \
+          https://salsa.debian.org/fonts-team/fonts-wqy-microhei/-/raw/master/debian/wqy-microhei.ttc.xd3"
+MD5SUM="a124c5c6606f4f3b733d3477380e9d2f \
+        9f505f04f565d574fe13035a24d8af21"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES=""
-MAINTAINER="orphaned - no maintainer"
-EMAIL="NOEMAIL"
+REQUIRES="xdelta3"
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

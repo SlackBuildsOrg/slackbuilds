@@ -1,10 +1,12 @@
 PRGNAM="fira-code-fonts"
-VERSION="1.206"
+VERSION="6.2"
 HOMEPAGE="https://github.com/tonsky/FiraCode"
-DOWNLOAD="https://github.com/tonsky/FiraCode/archive/1.206/FiraCode-1.206.tar.gz"
-MD5SUM="3df0bc5027ded7db125e3733fca2a81e"
+DOWNLOAD="https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip \
+          https://raw.githubusercontent.com/tonsky/FiraCode/refs/tags/6.2/LICENSE"
+MD5SUM="77dfd6d902db1ee8d8a6722373ce7933 \
+        1f319ca1887afc3591b1dccdd8530c58"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""
-MAINTAINER="orphaned - no maintainer"
-EMAIL="NOEMAIL"
+MAINTAINER="K. Eugene Carlson"
+EMAIL="kvngncrlsn@gmail.com"

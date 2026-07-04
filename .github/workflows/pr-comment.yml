@@ -1,0 +1,108 @@
+---
+name: PR comment
+
+on: # zizmor: ignore[dangerous-triggers]
+  workflow_run:
+    workflows:
+      - PR checks
+    types:
+      - completed
+
+permissions: {}
+
+concurrency:
+  group: pr-comment-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    name: Post PR comments
+    runs-on: ubuntu-slim
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success'
+    permissions:
+      pull-requests: write # create/update the PR comments produced by the check run
+      actions: read # download the check run's artifact via the actions API
+    steps:
+      - name: Download comment bodies
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: pr-comments
+          path: comments
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Post comments
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const dir = 'comments';
+
+            if (!fs.existsSync(dir)) {
+              core.info('No comment artifact found; nothing to do.');
+              return;
+            }
+
+            const headSha = context.payload.workflow_run.head_sha;
+            const { owner, repo } = context.repo;
+
+            const associated =
+              await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                owner,
+                repo,
+                commit_sha: headSha,
+              });
+
+            const pr = associated.data.find((p) => p.state === 'open');
+
+            if (!pr) {
+              core.info(`No open PR found for ${headSha}; nothing to do.`);
+              return;
+            }
+
+            const issue_number = pr.number;
+
+            const allowed = /^(sbolint-|reverse-deps-|too-many-changes).*\.md$/;
+            const files = fs
+              .readdirSync(dir)
+              .filter((f) => allowed.test(f))
+              .slice(0, 50);
+
+            const existing = await github.paginate(
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 },
+            );
+
+            for (const file of files) {
+              const body = fs.readFileSync(path.join(dir, file), 'utf8');
+              const match = body.match(/<!-- (ci:[^\n>]+) -->/);
+
+              if (!match) {
+                core.warning(`No marker in ${file}; skipping.`);
+                continue;
+              }
+
+              const marker = `<!-- ${match[1]} -->`;
+              const found = existing.find((c) => (c.body || '').includes(marker));
+
+              if (found) {
+                await github.rest.issues.updateComment({
+                  owner,
+                  repo,
+                  comment_id: found.id,
+                  body,
+                });
+              } else {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number,
+                  body,
+                });
+              }
+            }

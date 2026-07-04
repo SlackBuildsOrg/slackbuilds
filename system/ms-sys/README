@@ -1,3 +1,5 @@
+ms-sys (writes Microsoft compatible boot records)
+
 This program is used to create Microsoft compatible boot records.
 It is able to do the same as Microsoft "fdisk /mbr" to a hard disk.
 It is also able to do the same as Microsoft "sys d:" to a floppy or
@@ -5,5 +7,5 @@ FAT partition except that it does not copy any system files,
 only the boot record is written.
 
 It is useful when using Linux to restore a backup of a reference
-Microsoft Windows installation.
-(Excellent for creating bootable Windows 7 install USB).
+Microsoft Windows installation, and excellent for creating bootable
+Windows 7 install USB sticks.

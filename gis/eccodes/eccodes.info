@@ -1,10 +1,12 @@
 PRGNAM="eccodes"
-VERSION="2.47.0"
+VERSION="2.47.3"
 HOMEPAGE="https://confluence.ecmwf.int/display/ECC"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://confluence.ecmwf.int/download/attachments/45757960/eccodes-2.47.0-Source.tar.gz"
-MD5SUM_x86_64="6e5188a032ee47e2d28ad3ac48eef1fa"
+DOWNLOAD_x86_64="https://github.com/ecmwf/eccodes/archive/refs/tags/2.47.3/eccodes-2.47.3.tar.gz \
+	https://github.com/ecmwf/ecbuild/archive/refs/tags/3.12.0/ecbuild-3.12.0.tar.gz"
+MD5SUM_x86_64="ba4a9ea99c02ce96c73a7eab11ee9444 \
+	fec9ef51968b009a9fbb6c7820132e04"
 REQUIRES="libaec"
 MAINTAINER="ArTourter"
 EMAIL="artourter@gmail.com"

@@ -1,0 +1,7 @@
+sacd-extract (Extract DSD files from an SACD image)
+
+SACD Extract is a command-line application which extracts
+tracks from SACD ISO image
+
+When using slackware current, CURRENT=ON (default OFF) is
+required to fix build with gcc.

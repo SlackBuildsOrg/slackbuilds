@@ -13,3 +13,8 @@ Commandline tab completion is available in bash shells provided
 that Slackware's bash-completion package (from Slackware CD "extra"
 directory) has been installed at run time. The tab completion for zsh
 should just work (thanks to contribution from David O'Shaughnessy).
+
+The completions are not installed by default. They can be enabled by
+setting evnironment variable INSTALL_COMPLETIONS to YES
+when running the SlackBuild e.g.
+    INSTALL_COMPLETIONS=YES bash hoorex.SlackBuild

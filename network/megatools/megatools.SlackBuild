@@ -25,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=megatools
-VERSION=${VERSION:-1.11.1}
-EXTRAVER=${EXTRAVER:-20241028}
+VERSION=${VERSION:-1.11.5}
+EXTRAVER=${EXTRAVER:-20250706}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,10 +84,11 @@ mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \
   CXXFLAGS="$SLKCFLAGS" \
-  meson .. \
+  meson setup .. \
     --buildtype=release \
     --infodir=/usr/info \
     --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --datadir=/usr \
     --localstatedir=/var \
     --mandir=/usr/man \
     --prefix=/usr \
@@ -97,13 +98,14 @@ cd build
   DESTDIR=$PKG $NINJA install
 cd ..
 
+pushd $PKG/usr/doc
+mv -iv $PRGNAM $PRGNAM-$VERSION
+popd
+
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a \
-  LICENSE NEWS README TODO \
-  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

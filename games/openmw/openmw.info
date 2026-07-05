@@ -1,10 +1,16 @@
 PRGNAM="openmw"
-VERSION="0.47.0"
+VERSION="0.51.0"
 HOMEPAGE="https://openmw.org"
-DOWNLOAD="https://github.com/OpenMW/openmw/archive/refs/tags/openmw-0.47.0/openmw-openmw-0.47.0.tar.gz"
-MD5SUM="823de13cc92645dd4e02c6343022c55c"
+DOWNLOAD="https://github.com/OpenMW/openmw/archive/openmw-0.51.0/openmw-openmw-0.51.0.tar.gz \
+          https://github.com/OpenMW/osg/archive/8aa8d91747ff414ab0de19aae1e0dbd739acea2c/osg-8aa8d91747ff414ab0de19aae1e0dbd739acea2c.tar.gz \
+          https://github.com/recastnavigation/recastnavigation/archive/v1.6.0/recastnavigation-1.6.0.tar.gz
+          https://github.com/jbeder/yaml-cpp/archive/c2680200486572baf8221ba052ef50b58ecd816e/yaml-cpp-c2680200486572baf8221ba052ef50b58ecd816e.tar.gz"
+MD5SUM="92123addd1b7b2bb5804c69429e33a2c \
+        b9427669964d7e489d983df4d30cc79f \
+        4dc47c74e41dc8b484ffc39019ce0c2c \
+        4427dba719fe535e861956c3782e3da7"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="FreeImage unshield OpenSceneGraph MyGUI bullet"
-MAINTAINER="orphaned - no maintainer"
-EMAIL="NOEMAIL"
+REQUIRES="unshield MyGUI bullet luajit collada-dom gcc14"
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

@@ -3,6 +3,7 @@
 # Slackware build script for MyGUI
 
 # Copyright Talos Thoren <talosthoren@gmail.com>
+# Copyright 2026 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=MyGUI
 SRCNAM=mygui-MyGUI  # Yes, really (github)
-VERSION=${VERSION:-3.4.1}
+VERSION=${VERSION:-3.4.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,33 +79,37 @@ cd $SRCNAM$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
- -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-sed -i '71 i set(MYGUI_GCC_VISIBILITY_FLAGS "")' CMakeLists.txt
-sed -i 's/\${OIS_LIBRARIES}/${OIS_LIBRARIES} boost_system/g' Common/CMakeLists.txt
+ -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
 mkdir -p build
 cd build
   cmake \
     -DCMAKE_C_FLAGS="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS="$SLKCFLAGS" \
+    -DLIB_SUFFIX="$LIBDIRSUFFIX" \
+    -DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+    -DBUILD_SHARED_LIBS=TRUE \
+    -DMYGUI_STATIC=OFF \
     -DMYGUI_INSTALL_TOOLS=TRUE \
     -DMYGUI_INSTALL_DOCS=FALSE \
-    -DMYGUI_INSTALL_SAMPLES=FALSE \
-    -DMYGUI_INSTALL_MEDIA=TRUE \
-    -DMYGUI_STATIC=FALSE \
-    -DMYGUI_USE_FREETYPE=TRUE \
+    -DMYGUI_USE_FREETYPE=ON \
+    -DMYGUI_BUILD_DEMOS=OFF \
+    -DMYGUI_BUILD_DOCS=OFF \
     -DMYGUI_BUILD_PLUGINS=TRUE \
     -DMYGUI_BUILD_TOOLS=TRUE \
-    -DMYGUI_BUILD_WRAPPER=FALSE \
+    -DMYGUI_RENDERSYSTEM=7 \
+    -DMYGUI_USE_SYSTEM_GLEW=ON \
+    -DMYGUI_DONT_USE_OBSOLETE=TRUE \
     ..
 
   make
   make install DESTDIR=$PKG
+  rm -f $PKG/usr/bin/resources.xml
 cd ..
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
@@ -113,11 +118,6 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-
-# Ensure that the libraries are installed in the correct directory on 64-bit
-if [ "$ARCH" = "x86_64" ]; then
-    sed -i 's/\/lib/\/lib64/' $PKG/usr/lib$LIBDIRSUFFIX/pkgconfig/MYGUI.pc
-fi
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

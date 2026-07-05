@@ -4,6 +4,7 @@
 
 # Copyright 2013  David  Fillpot
 # All rights reserved.
+# Updated by Emmanuel N. Millan 2026
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -25,11 +26,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=lightyears
-VERSION=${VERSION:-1.4}
+VERSION=${VERSION:-1.5.2}
 ARCH=noarch
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+PRGNAM2=20kly
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
 # the name of the created package would be, and then exit. This information
@@ -46,9 +48,9 @@ OUTPUT=${OUTPUT:-/tmp}
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP || exit 1
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2 || exit 1
-cd $PRGNAM-$VERSION || exit 1
+rm -rf $PRGNAM2-$VERSION
+tar xvf $CWD/$PRGNAM2-$VERSION.tar.gz || exit 1
+cd $PRGNAM2-$VERSION || exit 1
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -58,11 +60,11 @@ find -L . \
 
 # move the application files
 mkdir -p $PKG/usr/share/games/$PRGNAM-$VERSION
-cp -a -r audio code data $PKG/usr/share/games/$PRGNAM-$VERSION
+cp -a -r lib20k data $PKG/usr/share/games/$PRGNAM-$VERSION
 
 # move the icon and .desktop file
 mkdir $PKG/usr/share/{applications,pixmaps}
-cp -a data/32.png $PKG/usr/share/pixmaps/lightyears.png
+cp -a data/32_png $PKG/usr/share/pixmaps/${PRGNAM}.png
 cp $CWD/lightyears.desktop $PKG/usr/share/applications/
 
 # modify and copy the executable script
@@ -71,7 +73,7 @@ install -m 755 -D lightyears $PKG/usr/games/lightyears
 
 # move the documentation
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a -r LICENSE.txt README.txt manual \
+cp -a -r LICENSE.txt README.md manual.pdf \
   $PKG/usr/doc/$PRGNAM-$VERSION
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
@@ -79,6 +81,7 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat $CWD/douninst.sh > $PKG/install/douninst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

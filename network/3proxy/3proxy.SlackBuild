@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=3proxy
-VERSION=${VERSION:-0.9.6}
+VERSION=${VERSION:-0.9.7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,7 +84,10 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # fix detecting libs for plugins
-sed -i 's/echo/echo -e/g' Makefile.Linux
+# replace forgotten placeholders
+sed -i "s/echo/echo -e/g
+        /add3proxyuser/a\\\tsed -i -e 's|@CMAKE_INSTALL_FULL_BINDIR@|\$(exec_prefix)/bin|g' -e 's|@3PROXY_CONFDIR@|/etc/3proxy|g' -e 's|@CRYPT_PREFIX@|\$(CRYPT_PREFIX)|g' \$(BINDIR)/add3proxyuser" \
+    Makefile.Linux
 
 CFLAGS="$SLKCFLAGS" \
 make -f Makefile.Linux
@@ -103,18 +106,12 @@ sed -i "s|/bin|/usr/bin|
         $PKG/etc/$PRGNAM/3proxy.cfg
 mv $PKG/etc/$PRGNAM/3proxy.cfg $PKG/etc/$PRGNAM/3proxy.cfg.new
 
-# proxy binary conflicts with libproxy, so we rename it
-mv $PKG/usr/bin/proxy $PKG/usr/bin/htproxy
-mv $PKG/usr/man/man8/proxy.8 $PKG/usr/man/man8/htproxy.8
-
 # taken from postinst file
 touch $PKG/var/lib/$PRGNAM/conf/passwd
 for file in $PKG/var/lib/$PRGNAM/conf/*; do mv "$file" "$file.new"; done
-mv $PKG/var/lib/$PRGNAM/conf/add3proxyuser.sh.new $PKG/var/lib/$PRGNAM/conf/add3proxyuser.sh
-sed -i 's|/bin|/usr/bin|' $PKG/var/lib/$PRGNAM/conf/add3proxyuser.sh
 chown -R proxy:proxy $PKG/var/lib/$PRGNAM
 chmod 0440 $PKG/var/lib/$PRGNAM/conf/*
-chmod 0550 $PKG/var/lib/$PRGNAM/{,conf,conf/add3proxyuser.sh}
+chmod 0550 $PKG/var/lib/$PRGNAM/conf
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -123,11 +120,11 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $(find $PKG/usr/man -type l); do ln -s $(readlink $i).gz $i.gz; rm $i; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -aR \
-  cfg/ doc/* authors copying README \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -aR -t $PKG/usr/doc/$PRGNAM-$VERSION \
+  cfg/ doc/* authors CHANGELOG copying README.md
 iconv -f koi8-r -t utf-8 -o $PKG/usr/doc/$PRGNAM-$VERSION/ru/example1.txt doc/ru/example1.txt
 iconv -f koi8-r -t utf-8 -o $PKG/usr/doc/$PRGNAM-$VERSION/ru/iodbc.txt doc/ru/iodbc.txt
+cp -a CHANGELOG.rus $PKG/usr/doc/$PRGNAM-$VERSION/ru/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

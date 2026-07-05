@@ -79,7 +79,7 @@ find -L . \
 
 mkdir -p build
 cd build
-  export "PATH=/opt/cmake-202x/bin:$PATH"
+  export "PATH=/opt/cmake-opt/bin:$PATH"
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \

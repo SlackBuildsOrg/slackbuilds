@@ -9,4 +9,6 @@ library comes with some example programs including heif-convert that
 converts HEIF/AVIF images to JPEG or PNG.
 
 libheif makes use of libde265 for HEIF image decoding and x265 for
-encoding. For AVIF, aom, dav1d, svt-av1, or rav1e are used as codecs.
+encoding. For AVIF, aom, dav1d, and svt-av1, are used as codecs.
+
+codecs rav1e and kvazaar are optional.

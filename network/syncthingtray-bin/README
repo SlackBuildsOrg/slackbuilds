@@ -27,7 +27,7 @@ Syncthing Tray Features
     - Can be opened as regular browser tab
     - Can be opened in a dedicated window utilizing either
        Qt WebEngine/WebKit
-       the "app mode" of a Chromium-based browser (e.g. Chrome and Edge)
+       the "app mode" of a Chromium-based browser (e.g. Chrome and Edge
   + Allows switching quickly between multiple Syncthing instances
   + Also features a simple command line utility syncthingctl
     - Check status

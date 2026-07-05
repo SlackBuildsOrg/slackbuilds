@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/PyGreSQL/PyGreSQL/archive/6.2.3/PyGreSQL-6.2.3.tar.
 MD5SUM="d84012cbed2d6a3d99ae798fb3ecd5f8"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="postgresql"
+REQUIRES="postgresql18"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

@@ -1,0 +1,31 @@
+From: =?utf-8?b?0L3QsNCx?= <nabijaczleweli@nabijaczleweli.xyz>
+Date: Sun, 3 Nov 2024 20:10:39 +0100
+Subject: Don't install internal headers
+
+---
+ src/Makefile.am | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 59da838..a02bb0a 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -8,18 +8,6 @@ iat_SOURCES =   util.c \
+ 		mktoc.c \
+ 		mkcore.c \
+ 		main.c 
+-include_HEADERS = util.h \
+-		calculate_pregap.h \
+-		convert_2_iso.h \
+-		cmdline.h \
+-		define.h \
+-		mmc2r11.h \
+-		debug.h \
+-		ecma119.h \
+-		mkcue.h \
+-		mktoc.h	\
+-		mkcore.h \
+-		ecma167.h
+ 
+ AM_CFLAGS = -D_FILE_OFFSET_BITS=64 -pedantic -Wconversion -Wpointer-arith -Wcast-align #-std=c99 
+ 

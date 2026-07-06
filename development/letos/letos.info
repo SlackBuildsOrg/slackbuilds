@@ -1,11 +1,11 @@
 PRGNAM="letos"
-VERSION="4.0.0"
+VERSION="4.0.1"
 HOMEPAGE="https://letos.org"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/pawelsalawa/letos/archive/4.0.0/letos-4.0.0.tar.gz \
+DOWNLOAD_x86_64="https://github.com/pawelsalawa/letos/archive/4.0.1/letos-4.0.1.tar.gz \
                  http://mirrors.slackware.com/slackware/slackware64-15.0/patches/packages/sqlite-3.50.4-x86_64-2_slack15.0.txz"
-MD5SUM_x86_64="a8a4f9b87e1352ff8b47f784557f644c \
+MD5SUM_x86_64="25f4276c6188f37a9fe95efcca5085e4 \
                4ff09e9659b1843e063fe56f5133511b"
 REQUIRES="chrpath qt6"
 MAINTAINER="Antonio Leal"

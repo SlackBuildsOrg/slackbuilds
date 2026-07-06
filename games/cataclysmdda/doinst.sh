@@ -1,11 +1,9 @@
-# HACK: The binary build depends on this symlink present
-if [ ! -e /usr/lib64/libtinfo.so.5 ]
-then
-	if [ ! -e /usr/lib64/libtinfo.so ]
-	then
-		echo "libtinfo.so cannot be found. Expect problems"
-	fi
-	echo "Creating symlink /usr/lib64/libtinfo.so.5 => /usr/lib64/libtinfo.so"
-	ln -s /usr/lib64/libtinfo.so /usr/lib64/libtinfo.so.5
+if [ -x /usr/bin/update-desktop-database ]; then
+  /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
 fi
 
+if [ -e usr/share/icons/hicolor/icon-theme.cache ]; then
+  if [ -x /usr/bin/gtk-update-icon-cache ]; then
+    /usr/bin/gtk-update-icon-cache -f usr/share/icons/hicolor >/dev/null 2>&1
+  fi
+fi

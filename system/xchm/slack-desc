@@ -8,8 +8,8 @@
     |-----handy-ruler------------------------------------------------------|
 xchm: xchm (viewer for .chm files)
 xchm:
-xchm: xchm is a viewer for Compiled HTML Help (.chm) files.
-xchm:
+xchm: xchm is a viewer for Compiled HTML Help (.chm) files, with a wxWidgets
+xchm: user interface.
 xchm:
 xchm:
 xchm:

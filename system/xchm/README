@@ -1,1 +1,4 @@
-xchm is a viewer for Compiled HTML Help (.chm) files.
+xchm (viewer for .chm files)
+
+xchm is a viewer for Compiled HTML Help (.chm) files, with a wxWidgets
+user interface.

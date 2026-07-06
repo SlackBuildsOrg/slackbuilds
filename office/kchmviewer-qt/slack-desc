@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+kchmviewer-qt: kchmviewer-qt (a CHM viewer)
+kchmviewer-qt:
+kchmviewer-qt: Kchmviewer is a free, open-source CHM (aka MS HTML help) and EPUB
+kchmviewer-qt: viewer written in C++ for Unix, Mac and Windows systems. Unlike most
+kchmviewer-qt: existing CHM viewers for Unix, it uses Trolltech Qt widget library,
+kchmviewer-qt: and could optionally be compiled for better KDE integration. It does
+kchmviewer-qt: not require KDE, but may be compiled with KDE widget support. Since
+kchmviewer-qt: version 5.0 it uses the Webkit API to show the content. This is
+kchmviewer-qt: Qt-only version.
+kchmviewer-qt:
+kchmviewer-qt: Homepage: http://www.ulduzsoft.com/kchmviewer

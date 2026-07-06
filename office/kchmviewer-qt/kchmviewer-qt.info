@@ -1,0 +1,20 @@
+PRGNAM="kchmviewer-qt"
+VERSION="8.0"
+HOMEPAGE="https://www.ulduzsoft.com/kchmviewer"
+DOWNLOAD="https://github.com/gyunaev/kchmviewer/commit/869ecdf6861dbc75db1a37de5844d3e40c2b267b.patch \
+          https://github.com/gyunaev/kchmviewer/commit/99a6d94bdfce9c4578cce82707e71863a71d1453.patch \
+          https://github.com/gyunaev/kchmviewer/commit/9ac73e7ad15de08aab6b1198115be2eb44da7afe.patch \
+          https://github.com/gyunaev/kchmviewer/commit/a4a3984465cb635822953350c571950ae726b539.patch \
+          https://github.com/gyunaev/kchmviewer/commit/e3b09edbbae17ad19661a7514afe5a9d84ca0ffa.patch \
+          https://github.com/gyunaev/kchmviewer/archive/RELEASE_8_0/kchmviewer-RELEASE_8_0.tar.gz"
+MD5SUM="c60c9ee0ac7bf8af718954dcb2f60e65 \
+        25154483aa653492d94aaa5f3eed1294 \
+        5ee94f39d4e91b4d104f64bfd6392f6a \
+        882a7dd07012c13eed1735fbb5dc249e \
+        4980b6c4c36ac3e8990aea59b31d9e36 \
+        581fac4d97042b0cc32bf683a39458eb"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

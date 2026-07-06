@@ -1,0 +1,18 @@
+Kchmviewer is a free, open-source CHM (aka MS HTML help) and EPUB viewer
+written in C++ for Unix, Mac and Windows systems. Unlike most existing
+CHM viewers for Unix, it uses Trolltech Qt widget library, and could
+optionally be compiled for better KDE integration. It does not require
+KDE, but may be compiled with KDE widget support. Since version 5.0 it
+uses the Webkit API to show the content. This script builds Qt-only
+version.
+
+The main advantage of kchmviewer is the best support for non-English
+languages. Unlike other viewers, kchmviewer in most cases is able to
+correctly detect the chm file encoding and show it. It correctly shows
+the index and table of context in Russian, Spanish, Romanian, Korean,
+Chinese and Arabic help files, and with new search engine is able to
+search in any chm file no matter what language it is written.
+
+kchmviewer is written by George Yunaev, and is licensed under GNU
+General Public License version 3. It uses chmlib to handle the CHM
+files, and some ideas from xchm.

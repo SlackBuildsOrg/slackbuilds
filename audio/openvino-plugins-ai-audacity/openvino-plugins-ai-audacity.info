@@ -16,5 +16,5 @@ MD5SUM_x86_64="289001fcd7a314a762ff366c220d3437 \
         c17382730bdef35c325df210a1ff3d4b \
         dfaca36bb422a37a299e4f328e1b6843"
 REQUIRES="audacity openvino pytorch whisper.cpp"
-MAINTAINER="Johannes Schoepfer"
-EMAIL="slackbuilds@schoepfer.info"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

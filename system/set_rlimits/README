@@ -1,3 +1,5 @@
+set_rlimits (tool to set rlimits)
+
 This is a small program written to give unpriviledged users access to
 realtime scheduling via the new rlimits added to kernel 2.6.12. The
 new name reflects the fact that the program can control resource

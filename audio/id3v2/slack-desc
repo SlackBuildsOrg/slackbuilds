@@ -6,13 +6,13 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
      |-----handy-ruler------------------------------------------------------|
-id3v2: id3v2 (id3v2 tag editor)
+id3v2: id3v2 (command line id3v2 tag editor)
 id3v2:
-id3v2: id3v2 is a command line editor for id3v2 tags.
-id3v2:
-id3v2:
-id3v2:
-id3v2:
+id3v2: A command-line tool to add, modify, remove, or view ID3v2 tags, as
+id3v2: well as convert or list ID3v1 tags. ID3 tags are commonly embedded in
+id3v2: compressed music files such as MP3 and are the standard way to more
+id3v2: fully describe the work than would normally be allowed by putting the
+id3v2: information in the filename.
 id3v2:
 id3v2:
 id3v2:

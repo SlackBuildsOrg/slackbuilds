@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=globalqss
-VERSION=${VERSION:-1.1.0}
+VERSION=${VERSION:-1.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -87,13 +87,12 @@ for qt in "5" "6"; do
     -DCMAKE_C_FLAGS="${SLKCFLAGS}" \
     -DCMAKE_CXX_FLAGS="${SLKCFLAGS}" \
     -DCMAKE_INSTALL_PREFIX="/usr" \
-    -DCMAKE_INSTALL_LIBDIR="/usr/lib${LIBDIRSUFFIX}"
-  make -C build-qt$qt
+    -DCMAKE_INSTALL_LIBDIR="/usr/lib${LIBDIRSUFFIX}" \
+    -DCMAKE_BUILD_TYPE=Release
+  cmake --build build-qt$qt
+  DESTDIR=$PKG cmake --install build-qt$qt
 
-  install -Dpm 755 build-qt$qt/libglobalqssplugin.so \
-    $PKG/usr/lib${LIBDIRSUFFIX}/qt$qt/plugins/styles/libglobalqssplugin.so
-  install -Dpm 644 data/profile.sh \
-    $PKG/etc/profile.d/qt$qt-style-globalqss.sh
+  install -Dpm 644 data/profile.sh $PKG/etc/profile.d/qt$qt-style-globalqss.sh
 done
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

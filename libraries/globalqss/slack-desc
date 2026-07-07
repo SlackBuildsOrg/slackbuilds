@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
          |-----handy-ruler------------------------------------------------------|
-globalqss: globalqss (Qt Engine)
+globalqss: globalqss (qt style engine)
 globalqss:
 globalqss: This engine allows theming of Qt applications using QSS files,
 globalqss: similar to how GTK applications are themed with CSS files.
 globalqss:
-globalqss: For Qt 5.15, 6.x
+globalqss: After uninstallation be sure to remove the config file:
+globalqss:  /etc/profile.d/qt*-style-globalqss.sh
 globalqss:
-globalqss:
-globalqss:
+globalqss: For: Qt 5.10+, 6.x
 globalqss: Homepage: https://github.com/luigifab/globalqss
 globalqss:

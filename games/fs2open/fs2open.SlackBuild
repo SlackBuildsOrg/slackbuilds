@@ -3,6 +3,7 @@
 # Slackware build script for fs2open
 
 # Copyright 2016 Danny Schmarsel <danny@schmarsel.de>
+# Copyright 2026 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -33,8 +34,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fs2open
-VERSION=${VERSION:-ac2b864}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-26.0.0}
+SRCNAM=${SRCNAM:-fs2open.github.com}
+SRCVER=${SRCVER:-release_26_0_0}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -74,9 +77,13 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvzf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $SRCNAM-$SRCVER
+tar -xvf $CWD/$SRCNAM-$SRCVER.tar.gz
+cd $SRCNAM-$SRCVER
+tar -xvf $CWD/cmake-modules-7cef9577d6fc35057ea57f46b4986a8a28aeff50.tar.gz \
+    -C cmake/external/rpavlik-cmake-modules --strip-components=1
+tar -xvf $CWD/libRocket-b0c18e17d257a46db8395485895185915f483ede.tar.gz \
+    -C lib/libRocket --strip-components=1
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -84,60 +91,44 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-# 20220222 bkw: force cmake to find wxGTK3, ignoring /usr/bin/wx-config.
-mkdir -p wxtmp
-ln -s /usr/lib$LIBDIRSUFFIX/wx/config/gtk3-unicode-3.0 wxtmp/wx-config
-export PATH="$(pwd)/wxtmp:$PATH"
-
-mkdir -p build/lib/openal/OpenALsoft/src/
-cp $CWD/openal-soft-1.15.1.tar.bz2 build/lib/openal/OpenALsoft/src/
+sed -i '/sdl2 >=/ s/2.26.5/2.0.20/g' lib/SDL2.cmake
+sed -i '/SET_TARGET_PROPERTIES/ s/fs2_open_${FSO_BINARY_SUFFIX}/fs2open/' \
+    freespace2/CMakeLists.txt
+mkdir -p build
 cd build
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DwxWidgets_CONFIG_OPTIONS="--version=3.0" \
-    -DCMAKE_INSTALL_PREFIX=/opt/fs2open \
-    -DFSO_BUILD_TOOLS:BOOL=ON \
-    -DFSO_BUILD_WXFRED2:BOOL=ON \
-    -DFSO_USE_OPENALSOFT:BOOL=ON \
-    -DFSO_USE_LUAJIT:BOOL=OFF \
+    -DLIB_SUFFIX="$LIBDIRSUFFIX" \
+    -DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DFSO_BUILD_WITH_VULKAN=OFF \
+    -DFSO_BUILD_WITH_OPENXR=OFF \
     -DCMAKE_BUILD_TYPE=Release ..
   make
-  make install/strip DESTDIR=$PKG
+  install -Dm755 ./bin/fs2open -t $PKG/usr/bin
 cd ..
-
-# copy the pixmap
-mkdir -p $PKG/usr/share/pixmaps
-cp $TMP/$PRGNAM-$VERSION/freespace2/resources/app_icon.png $PKG/usr/share/pixmaps/fs2open.png
 
 # create a desktop launcher
 mkdir -p $PKG/usr/share/applications
-if [ "$ARCH" = "x86_64" ]; then
+install -Dm644 freespace2/resources/app_icon.png \
+	$PKG/usr/share/icons/hicolor/48x48/apps/fs2open.png
 cat << EOF > $PKG/usr/share/applications/fs2open.desktop
 [Desktop Entry]
 Type=Application
-Name=FreeSpace 2 Open
-Comment=A Linux port of FreeSpace 2
-Icon=/usr/share/pixmaps/fs2open.png
-Exec=/opt/fs2open/fs2_open_3_7_5_x64
+Name=FreeSpace Open
+Icon=/usr/share/icons/hicolor/48x48/apps/fs2_open.png
+Exec=fs2open
 Terminal=false
 Categories=Game;
 EOF
-else
-cat << EOF > $PKG/usr/share/applications/fs2open.desktop
-[Desktop Entry]
-Type=Application
-Name=FreeSpace 2 Open
-Comment=A Linux port of FreeSpace 2
-Icon=/usr/share/pixmaps/fs2open.png
-Exec=/opt/fs2open/fs2_open_3_7_5
-Terminal=false
-Categories=Game;
-EOF
-fi
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a ChangeLog COPYING Readme.md $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a About.md Authors.md Changelog.md Copying.md Readme.md Unlicense.md \
+   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

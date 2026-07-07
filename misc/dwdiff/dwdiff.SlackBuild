@@ -1,14 +1,23 @@
 #!/bin/bash
 
 # Slackware build script for dwdiff
-# Written by slakmagik <slakmagik@gmail.com>
-# Released under the WTFPL
+# Written by slakmagik.
+# Released under the WTFPL.
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>.
+
+# 20260707 bkw, BUILD=2:
+# - take over maintenance.
+# - get rid of option to disable Unicode (it's 2026, Unicode has been
+#   around for longer than we had ASCII before Unicode). this is the
+#   upstream default, and lets me get rid of a couple of patches.
+# - likewise, get rid of NLS option (install all supported languages).
+#   this is the upstream default, too.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dwdiff
 VERSION=${VERSION:-2.1.4}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -20,9 +29,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -34,24 +40,13 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
-
-if [ -z "$UNICODE" ]; then
-  UNICODE=without
-else
-  UNICODE=with
-fi
-NLS="${NLS:-""}"
 
 set -e
 
@@ -62,38 +57,30 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
-  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
-  -exec chmod 755 {} \; -o \
-  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 \
-  -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Patch for configure --mandir
 patch -p1 < $CWD/config.pkg.patch
-# Patch for a build failure if not building with unicode.
-patch -p1 < $CWD/src-option.c.patch
 
 # This is one messed up makefile - and its configure doesn't accept '--build'
 CC="gcc -fgnu89-inline" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
-  --$UNICODE-unicode \
+  --with-unicode \
   --prefix=/usr \
   --mandir='$(prefix)/man'
 
-make LINGUAS="$NLS" prefix=/usr
-make LINGUAS="$NLS" prefix=$PKG/usr install
+# 20260707 bkw: --docdir accepted and ignored...
+sed -i "/^docdir=/s,share/doc/.*,doc/$PRGNAM-$VERSION," Makefile
 
-find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF |
-  cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+make prefix=/usr
+strip dwdiff dwfilter
+make prefix=$PKG/usr install
+gzip -9 $PKG/usr/man/{man1,*/man1}/*
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-
-mv $PKG/usr/share/doc $PKG/usr
-if [ -z "$NLS" ]; then # share/ will be empty
-  rmdir $PKG/usr/share
-fi
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

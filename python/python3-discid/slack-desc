@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+              |-----handy-ruler------------------------------------------------------|
+python3-discid: python3-discid (libdiscid Python Bindings)
+python3-discid:
+python3-discid: python-discid is a Python binding of libdiscid by MusicBrainz.
+python3-discid: The main purpose is the calculation of an identifier for audio
+python3-discid: discs (Disc ID) to use for the MusicBrainz database. Additionally
+python3-discid: the disc MCN and track ISRCs can be extracted.
+python3-discid:
+python3-discid: Homepage: https://python-discid.readthedocs.org/
+python3-discid:
+python3-discid:
+python3-discid:

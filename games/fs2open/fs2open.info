@@ -1,12 +1,14 @@
 PRGNAM="fs2open"
-VERSION="ac2b864"
+VERSION="26.0.0"
 HOMEPAGE="https://github.com/scp-fs2open/fs2open.github.com"
-DOWNLOAD="https://slackware.uk/~urchlay/src/fs2open-ac2b864.tar.gz \
-          https://downloads.sourceforge.net/project/openal-soft/openal-soft/openal-soft-1.15.1.tar.bz2"
-MD5SUM="19d8cd7edeb98a25b49abbf92b68246c \
-        ea83dec3b9655a27d28e7bc7cae9cd71"
+DOWNLOAD="https://github.com/rpavlik/cmake-modules/archive/7cef957/cmake-modules-7cef9577d6fc35057ea57f46b4986a8a28aeff50.tar.gz \
+          https://github.com/scp-fs2open/fs2open.github.com/archive/release_26_0_0/fs2open.github.com-release_26_0_0.tar.gz \
+          https://github.com/scp-fs2open/libRocket/archive/b0c18e1/libRocket-b0c18e17d257a46db8395485895185915f483ede.tar.gz"
+MD5SUM="feb2c6bf5da8db5e44f133898cce54d2 \
+        4bdf9e77484012c90a183fc6f354f450 \
+        c0a1b0c70fa6a6e50fef7157d2070434"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="wxGTK3"
-MAINTAINER="orphaned - no maintainer"
-EMAIL="NOEMAIL"
+REQUIRES=""
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

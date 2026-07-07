@@ -1,13 +1,13 @@
 PRGNAM="dnsproxy-bin"
-VERSION="0.82.1"
+VERSION="0.83.0"
 HOMEPAGE="https://github.com/AdguardTeam/dnsproxy"
-DOWNLOAD="https://github.com/AdguardTeam/dnsproxy/releases/download/v0.82.1/dnsproxy-linux-386-v0.82.1.tar.gz \
-          https://raw.githubusercontent.com/AdguardTeam/dnsproxy/v0.82.1/config.yaml.dist"
-MD5SUM="2829b89413138168b23043b63d8eeec7 \
+DOWNLOAD="https://github.com/AdguardTeam/dnsproxy/releases/download/v0.83.0/dnsproxy-linux-386-v0.83.0.tar.gz \
+          https://raw.githubusercontent.com/AdguardTeam/dnsproxy/v0.83.0/config.yaml.dist"
+MD5SUM="bd96e17b902e3d15ee8b16ef73090728 \
         56eb9a12fe27fd8bac1ff93af53234d4"
-DOWNLOAD_x86_64="https://github.com/AdguardTeam/dnsproxy/releases/download/v0.82.1/dnsproxy-linux-amd64-v0.82.1.tar.gz \
-                 https://raw.githubusercontent.com/AdguardTeam/dnsproxy/v0.82.1/config.yaml.dist"
-MD5SUM_x86_64="26e9f4efda80c004a79d0b503c7ba3fc \
+DOWNLOAD_x86_64="https://github.com/AdguardTeam/dnsproxy/releases/download/v0.83.0/dnsproxy-linux-amd64-v0.83.0.tar.gz \
+                 https://raw.githubusercontent.com/AdguardTeam/dnsproxy/v0.83.0/config.yaml.dist"
+MD5SUM_x86_64="4f084b8004e20fc9002190d24564ea1a \
                56eb9a12fe27fd8bac1ff93af53234d4"
 REQUIRES=""
 MAINTAINER="fourtysixandtwo"

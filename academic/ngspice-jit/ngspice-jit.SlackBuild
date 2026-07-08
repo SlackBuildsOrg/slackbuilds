@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Slackware build script for ngspice-jit
+
+# Copyright 2026 Alfredo USA
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# ngspice-jit is a fork of ngspice (codeberg.org/alto555/ngspice).  The source
+# tarball is a normal autotools "make dist" release: it already contains a
+# generated ./configure, so it builds with the stock Slackware autoconf and
+# needs no autogen.sh.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=ngspice-jit
+VERSION=${VERSION:-46.2}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# KLU, XSPICE, OSDI and OpenMP are enabled by default.
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --mandir=/usr/man \
+  --enable-xspice \
+  --enable-cider \
+  --with-readline=yes \
+  --with-x \
+  --build=$ARCH-slackware-linux
+
+make -j 4
+make install DESTDIR=$PKG
+
+# The OSDI JIT compiles behavioral R/C to native OSDI at run time with the
+# system gcc, and needs the osdi headers.  Ship them and point the installed
+# spinit at them (default in the source is the build tree, which does not
+# exist on the target).
+mkdir -p $PKG/usr/share/ngspice/osdi
+install -m 0644 src/osdi/osdi.h src/osdi/osdidefs.h src/osdi/osdiext.h \
+  $PKG/usr/share/ngspice/osdi/
+SPINIT=$PKG/usr/share/ngspice/scripts/spinit
+if [ -f "$SPINIT" ]; then
+  echo "" >> "$SPINIT"
+  echo "* ngspice-jit: where the OSDI codegen finds its headers" >> "$SPINIT"
+  echo "set osdi_res_include=/usr/share/ngspice/osdi" >> "$SPINIT"
+fi
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# man pages
+find $PKG/usr/man -type f -name "*.?" -exec gzip -9 {} \; 2> /dev/null || true
+
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a COPYING* README* ANNOUNCE* NEWS* $PKGDOC 2> /dev/null || true
+
+# Example circuits and our HTML/PDF reference manual both ship in the source
+# tree ("make dist" keeps examples/ and docs/reference_manual/), they just were
+# not being copied into the package.  Install both.
+cp -a examples $PKGDOC/ 2> /dev/null || true
+cp -a docs/reference_manual $PKGDOC/ 2> /dev/null || true
+
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

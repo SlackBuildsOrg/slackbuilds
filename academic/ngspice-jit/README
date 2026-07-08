@@ -1,0 +1,32 @@
+ngspice-jit is a fork of ngspice (the mixed-level/mixed-signal circuit
+simulator) aimed at running raw foundry analog / mixed-signal top-level
+chips without hand-conversion.
+
+Its headline feature, and its name, is that it JIT-compiles the
+behavioral R/C value expressions a PDK writes
+(voltage/temperature-dependent poly-resistors, MIM capacitors,
+high-field tanh laws) into native OSDI devices at parse time, so the
+solver sees real charge/current-conserving devices instead of fragile
+behavioral sub-circuits.  It also adds Eldo-style topology reduction
+(dangling-passive removal), regular-expression selection in
+show/display/print/plot/write/save, a new 'devices' command, and
+assorted fixes.
+
+The startup banner is tagged "[ngspice-jit fork: ...]" so the binary is
+distinguishable from a stock ngspice at a glance. The internal simulator
+name and version stay "ngspice-46" so .raw files remain compatible.
+
+The OSDI codegen invokes the system compiler (gcc) at run time; gcc is
+part of the Slackware base system.  The osdi headers it needs are
+installed to /usr/share/ngspice/osdi and spinit is set to find them.
+
+Documentation shipped under /usr/doc/ngspice-jit-VERSION:
+examples         - the upstream example-circuit tree (from the source)
+reference_manual - our HTML/PDF command reference (ngspice_manual.html /
+                   .pdf, tested vs ngspice-46), carried by the source
+                   tarball.
+
+Important: Installing ngspice-jit will overwrite the original ngspice
+executable and all the libraies name are the same.
+
+Homepage: https://codeberg.org/alto555/ngspice

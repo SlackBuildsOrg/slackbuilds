@@ -2,14 +2,21 @@
 
 # Slackware build script for schedtool
 
-# Written by Dave Margell (dmargell@gmail.com)
+# Written by Dave Margell.
 # Thanks to Robby Workman for help with the Makefile patch.
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>.
+# Original had no license. Modified version is licensed under the
+# WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# 20260708 bkw, BUILD=2:
+# - take over maintenance.
+# This is old, but looks too useful to get rid of.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=schedtool
 VERSION=${VERSION:-1.3.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -21,9 +28,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -50,26 +54,27 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
- -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
- -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
+DOC=/usr/doc/$PRGNAM-$VERSION
+PKGDOC=$PKG/$DOC
 patch -p1 < $CWD/schedtool-Makefile.patch
 
 make install \
   OPT="$SLKCFLAGS" \
   PREFIX=/usr \
   MANDIR=/usr/man \
-  DOCDIR=/usr/doc/$PRGNAM-$VERSION \
+  DOCDIR=$DOC \
   DESTDIR=$PKG
+strip $PKG/usr/bin/$PRGNAM
 
-find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-cp -a CHANGES PACKAGERS TODO TUNING $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+# 20260708 bkw: INSTALL was installed, above. Unlike most builds,
+# it actually has useful (but dated) information.
+# PACKAGERS isn't useful.
+cp -a CHANGES TODO TUNING $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

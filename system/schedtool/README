@@ -1,3 +1,5 @@
+schedtool (query or alter a process' scheduling policy)
+
 Schedtool interfaces with the Linux CPU scheduler.
 
 It allows the user to set and query the CPU-affinity and nice-levels

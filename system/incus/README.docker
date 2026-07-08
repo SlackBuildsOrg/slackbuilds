@@ -1,0 +1,46 @@
+Since version 6.3, Incus has been able to ingest OCI images. Docker
+images conform to the OCI standard, meaning that docker images can
+be downloaded and run in incus.
+
+For each docker (or other) download site that is to be used, it is
+necessary to add a 'remote' configuration to incus. To check what
+remotes are currently configured, run:
+    incus remote list
+
+which (in a default installation) will show just 'image' and 'local'
+remotes using 'simplestreams' and 'incus' protocols. To add a remote
+for OCI protocol images from, say, hub.docker.com run the command:
+    incus remote add docker https://docker.io --protocol=oci
+
+Listing remotes should now show an additional remote named 'docker'
+using the 'oci' protocol.
+
+For the following examples of docker image ingestion, we'll use
+docker images produced by Andrew Clemons and published at:
+    https://hub.docker.com/r/aclemons/slackware
+
+These are minimal Slackware images so don't take too long to download
+and don't consume too much disk space.
+
+Try:
+    incus launch docker:aclemons/slackware:15.0 example-1
+
+Notice that the resulting example-1 image is for an x86_64 (amd64)
+system. What if a 32bit image is required instead? Luckily these
+aclemons/slackware images are multi architecture (i386, amd64, arm/v7).
+Any of these architectures can be selected by using the appropriate
+image digest (the image for each architecture has its own distinct
+digest). Find the digest for the i386 image and run:
+    incus launch docker:aclemons/slackware@sha256:c4d50514d4f3922ef935946af48c6b44286723eb3974ca52e29baa4d2366614f example-2
+
+Notice that the example-2 image contains i586 packages:
+    incus exec example-2 -- ls -l /var/lib/pkgtools/packages
+
+and uname -m returns 'i686':
+    incus exec example-2 -- uname -m
+
+i.e. example-2 is a 32bit Slackware 15.0
+
+
+N.B. The image digest in the example above is correct at the time this
+is written. It is likely to change whenever the image is updated.

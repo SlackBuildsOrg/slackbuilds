@@ -1,2 +1,11 @@
 QuiteRSS is RSS/Atom quite fast and comfortable to user feed reader
 written on Qt/C++
+
+Security note: QuiteRSS has known security problems and upstream appears
+to have no intention of patching them or developing the program further.
+But since the program is still functional on slackware and an overall
+great RSS reader, I'm still leaving this SlackBuild up on SBo. Use with
+care and only on trusted non-malicious feeds! Consider moving to
+something else if you can.
+
+This package won't build if qt4 is installed.

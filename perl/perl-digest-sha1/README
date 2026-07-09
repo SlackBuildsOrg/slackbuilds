@@ -1,4 +1,4 @@
-perl-digest-sha1 - Perl interface to the SHA-1 algorithm
+perl-digest-sha1 (Perl interface to the SHA-1 algorithm)
 
 It allows you to use the NIST SHA-1 message digest algorithm 
 from within Perl programs. The algorithm takes as input a

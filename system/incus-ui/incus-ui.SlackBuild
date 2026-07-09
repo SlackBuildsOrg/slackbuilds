@@ -26,12 +26,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=incus-ui
 SRCNAM=incus-ui-canonical
-VERSION=${VERSION:-20260320_f02a5013}
+VERSION=${VERSION:-20260706_64d46e71}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-
-HAVE_NM_TARBALL=${HAVE_NM_TARBALL:-1}
 
 ARCH=${ARCH:-$(uname -m)}
 [ "$ARCH" = "x86_64" ] || {
@@ -54,12 +52,25 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.lz
+echo -n "Unpacking source tarball ... "
+tar xf $CWD/$SRCNAM-$VERSION.tar.lz
+echo
 cd $SRCNAM-$VERSION
+
 if [ -r "$CWD"/"$SRCNAM"-"${VERSION}"-NM.tar.lz ]; then
-  tar xvf "$CWD"/"$SRCNAM"-"${VERSION}"-NM.tar.lz
+  echo -n "Unpacking node-modules ... "
+  tar xf "$CWD"/"$SRCNAM"-"${VERSION}"-NM.tar.lz
+  echo
 else
-  HAVE_NM_TARBALL="0"
+  echo "Generating node_modules tarball ... "
+  npm install --legacy-peer-deps
+  tar cf incus-ui-canonical-${VERSION}-NM.tar node_modules
+  plzip -9 --output=$CWD/incus-ui-canonical-${VERSION}-NM.tar.lz incus-ui-canonical-${VERSION}-NM.tar
+  echo ;
+  echo "Generated tarball of required node_modules";
+  echo "$(md5sum $CWD/incus-ui-canonical-${VERSION}-NM.tar.lz)"
+  echo "Remember to upload it"
+  sleep 5
 fi
 
 chown -R root:root .
@@ -68,15 +79,6 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-
-if [ "$HAVE_NM_TARBALL" = "0" ]; then
-  npm install --legacy-peer-deps
-  tar cf incus-ui-canonical-${VERSION}-NM.tar node_modules
-  plzip -9 --output=$CWD/incus-ui-canonical-${VERSION}-NM.tar.lz incus-ui-canonical-${VERSION}-NM.tar
-  echo ; echo "Run build script again with HAVE_NM_TARBALL=1"
-  exit 0
-fi
 
 npm run build
 

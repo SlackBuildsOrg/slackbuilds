@@ -46,7 +46,7 @@ echo "DATE = $DATE"
 echo "HEADISAT = $HEADISAT"
 
 # Cleanup.  We're not packing up the whole git repo.
-( cd incus-ui-canonical && find . -type d -name ".git*" -exec rm -rf {} \; 2> /dev/null )
+#( cd incus-ui-canonical && find . -type d -name ".git*" -exec rm -rf {} \; 2> /dev/null )
 
 # Generate tarball
 mv incus-ui-canonical incus-ui-canonical-${DATE}_${HEADISAT}

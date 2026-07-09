@@ -1,0 +1,15 @@
+Please run the SlackBuild script as root user.
+
+An optional cron script to keep the framework up to date is
+distributed inside the /usr/doc/metasploit-framework-bin-${VERSION} directory and
+it's called "msfupdate.sh", there also is a logrotate config file
+called "msfupdate.logrotate" which can be useful.
+
+Inside the /usr/doc/metasploit-framework-bin-${VERSION} directory you'll also find a
+bash-completion script for msfvenom, courtesy of kali linux. It is a
+snapshot generated from the Metasploit version shipped in this package,
+so its payload and encoder lists match this release.
+
+man pages for msfconsole and msfvenom (also courtesy of kali linux) are
+installed under /usr/man/man1.
+

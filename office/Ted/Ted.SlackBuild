@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Slackware build script for Ted
-# Copyright 2025 B. Watson (urchlay@gmail.com).
+# Copyright 2025 B. Watson (urchlay@slackware.uk).
 # Copyright 2019 GOSIKI Agiri <agiri@cocaine.ninja>.
 # Previously written by Willy Sudiarto Raharjo <willysr@slackbuilds.org>.
 # Originally written by Hannes Worst <hannesworst@gmail.com>.

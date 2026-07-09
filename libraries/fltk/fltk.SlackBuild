@@ -3,6 +3,7 @@
 # Slackware build script for fltk13
 
 # Copyright 2006-2014  LukenShiro, Italy
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,8 +23,14 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260708 bkw:
+# - take over maintenance.
+# Note to self (or future maintainer): This should stay at the same
+# version as the fltk-1.3.x in Slackware's /extra. Assuming Slackware
+# doesn't drop it in the next release...
+
 # 20230621 bkw: Modified by SlackBuilds.org, BUILD=2:
-#- install static libs # without +x permission.
+# - install static libs # without +x permission.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
@@ -75,16 +82,14 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION-source.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \+ -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Fix linking when --libdir=/usr/lib64
 sed -i \
   -e '/RANLIB/s:$(libdir)/\(.*LIBNAME)\):$(libdir)/`basename \1`:g' \
-  src/Makefile || exit
+  src/Makefile
 
 # Cairo library support
 # By default Cairo library support is enabled (like Slackware extra/fltk)
@@ -117,23 +122,25 @@ CXXFLAGS="$SLKCFLAGS" \
   --${CAIRO_FLAG}able-cairo \
   --build=$ARCH-slackware-linux
 
+# 20260708 bkw: Show the damn compile commands. Have to do this to
+# verify SLKCFLAGS are being used (they are).
+sed -i '/^\.SILENT:/d' makeinclude
+
 # but not here... :)
 make docdir=/usr/doc/$PRGNAM-$VERSION
 make install docdir=/usr/doc/$PRGNAM-$VERSION DESTDIR=$PKG
 chmod 644 $PKG/usr/lib*/*.a
-
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+strip $PKG/usr/bin/fluid $PKG/usr/lib*/lib*.so.*.*
+gzip -9 $PKG/usr/man/man*/*
 
 # Remove catman directories :)
-rm -rf $PKG/usr/man/cat{1,3}
+# 20260708 bkw: If I ever get out of this place, I'm goin' to catman du...
+rm -rf $PKG/usr/man/cat*
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/
-cp -a $DOCFILES $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION/
+mkdir -p $PKGDOC/
+cp -a $DOCFILES $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 rm -f $PKG/usr/lib*/*.la
 

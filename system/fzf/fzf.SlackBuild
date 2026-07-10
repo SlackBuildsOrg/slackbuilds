@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fzf
-VERSION=${VERSION:-0.73.1}
+VERSION=${VERSION:-0.74.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -57,42 +57,50 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 
-# build offline with our vendored dependencies
-sed -i '/^BUILD_FLAGS/s/$/ -mod=vendor/' Makefile
+# Vendor the Go module dependencies offline.
+mapfile -t GO_MODULES < <(go mod edit -json go.mod | python3 -c "
+import json
+import sys
+for r in json.load(sys.stdin).get('Require', []):
+    print(r['Path'])
+")
+mapfile -t GO_TARBALLS < <(grep -oE 'https?://[^ ]+\.tar\.gz' $CWD/$PRGNAM.info | sed 's#.*/##')
 
-mkdir -p vendor/github.com
-
-for DEPENDENCY in gdamore/encoding/1.0.1 \
-                  gdamore/tcell/2.9.0 \
-                  lucasb-eyer/go-colorful/1.2.0 \
-                  mattn/go-isatty/0.0.22 \
-                  mattn/go-runewidth/0.0.16 \
-                  junegunn/go-shellwords/2aa3b3277741a6ad31883f223d770221a85e9dd0 \
-                  rivo/uniseg/0.4.7 \
-                  charlievieth/fastwalk/1.0.14 ; do
-  DEPENDENCY_OWNER="$(echo "$DEPENDENCY" | cut -d/ -f1)"
-  DEPENDENCY_NAME="$(echo "$DEPENDENCY" | cut -d/ -f2)"
-  DEPENDENCY_REV="$(echo "$DEPENDENCY" | cut -d/ -f3)"
-
-  mkdir -p "vendor/github.com/$DEPENDENCY_OWNER"
-
-  tar xf "$CWD/$DEPENDENCY_NAME-$DEPENDENCY_REV.tar.gz"
-  mv "$DEPENDENCY_NAME-$DEPENDENCY_REV" "vendor/github.com/$DEPENDENCY_OWNER/$DEPENDENCY_NAME"
+GO_PAIRS=()
+for i in "${!GO_MODULES[@]}"; do
+  GO_PAIRS+=("${GO_MODULES[$i]} ${GO_TARBALLS[$(( i + 1 ))]}")
 done
 
-mkdir -p vendor/golang.org/x
-for DEPENDENCY in sync/0.5.0 \
-                  sys/0.35.0 \
-                  term/0.34.0 \
-                  text/0.28.0 ; do
-  DEPENDENCY_NAME="$(echo "$DEPENDENCY" | cut -d/ -f1)"
-  DEPENDENCY_REV="$(echo "$DEPENDENCY" | cut -d/ -f2)"
+mapfile -t GO_PAIRS < <(printf '%s\n' "${GO_PAIRS[@]}" | sort)
 
-  tar xf "$CWD/$DEPENDENCY_NAME-$DEPENDENCY_REV.tar.gz"
-  mv "$DEPENDENCY_NAME-$DEPENDENCY_REV" "vendor/golang.org/x/$DEPENDENCY_NAME"
+rm -rf vendor
+mkdir -p vendor
+
+for PAIR in "${GO_PAIRS[@]}"; do
+  MODULE="${PAIR% *}"
+  TARBALL="${PAIR##* }"
+
+  MODTMP="$(mktemp -d)"
+  tar xf $CWD/$TARBALL -C "$MODTMP"
+  MODTOP="$(find "$MODTMP" -mindepth 1 -maxdepth 1 -type d | head -1)"
+
+  MODSRC="$(grep -rlxF "module $MODULE" --include=go.mod "$MODTOP" 2>/dev/null | head -1 || true)"
+  if [ -n "$MODSRC" ]; then
+    MODSRC="$(dirname "$MODSRC")"
+  else
+    MODSRC="$MODTOP"
+  fi
+
+  find "$MODSRC" -mindepth 2 -name go.mod -printf '%h\n' | sort -ru | xargs -r rm -rf
+
+  mkdir -p "vendor/$(dirname "$MODULE")"
+  rm -rf "vendor/$MODULE"
+  mv "$MODSRC" "vendor/$MODULE"
+
+  rm -rf "$MODTMP"
 done
 
-cat << EOF > vendor/modules.txt
+cat > vendor/modules.txt << "EOF"
 # github.com/charlievieth/fastwalk v1.0.14
 ## explicit; go 1.21
 github.com/charlievieth/fastwalk
@@ -178,6 +186,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+sed -i 's/-trimpath/-trimpath -mod=vendor/g' Makefile
 FZF_VERSION="$VERSION" FZF_REVISION="Slackware" make
 
 mkdir -p $PKG/usr/bin

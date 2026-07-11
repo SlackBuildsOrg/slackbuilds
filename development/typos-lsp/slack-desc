@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+typos-lsp: typos-lsp (Source code spell checker for LSP clients)
+typos-lsp:
+typos-lsp: typos is a low false-positive source code spell checker. This project
+typos-lsp: exposes typos via a Language Server Protocol (LSP) server and Visual
+typos-lsp: Studio Code extension to provide a fast, low memory, in-editor spell
+typos-lsp: checker.
+typos-lsp:
+typos-lsp: https://github.com/tekumara/typos-lsp
+typos-lsp:
+typos-lsp:
+typos-lsp:

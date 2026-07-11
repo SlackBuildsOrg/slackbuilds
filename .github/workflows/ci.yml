@@ -42,11 +42,14 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           set -e
           set -o pipefail
 
           mkdir -p comments
+
+          printf '%s\n' "$PR_NUMBER" > comments/pr-number.txt
 
           changed_projects="$(git diff-tree --name-only --diff-filter=d --no-commit-id -r "$BASE_SHA" "$HEAD_SHA" | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -r -I xx dirname xx | sort -u)"
 

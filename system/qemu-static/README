@@ -14,6 +14,12 @@ the binfmt-support service, they will be loaded at machine start up.
 Then you should be able to run all compatible docker images through
 qemu emulation transparently.
 
+Note: update-binfmts --import (below) must be run once after installing
+or upgrading this package - binfmt-support only re-enables formats
+already recorded in /var/lib/binfmts,
+it does not scan /usr/share/binfmts for new ones.
+(This is true for all installable binfmts, not just qemu-static.)
+
 /*
 modprobe binfmt_misc
 mount -t binfmt_misc none /proc/sys/fs/binfmt_misc

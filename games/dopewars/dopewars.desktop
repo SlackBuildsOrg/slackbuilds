@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=dopewars
+Name[de]=Drogenkrieg
+Name[pl]=Wojny narkotykowe
+Comment=dopewars drug dealing game
+Comment[pl]=Gra polegająca na handlowaniu narkotykami
+Comment[fr]=Jeu de vente de drogue
+Exec=dopewars
+Icon=/usr/share/pixmaps/dopewars-weed.png
+Terminal=false
+Type=Application
+Categories=Game;ArcadeGame;

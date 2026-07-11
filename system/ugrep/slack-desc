@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+ugrep: ugrep (the ugrep file pattern searcher)
+ugrep:
+ugrep: ugrep is compatible to GNU/BSD grep, but much faster and with a ton
+ugrep: of new features.  ugrep is a drop-in replacement for BSD and GNU
+ugrep: grep (copy or symlink ug to grep, and to egrep and to fgrep), unlike
+ugrep: other popular grep claiming to be "grep alternatives" or
+ugrep: "replacements" when those actually implement incompatible
+ugrep: command-line options and use an incompatible regex matcher.
+ugrep:
+ugrep: Homepage: https://github.com/Genivia/ugrep
+ugrep:

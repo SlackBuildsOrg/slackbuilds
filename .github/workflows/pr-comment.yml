@@ -51,21 +51,42 @@ jobs:
             const headSha = context.payload.workflow_run.head_sha;
             const { owner, repo } = context.repo;
 
-            const associated =
-              await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                owner,
-                repo,
-                commit_sha: headSha,
-              });
-
-            const pr = associated.data.find((p) => p.state === 'open');
-
-            if (!pr) {
-              core.info(`No open PR found for ${headSha}; nothing to do.`);
+            const numberFile = path.join(dir, 'pr-number.txt');
+            if (!fs.existsSync(numberFile)) {
+              core.info('No pr-number.txt in artifact; nothing to do.');
               return;
             }
 
-            const issue_number = pr.number;
+            const issue_number = Number.parseInt(
+              fs.readFileSync(numberFile, 'utf8').trim(),
+              10,
+            );
+
+            if (!Number.isInteger(issue_number) || issue_number <= 0) {
+              core.setFailed(`Invalid PR number in artifact for ${headSha}.`);
+              return;
+            }
+
+            // PR number from untrusted run, check that is belongs to the
+            // triggering commit.
+            const { data: prData } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: issue_number,
+            });
+
+            if (prData.head.sha !== headSha) {
+              core.setFailed(
+                `PR #${issue_number} head (${prData.head.sha}) does not match ` +
+                  `the triggering commit (${headSha}).`,
+              );
+              return;
+            }
+
+            if (prData.state !== 'open') {
+              core.info(`PR #${issue_number} is not open; nothing to do.`);
+              return;
+            }
 
             const allowed = /^(sbolint-|reverse-deps-|too-many-changes).*\.md$/;
             const files = fs

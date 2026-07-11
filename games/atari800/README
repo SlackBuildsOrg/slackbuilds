@@ -7,7 +7,9 @@ under the GPL.
 
 This build uses SDL for audio, and SDL+OpenGL for video by default. To
 build without OpenGL support (SDL software rendering only), set
-OPENGL=no in the script's environment.
+OPENGL=no in the script's environment. By default, SDL-1.2 is used,
+but you can build with SDL=2 in the environment to use SDL-2.0 (which
+is new in 7.0.0, and not as well-tested).
 
 Starting with version 4.0.0, atari800 includes free replacements
 for the system ROMs, from the Altirra project. This allows

@@ -13,7 +13,7 @@ stalonetray: Window System. It has full XEMBED support and minimal dependencies:
 stalonetray: the X11 lib only. Stalonetray works with virtually any EWMH-compliant
 stalonetray: window manager.
 stalonetray:
-stalonetray: Homepage: http://stalonetray.sourceforge.net/
+stalonetray: Homepage: https://github.com/d3adb5/stalonetray
 stalonetray:
 stalonetray:
 stalonetray:

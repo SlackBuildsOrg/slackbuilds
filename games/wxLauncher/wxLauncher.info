@@ -1,0 +1,14 @@
+PRGNAM="wxLauncher"
+VERSION="0.12.0rc.3"
+HOMEPAGE="https://github.com/scp-fs2open/wxLauncher"
+DOWNLOAD="https://github.com/scp-fs2open/wxLauncher/compare/0.12.0-rc.3...a204abbaa8eb0ca3adbd69138dd0554dcfea3d73.patch \
+          https://github.com/scp-fs2open/wxLauncher/pull/173.patch \
+          https://github.com/scp-fs2open/wxLauncher/archive/0.12.0-rc.3/wxLauncher-0.12.0-rc.3.tar.gz"
+MD5SUM="d79a6b27f80fa5cb132d9f903da49a20 \
+        48053b84249fcd94715075762619f6e6 \
+        a41386e3fe1257814908b52ca895a534"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="wxWidgets"
+MAINTAINER="Ruoh-Shoei LIN"
+EMAIL="lin.ruohshoei+sbo@gmail.com"

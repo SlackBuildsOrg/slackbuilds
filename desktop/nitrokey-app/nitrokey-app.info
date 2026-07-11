@@ -10,5 +10,5 @@ MD5SUM="b8db205c3a33c8260e837c19941b435c \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="hidapi"
-MAINTAINER="Felipe Bugno"
-EMAIL="capent@yahoo.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

@@ -32,7 +32,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=goffice
-VERSION=${VERSION:-0.10.59}
+VERSION=${VERSION:-0.10.61}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -1,3 +1,7 @@
+Sat Jul 11 14:37:17 UTC 2026
+games/beetle-psx-libretro: Fix script.
+misc/hoorex: Fix MD5SUM
++--------------------------+
 Sat Jul 11 10:12:20 UTC 2026
 academic/armadillo: Orphaned (unmaintained).
 academic/arpack: Orphaned (unmaintained).

@@ -3,7 +3,7 @@ VERSION="0.51.0"
 HOMEPAGE="https://openmw.org"
 DOWNLOAD="https://github.com/OpenMW/openmw/archive/openmw-0.51.0/openmw-openmw-0.51.0.tar.gz \
           https://github.com/OpenMW/osg/archive/8aa8d91747ff414ab0de19aae1e0dbd739acea2c/osg-8aa8d91747ff414ab0de19aae1e0dbd739acea2c.tar.gz \
-          https://github.com/recastnavigation/recastnavigation/archive/v1.6.0/recastnavigation-1.6.0.tar.gz
+          https://github.com/recastnavigation/recastnavigation/archive/v1.6.0/recastnavigation-1.6.0.tar.gz \
           https://github.com/jbeder/yaml-cpp/archive/c2680200486572baf8221ba052ef50b58ecd816e/yaml-cpp-c2680200486572baf8221ba052ef50b58ecd816e.tar.gz"
 MD5SUM="92123addd1b7b2bb5804c69429e33a2c \
         b9427669964d7e489d983df4d30cc79f \

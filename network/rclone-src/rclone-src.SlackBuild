@@ -26,7 +26,7 @@ cd "$(dirname "$0")" ; CWD="$(pwd)"
 
 PRGNAM=rclone-src
 SRCNAM=rclone
-VERSION=${VERSION:-1.74.3}
+VERSION=${VERSION:-1.74.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -98,8 +98,9 @@ else
   echo "Creating vendorball"
   go mod vendor
   tar cvf - vendor | xz -c > "$CWD"/"$SRCNAM"-"$VERSION"-vendor.tar.xz
-  echo "Created vendorball - run this script again"
-  exit 0
+  echo
+  echo "Created vendorball - Remember to upload it!"
+  sleep 5
 fi
 
 make TAG=v"$VERSION" rclone

@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=PrismLauncher
-VERSION=${VERSION:-11.0.2}
+VERSION=${VERSION:-11.0.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,7 +78,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # fix building with newer Java
-if [ $(java -version 2>&1 | awk -F'[ ".]' '/version/ {print $4}') -ge 21 ]; then
+if [ "$(java -version 2>&1 | awk -F'[ ".]' '/version/ {print $4}')" -ge 21 ]; then
   sed -i 's/-target 7 -source 7/--release 8 -Xlint:-options/' libraries/{javacheck,launcher}/CMakeLists.txt
 fi
 

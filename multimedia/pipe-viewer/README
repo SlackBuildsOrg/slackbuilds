@@ -5,10 +5,10 @@ videos from YouTube. pipe-viewer is a fork of youtube-viewer that
 does not require a Google API key. Usage and user interface are
 identical to youtube-viewer.
 
-For playing videos, this uses mplayer, vlc, or mpv. However, the
-mplayer that ships with Slackware has some issues with pipe-viewer
-(or actually with youtube: the audio stream cuts out randomly, and
-can be fixed by pressing the left arrow usually).
+For playing videos, this uses vlc or mpv. One of these is required, to
+actually play videos (though, you can search for videos without a
+player installed). I didn't list either one under REQUIRES because
+whichever one I choose, someone's going to prefer the other.
 
 Optional dependencies:
 

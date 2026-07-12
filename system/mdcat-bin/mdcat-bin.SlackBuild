@@ -22,11 +22,17 @@
 # for making sense of the powershell completions and just generally
 # being friendly folks.
 
+# 20260712 bkw:
+# - updated for v2.5.0.
+# Newer releases exist, but they require a newer glibc than Slackware
+# 15.0 has. I don't use this often enough to jump through hoops to get
+# a new version working, so this is it for 15.0.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mdcat-bin
 SRCNAM=mdcat
-VERSION=${VERSION:-2.0.3}
+VERSION=${VERSION:-2.5.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -48,6 +54,8 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+# 20260712 bkw: newer releases dropped the completions/ dir, so use the
+# one from the old release.
 if [ "$ARCH" = "x86_64" ]; then
   SRCDIR="$SRCNAM-$VERSION-$ARCH-unknown-linux-musl"
   TARBALL="$SRCDIR.tar.gz"
@@ -92,12 +100,26 @@ mkdir -p $PKGBIN $PKGDOC $PKGMAN1 $PKGBASHC $PKGZSHC $PKGFISHC $PKGPSHC
 install -m0755 $SRCNAM $PKGBIN
 ln -s $SRCNAM $PKGBIN/mdless
 
-INST="install -m0644"
+INST="install -oroot -groot -m0644"
 $INST LICENSE *.md $PKGDOC
 gzip -9c < $SRCNAM.1 > $PKGMAN1/$SRCNAM.1.gz
 ln -s $SRCNAM.1.gz $PKGMAN1/mdless.1.gz
 
+# 20260712 bkw: upstream no longer ships completions/*. instead, we
+# generate them. this is more complex than it should be, to avoid
+# running mdcat as root.
+mkdir completions
+chown nobody:nobody completions
 cd completions
+su nobody -s /bin/sh -c "$PKGBIN/mdcat --completions bash" > mdcat.bash
+su nobody -s /bin/sh -c "$PKGBIN/mdless --completions bash" > mdless.bash
+su nobody -s /bin/sh -c "$PKGBIN/mdcat --completions zsh" > _mdcat
+su nobody -s /bin/sh -c "$PKGBIN/mdless --completions zsh" > _mdless
+su nobody -s /bin/sh -c "$PKGBIN/mdcat --completions fish" > mdcat.fish
+su nobody -s /bin/sh -c "$PKGBIN/mdless --completions fish" > mdless.fish
+su nobody -s /bin/sh -c "$PKGBIN/mdcat --completions powershell" > _mdcat.ps1
+su nobody -s /bin/sh -c "$PKGBIN/mdless --completions powershell" > _mdless.ps1
+
 $INST mdcat.bash $PKGBASHC/mdcat
 $INST mdless.bash $PKGBASHC/mdless
 $INST _mdcat _mdless $PKGZSHC

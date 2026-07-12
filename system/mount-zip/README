@@ -6,3 +6,7 @@ can then be explored and read by any application.
 mount-zip aspires to be an excellent ZIP mounter. It starts quickly,
 uses little memory, decodes encrypted files, and provides on-the-go
 decompression and caching for maximum efficiency.
+
+Note: mount-zip 1.12 is the newest version that will compile with
+Slackware 15.0's g++ (or clang++). Don't ask for an update to 1.14 for
+15.0 unless you send me a patch.

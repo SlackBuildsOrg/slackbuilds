@@ -4,6 +4,7 @@
 
 # Copyright 2017-2026 Judah Milgram, Washington DC
 # All rights reserved.
+# Assistance of Chris Willing gratefully acknowledged.
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=hebcal
-VERSION=${VERSION:-5.13.0}
+VERSION=${VERSION:-5.14.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -64,6 +65,9 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# Ensure google-go-lang is used
+. /etc/profile.d/go.sh
 
 make clean
 make DEFAULT_CITY="${DEFAULT_CITY:-New York}" all

@@ -3,6 +3,7 @@
 # Slackware build script for playerctl
 
 # Copyright 2016 Andre Fernando, Indonesia
+# Maintained 2026 Jay Lanagan, Detroit, MI, USA. (j@lngn.net)
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,6 +23,7 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260712 jbl: Added aarch64 flag, turned off gtk-doc, cleanup.
 # 20230704 bkw: Modified by SlackBuilds.org, BUILD=2:
 # - gzip the man page.
 
@@ -59,6 +61,9 @@ elif [ "$ARCH" = "i686" ]; then
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
@@ -83,17 +88,18 @@ mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \
   CXXFLAGS="$SLKCFLAGS" \
-  meson .. \
+  meson setup .. \
     --buildtype=release \
     --infodir=/usr/info \
     --libdir=/usr/lib${LIBDIRSUFFIX} \
     --localstatedir=/var \
     --mandir=/usr/man \
+    --sysconfdir=/etc \
     --prefix=/usr \
     -Dbash-completions=true \
     -Dzsh-completions=true \
-    -Dstrip=true \
-    --sysconfdir=/etc
+    -Dgtk-doc=false \
+    -Dstrip=true
   "${NINJA:=ninja}"
   DESTDIR=$PKG $NINJA install
 cd ..
@@ -102,7 +108,7 @@ gzip -9 $PKG/usr/man/man*/*
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  README.md COPYING \
+  CHANGELOG.md CONTRIBUTORS README.md COPYING \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

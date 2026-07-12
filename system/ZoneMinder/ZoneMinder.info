@@ -10,5 +10,5 @@ MD5SUM="fc986fcb7601d3fe463a2970ead67cf7 \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="perl-Sys-MemInfo perl-Date-Manip perl-Sys-Mmap perl-LWP-Protocol-https perl-JSON-MaybeXS perl-Number-Bites-Human perl-TimeDate perl-Sys-CPU libmp4v2 x264"
-MAINTAINER="Geno Bob"
-EMAIL="GenoBob@gmail.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

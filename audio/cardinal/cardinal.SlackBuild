@@ -22,7 +22,7 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd "$(dirname "$0")"; CWD=$(pwd)
 
 PRGNAM=cardinal
 VERSION=${VERSION:-24.05}
@@ -49,57 +49,55 @@ fi
 
 set -e
 
-rm -rf $PKG
+rm -rf "$PKG"
 LIBDIR=lib
-if [ $ARCH == "x86_64" ]; then
+if [ "$ARCH" == "x86_64" ]; then
     LIBDIR="$LIBDIR"64
 fi
-mkdir -p $TMP $PKG $OUTPUT $PKG/$LIBDIR
-cd $TMP
+mkdir -p "$TMP" "$PKG" "$OUTPUT" "$PKG"
+cd "$TMP"
 if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
-  rm -rf Cardinal-linux-i686-$VERSION
-  mkdir Cardinal-linux-i686-$VERSION
-  cd Cardinal-linux-i686-$VERSION
-  tar xvf $CWD/Cardinal-linux-i686-$VERSION.tar.gz
+    _arch="i686"
 elif [ "$ARCH" = "x86_64" ]; then
-  rm -rf Cardinal-linux-x86_64-$VERSION
-  mkdir Cardinal-linux-x86_64-$VERSION
-  cd Cardinal-linux-x86_64-$VERSION
-  tar xvf $CWD/Cardinal-linux-x86_64-$VERSION.tar.gz
+    _arch="x86_64"
 else
   echo "Unknown ARCH"
   exit 1
 fi
+rm -rf "Cardinal-linux-${_arch}-$VERSION"
+mkdir "Cardinal-linux-${_arch}-$VERSION"
+cd "Cardinal-linux-${_arch}-$VERSION"
+tar xvf "$CWD/Cardinal-linux-${_arch}-$VERSION.tar.gz"
+
 chown -R root:root .
 
-mkdir -p $PKG/usr/$LIBDIR/clap
-mkdir -p $PKG/usr/$LIBDIR/lv2
-mkdir -p $PKG/usr/$LIBDIR/vst
-mkdir -p $PKG/usr/$LIBDIR/vst3
-mkdir -p $PKG/usr/bin
-mv Cardinal.clap $PKG/usr/$LIBDIR/clap/
-mv Cardinal.lv2 $PKG/usr/$LIBDIR/lv2/
-mv Cardinal.vst $PKG/usr/$LIBDIR/vst/
-mv Cardinal.vst3 $PKG/usr/$LIBDIR/vst3/
-mv CardinalFX.lv2/ $PKG/usr/$LIBDIR/lv2/
-mv CardinalFX.vst3/ $PKG/usr/$LIBDIR/vst3/
-mv CardinalJACK $PKG/usr/bin/
-mv CardinalMini.lv2/ $PKG/usr/$LIBDIR/lv2/
-mv CardinalNative $PKG/usr/bin/
-mv CardinalSynth.lv2/ $PKG/usr/$LIBDIR/lv2/
-mv CardinalSynth.vst3/ $PKG/usr/$LIBDIR/vst3/
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p "$PKG/usr/$LIBDIR/clap"
+mkdir -p "$PKG/usr/$LIBDIR/lv2"
+mkdir -p "$PKG/usr/$LIBDIR/vst"
+mkdir -p "$PKG/usr/$LIBDIR/vst3"
+mkdir -p "$PKG/usr/bin"
+mv Cardinal.clap "$PKG/usr/$LIBDIR/clap/"
+mv Cardinal.lv2 "$PKG/usr/$LIBDIR/lv2/"
+mv Cardinal.vst "$PKG/usr/$LIBDIR/vst/"
+mv Cardinal.vst3 "$PKG/usr/$LIBDIR/vst3/"
+mv CardinalFX.lv2/ "$PKG/usr/$LIBDIR/lv2/"
+mv CardinalFX.vst3/ "$PKG/usr/$LIBDIR/vst3/"
+mv CardinalJACK "$PKG/usr/bin/"
+mv CardinalMini.lv2/ "$PKG/usr/$LIBDIR/lv2/"
+mv CardinalNative "$PKG/usr/bin/"
+mv CardinalSynth.lv2/ "$PKG/usr/$LIBDIR/lv2/"
+mv CardinalSynth.vst3/ "$PKG/usr/$LIBDIR/vst3/"
+mkdir -p "$PKG/usr/doc/$PRGNAM-$VERSION"
 chown root:root LICENSE
 cp -a \
   LICENSE \
   README.md \
   docs/* \
-  $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+  "$PKG/usr/doc/$PRGNAM-$VERSION"
+cat "$CWD/$PRGNAM.SlackBuild" > "$PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild"
 
-rm -rf $PKG/$LIBDIR
-mkdir -p $PKG/install
-cat $CWD/slack-desc > $PKG/install/slack-desc
+mkdir -p "$PKG/install"
+cat "$CWD/slack-desc" > "$PKG/install/slack-desc"
 
-cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+cd "$PKG"
+/sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

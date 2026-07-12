@@ -74,7 +74,7 @@ CXXFLAGS="$SLKCFLAGS" \
 
 make
 make install-strip DESTDIR=$PKG
-gzip -9 $PKE/usr/man/man*/*
+gzip -9 $PKG/usr/man/man*/*
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p $PKGDOC

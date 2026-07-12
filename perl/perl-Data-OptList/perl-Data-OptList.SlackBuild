@@ -6,6 +6,7 @@
 
 # Copyright 2008, 2009  Patrick J. Volkerding, Sebeka, Minnesota, USA
 # Copyright 2011  David Somero (dsomero@hotmail.com) Athens, TN, USA
+# Copyright 2026 pyllyukko
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=perl-Data-OptList
-VERSION=${VERSION:-0.110}
+VERSION=${VERSION:-0.114}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -105,7 +106,7 @@ find $PKG -depth -type d -empty -delete || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-   LICENSE README  \
+  LICENSE README Changes \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

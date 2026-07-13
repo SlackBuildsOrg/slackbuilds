@@ -26,11 +26,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bbcsdl
-VERSION=${VERSION:-20260620_e869745}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-20260713_22fb22f}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=${TARBALL:-BBCSDL-e869745656ba824fa4a55ad4470fd082d6fadbe9}
+TARBALL=${TARBALL:-BBCSDL-22fb22facd11c93c7edf415e14e1bdd7eecbc09a}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

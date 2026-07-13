@@ -82,11 +82,11 @@ ln -sf /usr/bin/mold "$TMP/$PRGNAM-$VERSION/mold-ld/ld"
 # two dependencies use malloc_usable_size, which is incompatible with fortification level 3
 # https://github.com/DISTRHO/Cardinal/issues/576
 # bfd need to be replaced with mold globally to build
-export CFLAGS+=" -B${TMP}/$PRGNAM-$VERSION/mold-ld -Wno-format-security FORTIFY_SOURCE=2 $SLKCFLAGS"
-export CXXFLAGS+=" -B${TMP}/$PRGNAM-$VERSION/mold-ld -Wno-format-security FORTIFY_SOURCE=2 $SLKCFLAGS"
+export CFLAGS+=" -B${TMP}/$PRGNAM-$VERSION/mold-ld -Wno-format-security FORTIFY_SOURCE=2 $SLKCFLAGS "
+export CXXFLAGS+=" -B${TMP}/$PRGNAM-$VERSION/mold-ld -Wno-format-security FORTIFY_SOURCE=2 $SLKCFLAGS "
 
 export CFLAGS+="${FORTIFY_SOURCE=2}"
-export CXXFLAGS+="${CXXFLAGS/_FORTIFY_SOURCE=3/_FORTIFY_SOURCE=2}"
+export CXXFLAGS+="${FORTIFY_SOURCE=2}"
 
 make \
   PREFIX=/usr \
@@ -108,6 +108,7 @@ cat "$CWD/$PRGNAM.SlackBuild" > "$PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuil
 
 mkdir -p "$PKG/install"
 cat "$CWD/slack-desc" > "$PKG/install/slack-desc"
+cat "$CWD/doinst.sh" > "$PKG/install/doinst.sh"
 
 cd "$PKG"
 /sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

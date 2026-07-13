@@ -12,6 +12,7 @@ This package builds the legacy version 3.6.2 the last one in
 the 3.x series.
 
 Note:
-MuseScore 4.5 does not yet support midi sync. If you need
-it, for example to sync with ardour playback then you
-should use this version.
+a) MuseScore 3.6.2 is ideal to sync with Ardour - play
+   your scores while Ardour plays mp3 covers. Use AI track
+   splitting and running a powerful audio system.
+b) Note that MuseScore 4.x does not yet support midi sync.

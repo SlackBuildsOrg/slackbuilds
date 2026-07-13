@@ -2,7 +2,7 @@
 
 # Slackware build script for udns
 
-# Copyright 2013 Christopher Walker Copperas Cove, TX
+# Copyright 2013,2026 Chris Walker Kempner, TX
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=udns
-VERSION=${VERSION:-0.2}
+VERSION=${VERSION:-0.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -88,7 +88,6 @@ make static sharedlib udns.3.html
 mkdir -p $PKG/usr/{include,lib$LIBDIRSUFFIX}
 install -o root -g root -m 644 -T udns.h $PKG/usr/include/udns.h
 install -o root -g root -m 755 -T libudns.so.0 $PKG/usr/lib$LIBDIRSUFFIX/libudns.so.0
-install -o root -g root -m 755 -T libudns.a $PKG/usr/lib$LIBDIRSUFFIX/libudns.a
 cd $PKG/usr/lib$LIBDIRSUFFIX
   ln -s libudns.so.0 libudns.so
 cd -

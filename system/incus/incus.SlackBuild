@@ -138,6 +138,11 @@ cp -a \
   AUTHORS CONTRIBUTING* COPYING README* SECURITY* doc/reference \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/README > $PKG/usr/doc/$PRGNAM-$VERSION/README
+cat $CWD/README.docker > $PKG/usr/doc/$PRGNAM-$VERSION/README.docker
+cat $CWD/README.slackware > $PKG/usr/doc/$PRGNAM-$VERSION/README.slackware
+cat $CWD/incus-install_all.sh > $PKG/usr/doc/$PRGNAM-$VERSION/incus-install_all.sh
+cat $CWD/incus-update_image.sh > $PKG/usr/doc/$PRGNAM-$VERSION/incus-update_image.sh
 
 INCUSD_GROUP=${INCUSD_GROUP:-wheel}
 mkdir -p $PKG/etc/default

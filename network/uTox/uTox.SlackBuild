@@ -3,7 +3,7 @@
 # Slackware build script for uTox
 #
 # Copyright 2015 Gethyn ThomasQuail <gethyn@bloodbathsoftworks.com>
-# Copyright 2016-2021 Christoph Willing  Brisbane, Australia
+# Copyright 2016-2026 Christoph Willing  Sydney, Australia
 # All rights reserved.
 #
 # Permission to use, copy, modify, and/or distribute this software for any
@@ -22,7 +22,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=uTox
 VERSION=${VERSION:-0.18.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -34,9 +34,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -68,6 +65,11 @@ cd $TMP
 rm -rf ${PRGNAM}-${VERSION}
 tar xvf $CWD/${PRGNAM}-${VERSION}-full.tar.gz
 cd ${PRGNAM}
+
+# This patch contains updated bootstrap nodes.
+# To self generate the patch, see README
+patch -p0 < $CWD/bootstrap-updates.diff
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -88,7 +90,7 @@ cd build
     -DMAN_INSTALL_DIR=/usr/man \
     -DCMAKE_BUILD_TYPE=Release ..
   make
-  make install DESTDIR=$PKG
+  make install/strip DESTDIR=$PKG
 cd ..
 
 cd icons

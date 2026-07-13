@@ -7,3 +7,11 @@ To build with GTK2 support instead of the default GTK3, execute:
 Since version 0.13.1, uTox REQUIRES libraries from the c-toxcore
 package. Please note c-toxcore's README which recommends removal
 of any existing c-toxcore package prior to building.
+
+A patch is used to to update the list of available bootstrap nodes.
+This patch can itself be updated at any time by unpacking the
+source tarball, cd to the uTox directory and running the commands:
+    cp -p src/tox_bootstrap.h src/tox_bootstrap.h.orig
+    python3 tools/update-bootstrap.py > src/tox_bootstrap.h
+    diff -urN src/tox_bootstrap.h.orig src/tox_bootstrap.h  \
+        > path_to_slackbuilds/network/uTox/bootstrap-updates.diff

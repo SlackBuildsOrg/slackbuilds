@@ -1,20 +1,25 @@
 #!/bin/bash
 
 # Slackware build script for jbigkit
-# Written by Iskar Enev <iskar.enev[@]gmail.com>
+# Written by Iskar Enev
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>
+# Original version had no license. Modified version is licensed under
+# the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
-# 20220418 bkw: Modified by SlackBuilds.org, BUILD=3:
+# 20260712 bkw, BUILD=3:
+# - take over maintenance.
+# - remove static libs (except for libjbig85.a since there's no shared one).
+# Took this over as it's an optional dep for GraphicsMagick.
+
+# 20220418 bkw: Modified by SlackBuilds.org, BUILD=2:
 # - strip binaries and libraries.
 # - rename INSTALL in doc dir (it's not useless; shut sbopkglint up).
-# Note to maintainer: you should consider getting rid of the static
-# libraries. Our policy is not to ship static libs unless they are
-# required by some other build.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=jbigkit
 VERSION=${VERSION:-2.1}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -58,11 +63,9 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
- -o -perm 511 \) -exec chmod 755 {} \+ -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
- -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Build the shared library first
 cd libjbig
@@ -79,21 +82,20 @@ make CCFLAGS="$SLKCFLAGS"
 # There is no "install" target in the Makefile...
 
 # The man 5 files in pbmtools are inclueded netpbm-10.35.2
-mkdir -p $PKG/usr/{bin,lib$LIBDIRSUFFIX,include,man/man1,doc/$PRGNAM-$VERSION}
+mkdir -p $PKG/usr/{bin,lib$LIBDIRSUFFIX,include,man/man1}
 
-cp -a pbmtools/{jbgtopbm,pbmtojbg,jbgtopbm85,pbmtojbg85} $PKG/usr/bin
-cp -a pbmtools/*.1 $PKG/usr/man/man1
-gzip -9 $PKG/usr/man/man1/*.1
+install -s pbmtools/{jbgtopbm,pbmtojbg,jbgtopbm85,pbmtojbg85} $PKG/usr/bin
+gzip -9 pbmtools/*.1
+cp -a pbmtools/*.1.gz $PKG/usr/man/man1
 cp -a libjbig/jbig.h libjbig/jbig85.h libjbig/jbig_ar.h $PKG/usr/include
-cp -a libjbig/libjbig.* libjbig/libjbig85.a $PKG/usr/lib$LIBDIRSUFFIX
+strip libjbig/libjbig.so.*.*
+cp -a libjbig/libjbig.so* libjbig/libjbig85.a $PKG/usr/lib$LIBDIRSUFFIX
 
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-cp -a ANNOUNCE CHANGES COPYING TODO libjbig/*.txt examples \
-   $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a INSTALL $PKG/usr/doc/$PRGNAM-$VERSION/README
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a ANNOUNCE CHANGES COPYING TODO libjbig/*.txt examples $PKGDOC
+cp -a INSTALL $PKGDOC/README
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

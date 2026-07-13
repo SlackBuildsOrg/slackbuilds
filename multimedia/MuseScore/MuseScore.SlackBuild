@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=MuseScore
 VERSION=${VERSION:-4.7.3}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 QT=${QT:-6.9.3}
@@ -80,17 +80,10 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-mkdir -p b/_deps/harfbuzz
-
 # We need a bunch of dependencies...
 (
-    cp $CWD/harfbuzz.cmake b/_deps/harfbuzz/
-    cp $CWD/harfbuzz_src.7z b/_deps/harfbuzz/
-    cd b/_deps/harfbuzz
-    7z x harfbuzz_src.7z
-)
-(
-    cd b/_deps/
+    mkdir -p b/_deps
+    cd b/_deps
     tar xf $CWD/mnx-aedba3a3740ffbb6ae9befa2ef0bb3e0226e5f7c.tar.gz
     mv mnx-aedba3a3740ffbb6ae9befa2ef0bb3e0226e5f7c mnx_w3c-src
 
@@ -117,6 +110,7 @@ export Qt6Test_DIR=/opt/MuseScore-Libraries/lib/cmake/Qt6Test
     -DMUSE_APP_BUILD_MODE=RELEASE \
     -DCMAKE_MODULE_LINKER_FLAGS_RELEASE="-pthread" \
     -DQT_QMAKE_EXECUTABLE=/opt/MuseScore-Libraries/bin/qmake \
+    -DMUE_COMPILE_USE_SYSTEM_HARFBUZZ=ON \
     -DFETCHCONTENT_FULLY_DISCONNECTED=ON
 
 /opt/cmake-opt/bin/cmake --build b

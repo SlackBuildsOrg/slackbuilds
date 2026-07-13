@@ -46,7 +46,7 @@ if ! getent group "$MGROUPNAME" 2>&1 > /dev/null; then
   exit 1
 elif ! getent passwd "$MUSERNAME" 2>&1 > /dev/null; then
   echo "  You must have a $MUSERNAME user to run this script."
-  echo "    # useradd -u $MUID -g $MGID -d /var/log/snort $MUSERNAME"
+  echo "    # useradd -u $SUID -g $MGID -d /var/log/snort $MUSERNAME"
   exit 1
 fi
 

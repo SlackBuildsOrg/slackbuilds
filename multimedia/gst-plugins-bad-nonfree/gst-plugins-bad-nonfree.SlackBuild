@@ -22,6 +22,12 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260713 bkw:
+# - take over maintenance (Robby doesn't have time for this).
+# - remove mention of libsrtp from README: meson fails to autodetect
+#   it. updating to libsrtp-2.8.0 doesn't help.
+# - no script or package changes.
+
 # 20250805 bkw: BUILD=2
 # - x265 and zxing are optional deps that weren't mentioned in the
 #   README. The build would fail if either was installed. Add patches

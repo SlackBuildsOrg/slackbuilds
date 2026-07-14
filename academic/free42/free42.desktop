@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=Free42
+Exec=/usr/bin/free42dec
+Type=Application
+Categories=Utility;Calculator;
+Icon=/usr/share/pixmaps/free42icon-128x128.png

@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libcamera
-VERSION=${VERSION:-0.7.1}
+VERSION=${VERSION:-0.7.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -106,8 +106,13 @@ fi
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+# Don't strip manually: IPA modules are signed at build time and stripping
+# them post-install breaks the signatures (modules fall back to isolated mode).
+# meson already strips everything before signing via -Dstrip=true.
+# If in the future somthing escape uncomment bellow:
+#find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+#  | cut -f 1 -d : | grep -v "/usr/lib64/libcamera/ipa/" \
+#  | xargs -r strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -R LICENSES $PKG/usr/doc/$PRGNAM-$VERSION/

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Slackware build script for rlvm
+# Slackware build script for XnViewMP
 
 # Copyright 2017 Melvin Mawhin, Graz, Austria
-#
+# Copyright 2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=XnViewMP
-VERSION=${VERSION:-0.99.7}
+SRCNAM=XnView_MP
+VERSION=${VERSION:-1.11.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,18 +39,13 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-if [ "$ARCH" = "i586" ]; then
-	PACKAGE_SUFFIX="linux"
-elif [ "$ARCH" = "x86_64" ]; then
+if [ "$ARCH" = "x86_64" ]; then
 	PACKAGE_SUFFIX="linux-x64"
 else
 	echo "Architecture not supported"
 	exit 1
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -67,7 +63,7 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 mkdir -p $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$PACKAGE_SUFFIX.tgz
+tar xvf $CWD/$SRCNAM-$VERSION-$PACKAGE_SUFFIX.tgz
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -80,7 +76,16 @@ mkdir -p $PKG/usr/share/applications
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/
 
 mv * $PKG/opt
-cp $PKG/opt/XnView/XnView.desktop $PKG/usr/share/applications
+install -m 644 $PKG/opt/XnView/XnView.desktop $PKG/usr/share/applications
+
+# Correct permissions of ELF libraries/binaries
+find $PKG/opt/XnView/lib $PKG/opt/XnView/Plugins -type f -name '*.so*' -exec chmod 755 {} +
+
+# Fix .desktop
+sed -i 's|^Value|Version|' $PKG/usr/share/applications/XnView.desktop
+sed -i '/^Encoding=UTF-8$/d' $PKG/usr/share/applications/XnView.desktop
+sed -i 's|^Terminal=0$|Terminal=false|' $PKG/usr/share/applications/XnView.desktop
+sed -i 's|^Name.*|Name=XnViewMP|' $PKG/usr/share/applications/XnView.desktop
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

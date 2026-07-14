@@ -1,2 +1,7 @@
 This repackages the original XnViewMP binary from the developer's
 homepage.
+
+They no longer offer 32bit packages, so this is 64bit only.
+
+NOTE: Unable to support newer versions due to requiring newer version
+of glibc than is available in Slackware 15.0 (glibc 2.34).

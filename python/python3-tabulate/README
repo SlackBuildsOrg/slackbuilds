@@ -10,3 +10,6 @@ The main use cases of the library are:
   * readable presentation of mixed textual and numeric data: smart
     column alignment, configurable number formatting, alignment by a
     decimal point
+
+python3-tabulate 0.9.0 is the last available version on Slackware 15.0.
+Later versions require Python >= 3.10.

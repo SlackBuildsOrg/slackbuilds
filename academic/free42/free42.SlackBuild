@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=free42
-VERSION=${VERSION:-2.0.4}
+VERSION=${VERSION:-3.3.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -39,9 +39,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -70,9 +67,10 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM
-tar xvf $CWD/$PRGNAM.tgz
-cd $PRGNAM
+rm -rf ${PRGNAM}-${VERSION} ${PRGNAM}desktop
+tar xvf $CWD/*.tar.gz
+mv ${PRGNAM} ${PRGNAM}-${VERSION}
+cd ${PRGNAM}-${VERSION}
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -91,13 +89,18 @@ sed -i "s|-g\ |$SLKCFLAGS -Wno-error=narrowing|" Makefile
 make
 make -e BCD_MATH=1
 
-install -D -m0755 $TMP/$PRGNAM/gtk/free42bin $PKG/usr/bin/free42bin
-install -D -m0755 $TMP/$PRGNAM/gtk/free42dec $PKG/usr/bin/free42dec
+install -D -m0755 free42bin $PKG/usr/bin/free42bin
+install -D -m0755 free42dec $PKG/usr/bin/free42dec
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-cd $TMP/$PRGNAM
+cd ..
+mkdir -p $PKG/usr/share/applications $PKG/usr/share/pixmaps
+cp gtk/icon-128x128.png $PKG/usr/share/pixmaps/free42icon-128x128.png
+cp $CWD/free42.desktop $PKG/usr/share/applications
+(cd $PKG/usr/bin; ln -s free42dec free42)
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a COPYING README \
   $PKG/usr/doc/$PRGNAM-$VERSION
@@ -106,6 +109,7 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

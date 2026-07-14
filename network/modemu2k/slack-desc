@@ -8,12 +8,12 @@
         |-----handy-ruler------------------------------------------------------|
 modemu2k: modemu2k (Hayes-style AT-command modem emulator)
 modemu2k:
-modemu2k: modemu2k bridges a serial-style interface to a TCP or Telnet
-modemu2k: endpoint. It ships as a C library (libmodemu2k) exposing the
-modemu2k: modem state machine, plus a small CLI built on top that allocates
-modemu2k: a PTY and either reads stdin/stdout directly, forks a comm program
-modemu2k: (minicom, picocom) on the slave, or accepts an incoming TCP
-modemu2k: connection as the TTY. IPv4 and IPv6 are supported.
+modemu2k: modemu2k bridges a serial-style interface to TCP/Telnet ("dials"
+modemu2k: out and answers incoming connections). It ships as a C library
+modemu2k: (libmodemu2k) exposing the modem state machine, plus a small CLI
+modemu2k: built on top that allocates a PTY and either reads stdin/stdout
+modemu2k: directly, forks a comm program (minicom, picocom) on the slave,
+modemu2k: or accepts an incoming TCP connection as the TTY. IPv4 and IPv6.
 modemu2k:
 modemu2k: Homepage: https://github.com/theimpossibleastronaut/modemu2k
 modemu2k:

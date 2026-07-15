@@ -1,15 +1,13 @@
-wmimagedock
-===========
+wmimagedock (image slideshow dockapp)
+
 This is a WindowMaker dockapp for displaying multiple images of
-various types.  Including, png, jpg, gif, xmp using Imlib2. Images
-change automatically in order loaded into list or randomly. Set at a
-given size. Defaults to 64.
+various types. Supports png, jpg, gif, xpm using Imlib2. Images
+change automatically in order loaded into list or randomly.
 
 Has right and left double click events to execute commands.
 
-Written completely in C++
-
-(tested)
 Works in WMaker, blackbox, fluxbox, e16.
 
 Replaces wmslideshow or can work in conjunction with it.
+
+There's no man page, but "wmimagedock --help" is, uh, helpful.

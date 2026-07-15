@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
            |-----handy-ruler------------------------------------------------------|
-wmimagedock: wmimagedock (changes image inside of dockapp)
+wmimagedock: wmimagedock (image slideshow dockapp)
 wmimagedock:
-wmimagedock: A powerful little dockapp that displays multiple images.
-wmimagedock: Changing the images at the will of the user set time.
-wmimagedock: jpg, png, xpm, gif formats.
-wmimagedock: Dockapp loads faster with use of a file, paths to images.
-wmimagedock: Has right and left double click events to execute commands.
-wmimagedock: Rewritten in C++
-wmimagedock: Works in WMaker, blackbox, fluxbox, e16. (tested)
-wmimagedock: Replaces wmslideshow (written in C) or can work in conjunction with it
+wmimagedock: This is a WindowMaker dockapp for displaying multiple images of
+wmimagedock: various types. Supports png, jpg, gif, xpm using Imlib2. Images
+wmimagedock: change automatically in order loaded into list or randomly.
+wmimagedock:
+wmimagedock:
+wmimagedock:
+wmimagedock:
+wmimagedock:
 wmimagedock:

@@ -1,1 +1,12 @@
-wmcpuwatch aims to show the load of every logical CPU on the system.
+wmcpuwatch (dockapp that shows CPU load)
+
+wmcpuwatch is a WindowMaker dockapp which aims to show the load of
+every logical CPU on the system.
+
+It is a fork of wmmon. wmmon shows the load of up to 10 CPUs. With
+a little tweaking it is possible to show 12 with wmmon, but when in
+2017 Intel announced an 18 core CPU (and AMD was with their Ryzen even
+earlier), then it was time for a new dockapp.
+
+wmcpuwatch now shows the load of all CPUs in the lower frame which
+allows up to 40 CPUs max.

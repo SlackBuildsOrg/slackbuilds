@@ -16,5 +16,5 @@ MD5SUM="ec776752c599d4416ace517d14af8581 \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="murrine gtk-engines"
-MAINTAINER="Petar Petrov"
-EMAIL="slackalaxy@gmail.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

@@ -11,4 +11,4 @@ config() {
   # Otherwise, we leave the .new copy for the admin to consider...
 }
 
-config etc/dbus-1/system.d/nm-ssh-service.conf.new
+config usr/share/dbus-1/system.d/nm-ssh-service.conf.new

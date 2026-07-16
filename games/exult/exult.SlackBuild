@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=exult
-VERSION=${VERSION:-1.6}
+VERSION=${VERSION:-1.12.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -82,6 +82,8 @@ find -L . \
 
 autoreconf -fi
 
+export LDFLAGS="-ldl"
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -92,27 +94,16 @@ CXXFLAGS="$SLKCFLAGS" \
 make
 make install DESTDIR=$PKG
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-
-if [ -f $CWD/${PRGNAM}_audio.zip ]; then
-  unzip $CWD/${PRGNAM}_audio.zip -d $PKG/usr/share/$PRGNAM
-  chown -R root:root $PKG/usr/share/$PRGNAM
-  find $PKG/usr/share/$PRGNAM \
-   \( -type f -exec chmod 644 {} \; \) -o \
-   \( -type d -exec chmod 755 {} \; \)
-
-  mv $PKG/usr/share/$PRGNAM/README_audiopack.txt \
-    $PKG/usr/share/$PRGNAM/readme_*.txt \
-    $PKG/usr/doc/$PRGNAM-$VERSION
-fi
-
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" |
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
-cp -a AUTHORS COPYING ChangeLog FAQ NEWS README* TODO.xml \
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/usr/share/doc/$PRGNAM $PKG/usr/doc/$PRGNAM-$VERSION
+rm -rf $PKG/usr/share/doc
+cp -a AUTHORS COPYING ChangeLog FAQ NEWS README* \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

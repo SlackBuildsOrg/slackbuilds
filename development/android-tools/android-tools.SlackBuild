@@ -4,6 +4,7 @@
 # Thanks to the Arch linux maintainers for the makefiles
 
 # Copyright 2016, 2017, 2022-2025 Philip van der Hoeven, Almere, NL
+# Copyright 2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,8 +28,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=android-tools
-VERSION=${VERSION:-35.0.2}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-36.0.1}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -51,16 +52,12 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
@@ -83,9 +80,6 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
-
-# Fix building with protobuf3 version 30
-patch -p1 -d "vendor/extras" < $CWD/android-tools-35.0.2-fix-protobuf-30.0-compilation.patch
 
 mkdir -p build
 cd build

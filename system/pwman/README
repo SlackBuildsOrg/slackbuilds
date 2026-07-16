@@ -1,4 +1,4 @@
-PWman (An NCurses password management program)
+pwman (An NCurses password management program)
 
 PWMan is a password manager which uses gpg encryption to safeguard
 your data. It provides a simple and easy to use command line
@@ -14,7 +14,7 @@ Gnu Privacy Guard (gpg) being installed. You will need to specify
 a GnuPG ID the first time a user runs pwman, so this must be set up
 beforehand.
 
-There is more information on the gpg manpage, but you can probably
+There is more information in the gpg manpage, but you can probably
 just run:
 
  % gpg --gen-key

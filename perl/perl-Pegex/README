@@ -1,3 +1,5 @@
+perl-Pegex (Acmeist PEG Parser Framework)
+
 Pegex is an Acmeist parser framework. It allows you to easily
 create parsers that will work equivalently in lots of programming
 languages! The inspiration for Pegex comes from the parsing engine

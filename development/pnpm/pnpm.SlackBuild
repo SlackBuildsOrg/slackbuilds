@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pnpm
-VERSION=${VERSION:-11.9.0}
+VERSION=${VERSION:-11.13.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -79,16 +79,16 @@ find -L . \
 cat << EOF | patch -p1
 diff -Naur package.orig/dist/pnpm.mjs package/dist/pnpm.mjs
 --- package.orig/dist/pnpm.mjs	1985-10-26 17:15:00.000000000 +0900
-+++ package/dist/pnpm.mjs	2026-06-20 08:54:13.431316801 +0900
-@@ -136590,6 +136590,7 @@
++++ package/dist/pnpm.mjs	2026-07-17 21:09:34.590723890 +0900
+@@ -139462,6 +139462,7 @@
  // lib/checkForUpdates.js
- import path47 from "node:path";
+ import path49 from "node:path";
  async function checkForUpdates(config2) {
 +  return;
-   const stateFile = path47.join(config2.stateDir, "pnpm-state.json");
+   const stateFile = path49.join(config2.stateDir, "pnpm-state.json");
    let state;
    try {
-@@ -239973,6 +239974,7 @@
+@@ -241685,6 +241686,7 @@
    });
  }
  async function handler33(opts3, params) {

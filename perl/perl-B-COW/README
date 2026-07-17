@@ -1,1 +1,3 @@
+perl-B-COW (additional B helpers to check COW status)
+
 This module provides additional B helpers to check COW status.

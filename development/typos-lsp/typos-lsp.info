@@ -1,7 +1,7 @@
 PRGNAM="typos-lsp"
-VERSION="0.1.52"
+VERSION="0.1.53"
 HOMEPAGE="https://github.com/tekumara/typos-lsp"
-DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52.tar.gz \
+DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.53/typos-lsp-0.1.53.tar.gz \
           https://static.crates.io/crates/Inflector/Inflector-0.11.4.crate \
           https://static.crates.io/crates/addr2line/addr2line-0.25.1.crate \
           https://static.crates.io/crates/adler2/adler2-2.0.0.crate \
@@ -29,7 +29,7 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/clap_lex/clap_lex-1.1.0.crate \
           https://static.crates.io/crates/colorchoice-clap/colorchoice-clap-1.0.8.crate \
           https://static.crates.io/crates/colorchoice/colorchoice-1.0.3.crate \
-          https://static.crates.io/crates/console/console-0.15.10.crate \
+          https://static.crates.io/crates/console/console-0.16.3.crate \
           https://static.crates.io/crates/content_inspector/content_inspector-0.2.4.crate \
           https://static.crates.io/crates/convert_case/convert_case-0.10.0.crate \
           https://static.crates.io/crates/crossbeam-deque/crossbeam-deque-0.8.6.crate \
@@ -96,7 +96,7 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/log/log-0.4.29.crate \
           https://static.crates.io/crates/ls-types/ls-types-0.0.2.crate \
           https://static.crates.io/crates/matchers/matchers-0.2.0.crate \
-          https://static.crates.io/crates/matchit/matchit-0.9.1.crate \
+          https://static.crates.io/crates/matchit/matchit-0.9.2.crate \
           https://static.crates.io/crates/memchr/memchr-2.8.0.crate \
           https://static.crates.io/crates/miniz_oxide/miniz_oxide-0.8.3.crate \
           https://static.crates.io/crates/ntapi/ntapi-0.4.3.crate \
@@ -146,8 +146,8 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/sharded-slab/sharded-slab-0.1.7.crate \
           https://static.crates.io/crates/shellexpand/shellexpand-3.1.2.crate \
           https://static.crates.io/crates/simdutf8/simdutf8-0.1.5.crate \
-          https://static.crates.io/crates/similar-asserts/similar-asserts-1.7.0.crate \
-          https://static.crates.io/crates/similar/similar-2.7.0.crate \
+          https://static.crates.io/crates/similar-asserts/similar-asserts-2.0.0.crate \
+          https://static.crates.io/crates/similar/similar-3.1.0.crate \
           https://static.crates.io/crates/siphasher/siphasher-1.0.1.crate \
           https://static.crates.io/crates/slab/slab-0.4.9.crate \
           https://static.crates.io/crates/smallvec/smallvec-1.13.2.crate \
@@ -162,20 +162,20 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/sysinfo/sysinfo-0.38.4.crate \
           https://static.crates.io/crates/tempfile/tempfile-3.27.0.crate \
           https://static.crates.io/crates/terminal_size/terminal_size-0.4.3.crate \
-          https://static.crates.io/crates/test-log-macros/test-log-macros-0.2.19.crate \
-          https://static.crates.io/crates/test-log/test-log-0.2.19.crate \
+          https://static.crates.io/crates/test-log-core/test-log-core-0.2.20.crate \
+          https://static.crates.io/crates/test-log-macros/test-log-macros-0.2.20.crate \
+          https://static.crates.io/crates/test-log/test-log-0.2.20.crate \
           https://static.crates.io/crates/thiserror-impl/thiserror-impl-1.0.69.crate \
           https://static.crates.io/crates/thiserror-impl/thiserror-impl-2.0.17.crate \
           https://static.crates.io/crates/thiserror/thiserror-1.0.69.crate \
           https://static.crates.io/crates/thiserror/thiserror-2.0.17.crate \
           https://static.crates.io/crates/thread_local/thread_local-1.1.9.crate \
-          https://static.crates.io/crates/tokio-macros/tokio-macros-2.6.0.crate \
+          https://static.crates.io/crates/tokio-macros/tokio-macros-2.7.0.crate \
           https://static.crates.io/crates/tokio-util/tokio-util-0.7.13.crate \
-          https://static.crates.io/crates/tokio/tokio-1.50.0.crate \
+          https://static.crates.io/crates/tokio/tokio-1.52.1.crate \
           https://static.crates.io/crates/toml/toml-1.1.2%2Bspec-1.1.0.crate \
-          https://static.crates.io/crates/toml_datetime/toml_datetime-0.7.2.crate \
           https://static.crates.io/crates/toml_datetime/toml_datetime-1.1.1%2Bspec-1.1.0.crate \
-          https://static.crates.io/crates/toml_edit/toml_edit-0.23.6.crate \
+          https://static.crates.io/crates/toml_edit/toml_edit-0.25.11%2Bspec-1.1.0.crate \
           https://static.crates.io/crates/toml_parser/toml_parser-1.1.2%2Bspec-1.1.0.crate \
           https://static.crates.io/crates/toml_writer/toml_writer-1.1.1%2Bspec-1.1.0.crate \
           https://static.crates.io/crates/tower-layer/tower-layer-0.3.3.crate \
@@ -190,10 +190,10 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/typed-arena/typed-arena-2.0.2.crate \
           https://static.crates.io/crates/typed-builder-macro/typed-builder-macro-0.21.2.crate \
           https://static.crates.io/crates/typed-builder/typed-builder-0.21.2.crate \
-          https://static.crates.io/crates/typos-cli/typos-cli-1.45.1.crate \
-          https://static.crates.io/crates/typos-dict/typos-dict-0.13.23.crate \
+          https://static.crates.io/crates/typos-cli/typos-cli-1.47.0.crate \
+          https://static.crates.io/crates/typos-dict/typos-dict-0.13.28.crate \
           https://static.crates.io/crates/typos-vars/typos-vars-0.10.4.crate \
-          https://static.crates.io/crates/typos/typos-0.10.42.crate \
+          https://static.crates.io/crates/typos/typos-0.10.43.crate \
           https://static.crates.io/crates/unicase/unicase-2.9.0.crate \
           https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.24.crate \
           https://static.crates.io/crates/unicode-segmentation/unicode-segmentation-1.12.0.crate \
@@ -230,6 +230,7 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/windows-sys/windows-sys-0.52.0.crate \
           https://static.crates.io/crates/windows-sys/windows-sys-0.59.0.crate \
           https://static.crates.io/crates/windows-sys/windows-sys-0.60.2.crate \
+          https://static.crates.io/crates/windows-sys/windows-sys-0.61.2.crate \
           https://static.crates.io/crates/windows-targets/windows-targets-0.48.5.crate \
           https://static.crates.io/crates/windows-targets/windows-targets-0.52.6.crate \
           https://static.crates.io/crates/windows-targets/windows-targets-0.53.3.crate \
@@ -258,7 +259,6 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.48.5.crate \
           https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.52.6.crate \
           https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.53.0.crate \
-          https://static.crates.io/crates/winnow/winnow-0.7.13.crate \
           https://static.crates.io/crates/winnow/winnow-1.0.1.crate \
           https://static.crates.io/crates/wit-bindgen-core/wit-bindgen-core-0.51.0.crate \
           https://static.crates.io/crates/wit-bindgen-rust-macro/wit-bindgen-rust-macro-0.51.0.crate \
@@ -270,7 +270,7 @@ DOWNLOAD="https://github.com/tekumara/typos-lsp/archive/v0.1.52/typos-lsp-0.1.52
           https://static.crates.io/crates/zerocopy-derive/zerocopy-derive-0.7.35.crate \
           https://static.crates.io/crates/zerocopy/zerocopy-0.7.35.crate \
           https://static.crates.io/crates/zmij/zmij-1.0.6.crate"
-MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
+MD5SUM="47a5017fdf1b575be99ceebae3d2aaa8 \
         b7f1a4cd029f5b6ffbc31b3acd5ae605 \
         6185be920ab1302a8b29a5ed44875324 \
         579e59ba996675f454d456471924ea9d \
@@ -298,7 +298,7 @@ MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
         056a1045af18c08720ca220adefedc5b \
         1c9bc752dac4b9fc5429bb1ed3cde013 \
         8d244d1c44724ffa933f15695ba75435 \
-        83ace7af9c999137e72c26a08ada3f4a \
+        f987937db2822e37626136d3024e5f73 \
         64bebafaf681f39deebbc41b24b3527f \
         73fe23ba2453e0e169dd26f74be57bc8 \
         3975562a4eb5f04b174ad599a0da8fd6 \
@@ -365,7 +365,7 @@ MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
         421029191180ccd11cd28d7186a0640a \
         e7a445f1f8e785c365bfb264fc9a7575 \
         775cccc2de63ac894d5c2fc2c6864a73 \
-        d8180c948531d624eb003e2f030a0649 \
+        1a884207f5134e04a352952dce61187f \
         5ab4143491e10a733e15fd16fadc9ee8 \
         6c44375f13b50cb40458defbc1a0be46 \
         747ad92c032b3dfd1fc3b4ed2c5226d3 \
@@ -415,8 +415,8 @@ MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
         96261f3cee18842060fd64d618e056d8 \
         3711e319ba4fb39d338bb4a799610b20 \
         789440cccc83854c8e317313ed19a4d1 \
-        d280eb5494a73753ae8b5fe34948cd2b \
-        5589880087d08bb34ca9f492de374efb \
+        13e285acb0724e985a4e9a0090cfc328 \
+        f9845929159331f52461d1b1f5ee0090 \
         ca8d3b0dc2184709ad94f8724cd1dd4f \
         5d8c25fc51ffebca67935516c2325860 \
         50d5a501f911bb592f0dce2d052c2aa8 \
@@ -431,20 +431,20 @@ MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
         165f0b256e4ce90b9f750b1c451ee443 \
         c0e4af0c8f6abb0789bce7593b814245 \
         bb56b7d479e9fa872a035b46f04a3fbd \
-        cd899dac31ce177b2facb5d24938bb61 \
-        67a99bcf277ea8ca5e9465b2abfb53d9 \
+        d35acc2534faa2b694f4258be7edd23f \
+        184aa3fee4343ee6bad63807eb98682b \
+        a2689062fe87345369c25db0bbcefc62 \
         a4bb1b92a5b098fdaa5694733ea73e7a \
         efa0b14bd1721494cf1ab2be65053004 \
         9c02495b380dc51331dcd8789b26cbfb \
         6e01ab006629a393105a1d90effffe64 \
         f6d8a5fadf6091837b8d5c33851ad571 \
-        61335e2178b696ce487bae0403c89271 \
+        e8e2ed3e11717c02e368b4bae1645522 \
         ccc8b275e917583199b0775f25a4722e \
-        8f99cbd301ab089989481394508a1015 \
+        ea7be9189da07999c764ac150b605fd7 \
         6c2332f8b7199706fc7c033779749240 \
-        27552fda32c3dab685bf0ee2b68a97a4 \
         2af706984c49313b205ac89d6f65feac \
-        408ed5814c4366d1b3760c69a20d22ea \
+        87e91f88865b85b41d9cca6c741c5f2c \
         f5e10886101af4899b55c75955234d70 \
         08946b01f9cbec3b250e3e1085c29646 \
         e422d5db1722c13ac3ab6f9d6deee3c7 \
@@ -459,10 +459,10 @@ MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
         f527f2d51c624ef142c8a59820af1e0f \
         434a59c6f1e943d8d837a08d3ebd2273 \
         f5d7cd04644c04a77186c57fce3a57a5 \
-        4a3b02ca5946b6cc1f7aaae626a0259f \
-        360768334ef2f2b5a9e4b115897dcf0b \
+        00db9bd52322d35f5ebccb47d35edb76 \
+        b95c9e543335dbc9a938fa8b3ec74232 \
         a101d53eb350b08075fb455462f1f393 \
-        0f2d620e6f727c10006b99543510a8c8 \
+        89ed2275925152eefff9d78144df6dc1 \
         d2fef56363be148395a6b7e3a1aa59fa \
         49fb2204154a5fe5320366aa88b84291 \
         f2a271be7934b762ed05523370bf14c5 \
@@ -499,6 +499,7 @@ MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
         2376de634160158ece40c4bc2ab3eb41 \
         73b177d6d000daaa8f05790414a887a3 \
         5b8f032f5b1f775ec3c35d9d6fe1aba9 \
+        dd7513efd3722e624cf5b4f57d67b2be \
         24c64817e85ef77765ed0f26c31c9b4c \
         9e876a38acd8262d97e9302ecb4e0f72 \
         a42efcf7f971ae18508cc944b3019e69 \
@@ -527,7 +528,6 @@ MD5SUM="5955f20a61b7b2049ffe16db234262e8 \
         7799baff9a5664205d9110a2624e8989 \
         b95760e9133ba1bb456d0f0cef74c9a4 \
         9a2e57fbd616cdf9917ad6fc47eb6daa \
-        688b19c20a0dba9815e95d05d68e69a8 \
         7dbb4447e587b8b7e5dcd7f5e5cd7e2e \
         69f012ae935b27500554824ea32f921b \
         06263c33fd2df33c2ee92c1a0637d33d \

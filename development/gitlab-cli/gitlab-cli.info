@@ -1,12 +1,12 @@
 PRGNAM="gitlab-cli"
-VERSION="1.106.0"
+VERSION="1.108.0"
 HOMEPAGE="https://gitlab.com/gitlab-org/cli"
-DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.106.0/cli-v1.106.0.tar.gz \
-          https://github.com/charmbracelet/bubbletea/archive/v2.0.7/bubbletea-2.0.7.tar.gz \
+DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.108.0/cli-v1.108.0.tar.gz \
+          https://github.com/charmbracelet/bubbletea/archive/v2.0.8/bubbletea-2.0.8.tar.gz \
           https://github.com/charmbracelet/fang/archive/v2.0.1/fang-2.0.1.tar.gz \
           https://github.com/charmbracelet/glamour/archive/v2.0.1/glamour-2.0.1.tar.gz \
           https://github.com/charmbracelet/huh/archive/v2.0.3/huh-2.0.3.tar.gz \
-          https://github.com/charmbracelet/lipgloss/archive/v2.0.4/lipgloss-2.0.4.tar.gz \
+          https://github.com/charmbracelet/lipgloss/archive/v2.0.5/lipgloss-2.0.5.tar.gz \
           https://git.sr.ht/~timofurrer/ugh/archive/v0.1.1.tar.gz \
           https://github.com/MakeNowJust/heredoc/archive/v2.0.1/heredoc-2.0.1.tar.gz \
           https://github.com/acarl005/stripansi/archive/5a71ef0e047d/stripansi-5a71ef0e047df0427e87a79f27009029921f1f9b.tar.gz \
@@ -14,7 +14,7 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.106.0/cli-v1.106.0.tar.
           https://github.com/avast/retry-go/archive/v5.0.0/retry-go-5.0.0.tar.gz \
           https://github.com/briandowns/spinner/archive/v1.23.2/spinner-1.23.2.tar.gz \
           https://github.com/coder/websocket/archive/v1.8.15/websocket-1.8.15.tar.gz \
-          https://github.com/docker/cli/archive/v29.6.0/cli-29.6.0.tar.gz \
+          https://github.com/docker/cli/archive/v29.6.1/cli-29.6.1.tar.gz \
           https://github.com/docker/docker-credential-helpers/archive/v0.9.8/docker-credential-helpers-0.9.8.tar.gz \
           https://github.com/dustin/go-humanize/archive/v1.0.1/go-humanize-1.0.1.tar.gz \
           https://github.com/gdamore/tcell/archive/v2.13.9/tcell-2.13.9.tar.gz \
@@ -42,7 +42,7 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.106.0/cli-v1.106.0.tar.
           https://github.com/stretchr/testify/archive/v1.11.1/testify-1.11.1.tar.gz \
           https://github.com/tidwall/pretty/archive/v1.2.1/pretty-1.2.1.tar.gz \
           https://github.com/zalando/go-keyring/archive/v0.2.8/go-keyring-0.2.8.tar.gz \
-          https://gitlab.com/gitlab-org/api/client-go/-/archive/v2.44.0/client-go-v2.44.0.tar.gz \
+          https://gitlab.com/gitlab-org/api/client-go/-/archive/v2.47.0/client-go-v2.47.0.tar.gz \
           https://github.com/uber-go/goleak/archive/v1.3.0/goleak-1.3.0.tar.gz \
           https://github.com/uber/mock/archive/v0.6.0/mock-0.6.0.tar.gz \
           https://github.com/yaml/go-yaml/archive/v3.0.4/go-yaml-3.0.4.tar.gz \
@@ -66,7 +66,7 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.106.0/cli-v1.106.0.tar.
           https://github.com/aymerick/douceur/archive/v0.2.0/douceur-0.2.0.tar.gz \
           https://github.com/catppuccin/go/archive/v0.3.0/go-0.3.0.tar.gz \
           https://github.com/charmbracelet/colorprofile/archive/v0.4.3/colorprofile-0.4.3.tar.gz \
-          https://github.com/charmbracelet/ultraviolet/archive/948f4557a65401aabea6e78ce693a03132f7a3da/ultraviolet-948f4557a65401aabea6e78ce693a03132f7a3da.tar.gz \
+          https://github.com/charmbracelet/ultraviolet/archive/f5a850f9c2b7ed4def3807fe12d0b5e76d345bdc/ultraviolet-f5a850f9c2b7ed4def3807fe12d0b5e76d345bdc.tar.gz \
           https://github.com/charmbracelet/x/archive/ansi/v0.11.7/x-ansi-v0.11.7.tar.gz \
           https://github.com/charmbracelet/x/archive/c31516f43444bda2edebc5e2179a966d3009cd19/x-c31516f43444bda2edebc5e2179a966d3009cd19.tar.gz \
           https://github.com/charmbracelet/x/archive/exp/ordered/v0.1.0/x-exp-ordered-v0.1.0.tar.gz \
@@ -150,12 +150,12 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.106.0/cli-v1.106.0.tar.
           https://github.com/kubernetes-sigs/randfill/archive/v1.0.0/randfill-1.0.0.tar.gz \
           https://github.com/kubernetes-sigs/structured-merge-diff/archive/v6.3.2/structured-merge-diff-6.3.2.tar.gz \
           https://github.com/kubernetes-sigs/yaml/archive/v1.6.0/yaml-1.6.0.tar.gz"
-MD5SUM="68a426029bc154fd4c9ffe826cbaf122 \
-        1c6b7cc43308b3e107cc00947f1c7137 \
+MD5SUM="a4ec4504db658ca8fc2e47c37ac54ba5 \
+        01ef397f04ae5ccd6cf8ea78b8dac2bf \
         35c77a2d318cac413ebaf90bd2657a74 \
         683d6789768a1201851bc9a9f5350fdf \
         ed0bcea24263a9825ec0871f9334393e \
-        cbe7bf806da497ff0ee844d5c75f4d7b \
+        de7e617a89032caa3b8de0a8678fbfd3 \
         3cc9f737048bfa6b64f930cbe1ba7524 \
         2cdae8f5ec7f611080ee48eb0737cc51 \
         72763f9165ad0a1bfff58de01c017747 \
@@ -163,7 +163,7 @@ MD5SUM="68a426029bc154fd4c9ffe826cbaf122 \
         175e69151ec05933ad4241c4abc3c6c6 \
         216840087cfb086ebb38dde8536e68b7 \
         20dc6d58588ae4a7b905496f66db2429 \
-        90ae7119e23156078e69f5b68772ab12 \
+        3fe6d4374b976aa21b56049429228bc9 \
         d71963b0c6a18eecb7fb70b5ec3873e4 \
         c0eec1af43ed0dc804ac66f2a8cf5982 \
         4545076de54e4fcd1a42dbdaa85cf3cd \
@@ -191,7 +191,7 @@ MD5SUM="68a426029bc154fd4c9ffe826cbaf122 \
         5ee7adde0ac460aae7e80bccaaa70e3e \
         4fcca04e5cefb210ce57f7daf0112f46 \
         f5093d471d7f698ada2d07922d5b3896 \
-        b874e94d2254e615bf82f05df9a9068d \
+        601128854680a482a3c49f35702c3543 \
         da6248dcc8e46bc17ba5a7897c85db79 \
         425adaaf59eda075098a23796880a8bb \
         e1172a22558cfa4c25ca9955eb54088d \
@@ -215,7 +215,7 @@ MD5SUM="68a426029bc154fd4c9ffe826cbaf122 \
         48d2b40c0bc69a5c19b5fad8a8d1ab1b \
         4311dbc3398da2eafa4bb324d14f4aba \
         9d54b473427f735514c909709ae3d0e8 \
-        f53ed8186a9005ea7be1ea9f6eb73e61 \
+        a8d288fd5038e3dd4e6a64a3fbf38dfd \
         6733b083e8bf07f1b06d407eea273375 \
         3619ddf8c1fcfe4bfee61bab5ea4f892 \
         8caa536e26c5250cf9b87769567f85fd \

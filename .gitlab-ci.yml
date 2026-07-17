@@ -1,9 +1,9 @@
 variables:
   FF_DISABLE_UMASK_FOR_DOCKER_EXECUTOR: "true"
   # renovate: datasource=gitlab-releases depName=gitlab-org/cli
-  GLAB_VERSION: 1.107.0
+  GLAB_VERSION: 1.108.0
   # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
-  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:a313639001e6498de247b8012792756e84c5b8ca681bb2777f82ea27bb7c1f12
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:19eb6905e6ae0942eb35f9befc53a0d1f4945cc9447e202efba79c9d744326df
 
 workflow:
   rules:
@@ -29,7 +29,7 @@ pr-checks:
 
     docker pull "$SBO_MAINTAINER_TOOLS_IMAGE"
 
-    git diff-tree --name-only --diff-filter=d --no-commit-id -r $CI_MERGE_REQUEST_DIFF_BASE_SHA $CI_COMMIT_SHA | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -I xx dirname xx | sort -u | while read -r project ; do
+    git diff-tree --name-only --diff-filter=d --no-commit-id -r $CI_MERGE_REQUEST_DIFF_BASE_SHA $CI_COMMIT_SHA | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -I xx dirname xx | awk -F/ 'NF==2' | sort -u | while read -r project ; do
       mkfifo pipe
       tee sbolint-output < pipe &
       exec 3>pipe
@@ -65,7 +65,7 @@ pr-checks:
       fi
     done
 
-    git diff-tree --name-only --diff-filter=d --no-commit-id -r $CI_MERGE_REQUEST_DIFF_BASE_SHA $CI_COMMIT_SHA | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -I xx dirname xx | sort -u | while read -r project ; do
+    git diff-tree --name-only --diff-filter=d --no-commit-id -r $CI_MERGE_REQUEST_DIFF_BASE_SHA $CI_COMMIT_SHA | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -I xx dirname xx | awk -F/ 'NF==2' | sort -u | while read -r project ; do
       short_project="$(printf '%s\n' "$project" | cut -d/ -f2)"
       response="$(wget -q -O - "https://slackbuilds.org/revdeps.php?q=$short_project" | sort)"
 

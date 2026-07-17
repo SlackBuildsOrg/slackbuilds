@@ -13,7 +13,7 @@ concurrency:
 
 env:
   # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
-  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:a313639001e6498de247b8012792756e84c5b8ca681bb2777f82ea27bb7c1f12
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:19eb6905e6ae0942eb35f9befc53a0d1f4945cc9447e202efba79c9d744326df
 
 jobs:
   pr-checks:
@@ -83,7 +83,7 @@ jobs:
               fi
 
               page=$((page + 1))
-            done | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -r -I xx dirname xx | sort -u
+            done | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -r -I xx dirname xx | awk -F/ 'NF==2' | sort -u
           )"
 
           if [[ -z "$changed_projects" ]] ; then

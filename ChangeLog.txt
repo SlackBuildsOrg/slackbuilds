@@ -1,3 +1,912 @@
+Sat Jul 18 01:21:24 UTC 2026
+academic/CAFS_divergence: Orphaned (unmaintained).
+academic/CAPS_coevolution: Orphaned (unmaintained).
+academic/Data2FCS: Orphaned (unmaintained).
+academic/DendroPy: Orphaned (unmaintained).
+academic/EMBASSY: Orphaned (unmaintained).
+academic/EMBOSS: Orphaned (unmaintained).
+academic/FCSalyzer: Orphaned (unmaintained).
+academic/FastTree: Orphaned (unmaintained).
+academic/FigTree: Orphaned (unmaintained).
+academic/FreeFem: Updated for version 4.17.
+academic/Gblocks: Orphaned (unmaintained).
+academic/HMMER: Orphaned (unmaintained).
+academic/IGV: Orphaned (unmaintained).
+academic/MetaPhlAn2: Orphaned (unmaintained).
+academic/PhyML: Orphaned (unmaintained).
+academic/RAxML: Orphaned (unmaintained).
+academic/RepeatMasker: Orphaned (unmaintained).
+academic/SeqMonk: Orphaned (unmaintained).
+academic/WEVOTE: Orphaned (unmaintained).
+academic/abntex: Orphaned (unmaintained).
+academic/aline: Orphaned (unmaintained).
+academic/aliview: Orphaned (unmaintained).
+academic/amplicon: Orphaned (unmaintained).
+academic/amplifx: Orphaned (unmaintained).
+academic/arka: Orphaned (unmaintained).
+academic/bedGraphToBigWig: Orphaned (unmaintained).
+academic/bedtools: Orphaned (unmaintained).
+academic/bibus: Orphaned (unmaintained).
+academic/biopython: Orphaned (unmaintained).
+academic/bowtie2-legacy: Orphaned (unmaintained).
+academic/bowtie: Orphaned (unmaintained).
+academic/bpp-core: Orphaned (unmaintained).
+academic/bpp-phyl-omics: Orphaned (unmaintained).
+academic/bpp-phyl: Orphaned (unmaintained).
+academic/bpp-popgen: Orphaned (unmaintained).
+academic/bpp-seq-omics: Orphaned (unmaintained).
+academic/bpp-seq: Orphaned (unmaintained).
+academic/bpp1.9-numcalc: Orphaned (unmaintained).
+academic/bpp1.9-phyl: Orphaned (unmaintained).
+academic/bpp1.9-seq: Orphaned (unmaintained).
+academic/bpp1.9-utils: Orphaned (unmaintained).
+academic/bppsuite: Orphaned (unmaintained).
+academic/bwa: Orphaned (unmaintained).
+academic/cap3: Orphaned (unmaintained).
+academic/cistrome-CEAS: Orphaned (unmaintained).
+academic/cistrome-MACS: Orphaned (unmaintained).
+academic/cistrome-conductGO: Orphaned (unmaintained).
+academic/cistrome-extra: Orphaned (unmaintained).
+academic/cistrome-mdseqpos: Orphaned (unmaintained).
+academic/clark-ugene: Orphaned (unmaintained).
+academic/clustalo: Orphaned (unmaintained).
+academic/clustalw: Orphaned (unmaintained).
+academic/clustalx: Orphaned (unmaintained).
+academic/convertall: Orphaned (unmaintained).
+academic/cufflinks: Orphaned (unmaintained).
+academic/cutadapt: Orphaned (unmaintained).
+academic/datamash: Orphaned (unmaintained).
+academic/diamond: Orphaned (unmaintained).
+academic/exonerate: Orphaned (unmaintained).
+academic/extrema: Orphaned (unmaintained).
+academic/fiji: Orphaned (unmaintained).
+academic/finchtv: Orphaned (unmaintained).
+academic/free42: Updated for version 3.3.12
+academic/gchemutils: Orphaned (unmaintained).
+academic/geda-gaf: Orphaned (unmaintained).
+academic/gelemental: Orphaned (unmaintained).
+academic/geneconv: Orphaned (unmaintained).
+academic/genometools: Orphaned (unmaintained).
+academic/genpak: Orphaned (unmaintained).
+academic/glpk: New maintainer.
+academic/gp2fasta: Orphaned (unmaintained).
+academic/gresistor: Orphaned (unmaintained).
+academic/gtkwave: Orphaned (unmaintained).
+academic/hyphy: Orphaned (unmaintained).
+academic/io_lib: Orphaned (unmaintained).
+academic/iqtree: Orphaned (unmaintained).
+academic/isoelectric-point: Orphaned (unmaintained).
+academic/jalview: Orphaned (unmaintained).
+academic/jellyfish_k-mer: Orphaned (unmaintained).
+academic/kalign: Orphaned (unmaintained).
+academic/knime: Orphaned (unmaintained).
+academic/kraken: Orphaned (unmaintained).
+academic/kurso: Orphaned (unmaintained).
+academic/lalnview: Orphaned (unmaintained).
+academic/mafft: Orphaned (unmaintained).
+academic/megax: Orphaned (unmaintained).
+academic/meme-db-gomo: Orphaned (unmaintained).
+academic/meme-db-motif: Orphaned (unmaintained).
+academic/meme-db-tgene: Orphaned (unmaintained).
+academic/meme-suite: Orphaned (unmaintained).
+academic/mendeleydesktop: Orphaned (unmaintained).
+academic/mkDSSP: Orphaned (unmaintained).
+academic/mrbayes: Orphaned (unmaintained).
+academic/mumsa: Orphaned (unmaintained).
+academic/muscle5: Orphaned (unmaintained).
+academic/muscle: Orphaned (unmaintained).
+academic/ncbi-blast+: Orphaned (unmaintained).
+academic/ncbi-blast: Orphaned (unmaintained).
+academic/ncbi-edirect: Orphaned (unmaintained).
+academic/ncbi-rmblastn: Orphaned (unmaintained).
+academic/pal2nal: Orphaned (unmaintained).
+academic/paml: Orphaned (unmaintained).
+academic/pamlX: Orphaned (unmaintained).
+academic/pcb: Orphaned (unmaintained).
+academic/perlprimer: Orphaned (unmaintained).
+academic/plasmidomics: Orphaned (unmaintained).
+academic/prank-msa: Orphaned (unmaintained).
+academic/primer3: Orphaned (unmaintained).
+academic/root: Updated for version 6.36.14
+academic/samtools-legacy: Orphaned (unmaintained).
+academic/seaview: Orphaned (unmaintained).
+academic/seqkit: Orphaned (unmaintained).
+academic/sequence-analysis: Orphaned (unmaintained).
+academic/sim: Orphaned (unmaintained).
+academic/snpEff: Orphaned (unmaintained).
+academic/spades: Orphaned (unmaintained).
+academic/spidey: Orphaned (unmaintained).
+academic/squizz: Orphaned (unmaintained).
+academic/staden: Orphaned (unmaintained).
+academic/stringtie: Orphaned (unmaintained).
+academic/t_coffee: Orphaned (unmaintained).
+academic/tabix-legacy: Orphaned (unmaintained).
+academic/topdraw: Orphaned (unmaintained).
+academic/tophat: Orphaned (unmaintained).
+academic/treebest-ensembl: Orphaned (unmaintained).
+academic/treerecs: Orphaned (unmaintained).
+academic/treeviewx: Orphaned (unmaintained).
+academic/trfind: Orphaned (unmaintained).
+academic/trimmomatic: Orphaned (unmaintained).
+academic/tuxtype2: Orphaned (unmaintained).
+academic/ucsc-blat: Orphaned (unmaintained).
+academic/ugene: Orphaned (unmaintained).
+academic/vCAPS_coevolution: Orphaned (unmaintained).
+academic/vcftools: Orphaned (unmaintained).
+academic/wehi-cellsymphony: Orphaned (unmaintained).
+academic/wehi-deid: Orphaned (unmaintained).
+academic/wehi-hackit: Orphaned (unmaintained).
+academic/wehi-weasel: Orphaned (unmaintained).
+academic/wise: Orphaned (unmaintained).
+academic/zotero-gtk2: Orphaned (unmaintained).
+academic/zotero: Updated for version 9.0.6
+audio/SuperCollider: Orphaned (unmaintained).
+audio/acxi: Fix MD5SUM.
+audio/audacious-aac: Update maintainer email.
+audio/cardinal: Updated for version 26.02
+audio/easymp3gain: New maintainer
+audio/ezstream: Orphaned (unmaintained).
+audio/faust: Orphaned (unmaintained).
+audio/gmpc-plugins: Orphaned (unmaintained).
+audio/gmpc: Orphaned (unmaintained).
+audio/herrie: Orphaned (unmaintained).
+audio/mpd: New maintainer.
+audio/muse: Orphaned (unmaintained).
+audio/ogmtools: Orphaned (unmaintained).
+audio/python-audiotools: Orphaned (unmaintained).
+audio/qtractor: Updated for version 1.6.2.
+audio/rezound: Orphaned (unmaintained).
+audio/sbagen: Orphaned (unmaintained).
+audio/soundconverter: Orphaned (unmaintained).
+audio/twolame: New maintainer.
+audio/xmms-wma: Orphaned (unmaintained).
+business/ledger: New maintainer.
+desktop/LX-Colors-Revival: Orphaned (unmaintained).
+desktop/ambiance-radiance-flat-colors-gtk-theme: Orphaned.
+desktop/areao43-icon-theme: Orphaned (unmaintained).
+desktop/cairo-dock-plugins: Orphaned (unmaintained).
+desktop/cairo-dock: Orphaned (unmaintained).
+desktop/cbatticon: Orphaned (unmaintained).
+desktop/claude-desktop: Updated for version 1.19367.0
+desktop/clearlooks-classic-themes: Orphaned (unmaintained).
+desktop/clearlooks-phenix-theme: Update maintainer email.
+desktop/compton: Orphaned (unmaintained).
+desktop/devilspie: Orphaned (unmaintained).
+desktop/dolphin-megasync: Orphaned (unmaintained).
+desktop/fbpanel: Orphaned (unmaintained).
+desktop/gnome-icon-theme-stock: Orphaned (unmaintained).
+desktop/gtk1-industrial-engine: Orphaned (unmaintained).
+desktop/gtk1-theme-switch: Orphaned (unmaintained).
+desktop/herbe: Orphaned (unmaintained).
+desktop/icewm-themes: New maintainer
+desktop/joystickwake: Updated for version 0.5.4
+desktop/kdocker: Orphaned (unmaintained).
+desktop/keynav: Orphaned (unmaintained).
+desktop/polar-cursor-themes: Orphaned (unmaintained).
+desktop/protozoa-cursor-themes: Orphaned (unmaintained).
+desktop/q4wine: Orphaned (unmaintained).
+desktop/slackware-xdg-menu: Orphaned (unmaintained).
+desktop/stalonetray: Updated for version 1.5.0; new maintainer.
+desktop/thunar-megasync: Orphaned (unmaintained).
+desktop/wmcpuwatch: New maintainer.
+desktop/wmfishtime: New maintainer.
+desktop/wmimagedock: New maintainer.
+desktop/wmshutdown: Orphaned (unmaintained and *broken*).
+desktop/wmslideshow: Updated for version 1.3.2, New maintainer.
+desktop/wmuptime: New maintainer.
+desktop/xmms-skins-almond: Orphaned (unmaintained).
+desktop/xmms-skins-ater: Orphaned (unmaintained).
+desktop/xmms-status-plugin: Orphaned (unmaintained).
+desktop/xpenguins-xtrathemes: New maintainer.
+desktop/xpenguins: Updated for version 3.2.4.
+desktop/xseticon: Update maintainer email.
+development/Arduino: Update maintainer email.
+development/Catch2: Updated for version 3.15.2
+development/Kiro: Updated for version 1.0.138.
+development/MySQL-python: New maintainer.
+development/a68g: Updated for version 3.12.3
+development/android-tools: Version bump to 36.0.1 + New maintainer
+development/antigravity2: Updated for version 2.3.0
+development/arduino: Update maintainer email.
+development/aspnetcore-runtime-10.0: Updated for version 10.0.10.
+development/aspnetcore-runtime-8.0: Updated for version 8.0.29.
+development/aspnetcore-runtime-9.0: Updated for version 9.0.18.
+development/aws-cdk: Updated for version 2.1130.0.
+development/bas: Orphaned (unmaintained).
+development/bbcsdl: Updated for version 20260713_22fb22f
+development/beautysh: Updated for version 6.4.3.
+development/boost-di: Orphaned (unmaintained).
+development/bruno: Updated for version 3.5.1.
+development/cim: Orphaned (unmaintained).
+development/cloc: Version bump to 2.10
+development/cpan2tgz: Orphaned (unmaintained).
+development/deno-bin: Updated for version 2.9.3
+development/dotnet-runtime-10.0: Updated for version 10.0.10.
+development/dotnet-runtime-8.0: Updated for version 8.0.29.
+development/dotnet-runtime-9.0: Updated for version 9.0.18.
+development/dotnet-sdk-10.0: Updated for version 10.0.302.
+development/dotnet-sdk-8.0: Updated for version 8.0.423.
+development/dotnet-sdk-9.0: Updated for version 9.0.316.
+development/dte: Orphaned (unmaintained).
+development/ebe: Orphaned (unmaintained).
+development/electron-bin: Updated for version 43.1.0
+development/energia: Orphaned (unmaintained).
+development/flawfinder: New maintainer.
+development/freetds: Update maintainer email.
+development/g3log: Orphaned (unmaintained).
+development/gisto: Orphaned (unmaintained).
+development/git-cola: Orphaned (unmaintained).
+development/git-crypt: Orphaned (unmaintained).
+development/gitlab-cli: Updated for version 1.108.0.
+development/gnuradio: Update maintainer email.
+development/gopls: Updated for version 0.23.0.
+development/gplcver: Orphaned (unmaintained).
+development/gr-osmosdr: Update maintainer email.
+development/grails: Orphaned (unmaintained).
+development/guile2.0: Update maintainer email.
+development/icdiff: Updated for version 2.0.10.
+development/jdk11: Orphaned (unmaintained).
+development/jsmin: Orphaned (unmaintained).
+development/kdesvn: Orphaned (unmaintained).
+development/kotlin: Updated for version 2.4.10.
+development/libcutl: Orphaned (unmaintained).
+development/libxbgi: Orphaned (unmaintained).
+development/lighttable: Orphaned (unmaintained).
+development/mongodb-compass: Updated for version 1.49.12.
+development/mono-addins: Orphaned (unmaintained).
+development/mstch: Orphaned (unmaintained).
+development/notepad++: Updated for version 8.9.7
+development/omake: Update maintainer email.
+development/onetrueawk: Updated for version 20260426.
+development/ophis: Updated for version 2.3.
+development/p4: Orphaned (unmaintained).
+development/p4d: Orphaned (unmaintained).
+development/p4v: Orphaned (unmaintained).
+development/perf: Orphaned (unmaintained).
+development/pingendo: Orphaned (unmaintained).
+development/pnpm: Updated for version 11.13.1.
+development/positron: Updated for version 2026.07.1_5.
+development/prek: Updated for version 0.4.10.
+development/pycharm: Updated for version 2026.1.4
+development/pyside-tools: Orphaned (unmaintained).
+development/quilt: Orphaned (unmaintained).
+development/reckless: Orphaned (unmaintained).
+development/redo: Orphaned (unmaintained).
+development/s9fes: Updated for version 20250812.
+development/sauce: Orphaned (unmaintained).
+development/sbt: Updated for version 2.0.3
+development/shiboken: New maintainer.
+development/sourcegit: Updated for version 2026.15
+development/sqliteman: Orphaned (unmaintained).
+development/teensy_loader_cli: Orphaned (unmaintained).
+development/typos-lsp: Updated for version 0.1.53.
+development/viewvc: Orphaned (unmaintained).
+development/vscode-bin: Updated for version 1.129.0.
+development/vscodium: Updated for version 1.126.04524.
+development/vstudio: Updated for version 17.5.2
+development/xsp: Orphaned (unmaintained).
+development/zed-editor-bin: Updated for version 1.10.2.
+development/zizmor: Updated for version 1.27.0.
+games/PrismLauncher: Updated for version 11.0.3.
+games/VASSAL: Updated for version 3.7.24
+games/abuse: Fix maintainer info (whoops).
+games/atari800: Updated for version 7.0.0, add SDL2 option.
+games/bstone: Updated for version 1.3.4.
+games/d1x-rebirth: Orphaned (unmaintained).
+games/d2x-rebirth: Orphaned (unmaintained).
+games/empire: Orphaned (unmaintained).
+games/exult: Updated for version 1.12.1
+games/ggmud: Orphaned (unmaintained).
+games/openarena: Orphaned (unmaintained).
+games/openmw: Fix .info.
+games/playonlinux: Orphaned (unmaintained).
+games/quake3_shareware_data: Orphaned (unmaintained).
+games/quakeforge: Orphaned (unmaintained).
+games/quarry: Orphaned (unmaintained).
+games/qxw: Orphaned (unmaintained).
+games/smokinguns: Orphaned (unmaintained).
+games/solarus: Updated for version 2.0.4
+games/uligo: Orphaned (unmaintained).
+games/warsow: New maintainer
+games/xmoto: New maintainer
+games/xskat: New maintainer.
+gis/openorienteering-mapper: Orphaned (unmaintained).
+gis/osgEarth: Updated for version 3.8.1
+git/README: Add codeberg repository.
+git/ci: Update CI dependencies.
+graphics/Pixie: Orphaned (unmaintained).
+graphics/VariCAD: Orphaned (unmaintained).
+graphics/XnViewMP: Version bump to 1.11.2 + New Maintainer
+graphics/dcraw: Orphaned (unmaintained).
+graphics/fbgrab: Orphaned (unmaintained).
+graphics/fotowall: Orphaned (unmaintained).
+graphics/fyre: Orphaned (unmaintained).
+graphics/g3dviewer: Orphaned (unmaintained).
+graphics/gallery: Orphaned (unmaintained).
+graphics/gpaint: Orphaned (unmaintained).
+graphics/inkscape-gtk2: Orphaned (unmaintained).
+graphics/kim4: Orphaned (unmaintained).
+graphics/ldglite: Orphaned (unmaintained).
+graphics/maim: Updated for version 5.8.2.
+graphics/mtpaint: Orphaned (unmaintained).
+graphics/openclipart: Orphaned (unmaintained).
+graphics/pencil3: Orphaned (unmaintained).
+graphics/pngquant: New maintainer.
+graphics/ufraw: Orphaned (unmaintained).
+graphics/uniconvertor: Orphaned (unmaintained).
+graphics/xdaliclock: Orphaned (unmaintained).
+graphics/xfishtank: Orphaned (unmaintained).
+graphics/ximaging: Updated for version 1.9.2.
+graphics/xpe: Orphaned (unmaintained).
+ham/gqrx-sdr: Update maintainer email.
+ham/gsmlib: Update maintainer email.
+ham/libosmocore: Updated for version 1.14.0.
+ham/redsea: Updated for version 1.3.1.
+ham/rtl-sdr: Update maintainer email.
+libraries/CEGUI: Orphaned (unmaintained).
+libraries/Crypt-SSLeay: Orphaned (unmaintained).
+libraries/Hypodermic: Orphaned (unmaintained).
+libraries/PDFlib-Lite: Orphaned (unmaintained).
+libraries/PyXML: Orphaned (unmaintained).
+libraries/RxCpp: Orphaned (unmaintained).
+libraries/adodb: Orphaned (unmaintained).
+libraries/alglib: Orphaned (unmaintained).
+libraries/apiextractor: Orphaned (unmaintained).
+libraries/barry: Update maintainer email.
+libraries/bzrtp: Orphaned (unmaintained).
+libraries/c++-gtk-utils: Orphaned (unmaintained).
+libraries/capnproto: New maintainer.
+libraries/ccrtp: New maintainer.
+libraries/cpp-netlib: Orphaned (unmaintained).
+libraries/cpprestsdk: Orphaned (unmaintained).
+libraries/daq: Updated for version 3.0.27.
+libraries/dlib: Orphaned (unmaintained).
+libraries/gl2ps: New maintainer.
+libraries/gmtk: Orphaned (unmaintained).
+libraries/gnome-media: Orphaned (unmaintained).
+libraries/gnome-sharp: Orphaned (unmaintained).
+libraries/gnome-vfsmm: Orphaned (unmaintained).
+libraries/google-fruit: Orphaned (unmaintained).
+libraries/gperftools: Orphaned (unmaintained).
+libraries/gspell: New maintainer.
+libraries/gtkmm-utils: Orphaned (unmaintained).
+libraries/jbigkit: New maintainer.
+libraries/kashmir: Orphaned (unmaintained).
+libraries/libantlr3c: New maintainer.
+libraries/libcamera: Updated for version 0.7.2
+libraries/libcdaudio: Orphaned (unmaintained).
+libraries/libcifpp: Orphaned (unmaintained).
+libraries/libdynamite: New maintainer.
+libraries/libexif-gtk: New maintainer.
+libraries/libfilteraudio: Update maintainer email.
+libraries/libg3d: Orphaned (unmaintained).
+libraries/libgnomemm: Orphaned (unmaintained).
+libraries/libgnomeuimm: Orphaned (unmaintained).
+libraries/libgraphqlparser: Orphaned (unmaintained).
+libraries/libgxps: New maintainer.
+libraries/libiptcdata: New maintainer.
+libraries/libisoburn: Orphaned (unmaintained).
+libraries/libisofs: New maintainer.
+libraries/libjson-rpc-cpp: Update maintainer email.
+libraries/libkate: New maintainer.
+libraries/liblinebreak: Orphaned (unmaintained).
+libraries/libmediainfo: Version bump to 26.05
+libraries/libmimic: Orphaned (unmaintained).
+libraries/libmodbus: Updated for version 3.2.0
+libraries/libmpd: Orphaned (unmaintained).
+libraries/libr3: Orphaned (unmaintained).
+libraries/libsrtp: Orphaned (unmaintained).
+libraries/libsuinput: Orphaned (unmaintained).
+libraries/libtins: Orphaned (unmaintained).
+libraries/libunibreak: Updated for version 7.0.
+libraries/libvmime: Orphaned (unmaintained).
+libraries/libvorbisidec: Orphaned (unmaintained).
+libraries/libyubikey: Orphaned (unmaintained).
+libraries/libzrtpcpp: New maintainer.
+libraries/manubulon-snmp-plugins: Update maintainer email.
+libraries/med: Orphaned (unmaintained).
+libraries/mysqltcl: Update maintainer email.
+libraries/opendht: Update maintainer email.
+libraries/php-memcache: Update maintainer email.
+libraries/php-oci8: Orphaned (unmaintained).
+libraries/php-ssh2: Update maintainer email.
+libraries/polyclipping: Orphaned (unmaintained).
+libraries/python-gnupg: Removed (see python3-gnupg)
+libraries/qt-assistant-compat: New maintainer.
+libraries/qt5-pbfimageplugin: Orphaned (unmaintained).
+libraries/restbed: Orphaned (unmaintained).
+libraries/rrdtool: Update maintainer email.
+libraries/rudiments: Update maintainer email.
+libraries/sqlpp11: Orphaned (unmaintained).
+libraries/stk: New maintainer.
+libraries/tamu_anova: Orphaned (unmaintained).
+libraries/tcl-promise: Orphaned (unmaintained).
+libraries/tree-sitter: Updated for version 0.26.11
+libraries/tslib: Orphaned (unmaintained).
+libraries/ucommon: New maintainer.
+libraries/vigra: New maintainer.
+libraries/volk: Update maintainer email.
+libraries/xmlrpc-c: Update maintainer email.
+libraries/yaz: Orphaned (unmaintained).
+misc/asr-manpages: New maintainer.
+misc/bodr: Orphaned (unmaintained).
+misc/chemical-mime-data: Orphaned (unmaintained).
+misc/cksfv: Update maintainer email.
+misc/dcc: Updated for version 2.3.169.
+misc/drg2sbg: Orphaned (unmaintained).
+misc/exploitdb: Updated for version 2026_07_09.
+misc/fcitx5-mozc: Orphaned (unmaintained).
+misc/funny-manpages: New maintainer.
+misc/gcp: Orphaned (unmaintained).
+misc/gourmet: Orphaned (unmaintained).
+misc/nuclei: Updated for version 3.11.0.
+misc/utimer: New Maintainer
+misc/ykpers: Orphaned (unmaintained).
+misc/yubikey-personalization-gui: Orphaned (unmaintained).
+multimedia/MuseScore-Legacy: Updated README
+multimedia/MuseScore: Updated for version 4.7.3
+multimedia/castget: Orphaned (unmaintained).
+multimedia/castnow: Orphaned (unmaintained).
+multimedia/dirac: New maintainer.
+multimedia/dvdrip: New Maintainer
+multimedia/ffmpeg2theora: Orphaned (unmaintained).
+multimedia/filebot: Version bump to 5.2.3
+multimedia/flvtool2: Orphaned (unmaintained).
+multimedia/gnome-mplayer: Orphaned (unmaintained).
+multimedia/gnupod: Orphaned (unmaintained).
+multimedia/gst-plugins-bad-nonfree: New maintainer.
+multimedia/iat: Fix typo (PKE => PKG).
+multimedia/inputstream.adaptive: Version bump to 21.5.22
+multimedia/intel-gmmlib: Update maintainer email.
+multimedia/intel-media-driver: Update maintainer email.
+multimedia/intel-media-sdk: Update maintainer email.
+multimedia/kaffeine-mozilla: Orphaned (unmaintained).
+multimedia/kaffeine: Orphaned (unmaintained).
+multimedia/mediainfo: Version bump to 26.05
+multimedia/minidlna: Update maintainer email.
+multimedia/mozplugger: Orphaned (unmaintained).
+multimedia/opencaster: Update maintainer email.
+multimedia/pipe-viewer: Updated for version 0.5.8.
+multimedia/playerctl: Script updated + new maintainer.
+multimedia/schroedinger: New maintainer.
+multimedia/strawberry: Updated for version 1.2.24.
+multimedia/subtitleripper: Orphaned (unmaintained).
+multimedia/tstools: Update maintainer email.
+multimedia/vobcopy: Orphaned (unmaintained).
+multimedia/xmltv: Orphaned (unmaintained).
+network/2ping: Updated for version 4.6.1.
+network/AdGuardHome: Updated for version 0.107.78.
+network/MEGAcmd: Orphaned (unmaintained).
+network/MEGAsync: Orphaned (unmaintained).
+network/NetworkManager-ssh: Updated for version 1.4.5.
+network/acme.sh: Updated for version 3.1.3.
+network/amavisd-new: Orphaned (unmaintained).
+network/awstats: Orphaned (unmaintained).
+network/barnyard2: Orphaned (unmaintained).
+network/bluejeans: Orphaned (unmaintained).
+network/bombadillo: Orphaned (unmaintained).
+network/brave-browser: Updated for version 1.92.140.
+network/brave-origin: Updated for version 1.92.140.
+network/c-toxcore: Update maintainer email.
+network/clamav-unofficial-sigs: Orphaned (unmaintained).
+network/cyrus-imapd: Update maintainer email.
+network/discord: Version bump to 1.0.147
+network/dnscrypt-wrapper: Orphaned (unmaintained).
+network/dooble: Updated for version 2026.07.09
+network/dovecot-pigeonhole: Update maintainer email.
+network/dublin-traceroute: Orphaned (unmaintained).
+network/dukto: Orphaned (unmaintained).
+network/efax-gtk: Orphaned (unmaintained).
+network/eiskaltdcpp: Orphaned (unmaintained).
+network/ffuf: Updated for version 2.2.1.
+network/fping: Update maintainer email.
+network/franz: Updated for version 6.5.1.
+network/freeradius-server: Update maintainer email.
+network/gajim: Updated REQUIRES
+network/gallery-dl: Updated for version 1.32.6
+network/geoipupdate: Orphaned (unmaintained).
+network/go-ipfs: Orphaned (unmaintained).
+network/helium-browser: Updated for version 0.14.5.1
+network/host-sflow: Orphaned (unmaintained).
+network/icecat: Orphaned (unmaintained).
+network/icinga2: Update maintainer email.
+network/inadyn: Orphaned (unmaintained).
+network/iodine: New homepage/download.
+network/ipfs-pack: Orphaned (unmaintained).
+network/jitsi-meet-desktop: Updated for version 2026.7.0
+network/libnatpmp: Update maintainer email.
+network/librewolf: Updated for version 152.0.5_1
+network/lighttpd: Updated for version 1.4.85.
+network/lizardfs: Orphaned (unmaintained).
+network/maildrop: Updated for version 4.0.3
+network/mdk3: Orphaned (unmaintained).
+network/metasploit-framework-bin: Updated for version 6.4.144.
+network/microsoft-edge: Updated for version 150.0.4078.65.
+network/miniupnpd: Orphaned (unmaintained).
+network/mk-livestatus: Update maintainer email.
+network/mod_ruid2: Update maintainer email.
+network/modemu2k: Updated for version 0.2.3
+network/msmtp: update to 1.8.33
+network/mullvad-browser: Updated for version 15.0.18
+network/nagios: Update maintainer email.
+network/nagiosgraph: Update maintainer email.
+network/neomutt: Updated for version 20260616.
+network/netdrive-connector: Orphaned (unmaintained).
+network/netstat-nat: Orphaned (unmaintained).
+network/nginx: Updated for version 1.30.4
+network/noip2: Orphaned (unmaintained).
+network/nordvpn-gui: Updated for version 5.2.0.
+network/nordvpn: Updated for version 5.2.0.
+network/nrpe: Update maintainer email.
+network/nsca: Update maintainer email.
+network/ntpclient: Updated for version 2024_132, new maintainer.
+network/offlineimap: Orphaned (unmaintained).
+network/opendmarc: Update maintainer email.
+network/openvswitch-utils: Update maintainer email.
+network/opera: Updated for version 133.0.5932.34
+network/pCloudDrive: Orphaned (unmaintained).
+network/pexip-infinity-connect: Orphaned (unmaintained).
+network/pflogsumm: Orphaned (unmaintained).
+network/pfqueue: Orphaned (unmaintained).
+network/pidgin-musictracker: Orphaned (unmaintained).
+network/pmacct: Orphaned (unmaintained).
+network/policyd2: Orphaned (unmaintained).
+network/policyd: Orphaned (unmaintained).
+network/pptp: Update maintainer email.
+network/qTox: Update maintainer email.
+network/rclone-src: Updated for version 1.74.4
+network/rclone: Updated for version 1.74.4
+network/remotebox: Orphaned (unmaintained).
+network/rtl8188eu: New maintainer.
+network/rtl8821ce: New maintainer.
+network/sflowtool: Orphaned (unmaintained).
+network/shadowsocks-libev: Orphaned (unmaintained).
+network/signal-desktop: Updated for version 8.19.0.
+network/sipcalc: New Maintainer
+network/smcroute: Update maintainer email.
+network/snmptt: Update maintainer email.
+network/snort: Fix UID.
+network/snort: Updated for version 3.12.2.0.
+network/sqlrelay: Update maintainer email.
+network/sshguard: Updated for version 2.5.1, new maintainer.
+network/sshpass: Update maintainer email.
+network/sstp-client: Update maintainer email.
+network/sylpheed: Orphaned (unmaintained).
+network/syncthingtray-bin: Updated for version 2.1.3.
+network/tailscale: Updated for version 1.98.8
+network/telegram: Updated for version 7.0.1.
+network/thrift: Orphaned (unmaintained).
+network/tor-browser: Updated for version 15.0.18.
+network/toxcore: Update maintainer email.
+network/uTox: Patch bootstrap-updates.diff
+network/udns: Updated for version 0.6.
+network/verlihub: Update maintainer email.
+network/viber: Updated for version 27.3.0.2 + new maintainer
+network/vivaldi: Updated for version 8.1.4087.53.
+network/waterfox: Updated for version 6.6.16.1
+network/wavemon: Orphaned (unmaintained).
+network/wendzelnntpd: Orphaned (unmaintained).
+network/wifite: Orphaned (unmaintained).
+network/xl2tpd: Update maintainer email.
+network/zen-browser: Updated for version 1.21.6b
+network/znc: Update maintainer email.
+network/zsync: Orphaned (unmaintained).
+office/FreeOffice: Orphaned (unmaintained).
+office/aigaion: Orphaned (unmaintained).
+office/bibutils: Orphaned (unmaintained).
+office/devtodo: Orphaned (unmaintained).
+office/gbgoffice: Orphaned (unmaintained).
+office/gcalctool-gtk2: Orphaned (unmaintained).
+office/gnumeric-gtk2: Orphaned (unmaintained).
+office/hebcal: Updated for version 5.14.0.
+office/hunspell-es: Orphaned (unmaintained).
+office/hunspell-id: Orphaned (unmaintained).
+office/kbbi-qt: Orphaned (unmaintained).
+office/latexdiff: Updated for version 1.4.0
+office/mdp: Orphaned (unmaintained).
+office/mythes-id: Orphaned (unmaintained).
+office/osmo-gtk2: Orphaned (unmaintained).
+office/pdfsam-basic: Updated for version 6.0.4.
+office/qownnotes: Updated for version 26.7.7.
+office/referencer: Orphaned (unmaintained).
+office/text2pdf: Update maintainer email.
+office/trelby: Orphaned (unmaintained).
+office/turtl: Orphaned (unmaintained).
+office/wps-office-dicts: Updated for version 26.8.0.1
+perl/MoarVM: Updated for version 2026.06.1
+perl/cpanminus: Orphaned (unmaintained).
+perl/perl-B-COW: New maintainer.
+perl/perl-BerkeleyDB: New maintainer.
+perl/perl-CPAN-Perl-Releases: Orphaned (unmaintained).
+perl/perl-CPAN-Requirements-Dynamic: Updated for version 0.003.
+perl/perl-Cache-FastMmap: Orphaned (unmaintained).
+perl/perl-Canary-Stability: New maintainer
+perl/perl-Carp-Clan: Updated for version 6.08
+perl/perl-Class-Factory-Util: Orphaned (unmaintained).
+perl/perl-Class-Inspector: Updated for version 1.36.
+perl/perl-Class-MethodMaker: Orphaned (unmaintained).
+perl/perl-Class-Mix: Orphaned (unmaintained).
+perl/perl-Clone: New maintainer.
+perl/perl-Config-File: Update maintainer email.
+perl/perl-Config-IniFiles: New maintainer.
+perl/perl-Config-Simple: New maintainer.
+perl/perl-Convert-ASN1: Updated for version 0.34.
+perl/perl-Convert-BinHex: Orphaned (unmaintained).
+perl/perl-Convert-Color: Orphaned (unmaintained).
+perl/perl-Convert-TNEF: Orphaned (unmaintained).
+perl/perl-Convert-UUlib: Orphaned (unmaintained).
+perl/perl-Crypt-Eksblowfish: Orphaned (unmaintained).
+perl/perl-Crypt-OpenSSL-DSA: Orphaned (unmaintained).
+perl/perl-Crypt-OpenSSL-EC: Orphaned (unmaintained).
+perl/perl-Crypt-OpenSSL-ECDSA: Orphaned (unmaintained).
+perl/perl-Crypt-OpenSSL-RSA: New maintainer.
+perl/perl-Crypt-OpenSSL-Random: Orphaned (unmaintained).
+perl/perl-Crypt-Rijndael: Updated for version 1.16.
+perl/perl-Data-Compare: Update maintainer email.
+perl/perl-Data-OptList: Updated for version 0.114.
+perl/perl-DateTime-Format-Builder: Orphaned (unmaintained).
+perl/perl-DateTime-Format-ISO8601: Orphaned (unmaintained).
+perl/perl-DateTime-Format-Strptime: Orphaned (unmaintained).
+perl/perl-Devel-PatchPerl: Orphaned (unmaintained).
+perl/perl-Digest-GOST: Orphaned (unmaintained).
+perl/perl-Error: Change ARCH to noarch.
+perl/perl-ExtUtils-XSBuilder: Orphaned (unmaintained).
+perl/perl-File-Copy-Recursive: Updated for version 0.44, new maint.
+perl/perl-File-Find-Rule: New maintainer.
+perl/perl-File-ReadBackwards: New maintainer.
+perl/perl-File-ShareDir-Install: Updated for v0.13, new maint.
+perl/perl-File-Which: New maintainer.
+perl/perl-Geo-IP: Orphaned (unmaintained).
+perl/perl-HTML-TableExtract: Orphaned (unmaintained).
+perl/perl-HTTP-Cache-Transparent: Orphaned (unmaintained).
+perl/perl-HTTP-CookieJar: Change ARCH to noarch.
+perl/perl-IO-All: New maintainer.
+perl/perl-IO-Multiplex: New maintainer.
+perl/perl-IO-SessionData: Orphaned (unmaintained).
+perl/perl-IO-Socket-Timeout: Orphaned (unmaintained).
+perl/perl-IPC-Run: New maintainer.
+perl/perl-Inline-C: New maintainer.
+perl/perl-Inline: New maintainer.
+perl/perl-JSON-MaybeXS: Updated for version 1.004008
+perl/perl-JSON: New maintainer.
+perl/perl-Lingua-EN-Numbers-Ordinate: Orphaned (unmaintained).
+perl/perl-Lingua-Preferred: Orphaned (unmaintained).
+perl/perl-List-MoreUtils: Updated for version 0.430
+perl/perl-Log-Dispatch: Update maintainer email.
+perl/perl-Log-Log4perl: Updated for version 1.57
+perl/perl-MIME-tools: Orphaned (unmaintained).
+perl/perl-MailTools: New maintainer.
+perl/perl-Net-CIDR: Orphaned (unmaintained).
+perl/perl-Net-DNS-Native: Orphaned (unmaintained).
+perl/perl-Net-DNS-SEC: Orphaned (unmaintained).
+perl/perl-Net-LibIDN2: Included extra_compiler_flags="${SLKCFLAGS}"
+perl/perl-Net-Patricia: Orphaned (unmaintained).
+perl/perl-Net-SNMP: Update maintainer email.
+perl/perl-Net-Server: New maintainer.
+perl/perl-Net-UPnP: Orphaned (unmaintained).
+perl/perl-Number-Compare: New maintainer.
+perl/perl-Params-Classify: Orphaned (unmaintained).
+perl/perl-Params-Util: Updated for version 1.102.
+perl/perl-Parse-RecDescent: New maintainer
+perl/perl-Pegex: New maintainer.
+perl/perl-PerlIO-via-Timeout: Orphaned (unmaintained).
+perl/perl-Proc-PID-File: Update maintainer email.
+perl/perl-Proc-ProcessTable: Updated for version 0.637
+perl/perl-Religion-Islam-Quran: Orphaned (unmaintained).
+perl/perl-SOAP-Lite: Orphaned (unmaintained).
+perl/perl-String-ShellQuote: Orphaned (unmaintained).
+perl/perl-Sub-Exporter: Updated for version 0.991.
+perl/perl-Sub-Override: Updated for version 0.12
+perl/perl-Sub-Uplevel: New maintainer
+perl/perl-Switch: New maintainer.
+perl/perl-Term-ProgressBar: Orphaned (unmaintained).
+perl/perl-Test-Deep: new maintainer
+perl/perl-Test-Fatal: New maintainer.
+perl/perl-Test-File: New maintainer.
+perl/perl-Test-Inter: Updated for version 1.13.
+perl/perl-Test-Needs: New maintainer.
+perl/perl-Test-NoWarnings: New maintainer.
+perl/perl-Test-Output: New maintainer.
+perl/perl-Test-Requires: New maintainer.
+perl/perl-Test-SharedFork: Orphaned (unmaintained).
+perl/perl-Test-Spec: Orphaned (unmaintained).
+perl/perl-Test-TCP: Orphaned (unmaintained).
+perl/perl-Test-TempDir-Tiny: Orphaned (unmaintained).
+perl/perl-Test-Warnings: New maintainer.
+perl/perl-Test-utf8: New maintainer.
+perl/perl-Text-Autoformat: Updated for version 1.75, new maintainer.
+perl/perl-Text-CSV_XS: Orphaned (unmaintained).
+perl/perl-Text-Glob: New maintainer.
+perl/perl-Text-Iconv: New maintainer.
+perl/perl-Text-Quoted: Orphaned (unmaintained).
+perl/perl-Text-Reform: New maintainer plus fixes.
+perl/perl-Text-Tabs+Wrap: Updated for version 2024.001, new maintainer.
+perl/perl-Tie-IxHash: Orphaned (unmaintained).
+perl/perl-Time-Out: Orphaned (unmaintained).
+perl/perl-Time-Piece: Orphaned (unmaintained).
+perl/perl-TimeDate: New maintainer.
+perl/perl-Tk-TableMatrix: Orphaned (unmaintained).
+perl/perl-Try-Tiny: New maintainer.
+perl/perl-Unicode-UTF8simple: Orphaned (unmaintained).
+perl/perl-Unix-Syslog: New maintainer.
+perl/perl-XML-LibXSLT: New maintainer
+perl/perl-XML-XPath: Orphaned (unmaintained).
+perl/perl-YAML-LibYAML: New maintainer.
+perl/perl-ZMQ-Constants: Orphaned (unmaintained).
+perl/perl-config-general: Updated for version 2.67
+perl/perl-test-warn: New maintainer.
+perl/perlbrew: Orphaned (unmaintained).
+python/cfgparse: Orphaned (unmaintained).
+python/fasteners: Orphaned (unmaintained).
+python/gnome-python-desktop: Orphaned (unmaintained).
+python/monotonic: Orphaned (unmaintained).
+python/node-semver: Orphaned (unmaintained).
+python/pattern: Orphaned (unmaintained).
+python/pluginbase: Orphaned (unmaintained).
+python/pycassa: Orphaned (unmaintained).
+python/pyjwt: Orphaned (unmaintained).
+python/python-fusepy: Orphaned (unmaintained).
+python/python-setuptools-git: New maintainer.
+python/python2-django-tagging: Update maintainer email.
+python/python2-django: Update maintainer email.
+python/python2-elib.intl: Orphaned (unmaintained).
+python/python2-patch: Orphaned (unmaintained).
+python/python2-whisper: Update maintainer email.
+python/python3-docker: Updated for version 7.2.0.
+python/python3-gnupg: Added (Renamed from python-gnupg).
+python/python3-hatchling: Updated for version 1.31.0.
+python/python3-odfdo: Updated for version 3.22.11
+python/python3-tabulate: Updated for version 0.9.0 + new maintainer
+python/ramlfications: Orphaned (outdated, unmaintained).
+python/sk1libs: Orphaned (unmaintained).
+python/virtualenv: Orphaned (unmaintained).
+python/xopen: Orphaned (unmaintained).
+ruby/ruby-build: Updated for version 20260716.
+ruby/rubygem-ast: Orphaned.
+ruby/rubygem-cairo-gobject: Orphaned.
+ruby/rubygem-cool.io: Update maintainer email.
+ruby/rubygem-fluentd: Update maintainer email.
+ruby/rubygem-gdk3: Orphaned.
+ruby/rubygem-gio2: Orphaned.
+ruby/rubygem-gobject-introspection: Orphaned.
+ruby/rubygem-gtk3: Orphaned.
+ruby/rubygem-hpricot: New maintainer.
+ruby/rubygem-http_parser.rb: Update maintainer email.
+ruby/rubygem-matrix: Orphaned.
+ruby/rubygem-msgpack: Update maintainer email.
+ruby/rubygem-mustache: Updated for version 1.1.2, new maint.
+ruby/rubygem-native-package-installer: Orphaned.
+ruby/rubygem-parallel: Orphaned.
+ruby/rubygem-parser: Orphaned.
+ruby/rubygem-rdiscount: Updated for version 2.2.7.5.
+ruby/rubygem-red-colors: Orphaned.
+ruby/rubygem-ronn: New maintainer.
+ruby/rubygem-sass: Update maintainer email.
+ruby/rubygem-sigdump: Update maintainer email.
+ruby/rubygem-string-scrub: Update maintainer email.
+ruby/rubygem-thread_safe: Update maintainer email.
+ruby/rubygem-tzinfo-data: Update maintainer email.
+ruby/rubygem-tzinfo: Update maintainer email.
+ruby/rubygem-yajl-ruby: Update maintainer email.
+system/FontAwesome: Update for 7.3.1
+system/MySQL-Sandbox: Orphaned (unmaintained).
+system/ZoneMinder: Orphaned (unmaintained).
+system/acpitool: Orphaned (unmaintained).
+system/apple-emoji: Orphaned (unmaintained).
+system/apple-fonts-Garamond: Orphaned (unmaintained).
+system/apple-fonts-NY: Orphaned (unmaintained).
+system/apple-fonts-SF: Orphaned (unmaintained).
+system/bacula-client: Update maintainer email.
+system/bacula: Update maintainer email.
+system/betty: Orphaned (unmaintained).
+system/ccrypt: Orphaned (unmaintained).
+system/clamsmtp: Orphaned (unmaintained).
+system/cndrvcups-capt: Update maintainer email.
+system/cndrvcups-common: Update maintainer email.
+system/collectd: Orphaned (unmaintained).
+system/corosync: Update maintainer email.
+system/cpuid: Orphaned (unmaintained).
+system/crikey: Orphaned (unmaintained).
+system/cups-bjnp: Orphaned (unmaintained).
+system/cve-check-tool: Orphaned (upstream DB gone).
+system/dateutils: Orphaned (unmaintained).
+system/debootstrap: Update maintainer email.
+system/direvent: Orphaned (unmaintained).
+system/displaylink: Orphaned (unmaintained).
+system/dlm: Update maintainer email.
+system/docker-compose: Updated for version 5.3.1
+system/doublecmd-qt5: Updated for version 1.1.32
+system/drbd-utils: Update maintainer email.
+system/duplicity: Orphaned (unmaintained).
+system/duply: Orphaned (unmaintained).
+system/epson-inkjet-printer-escpr: Orphaned (unmaintained).
+system/evdi-kernel: Orphaned (unmaintained).
+system/evdi: Orphaned (unmaintained).
+system/eventlog: Update maintainer email.
+system/exfat-utils: Update maintainer email.
+system/file-roller-gtk2: Orphaned (unmaintained).
+system/fish: Updated for version 4.8.1
+system/freeswitch: Update maintainer email.
+system/fuse-archive: Updated for version 1.22.
+system/fuse-exfat: Update maintainer email.
+system/fxload: Orphaned (unmaintained).
+system/gitolite: Update maintainer email.
+system/gnome-commander: Orphaned (unmaintained).
+system/gnome-pkgtool: Orphaned (unmaintained).
+system/hercules: Orphaned (unmaintained).
+system/herculesstudio: Orphaned (unmaintained).
+system/hime: Orphaned (unmaintained).
+system/hw-probe: Orphaned (unmaintained).
+system/icingaweb2: Update maintainer email.
+system/ifuse: Orphaned (unmaintained).
+system/incus: Added README.slackware & associated scripts
+system/ioping: Orphaned (unmaintained).
+system/iotop: New Maintainer
+system/kafka: Orphaned (unmaintained).
+system/keylaunch: Orphaned (unmaintained).
+system/ktsuss: Orphaned (unmaintained).
+system/limine: Updated for version 12.4.2
+system/listpkg: Orphaned (unmaintained).
+system/lvm2-cluster: Update maintainer email.
+system/lvm2-lockd: Update maintainer email.
+system/magiic: Orphaned (unmaintained).
+system/mbootpack: Update maintainer email.
+system/mcrypt: Orphaned (unmaintained).
+system/mdcat-bin: Updated for version 2.5.0.
+system/mediaextract: Updated for version 1.2.1.
+system/midisport-firmware: Orphaned (unmaintained).
+system/monitoring-plugins: Update maintainer email.
+system/mount-zip: Updated for version 1.12.
+system/nagios-plugins: Update maintainer email.
+system/nagvis: Update maintainer email.
+system/netdata: Updated for version 2.10.4.
+system/nsca-ng: Update maintainer email.
+system/numlockx: New maintainer.
+system/nut: New Maintainer
+system/ocfs2-tools: Update maintainer email.
+system/ohmyalias: Orphaned (unmaintained).
+system/ohsnap: Orphaned (unmaintained).
+system/omnidb-app: Orphaned (unmaintained).
+system/onerng: Updated REQUIRES
+system/openrc: Updated for version 0.63.3.
+system/openrgb: Version bump to 1.0rc3
+system/oracle-instantclient-basic: Orphaned (unmaintained).
+system/oracle-instantclient-devel: Orphaned (unmaintained).
+system/ossec-agent: Update maintainer email.
+system/ossec-local: Update maintainer email.
+system/ossec-server: Update maintainer email.
+system/otf-ibm-plex: Orphaned (unmaintained).
+system/overpass-desktop-fonts: Orphaned (unmaintained).
+system/overpass-webfonts: Orphaned (unmaintained).
+system/pacemaker: Update maintainer email.
+system/pbzx: Orphaned (unmaintained).
+system/phpsysinfo: Orphaned (unmaintained).
+system/posixovl: Orphaned (unmaintained).
+system/pwman: New maintainer.
+system/qemu-static: Improve README.
+system/rEFInd: Fix build on current.
+system/rar2fs: Update maintainer email.
+system/rar: Update maintainer email.
+system/ripgrep: Updated for version 15.2.0.
+system/rndaddentropy: Orphaned (unmaintained).
+system/rng-tools: Updated for version 6.17.
+system/sanlock: Update maintainer email.
+system/spacefm: Orphaned (unmaintained).
+system/splix: Orphaned (unmaintained).
+system/sqlcipher: Update maintainer email.
+system/syslog-ng: Update maintainer email.
+system/tagtools: Orphaned (unmaintained).
+system/tpc: Orphaned (unmaintained).
+system/trash: Orphaned (unmaintained).
+system/ttf-ibm-plex: Orphaned (unmaintained).
+system/tty2gif: Orphaned (unmaintained).
+system/unrar: Update maintainer email.
+system/winusb: Orphaned (unmaintained).
+system/wmconfig: Updated for version 1.5.2
+system/xautolock: Orphaned (unmaintained).
+system/xnp2: Orphaned (unmaintained).
+system/zookeeper: Orphaned (unmaintained).
++--------------------------+
 Sat Jul 11 14:37:17 UTC 2026
 games/beetle-psx-libretro: Fix script.
 misc/hoorex: Fix MD5SUM

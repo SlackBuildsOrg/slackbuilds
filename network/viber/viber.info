@@ -1,10 +1,12 @@
 PRGNAM="viber"
-VERSION="21.8.0.11"
+VERSION="27.3.0.2"
 HOMEPAGE="https://www.viber.com/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="http://download.cdn.viber.com/cdn/desktop/Linux/viber.deb"
-MD5SUM_x86_64="376ebe7c7b798dc722e8dc2c71d3bcee"
+DOWNLOAD_x86_64="https://download.cdn.viber.com/cdn/desktop/Linux/viber.deb \
+                 https://download.cdn.viber.com/desktop/Linux/viber.AppImage"
+MD5SUM_x86_64="de3a3a8ffa5a9939d5c8dacc52677f95 \
+               1445f65410c619f9d268d07798b9af77"
 REQUIRES="snappy tslib"
-MAINTAINER="Petar Petrov"
-EMAIL="slackalaxy@gmail.com"
+MAINTAINER="Strahil Yordanov"
+EMAIL="strahilski@yahoo.com"

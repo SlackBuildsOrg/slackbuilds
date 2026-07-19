@@ -2,7 +2,7 @@
 
 # Slackware build script for perl-Sys-Hostname-Long
 
-# Copyright 2013 Christopher Walker Copperas Cove, TX
+# Copyright 2013,2026 Chris Walker Kempner, TX
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=perl-Sys-Hostname-Long
-VERSION=${VERSION:-1.4}
+VERSION=${VERSION:-1.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -1,0 +1,32 @@
+#sunshine-ffmpeg (patched FFmpeg for Sunshine)
+
+This is a companion build-time dependency for the Sunshine (game stream host)
+SlackBuild.  It is NOT a general-purpose FFmpeg.
+
+Why it exists
+------------
+Sunshine does not use FFmpeg's public API.  It calls FFmpeg-internal Codec
+Bitstream (CBS) functions (ff_cbs_init, ff_cbs_read_packet,
+ff_cbs_write_fragment_data, ff_cbs_insert_unit_content, and the private headers
+libavcodec/cbs_h264.h / cbs_h265.h) to rewrite H.264/HEVC SPS bitstreams
+(bitstream restrictions, NVENC SPS handling).  These symbols are not exported by
+a stock FFmpeg, so Sunshine must be linked against the LizardByte patched
+FFmpeg that compiles the CBS internals into a separate static libcbs.a and ships
+matching static libavcodec/libswscale/libavutil/libSvtAv1Enc/libx264/libx265
+libraries.
+
+What it installs
+----------------
+Only static libraries and headers, under:
+
+  /opt/sunshine-ffmpeg/ffmpeg/{include,lib}   (FFmpeg + CBS + codec libs)
+
+These are consumed by the sunshine SlackBuild via:
+  -DFFMPEG_PREPARED_BINARIES=/opt/sunshine-ffmpeg/ffmpeg
+
+The build uses the LizardByte "build-deps" project to compile FFmpeg (plus
+AMF, x264, x265, SVT-AV1, nv-codec-headers, Vulkan headers) from source.
+CUDA-LLVM is disabled so the CUDA toolkit is not required; NVENC is still
+available via the header-only nv-codec-headers.
+
+Homepage: https://github.com/LizardByte/build-deps

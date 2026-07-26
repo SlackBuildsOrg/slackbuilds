@@ -1,0 +1,26 @@
+PRGNAM="sunshine-ffmpeg"
+VERSION="2026.516.143833"
+HOMEPAGE="https://github.com/LizardByte/build-deps"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://github.com/LizardByte/build-deps/archive/fce763bb09c73b5952ccdcbc90efb8ba8f53a7de/build-deps-fce763bb09c73b5952ccdcbc90efb8ba8f53a7de.tar.gz \
+                 https://github.com/GPUOpen-LibrariesAndSDKs/AMF/archive/eadd00804d5f7e5cd8c85d540073198312870776/AMF-eadd00804d5f7e5cd8c85d540073198312870776.tar.gz \
+                 https://github.com/FFmpeg/FFmpeg/archive/fb216b5facde2c97cb0ce2e75fb3228aa5ac21fa/FFmpeg-fb216b5facde2c97cb0ce2e75fb3228aa5ac21fa.tar.gz \
+                 https://github.com/LizardByte-infrastructure/SVT-AV1/archive/c04f951541ad600e0d9c10836f2ab7b9bc69816d/SVT-AV1-c04f951541ad600e0d9c10836f2ab7b9bc69816d.tar.gz \
+                 https://github.com/KhronosGroup/Vulkan-Headers/archive/015e25c3c91b70eb1a754d36fb14c4ba6ad9b0b9/Vulkan-Headers-015e25c3c91b70eb1a754d36fb14c4ba6ad9b0b9.tar.gz \
+                 https://github.com/KhronosGroup/Vulkan-Loader/archive/ebc06b83174f6b5200eb21de3e83fc0d03ddcd18/Vulkan-Loader-ebc06b83174f6b5200eb21de3e83fc0d03ddcd18.tar.gz \
+                 https://github.com/FFmpeg/nv-codec-headers/archive/e844e5b26f46bb77479f063029595293aa8f812d/nv-codec-headers-e844e5b26f46bb77479f063029595293aa8f812d.tar.gz \
+                 https://github.com/LizardByte-infrastructure/x264/archive/b35605ace3ddf7c1a5d67a2eb553f034aef41d55/x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.gz \
+                 https://github.com/LizardByte-infrastructure/x265_git/archive/1d117bed4747758b51bd2c124d738527e30392cb/x265_git-1d117bed4747758b51bd2c124d738527e30392cb.tar.gz"
+MD5SUM_x86_64="f3fe50caa072a658ad697afcdb16b706 \
+               78becb27f62e21080afed87c3ebbcc52 \
+               9b1ffc3bde672cf4805921b82b05f0f7 \
+               770b15164d4c1f65497379fa218b7dbe \
+               42e4bd07a33878f1adb58ffd367123bb \
+               044f04a21b9bbe82ee2d0a266abb4fac \
+               6fe6d89aa0705e0a5b243a098c1fd66a \
+               5ec36d2a3e6fe535aa20c10bc9c164f2 \
+               43fa61c6d29dfd65365e7f3a4ad7d418"
+REQUIRES="numactl"
+MAINTAINER="Jake Day"
+EMAIL="jake@ninebysix.com"

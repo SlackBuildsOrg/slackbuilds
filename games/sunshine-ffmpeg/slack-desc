@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description. Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in. You must
+# make exactly 11 lines for the formatting to be correct. It's also
+# customary to leave one space after the ':'.
+
+       |-----handy-ruler------------------------------------------------------|
+sunshine-ffmpeg: sunshine-ffmpeg (patched FFmpeg for Sunshine)
+sunshine-ffmpeg:
+sunshine-ffmpeg: Static, patched FFmpeg used only to build Sunshine.
+sunshine-ffmpeg: Sunshine calls FFmpeg-internal Codec Bitstream (CBS)
+sunshine-ffmpeg: APIs (ff_cbs_*, cbs_h264.h) that a stock FFmpeg does
+sunshine-ffmpeg: not export, so it links this custom build exposing
+sunshine-ffmpeg: them via libcbs.a plus matching static codec libs.
+sunshine-ffmpeg: Static libs/headers only; build-time dep of sunshine.
+sunshine-ffmpeg: and is a build-time dependency of the sunshine package.
+sunshine-ffmpeg:
+sunshine-ffmpeg: Homepage: https://github.com/LizardByte/build-deps

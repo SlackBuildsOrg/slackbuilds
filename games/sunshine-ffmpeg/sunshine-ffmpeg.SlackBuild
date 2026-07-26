@@ -1,0 +1,135 @@
+#!/bin/bash
+
+# Copyright 2026  Jake Day, Maryville, TN, USA
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# sunshine-ffmpeg: the patched FFmpeg used to build Sunshine.  Sunshine calls
+# FFmpeg-internal Codec Bitstream (CBS) APIs that are not exported by a stock
+# FFmpeg, so it must be linked against this custom static build which exposes
+# them via libcbs.a (plus matching static libavcodec/libswscale/libavutil/
+# libSvtAv1Enc/libx264/libx265).
+#
+# This package only ships static libraries and headers under /opt/sunshine-ffmpeg
+# and is a build-time dependency of the sunshine package.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=sunshine-ffmpeg
+VERSION=${VERSION:-2026.516.143833}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+	case "$(uname -m)" in
+	i?86) ARCH=i586 ;;
+	arm*) ARCH=arm ;;
+	*) ARCH=$(uname -m) ;;
+	esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+	echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+	exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+# Pinned submodule commits (must match the build-deps checkout used by
+# Sunshine v${VERSION}).
+BUILDDEPS=${BUILDDEPS:-fce763bb09c73b5952ccdcbc90efb8ba8f53a7de}
+AMF=${AMF:-eadd00804d5f7e5cd8c85d540073198312870776}
+FFMPEG=${FFMPEG:-fb216b5facde2c97cb0ce2e75fb3228aa5ac21fa}
+SVTAV1=${SVTAV1:-c04f951541ad600e0d9c10836f2ab7b9bc69816d}
+VULKANHDRS=${VULKANHDRS:-015e25c3c91b70eb1a754d36fb14c4ba6ad9b0b9}
+VULKANLDR=${VULKANLDR:-ebc06b83174f6b5200eb21de3e83fc0d03ddcd18}
+NVCODECHDRS=${NVCODECHDRS:-e844e5b26f46bb77479f063029595293aa8f812d}
+X264=${X264:-b35605ace3ddf7c1a5d67a2eb553f034aef41d55}
+X265=${X265:-1d117bed4747758b51bd2c124d738527e30392cb}
+
+PREFIX=/opt/sunshine-ffmpeg
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+mkdir $PRGNAM-$VERSION
+cd $PRGNAM-$VERSION
+
+# build-deps driver project
+tar xvf $CWD/build-deps-$BUILDDEPS.tar.gz
+mv build-deps-$BUILDDEPS build-deps
+
+# FFmpeg and its third-party sources, laid out exactly as build-deps expects
+# them under third-party/FFmpeg/.
+mkdir -p build-deps/third-party/FFmpeg/AMF
+tar xvf $CWD/AMF-$AMF.tar.gz -C build-deps/third-party/FFmpeg/AMF/ --strip-components 1
+mkdir -p build-deps/third-party/FFmpeg/FFmpeg
+tar xvf $CWD/FFmpeg-$FFMPEG.tar.gz -C build-deps/third-party/FFmpeg/FFmpeg/ --strip-components 1
+mkdir -p build-deps/third-party/FFmpeg/SVT-AV1
+tar xvf $CWD/SVT-AV1-$SVTAV1.tar.gz -C build-deps/third-party/FFmpeg/SVT-AV1/ --strip-components 1
+mkdir -p build-deps/third-party/FFmpeg/Vulkan-Headers
+tar xvf $CWD/Vulkan-Headers-$VULKANHDRS.tar.gz -C build-deps/third-party/FFmpeg/Vulkan-Headers/ --strip-components 1
+mkdir -p build-deps/third-party/FFmpeg/Vulkan-Loader
+tar xvf $CWD/Vulkan-Loader-$VULKANLDR.tar.gz -C build-deps/third-party/FFmpeg/Vulkan-Loader/ --strip-components 1
+mkdir -p build-deps/third-party/FFmpeg/nv-codec-headers
+tar xvf $CWD/nv-codec-headers-$NVCODECHDRS.tar.gz -C build-deps/third-party/FFmpeg/nv-codec-headers/ --strip-components 1
+mkdir -p build-deps/third-party/FFmpeg/x264
+tar xvf $CWD/x264-$X264.tar.gz -C build-deps/third-party/FFmpeg/x264/ --strip-components 1
+mkdir -p build-deps/third-party/FFmpeg/x265_git
+tar xvf $CWD/x265_git-$X265.tar.gz -C build-deps/third-party/FFmpeg/x265_git/ --strip-components 1
+
+chown -R root:root .
+chmod -R u+w,go+r-w,a-s .
+
+cd build-deps
+mkdir build
+cd build
+
+# Build only FFmpeg (BUILD_ALL=OFF skips Boost).  CUDA LLVM is disabled so
+# the build does not require the CUDA toolkit; NVENC is still enabled via the
+# header-only nv-codec-headers.
+cmake -G "Unix Makefiles" \
+  -D CMAKE_INSTALL_PREFIX=$PREFIX \
+  -D CMAKE_BUILD_TYPE=Release \
+  -D BUILD_ALL=OFF \
+  -D BUILD_FFMPEG=ON \
+  -D BUILD_FFMPEG_CUDA_LLVM=OFF \
+  .
+make
+
+# Install into the package staging tree.  build-deps' install rules populate
+# ${PREFIX}/ffmpeg with the static libraries and headers (including libcbs).
+make install DESTDIR=$PKG
+
+cd $PKG
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

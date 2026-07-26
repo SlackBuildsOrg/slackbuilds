@@ -1,0 +1,17 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description. Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.
+
+         |-----handy-ruler------------------------------------------------------|
+katifetch: katifetch (Cross-platform fetch utility)
+katifetch:
+katifetch: katifetch is a lightweight system information tool written in POSIX
+katifetch: shell script. It displays system hardware, OS details, and desktop
+katifetch: configuration in a clean terminal layout.
+katifetch:
+katifetch:
+katifetch:
+katifetch: Homepage: https://github.com/ximimoments/katifetch
+katifetch:
+katifetch:

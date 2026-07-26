@@ -1,0 +1,3 @@
+katifetch is a lightweight system information tool.
+
+Optional dependencies: pciutils, lshw (for enhanced hardware detection).

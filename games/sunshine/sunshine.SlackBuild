@@ -23,7 +23,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sunshine
-VERSION=${VERSION:-0.20.0}
+VERSION=${VERSION:-2026.516.143833}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -50,18 +50,29 @@ OUTPUT=${OUTPUT:-/tmp}
 
 DIRNAME=Sunshine-$VERSION
 
-MOONLIGHT=${MOONLIGHT:-2bb026c763fc18807d7e4a93f918054c488f84e1}
-ENET=${ENET:-880e41f3ab572ad6d8f064c6cc77e04f46d00956}
-SIMWEBSRV=${SIMWEBSRV:-v3.1.1}
-VIGEMCLIENT=${VIGEMCLIENT:-dc2f3da093938c3dcc8b7697707b7017e4a917fa}
-MINIUPNP=${MINIUPNP:-fb5c328a5e8fd57a3ec0f5d33915377a5d3581f3}
-NVCODECHDRS=${NVCODECHDRS:-dc3e4484dc83485734e503991fe5ed3bdf256fba}
-TPCIRCBUF=${TPCIRCBUF:-8833b3a73fab6530cc51e2063a85cced01714cfb}
-FFMPEG=${FFMPEG:-6deb7d7366fc6e09afb3cb235cab6780bfa550b9}
-NANORS=${NANORS:-e9e242e98e27037830490b2a752895ca68f75f8b}
-TRAY=${TRAY:-14b7797ac230ac4edeec9b82563a7a73a16572da}
+# Pinned third-party submodule commits.  These must match the submodules
+# recorded in the Sunshine v${VERSION} source tree.
+MOONLIGHT=${MOONLIGHT:-2600beaf13f18bfa43453609cf5e3b84a4227760}
+ENET=${ENET:-c7353c059373f8d3fc83d451f8f1a477be3dc94e}
+SIMWEBSRV=${SIMWEBSRV:-546895a93a29062bb178367b46c7afb72da9881e}
+LIBDD=${LIBDD:-fe7e6a81f65deae91594702e1a185f47229745b9}
+GLAD=${GLAD:-73db193f853e2ee079bf3ca8a64aa2eaf6459043}
+TRAY=${TRAY:-563dee475f8878d252ab2b9938d3a014e776ed08}
+NANORS=${NANORS:-19f07b513e924e471cadd141943c1ec4adc8d0e0}
+INPUTTINO=${INPUTTINO:-f4ce2b0df536ef309e9ff318f75b460f7097d7c1}
+NVCODECHDRS=${NVCODECHDRS:-33a9ede8d9914299d9262539c576a15bd0a19621}
+PLASMA=${PLASMA:-4c015e90ae6c88f2ffa766e899387ef431eade49}
+WLRPRO=${WLRPRO:-bf4fc79abc359eea5a0edec0ac6d4a2b2955f82a}
+
+# Location of the patched FFmpeg / Boost 1.89.0 produced by the sunshine-ffmpeg
+# companion package.
+SUNSHINE_FFMPEG=${SUNSHINE_FFMPEG:-/opt/sunshine-ffmpeg}
 
 DEPS=$PKG/$DIRNAME/third-party
+# Boost 1.89.0 is required by Sunshine (exactly) but Slackware -current ships
+# 1.91.0, so we build it from a vendored source via CMake's FetchContent
+# override (keeps the build offline/reproducible).
+BOOST_TAG=${BOOST_TAG:-boost-1.89.0}
 
 set -e
 
@@ -71,26 +82,35 @@ cd $PKG
 rm -rf $DIRNAME
 tar xvf $CWD/$DIRNAME.tar.gz
 
+mkdir -p boost-src
+tar xvf $CWD/$BOOST_TAG-cmake.tar.xz --strip-components 1 -C boost-src
+
+# third-party sources consumed directly by the Sunshine build
 tar xvf $CWD/moonlight-common-c-$MOONLIGHT.tar.gz -C \
 	$DEPS/moonlight-common-c/ --strip-components 1
+mkdir -p $DEPS/moonlight-common-c/enet
 tar xvf $CWD/enet-$ENET.tar.gz -C \
 	$DEPS/moonlight-common-c/enet/ --strip-components 1
 tar xvf $CWD/Simple-Web-Server-$SIMWEBSRV.tar.gz -C \
 	$DEPS/Simple-Web-Server/ --strip-components 1
-tar xvf $CWD/ViGEmClient-$VIGEMCLIENT.tar.gz -C \
-	$DEPS/ViGEmClient/ --strip-components 1
-tar xvf $CWD/miniupnp-$MINIUPNP.tar.gz -C \
-	$DEPS/miniupnp/ --strip-components 1
-tar xvf $CWD/nv-codec-headers-$NVCODECHDRS.tar.gz -C \
-	$DEPS/nv-codec-headers/ --strip-components 1
-tar xvf $CWD/TPCircularBuffer-$TPCIRCBUF.tar.gz -C \
-	$DEPS/TPCircularBuffer/ --strip-components 1
-tar xvf $CWD/build-deps-$FFMPEG.tar.gz -C \
-	$DEPS/ffmpeg-linux-x86_64/ --strip-components 1
-tar xvf $CWD/nanors-$NANORS.tar.gz -C \
-	$DEPS/nanors/ --strip-components 1
+tar xvf $CWD/libdisplaydevice-$LIBDD.tar.gz -C \
+	$DEPS/libdisplaydevice/ --strip-components 1
+mkdir -p $DEPS/glad
+tar xvf $CWD/glad-$GLAD.tar.gz -C \
+	$DEPS/glad/ --strip-components 1
 tar xvf $CWD/tray-$TRAY.tar.gz -C \
 	$DEPS/tray/ --strip-components 1
+tar xvf $CWD/nanors-$NANORS.tar.gz -C \
+	$DEPS/nanors/ --strip-components 1
+tar xvf $CWD/inputtino-$INPUTTINO.tar.gz -C \
+	$DEPS/inputtino/ --strip-components 1
+tar xvf $CWD/nv-codec-headers-$NVCODECHDRS.tar.gz -C \
+	$DEPS/nv-codec-headers/ --strip-components 1
+mkdir -p $DEPS/plasma-wayland-protocols
+tar xvf $CWD/plasma-wayland-protocols-$PLASMA.tar.gz -C \
+	$DEPS/plasma-wayland-protocols/ --strip-components 1
+tar xvf $CWD/wlr-protocols-$WLRPRO.tar.gz -C \
+	$DEPS/wlr-protocols/ --strip-components 1
 
 chown -R root:root .
 chmod -R u+w,go+r-w,a-s .
@@ -102,10 +122,26 @@ cd $DIRNAME
 mkdir build
 cd build
 
-npm install
+# The web UI is built by cmake (it runs `npm ci` + `vite build` itself).
 
+# Notes on the build configuration:
+#  * FFmpeg: provided by the sunshine-ffmpeg package (the patched, CBS-enabled
+#    static FFmpeg).  Sunshine cannot use a stock FFmpeg.
+#  * Boost 1.89.0 (exact): built from the vendored source via FetchContent so
+#    the build stays offline.
+#  * Vulkan headers and wayland-protocols come from the Slackware base install.
 BRANCH=master BUILD_VERSION=$VERSION COMMIT=release \
-  cmake -D CMAKE_INSTALL_PREFIX=/usr -D SUNSHINE_ASSETS_DIR="share/assets/sunshine" ..
+  cmake -D CMAKE_INSTALL_PREFIX=/usr \
+  -D CMAKE_POLICY_VERSION_MINIMUM=3.5 \
+  -D FETCHCONTENT_SOURCE_DIR_BOOST=$PKG/boost-src \
+  -D FFMPEG_PREPARED_BINARIES=$SUNSHINE_FFMPEG/ffmpeg \
+  -D SUNSHINE_ASSETS_DIR="share/assets/sunshine" \
+  -D SUNSHINE_SYSTEM_VULKAN_HEADERS=ON \
+  -D SUNSHINE_SYSTEM_WAYLAND_PROTOCOLS=ON \
+  -D BUILD_DOCS=OFF \
+  -D BUILD_TESTS=OFF \
+  -D CUDA_FAIL_ON_MISSING=OFF \
+  ..
 make
 
 cd $PKG
@@ -113,13 +149,16 @@ cd $PKG
 mkdir -p $PKG/usr/share/assets/sunshine
 cp -a $DIRNAME/src_assets/common/assets/* $PKG/usr/share/assets/sunshine/
 cp -a $DIRNAME/src_assets/linux/assets/* $PKG/usr/share/assets/sunshine/
-cp -a $DIRNAME/node_modules $PKG/usr/share/assets/sunshine/web/
+# web UI is built by vite during the cmake build; replace the unbuilt source
+# under web/ with the compiled assets.
+rm -rf $PKG/usr/share/assets/sunshine/web
+cp -a $DIRNAME/build/assets/web $PKG/usr/share/assets/sunshine/web
 mkdir -p $PKG/usr/lib/udev/rules.d
-cp -a $DIRNAME/src_assets/linux/misc/85-sunshine.rules $PKG/usr/lib/udev/rules.d/
+cp -a $DIRNAME/src_assets/linux/misc/60-sunshine.rules $PKG/usr/lib/udev/rules.d/
 mkdir -p $PKG/usr/share/icons
 cp -a $DIRNAME/sunshine.svg $PKG/usr/share/icons/
 mkdir -p $PKG/usr/bin
-cp -a $DIRNAME/build/sunshine-$VERSION $PKG/usr/bin/sunshine-$VERSION
+cp -a $DIRNAME/build/sunshine $PKG/usr/bin/sunshine-$VERSION
 cp -a $DIRNAME/build/sunshine $PKG/usr/bin/sunshine
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
@@ -132,7 +171,7 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc >$PKG/install/slack-desc
 cat $CWD/doinst.sh >$PKG/install/doinst.sh
 
-rm -rf $DIRNAME
+rm -rf $DIRNAME boost-src
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF |
 	cut -f 1 -d : | xargs strip --strip-unneeded 2>/dev/null || true

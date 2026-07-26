@@ -1,30 +1,34 @@
 PRGNAM="sunshine"
-VERSION="0.20.0"
+VERSION="2026.516.143833"
 HOMEPAGE="https://github.com/LizardByte/Sunshine"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/LizardByte/Sunshine/archive/v0.20.0/Sunshine-0.20.0.tar.gz \
-                 https://github.com/moonlight-stream/moonlight-common-c/archive/2bb026c763fc18807d7e4a93f918054c488f84e1/moonlight-common-c-2bb026c763fc18807d7e4a93f918054c488f84e1.tar.gz \
-                 https://github.com/cgutman/enet/archive/880e41f3ab572ad6d8f064c6cc77e04f46d00956/enet-880e41f3ab572ad6d8f064c6cc77e04f46d00956.tar.gz \
-                 https://gitlab.com/eidheim/Simple-Web-Server/-/archive/v3.1.1/Simple-Web-Server-v3.1.1.tar.gz \
-                 https://github.com/ViGEm/ViGEmClient/archive/dc2f3da093938c3dcc8b7697707b7017e4a917fa/ViGEmClient-dc2f3da093938c3dcc8b7697707b7017e4a917fa.tar.gz \
-                 https://github.com/miniupnp/miniupnp/archive/fb5c328a5e8fd57a3ec0f5d33915377a5d3581f3/miniupnp-fb5c328a5e8fd57a3ec0f5d33915377a5d3581f3.tar.gz \
-                 https://github.com/FFmpeg/nv-codec-headers/archive/dc3e4484dc83485734e503991fe5ed3bdf256fba/nv-codec-headers-dc3e4484dc83485734e503991fe5ed3bdf256fba.tar.gz \
-                 https://github.com/michaeltyson/TPCircularBuffer/archive/8833b3a73fab6530cc51e2063a85cced01714cfb/TPCircularBuffer-8833b3a73fab6530cc51e2063a85cced01714cfb.tar.gz \
-                 https://github.com/LizardByte/build-deps/archive/6deb7d7366fc6e09afb3cb235cab6780bfa550b9/build-deps-6deb7d7366fc6e09afb3cb235cab6780bfa550b9.tar.gz \
-                 https://github.com/sleepybishop/nanors/archive/e9e242e98e27037830490b2a752895ca68f75f8b/nanors-e9e242e98e27037830490b2a752895ca68f75f8b.tar.gz \
-                 https://github.com/dmikushin/tray/archive/14b7797ac230ac4edeec9b82563a7a73a16572da/tray-14b7797ac230ac4edeec9b82563a7a73a16572da.tar.gz"
-MD5SUM_x86_64="8d286f7a2344fdc1353a43a3199ee2c9 \
-               e3581235a993f0b693f601e36d58c90f \
-               9c31fb0b0a448371b436545b4631514d \
-               5d9e37cb150a8a8f77b32395ee873e87 \
-               d4123883019c46577077aafb40969500 \
-               62093450c0528e16cbde7fe7bff37007 \
-               b349540a2ae155f1c7e01a1081077d8b \
-               c72ddf506eb5c33732bc54dccd797bb2 \
-               7ef64c679b313a9510f855a8f79941f1 \
-               aacaa95b7d4c59c69bdac1f1b190a010 \
-               17fdbb1aafcba64798048ce2cd21daff"
-REQUIRES="nodejs22 npm numactl intel-media-sdk cudatoolkit"
-MAINTAINER="orphaned - no maintainer"
-EMAIL="NOEMAIL"
+DOWNLOAD_x86_64="https://github.com/LizardByte/Sunshine/archive/refs/tags/v2026.516.143833.tar.gz \
+                 https://github.com/boostorg/boost/releases/download/boost-1.89.0/boost-1.89.0-cmake.tar.xz \
+                 https://github.com/moonlight-stream/moonlight-common-c/archive/2600beaf13f18bfa43453609cf5e3b84a4227760/moonlight-common-c-2600beaf13f18bfa43453609cf5e3b84a4227760.tar.gz \
+                 https://github.com/cgutman/enet/archive/c7353c059373f8d3fc83d451f8f1a477be3dc94e/enet-c7353c059373f8d3fc83d451f8f1a477be3dc94e.tar.gz \
+                 https://github.com/LizardByte-infrastructure/Simple-Web-Server/archive/546895a93a29062bb178367b46c7afb72da9881e/Simple-Web-Server-546895a93a29062bb178367b46c7afb72da9881e.tar.gz \
+                 https://github.com/LizardByte/libdisplaydevice/archive/fe7e6a81f65deae91594702e1a185f47229745b9/libdisplaydevice-fe7e6a81f65deae91594702e1a185f47229745b9.tar.gz \
+                 https://github.com/Dav1dde/glad/archive/73db193f853e2ee079bf3ca8a64aa2eaf6459043/glad-73db193f853e2ee079bf3ca8a64aa2eaf6459043.tar.gz \
+                 https://github.com/LizardByte/tray/archive/563dee475f8878d252ab2b9938d3a014e776ed08/tray-563dee475f8878d252ab2b9938d3a014e776ed08.tar.gz \
+                 https://github.com/sleepybishop/nanors/archive/19f07b513e924e471cadd141943c1ec4adc8d0e0/nanors-19f07b513e924e471cadd141943c1ec4adc8d0e0.tar.gz \
+                 https://github.com/games-on-whales/inputtino/archive/f4ce2b0df536ef309e9ff318f75b460f7097d7c1/inputtino-f4ce2b0df536ef309e9ff318f75b460f7097d7c1.tar.gz \
+                 https://github.com/FFmpeg/nv-codec-headers/archive/33a9ede8d9914299d9262539c576a15bd0a19621/nv-codec-headers-33a9ede8d9914299d9262539c576a15bd0a19621.tar.gz \
+                 https://github.com/KDE/plasma-wayland-protocols/archive/4c015e90ae6c88f2ffa766e899387ef431eade49/plasma-wayland-protocols-4c015e90ae6c88f2ffa766e899387ef431eade49.tar.gz \
+                 https://github.com/LizardByte-infrastructure/wlr-protocols/archive/bf4fc79abc359eea5a0edec0ac6d4a2b2955f82a/wlr-protocols-bf4fc79abc359eea5a0edec0ac6d4a2b2955f82a.tar.gz"
+MD5SUM_x86_64="2287b2eed6471332d91bd52547d2d58d \
+               537da0e22b31b8b7185cc44fdde70458 \
+               c038d5c9181cc379f7a5ef39111f8281 \
+               32f9cedcfbbe1de8dc9ac1d94c332ca6 \
+               547f8b4cabfc016e9ebbbb3b79abdaa2 \
+               36f0c95cbf38f49e3cc749f02fd3094c \
+               0141dc352c551c70524cad75b7eddcb0 \
+               bf6e8e99d5e57727dc603ada3a62fda6 \
+               5493e7737b3835c12e15185052a2c54a \
+               04d02ab07ec09aab6f8c9ff8f05c2e28 \
+               110e31104261833c4ef2b74a304a2440 \
+               f2de345f66ab2d54b433e696bc3dc5ba \
+               addeb4b23521e5397fab378df1481dce"
+REQUIRES="sunshine-ffmpeg numactl miniupnpc cudatoolkit"
+MAINTAINER="Jake Day"
+EMAIL="jake@ninebysix.com"

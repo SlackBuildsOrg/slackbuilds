@@ -9,3 +9,11 @@ client pairing, from your favorite web browser. Pair from the local
 server or any mobile device.
 
 Homepage: https://github.com/LizardByte/Sunshine
+
+Build notes
+-----------
+This package depends on the companion "sunshine-ffmpeg" package, which
+provides the patched, CBS-enabled static FFmpeg that Sunshine requires (Sunshine
+uses FFmpeg-internal Codec Bitstream APIs not exported by a stock FFmpeg).
+Boost 1.89.0 is built from source during this build (Sunshine requires that
+exact version; Slackware -current ships 1.91.0).

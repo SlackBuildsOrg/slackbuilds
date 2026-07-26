@@ -2,6 +2,7 @@
 
 # Slackware build script for stress-ng
 # Copyright 2018 David Woodfall <dave@slackbuilds.org>
+# Updated 2026 by Emmanuel N. Millan, Argentina
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,10 +29,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=stress-ng
-VERSION=${VERSION:-0.13.05}
+VERSION=${VERSION:-0.21.04}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+GVER=06a5ac2
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -69,10 +71,10 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf ColinIanKing-stress-ng-c0e0123
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz || \
-  tar xvf $CWD/ColinIanKing-stress-ng-V0.13.05-0-gc0e0123.tar.gz
-cd ColinIanKing-stress-ng-c0e0123
+rm -rf ColinIanKing-stress-ng-$GVER
+tar xvf $CWD/$PRGNAM-V$VERSION.tar.gz || \
+  tar xvf $CWD/ColinIanKing-stress-ng-V$VERSION.tar.gz
+cd ColinIanKing-stress-ng-$GVER
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

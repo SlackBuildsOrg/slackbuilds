@@ -1,8 +1,9 @@
 #!/bin/bash
-
+#
 # Slackware build script for grim
-
+#
 # Copyright 2022 Damian Perticone  Berisso,Argentina
+# Copyright 2026 r1w1s1
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=grim
-SRCNAM=grim-v1.4.0
-VERSION=${VERSION:-1.4.0}
+SRCNAM=grim-v1.5.0
+VERSION=${VERSION:-1.5.0}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -68,10 +69,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $SRCNAM
-tar xvf $CWD/$SRCNAM.tar.gz || tar xvf $CWD/v$VERSION.tar.gz
+tar xvf $CWD/$SRCNAM.tar.?z
 cd $SRCNAM
-# https://git.sr.ht/~emersion/grim/commit/89e02e663fabc534b7e7039514f60a8c5d70070d
-patch -p1 -i $CWD/89e02e663fabc534b7e7039514f60a8c5d70070d.patch
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

@@ -4,6 +4,7 @@
 
 # Copyright 2007-2016 Michiel van Wessem, Leicester, United Kingdom
 # Copyright 2016-2017 Marcel Saegebarth <marc@mos6581.de>
+# Copyright 2026      Vasily Sora, USA
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bitlbee
-VERSION=${VERSION:-3.5.1}
+VERSION=${VERSION:-3.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -162,8 +163,6 @@ cp -a \
   COPYING doc/AUTHORS doc/CHANGES doc/CREDITS doc/FAQ doc/INSTALL \
   doc/README doc/HACKING doc/bitlbee.xinetd doc/comic_3.0.png \
   doc/example_plugin.c doc/user-guide/help.txt  $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a protocols/oscar/{AUTHORS,COPYING} $PKG/usr/doc/$PRGNAM-$VERSION/oscar
-cp -a protocols/skype/{HACKING,NEWS,README} $PKG/usr/doc/$PRGNAM-$VERSION/skype
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 find $PKG/usr/doc/$PRGNAM-$VERSION -type f -exec \

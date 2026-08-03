@@ -35,12 +35,13 @@
 # 18/04/2025: updated to version 0.0.1904.20250204
 # 10/09/2025: updated to version 0.0.1916.20250814
 # 09/03/2026: updated to version 0.0.1922.20260106
+# 03/08/2026: updated to version 0.0.1949.20260706
 # ----------------------------------------------------------------------------------
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libyuv
-VERSION=${VERSION:-0.0.1922.20260106}
+VERSION=${VERSION:-0.0.1949.20260706}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -73,8 +74,7 @@ elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-march=x86-64 -mtune=generic -pipe -O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
-  SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
+ echo "This SlackBuild will not run on $ARCH" && exit 1
 fi
 
 set -e

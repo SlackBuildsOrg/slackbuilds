@@ -3,6 +3,7 @@
 # Slackware build script for physlock
 
 # Copyright 2015 William G. Gardella, Hamden, Connecticut, USA
+# Copyright 2026 Nick Smallbone, Gothenburg, Sweden
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=physlock
-VERSION=${VERSION:-0.4.5}
+VERSION=${VERSION:-13}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -82,8 +83,8 @@ find -L . \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 
-make
-make install DESTDIR=$PKG PREFIX=/usr
+make HAVE_SYSTEMD=0
+make install HAVE_SYSTEMD=0 DESTDIR=$PKG PREFIX=/usr
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

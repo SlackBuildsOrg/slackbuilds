@@ -2,9 +2,9 @@ PRGNAM="rav1e"
 VERSION="0.8.1"
 HOMEPAGE="https://github.com/xiph/rav1e/"
 DOWNLOAD="https://github.com/xiph/rav1e/archive/v0.8.1/rav1e-0.8.1.tar.gz \
-	  https://github.com/lecramyajiv/sbo-rust-vendor/archive/1.0/sbo-rust-vendor-1.0.tar.gz"
+          https://github.com/lecramyajiv/sbo-rust-vendor/archive/1.0/sbo-rust-vendor-1.0.tar.gz"
 MD5SUM="7885b14bf77f7739550685dccefb3c6a \
-	1056e92672f6ebc8467fea9ae141cd55"
+        1056e92672f6ebc8467fea9ae141cd55"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="cargo-c"

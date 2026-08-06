@@ -2,6 +2,7 @@
 
 # Slackware build script for ecl (embeddedable common-lisp)
 
+# Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2013 Markus Hutmacher <mailing@markhu.de>
 #
 # Permission to use, copy, modify, and distribute this software for any purpose

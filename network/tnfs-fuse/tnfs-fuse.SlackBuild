@@ -6,6 +6,13 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260117 bkw:
+# - switch to FujiNetWIFI upstream.
+# - update to latest git, v20240707_3b99907.
+# - switch to python3. python2 support is still included, but doesn't
+#   actually seem to be able to mount anything.
+# - update man page.
+
 # 20220824 bkw: BUILD=2
 # - fix man page: this client does *not* use TCP, I don't know what
 #   I was smoking when I wrote that...
@@ -15,8 +22,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tnfs-fuse
-VERSION=${VERSION:-20130127_fd46ff}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-20240707_3b99907}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -29,7 +36,7 @@ SRCNAM="spectranet-tnfs-fuse"
 # This python-fuse will get installed in a private directory so it
 # won't stomp on python-fusepy.
 LIBNAM="python-fuse"
-LIBVER="1.0.5"
+LIBVER="1.0.9"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -73,24 +80,27 @@ TOPDIR="$(pwd)"
 tar xvf $CWD/$SRCNAM-$SRCVER*.tar.gz
 tar xvf $CWD/$LIBNAM-$LIBVER.tar.gz
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # first the library. remember, private directory.
 cd $LIBNAM-$LIBVER
-python2 setup.py install --root=$PKG
+python3 setup.py install --root=$PKG
 mkdir -p $PKGLIB
 mv $PKG/usr/lib*/python*/site-packages/* $PKGLIB
 rm -rf $PKG/usr/lib*/python*
 strip $PKGLIB/*/*.so
 
-# now the application (which also has a library)
+# now the application (which also has a library).
+# 20260117 bkw: the patch makes it look in the private library dir, and
+# also changes the #! lines to python3 since our /usr/bin/python is python2.
 cd $TOPDIR/$SRCNAM-$SRCVER*
 patch -p1 < $CWD/libdir.diff
 mkdir -p $PKG/usr/bin
-sed "s,@LIBDIR@,$LIBDIR," < $PRGNAM.py > $PKG/usr/bin/$PRGNAM
+sed "s,@LIBDIR@,$LIBDIR," < ${PRGNAM}3.py > $PKG/usr/bin/$PRGNAM
 chmod 755 $PKG/usr/bin/$PRGNAM
-install -m0755 tnfs_client.py $PKGLIB
+install -m0755 tnfs_client3.py $PKGLIB/tnfs_client.py
 ln -s ../lib$LIBDIRSUFFIX/$PRGNAM/tnfs_client.py $PKG/usr/bin/tnfs-client
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION

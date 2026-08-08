@@ -6,7 +6,8 @@ magic.
 
 NOTE: Requires sickchill user and group.
  groupadd -g 377 sickchill
- useradd -u 377 -g sickchill -d /var/lib/sickchill -s /bin/false sickchill
+ useradd -u 377 -g sickchill -d /var/lib/sickchill \
+   -s /bin/false sickchill
 
 If you previously had sickrage installed, please change the user and
 group with the following:
@@ -17,16 +18,16 @@ group with the following:
 To have this start up with Slackware, please add the following to your
 /etc/rc.d/rc.local:
 
-# Start sickrage
-if [ -x /etc/rc.d/rc.sickrage ]; then
-  /etc/rc.d/rc.sickrage start
+# Start sickchill
+if [ -x /etc/rc.d/rc.sickchill ]; then
+  /etc/rc.d/rc.sickchill start
 fi
 
 If you want it to shut down properly when Slackware restarts or shuts
 down, please add the following to your /etc/rc.d/rc.local_shutdown
 (it may need to be created):
 
-# Stop sickrage
-if [ -x /etc/rc.d/rc.sickrage ]; then
-  /etc/rc.d/rc.sickrage stop
+# Stop sickchill
+if [ -x /etc/rc.d/rc.sickchill ]; then
+  /etc/rc.d/rc.sickchill stop
 fi

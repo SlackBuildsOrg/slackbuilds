@@ -15,4 +15,3 @@ Check that it works run this command and check output:
 echo пестрый | ispell -d russian-lebedev-yo
 @(#) International Ispell Version 3.4.04 02 Jun 2021
 word: how about: пестрей, пестры, пёстрый
-

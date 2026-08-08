@@ -1,0 +1,13 @@
+This SlackBuild intentionally targets watchman 4.9.0.
+
+Newer versions introduce additional dependencies that are not
+currently available or practical on Slackware 15.0.
+
+Version 4.9.0 provides stable functionality and is sufficient
+for common use cases such as React Native development.
+
+No daemon setup is required. The service is started automatically
+by client applications when needed.
+
+Optional: For large projects, you may need to increase inotify limits.
+See upstream documentation for details.

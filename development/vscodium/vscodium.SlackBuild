@@ -2,6 +2,7 @@
 
 # Slackware build script for vscodium
 
+# Copyright 20253 Ferenc Kurucz <ferenc.kurucz.6351@gmail.com>
 # Copyright 2022-2023 rc-05 <rc_o5@protonmail.com>
 # All rights reserved.
 #
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vscodium
-VERSION=${VERSION:-1.79.0.23159}
+VERSION=${VERSION:-1.126.04524}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -85,6 +86,8 @@ ln -s ../../opt/$PRGNAM/bin/codium .
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod 0755 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

@@ -1,0 +1,31 @@
+From: Sophie Brun <sophie@offensive-security.com>
+Date: Fri, 10 Dec 2021 09:08:38 +0100
+Subject: Build doc
+
+---
+ Makefile | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 719c308..ca2e684 100644
+--- a/Makefile
++++ b/Makefile
+@@ -59,10 +59,7 @@ docgen: GOBUILD_OUTPUT = ./bin/docgen
+ docgen: GOBUILD_PACKAGES = cmd/docgen/docgen.go
+ docgen: bin = dstdocgen
+ docgen:
+-	@if ! which $(bin) >/dev/null; then \
+-		echo "Command $(bin) not found! Installing..."; \
+-		go install -v github.com/projectdiscovery/yamldoc-go/cmd/docgen/$(bin)@latest; \
+-	fi
++	go install -v github.com/projectdiscovery/yamldoc-go/cmd/docgen/$(bin)@latest; \
+ 	# TODO: FIX THIS PANIC
+ 	$(GOCMD) generate pkg/templates/templates.go
+ 	$(GOBUILD) -o "${GOBUILD_OUTPUT}" $(GOBUILD_PACKAGES)
+@@ -156,4 +153,4 @@ template-validate:
+ 	./bin/nuclei -validate \
+ 		-w workflows \
+ 		-et http/technologies \
+-		-ept code
+\ No newline at end of file
++		-ept code

@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=microsoft-edge
 BRANCH=stable
-VERSION=${VERSION:-138.0.3351.83}
+VERSION=${VERSION:-151.0.4129.59}
 BUILD=${BUILD:-1}
 DEBBUILD=${DEBBUILD:-1}
 TAG=${TAG:-_SBo}
@@ -42,9 +42,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$BRANCH_$VERSION_$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -95,10 +92,14 @@ mkdir -p $PKG/{usr/bin,usr/share,opt}
   cp -a usr/share/man $PKG/usr/
   cp -a usr/share/{appdata,applications} $PKG/usr/share/
 
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod 0755 2> /dev/null || true
+
+
 # move icon into place
 mkdir -p $PKG/usr/share/pixmaps
-cp -a opt/microsoft/msedge/product_logo_32.xpm \
-   $PKG/usr/share/pixmaps/microsoft-edge.xpm
+cp -a opt/microsoft/msedge/product_logo_32.png \
+   $PKG/usr/share/pixmaps/microsoft-edge.png
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

@@ -1,12 +1,14 @@
 PRGNAM="google-go-lang"
-VERSION="1.24.5"
+VERSION="1.26.5"
 HOMEPAGE="http://golang.org"
-DOWNLOAD="https://storage.googleapis.com/golang/go1.24.5.src.tar.gz \
-          https://storage.googleapis.com/golang/go1.23.11.src.tar.gz \
-          https://storage.googleapis.com/golang/go1.21.13.src.tar.gz \
-          https://storage.googleapis.com/golang/go1.19.13.src.tar.gz"
-MD5SUM="0b55cb2415adc18891753b3215034b5b \
-        525412af4e3882fa1f0375aafb03d8e1 \
+DOWNLOAD="https://go.dev/dl/go1.26.5.src.tar.gz \
+          https://go.dev/dl/go1.25.12.src.tar.gz \
+          https://go.dev/dl/go1.23.12.src.tar.gz \
+          https://go.dev/dl/go1.21.13.src.tar.gz \
+          https://go.dev/dl/go1.19.13.src.tar.gz"
+MD5SUM="ff03d7ab678c97c62dc84b41fdd317a4 \
+        4b5b9436cffdd0c519c81c5bf5194e0f \
+        8b26bb57dd624c3dbddf32c43359bb3d \
         3454362fc56df5020920e43fee2776ab \
         6d3625cac26503932002b98eae2d0001"
 DOWNLOAD_x86_64=""

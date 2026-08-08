@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+xatmas2: xatmas2 (6502 cross assembler for Atari 8-bit computers)
+xatmas2:
+xatmas2: Xatmas2 is a cross-assembler for modern systems to cross-assemble
+xatmas2: original source code for the Atmas II assembler for the Atari 8-bit
+xatmas2: series, once a popular assembler in the eighties and nineties.
+xatmas2:
+xatmas2:
+xatmas2:
+xatmas2:
+xatmas2:
+xatmas2:

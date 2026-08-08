@@ -1,0 +1,11 @@
+lxqt-qt6plugin provides the library libqtlxqt to integrate Qt with LXQt.
+With this plugin, all Qt-based programs can adopt settings of LXQt,
+such as the icon theme.
+
+To integrate Qt with LXQt, export the following environment variable:
+QT_QPA_PLATFORMTHEME=lxqt
+
+This lxqt-qt6plugin SlackBuild provides qt6 support. For qt5 support,
+please install lxqt-qtplugin.
+Both lxqt-qtplugin and lxqt-qt6plugin may be installed on the same
+system.

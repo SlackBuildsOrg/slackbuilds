@@ -2,7 +2,7 @@
 
 # Slackware build script for Blender
 
-# Copyright 2015-2025 Christoph Willing, Sydney Australia
+# Copyright 2015-2026 Christoph Willing, Sydney Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,23 +22,20 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# 20220322 bkw: Modified by SlackBuilds.org, BUILD=2:
-# - make embree optional (makes it possible to build Blender on 32-bit,
-#   since embree is 64-bit-only).
-# - add patch to fix 32-bit compilation. (no longer needed)
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=Blender
-VERSION=${VERSION:-3.3.10}
-BUILD=${BUILD:-5}
+VERSION=${VERSION:-5.1.2}
+BUILD=${BUILD:-1}
+LIBS_BUILD=${LIBS_BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 SRCNAM=blender
-
-BASE_VERSION=${BASE_VERSION:-$( echo $VERSION | sed -e 's/[^0-9.]*//g')}
-PYTHON_VERSION=$(python3 -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))')
+CONTINUE=${CONTINUE:-"no"}
+INSTALL_PATH=${INSTALL_PATH:-/opt/$PRGNAM-$VERSION}
+GCC14_VERSION=${GCC14_VERSION:-$(find /opt -type d -name gcc14\* |cut -d'-' -f2)}
+GCC14_PATH=${GCC14_PATH:-"/opt/gcc14-${GCC14_VERSION}"}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -59,48 +56,70 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
+fi
+SLKCFLAGS="$SLKCFLAGS $(pkg-config --libs numa)"
+
+# (Blender 5.1.x requires gcc14)
+#
+. /etc/profile.d/gcc14.sh
+/sbin/ldconfig
+
+with_cuda=""
+if [ -x /etc/profile.d/cuda-13.*.sh ]; then
+  . /etc/profile.d/cuda-13.*.sh
+  with_cuda="-DWITH_CYCLES_DEVICE_CUDA=ON -DWITH_CYCLES_CUDA_BINARIES=ON "
+elif [ -x /etc/profile.d/cuda-12.*.sh ]; then
+  . /etc/profile.d/cuda-12.*.sh
+  with_cuda="-DWITH_CYCLES_DEVICE_CUDA=ON -DWITH_CYCLES_CUDA_BINARIES=ON "
+fi
+if [ ! -z "$with_cuda" ]; then
+  # Set CUDA compiler to use gcc14 but save existing setting for later restoration
+  CUDA_GCC_DEFAULT=$(readlink -f ${CUDA_PATH}/bin/gcc)
+  CUDA_GXX_DEFAULT=$(readlink -f ${CUDA_PATH}/bin/g++)
+  ln -sf "$(readlink -f ${GCC14_PATH}/bin/gcc)" "${CUDA_PATH}"/bin/gcc
+  ln -sf "$(readlink -f ${GCC14_PATH}/bin/g++)" "${CUDA_PATH}"/bin/g++
 fi
 
-cuda=""
-if [ -d /usr/include/cuda ]; then
-  # If cudatoolkit is installed, assume we want to use it
-  cuda="-DWITH_CYCLES_CUDA_BINARIES=ON"
-  # However disable cuda if requested by e.g. CUDA=no
-  if [ ${CUDA:-yes} != "yes" ]; then
-    cuda="-DWITH_CYCLES_CUDA_BINARIES=OFF"
-  fi
-fi
-
-embree="-DWITH_CYCLES_EMBREE=OFF"
-# If embree is installed, use it unless user says EMBREE=no.
-if [ -d /usr/include/embree3 -a "${EMBREE:-yes}" = "yes" ]; then
-  embree="-DWITH_CYCLES_EMBREE=ON"
-fi
-
-openusd=""
-if [ -d opt/OpenUSD/bin ]; then
-  # Since OpenUSD is installed, assume we want to use it
-  openusd="-DUSD_INCLUDE_DIR:PATH=/opt/OpenUSD/include -DUSD_LIBRARY:PATH=/opt/OpenUSD/lib"
-fi
+with_rocm=""
+[ -x /etc/profile.d/rocmtoolkit_6.sh ] && {
+  . /etc/profile.d/rocmtoolkit_6.sh
+  with_rocm="-DWITH_CYCLES_DEVICE_HIP=ON -DWITH_CYCLES_HIP_BINARIES=ON -DWITH_CYCLES_DEVICE_HIPRT=ON "
+}
+with_optix=""
+[ -d /usr/include/optix ] && {
+  with_optix="-DOPTIX_INCLUDE_DIR=/usr/include/optix -DWITH_CYCLES_DEVICE_OPTIX=ON "
+}
 
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.xz
+if [ "$CONTINUE" = "yes" ]; then
+  echo "CONTINUE mode"
+else
+  echo "Unpacking source tarball ... "
+  rm -rf $SRCNAM-$VERSION
+  tar xf $CWD/$SRCNAM-$VERSION.tar.xz
+fi
 cd $SRCNAM-$VERSION
+if [ "$CONTINUE" = "yes" ]; then
+  echo "CONTINUE mode"
+else
+  if [ -r "$CWD"/"$SRCNAM"-libs-"${VERSION}"."$LIBS_BUILD".tar.lz ]; then
+    echo "Unpacking  -libs tarball ... "
+    (cd lib && tar xf $CWD/$SRCNAM-libs-$VERSION.$LIBS_BUILD.tar.lz)
+  else
+    echo ; echo "Generate the $SRCNAM-libs-$VERSION.$LIBS_BUILD.tar.lz tarball; then run build script again."
+    exit 0
+  fi
+fi
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -108,79 +127,74 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-sed -i -e '/#include <stdio.h>/a #include <iostream>' intern/locale/boost_locale_wrapper.cpp
-sed -i -e '/#include "util\/windows.h"/a #include <system_error>' intern/cycles/util/thread.cpp
-sed -i -e '/#include <fstream>/a #include <cstdint>' extern/quadriflow/src/loader.cpp
-
 mkdir -p build
 cd build
-  cmake ../ \
+  cmake .. \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS $(pkg-config --cflags-only-I python-$PYTHON_VERSION)" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DWITH_INSTALL_PORTABLE:BOOL=OFF \
-    -DWITH_BUILDINFO:BOOL=ON \
-    -DWITH_OPENCOLLADA:BOOL=ON \
-    -DWITH_OPENCOLORIO:BOOL=ON \
-    -DPYTHON_VERSION=$PYTHON_VERSION \
-    -DWITH_PYTHON_INSTALL:BOOL=OFF \
-    -DWITH_PYTHON_INSTALL_NUMPY:BOOL=ON \
-    -DWITH_CODEC_FFMPEG:BOOL=ON \
-    -DWITH_OPENAL:BOOL=ON \
-    -DWITH_JACK:BOOL=ON \
-    -DWITH_JACK_DYNLOAD:BOOL=ON \
-    -DPYTHON_LIBPATH:PATH=/usr/lib${LIBDIRSUFFIX} \
-	$openusd \
-    -DWITH_CODEC_SNDFILE:BOOL=ON \
-    -DWITH_FFTW3:BOOL=ON \
-    -DWITH_IMAGE_OPENJPEG:BOOL=ON \
-    -DWITH_SYSTEM_EIGEN3:BOOL=ON \
-    -DWITH_SYSTEM_GLEW:BOOL=ON \
-    -DWITH_SYSTEM_LZO:BOOL=ON \
-    -DWITH_MEM_JEMALLOC:BOOL=ON \
-    -DWITH_MEM_VALGRIND:BOOL=ON \
-    -DWITH_MOD_OCEANSIM:BOOL=ON \
-    -DWITH_SDL:BOOL=ON \
-    -DWITH_SDL_DYNLOAD:BOOL=ON \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -Wno-uninitialized" \
     -DCMAKE_BUILD_TYPE=Release \
-    $cuda \
-    $embree \
-    -DCMAKE_EXE_LINKER_FLAGS:STRING="-lboost_locale"
+    -DLIBDIR:PATH=$(pwd)/../lib/linux_x64 \
+    -DCMAKE_EXE_LINKER_FLAGS_RELEASE=-ldrm \
+    -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH \
+    -DWITH_INSTALL_PORTABLE:BOOL=ON \
+    -DWITH_BUILDINFO:BOOL=ON \
+    -DWITH_STATIC_LIBS=ON \
+    $with_cuda \
+    $with_rocm \
+    $with_optix \
+
+  # From https://projects.blender.org/blender (Release: Bump to 5.1.0)
+  COMMIT_HASH="b70da489d7f"
+  COMMIT_TIMESTAMP=$(stat -c "%Y %n" ../source/blender/blenkernel/BKE_blender_version.h |cut -d' ' -f1) 
+  sed -i \
+      -e "s|MY_WC_HASH \"unknown\"|MY_WC_HASH \"$COMMIT_HASH\"|" \
+      -e "s|MY_WC_BRANCH \"unknown\"|MY_WC_BRANCH \"master\"|" \
+      -e "s|MY_WC_COMMIT_TIMESTAMP 0|MY_WC_COMMIT_TIMESTAMP $COMMIT_TIMESTAMP|"  \
+    ../build_files/cmake/buildinfo.cmake 
 
   make
   make install DESTDIR=$PKG
 cd ..
 
+find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod a+x 2> /dev/null || true
+
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-BLENDERBINS="blender"
-for bin in $BLENDERBINS ; do
-  mv $PKG/usr/bin/$bin $PKG/usr/bin/$bin.bin
-  cat <<EOF >$PKG/usr/bin/$bin
-#!/bin/sh
-export LD_LIBRARY_PATH=/usr/lib$LIBDIRSUFFIX/opencollada
-exec $bin.bin "\$@"
-EOF
-  chmod 0755 $PKG/usr/bin/$bin
-done
-
-# Recent OSL breaks manpage generation
-if [ ! -e "/usr/lib$LIBDIRSUFFIX/liboslcomp.so" ]; then
-  mkdir -p $PKG/usr/man/man1
-  ./doc/manpage/blender.1.py --blender build/bin/blender --output $PKG/usr/man/man1/blender.1
-  find $PKG/usr/man -type f -exec gzip -9 {} \;
-  for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-fi
+mkdir -p $PKG/usr/share/applications
+(cd $PKG/usr/share/applications && ln -s $INSTALL_PATH/blender.desktop)
+mkdir -p $PKG/usr/share/icons/hicolor/scalable/apps
+(cd $PKG/usr/share/icons/hicolor/scalable/apps && ln -s $INSTALL_PATH/blender.svg)
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-mv $PKG/usr/share/doc/$SRCNAM/*  $PKG/usr/doc/$PRGNAM-$VERSION/
-rm -rf $PKG/usr/share/doc
+cp -a $PKG/$INSTALL_PATH/license/*  $PKG/usr/doc/$PRGNAM-$VERSION/
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
+# In case gcc14 is removed after building,
+# include updated libstdc++
+(  cd $PKG/$INSTALL_PATH/lib && \
+   cp -p ${GCC14_PATH}/lib64/libstdc++.so.6.0.33 . && \
+   ln -s libstdc++.so.6.0.33 libstdc++.so.6
+)
+
+mkdir $PKG/usr/bin
+cat >$PKG/usr/bin/blender <<EOF
+#!/bin/bash
+export LD_LIBRARY_PATH=$INSTALL_PATH/lib
+exec $INSTALL_PATH/blender
+EOF
+chmod a+x $PKG/usr/bin/blender
+
+# If one of the CUDA toolkits was used, restore its original compilers
+if [ ! -z "$with_cuda" ]; then
+  ln -sf "$CUDA_GCC_DEFAULT" "${CUDA_PATH}"/bin/gcc
+  ln -sf "$CUDA_GXX_DEFAULT" "${CUDA_PATH}"/bin/g++
+fi
+
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

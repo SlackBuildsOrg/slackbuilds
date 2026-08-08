@@ -7,3 +7,6 @@ to develop Dart web, command-line, and server apps.
 This SBo script packages the binary release from Google.
 
 Homepage: http://www.dartlang.org
+
+Dart-sdk 3.7.3 is the last version with a binary release supported by
+Slackware 15.0.

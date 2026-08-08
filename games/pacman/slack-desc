@@ -6,9 +6,9 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
       |-----handy-ruler------------------------------------------------------|
-pacman: pacman (an arcade game)
+pacman: pacman (arcade maze game)
 pacman:
-pacman: This is a clone of the original pacman by Namco.
+pacman: This is a clone of the original Pac-Man by Namco.
 pacman:
 pacman:
 pacman:

@@ -12,14 +12,8 @@
 # of this script had no license. Modified version licensed under the
 # WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
-# 20250613 bkw: no change, just adding this note to myself:
-# Do not upgrade to 0.1.18f, it doesn't work. When it's started
-# with no args, it says:
-# ERROR: invalid argument --addr subscriber
-# ...and its MIDI capture port never gets created.
-# The changes between 0.1.18e and 0.1.18f are minimal, I don't
-# think we're missing anything by not upgrading. Will revisit
-# this later at some point.
+# 20251216 bkw: update for v0.1.18g. previous release 0.1.18f didn't
+# actually work so I skipped it.
 
 # 20240808 bkw: update for v0.1.18e.
 
@@ -36,7 +30,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vkeybd
-VERSION=${VERSION:-0.1.18e}
+VERSION=${VERSION:-0.1.18g}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,8 +69,9 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # make .desktop file validate, use correct icon name.
 sed -i -e '/^Encoding/d' \
@@ -109,9 +104,10 @@ done
   rm -f *
   ln -s ../icons/hicolor/48x48/apps/$PRGNAM.png . )
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a ChangeLog README $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a ChangeLog README $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

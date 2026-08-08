@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251226 bkw: update for 2.7.20251205.
 # 20250122 bkw: update for 2.7.20241208.
 # 20240808 bkw: update for 2.7.20240708.
 # 20240314 bkw: update for 2.7.20240218.
@@ -22,7 +23,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vttest
-VERSION=${VERSION:-2.7.20241208}
+VERSION=${VERSION:-2.7.20251205}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,8 +76,9 @@ rm -rf $PRGNAM-$TARVER
 tar xvf $CWD/$PRGNAM-$TARVER.tgz
 cd $PRGNAM-$TARVER
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Check CHANGES to make sure the version hasn't updated. Nobody but me
 # should ever see this error message (in the grand tradition of error

@@ -3,7 +3,7 @@
 # Slackware build script for sbotools
 #
 # Written by Jacob Pipkin <j@dawnrazor.net>
-# Copyright 2024-2025 K. Eugene Carlson <kvngncrlsn@gmail.com>
+# Copyright 2024-2026 K. Eugene Carlson <kvngncrlsn@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sbotools
-VERSION=${VERSION:-3.7}
+VERSION=${VERSION:-4.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -72,8 +72,8 @@ find -L . \
 	make install DESTDIR=$PKG
 )
 
-SCRIPTS="check clean config find hints install remove upgrade"
-ANYONE="check config find hints install upgrade"
+SCRIPTS="check clean config cutleaves find hints install remove upgrade tool"
+ANYONE="check config cutleaves find hints install remove upgrade tool"
 MANS="man1 man3 man5"
 
 mkdir -p $PKG/usr/sbin \
@@ -84,7 +84,7 @@ for i in $SCRIPTS; do
   install -m 0644 completions/zsh/_sbo$i $PKG/usr/share/zsh/site-functions
   install -m 0644 completions/bash/sbo$i $PKG/usr/share/bash-completion/completions/sbo$i
 done
-# sbofind and parts of some other scripts can be used without root
+# sbofind and parts of most other scripts can be used without root
 mkdir -p $PKG/usr/bin
 (
 cd $PKG/usr/bin
@@ -110,10 +110,14 @@ cd $PKG/usr/man/man1
 ln -s sbocheck.1 sbosnap.1
 )
 
+mkdir -p $PKG/usr/share/sbotools
+install -m 0644 contrib/* $PKG/usr/share/sbotools
+
 mkdir -p $PKG/etc/sbotools
-cp etc/obsolete $PKG/etc/sbotools/obsolete
+cp etc/{obsolete,perl_vers} $PKG/etc/sbotools
 cp etc/sbotools.conf $PKG/etc/sbotools/sbotools.conf.new
 cp etc/sbotools.hints $PKG/etc/sbotools/sbotools.hints.new
+cp etc/sbotools.colors $PKG/etc/sbotools/sbotools.colors.new
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz; rm $i ; done

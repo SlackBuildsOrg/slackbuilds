@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+flexiblas: flexiblas (BLAS and LAPACK wrapper library)
+flexiblas:
+flexiblas: FlexiBLAS is a wrapper library that enables the exchange of the BLAS
+flexiblas: (Basic Linear Algebra System) and LAPACK (Linear Algebra PACKage)
+flexiblas: implementation used in an executable without recompiling or
+flexiblas: re-linking it.
+flexiblas:
+flexiblas:
+flexiblas:
+flexiblas:
+flexiblas:

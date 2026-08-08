@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one blank line after the base package description.
+
+          |-----handy-ruler------------------------------------------------------|
+nemo-share: nemo-share (Samba sharing extension for the Nemo file manager)
+nemo-share:
+nemo-share: nemo-share is a Nemo extension that allows you to quickly share
+nemo-share: folders using Samba (Windows file sharing) directly from the Nemo
+nemo-share: file manager context menu, without needing to manually edit the
+nemo-share: Samba configuration files.
+nemo-share:
+nemo-share: It is part of the nemo-extensions collection for the Cinnamon
+nemo-share: desktop environment.
+nemo-share:
+nemo-share: Homepage: https://github.com/linuxmint/nemo-extensions

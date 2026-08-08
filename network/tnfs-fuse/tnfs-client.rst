@@ -1,8 +1,7 @@
 .. RST source for tnfs-client(1) man page. Convert with:
 ..   rst2man.py tnfs-client.rst > tnfs-client.1
-.. rst2man.py comes from the SBo development/docutils package.
 
-.. |version| replace:: 20130127_fd46ff
+.. |version| replace:: 20240707_3b99907
 .. |date| date::
 
 ===========
@@ -21,7 +20,7 @@ trivial network filesystem client
 SYNOPSIS
 ========
 
-**tnfs-client** [*host* [*port*]]
+**tnfs-client** [**--udp** | **--tcp**] [*host* [*port*]]
 
 DESCRIPTION
 ===========
@@ -31,29 +30,53 @@ simplicity and ease of implementation on small systems, such as 8-bit
 computers. It's simpler than NFS, SMB, or FTP. It's similar to TFTP,
 but has features TFTP lacks.
 
-**tnfs-client** is a simple client for the TNFS protocol. It uses UDP
-port 16384 by default (standard for TNFS).
+**tnfs-client** is a simple client for the TNFS protocol. It uses TCP
+port 16384 by default (standard for TNFS), and falls back to UDP if it
+can't connect via TCP.
 
 **tnfs-client** doesn't mount the TNFS share as a directory (see
 **tnfs-fuse**\(1) for that). It has a textmode user interface similar
 to **ftp**\(1).
 
-If **host** is omitted, the default host is *vexed4.alioth.net*. If
+If **host** is omitted, the default host is *fujinet.online*. If
 **port** is omitted, the default port is *16384*.
+
+OPTIONS
+=======
+
+--tcp
+  Connect via TCP. This option is redundant since TCP is the default already.
+
+--udp
+  Connect via UDP. If the server you're connecting to is known not
+  to support TCP (e.g. **vexed4.alioth.net** as of this writing),
+  this allows faster connection (it doesn't try and fail to connect
+  via TCP before trying UDP).
 
 COMMANDS
 ========
 
 The client supports these commands:
 
-**ls** [*-l*]
-  List contents of current directory. With *-l*, show details.
+**ls** [*-l*] [*-x*] [*remote-path*]
+  List contents of a directory (default is current dir). With *-l*,
+  show details. With *-x*, show extended attributes (creation and
+  modification timestamps).
 
-**dir** [*-l*]
+**l** [*remote-path*]
+  Alias for **ls -l**.
+
+**lx** [*remote-path*]
+  Alias for **ls -x**.
+
+**dir** [*-l*] [*-x*] [*remote-path*]
   Synonym for **ls**.
 
-**cd** *path*
-  Change working directory on server to *path*.
+**cd** *remote-path*
+  Change working directory on server to *remote-path*.
+
+**lcd** *local-path*
+  Change local working directory to *local-path*.
 
 **pwd**
   Print current working directory on server.
@@ -64,19 +87,26 @@ The client supports these commands:
 **put** *local-filename* [*remote-filename*]
   Upload a file.
 
-**mkdir** *path*
+**cat** *remote-filename*
+  Download and print a file to standard output.
+
+**dump** *remote-filename*
+  Download and print a file to standard output as hex.
+
+**rm** *remote-filename*
+  Delete a file from the server.
+
+**mkdir** *remote-path*
   Create a directory.
 
-**rmdir** *path*
+**rmdir** *remote-path*
   Delete a directory (which must be empty).
 
 **quit**
   Exit the client.
 
-Note that there's no **rm** command, or any other way to delete
-a file. There's also no **lcd** command; you can't change the local
-working directory, so make sure you're in the right place before you
-start the client.
+**?** **h** **help**
+  Print built-in help.
 
 COPYRIGHT
 =========

@@ -1,0 +1,17 @@
+diff -Naur fileschanged-0.6.9/doc/fileschanged.texinfo fileschanged-0.6.9.patched/doc/fileschanged.texinfo
+--- fileschanged-0.6.9/doc/fileschanged.texinfo	2008-01-12 08:37:52.000000000 -0500
++++ fileschanged-0.6.9.patched/doc/fileschanged.texinfo	2026-06-05 22:25:12.314478985 -0400
+@@ -7,6 +7,13 @@
+ @setchapternewpage odd
+ @c %**end of header
+ 
++@ifinfo
++@dircategory Miscellaneous
++@direntry
++* fileschanged: (fileschanged).   Monitors files for changes, displays altered files.
++@end direntry
++@end ifinfo
++
+ @include package.texinfo
+ 
+ 

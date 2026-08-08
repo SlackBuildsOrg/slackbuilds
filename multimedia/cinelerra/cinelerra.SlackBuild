@@ -28,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cinelerra
-VERSION=${VERSION:-20210331_eabda9c}
+VERSION=${VERSION:-5.1.20260531}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -75,12 +75,15 @@ fi
 
 set -e
 
+DIRVERSION=${VERSION%.*}
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-gg-$VERSION
-tar xvf $CWD/$PRGNAM-gg-$VERSION.tar.xz
-cd $PRGNAM-gg-$VERSION/cinelerra-5.1
+rm -rf $PRGNAM-$DIRVERSION
+tar xvf $CWD/*tgz
+cd $PRGNAM-$DIRVERSION
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -98,6 +101,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --with-plugin-dir=/usr/lib${LIBDIRSUFFIX}/cin \
   --mandir=/usr/man \
+  --without-cuda \
   --build=$ARCH-slackware-linux \
   $mmx
 
@@ -109,6 +113,13 @@ install -D -m 0644 $CWD/$PRGNAM.desktop $PKG/usr/share/applications/$PRGNAM.desk
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find "$PKG"/usr/lib"$LIBDIRSUFFIX"/cin/ladspa/ -name '*.so' -exec strip --strip-unneeded {} \; 2> /dev/null
+strip --strip-unneeded $PKG/usr/bin/zmpeg3ifochk
+strip --strip-unneeded $PKG/usr/bin/zmpeg3cc2txt
+strip --strip-unneeded $PKG/usr/lib"$LIBDIRSUFFIX"/cin/mplexlo
+strip --strip-unneeded $PKG/usr/lib"$LIBDIRSUFFIX"/cin/mplex
+strip --strip-unneeded $PKG/usr/lib"$LIBDIRSUFFIX"/cin/mpeg2enc
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a COPYING README* *.txt $PKG/usr/doc/$PRGNAM-$VERSION

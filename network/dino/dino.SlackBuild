@@ -96,9 +96,6 @@ find . \
 
 VP9=${VP9:-disabled}
 
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-
 sed -i 's|call_window.bottom_bar.show_video_device_choices(false);|call_window.bottom_bar.show_video_device_choices(true);|g' main/src/ui/call_window/call_window_controller.vala
 sed -i 's|call_window.bottom_bar.show_audio_device_choices(false);|call_window.bottom_bar.show_audio_device_choices(true);|g' main/src/ui/call_window/call_window_controller.vala
 

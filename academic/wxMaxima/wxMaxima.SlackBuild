@@ -81,7 +81,6 @@ find -L . \
 BUILDDIR=build
 mkdir -p $BUILDDIR
 
-export PATH="/opt/cmake-202x/bin:$PATH"
 cmake \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \

@@ -3,6 +3,7 @@
 # Slackware build script for docker-cli
 
 # Copyright 2021 Audrius Kažukauskas <audrius@neutrino.lt>
+# Copyright 2023-2026 Andrew Clemons, Tokyo Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,8 +28,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=docker-cli
-VERSION=${VERSION:-28.3.1}
-GITHASH=${GITHASH:-38b7060a218775811da953650d8df7d492653f8f}
+VERSION=${VERSION:-29.6.2}
+GITHASH=${GITHASH:-dfc4efb1e2ab8c06d70d2a1366ad448d2f917e90}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

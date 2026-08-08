@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+termbin: termbin (paste stdin or file(s) to termbin.com)
+termbin:
+termbin: termbin uses nc (netcat) to paste stdin to termbin.com, or pastes
+termbin: one or more files if <filename(s)> are given. Spits out paste URL on
+termbin: stdout. Also copies URL to the X clipboard if X is running and either
+termbin: xsel or xclip is installed.
+termbin:
+termbin: Note: if you have a termbin alias in your .bashrc or similar, it will
+termbin: take precedence. Remove it, or call /usr/bin/termbin.
+termbin:
+termbin:

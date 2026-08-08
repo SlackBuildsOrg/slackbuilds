@@ -15,4 +15,3 @@ scratch in pure Python, with a focus on simplicity and immutability.
 It favors non-destructive edits allowed by the PDF Specification: by
 default incremental updates are added at the end of the original file
 (you may rewind or squash all revisions into a single one).
-

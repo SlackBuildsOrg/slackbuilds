@@ -49,7 +49,7 @@ Have a look at the commented part of rc.libvirt for some gotchas.
 Optional dependencies include avahi, xen, audit, glusterfs, numactl,
 open-iscsi and libiscsi.
 
-As of the 4.5.0 version, you may have to remove any previously 
+As of the 4.5.0 version, you may have to remove any previously
 installed version of libvirt before this will build.
 
 Note also that sometimes, in consequence of a major-version upgrade,

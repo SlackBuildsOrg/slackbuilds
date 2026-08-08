@@ -12,8 +12,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ctl
-VERSION=${VERSION:-1.5.2}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.5.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -63,13 +63,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+ || true
 
-# 20220223 bkw: patches comes from AUR and/or gentoo.
-patch -p1 < $CWD/ctl-1.5.2-Use-GNUInstallDirs-and-fix-PkgConfig-files-1.patch
-patch -p1 < $CWD/ilmbase-2.3.0-compatibility.patch
-
-# 20220223 bkw: C++, the ever-moving target...
-sed -i -e 's,std::istream::streampos,std::streampos,g' lib/dpx/dpx.hh
-
 PKG_CONFIG_PATH="$PKG/usr/lib${LIBDIRSUFFIX}/pkgconfig:$PKG_CONFIG_PATH" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -80,8 +73,6 @@ cd build
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_EXE_LINKER_FLAGS="-lAcesContainer" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DINSTALL_CMAKE_DIR=/usr/lib${LIBDIRSUFFIX} \
-    -DINSTALL_LIB_DIR=/usr/lib${LIBDIRSUFFIX} \
     -DCMAKE_BUILD_TYPE=Release ..
   make
   make install/strip DESTDIR=$PKG

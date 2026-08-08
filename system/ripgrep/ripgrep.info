@@ -1,110 +1,106 @@
 PRGNAM="ripgrep"
-VERSION="14.1.1"
+VERSION="15.2.0"
 HOMEPAGE="https://github.com/BurntSushi/ripgrep"
-DOWNLOAD="https://github.com/BurntSushi/ripgrep/archive/14.1.1/ripgrep-14.1.1.tar.gz \
-          https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.3.crate \
-          https://static.crates.io/crates/anyhow/anyhow-1.0.87.crate \
-          https://static.crates.io/crates/bstr/bstr-1.10.0.crate \
-          https://static.crates.io/crates/cc/cc-1.1.18.crate \
-          https://static.crates.io/crates/cfg-if/cfg-if-1.0.0.crate \
-          https://static.crates.io/crates/crossbeam-channel/crossbeam-channel-0.5.13.crate \
-          https://static.crates.io/crates/crossbeam-deque/crossbeam-deque-0.8.5.crate \
-          https://static.crates.io/crates/crossbeam-epoch/crossbeam-epoch-0.9.18.crate \
-          https://static.crates.io/crates/crossbeam-utils/crossbeam-utils-0.8.20.crate \
-          https://static.crates.io/crates/encoding_rs/encoding_rs-0.8.34.crate \
+DOWNLOAD="https://github.com/BurntSushi/ripgrep/archive/15.2.0/ripgrep-15.2.0.tar.gz \
+          https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.4.crate \
+          https://static.crates.io/crates/anyhow/anyhow-1.0.103.crate \
+          https://static.crates.io/crates/arbitrary/arbitrary-1.4.2.crate \
+          https://static.crates.io/crates/bstr/bstr-1.13.0.crate \
+          https://static.crates.io/crates/cc/cc-1.2.67.crate \
+          https://static.crates.io/crates/cfg-if/cfg-if-1.0.4.crate \
+          https://static.crates.io/crates/crossbeam-channel/crossbeam-channel-0.5.16.crate \
+          https://static.crates.io/crates/crossbeam-deque/crossbeam-deque-0.8.7.crate \
+          https://static.crates.io/crates/crossbeam-epoch/crossbeam-epoch-0.9.20.crate \
+          https://static.crates.io/crates/crossbeam-utils/crossbeam-utils-0.8.22.crate \
+          https://static.crates.io/crates/derive_arbitrary/derive_arbitrary-1.4.2.crate \
+          https://static.crates.io/crates/encoding_rs/encoding_rs-0.8.35.crate \
           https://static.crates.io/crates/encoding_rs_io/encoding_rs_io-0.1.7.crate \
-          https://static.crates.io/crates/glob/glob-0.3.1.crate \
-          https://static.crates.io/crates/itoa/itoa-1.0.11.crate \
-          https://static.crates.io/crates/jemalloc-sys/jemalloc-sys-0.5.4%2B5.3.0-patched.crate \
-          https://static.crates.io/crates/jemallocator/jemallocator-0.5.4.crate \
-          https://static.crates.io/crates/jobserver/jobserver-0.1.32.crate \
-          https://static.crates.io/crates/lexopt/lexopt-0.3.0.crate \
-          https://static.crates.io/crates/libc/libc-0.2.158.crate \
-          https://static.crates.io/crates/log/log-0.4.22.crate \
-          https://static.crates.io/crates/memchr/memchr-2.7.4.crate \
-          https://static.crates.io/crates/memmap2/memmap2-0.9.4.crate \
-          https://static.crates.io/crates/pcre2-sys/pcre2-sys-0.2.9.crate \
-          https://static.crates.io/crates/pcre2/pcre2-0.2.9.crate \
-          https://static.crates.io/crates/pkg-config/pkg-config-0.3.30.crate \
-          https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.86.crate \
-          https://static.crates.io/crates/quote/quote-1.0.37.crate \
-          https://static.crates.io/crates/regex-automata/regex-automata-0.4.7.crate \
-          https://static.crates.io/crates/regex-syntax/regex-syntax-0.8.4.crate \
-          https://static.crates.io/crates/regex/regex-1.10.6.crate \
-          https://static.crates.io/crates/ryu/ryu-1.0.18.crate \
+          https://static.crates.io/crates/find-msvc-tools/find-msvc-tools-0.1.9.crate \
+          https://static.crates.io/crates/getrandom/getrandom-0.4.3.crate \
+          https://static.crates.io/crates/glob/glob-0.3.3.crate \
+          https://static.crates.io/crates/itoa/itoa-1.0.18.crate \
+          https://static.crates.io/crates/jobserver/jobserver-0.1.35.crate \
+          https://static.crates.io/crates/lexopt/lexopt-0.3.2.crate \
+          https://static.crates.io/crates/libc/libc-0.2.186.crate \
+          https://static.crates.io/crates/log/log-0.4.33.crate \
+          https://static.crates.io/crates/memchr/memchr-2.8.3.crate \
+          https://static.crates.io/crates/memmap2/memmap2-0.9.11.crate \
+          https://static.crates.io/crates/pcre2-sys/pcre2-sys-0.2.10.crate \
+          https://static.crates.io/crates/pcre2/pcre2-0.2.11.crate \
+          https://static.crates.io/crates/pkg-config/pkg-config-0.3.33.crate \
+          https://static.crates.io/crates/proc-macro2/proc-macro2-1.0.106.crate \
+          https://static.crates.io/crates/quote/quote-1.0.46.crate \
+          https://static.crates.io/crates/r-efi/r-efi-6.0.0.crate \
+          https://static.crates.io/crates/regex-automata/regex-automata-0.4.15.crate \
+          https://static.crates.io/crates/regex-syntax/regex-syntax-0.8.11.crate \
+          https://static.crates.io/crates/regex/regex-1.13.0.crate \
           https://static.crates.io/crates/same-file/same-file-1.0.6.crate \
-          https://static.crates.io/crates/serde/serde-1.0.210.crate \
-          https://static.crates.io/crates/serde_derive/serde_derive-1.0.210.crate \
-          https://static.crates.io/crates/serde_json/serde_json-1.0.128.crate \
-          https://static.crates.io/crates/shlex/shlex-1.3.0.crate \
-          https://static.crates.io/crates/syn/syn-2.0.77.crate \
+          https://static.crates.io/crates/serde/serde-1.0.228.crate \
+          https://static.crates.io/crates/serde_core/serde_core-1.0.228.crate \
+          https://static.crates.io/crates/serde_derive/serde_derive-1.0.228.crate \
+          https://static.crates.io/crates/serde_json/serde_json-1.0.150.crate \
+          https://static.crates.io/crates/shlex/shlex-2.0.1.crate \
+          https://static.crates.io/crates/syn/syn-2.0.119.crate \
           https://static.crates.io/crates/termcolor/termcolor-1.4.1.crate \
-          https://static.crates.io/crates/textwrap/textwrap-0.16.1.crate \
-          https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.12.crate \
+          https://static.crates.io/crates/textwrap/textwrap-0.16.2.crate \
+          https://static.crates.io/crates/tikv-jemalloc-sys/tikv-jemalloc-sys-0.7.1%2B5.3.1-0-g81034ce1f1373e37dc865038e1bc8eeecf559ce8.crate \
+          https://static.crates.io/crates/tikv-jemallocator/tikv-jemallocator-0.7.0.crate \
+          https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.24.crate \
           https://static.crates.io/crates/walkdir/walkdir-2.5.0.crate \
-          https://static.crates.io/crates/winapi-util/winapi-util-0.1.9.crate \
-          https://static.crates.io/crates/windows-sys/windows-sys-0.59.0.crate \
-          https://static.crates.io/crates/windows-targets/windows-targets-0.52.6.crate \
-          https://static.crates.io/crates/windows_aarch64_gnullvm/windows_aarch64_gnullvm-0.52.6.crate \
-          https://static.crates.io/crates/windows_aarch64_msvc/windows_aarch64_msvc-0.52.6.crate \
-          https://static.crates.io/crates/windows_i686_gnu/windows_i686_gnu-0.52.6.crate \
-          https://static.crates.io/crates/windows_i686_gnullvm/windows_i686_gnullvm-0.52.6.crate \
-          https://static.crates.io/crates/windows_i686_msvc/windows_i686_msvc-0.52.6.crate \
-          https://static.crates.io/crates/windows_x86_64_gnu/windows_x86_64_gnu-0.52.6.crate \
-          https://static.crates.io/crates/windows_x86_64_gnullvm/windows_x86_64_gnullvm-0.52.6.crate \
-          https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.52.6.crate"
-MD5SUM="80fada3fb311956fb0e26f89e8115bf4 \
-        03b2d126766ed746706241b4c7487654 \
-        fa559be6ebda89a14342e8f77022a0e5 \
-        d5f24b25f3b9c60539df0dc5ea309be5 \
-        ec64eb8ba38086cda16ba6aaa9da7a23 \
-        74634128440dbc3766bda76fdf0aaa05 \
-        442a035d4bebfb01fde2e9299563f73d \
-        396f4f63322338c26d76b2f638646178 \
-        44505199ec0964feb5488051b4ac92d5 \
-        c9a5747e504d7f3dadc1fc563ae3d6f3 \
-        9a25a5393856f8a0bbc14d82e27414a6 \
+          https://static.crates.io/crates/winapi-util/winapi-util-0.1.11.crate \
+          https://static.crates.io/crates/windows-link/windows-link-0.2.1.crate \
+          https://static.crates.io/crates/windows-sys/windows-sys-0.61.2.crate \
+          https://static.crates.io/crates/zmij/zmij-1.0.23.crate"
+MD5SUM="dfe462fc2253d178f33047be729bf1d3 \
+        2fb8e2b2c327d642027d27dd82160195 \
+        06857522b4e958c718bfc59b392b6122 \
+        398727580fbb14a12bcbdb0851fac883 \
+        5bd7cffcaa33768f9c3027b128f4989d \
+        9a3f81b17f475aa4baf5a5c9f89d0d26 \
+        7dbc461580b8ee7d163a6e02524c6d90 \
+        7870d76caf85c607a191931fce111429 \
+        59a94f9d3dc00fce31b4cba59dd36de8 \
+        581342f2bc70d2c3604d6048b3e76c63 \
+        fc8f4cb37192480003aac1946c338727 \
+        048e7eaa07e02b00b3790add632cc674 \
+        916cd597e92b97a987a1a8f8f2d40805 \
         98dd664015c5a6c5e1d3cfb8dce1c4ff \
-        2d6d28ec311884da69bcaf320ada8ad5 \
-        5d87e8530342ef2a980b1c96dafd27f0 \
-        8a1180efc4ebeaecbf8e8e094bcb2659 \
-        77b8d4657c9c6ff1050c760a3c868a30 \
-        371fb71b0651ef8bf26e827ec21b1f76 \
-        d71093319a2c1efa90475bd45d34fab3 \
-        f87a00a9b24bb7ea2736fcacf57027ab \
-        efeb260cf6b2a13607ee12321e39cc8d \
-        c0aab5e6eaaa6a2f3c7ed44f123d1c7d \
-        5cf346df4658ff1ab6c0b3b3dba48f75 \
-        132dfdc5ec92d1dbc0fe27fc52cc1b46 \
-        b61531385a47bbbe3628e7bba1ffd2ce \
-        524ffd7a9b5b25c4d388686a5dde5cac \
-        480a3b8e8201739e157bb648f9243962 \
-        ec5466d73ce9285f92a1458cdc1b4046 \
-        158e2b15e6b75f6090767642138f75ff \
-        05ec4163d860f882c88fcc77f78d6172 \
-        a5f742e592150e471690627bbb77c2b8 \
-        56de037d755aeb0b45169991f9567cd7 \
+        01c4ec29f81c1001360f63fbb021b264 \
+        6258f4262468849e8d79856671f27cda \
+        57552c44152b62cf7fdf28a3582457f4 \
+        e46a3fc53950ca8571c6b5dced7f9552 \
+        b734d3a88fc7e0f86c2e377f8ae622fa \
+        45eaa48e15693ad8844427dea991c59c \
+        39a9421fa4b66196a3b6527211f694f8 \
+        26b90bacc904870ea1b33094fa2d629b \
+        9adcf2c7158534a48abb00f49595a8ea \
+        0cb5a40c2ec0df031902c781733937ee \
+        5e283ad25a4bfade899a47c6facd76e2 \
+        bd56f32fffac2631bdc652d77cc673c9 \
+        667d470dbf8cc7bcfb339b2a29bb29ab \
+        f5948ef8f9b14504ab34f71ad4a4bd18 \
+        308c96ba85731c4ef13873a668f5682f \
+        c8388734c6f93046c31072bea90175df \
+        f311f8c46f711b621df3a9c9491b1d56 \
+        9c879955f306f1e8db44835646b5c5b3 \
+        89fdb59671a2fc31afeb45330ba38fd0 \
         2d8d8b377d144f5e32b4f65a69eb0b24 \
-        9fa192f1e79f9062a6bb899d05e35c58 \
-        02caec0b32e7d14fb630f3f8f0f071cc \
-        d0ae58592f09d5bf6d1a943291ca02f2 \
-        6c623a8eed8450399ec323a72e96855c \
-        80c9bb4310021ed58b5ac2deb799bc8b \
+        d156b7c4a314664880656902717747ed \
+        60d4c4f575afc314d644677feb1289c1 \
+        45ca53c87e6fb9748e740a9298e2c14c \
+        1ff79222c959a270df3f48d94f1224a4 \
+        652382fc8d8fad189101cbb58ee88f67 \
+        f3ed9ad51830d695232e1e7c0c772598 \
         b83e3c4eee8862b3cd0dc8570da6d0c0 \
-        275687833131e77cf58730e21a179cba \
-        ca65153603a1a7240bbd9d2ce19f2d67 \
+        4b5ece77b3e731cba47059a5e2385b86 \
+        f2f4dc552c49a5892cf4f1e7907c41e0 \
+        474e486abdf8760b124ddc2a407f8743 \
+        49fb2204154a5fe5320366aa88b84291 \
         f38b27b8c9625110a51293658f1cc014 \
-        e908e1808f2a480449f8d86281ae24ef \
-        73b177d6d000daaa8f05790414a887a3 \
-        9e876a38acd8262d97e9302ecb4e0f72 \
-        8c8adde50f0a531c407c5b68ab928f0b \
-        233b17dfcf7e49ac791eef30b7f406e3 \
-        7cb99b00381f697eaf8a322ed3b8205c \
-        1baf62319b533f3d996993b82305e547 \
-        311ded6588844e072d3fb953a8f994da \
-        3f265cbde7668f38c1229043475470a9 \
-        4e50e886c72204c268c15a3230001d71 \
-        b95760e9133ba1bb456d0f0cef74c9a4"
+        119f519a2b99e0212a8def5baed07c3f \
+        bb3780dd283a2faedb95ca3efcbb1196 \
+        dd7513efd3722e624cf5b4f57d67b2be \
+        210947cbcbfe30ba3b97f1c1b28efb37"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="rust-opt"

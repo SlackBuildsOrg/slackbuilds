@@ -6,6 +6,10 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251226 bkw:
+# - update for v1.8.0.
+# - use upstream author's github as homepage and download.
+
 # 20240814 bkw: update for v1.7.0 (from launchpad).
 # - Change the default service to dpaste.org. Apparently sprunge.us
 #   is broken for everyone right now, even the main page http://sprunge.us
@@ -32,7 +36,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pastebinit
-VERSION=${VERSION:-1.7.0}
+VERSION=${VERSION:-1.8.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -54,18 +58,19 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/${PRGNAM}_$VERSION.orig.tar.gz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Get rid of the fixmes in the man page.
 patch -p1 < $CWD/manpagefix.diff
 
 # 20150116 bkw:
 sed -i \
- -e '/^defaultPB/s,=.*,= "dpaste.org",' \
+ -e '/^defaultPB/s,=.*,= "dpaste.com",' \
  $PRGNAM
 
 mkdir -p \
@@ -99,9 +104,10 @@ gzip -9c < utils/pbput.1 > $PKG/usr/man/man1/pbput.1.gz
 ln -s pbput.1.gz $PKG/usr/man/man1/pbget.1.gz
 ln -s pbput.1.gz $PKG/usr/man/man1/pbputs.1.gz
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING* README* $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a COPYING* README* $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

@@ -4,6 +4,7 @@
 
 # Copyright 2012-2015  Fridrich von Stauffenberg <cancellor2@gmail.com>
 # Copyright 2017, Alexander Verbovetsky, Moscow, Russia
+# Copyright 2026 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -30,7 +31,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=kchmviewer-qt
 VERSION=${VERSION:-8.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -72,23 +73,29 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
+patch -Np1 -i $CWD/869ecdf6861dbc75db1a37de5844d3e40c2b267b.patch
+patch -Np1 -i $CWD/99a6d94bdfce9c4578cce82707e71863a71d1453.patch
+patch -Np1 -i $CWD/9ac73e7ad15de08aab6b1198115be2eb44da7afe.patch
+patch -Np1 -i $CWD/a4a3984465cb635822953350c571950ae726b539.patch
+patch -Np1 -i $CWD/e3b09edbbae17ad19661a7514afe5a9d84ca0ffa.patch
+
 sed -i "s/$ORIG_PRGNAM/$PRGNAM/g;
-        /^Categories/s/KDE;//;
-        /^Name/s/$/ (Qt-only)/" packages/$ORIG_PRGNAM.desktop
+	/^Categories/s/KDE;//;
+	/^Name/s/$/ (Qt-only)/" packages/$ORIG_PRGNAM.desktop
 
 sed -i "/^Icon/s,=.*,=/usr/share/pixmaps/$PRGNAM.png," packages/$ORIG_PRGNAM.desktop
 
-qmake-qt5
+qmake-qt5 PREFIX=/usr
 make
-
-mkdir -p $PKG/usr/bin
-install -s -m 0755 -o root -g root bin/$ORIG_PRGNAM $PKG/usr/bin/$PRGNAM
+make DESTDIR="$PKG" install
+install -Dm755 bin/$ORIG_PRGNAM "$PKG"/usr/bin/$PRGNAM
 
 mkdir -p $PKG/usr/share/{applications,pixmaps}
-install -m 0644 -o root -g root packages/$ORIG_PRGNAM.desktop \
-  $PKG/usr/share/applications/$PRGNAM.desktop
-install -m 0644 -o root -g root packages/$ORIG_PRGNAM.png \
-  $PKG/usr/share/pixmaps/$PRGNAM.png
+install -Dm644 packages/$ORIG_PRGNAM.desktop $PKG/usr/share/applications/$PRGNAM.desktop
+install -Dm644 packages/$ORIG_PRGNAM.png $PKG/usr/share/pixmaps/$PRGNAM.png
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a COPYING ChangeLog DBUS-bindings FAQ README $PKG/usr/doc/$PRGNAM-$VERSION

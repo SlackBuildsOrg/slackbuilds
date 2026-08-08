@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+           |-----handy-ruler------------------------------------------------------|
+xhidecursor: xhidecursor (hide mouse cursor while typing)
+xhidecursor:
+xhidecursor: xhidecursor is a small X11 utility that hides the mouse
+xhidecursor: cursor while typing, reducing visual distraction.
+xhidecursor:
+xhidecursor: It uses XFixes and XInput extensions and is designed to be
+xhidecursor: simple, fast, and unobtrusive.
+xhidecursor:
+xhidecursor: Homepage: https://github.com/astier/xhidecursor
+xhidecursor:
+xhidecursor:

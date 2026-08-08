@@ -20,4 +20,3 @@ script will search it for options instead of using SBOPTIONS_LIBCTL.
 Simply include a line starting "libctl:" followed by options, e.g.:
 
 libctl: --prefix=/usr/local
-

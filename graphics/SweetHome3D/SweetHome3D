@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /opt/SweetHome3D/SweetHome3D
+exec /opt/SweetHome3D/SweetHome3D "$1"

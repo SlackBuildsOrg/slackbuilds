@@ -4,3 +4,8 @@ such as the icon theme.
 
 To integrate Qt with LXQt, export the following environment variable:
 QT_QPA_PLATFORMTHEME=lxqt
+
+This lxqt-qtplugin SlackBuild provides qt5 support. For qt6 support,
+please install lxqt-qt6plugin.
+Both lxqt-qtplugin and lxqt-qt6plugin may be installed on the same
+system.

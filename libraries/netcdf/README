@@ -10,9 +10,9 @@ Optional HDF4 support
 
 If you need support for reading HDF4 files, please build and install
 the 'hdf' package from SlackBuilds.org, and then pass the option
-'HDF4=yes' to the netcdf SlackBuild, for example
+'HDF4=YES' to the netcdf SlackBuild, for example
 
-  HDF4=yes ./netcdf.SlackBuild
+  HDF4=YES ./netcdf.SlackBuild
 
 By default, the script does not build nor run the tests. You can use the
 option TESTBUILD=YES to build and run the tests before the make install

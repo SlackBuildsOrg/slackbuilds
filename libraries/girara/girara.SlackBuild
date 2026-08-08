@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251217 bkw: update for v0.4.5 (again, doesn't really need new pango).
 # 20240927 bkw: update for v0.4.4 (doesn't *reallY* need newer pango).
 # 20240319 bkw: update for v0.4.2 (*not* 0.4.3, it needs a newer pango).
 # 20230105 bkw: update for v0.3.8.
@@ -18,7 +19,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=girara
-VERSION=${VERSION:-0.4.4}
+VERSION=${VERSION:-0.4.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

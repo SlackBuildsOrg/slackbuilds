@@ -1,0 +1,11 @@
+diff -Naur html2ps-1.0b7/contrib/xhtml2ps/xhtml2ps html2ps-1.0b7.patched/contrib/xhtml2ps/xhtml2ps
+--- html2ps-1.0b7/contrib/xhtml2ps/xhtml2ps	2026-05-23 22:36:15.537087429 -0400
++++ html2ps-1.0b7.patched/contrib/xhtml2ps/xhtml2ps	2026-05-23 22:43:38.196085740 -0400
+@@ -1773,6 +1773,7 @@
+     wm resizable $base 1 1
+     wm deiconify $base
+     wm title $base "$stusr(application)"
++	 wm protocol $base WM_DELETE_WINDOW { UT_SaveRessources ; exit }
+     frame $base.fra22 \
+         -background #aeaeae -borderwidth 2 -height 33 -width 125 
+     menubutton $base.fra22.men18 \

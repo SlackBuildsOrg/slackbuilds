@@ -1,0 +1,6 @@
+mtn (Movie Thumbnailer)
+
+Movie Thumbnailer (mtn) saves thumbnails (screenshots) of movie
+or video files to jpeg files. It uses FFmpeg's libavcodec as
+its engine, so it supports all popular codecs, e.g. h.265/hevc,
+h.264, AV1, VP9, mpeg1, mpeg2, mp4, vc1, wmv, xvid, divx.

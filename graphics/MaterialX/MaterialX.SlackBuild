@@ -2,7 +2,7 @@
 
 # Slackware build script for MaterialX
 
-# Copyright 2023-2025 Giancarlo Dessi, Cagliari, IT
+# Copyright 2023-2026 Giancarlo Dessi, Cagliari, IT
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,11 +25,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=MaterialX
-VERSION=${VERSION:-1.39.3}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.39.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-EXTVERSION=20240101
+EXTVERSION=20251231
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -67,25 +67,9 @@ set -e
 PYTHON_VERSION=$(python3 -c 'import sys; print("{}".format(sys.version_info.minor))')
 
 if pkg-config --exists OpenImageIO; then
-  WITHOIIO=""; [ "${OIIO:-yes}" = "yes" ] && WITHOIIO="ON"
+  WITHOIIO=""; [ "${OIIO:-yes}" = "yes" ] && WITHOIIO="-DMATERIALX_BUILD_OIIO=ON "
 else
   WITHOIIO=""
-fi
-
-if [ "$WITHOIIO" = "ON"  ]; then
-  TMPOIIO=/tmp/oiio
-  WITHOIIO="-DMATERIALX_BUILD_OIIO=ON -DOPENIMAGEIO_ROOT_DIR=$TMPOIIO "
-  # to prevent build failures we need to create a temporary
-  # directory with symbolic links to OIIO executables
-  rm -rf $TMPOIIO
-  mkdir -p $TMPOIIO/bin
-  ln -s /usr/bin/iconvert $TMPOIIO/bin/icovert
-  ln -s /usr/bin/idiff $TMPOIIO/bin/idiff
-  ln -s /usr/bin/igrep $TMPOIIO/bin/igrep
-  ln -s /usr/bin/info $TMPOIIO/bin/info
-  ln -s /usr/bin/iv $TMPOIIO/bin/iv
-  ln -s /usr/bin/maketx $TMPOIIO/bin/maketx
-  ln -s /usr/bin/oiiotool $TMPOIIO/bin/oiiotool
 fi
 
 rm -rf $PKG
@@ -100,27 +84,15 @@ GUI=no
 SET_GRAPH_EDITOR=no
 SET_VIEWER=no
 
-# Some third-part modules are build as internal but are not included in the
+# Some third-part modules are built as internal but are not included in the
 # source tarball because should be added in a git repository of 
 # MaterialX cloned with git -recursive, so we have to do the following steps
 
-if [ ${VIEWER:-yes} = "yes" ]; then
-  tar xvf $CWD/nanogui-$EXTVERSION.tar.gz
-  tar xvf $CWD/glfw-$EXTVERSION.tar.gz
-  tar xvf $CWD/nanobind-$EXTVERSION.tar.gz
-  tar xvf $CWD/nanovg-$EXTVERSION.tar.gz
-  tar xvf $CWD/robin-map-$EXTVERSION.tar.gz
-  rm -rf nanogui-$EXTVERSION/ext/glfw
-  rm -rf nanogui-$EXTVERSION/ext/nanovg
-  rm -rf nanogui-$EXTVERSION/ext/nanobind
-  mv glfw-$EXTVERSION nanogui-$EXTVERSION/ext/glfw
-  mv nanovg-$EXTVERSION nanogui-$EXTVERSION/ext/nanovg
-  mv nanobind-$EXTVERSION nanogui-$EXTVERSION/ext/nanobind
-  rm -rf nanogui-$EXTVERSION/ext/robin_map
-  mv robin-map-$EXTVERSION nanogui-$EXTVERSION/ext/nanobind/ext/robin_map
-  rm -rf source/MaterialXView/NanoGUI
-  mv nanogui-$EXTVERSION source/MaterialXView/NanoGUI
+tar xvf $CWD/external-MaterialX-$EXTVERSION.tar.gz
 
+if [ ${VIEWER:-yes} = "yes" ]; then
+  mv external-MaterialX-$EXTVERSION/source/MaterialXView/nanogui/* \
+     source/MaterialXView/NanoGUI
   BUILDOPTIONS="-DMATERIALX_BUILD_VIEWER=ON -DNANOGUI_PREFERRED_BACKEND=OpenGL "
   GUI=yes
   SET_VIEWER=yes
@@ -129,13 +101,12 @@ if [ ${VIEWER:-yes} = "yes" ]; then
    "s/cmake_minimum_required (VERSION 2.8.12)/cmake_minimum_required (VERSION 3.10)/g"
 fi
 
-if [ ${EDITOR:-yes} = "yes" ]; then
-  tar xvf $CWD/imgui-$EXTVERSION.tar.gz
-  tar xvf $CWD/imgui-node-editor-$EXTVERSION.tar.gz
-  rm -rf source/MaterialXGraphEditor/External/ImGui*
-  mv imgui-$EXTVERSION source/MaterialXGraphEditor/External/ImGui
-  mv imgui-node-editor-$EXTVERSION source/MaterialXGraphEditor/External/ImGuiNodeEditor 
 
+if [ ${EDITOR:-yes} = "yes" ]; then
+  mv external-MaterialX-$EXTVERSION/source/MaterialXGraphEditor/External/imgui/* \
+     source/MaterialXGraphEditor/External/ImGui
+  mv external-MaterialX-$EXTVERSION/source/MaterialXGraphEditor/External/imgui-node-editor/* \
+     source/MaterialXGraphEditor/External/ImGuiNodeEditor 
   BUILDOPTIONS="$BUILDOPTIONS -DMATERIALX_BUILD_GRAPH_EDITOR=ON "
   GUI=yes
   SET_GRAPH_EDITOR=yes
@@ -182,9 +153,11 @@ cd build
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_PREFIX=/usr/share/MaterialX \
     -DMATERIALX_BUILD_SHARED_LIBS=ON \
-    -DMATERIALX_INSTALL_LIB_PATH=lib${LIBDIRSUFFIX} \
+    -DMATERIALX_INSTALL_INCLUDE_PATH=/usr/include \
+    -DMATERIALX_INSTALL_BIN_PATH=/usr/bin \
+    -DMATERIALX_INSTALL_LIB_PATH=/usr/lib${LIBDIRSUFFIX} \
     $WITHOIIO \
     $BUILDOPTIONS \
     $CMAKE_POLICY \
@@ -198,11 +171,6 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 # fix wrong, redundant, and/or non standard installation path
 rm -rf $PKG/tmp
 rm -f $PKG/usr/share/MaterialX/*.md $PKG/usr/share/MaterialX/LICENSE
-
-# add symbolic links to executable and include files
-mkdir -p $PKG/usr/include
-cd $PKG/usr/include
-ln -s ../share/MaterialX/include MaterialX
 
 # remove eventual temporary directory with symlinks to OIIO executables
 rm -rf /tmp/oiio

@@ -1,0 +1,14 @@
+PRGNAM="fonts-atkinson-hyperlegible"
+VERSION="2025.02.21"
+HOMEPAGE="https://brailleinstitute.org/freefont"
+DOWNLOAD="https://github.com/googlefonts/atkinson-hyperlegible/archive/1cb311624b2ddf88e9e37873999d165a8cd28b46/atkinson-hyperlegible-1cb311624b2ddf88e9e37873999d165a8cd28b46.tar.gz \
+          https://github.com/googlefonts/atkinson-hyperlegible-next/archive/7925f50f649b3813257faf2f4c0b381011f434f1/atkinson-hyperlegible-next-7925f50f649b3813257faf2f4c0b381011f434f1.tar.gz \
+         https://github.com/googlefonts/atkinson-hyperlegible-next-mono/archive/154d50362016cc3e873eb21d242cd0772384c8f9/atkinson-hyperlegible-next-mono-154d50362016cc3e873eb21d242cd0772384c8f9.tar.gz"
+MD5SUM="ca17be3b1259ff5985d3e8f1a3044514 \
+        0b88c7cef136b0bd174e52d485e4db9c \
+	1146fe03de8dee642a64551220bb85d1"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Leonard Schmidt"
+EMAIL="lems@gmx.net"

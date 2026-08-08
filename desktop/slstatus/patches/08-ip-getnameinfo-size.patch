@@ -1,0 +1,44 @@
+commit 675c83912ea1aca9834448aaa87a040bc9990c52
+Author: drkhsh <me@drkhsh.at>
+Date:   Tue Jun 23 22:51:47 2026 +0200
+
+    fix getnameinfo sockaddr size for IPv4
+    
+    pass sizeof(struct sockaddr_in) for AF_INET instead of always using
+    sizeof(struct sockaddr_in6). also skip getnameinfo entirely for
+    non-matching interfaces rather than calling it for every entry.
+
+diff --git a/components/ip.c b/components/ip.c
+index 339fea3..c469043 100644
+--- a/components/ip.c
++++ b/components/ip.c
+@@ -30,18 +30,20 @@ ip(const char *interface, unsigned short sa_family)
+ 	for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next) {
+ 		if (!ifa->ifa_addr)
+ 			continue;
++		if (strcmp(ifa->ifa_name, interface) ||
++		    ifa->ifa_addr->sa_family != sa_family)
++			continue;
+ 
+-		s = getnameinfo(ifa->ifa_addr, sizeof(struct sockaddr_in6),
++		s = getnameinfo(ifa->ifa_addr,
++		                (sa_family == AF_INET) ? sizeof(struct sockaddr_in)
++		                                       : sizeof(struct sockaddr_in6),
+ 		                host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
+-		if (!strcmp(ifa->ifa_name, interface) &&
+-		    (ifa->ifa_addr->sa_family == sa_family)) {
+-			freeifaddrs(ifaddr);
+-			if (s != 0) {
+-				warn("getnameinfo: %s", gai_strerror(s));
+-				return NULL;
+-			}
+-			return bprintf("%s", host);
++		freeifaddrs(ifaddr);
++		if (s != 0) {
++			warn("getnameinfo: %s", gai_strerror(s));
++			return NULL;
+ 		}
++		return bprintf("%s", host);
+ 	}
+ 
+ 	freeifaddrs(ifaddr);

@@ -7,6 +7,6 @@ DOWNLOAD_x86_64="https://gitlab.com/kicad/services/kicad-doc/-/archive/7.0.2/kic
                  https://sourceforge.net/projects/slackbuildsdirectlinks/files/asciidoctor-web-pdf/asciidoctor-web-pdf-64bit-20230721.tar.gz"
 MD5SUM_x86_64="b2229bb564c1ff4590d6db65f9ea3353 \
                c522909c78ba3beff9efd4f9a6d00cbc"
-REQUIRES="dblatex po4a nodejs"
+REQUIRES="dblatex po4a nodejs22"
 MAINTAINER="Fernando Lopez Jr."
 EMAIL="fernando.lopezjr@gmail.com"

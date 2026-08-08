@@ -22,8 +22,8 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20251222 bkw: update for v1.0.3, remove rpath from binaries.
 # 20241018 bkw: BUILD=3, use bundled lua instead of system.
-
 # 20230902 bkw: update for v1.0.2.
 
 # 20230808 bkw: BUILD=2
@@ -43,8 +43,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=hedgewars
-VERSION=${VERSION:-1.0.2}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.0.3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -93,6 +93,8 @@ find . -type f -a -exec chmod 644 {} + \
 
 SLKCFLAGS+=" -fcommon"
 
+sed -i '/^get_target_property.*LOCATION/d' misc/liblua/CMakeLists.txt
+
 mkdir -p build
 cd build
   cmake \
@@ -110,6 +112,10 @@ cd ..
 
 # It's a game, so:
 mv $PKG/usr/bin $PKG/usr/games
+
+# 20251222 bkw: tried various -DCMAKE_* options to turn off rpath in the
+# binaries, nothing worked, nuke it from orbit.
+patchelf --remove-rpath $PKG/usr/{games,lib*}/*
 
 # Cleanup on aisle 6:
 strip $PKG/usr/games/*

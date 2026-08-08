@@ -15,6 +15,6 @@ MD5SUM="2f535573ed2d140f1adb63828b08df2e \
         80c5b4cf9d87b97972bc8e5098f44b51"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="mpv nodejs"
+REQUIRES="mpv nodejs22"
 MAINTAINER="Martin Bångens"
 EMAIL="marbangens@gmail.com"

@@ -1,0 +1,11 @@
+VeroRoute is a Qt-based application for designing and routing
+stripboard (veroboard), perfboard, and simple 1- or 2-layer
+PCB layouts. It automatically prevents short-circuits and checks
+for open-circuits while you work, and can import netlists exported
+from TinyCAD (Protel 1 format) and gEDA (Tango format) schematics.
+
+This builds VeroRoute from its upstream source tarball using the
+project's own qmake build and install rules.
+
+At runtime VeroRoute writes user data (undo/redo history and any
+custom part templates) under ~/.local/share/veroroute/.

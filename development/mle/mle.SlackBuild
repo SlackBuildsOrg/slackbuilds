@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mle
-VERSION=${VERSION:-1.7.2}
+VERSION=${VERSION:-1.8.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -72,9 +72,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-CFLAGS="$SLKCFLAGS" \
+# Upstream assumes versioned Lua paths (lua5.4) and vendor build; adjust for Slackware
+# Fix Lua paths for Slackware
+sed -i 's|-llua5\.4|-llua|g' Makefile
+sed -i 's|lua5\.4/||g' *.c *.h
+
+# Use system libraries for pcre2/lua, keep bundled uthash (header-only)
+CFLAGS="$SLKCFLAGS -Ivendor/uthash" \
 CXXFLAGS="$SLKCFLAGS" \
-make mle_vendor=1 -j1
+make -j1
 make install DESTDIR=$PKG prefix=/usr
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

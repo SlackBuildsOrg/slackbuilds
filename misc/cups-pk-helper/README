@@ -7,4 +7,3 @@ printer settings.
 
 To make it easy to integrate cups-pk-helper in system-config-printer, 
 the D-Bus API is based to a large extent on the pycups one.
-

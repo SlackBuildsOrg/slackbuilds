@@ -27,18 +27,16 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "TNFS-CLIENT" 1 "2022-08-24" "20130127_fd46ff" "SlackBuilds.org"
+.TH "TNFS-CLIENT" 1 "2026-01-17" "20240707_3b99907" "SlackBuilds.org"
 .SH NAME
 tnfs-client \- trivial network filesystem client
 .\" RST source for tnfs-client(1) man page. Convert with:
 .
 .\" rst2man.py tnfs-client.rst > tnfs-client.1
 .
-.\" rst2man.py comes from the SBo development/docutils package.
-.
 .SH SYNOPSIS
 .sp
-\fBtnfs\-client\fP [\fIhost\fP [\fIport\fP]]
+\fBtnfs\-client\fP [\fB\-\-udp\fP | \fB\-\-tcp\fP] [\fIhost\fP [\fIport\fP]]
 .SH DESCRIPTION
 .sp
 TNFS is a simplified Internet file transfer protocol, designed for
@@ -46,28 +44,52 @@ simplicity and ease of implementation on small systems, such as 8\-bit
 computers. It\(aqs simpler than NFS, SMB, or FTP. It\(aqs similar to TFTP,
 but has features TFTP lacks.
 .sp
-\fBtnfs\-client\fP is a simple client for the TNFS protocol. It uses UDP
-port 16384 by default (standard for TNFS).
+\fBtnfs\-client\fP is a simple client for the TNFS protocol. It uses TCP
+port 16384 by default (standard for TNFS), and falls back to UDP if it
+can\(aqt connect via TCP.
 .sp
 \fBtnfs\-client\fP doesn\(aqt mount the TNFS share as a directory (see
 \fBtnfs\-fuse\fP(1) for that). It has a textmode user interface similar
 to \fBftp\fP(1).
 .sp
-If \fBhost\fP is omitted, the default host is \fIvexed4.alioth.net\fP\&. If
+If \fBhost\fP is omitted, the default host is \fIfujinet.online\fP\&. If
 \fBport\fP is omitted, the default port is \fI16384\fP\&.
+.SH OPTIONS
+.INDENT 0.0
+.TP
+.B  \-\-tcp
+Connect via TCP. This option is redundant since TCP is the default already.
+.TP
+.B  \-\-udp
+Connect via UDP. If the server you\(aqre connecting to is known not
+to support TCP (e.g. \fBvexed4.alioth.net\fP as of this writing),
+this allows faster connection (it doesn\(aqt try and fail to connect
+via TCP before trying UDP).
+.UNINDENT
 .SH COMMANDS
 .sp
 The client supports these commands:
 .INDENT 0.0
 .TP
-.B \fBls\fP [\fI\-l\fP]
-List contents of current directory. With \fI\-l\fP, show details.
+.B \fBls\fP [\fI\-l\fP] [\fI\-x\fP] [\fIremote\-path\fP]
+List contents of a directory (default is current dir). With \fI\-l\fP,
+show details. With \fI\-x\fP, show extended attributes (creation and
+modification timestamps).
 .TP
-.B \fBdir\fP [\fI\-l\fP]
+.B \fBl\fP [\fIremote\-path\fP]
+Alias for \fBls \-l\fP\&.
+.TP
+.B \fBlx\fP [\fIremote\-path\fP]
+Alias for \fBls \-x\fP\&.
+.TP
+.B \fBdir\fP [\fI\-l\fP] [\fI\-x\fP] [\fIremote\-path\fP]
 Synonym for \fBls\fP\&.
 .TP
-.B \fBcd\fP \fIpath\fP
-Change working directory on server to \fIpath\fP\&.
+.B \fBcd\fP \fIremote\-path\fP
+Change working directory on server to \fIremote\-path\fP\&.
+.TP
+.B \fBlcd\fP \fIlocal\-path\fP
+Change local working directory to \fIlocal\-path\fP\&.
 .TP
 .B \fBpwd\fP
 Print current working directory on server.
@@ -78,23 +100,30 @@ Download a file.
 .B \fBput\fP \fIlocal\-filename\fP [\fIremote\-filename\fP]
 Upload a file.
 .TP
-.B \fBmkdir\fP \fIpath\fP
+.B \fBcat\fP \fIremote\-filename\fP
+Download and print a file to standard output.
+.TP
+.B \fBdump\fP \fIremote\-filename\fP
+Download and print a file to standard output as hex.
+.TP
+.B \fBrm\fP \fIremote\-filename\fP
+Delete a file from the server.
+.TP
+.B \fBmkdir\fP \fIremote\-path\fP
 Create a directory.
 .TP
-.B \fBrmdir\fP \fIpath\fP
+.B \fBrmdir\fP \fIremote\-path\fP
 Delete a directory (which must be empty).
 .TP
 .B \fBquit\fP
 Exit the client.
+.TP
+.B \fB?\fP \fBh\fP \fBhelp\fP
+Print built\-in help.
 .UNINDENT
-.sp
-Note that there\(aqs no \fBrm\fP command, or any other way to delete
-a file. There\(aqs also no \fBlcd\fP command; you can\(aqt change the local
-working directory, so make sure you\(aqre in the right place before you
-start the client.
 .SH COPYRIGHT
 .sp
-See the file /usr/doc/tnfs\-fuse\-20130127_fd46ff/COPYING for license information.
+See the file /usr/doc/tnfs\-fuse\-20240707_3b99907/COPYING for license information.
 .SH AUTHORS
 .sp
 tnfs\-client was written by Radu Cristescu.

@@ -12,7 +12,6 @@ config() {
 
 config etc/zgv.conf.new
 
-if [ -x usr/bin/install-info ]; then
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/zgv.gz 2> /dev/null
+if [ -x /usr/bin/install-info ]; then
+  /usr/bin/install-info --info-dir=usr/info usr/info/zgv.info.gz 1> /dev/null 2>&1
 fi
-

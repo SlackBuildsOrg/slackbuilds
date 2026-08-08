@@ -2,6 +2,7 @@
 #
 # Slackware build script for Viber
 
+# Copyright 2026 Strahil Yordanov, strahilski@yahoo.com
 # Copyright 2023 Petar Petrov, slackalaxy@gmail.com
 # Copyright 2009-2017  Roberto Metere, Newcastle Upon Tyne, UK
 # All rights reserved.
@@ -26,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=viber
-VERSION=${VERSION:-21.8.0.11}
+VERSION=${VERSION:-27.3.0.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -55,6 +56,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $PKG
 ar p $CWD/$PRGNAM.deb data.tar.xz | xz -d | tar xv
+chmod +x $CWD/viber.AppImage && $CWD/viber.AppImage --appimage-extract
+cp squashfs-root/usr/lib/{libssl.so.3,libcrypto.so.3} opt/viber/lib && rm -rf squashfs-root
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

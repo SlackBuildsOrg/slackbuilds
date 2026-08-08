@@ -3,10 +3,11 @@
 # Slackware build script for spamassassin
 
 # Copyright 2008-2015 LukenShiro, Italy
+# Copyright 2026 pyllyukko
 # All rights reserved.
 #
 # Maintained by Gerardo Zamudio <gerardo.zamudio@linux.com>
-# 
+#
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
 #
@@ -30,7 +31,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=spamassassin
-VERSION=${VERSION:-3.4.6}
+VERSION=${VERSION:-4.0.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -43,9 +44,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -56,7 +54,7 @@ PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 SRC_PRGNAM=Mail-SpamAssassin
-DOCFILES="Changes CREDITS INSTALL LICENSE NOTICE PACKAGING procmailrc.example \
+DOCFILES="Changes CREDITS LICENSE NOTICE PACKAGING procmailrc.example \
 README sample-nonspam.txt sample-spam.txt TRADEMARK UPGRADE USAGE sql/"
 
 if [ "$ARCH" = "i586" ]; then

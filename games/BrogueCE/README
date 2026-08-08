@@ -1,4 +1,9 @@
 BrogueCE is a beautiful roguelike, although it is "text based" like
-other roguelikes, it uses SDL to create a very colorful interface.
+other roguelikes, it uses a very colorful and user friendly interface.
+
+By default the ASCII version of BrogueCE is built, it sacrifices little
+in terms of esthetics while being compatible with any terminal. If you
+want the SDL version instead, change make TERMINAL=YES bin/brogue in
+the SlackBuild script to make bin/brogue.
 
 Have fun!

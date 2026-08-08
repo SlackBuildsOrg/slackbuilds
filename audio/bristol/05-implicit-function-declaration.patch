@@ -1,0 +1,249 @@
+Author: Florian Weimer <fw@deneb.enyo.de>
+Origin: https://sourceforge.net/p/bristol/patches/3/attachment/bristol-c99.patch
+Bug-Ubuntu:  https://bugs.launchpad.net/bugs/2060784
+Forwarded:   no
+Last-Update: 2024-04-17
+Description: Avoid implicit ints and implicit function declarations, to prevent
+build failures with future compilers which do not support them.
+
+--- a/bristol/bristolmemorymoog.c
++++ b/bristol/bristolmemorymoog.c
+@@ -33,6 +33,7 @@
+ #include "bristolmemorymoog.h"
+ 
+ extern int buildCurrentTable(Baudio *, float);
++extern void doPitchWheel(Baudio *);
+ 
+ /*
+  * Use of these memorymoog global buffers will be an issue with use of multiple
+--- a/libbrightonC11/bRoutines.c
++++ b/libbrightonC11/bRoutines.c
+@@ -24,6 +24,7 @@
+ 
+ void *
+ brightonX11malloc(size)
++int size;
+ {
+ 	void *mem;
+ 
+--- a/libbrightonX11/bRoutines.c
++++ b/libbrightonX11/bRoutines.c
+@@ -25,6 +25,7 @@
+ 
+ void *
+ brightonX11malloc(size)
++int size;
+ {
+ 	void *mem;
+ 
+--- a/libbristol/bristolcdefs.c
++++ b/libbristol/bristolcdefs.c
+@@ -25,6 +25,7 @@
+ 
+ void *
+ bristolmalloc(size)
++int size;
+ {
+ 	char *mem;
+ 
+@@ -39,6 +40,7 @@
+ 
+ void *
+ bristolmalloc0(size)
++int size;
+ {
+ 	char *mem;
+ 
+--- a/libbristolaudio/audioEngine.c
++++ b/libbristolaudio/audioEngine.c
+@@ -85,6 +85,7 @@
+ initAudioDevice2(audioDev, devID, fragSize)
+ duplexDev *audioDev;
+ int devID;
++int fragSize;
+ {
+ 	/*
+ 	 * The device is basically just opened for the first call of this routine.
+@@ -118,6 +119,7 @@
+ int
+ setAudioStart2(audioDev, devID)
+ duplexDev *audioDev;
++int devID;
+ {
+ 	int enable;
+ 
+@@ -162,6 +164,7 @@
+ int
+ setAudioStop2(audioDev, devID)
+ duplexDev *audioDev;
++int devID;
+ {
+ 	int enable;
+ 
+--- a/libbristolaudio/audioEngineOSS.c
++++ b/libbristolaudio/audioEngineOSS.c
+@@ -49,6 +49,7 @@
+ ossAudioInit(audioDev, devID, fragSize)
+ duplexDev *audioDev;
+ int devID;
++int fragSize;
+ {
+ #if (BRISTOL_HAS_OSS == 1)
+ 	int results, data = 0, mode;
+--- a/libbristolaudio/audioGUI.c
++++ b/libbristolaudio/audioGUI.c
+@@ -161,6 +161,7 @@
+ char *
+ getControllerName(audioDev, controller)
+ duplexDev *audioDev;
++int controller;
+ {
+ #if (BRISTOL_HAS_ALSA == 1)
+ 	if ((audioDev->flags & AUDIO_ALSA) != 0)
+@@ -173,6 +174,8 @@
+ int
+ setRecordSource(audioDev, controller, position)
+ duplexDev *audioDev;
++int controller;
++int position;
+ {
+ #if (BRISTOL_HAS_ALSA == 1)
+ 	if ((audioDev->flags & AUDIO_ALSA) != 0)
+@@ -185,6 +188,7 @@
+ int
+ getRecordability(audioDev, controller)
+ duplexDev *audioDev;
++int controller;
+ {
+ #if (BRISTOL_HAS_ALSA == 1)
+ 	if ((audioDev->flags & AUDIO_ALSA) != 0)
+@@ -197,6 +201,7 @@
+ int
+ getMutability(audioDev, controller)
+ duplexDev *audioDev;
++int controller;
+ {
+ #if (BRISTOL_HAS_ALSA == 1)
+ 	if ((audioDev->flags & AUDIO_ALSA) != 0)
+@@ -211,6 +216,7 @@
+ int
+ getStereoStatus(audioDev, controller)
+ duplexDev *audioDev;
++int controller;
+ {
+ #if (BRISTOL_HAS_ALSA == 1)
+ 	if ((audioDev->flags & AUDIO_ALSA) != 0)
+@@ -222,6 +228,8 @@
+ int
+ getValue(audioDev, controller, side)
+ duplexDev *audioDev;
++int controller;
++int side;
+ {
+ #if (BRISTOL_HAS_ALSA == 1)
+ 	if ((audioDev->flags & AUDIO_ALSA) != 0)
+@@ -233,6 +241,9 @@
+ int
+ setAudioValue(audioDev, controller, side, value)
+ duplexDev *audioDev;
++int controller;
++int side;
++int value;
+ {
+ 	if (audioDev->cflags & SLAB_AUDIODBG)
+ 		printf("setAudioValue(%p, %i, %i, %i)\n", audioDev, controller, side, value); 
+@@ -251,6 +262,8 @@
+ int
+ setAudioMute(audioDev, controller, value)
+ duplexDev *audioDev;
++int controller;
++int value;
+ {
+ 	if (audioDev->cflags & SLAB_AUDIODBG)
+ 		printf("setAudioMute()\n");
+@@ -280,6 +293,7 @@
+ int
+ getAudioCapability(audioDev, controller)
+ duplexDev *audioDev;
++int controller;
+ {
+ 	if (audioDev->cflags & SLAB_AUDIODBG)
+ 		printf("getAudioCapability(%s, %i)\n", audioDev->devName, controller);
+@@ -296,6 +310,7 @@
+ int
+ validDev(audioDev, index)
+ duplexDev *audioDev;
++int index;
+ {
+ #if (BRISTOL_HAS_ALSA == 1)
+ 	if ((audioDev->flags & AUDIO_ALSA) != 0)
+--- a/libbristolaudio/audioGUIOSS.c
++++ b/libbristolaudio/audioGUIOSS.c
+@@ -91,7 +91,11 @@
+  */
+ static int
+ setAudioOSS(fd, audioDev, param, valueL, valueR)
++int fd;
+ duplexDev *audioDev;
++int param;
++int valueL;
++int valueR;
+ {
+ #if (BRISTOL_HAS_OSS == 1)
+ 	int value, command;
+@@ -259,6 +263,7 @@
+ int
+ getOSSCapability(audioDev, controller)
+ duplexDev *audioDev;
++int controller;
+ {
+ 	if ((audioDev->stereoCaps | audioDev->monoCaps) & (1 << controller))
+ 		return controller;
+@@ -268,6 +273,7 @@
+ int
+ getOSSRecordability(audioDev, cont)
+ duplexDev *audioDev;
++int cont;
+ {
+ 	if (audioDev->cflags & SLAB_AUDIODBG)
+ 		printf("getOSSRecordability(%i, %i)\n", audioDev->devID, cont);
+--- a/libbristolmidi/inetClient.c
++++ b/libbristolmidi/inetClient.c
+@@ -66,6 +66,7 @@
+ int
+ initControlPort(host, port)
+ char	*host;
++int	port;
+ {
+ struct	sockaddr_in	connect_socket_addr;
+ char				hostname[NAME_LENGTH];
+--- a/libbristolmidi/midiRoutines.c
++++ b/libbristolmidi/midiRoutines.c
+@@ -85,6 +85,7 @@
+ 
+ void
+ bristolMidiPrintHandle(handle)
++int handle;
+ {
+ 	printf("	Handle:	 %i\n", bmidi.handle[handle].handle);
+ 	printf("	State:   %i\n", bmidi.handle[handle].state);
+@@ -103,6 +104,7 @@
+ 
+ int
+ bristolMidiSanity(handle)
++int handle;
+ {
+ #ifdef DEBUG
+ 	printf("bristolMidiSanity(%i)\n", handle);
+--- a/libbristolmidi/socketToolKit.c
++++ b/libbristolmidi/socketToolKit.c
+@@ -57,7 +57,9 @@
+ int
+ open_remote_socket(name, port, listens, reqsig)
+ char		*name; /* service name, must be known */
++int		port;
+ int 		listens; /* Parameter for the number of connections accepted */
++int		reqsig;
+ {
+ 	struct	servent		*service, service_tmp;
+ 	struct  sockaddr_in remote_socket_addr;

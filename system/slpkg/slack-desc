@@ -8,12 +8,12 @@
      |-----handy-ruler------------------------------------------------------|
 slpkg: slpkg (Slackware Packaging Tool)
 slpkg:
-slpkg: Slpkg is a software package manager that installs, updates,
-slpkg: and removes packages on Slackware-based systems. It automatically
-slpkg: calculates dependencies and determines the required steps for
-slpkg: package installation. Slpkg simplifies managing machine groups by
-slpkg: eliminating manual updates.
+slpkg: Slpkg is a feature-rich package manager for Slackware-based systems.
+slpkg: It installs, upgrades, removes, and builds packages from multiple
+slpkg: repositories, including SlackBuilds.org (SBo, Ponce) and binary
+slpkg: repositories. Slpkg automatically resolves and tracks dependencies,
+slpkg: maintains a full installation history with transaction rollback,
+slpkg: detects orphaned and foreign packages, and verifies the integrity
+slpkg: of installed files.
 slpkg:
-slpkg: Homepage: https://dslackw.gitlab.io/slpkg
-slpkg:
-slpkg:
+slpkg: Homepage: https://dslackw.gitlab.io/slpkg/

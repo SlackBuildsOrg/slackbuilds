@@ -1,0 +1,129 @@
+.TH MSFCONSOLE 1 "July 24, 2015" "4.11.4" "Metasploit Framework Console"
+.SH NAME
+msfconsole - Metasploit Framework Console
+.SH SYNOPSIS
+msfconsole [options]
+.SH DESCRIPTION
+.B
+Msfconsole 
+is probably the most popular interface to the MSF. It provides an "all-in-one" centralized console and allows you efficient access to virtually all of the options available in the Metasploit Framework. Msfconsole may seem intimidating at first, but once you learn the syntax of the commands you will learn to appreciate the power of utilizing this interface. 
+.SH OPTIONS
+.SH Common options
+.PP
+-E, --environment ENVIRONMENT    
+.br
+The Rails environment. Will use RAIL_ENV environment variable if that is set.  Defaults to production if neither option not RAILS_ENV environment variable is set.
+
+.SH Database options
+    -M, --migration-path DIRECTORY   Specify a directory containing additional DB migrations
+    -n, --no-database                Disable database support
+    -y, --yaml PATH                  Specify a YAML file containing database settings
+
+.SH Framework options
+    -c FILE                          Load the specified configuration file
+    -v, --version                    Show version
+
+.SH Module options
+        --defer-module-loads         Defer module loading unless explicitly asked.
+    -m, --module-path DIRECTORY      An additional module path
+
+
+.SH Console options:
+    -a, --ask                        Ask before exiting Metasploit or accept 'exit -y'
+    -d, --defanged                   Execute the console as defanged
+    -L, --real-readline              Use the system Readline library instead of RbReadline
+    -o, --output FILE                Output to the specified file
+    -p, --plugin PLUGIN              Load a plugin on startup
+    -q, --quiet                      Do not print the banner on start up
+    -r, --resource FILE              Execute the specified resource file (- for stdin)
+    -x, --execute-command COMMAND    Execute the specified string as console commands (use ; for multiples)
+    -h, --help                       Show help message
+
+.SH EXAMPLE
+.PP
+msfconsole -q -x "use auxiliary/scanner/telnet/telnet_login; set USERNAME msfadmin; set PASSWORD msfadmin; set RHOSTS metasploitable; run; exit -y" 
+
+.SH SEE ALSO
+msfcli(1) - 
+.I
+deprecated 
+-
+.br
+msfvenom(1)
+.br
+msfpayload(1) - 
+.I
+deprecated 
+-
+.br
+msfencode(1) - 
+.I
+deprecated 
+-
+.SH AUTHOR(S)
+.TP
+.B
+Creator
+HD Moore - @hdmoore / hdm@metasploit.com
+.br
+Man Page Author: Kali Linux\*(Tm
+File man page bug reports at
+.B
+https://bugs.kali.org
+.TP
+.B
+Top Contributors,
+Joshua J. Drake,
+Wei Chen,
+James Lee,
+Mario Ceballos,
+Steve Tornio,
+David D. Rude II,
+Ramon Valle,
+Nathan Keltner,
+Tod Beardsley,
+Patrick Webster,
+Chris Gates,
+Jonathan Cran,
+Efrain Torres,
+Carlos Perez,
+Stephen Fewer,
+Alexandre Maloteaux,
+Chao Mu,
+Juan Vazquez,
+Brandon Perry,
+David Maloney
+
+.SH NOTES
+For a more complete list of contributors run:
+.br
+/usr/share/metasploit-framework/tools/modules_authors.rb
+.br
+Or visit:
+.br
+https://github.com/rapid7/metasploit-framework/graphs/contributors
+
+.SH COPYRIGHT
+Copyright (C) 2006-2015, Rapid7 Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+.TP
+* 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+.TP
+* 
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. 
+.TP
+* 
+Neither the name of Rapid7 LLC nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+The Metasploit Framework is provided under the 3-clause BSD license above.
+
+The copyright on this package is held by Rapid7 LLC.
+
+This license does not apply to several components within the Metasploit
+Framework source tree.  For more details see the LICENSE file.

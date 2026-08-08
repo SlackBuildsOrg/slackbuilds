@@ -1,0 +1,20 @@
+CUDA Toolkit CUDA is NVIDIA's parallel computing architecture. It
+enables dramatic increases in computing performance by harnessing the
+power of the GPU.
+
+The aim of this SlackBuild is to provide the latest release of
+Nvidia's "13" series of the Nvidia Toolkit. It _should_ be installable
+together with the default version 10.
+
+It is activated by sourcing /etc/profile.d/cuda-13.2.sh
+
+NOTE:
+- the binary file to download is 5.5 GB
+- the temporary package file will need 7 GB
+- the final package will be over 4 GB (7 GB when installed).
+Be sure to have enough free space before building this.
+
+By default, the available nsight components are not included in
+the final package. They may be enabled by setting the NSIGHT
+environment variable to yes when building the package e.g.
+    NSIGHT=yes bash cudatoolkit_13.SlackBuild

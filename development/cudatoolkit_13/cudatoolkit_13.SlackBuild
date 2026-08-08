@@ -1,0 +1,209 @@
+#!/bin/bash
+
+# Slackware build script for CUDA Toolkit
+
+# Copyright 2020 Giorgio Peron <giorgio.peron@gmail.com>, Belluno, Italy
+# Copyright 2026 Christoph Willing  Sydney, Australia
+# All rights reserved.
+#
+# Version 13.1.1 (2026) based on Lockywolf's (lwf) earlier cudatoolkit_12.6
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=cudatoolkit_13
+FILENAME=cuda
+VERSION=${VERSION:-13.2.1}
+DRIVER=${DRIVER:-595.58.03}
+BUILD=${BUILD:-3}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  ARCH=$( uname -m )
+fi
+
+if [ "$ARCH" != "x86_64" ]; then
+  printf '%s' "$ARCH architecture is unsupported." 1>&2
+  exit 1
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+#CPREFIX=cuda-13.2
+SHORT_VERSION=$(echo ${VERSION%.*})
+CPREFIX=cuda-$SHORT_VERSION
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+mkdir -p $PRGNAM-$VERSION
+
+echo -n "Unpacking .run file ... "
+sh $CWD/"${FILENAME}"_"${VERSION}"_"${DRIVER}"_linux.run --extract=$(readlink -f $PRGNAM-$VERSION)
+echo
+
+cd $PRGNAM-$VERSION
+
+echo -n "Installing into final locations ... "
+# Clean unused files & directories
+find . -name cuda-uninstaller -delete
+rm -rf NVIDIA*.run bin
+rm -rf cuda_nsight
+rm -rf nsight_compute nsight_systems
+
+# legal stuff
+mkdir -p "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"
+mv EULA.txt version.json $PKG/usr/doc/$PRGNAM-$VERSION
+mv cuda_documentation/{CUDA_Toolkit_Release_Notes.txt,DOCS,README} $PKG/usr/doc/$PRGNAM-$VERSION/
+mv cuda_documentation/EULA.txt $PKG/usr/doc/$PRGNAM-$VERSION/EULA-doc.txt
+mv cuda_documentation/tools/* $PKG/usr/doc/$PRGNAM-$VERSION/
+rm -rf cuda_documentation
+
+# extras
+mkdir -p "${PKG}"/opt/"${CPREFIX}"/extras
+mv cuda_sanitizer_api/compute-sanitizer "${PKG}"/opt/"${CPREFIX}"/extras/compute-sanitizer
+rmdir cuda_sanitizer_api
+mkdir -p "${PKG}"/opt/"${CPREFIX}"/bin
+ln -s ../Sanitizer/compute-sanitizer "${PKG}"/opt/"${CPREFIX}"/bin/compute-sanitizer 
+ln -s ../nvvm/bin/cicc "${PKG}"/opt/"${CPREFIX}"/bin/cicc
+
+# Main CUDA
+mkdir -p "${PKG}"/opt/"${CPREFIX}"
+for component in *; do
+  cp -alr --force "$component"/* "${PKG}"/opt/"${CPREFIX}"/
+  rm -rf $component
+done
+
+mv "${PKG}"/opt/"${CPREFIX}"/extras/CUPTI/include/* "${PKG}"/opt/"${CPREFIX}"/include/
+mv "${PKG}"/opt/"${CPREFIX}"/extras/CUPTI/lib64/* "${PKG}"/opt/"${CPREFIX}"/lib64/
+rmdir "${PKG}"/opt/"${CPREFIX}"/extras/CUPTI/{include,lib64}
+rm -f "${PKG}"/opt/"${CPREFIX}"/extras/CUPTI/doc/html/_static/scripts/nvidia-sphinx-theme.js
+rm -f "${PKG}"/opt/"${CPREFIX}"/extras/compute-sanitizer/docs/_static/scripts/nvidia-sphinx-theme.js
+rm -f "${PKG}"/opt/"${CPREFIX}"/gds/cuobject/Doxyfile.in
+
+rm -f "${PKG}"/opt/"${CPREFIX}"/include/include
+rm -f "${PKG}"/opt/"${CPREFIX}"/lib64/lib64
+
+# Add a symlink lib->lib64 as some libraries might expect that (FS#76951)
+( cd "${PKG}"/opt/"${CPREFIX}"  && ln -sr lib64 lib)
+
+# Define compilers for CUDA to use.
+# This allows use of different versions of GCC if necessary
+# (although still locked to compilers available when running this SlackBuild)
+ln -s "$(readlink -f /usr/bin/gcc)" "${PKG}"/opt/"${CPREFIX}"/bin/gcc
+ln -s "$(readlink -f /usr/bin/g++)" "${PKG}"/opt/"${CPREFIX}"/bin/g++
+
+# Ensure shared objects are executable
+find $PKG -print0 | xargs -0 file | grep -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod a+x 2> /dev/null || true
+
+# Strip them
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+# Allow newer compilers to work. This is not officially supported - if users want to try, let them try.
+# See https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#system-requirements
+# Could be useful for -current
+sed -i "/.*unsupported GNU version.*/d" "${PKG}"/opt/"${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
+sed -i "/.*unsupported clang version.*/d" "${PKG}"/opt/"${CPREFIX}"/targets/x86_64-linux/include/crt/host_config.h
+
+# Fix Makefile paths to CUDA
+for f in $(find "${PKG}"/opt/"${CPREFIX}" -name Makefile); do
+  sed -i "s|/usr/local/cuda|/opt/${CPREFIX}|g" "$f"
+done
+
+# Put man in the standard place
+mv $PKG/opt/"${CPREFIX}"/gds/man $PKG/usr/
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+rm -rf $PKG/opt/"${CPREFIX}"/gds/usr
+rm -rf $PKG/opt/"${CPREFIX}"/gds-tools
+
+# Put docs in the standard place
+mv "$PKG"/opt/"${CPREFIX}"/usr/share/doc/* "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"/
+rm -rf "$PKG"/opt/"${CPREFIX}"/usr/share
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+echo
+
+echo -n "Installing profile.d and pkgconfig files ... "
+install -Dm755 "${CWD}/profile/cuda.sh" "${PKG}/etc/profile.d/$CPREFIX.sh"
+install -Dm755 "${CWD}/profile/cuda.csh" "${PKG}/etc/profile.d/$CPREFIX.csh"
+sed -i "s|@VERSION@|$SHORT_VERSION|g" "${PKG}/etc/profile.d/$CPREFIX.sh" "${PKG}/etc/profile.d/$CPREFIX.csh"
+
+# Generate and install pkgconfig files
+pkg_config_path="$PKG"/opt/"${CPREFIX}"/usr/share/pkgconfig
+mkdir -p $pkg_config_path
+for pcfile in "$CWD"/pkgconfig/*.pc.in ; do
+  project_name=$(basename $pcfile .pc.in)
+  find_result=$(find $PKG/opt/$CPREFIX/targets/x86_64-linux/lib/ -name lib$project_name.so.\*.\*)
+  if [ -z $find_result ]; then
+    # Not found in default libdir so check in stubs directory
+    find_result=$(find $PKG/opt/$CPREFIX/targets/x86_64-linux/lib/stubs -name lib$project_name.so)
+    if [ -z $find_result ]; then
+      # What to do? Library not found!
+      # Don't bother installing this one
+      break
+    else
+      # Found in stubs directory
+      # i.e. no version info so use package version
+      project_version=$VERSION
+      stubslibdir=true
+    fi
+  else
+    # Found in default libdir i.e. not in stubslibdir
+    stubslibdir=false
+    project_version=$(basename $(find $PKG/opt/$CPREFIX/targets/x86_64-linux/lib/ -name lib$project_name.so.\*.\*) |cut -d'.' -f3-)
+  fi
+  sed \
+	-e "s:@CUDA_ROOT@:/opt/$CPREFIX:" \
+	-e "s:@PROJECT_NAME@:$project_name:" \
+	-e "s:@PROJECT_VERSION@:$project_version:" \
+  $pcfile \
+  > $pkg_config_path/${project_name}.pc
+  # Adjust location for stubslibdir
+  if [ "$stubslibdir" = "true" ]; then
+    sed -i -e 's:{libdir}:{libdir}/stubs:' $pkg_config_path/${project_name}.pc
+  fi
+done
+# Also some strays in $PKG/opt/$CPREFIX/pkg-config/
+sed \
+  -e "/cudaroot=/ccudaroot=\/opt\/$CPREFIX" $PKG/opt/$CPREFIX/pkg-config/nvfatbin-"${SHORT_VERSION}".pc \
+  > $pkg_config_path/nvfatbin-"${SHORT_VERSION}".pc
+  # There is also nvjitlink-13.2.pc at the same location but no library for it so just ignore it
+  # -e "/cudaroot=/ccudaroot=\/opt\/$CPREFIX" $PKG/opt/$CPREFIX/pkg-config/nvjitlink-"${SHORT_VERSION}".pc \
+  # > $pkg_config_path/nvjitlink-"${SHORT_VERSION}".pc
+rm -rf $PKG/opt/$CPREFIX/pkg-config
+echo
+
+mkdir -p "$PKG"/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n --compress -1 --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

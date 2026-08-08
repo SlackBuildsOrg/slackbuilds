@@ -1,0 +1,81 @@
+Patches for slstatus 1.1
+========================
+
+These patches are backported from the slstatus upstream repository
+(https://git.suckless.org/slstatus) and applied at build time by
+the SlackBuild script.
+
+01-memory-lscanf.patch
+  commit 8723e8b8c69c08bae8abe02ea1f4a49758b8bdfc
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Thu, 24 Jul 2025
+
+  More concise memory calculation on Linux. Introduces lscanf() for
+  flexible /proc/meminfo parsing, taking shared and reclaimable memory
+  into account to match the output of free(1). Also fixes corner cases
+  where the order of fields in /proc/meminfo is not strictly defined.
+
+02-volume-null-deref.patch
+  commit 6fa36bad9f74154d4bf3be834ada93e04bf737e1
+  Author: Chris Billington <emulti@disroot.org>
+  Date:   Fri, 21 Nov 2025
+
+  Avoid NULL dereference in onval() when an sndio device switch occurs
+  and the control address is not found in the list.
+
+03-wifi-ioctl-retry.patch
+  commit 4f61bbbd8e9278c75f29e7853ae8922717261d2d
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Thu, 12 Feb 2026
+
+  Always retry ioctl(SIOCGIFINDEX) for the wifi interface index instead
+  of caching a potentially stale result. Fixes cases where the interface
+  does not exist at slstatus startup (e.g. iwd destroying and recreating
+  interfaces depending on service state).
+
+04-battery-buffer-overflow.patch
+  commit 98769dfed7266b5a9959162e03bee1ddfaf5ecb4
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Thu, 12 Feb 2026
+
+  Fix buffer overflow in battery state parsing. "Not charging" is 12
+  characters; the format specifier %12[a-zA-Z ] reads up to 12 chars
+  plus a NUL terminator (13 bytes) into a 12-byte buffer. Increases
+  state buffer to 13 in both battery_state() and battery_remaining().
+
+05-fmt-human-no-space.patch
+  local patch
+  Author: Ricardson Williams <r1w1s1@fastmail.com>
+  Date:   Thu, 14 May 2026
+
+  Remove the space between the numeric value and unit prefix in
+  fmt_human() output:
+
+    "2.4 Gi" -> "2.4Gi"
+
+  This produces more compact status output, which is useful for
+  narrow status bars and minimalist desktop setups.
+
+06-oss-volume-uninitialized.patch
+  commit 60b28d8a78b14ecc43f1c7d177cfa5f8597e2071
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Tue, 23 Jun 2026
+
+  Avoid using an uninitialized OSS mixer volume when no "vol" device is
+  present; return NULL with a warning instead.
+
+07-wifi-buffer-overflows.patch
+  commit 0dc0c59dbefbd38a8c59004e941260a26fe4bccf
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Tue, 23 Jun 2026
+
+  Bound-copy Linux wifi interface names and reserve space for SSID NUL
+  termination in the netlink response buffer.
+
+08-ip-getnameinfo-size.patch
+  commit 675c83912ea1aca9834448aaa87a040bc9990c52
+  Author: drkhsh <me@drkhsh.at>
+  Date:   Tue, 23 Jun 2026
+
+  Pass the correct sockaddr size to getnameinfo() for IPv4 and skip
+  getnameinfo() for non-matching interfaces.

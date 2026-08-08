@@ -7,4 +7,4 @@ DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/390.157/NVIDIA
 MD5SUM_x86_64="d564c4a0f57eb7715a5f11ed8da17b6c"
 REQUIRES=""
 MAINTAINER="Lenard Spencer"
-EMAIL="lenardrspencer@gmai.com"
+EMAIL="lenardrspencer@gmail.com"

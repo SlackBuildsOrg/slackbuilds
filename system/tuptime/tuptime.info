@@ -1,6 +1,6 @@
 PRGNAM="tuptime"
 VERSION="5.2.2"
-HOMEPAGE="https://github.com/rfrail3/tuptime"
+HOMEPAGE="https://github.com/rfmoz/tuptime"
 DOWNLOAD="https://github.com/rfmoz/tuptime/archive/5.2.2/tuptime-5.2.2.tar.gz"
 MD5SUM="d5f4bfa0cd1be5d4353fdb4c5e68512b"
 DOWNLOAD_x86_64=""

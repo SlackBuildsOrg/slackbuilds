@@ -1,2 +1,7 @@
-An LED display of your uptime.  This is a dockapp that can be used in
-WindowMaker, and other window managers.
+wmuptime (dockapp that displays your uptime)
+
+An LED display of your uptime, for WindowMaker and related window
+managers.
+
+Note: wmuptime by default runs in a normal (non-dockable) window. To
+use it as a dockapp, run "wmuptime -w".

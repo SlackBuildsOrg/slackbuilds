@@ -1,3 +1,0 @@
-libasr is asynchronous resolver library which can be used
-in place of the resolver functions of libc when blocking is
-not desirable.

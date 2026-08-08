@@ -1,0 +1,6 @@
+The idevicerestore application is a full reimplementation of all granu-
+lar steps which are performed during the restore of a firmware to a de-
+vice.
+
+In general, upgrades and downgrades are possible, however subject to
+availability of SHSH blobs from Apple for signing the firmware files.

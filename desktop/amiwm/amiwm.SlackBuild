@@ -11,6 +11,9 @@
 # for someone who grew up with one, maybe this is how they expect GUIs
 # to work.
 
+# 20260204 bkw: update for v0.22pl3. Thanks to Bouboulov for noticing
+# the new version is out.
+
 # 20230427 bkw: update for v0.22pl2.
 # - Switched upstreams. Apparently the github version I packaged was a
 #   fork. Now I'm using the actual author's version. Thanks to luna on
@@ -22,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=amiwm
-VERSION=${VERSION:-0.22pl2}
+VERSION=${VERSION:-0.22pl3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

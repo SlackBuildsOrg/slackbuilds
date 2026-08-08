@@ -24,11 +24,16 @@
 # along with this program (most likely, a file named COPYING).  If
 # not, see <http://www.gnu.org/licenses/>.
 
+# 20260521 bkw: Modified by SlackBuilds.org:
+# - add missing "set -e".
+# - install FAQ in doc dir.
+# - add .md suffix to README and TODO docs.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scrot
 VERSION=${VERSION:-1.10}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -62,6 +67,8 @@ else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
 fi
+
+set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -98,7 +105,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 rm -rf $PKG/usr/doc/$PRGNAM
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING ChangeLog README TODO $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING ChangeLog FAQ README* TODO* $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

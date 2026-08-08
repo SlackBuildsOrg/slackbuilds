@@ -1,0 +1,16 @@
+To start ocserv at boot and stop it properly at shutdown, make sure
+rc.local and rc.local_shutdown contain the following lines:
+
+  /etc/rc.d/rc.local
+  ==================
+  # Start ocserv
+  if [ -x /etc/rc.d/rc.ocserv ]; then
+    /etc/rc.d/rc.ocserv start
+  fi
+
+  /etc/rc.d/rc.local_shutdown
+  ===========================
+  # Stop ocserv
+  if [ -x /etc/rc.d/rc.ocserv ]; then
+    /etc/rc.d/rc.ocserv stop
+  fi

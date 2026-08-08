@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                |-----handy-ruler------------------------------------------------------|
+VulkanSceneGraph: VulkanSceneGraph (3D graphics toolkit)
+VulkanSceneGraph:
+VulkanSceneGraph: VulkanSceneGraph (VSG), is a modern, cross platform, high performance
+VulkanSceneGraph: scene graph library built upon Vulkan graphics/compute API. The
+VulkanSceneGraph: software is written in C++17, and follows the CppCoreGuidelines and
+VulkanSceneGraph: FOSS Best Practices. The source code is published under the MIT
+VulkanSceneGraph: License, with the exception of vulkan.h, used for Vulkan extensions,
+VulkanSceneGraph: which is under Apache License 2.0.
+VulkanSceneGraph:
+VulkanSceneGraph:
+VulkanSceneGraph:

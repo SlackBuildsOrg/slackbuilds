@@ -1,15 +1,18 @@
-These are the headers for NVIDIA's OptiX ray tracing API. Usage of this
-API allows for an application to offload its ray tracing calculations
-to the system's onboard NVIDIA GPU card, potentially drastically
-render speeds.
+OptiX is an application framework for achieving optimal ray tracing
+performance on the GPU.
 
-Currently, this is only present in the SlackBuilds.org repository as an
-optional dependency for graphics/Blender. If this is installed, the
-graphics/Blender SlackBuild will automatically detect the OptiX headers
-and Blender will be built with support for OptiX, allowing to use it
-for rendering, as well as GPGPU-accelerated image denoising.
+This repository contains the minimal set of necessary header files for
+building an application with OptiX support, including access to the
+OptiX functions provided by the NVIDIA display driver.
 
-This SlackBuild also requires a recent CUDA toolkit (probably newer
-than the current one available in the SBo repository). It will install
-without it, it just will be useless without it.
+Usage of this API allows for an application to offload its ray tracing
+calculations to the system's onboard NVIDIA GPU card, potentially
+drastically reducing render speeds.
 
+This SlackBuild targets SBo's graphics/Blender SlackBuild which will
+automatically detect the OptiX headers and build Blender to include
+OptiX rendering kernels as well as GPU-accelerated image denoising.
+
+The built OptiX-Headers package requires a recent CUDA toolkit to
+be useful when building Blender but the CUDA toolkit is not required
+to build OptiX-Headers itself.

@@ -7,12 +7,12 @@ avifdec can convert from avif to jpeg or png image.
 avifenc can encode jpeg or png to avif image.
 
 By default man page generation is turned off hence from
-now on pandoc is an optional dependency.Alternative 
-documentation for avifdec and avifenc is provided in 
+now on pandoc is an optional dependency.Alternative
+documentation for avifdec and avifenc is provided in
 /usr/doc/libavif-$VERSION in the form of markdown files.
 
 If you enable tests in the build script then gtest needs
-to be installed. By default this is also turned off. 
+to be installed. By default this is also turned off.
 
 usage:
 -------

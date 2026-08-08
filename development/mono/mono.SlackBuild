@@ -2,6 +2,7 @@
 
 # Slackware build script for mono
 
+# Copright 2025-2026 Ruoh-Shoei LIN
 # Copright 2023-2024 Steven Voges <Oregon, USA>
 # Written by SebastiÃƒÂ¡n Salazar Molina <ssalazar@orangepeople.cl>
 # Updated by Andre Barboza <bmg.andre@gmail.com>
@@ -27,8 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mono
-VERSION=${VERSION:-6.12.0.205}
-BOOTSTRAP=${BOOTSTRAP:-4.4.2.11}
+VERSION=${VERSION:-6.14.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,13 +84,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Use full featured precompiled mono version instead of monolite
-pushd $TMP
-rm -rf $PRGNAM-$BOOTSTRAP-$BOOTSTRAPARCH
-tar xvf $CWD/$PRGNAM-$BOOTSTRAP-$BOOTSTRAPARCH.tar.bz2
-export PATH="$TMP/$PRGNAM-$BOOTSTRAP-$BOOTSTRAPARCH/usr/bin:$PATH"
-popd
-
+autoreconf -vif
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -100,55 +94,30 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
+  --enable-maintainer-mode \
+  --enable-compile-warnings \
+  --with-mcs-docs=no \
   --build=$ARCH-slackware-linux
-make
+
+make || make -j1
 make install DESTDIR=$PKG
 
-rm -rf $PKG/usr/lib${LIBDIRSUFFIX}/*.a
-rm -rf $PKG/usr/lib${LIBDIRSUFFIX}/*.la
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.a
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
-
-# Don't clobber the config files
-( cd $PKG/etc/mono
-
-  mv config config.new
-  sed -i "s|\$mono_libdir|/usr/lib${LIBDIRSUFFIX}|" config.new
-  mv browscap.ini browscap.ini.new
-  mv mconfig/config.xml mconfig/config.xml.new
-
-  mv 2.0/DefaultWsdlHelpGenerator.aspx 2.0/DefaultWsdlHelpGenerator.aspx.new
-  mv 2.0/machine.config 2.0/machine.config.new
-  mv 2.0/settings.map 2.0/settings.map.new
-  mv 2.0/web.config 2.0/web.config.new
-  mv 2.0/Browsers/Compat.browser 2.0/Browsers/Compat.browser.new
-
-  mv 4.0/DefaultWsdlHelpGenerator.aspx 4.0/DefaultWsdlHelpGenerator.aspx.new
-  mv 4.0/machine.config 4.0/machine.config.new
-  mv 4.0/settings.map 4.0/settings.map.new
-  mv 4.0/web.config 4.0/web.config.new
-  mv 4.0/Browsers/Compat.browser 4.0/Browsers/Compat.browser.new
-
-  mv 4.5/DefaultWsdlHelpGenerator.aspx 4.5/DefaultWsdlHelpGenerator.aspx.new
-  mv 4.5/machine.config 4.5/machine.config.new
-  mv 4.5/settings.map 4.5/settings.map.new
-  mv 4.5/web.config 4.5/web.config.new
-  mv 4.5/Browsers/Compat.browser 4.5/Browsers/Compat.browser.new
-)
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  *.md COPYING.LIB LICENSE NEWS docs \
+  *.md COPYING.LIB LICENSE \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-chmod 644 $PKG/usr/doc/$PRGNAM-$VERSION/docs/abc-removal.txt
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -9,6 +9,29 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260615 bkw: Updated for v0.288 (incl. groovy patch).
+# - switch compilers, use gcc. our old clang fails, hard.
+# - disable ccache, since it doesn't work with gcc and PCH.
+#   this matters less than it did, hardware has gotten faster.
+
+# 20260403 bkw: Updated for v0.287 (incl. groovy patch).
+# - had to add ARCHOPTS=-latomic to get it to build on 32-bit.
+
+# 20260304 bkw: Updated for v0.286 (no groovy yet).
+# 20260131 bkw: Updated for v0.285 (incl. groovy patch).
+# 20260103 bkw: Updated for v0.284 (incl. groovy patch).
+# 20251203 bkw: Updated for v0.283 (incl. groovy patch).
+# 20251111 bkw: Added groovy patch for v0.282, no other changes.
+# 20251103 bkw: Updated for v0.282. No groovy yet.
+# 20251008 bkw: Updated for v0.281, groovy patches have resumed!
+# 20250902 bkw: Updated for v0.280. Still no groovy patch.
+# 20250811 bkw: Updated for v0.279. No groovy patch this time, the
+#   groovymame developer hasn't released one since May (for 0.277).
+# - Only use ld.gold if it's installed (fixes -current build).
+# - Upstream added pipewire support, but 15.0's pipewire is too old,
+#   only try to build it if pipewire is >= v1.2.x.
+
+# 20250515 bkw: Updated for v0.277 (incl. groovy patch).
 # 20250405 bkw: Updated for v0.276 (incl. groovy patch).
 # 20250304 bkw: Updated for v0.275 (incl. groovy patch).
 # 20250210 bkw: Added groovy patch for v0.274, no other changes.
@@ -24,7 +47,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mame
-VERSION=${VERSION:-0.277}
+VERSION=${VERSION:-0.288}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -66,6 +89,14 @@ DIRNAME=$PRGNAM-$SHORTNAME
 
 set -e
 
+# 20260618 bkw: for 0.288, it's still possible to build with gcc-11.
+# Looking at upstream git, it looks like 0.289 may require gcc-14.
+#source /etc/profile.d/gcc14.sh
+
+# for now:
+export CC=/usr/bin/gcc
+export CXX=/usr/bin/g++
+
 # 20200108 bkw: before doing ANYTHING else, check to make sure
 # our required deps are installed. This is helpful because if
 # they are missing, the mame compile will still start and run
@@ -98,8 +129,8 @@ cd $DIRNAME
 chown -R root:root .
 
 # 20181201 bkw: Urchlay's personal template:
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
+        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 
 # OK, building modern mame is a bit of a PITA. It uses genie (written
 # in lua, a fork of premake), but you don't get to run genie directly,
@@ -163,14 +194,17 @@ sed -i 's,\.;ini,/etc,' src/osd/sdl/sdlmain.cpp
 #SDL_INI_PATH='$$HOME/.mame;/etc' \
 
 # 20211110 bkw: undocumented option. keep this Just In Case.
+QTOPT=0
 if [ "${QTDEBUG:-yes}" = "yes" ]; then
-  QTOPT=1
-else
-  QTOPT=0
+  which qmake-qt6 2>/dev/null && QTOPT=1
 fi
+echo "=== USE_QTDEBUG=$QTOPT"
 
 # 20211112 bkw: the rest of the GroovyMAME stuff.
 # The diffs look to be close to half a meg, so they're compressed.
+# 20260618 bkw: the diffs are closer to 6MB these days! the timestamp
+# stuff isn't needed right now (as ccache is disabled) but leave it
+# in place for when a new ccache makes it into Slackware stable.
 if [ "$GROOVY" = "yes" ]; then
   GROOVYDIFF="$( /bin/ls $CWD/gm${VERSION/./}*.diff.xz 2>/dev/null | tail -1 )"
   if [ -e "$GROOVYDIFF" ]; then
@@ -205,6 +239,12 @@ fi
 
 # Using ld.gold is *much* faster, and I see no disadvantage to it.
 
+# 20250812 bkw: -current no longer has ld.gold. Anyway, the default linker
+# has improved. Only use gold if we have it.
+if [ -x /usr/bin/ld.gold ]; then
+  GOLDOPT='LDOPTS="-fuse-ld=gold"'
+fi
+
 # The point of the OVERRIDE_CC and friends is to make the build use $PATH
 # to find gcc (so ccache will be found if it's using the symlink method).
 
@@ -229,23 +269,47 @@ if [ "${WAYLAND:-no}" = "yes" ]; then
   WAYLOPT="USE_WAYLAND=1"
 fi
 
-# 20211111 bkw: build with ccache by default, now that it works.
-if [ "${USE_CCACHE:-yes}" = "yes" ]; then
-  CC="/usr/bin/ccache /usr/bin/clang"
-  CXX="/usr/bin/ccache /usr/bin/clang++"
+# 20260617 bkw: ccache is disabled for now. It won't work with gcc and
+# precompiled headers. Anyway, hardware has caught up, a full mame build
+# without ccache only takes me 1.5 hours on my (rather modest) build box.
+### 20211111 bkw: build with ccache by default, now that it works.
+##if [ "${USE_CCACHE:-yes}" = "yes" ]; then
+##  CC="/usr/bin/ccache $( which gcc )"
+##  CXX="/usr/bin/ccache $( which g++ )"
+##else
+##  # 20250812 bkw: default to clang/clang++, not gcc/g++, if CC and CXX not set.
+##  # 20260616 bkw: switch back to gcc/g++, now that we require gcc14.
+##  CC="${CC:-$( which gcc )}"
+##  CXX="${CXX:-$( which g++ )}"
+##fi
+
+# 20250811 bkw: 0.279 has support for pipewire, enabled by default,
+# but 15.0's default pipewire is too old for mame. The one in testing/
+# is OK. Note that the old pipewire doesn't even have a .pc file,
+# which is fine for this purpose (pkg-config returns failure status).
+
+PWOPT='NO_USE_PIPEWIRE=1'
+if [ "${PIPEWIRE:-yes}" = "yes" ]; then
+  if pkg-config libpipewire-0.3 --atleast-version 1.2; then
+    echo "===> libpipewire-0.3 at least 1.2, building with pipewire"
+    PWOPT=""
+  else
+    echo "===> libpipewire-0.3 missing or too old: $PWOPT"
+  fi
 else
-  CC="${CC:-$( which gcc )}"
-  CXX="${CXX:-$( which g++ )}"
+  echo "===> user set PIPEWIRE=no: $PWOPT"
 fi
 
 make USE_QTDEBUG=$QTOPT \
+     ARCHOPTS="-std=c++20 -latomic" \
+     $GOLDOPT \
+     $PWOPT \
      USE_SYSTEM_LIB_EXPAT=1 \
      USE_SYSTEM_LIB_ZLIB=1 \
      USE_SYSTEM_LIB_JPEG=1 \
      USE_SYSTEM_LIB_FLAC=1 \
      PYTHON_EXECUTABLE="/usr/bin/python3 -S" \
      OPT_FLAGS="$SLKCFLAGS" \
-     LDOPTS="-fuse-ld=gold" \
      OVERRIDE_CC="$CC" \
      OVERRIDE_CXX="$CXX" \
      CC="$CC" \

@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                 |-----handy-ruler------------------------------------------------------|
+filen-desktop-bin: filen-desktop-bin (end-to-end encrypted cloud storage client)
+filen-desktop-bin:
+filen-desktop-bin: Filen is a zero-knowledge, client-side encrypted cloud storage
+filen-desktop-bin: provider based in Germany. This GUI client offers automatic syncing
+filen-desktop-bin: in different modes, network drive mounting, secure notes with
+filen-desktop-bin: collaboration, end-to-end encrypted chats, and more.
+filen-desktop-bin:
+filen-desktop-bin: This is a repackaging of the official binary .deb package.
+filen-desktop-bin:
+filen-desktop-bin: Homepage: https://filen.io
+filen-desktop-bin:

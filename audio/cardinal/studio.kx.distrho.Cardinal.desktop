@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Cardinal
+Comment=Rack modular synthesizer"
+Categories=Audio;AudioVideo;AudioVideoEditing;Recorder;
+Exec=/usr/bin/CardinalNative %F
+Icon=/usr/share/icons/hicolor/scalable/apps/cardinal.svg
+Terminal=false
+StartupNotify=false

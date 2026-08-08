@@ -2,7 +2,7 @@
 
 # Slackware build script for therion
 
-# Copyright 2023-2024 Giancarlo Dessi, Cagliari, IT
+# Copyright 2023-2026 Giancarlo Dessi, Cagliari, IT
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=therion
-VERSION=${VERSION:-6.2.1}
+VERSION=${VERSION:-6.3.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -92,7 +92,7 @@ cd build
     $BUILDBOOK \
     $BUILDX \
     -DCMAKE_BUILD_TYPE=Release ..
-  make -j 10
+  make
   make install/strip DESTDIR=$PKG
 cd ..
 

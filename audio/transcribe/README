@@ -10,10 +10,22 @@ players.
 
 Transcribe! is proprietary software. After installation, Transcribe!
 will be fully functional for a 30-day evaluation period. To buy the
-software, use the site at http://www.seventhstring.com/xscribe/buy.html.
+software, go to https://www.seventhstring.com/xscribe/buy.html.
 The Slackware package doesn't need to be changed or updated (just
 enter the license key).
 
-Note: I'm aware that there's a newer version (9.10.0), but it crashes
-on startup, most likely due to incompatible library versions. Will
-revisit this when Slackware 15.0 is released.
+This version of Transcribe! only supports x86_64. If you need a
+version that will run on 32-bit x86, see transcribe-legacy.
+Don't install both transcribe and transcribe-legacy; they conflict.
+
+Transcribe! uses GStreamer for audio playback. The first time you
+start the application, the default playback sink is set to
+pipewiresink. If you don't use pipewire, you'll have to switch
+to PulseAudio (or maybe ALSA). To do this, use the menu bar:
+
+  Application -> Preferences -> Playback
+
+...then find "GStreamer device name" about halfway down
+the dialog. Change "pipewiresink" to either "pulsesink" or
+"alsasink". You'll actually have to type the name (there's no
+drop-down list), then click OK.

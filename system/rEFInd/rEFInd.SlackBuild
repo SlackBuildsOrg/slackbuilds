@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=rEFInd
 SRCNAME=refind
 VERSION=${VERSION:-0.14.2}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -69,6 +69,9 @@ else
     REFIND_SUFFIX=ia32
 fi
 sed -i '/^EFICRT0/ s/$/\/gnuefi/' Make.common
+
+patch -p1 < $CWD/gnu-efi-4-compat.patch
+patch -p1 < $CWD/fix-target-option.patch
 
 make -j1 all_gnuefi
 REFIND_SHARE_DIR=$PKG/usr/share/$PRGNAM-$VERSION

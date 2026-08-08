@@ -3,6 +3,7 @@
 # Slackware build script for libdispatch
 
 # Copyright 2020 Hunter Sezen California, USA
+# Copyright 2026 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +28,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libdispatch
-VERSION=${VERSION:-5.3}
+VERSION=${VERSION:-6.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

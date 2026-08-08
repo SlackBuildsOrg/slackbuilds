@@ -10,7 +10,7 @@ libavif: libavif (AVIF Encoding and Decoding Library)
 libavif:
 libavif: This library aims to be a portable C implementation of
 libavif: AV1 image file format.It can encode and decode all AOM
-libavif: supported YUV formats and bit depths. 
+libavif: supported YUV formats and bit depths.
 libavif:
 libavif: Homepage:https://github.com/AOMediaCodec/libavif
 libavif:

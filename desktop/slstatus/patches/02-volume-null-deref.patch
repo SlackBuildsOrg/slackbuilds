@@ -1,0 +1,19 @@
+commit 6fa36bad9f74154d4bf3be834ada93e04bf737e1
+Author: Chris Billington <emulti@disroot.org>
+Date:   Fri Nov 21 12:31:40 2025 +0800
+
+    volume: avoid NULL dereference in onval() on sndio device switch
+
+diff --git a/components/volume.c b/components/volume.c
+index 6cec556..5a2bfb7 100644
+--- a/components/volume.c
++++ b/components/volume.c
+@@ -89,6 +89,8 @@
+ 			if (c->addr == addr)
+ 				break;
+ 		}
++		if (c == NULL)
++			return;
+ 		c->val = val;
+ 	}
+ 

@@ -6,3 +6,14 @@ C++11. It is header only, and comes in a single file form for easy
 inclusion in projects. It is easy to use for small projects, but
 powerful enough for complex command line projects, and can be
 customized for frameworks.
+
+************************************************************************
+
+Starting with v2.6.2, the package installs a pre-built static library as
+well as all the headers. In this setup, both header-only and regular
+usage of the library are possible:
+ - simply including the library headers doesn't require linking with
+   anything, so no changes in this scenario
+ - looking up the library using pkg-config/pkgconf/CMake defines a macro
+   which instructs headers to not define implementation and also sets up
+   linking with the static library resulting in faster build times

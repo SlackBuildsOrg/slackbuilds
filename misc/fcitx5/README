@@ -34,4 +34,3 @@ To make fcitx5 the default input method, please add these lines to your
     GTK_IM_MODULE=fcitx
     QT_IM_MODULE=fcitx
     XMODIFIERS=@im=fcitx
-

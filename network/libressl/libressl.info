@@ -1,12 +1,12 @@
 PRGNAM="libressl"
-VERSION="3.7.1"
+VERSION="4.3.2"
 HOMEPAGE="https://www.libressl.org"
-DOWNLOAD="https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.7.1.tar.gz \
-          https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-3.7.1-relnotes.txt"
-MD5SUM="133f11e478f46528414245dccb6355f2 \
-        0b1e4784b5c3b2672c9e7432e11d1fa3"
+DOWNLOAD="https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.3.2.tar.gz \
+          https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.3.2-relnotes.txt"
+MD5SUM="52d53fe0cd880a7276a4a2f9cd1fa29f \
+        a3b61bd30b47ef69a819d3a342d7d1ce"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""
-MAINTAINER="D Woodfall"
-EMAIL="dave@slackbuilds.org"
+MAINTAINER="r1w1s1"
+EMAIL="r1w1s1@fastmail.com"

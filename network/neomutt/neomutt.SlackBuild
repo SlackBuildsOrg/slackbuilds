@@ -2,7 +2,7 @@
 #
 # Slackware build script for neomutt
 #
-# Copyright 2016-2025 Corrado Franco (https://corradofranco.it)
+# Copyright 2016-2026 Corrado Franco (https://corradofranco.it)
 # All rights reserved.
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,22 +22,20 @@
 # You may have received a copy of the GNU General Public License along
 # with this program (most likely, a file named COPYING).  If not, see
 # <http://www.gnu.org/licenses/>.
-#
-# Latest version of this SlackBuild at https://github.com/conraid/SlackBuilds
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=neomutt
-VERSION=${VERSION:-20250510}
+VERSION=${VERSION:-20260616}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 if [ -z ${ARCH:=""} ]; then
-  case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
+  case "$(uname -m)" in
+    i?86) ARCH=i686 ;;
     arm*) ARCH=arm ;;
-       *) ARCH=$( uname -m ) ;;
+    *) ARCH=$(uname -m) ;;
   esac
 fi
 
@@ -50,24 +48,22 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+if [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=pentium4 -mtune=generic"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
+  SLKCFLAGS="-O2 -march=x86-64 -mtune=generic -fPIC"
   LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
 fi
 
+[ ${USEKYOTOCABINET:-no} == 'yes' ] && KYOTOCABINET="--kyotocabinet" || KYOTOCABINET=""
 [ ${USELUA:-no} == 'yes' ] && LUA="--lua" || LUA=""
 [ ${USENOTMUCH:-no} == 'yes' ] && NOTMUCH="--notmuch" || NOTMUCH=""
 
-set -eu
+set -euo pipefail
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
@@ -77,14 +73,14 @@ tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure \
+  CXXFLAGS="$SLKCFLAGS" \
+  ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --localstatedir=/var \
@@ -97,15 +93,17 @@ CXXFLAGS="$SLKCFLAGS" \
   --sasl \
   --gdbm \
   --gpgme \
-  --locales-fix \
   --sqlite \
-  --full-doc \
-  --idn2 \
+  --lmdb \
+  --lz4 \
+  --zlib \
+  --zstd \
+  --gss \
   --autocrypt \
-  --lmdb  \
+  --fmemopen \
   --host=$ARCH-slackware-linux \
   --build=$ARCH-slackware-linux \
-  $NOTMUCH $LUA
+  $KYOTOCABINET $NOTMUCH $LUA
 
 make
 make DESTDIR=$PKG install
@@ -137,4 +135,3 @@ cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
-

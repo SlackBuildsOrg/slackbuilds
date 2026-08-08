@@ -1,6 +1,6 @@
 PRGNAM="pax"
 VERSION="20201030"
-HOMEPAGE="http://wiki.bash-hackers.org/howto/pax"
+HOMEPAGE="http://www.mirbsd.org/pax.htm"
 DOWNLOAD="http://ponce.cc/slackware/sources/repo/pax_20201030.orig.tar.gz"
 MD5SUM="87a0a3870ec437c41eb1b406334fe2c5"
 DOWNLOAD_x86_64=""

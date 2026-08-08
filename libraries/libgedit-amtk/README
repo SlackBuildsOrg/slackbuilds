@@ -4,4 +4,3 @@ targetting GTK+ 3.
 
 It is suitable for both a traditional UI or a modern UI
 with a GtkHeaderBar.
-

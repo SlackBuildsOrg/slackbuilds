@@ -76,8 +76,6 @@ install -m0644 $PKG/opt/$PRGNAM/flathub/gephi.png $PKG/usr/share/icons/hicolor/5
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 
-cat  $CWD/gephi-tutorial-quick_start.pdf > $PKG/usr/doc/$PRGNAM-$VERSION/gephi-tutorial-quick_start.pdf
-
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

@@ -1,0 +1,6 @@
+QuickJS by Fabrice Bellard and Charlie Gordon provide a small and
+embeddable JavaScript engine. QuickJS-NG is a fork intended as a
+continuation of this now dormant project.
+
+PS: Installing both quickjs and quickjs-ng packages can cause conflicts,
+so it's best to chose one or the other.

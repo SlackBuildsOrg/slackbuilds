@@ -4,3 +4,5 @@ cattrs is an open source Python library for structuring and
 unstructuring data. cattrs works best with attrs classes, dataclasses
 and the usual Python collections, but other kinds of classes are
 supported by manually registering converters.
+
+NOTE: 25.3.0 is last version to support python-3.9

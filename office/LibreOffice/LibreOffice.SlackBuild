@@ -2,7 +2,7 @@
 
 # Slackware build script for LibreOffice
 
-# Copyright 2015-2025 Christoph Willing  Sydney, Australia
+# Copyright 2015-2026 Christoph Willing  Sydney, Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@ cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=LibreOffice
 SRCNAM=libreoffice
-VERSION=${VERSION:-25.2.5.2}
+VERSION=${VERSION:-26.2.5.2}
 SHORT_VERSION=${VERSION%.*.*}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -84,6 +84,10 @@ then
   export CC=/usr/bin/clang
   export CXX=/usr/bin/clang++
   CXXCLANGFLAGS="-Wno-c++11-narrowing"
+  # for 28.5.0.4
+  sed -i -e '/errEncrypted/c printf("#ERROR:%d\\n", err);' sdext/source/pdfimport/xpdfwrapper/wrapper_gpl.cxx
+  PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
+  export PYTHONPATH=/opt/python$PYVER/site-packages
 else
   echo Slackware-15.0++
   export CC=/usr/bin/gcc
@@ -176,14 +180,6 @@ if pkg-config --exists mythes ; then mythes="--with-system-mythes" ; else mythes
 if test -x /usr/bin/odbc_config ; then odbc="--with-system-odbc" ; else odbc="" ; fi
 #if test -d /usr/lib${LIBDIRSUFFIX}/python3*/site-packages/lxml ; then lxml="--with-system-lxml" ; else lxml="" ; fi
 
-if pkg-config --exists xmlsec1 ; then
-  xmlsec="--with-system-xmlsec"
-else
-  xmlsec=""
-  # Also ensure correct nspr implementation is used if building libreoffice supplied xmlsec
-  sed -i -e 's:openssl:openssl --with-mozilla-ver=/usr:' external/xmlsec/ExternalProject_xmlsec.mk
-fi
-
 #if test -e /usr/share/ant/lib/rhino.jar ; then rhino="--with-system-rhino --with-rhino-jar=/usr/share/ant/lib/rhino.jar" ; else rhino="" ; fi
 if pkg-config --exists libvlc ; then vlc="--enable-vlc" ; else vlc="" ; fi
 # Building with vlc backend is marked as experimental so demand explicit indication via environment variable VLC to do it.
@@ -203,8 +199,9 @@ extwikipub="--enable-ext-wiki-publisher"; [ "${EXTWIKIPUB:-no}" != "yes" ]     &
 
 extnlpsolver="--enable-ext-nlpsolver"; [ "${EXTNLPSOLVER:-yes}" != "yes" ]     && extnlpsolver=""
 
-# Workaround for -current 20241116 (poppler version is too recent)
-if pkg-config --atleast-version 24.11.0 poppler ; then poppler="--without-system-poppler" ; else poppler="--with-system-poppler" ; fi
+
+# Workaround for -current 20251114 (needs system harfbuzz)
+if pkg-config --atleast-version 12.2.0 harfbuzz ; then harfbuzz="--with-system-harfbuzz --with-system-graphite" ; else harfbuzz="" ; fi
 
 
 ./configure \
@@ -265,11 +262,14 @@ if pkg-config --atleast-version 24.11.0 poppler ; then poppler="--without-system
     --with-system-nss \
     --with-system-openldap \
     --with-system-openssl \
+    --with-system-poppler \
     --with-system-sane \
+    --with-system-xmlsec \
     --with-system-zlib \
     $coinmp \
     $cppunit \
     $glm \
+    $harfbuzz \
     $libabw \
     $libcdr \
     $liblangtag \
@@ -293,12 +293,10 @@ if pkg-config --atleast-version 24.11.0 poppler ; then poppler="--without-system
     $libzmf \
     $lpsolve \
     $mythes \
-    $poppler \
     $postgresql \
     $valgrind \
     $ucpp \
     $odbc \
-    $xmlsec \
 
 
 
@@ -312,10 +310,6 @@ if [ "$HAVE_SRCS_TARBALL" = "0" ]; then
 fi
 
 patch -p0 < "$CWD"/no-check-if-root.diff
-
-# GCC10 requirements (Tx alienBOB)
-sed -i external/libebook/ExternalProject_libebook.mk \
-    -e '/configure /i \\t\t&& sed -i "s/TRUE/true/g" src/lib/EBOOKCharsetConverter.cpp \\'
 
 
 make build
@@ -363,9 +357,9 @@ mkdir -p "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"
 cp -a COPYING* README* "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"
 cat "$CWD"/"$PRGNAM".SlackBuild > "$PKG"/usr/doc/"$PRGNAM"-"$VERSION"/"$PRGNAM".SlackBuild
 
-mkdir -p "$PKG"/install
-cat "$CWD"/slack-desc > "$PKG"/install/slack-desc
-cat "$CWD"/doinst.sh > "$PKG"/install/doinst.sh
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
-cd "$PKG"
-/sbin/makepkg -l y -c n "$OUTPUT"/"$PRGNAM"-"$VERSION"-"$ARCH"-"$BUILD""$TAG"."$PKGTYPE"
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

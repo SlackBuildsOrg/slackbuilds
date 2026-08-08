@@ -5,5 +5,5 @@ Exec=/usr/bin/mf3
 Icon=/usr/share/pixmaps/MinForth.png
 Terminal=true
 Type=Application
-Categories=System;Development;
+Categories=Development;
 

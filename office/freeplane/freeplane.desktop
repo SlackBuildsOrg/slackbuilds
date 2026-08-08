@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Freeplane
+Exec=/usr/bin/freeplane
+Icon=/usr/share/icons/hicolor/256x256/apps/freeplane256.png
+Type=Application
+Categories=Office;

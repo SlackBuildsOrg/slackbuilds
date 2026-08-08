@@ -1,0 +1,25 @@
+From: Sophie Brun <sophie@offensive-security.com>
+Date: Thu, 20 Apr 2023 14:51:31 +0200
+Subject: Fix path to nuclei-templates
+
+By default the nuclei-templates is located directly in /home/user.
+Change the default location to /home/user/.local
+
+Last-Update: 2023-06-27
+---
+ pkg/catalog/config/constants.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pkg/catalog/config/constants.go b/pkg/catalog/config/constants.go
+index fab1884..6d78e7f 100644
+--- a/pkg/catalog/config/constants.go
++++ b/pkg/catalog/config/constants.go
+@@ -22,7 +22,7 @@ var (
+ 
+ const (
+ 	TemplateConfigFileName          = ".templates-config.json"
+-	NucleiTemplatesDirName          = "nuclei-templates"
++	NucleiTemplatesDirName           = ".local/nuclei-templates"
+ 	OfficialNucleiTemplatesRepoName = "nuclei-templates"
+ 	NucleiIgnoreFileName            = ".nuclei-ignore"
+ 	NucleiTemplatesIndexFileName    = ".templates-index" // contains index of official nuclei templates

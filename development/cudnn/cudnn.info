@@ -1,10 +1,12 @@
 PRGNAM="cudnn"
-VERSION="v5.1_8.0"
+VERSION="9.22.0.52_13"
 HOMEPAGE="https://developer.nvidia.com/cudnn"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://developer.download.nvidia.com/compute/redist/cudnn/v5.1/cudnn-8.0-linux-x64-v5.1.tgz"
-MD5SUM_x86_64="406f4ac7f7ee8aa9e41304c143461a69"
-REQUIRES="cudatoolkit"
-MAINTAINER="Nikolay Nikolov"
-EMAIL="nikobnikolov[at]gmail[dot]com"
+DOWNLOAD_x86_64="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.22.0.52_cuda13-archive.tar.xz \
+        https://developer.download.nvidia.com/compute/cudnn/redist/cudnn_samples/source/cudnn_samples-source-9.22.0.52-archive.tar.xz"
+MD5SUM_x86_64="4246179d88fc98af8660b31d6eca3f8e \
+        676a9f1ff3d0e9812f38683013f4a83e"
+REQUIRES="cudatoolkit_13"
+MAINTAINER="Christoph Willing"
+EMAIL="chris.willing@linux.com"

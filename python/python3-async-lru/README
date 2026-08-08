@@ -2,3 +2,6 @@ This package is a port of Python's built-in functools.lru_cache function
 for asyncio. To better handle async behaviour, it also ensures multiple
 concurrent calls will only result in 1 call to the wrapped function,
 with all awaits receiving the result of that call when it completes.
+
+Note: python3-async-lru is held back at version 2.0.5 on Slackware 15.0
+(later versions require Python >= 3.10.)

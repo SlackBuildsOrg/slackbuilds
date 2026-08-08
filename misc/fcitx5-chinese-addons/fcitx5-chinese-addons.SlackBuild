@@ -24,7 +24,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fcitx5-chinese-addons
 VERSION=${VERSION:-5.1.8}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -67,6 +67,11 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-${VERSION}_dict.tar.*
 cd $PRGNAM-$VERSION
+
+# fix for fmt 12.1.0
+sed -i 's/fmt::localtime/f_localtime/g' im/pinyin/customphrase.cpp
+sed -i '1i #include <ctime>\ntemplate <typename T> std::tm f_localtime(T t) { std::tm tm; localtime_r(\&t, \&tm); return tm; }' im/pinyin/customphrase.cpp
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

@@ -1,10 +1,10 @@
 PRGNAM="protobuf3"
-VERSION="31.1"
+VERSION="33.5"
 HOMEPAGE="https://github.com/google/protobuf"
-DOWNLOAD="https://github.com/google/protobuf/archive/v31.1/protobuf-31.1.tar.gz \
-https://files.pythonhosted.org/packages/52/f3/b9655a711b32c19720253f6f06326faf90580834e2e83f840472d752bc8b/protobuf-6.31.1.tar.gz"
-MD5SUM="49ed995cf51185a63faf8a714bc57e2c \
-183fa565016507c253144809b674cc66"
+DOWNLOAD="https://github.com/google/protobuf/archive/v33.5/protobuf-33.5.tar.gz \
+https://files.pythonhosted.org/packages/ba/25/7c72c307aafc96fa87062aa6291d9f7c94836e43214d43722e86037aac02/protobuf-6.33.5.tar.gz"
+MD5SUM="4a9b184a11eacb4fc3eefd05ae763bc6 \
+5d9230257cd63f6f94ca3a7303b22413"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="abseil-cpp python3-build python3-wheel"

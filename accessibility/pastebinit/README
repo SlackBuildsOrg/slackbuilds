@@ -6,12 +6,14 @@ useful when doing IRC support (when you don't want one to paste a 200
 line log) or when working on a command line box with no way to SSH
 to it.
 
-Maintainer's note: as of 2024-08-14, of the 12 pastebin sites
-currently supported by pastebinit, four of them didn't work in
+Maintainer's note: as of 2025-12-26, of the 14 pastebin sites
+currently supported by pastebinit, five of them didn't work in
 the SlackBuild author's testing:
+
 - bpa.st (404 error)
-- sprunge.us (404 error)
+- dpaste.org (403 error)
 - paste.debian.net (redirects to the main page)
 - paste.ubuntu.com (may work if you create an account and log in?)
+- sprunge.us (404 error)
 
-The default pastebin (with no -b option) is dpaste.org.
+The default pastebin (with no -b option) is dpaste.com.

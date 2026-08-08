@@ -2,4 +2,3 @@ perl-IO-Multiplex manages IO on many file handles.
 
 perl-IO-Multiplex is required for amavisd-new package
 (by amavisd-signer process).
-

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # SlackBuild script for "Battle of Wesnoth".
 
@@ -26,12 +26,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-set -e
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=wesnoth
-VERSION=${VERSION:-1.18.4}
+VERSION=${VERSION:-1.18.6}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=shadowsocks-rust
-VERSION=${VERSION:-1.23.5}
+VERSION=${VERSION:-1.24.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -44,9 +44,6 @@ if [ -z "$ARCH" ]; then
   fi
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -81,7 +78,6 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 
-# Unpack vendored sources to build offline
 tar xvf $CWD/$PRGNAM-$VERSION-vendored-sources.tar.xz
 
 cd $PRGNAM-$VERSION
@@ -92,7 +88,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Use rust-opt instead of system rust if it's available
 export PATH="/opt/rust/bin:$PATH"
 if [ -z "$LD_LIBRARY_PATH" ]; then
   export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX"
@@ -100,7 +95,6 @@ else
   export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
 fi
 
-# Compile the binaries
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 RUSTFLAGS="-C target-cpu=native" \
@@ -108,11 +102,9 @@ CARGO_HOME=".cargo" \
 cargo build --frozen --release
 make install DESTDIR=$PKG TARGET=release PREFIX=/usr/bin
 
-# Strip binaries and libraries
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-# Copy available documentation
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -aR \
   LICENSE README.md examples/ \

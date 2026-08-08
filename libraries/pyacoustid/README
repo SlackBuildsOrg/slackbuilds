@@ -3,3 +3,5 @@ high-quality, open-source acoustic fingerprinting system.
 This package provides Python bindings for both the fingerprinting
 algorithm library, which is written in C but portable, and the Web
 service, which provides fingerprint lookups.
+
+NOTE: 1.3.0 is last version to support python-3.9

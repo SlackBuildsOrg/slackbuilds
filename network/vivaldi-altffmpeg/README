@@ -1,0 +1,8 @@
+vivaldi-altffmpeg (Support for H.264 and AAC in the Vivaldi browser)
+
+Prebuilt, Chromium patched, FFMpeg binary supporting proprietary
+Codecs, using a file provided by the Electron project.
+
+To test:
+
+https://help.vivaldi.com/desktop/media/html5-proprietary-media-on-linux/

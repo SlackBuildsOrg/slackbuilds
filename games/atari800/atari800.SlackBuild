@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260711 bkw: update for v7.0.0.
 # 20240312 bkw:
 # - update for v5.2.0.
 # - new-style icons.
@@ -33,7 +34,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=atari800
-VERSION=${VERSION:-5.2.0}
+VERSION=${VERSION:-7.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -78,6 +79,16 @@ fi
 
 GLOPT="--$GLWITH-opengl"
 
+# 20260711 bkw: SDL2 is now supported, but not really well-tested yet.
+# Make it an option, but disabled by default.
+if [ "${SDL2:-no}" = "yes" ]; then
+  SDLVER="2"
+  SDLARG="sdl2"
+else
+  SDLVER="1.2"
+  SDLARG="sdl"
+fi
+
 set -e
 
 rm -rf $PKG
@@ -97,6 +108,14 @@ PKGDOCDIR=$PKG/$DOCDIR
 
 [ ! -f configure ] && cd src
 
+# 20260711 bkw: Grrr. Hard-coded -ansi gets added to CFLAGS *after*
+# the ones inherited from the environment. Which (in our version of
+# gcc at least) breaks the build due to "for(int i =..." constructs,
+# which aren't supported with -ansi. The compiler error message says
+# to build with '-std=c11' or such, but since the -ansi comes *after*
+# our flags, it resets the standard to c89.
+sed -i '/CFLAGS -ansi/s,-ansi,,' configure
+
 # Include some optional extras. The monitor stuff is nice if you're
 # developing code for the Atari, and the extra sound stuff makes for
 # a more accurate emulation. The R: device options might let someone
@@ -105,15 +124,13 @@ CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   $GLOPT \
-  --with-video=sdl \
-  --with-sound=sdl \
+  --with-video=$SDLARG \
+  --with-sound=$SDLARG \
   --enable-monitorprofile \
   --enable-monitorbreakpoints \
   --enable-monitortrace \
-  --enable-seriosound \
   --enable-riodevice \
   --enable-rnetwork \
-  --enable-volonlysound \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --sysconfdir=/etc \
@@ -123,13 +140,17 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=$DOCDIR \
   --build=$ARCH-slackware-linux
 
+# 20260711 bkw: these options have been removed by upstream:
+#  --enable-seriosound \
+#  --enable-volonlysound \
+
 # in 4.0.0 and 4.1.0, the --enable-volonlysound is supposed to
 # define this, but for some reason it doesn't.
 #[ -e src/config.h ] && echo '#define VOL_ONLY_SOUND 1' >> src/config.h
 # Unfortunately, forcibly defining it like that, doesn't make the volume
 # only sound actually work. Must determine WTF's going on here.
 
-make
+make V=1
 make install-strip DOC_DIR=$DOCDIR MAN_DIR=/usr/man/man1 DESTDIR=$PKG
 
 # 20200303 bkw: move man page to section 6 (games)
@@ -176,7 +197,10 @@ mkdir -p $PKG/usr/share/applications
 cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
 
 mkdir -p $PKG/install
-sed "s,@WITH@,$GLWITH," $CWD/slack-desc > $PKG/install/slack-desc
+sed \
+  -e "s,@WITH@,$GLWITH," \
+  -e "s,@SDLVER@,$SDLVER," \
+  $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG

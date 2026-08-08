@@ -2,7 +2,7 @@
 
 # Slackware build script for krop
 
-# Copyright 2018-2024, Alexander Verbovetsky, Moscow, Russia
+# Copyright 2026, Caterino Tommaso, T.O.P., 🇺🇸 USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,8 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=krop
-VERSION=${VERSION:-0.6.1_e96d42b}
-COMMIT="e96d42b2f1ab4317efe37cab498b708663bc104c"
+VERSION=${VERSION:-0.7.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -53,9 +52,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$COMMIT
-tar xvf $CWD/$PRGNAM-$COMMIT.tar.gz
-cd $PRGNAM-$COMMIT
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -69,7 +68,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/share/applications
-install -m 0644 -o root -g root krop.desktop $PKG/usr/share/applications/
+install -m 0644 -o root -g root com.arminstraub.krop.desktop $PKG/usr/share/applications/
 
 mv $PKG/usr/share/man $PKG/usr
 find $PKG/usr/man -type f -exec gzip -9 {} \;

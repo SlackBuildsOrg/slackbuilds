@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+HeidiSQL: HeidiSQL (database management tool)
+HeidiSQL:
+HeidiSQL: HeidiSQL is free software for people who work with databases, and aims
+HeidiSQL: to be intuitive to use. "Heidi" lets you connect to a variety of
+HeidiSQL: databases, like MariaDB, MySQL, Microsoft SQL, PostgreSQL, SQLite,
+HeidiSQL: Interbase and Firebird. Once you are connected, you can edit data and
+HeidiSQL: structures in these databases.
+HeidiSQL:
+HeidiSQL: HOMEPAGE: https://www.heidisql.com
+HeidiSQL:
+HeidiSQL:

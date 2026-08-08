@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=REAPER
+Comment=Digital Audio Workstation
+Categories=Audio;Video;AudioVideo;AudioVideoEditing;Recorder;
+Exec=/opt/reaper/reaper %F
+Icon=/opt/reaper/Resources/main.png
+MimeType=application/x-reaper-project;application/x-reaper-project-backup;application/x-reaper-theme
+StartupWMClass=REAPER

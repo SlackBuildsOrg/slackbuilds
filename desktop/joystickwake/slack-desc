@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+            |-----handy-ruler------------------------------------------------------|
+joystickwake: joystickwake (joystick-aware screen waker)
+joystickwake:
+joystickwake: Linux gamers often find themselves unexpectedly staring at a blank
+joystickwake: screen, because their display server fails to recognize game
+joystickwake: controllers as input devices, allowing the screen blanker to activate
+joystickwake: during gameplay. This program works around the problem by suppressing
+joystickwake: screen blankers while joystick activity is detected.
+joystickwake:
+joystickwake:
+joystickwake:
+joystickwake: https://codeberg.org/forestix/joystickwake

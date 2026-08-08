@@ -9,7 +9,7 @@
 detox: detox (filename cleanup utility)
 detox:
 detox: Detox replaces difficult to work with characters, such as spaces,
-detox: with standard equivalents.  It will also clean up filenames with
+detox: with standard equivalents. It will also clean up filenames with
 detox: UTF-8 or Latin-1 (or CP-1252) characters in them.
 detox:
 detox: http://detox.sourceforge.net

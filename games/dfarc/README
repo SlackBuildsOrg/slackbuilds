@@ -21,4 +21,3 @@ Optional dependency:
   can be provided by setting
 
     UPX=/path/to/upx ./dfarc.Slackbuild
-

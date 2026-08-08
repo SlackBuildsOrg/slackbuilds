@@ -1,0 +1,44 @@
+PRGNAM="fscrypt"
+VERSION="0.3.6"
+HOMEPAGE="https://github.com/google/fscrypt"
+DOWNLOAD="https://github.com/google/fscrypt/archive/v0.3.6/fscrypt-0.3.6.tar.gz \
+          https://github.com/client9/misspell/archive/v0.3.4/misspell-0.3.4.tar.gz \
+          https://github.com/pkg/errors/archive/v0.9.1/errors-0.9.1.tar.gz \
+          https://github.com/urfave/cli/archive/v1.22.17/cli-1.22.17.tar.gz \
+          https://github.com/wadey/gocovmerge/archive/b5bfa59/gocovmerge-b5bfa59ec0adc420475f97f89b58045c721d761c.tar.gz \
+          https://github.com/golang/crypto/archive/v0.41.0/crypto-0.41.0.tar.gz \
+          https://github.com/golang/sys/archive/v0.35.0/sys-0.35.0.tar.gz \
+          https://github.com/golang/term/archive/v0.34.0/term-0.34.0.tar.gz \
+          https://github.com/golang/tools/archive/v0.36.0/tools-0.36.0.tar.gz \
+          https://github.com/protocolbuffers/protobuf-go/archive/v1.36.10/protobuf-go-1.36.10.tar.gz \
+          https://github.com/dominikh/go-tools/archive/v0.6.1/go-tools-0.6.1.tar.gz \
+          https://github.com/BurntSushi/toml/archive/v1.5.0/toml-1.5.0.tar.gz \
+          https://github.com/cpuguy83/go-md2man/archive/v2.0.7/go-md2man-2.0.7.tar.gz \
+          https://github.com/russross/blackfriday/archive/v2.1.0/blackfriday-2.1.0.tar.gz \
+          https://github.com/golang/exp/archive/2478ac8/exp-2478ac86f6784cc492495a49c25cd184d471d9de.tar.gz \
+          https://github.com/golang/mod/archive/v0.27.0/mod-0.27.0.tar.gz \
+          https://github.com/golang/sync/archive/v0.16.0/sync-0.16.0.tar.gz \
+          https://github.com/golang/tools/archive/v0.11.0/tools-0.11.0.tar.gz"
+MD5SUM="01768e4c63183fdb92152beb6a266516 \
+        e63dbac31070aa8df4c8b12afade5f02 \
+        0951216925c98fda75a484a528b06af6 \
+        fe3f2c32f038d25ea53a89f2cc053977 \
+        ea06b396710e3d6f535e549c32a14cc2 \
+        874ff52740907fe161c1bd00fcd2212a \
+        580e856032bd883069fd8cf936e08b23 \
+        796b409c450665288650be64568fa763 \
+        82998791d8b5af7c97a0c600b5996252 \
+        4f73a5a678c0f85640060b77c0dcf827 \
+        8ed32af3fa578fa39e41cf3d89f12788 \
+        b8cd351d9231480fed122b9ef8083fea \
+        62c26841be8216afe8ebe50bb200d805 \
+        59acda02d26209540970ad339d071f6a \
+        86bbee3e7428b7a91d8c071eb29cd2c3 \
+        621d4d5b80127c2b5d39ee35ec0ac45f \
+        50f6292bf63e286c5d32684c3c963d1d \
+        6c2c03255874fd6d3bc58870000cde84"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="google-go-lang"
+MAINTAINER="Isaac Yu"
+EMAIL="isaacyu@protonmail.com"

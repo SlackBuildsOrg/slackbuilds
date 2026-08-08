@@ -25,12 +25,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=tsduck
-VERSION=${VERSION:-3.36.3528}
-SRCVERSION=${SRCVERSION:-3.36-3528}
+VERSION=${VERSION:-3.41.4299}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-NUMJOBS=${NUMJOBS:-" -j$(expr $(nproc) + 1) "}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -72,9 +70,9 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 
-rm -rf $PRGNAM-$SRCVERSION
-unzip $CWD/$PRGNAM-$SRCVERSION.zip
-cd $PRGNAM-$SRCVERSION
+rm -rf $PRGNAM-${VERSION%.*}-*
+unzip $CWD/$PRGNAM-${VERSION%.*}-*.zip
+cd $PRGNAM-${VERSION%.*}-*
 
 chown -R root:root .
 find -L . \
@@ -83,23 +81,36 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Fix - the [[maybe_unused]] attribute is supported since gcc-13
+sed 's/\[\[maybe_unused\]\]//' -i src/*/{,*/{,*/{,*/}}}/*.{h,cpp}
+sed 's/-Wextra/-Wextra -Wno-unused/' -i scripts/make-config.sh
+
+# Fix - missing $(TABLES_DEST)
+sed '/install-tools/s/$(NAMES_DEST)/$(NAMES_DEST) $(TABLES_DEST)/' -i src/libtsduck/config/Makefile
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-make $NUMJOBS \
+make NOSTATIC=true \
   NOGITHUB=true \
+  NODEKTEC=true \
+  NOVATEK=true \
   NOTEST=true \
+  USELIB64=$LIBDIRSUFFIX \
   SYSPREFIX=/usr \
   SYSROOT=$PKG \
   install
 
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.a
+# Fix - ELF binaries/libraries should be executable
+chmod +x -R -P $PKG/usr/lib*
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/usr/share/doc/$PRGNAM/* $PKG/usr/doc/$PRGNAM-$VERSION
+rm -rf $PKG/usr/share/doc
 cp -a \
-  *.txt doc/*.pdf \
+  README.md \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

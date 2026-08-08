@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+              |-----handy-ruler------------------------------------------------------|
+easyrpg-player: easyrpg-player (Play games created with RPG Maker 2000 and 2003)
+easyrpg-player:
+easyrpg-player: EasyRPG Player is a program that allows to play games created with RPG
+easyrpg-player: Maker 2000 and 2003. It aims to be a free (as in freedom)
+easyrpg-player: cross-platform RPG Maker 2000/2003 interpreter. The main goal is to
+easyrpg-player: play all games created with them as the original game interpreter
+easyrpg-player: (RPG_RT) does.
+easyrpg-player:
+easyrpg-player: Homepage: https://easyrpg.org/player/
+easyrpg-player:
+easyrpg-player:

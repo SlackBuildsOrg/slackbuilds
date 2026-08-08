@@ -1,0 +1,22 @@
+From: Sophie Brun <sophie@offensive-security.com>
+Date: Wed, 8 Dec 2021 08:40:42 +0100
+Subject: Disable update
+
+Last-Update: 2023-10-27
+Updates must be done with apt.
+---
+ cmd/nuclei/main.go | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/cmd/nuclei/main.go b/cmd/nuclei/main.go
+index 8421d1d..095f5d5 100644
+--- a/cmd/nuclei/main.go
++++ b/cmd/nuclei/main.go
+@@ -469,7 +469,6 @@ on extensive configurability, massive extensibility and ease of use.`)
+ 	)
+ 
+ 	flagSet.CreateGroup("update", "Update",
+-		flagSet.BoolVarP(&updateNucleiBinary, "update", "up", false, "update nuclei engine to the latest released version"),
+ 		flagSet.BoolVarP(&options.UpdateTemplates, "update-templates", "ut", false, "update nuclei-templates to latest released version"),
+ 		flagSet.StringVarP(&options.NewTemplatesDirectory, "update-template-dir", "ud", "", "custom directory to install / update nuclei-templates"),
+ 		flagSet.CallbackVarP(disableUpdatesCallback, "disable-update-check", "duc", "disable automatic nuclei/templates update check"),

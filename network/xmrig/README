@@ -97,4 +97,3 @@ WITH_SECURE_JIT=yes|no (default: no)
      except for macOS with ARM CPU)
 WITH_DMI=yes|no (default: yes)
     (disable DMI/SMBIOS reader)
-

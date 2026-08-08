@@ -1,0 +1,243 @@
+--- a/brighton/brightonCLI.c
++++ b/brighton/brightonCLI.c
+@@ -136,7 +136,6 @@
+ //	if (RESOURCES->resources[btty.p].devlocn[btty.i].to == 1.0f)
+ //	if (DEVICE(btty.i).to == 1.0f)
+ 
+-brightonEvent event;
+ extern void printBrightonHelp(int);
+ 
+ typedef int (*clicom)();
+--- a/brighton/brightonMixerMenu.c
++++ b/brighton/brightonMixerMenu.c
+@@ -1179,11 +1179,10 @@
+ 	return(NULL);
+ }
+ 
+-brightonEvent event;
+-
+ int
+ doAlarm()
+ {
++	brightonEvent event;
+ 	event.type = BRIGHTON_FLOAT;
+ 	event.value = 0.0;
+ 
+--- a/include/bristol/bristolblo.h
++++ b/include/bristol/bristolblo.h
+@@ -39,7 +39,7 @@
+ #define BLO_COSINE	6
+ #define BLO_PULSE	7
+ 
+-struct {
++struct blo {
+ 	int flags;
+ 	int harmonics;
+ 	int cutin;
+@@ -47,7 +47,8 @@
+ 	int min;
+ 	float fraction;
+ 	float samplerate;
+-} blo;
++};
++extern struct blo blo;
+ 
+ extern float blosine[BRISTOL_BLO_SIZE];
+ extern float blosquare[BRISTOL_BLO_SIZE];
+--- a/bristol/blo.c
++++ b/bristol/blo.c
+@@ -33,6 +33,8 @@
+ 
+ static int init = 1;
+ 
++struct blo blo;
++
+ float blosine[BRISTOL_BLO_SIZE];
+ float blocosine[BRISTOL_BLO_SIZE];
+ float blosquare[BRISTOL_BLO_SIZE];
+--- a/bristol/arpdco.c
++++ b/bristol/arpdco.c
+@@ -39,7 +39,8 @@
+ #include "bristolblo.h"
+ #include "arpdco.h"
+ 
+-float note_diff, *zbuf;
++static float note_diff;
++float *zbuf;
+ 
+ #define BRISTOL_SQR 4
+ 
+--- a/bristol/cs80osc.c
++++ b/bristol/cs80osc.c
+@@ -41,8 +41,8 @@
+ #include "cs80osc.h"
+ #include "bristolcs80.h"
+ 
+-float note_diff;
+-int samplecount;
++static float note_diff;
++static int samplecount;
+ 
+ static void fillWave(float *, int, int);
+ static void buildCs80Sound(bristolOP *, bristolOPParams *);
+--- a/bristol/dco.c
++++ b/bristol/dco.c
+@@ -39,7 +39,7 @@
+ #include "bristolblo.h"
+ #include "dco.h"
+ 
+-float note_diff;
++static float note_diff;
+ 
+ /*
+  * The name of this operator, IO count, and IO names.
+--- a/bristol/expdco.c
++++ b/bristol/expdco.c
+@@ -40,7 +40,7 @@
+ #include "bristolblo.h"
+ #include "expdco.h"
+ 
+-float note_diff;
++static float note_diff;
+ 
+ /*
+  * The name of this operator, IO count, and IO names.
+--- a/bristol/filter2.c
++++ b/bristol/filter2.c
+@@ -147,7 +147,6 @@
+ }
+ 
+ #define ROOT2 1.4142135623730950488
+-double pidsr;
+ 
+ /*
+  * Reset any local memory information.
+--- a/bristol/granulardco.c
++++ b/bristol/granulardco.c
+@@ -38,8 +38,8 @@
+ #include "bristol.h"
+ #include "granulardco.h"
+ 
+-float note_diff;
+-float samplerate;
++static float note_diff;
++static float samplerate;
+ 
+ #define BRISTOL_SQR 4
+ 
+--- a/bristol/hammond.c
++++ b/bristol/hammond.c
+@@ -45,8 +45,8 @@
+ #include "bristol.h"
+ #include "hammond.h"
+ 
+-float note_diff;
+-int samplecount;
++static float note_diff;
++static int samplecount;
+ 
+ static void fillWave(float *, int, int);
+ static void buildHammondSound(bristolOP *, unsigned char);
+@@ -70,8 +70,8 @@
+ static int *waveindex;
+ static int *percussion;
+ 
+-float *wave1;
+-float *wave2;
++static float *wave1;
++static float *wave2;
+ 
+ /*
+  * This can be a single list, it is used to generate the different pipes.
+--- a/bristol/junodco.c
++++ b/bristol/junodco.c
+@@ -39,7 +39,7 @@
+ #include "bristolblo.h"
+ #include "junodco.h"
+ 
+-float note_diff;
++static float note_diff;
+ 
+ #define BRISTOL_SQR 8
+ 
+--- a/bristol/lfo.c
++++ b/bristol/lfo.c
+@@ -38,7 +38,7 @@
+ #include "bristol.h"
+ #include "lfo.h"
+ 
+-float note_diff;
++static float note_diff;
+ 
+ /*
+  * The name of this operator, IO count, and IO names.
+--- a/bristol/midihandlers.c
++++ b/bristol/midihandlers.c
+@@ -633,7 +633,7 @@
+  *	previous frequency * (2^^(1/12))
+  * Since A is constand whole numbers we can calcuate each octave from A.
+  */
+-float samplerate;
++static float samplerate;
+ 
+ int
+ initFrequencyTable(float rate)
+--- a/bristol/prophetdco.c
++++ b/bristol/prophetdco.c
+@@ -47,7 +47,7 @@
+ #include "bristolblo.h"
+ #include "prophetdco.h"
+ 
+-float note_diff;
++static float note_diff;
+ 
+ #define BRISTOL_SQR 4
+ 
+--- a/bristol/sdco.c
++++ b/bristol/sdco.c
+@@ -41,7 +41,7 @@
+ #include "bristol.h"
+ #include "sdco.h"
+ 
+-float note_diff;
++static float note_diff;
+ 
+ /*
+  * The name of this operator, IO count, and IO names.
+--- a/bristol/trilogyosc.c
++++ b/bristol/trilogyosc.c
+@@ -40,8 +40,8 @@
+ #include "bristolblo.h"
+ #include "trilogyosc.h"
+ 
+-float note_diff;
+-int samplecount;
++static float note_diff;
++static int samplecount;
+ 
+ static void fillWave(float *, int, int);
+ static void buildTrilogySound(bristolOP *, bristolOPParams *);
+--- a/bristol/vox.c
++++ b/bristol/vox.c
+@@ -40,8 +40,8 @@
+ #include "bristolblo.h"
+ #include "vox.h"
+ 
+-float note_diff;
+-int samplecount;
++static float note_diff;
++static int samplecount;
+ 
+ static void fillWave(float *, int, int);
+ static void buildVoxSound(bristolOP *, bristolOPParams *, unsigned char);
+@@ -59,8 +59,8 @@
+  */
+ static int *wavelevel;
+ 
+-float *wave1;
+-float *wave2;
++static float *wave1;
++static float *wave2;
+ 
+ /*
+  * This can be a single list, it is used to generate the different pipes.

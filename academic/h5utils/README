@@ -29,5 +29,3 @@ script will search it for options. Simply include a line starting
 "h5utils:" followed by options, e.g.:
 
 h5utils: --with-hdf4
-
-

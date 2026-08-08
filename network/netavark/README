@@ -1,0 +1,3 @@
+Netavark is a rust based network stack for containers.
+It is being designed to work with Podman but is also applicable
+for other OCI container management applications.

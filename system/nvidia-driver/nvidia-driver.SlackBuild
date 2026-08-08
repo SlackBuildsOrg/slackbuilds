@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-driver
-VERSION=${VERSION:-570.169}
+VERSION=${VERSION:-595.84}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -63,6 +63,9 @@ else
     MULTI=""
 fi
 
+# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
+# the name of the created package would be, and then exit. This information
+# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION$MULTI-$TARGET-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -230,6 +233,7 @@ cd $TMP/nvidia-settings-$VERSION
   install -m 644 doc/_out/Linux_$TARGET/nvidia-settings.1.gz $PKG/usr/man/man1/
   install -m 644 doc/nvidia-settings.desktop $PKG/usr/share/applications/
   install -m 644 doc/nvidia-settings.png $PKG/usr/share/pixmaps/
+  chmod 0644 $PKG/usr/share/icons/hicolor/128x128/apps/nvidia-settings.png
 # For nvidia-settings GUI support
   install -m 755 src/_out/Linux_$TARGET/libnvidia-gtk2.so $PKG/usr/lib$LIBDIRSUFFIX/libnvidia-gtk2.so.$VERSION
   install -m 755 src/_out/Linux_$TARGET/libnvidia-gtk3.so $PKG/usr/lib$LIBDIRSUFFIX/libnvidia-gtk3.so.$VERSION
@@ -288,7 +292,6 @@ rm -rf $PKG/usr/share/doc
 cp -a LICENSE NVIDIA_Changelog README.txt $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/README > $PKG/usr/doc/$PRGNAM-$VERSION/README.Slackware
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
-chmod 644 $PKG/usr/share/icons/hicolor/128x128/apps/nvidia-settings.png
 
 sed "s/PKGVERSION/$VERSION/g" $CWD/slack-desc > $PKG/install/slack-desc
 if [ "$COMPAT32" = "yes" ]; then

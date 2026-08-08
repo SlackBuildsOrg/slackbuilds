@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+litehtml: litehtml (lightweight HTML rendering engine)
+litehtml:
+litehtml: litehtml just parses HTML/CSS and places the HTML elements into the
+litehtml: correct positions (renders HTML). To draw the HTML elements you have
+litehtml: to implement the simple callback interface document_container.
+litehtml:
+litehtml: This interface is really simple, check it out! The document_container
+litehtml: implementation is required to render HTML correctly.
+litehtml:
+litehtml:
+litehtml:

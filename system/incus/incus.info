@@ -1,12 +1,12 @@
 PRGNAM="incus"
-VERSION="6.14"
+VERSION="7.3"
 HOMEPAGE="https://linuxcontainers.org/incus"
-DOWNLOAD="https://github.com/lxc/incus/releases/download/v6.14.0/incus-6.14.tar.xz \
-	https://pkgs.zabbly.com/incus/stable/pool/main/i/incus/incus-ui-canonical_6.14-ubuntu24.04-202507110422_amd64.deb"
-MD5SUM="6d2006e81d5312c9c4cf8c1c7e5d89f6 \
-	81effa1b747057369927a70ba53eb730"
+DOWNLOAD="https://github.com/lxc/incus/archive/refs/tags/v7.3.0/incus-7.3.0.tar.gz \
+          https://sourceforge.net/projects/slackbuildsdirectlinks/files/incus/incus-7.3.0-vendor.tar.xz"
+MD5SUM="a5181d9a5d5024b0dc382c6c0ef81572 \
+        f0f4cc3dbe470f2ab8e642be6c81b502"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="cowsql edk2-ovmf google-go-lang"
+REQUIRES="cowsql edk2-ovmf google-go-lang qemu skopeo"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

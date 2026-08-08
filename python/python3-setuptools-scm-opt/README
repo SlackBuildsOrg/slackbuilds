@@ -15,3 +15,8 @@ Slackbuild to use this version over the stock one in 15.0:
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH=/opt/python$PYVER/site-packages
+
+NOTE: 8.3.1 is the last version that works with the stock 15.0
+  python-setuptools_scm installed.  FYI, 9.2.2 is the last python3.9
+  version if you need to upgraded further, keeping in mind the above
+  caveat.

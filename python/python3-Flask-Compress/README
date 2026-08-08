@@ -1,2 +1,4 @@
 python3-Flask-Compress allows you to easily compress your Flask
 application's responses with gzip.
+
+NOTE: Cannot be upgraded further due to python-cffi version in 15.0

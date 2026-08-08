@@ -18,7 +18,7 @@ To build with debugging support, use:
 
   DEBUG="yes" ./pioneer.SlackBuild
 
-OpenGL core profile version 3.1 or newer is a runtime dependency. To
+OpenGL core profile version 3.2 or newer is a runtime dependency. To
 determine what version of OpenGL is installed, use:
 
   glxinfo | grep "core profile version"

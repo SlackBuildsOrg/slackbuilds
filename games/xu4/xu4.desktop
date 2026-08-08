@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Ultima 4
 Comment=Ultima 4 (xu4)
-Exec=xu4
+Exec=/usr/games/xu4
 Icon=xu4
 Terminal=false
 Type=Application

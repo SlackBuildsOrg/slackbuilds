@@ -1,0 +1,9 @@
+cudaroot=@CUDA_ROOT@
+libdir=${cudaroot}/targets/x86_64-linux/lib
+includedir=${cudaroot}/targets/x86_64-linux/include
+
+Name: @PROJECT_NAME@
+Description: NVIDIA Performance Primitives - Image Processing - Geometry
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -lnppig
+Cflags: -I${includedir}

@@ -3,6 +3,7 @@
 # Slackware build script for md4c
 
 # Copyright 2022-2024 Steven Voges <Oregon, USA>
+# Copyright 2025-2026 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=md4c
 SRCNAM=md4c-release
-VERSION=${VERSION:-0.5.2}
+VERSION=${VERSION:-0.5.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

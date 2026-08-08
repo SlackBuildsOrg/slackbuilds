@@ -6,7 +6,7 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
         |-----handy-ruler------------------------------------------------------|
-libnsgif: libnsgif (gif image decoder library)
+libnsgif: libnsgif (GIF image decoder library)
 libnsgif:
 libnsgif: The functions provided by this library allow for efficient progressive
 libnsgif: GIF decoding. This library was originally part of the netsurf browser,

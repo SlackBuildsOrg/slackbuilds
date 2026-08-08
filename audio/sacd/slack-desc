@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+    |-----handy-ruler------------------------------------------------------|
+sacd: sacd (Super Audio CD decoder)
+sacd:
+sacd: SACD decoder is a command-line application which takes a Super Audio
+sacd: CD source and extracts a 24-bit high resolution wave file. It handles
+sacd: both DST and DSD streams.
+sacd:
+sacd:
+sacd:
+sacd:
+sacd:
+sacd:

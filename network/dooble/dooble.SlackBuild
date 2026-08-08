@@ -24,9 +24,9 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dooble
-VERSION=${VERSION:-2025.06.10}
+VERSION=${VERSION:-2026.07.09}
 DIC_VERSION="dooble-dictionaries-0f1e715b85a47f930deb004fc44fa9e234941604"
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -48,6 +48,16 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+if [ "$ARCH" = "i586" ]; then
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX="64"
+else
+  LIBDIRSUFFIX=""
+fi
+
 set -e
 
 rm -rf $PKG
@@ -64,16 +74,30 @@ if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
 fi
 
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . -type f \( -perm -4000 -o -perm -2000 \) -exec chmod -s {} +
+find . ! -type l -type d ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f -perm /111 ! -perm 755 -exec chmod -f 755 {} +
+find . ! -type l -type f ! -perm /111 ! -perm 644 -exec chmod -f 644 {} +
 
 export DOOBLE_DICTIONARIES_DIRECTORY="$DIC_VERSION"/Dictionaries
 
-QMAKE=$(which qmake)
+# Pick a qmake whose Qt actually provides WebEngine (qt5-webengine on 15.0,
+# qt6 on -current). We test for the module's mkspecs .pri, not just the binary.
+qmake_has_webengine() {
+  local q="$1" archdata
+  [ -x "$q" ] || return 1
+  archdata="$("$q" -query QT_INSTALL_ARCHDATA 2>/dev/null)" || return 1
+  [ -e "$archdata/mkspecs/modules/qt_lib_webenginewidgets.pri" ]
+}
 
+QMAKE=""
+for c in qmake6 /usr/lib${LIBDIRSUFFIX}/qt6/bin/qmake \
+         qmake-qt5 /usr/lib${LIBDIRSUFFIX}/qt5/bin/qmake qmake ; do
+  cand="$(command -v "$c" 2>/dev/null || echo "$c")"
+  if qmake_has_webengine "$cand"; then QMAKE="$cand"; break; fi
+done
+[ -n "$QMAKE" ] || { echo "No qmake with Qt WebEngine found (need qt6, or qt5+qt5-webengine)"; exit 1; }
+echo "Using qmake: $QMAKE ($("$QMAKE" -query QT_VERSION))"
 "$QMAKE" dooble.pro
 make
 
@@ -85,6 +109,13 @@ make
 cat $CWD/slack-dooble.sh > "$PKG"/usr/bin/"$PRGNAM"
 mv Distributions/$PRGNAM.desktop "$PKG"/usr/share/applications/
 mv Icons/Logo/$PRGNAM.png "$PKG"/usr/share/pixmaps/
+
+# Strip build artifacts before shipping the run-tree to /opt.
+# NOTE: do NOT use 'make clean/distclean' here — dooble.pro lists the
+# 'Dooble' binary in QMAKE_CLEAN, so either would delete the executable.
+rm -rf Temporary .qmake.stash .qmake.cache Makefile object_script.* .qmake.cache
+rm -rf "$DIC_VERSION"     # raw dictionary sources: already converted to
+                          # qtwebengine_dictionaries and installed; not needed at runtime
 cp -R * "$PKG/opt/$PRGNAM"/
 
 chmod +x "$PKG"/usr/bin/"$PRGNAM"

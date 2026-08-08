@@ -2,6 +2,7 @@
 
 # Slackware build script for python2-enlighten
 
+# Copyright 2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2023 Samuel Young, MO, USA
 # All rights reserved.
 #
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python2-enlighten
-VERSION=${VERSION:-1.11.2}
+VERSION=${VERSION:-1.14.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

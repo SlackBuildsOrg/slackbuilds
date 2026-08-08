@@ -1,0 +1,15 @@
+document_dsc_option.patch
+remove_latin1_char.patch
+xhtml2ps_defaults.patch
+default_paper_size.patch
+proper_variable_escaping.patch
+shell_tricks_removed.patch
+configuration_path.patch
+large_eps_fix.patch
+always_require_posix.patch
+check_file_state.patch
+DSC_to_dsc.patch
+fix_ps.patch
+checker_warning.patch
+upstream_changelog.patch
+perl-deprecations.patch

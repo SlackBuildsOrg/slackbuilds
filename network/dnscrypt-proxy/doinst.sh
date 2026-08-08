@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# dnscrypt-proxy writes files to its data directories after
-# dropping privileges. This ensures $DNSCRYPT_USER can write
-# files to these directories, without having to change default
-# root:root in slackware.
-#
-# This is a workaround, might not be a elegant solution.
-
-PRGNAM=dnscrypt-proxy
-DNSCRYPT_UID=293
-DNSCRYPT_GID=293
-
-setfacl -R -m u:$DNSCRYPT_UID:rwx etc/$PRGNAM
-setfacl -R -m u:$DNSCRYPT_UID:rwx var/run/$PRGNAM
-setfacl -R -m u:$DNSCRYPT_UID:rwx var/log/$PRGNAM
+config() {
+ NEW="$1"
+ OLD="$(dirname $NEW)/$(basename $NEW .new)"
+ # If there's no config file by that name, mv it over:
+ if [ ! -r $OLD ]; then
+   mv $NEW $OLD
+ elif [ "$(cat $OLD | md5sum)" = "$(cat $NEW | md5sum)" ]; then # toss the redundant copy
+   rm $NEW
+ fi
+ # Otherwise, we leave the .new copy for the admin to consider...
+}
+config etc/dnscrypt-proxy/dnscrypt-proxy.toml.new

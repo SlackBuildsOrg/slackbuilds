@@ -1,8 +1,10 @@
 PRGNAM="atari800_roms"
-VERSION="20140424"
+VERSION="20260105"
 HOMEPAGE="https://atari800.github.io/"
-DOWNLOAD="https://downloads.sourceforge.net/sourceforge/atari800/xf25.zip"
-MD5SUM="4dc3b6b4313e9596c4d474785a37b94d"
+DOWNLOAD="https://downloads.sourceforge.net/sourceforge/atari800/xf25.zip \
+          http://www.emulators.com/freefile/pcxf380.zip"
+MD5SUM="4dc3b6b4313e9596c4d474785a37b94d \
+        0225dc8bcf2e69fd30c12a226822222a"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

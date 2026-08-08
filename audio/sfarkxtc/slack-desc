@@ -6,12 +6,12 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
         |-----handy-ruler------------------------------------------------------|
-sfarkxtc: sfarkxtc (a console utility to extract sfark files on Linux)
+sfarkxtc: sfarkxtc (extract sfArk v2 files)
 sfarkxtc:
-sfarkxtc: sfarkxtc is a console utility to extract sfark files on Linux. sfArk
-sfarkxtc: is a lossless audio compression format optimized for SoundFont files.
-sfarkxtc: sfArk is free for non-commercial use.
-sfarkxtc:
+sfarkxtc: sfarkxtc is a console utility to convert soundfonts in the legacy
+sfarkxtc: sfArk v2 file format to sf2. sfArk is a lossless audio compression
+sfarkxtc: format optimized for SoundFont files. Only v2 sfArk archives are
+sfarkxtc: supported.
 sfarkxtc:
 sfarkxtc:
 sfarkxtc:

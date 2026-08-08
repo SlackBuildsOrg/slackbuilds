@@ -1,0 +1,39 @@
+.TH CCD2ISO 1 "June 2006" "ccd2iso 0.3" "User Commands"
+.SH NAME
+ccd2iso \- convert IMG format to ISO format
+.SH SYNOPSIS
+.B ccd2iso
+.B "[FOO.IMG]" "[BAR.ISO]"
+.SH DESCRIPTION
+.B ccd2iso
+converts 
+.B FOO.IMG
+to ISO format and writes the result to 
+.BR "BAR.ISO" "."
+If fewer arguments than expected are given, 
+.B ccd2iso
+will print its help message and quit. If more arguments than expected are given, 
+.B ccd2iso
+will silently ignore them and use only the first two arguments.
+
+IMG files are raw-data copies of optical media, generated primarily by the Windows
+application CloneCD, and are primarily used to store CDs with odd properties, such
+as sectors which need to have read errors when read. Conversion to ISO format removes
+this information, as ISO format does not support this.
+
+IMG files almost always include a SUB file, which contains additional data for the disc format,
+and a CCD file, which is a plaintext configuration file describing the disc layout. ccd2iso does not
+make use of these files, but the applications which generate them expect them to have the same
+.B FOO
+prefix as the IMG file.
+.SH LIMITATIONS
+ccd2iso currently only copies the first session of multisession discs, as well as outputting a harmless warning of
+.BR "Unrecognized sector mode" "."
+
+ccd2iso utterly ignores the additional data in CCD or SUB files.
+.SH SEE ALSO
+.BR "mdf2iso" "(1), " "nrg2iso" "(1)"
+.SH AUTHOR
+This manual page was written by Rich Ercolani <rercola@acm.jhu.edu>, for the Debian GNU/Linux distribution
+(but it may, of course, be used by others), because the original program lacked a manual page.  It may be
+distributed under the same terms as ccd2iso, the GNU GPL version 2 or later, at your option.

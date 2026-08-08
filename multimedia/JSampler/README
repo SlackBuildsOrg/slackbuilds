@@ -1,17 +1,13 @@
-You want a pretty LinuxSampler GUI? Try JSampler today!
+A graphical frontend for LinuxSampler.
 
-This SlackBuild will build JSampler from source code.
+This build script assumes you have some JDK installed, and that
+$JAVA_HOME is properly set for the root user during the build process.
 
-If you don't have apache-ant installed (but only java),
-then this SlackBuild installs the pre-built .jar file.
+Any JDK distributed on SlackBuilds.org includes a configuration file to
+set JAVA_HOME.
 
-.-----------------------.
-| If you are compiling:  \________________________________
-|                                                         \
-| JSampler has two themes: jsclassic and fantasia. The    |
-| default is fantasia but you may choose classic by       |
-| passing this variable to the SlackBuild:                |
-|                                                         |
-| THEME=jsclassic                                         |
-|                                                         |
-'---------------------------------------------------------'
+The default is zulu-openjdk8.
+If you want to use a different JDK, then you must manually specify it.
+For example, suppose you've installed jdk23 and want to use it:
+
+# JDK=jdk23 ./JSampler.SlackBuild

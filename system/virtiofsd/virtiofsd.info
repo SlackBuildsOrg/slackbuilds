@@ -1,0 +1,12 @@
+PRGNAM="virtiofsd"
+VERSION="1.13.3"
+HOMEPAGE="https://virtio-fs.gitlab.io"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://gitlab.com/virtio-fs/virtiofsd/-/archive/v1.13.3/virtiofsd-v1.13.3.tar.bz2 \
+                 https://sourceforge.net/projects/slackbuildsdirectlinks/files/virtiofsd/virtiofsd-1.13.3-vendor.tar.xz"
+MD5SUM_x86_64="899f902d197b804cc32abee4918d92ef \
+               9a7e1850d44fc224004782aeb911c963"
+REQUIRES="rust-opt"
+MAINTAINER="Duncan Roe"
+EMAIL="duncan_roe@optusnet.com.au"

@@ -3,5 +3,5 @@ Window System. It has full XEMBED support and minimal dependencies:
 the X11 lib only. Stalonetray works with virtually any EWMH-compliant
 window manager.
 
-After install, copy stalonetrayrc.sample from the documentation folder
-to ~/.stalonetrayrc, then you can start using it.
+After install, copy /etc/stalonetrayrc to to ~/.stalonetrayrc to make
+per-user settings changes.

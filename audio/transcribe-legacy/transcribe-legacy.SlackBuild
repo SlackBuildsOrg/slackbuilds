@@ -1,0 +1,137 @@
+#!/bin/bash
+
+# Slackware build script for transcribe
+
+# Written by B. Watson (urchlay@slackware.uk)
+
+# Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# Notes:
+
+# Closed-source software, precompiled binaries for x86 and x86_64,
+# deps are all included in Slackware.
+
+# Originally ported from Windows, so it expects to be run from its
+# own directory. We install to /usr/lib(64)?/transcribe, and a wrapper
+# script /usr/bin/transcribe that cd's to the install dir and runs
+# the app from there (this allows the app's help system to work).
+
+# Upgrading from the 30-day eval to the registered version is just
+# a matter of entering the license key (no change to the package
+# needed).
+
+# The version number doesn't appear in the tarball filename or the URL,
+# so be careful that $VERSION matches the actual version number (found
+# in Help/About)... though starting with v8.80, I host the tarballs
+# and put $VERSION in the filenames.
+
+# 20260622 bkw: renamed the old transcribe build to transcribe-legacy,
+# so I can keep this older version that supports 32-bit while having
+# an up-to-date transcribe build.
+
+# 20211127 bkw: updated for v8.80 and -current. This is the last
+# version that supports 32-bit. I tried the latest verion (9.10.0)
+# on 64-bit, but it fails to init the audio device, then crashes
+# with a "malloc(): unaligned tcache chunk detected", which means
+# either an actual bug (that I can't fix due to lack of source) or an
+# incompatible library (the 9.10.0 binary is built on XUbuntu 20.4).
+
+# 20191211 bkw: updated for v8.73. This is the "older version" upstream
+# provides for OSes where the libraries (including glibc) are too
+# old for the latest (8.74.1) version. v8.74.1 requires glibc-2.27,
+# while Slackware 14.2 only has 2.23. Please don't ask me to update to
+# versions later than 8.73, I won't be able to do that until Slackware
+# 15.0 is released. I'm hosting the download files on my server because
+# at some point, upstream will release a version 8.75. At that point
+# it's likely that 8.73 will disappear from his site.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=transcribe-legacy
+SRCNAM=transcribe
+VERSION=${VERSION:-8.80}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
+  LIBDIRSUFFIX=""
+  BITS=32
+elif [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX="64"
+  BITS=64
+else
+  echo "*** Unsupported ARCH '$ARCH', only i586/i686/x86_64 supported."
+  exit 1
+fi
+
+# The dist tarball's filename has no connection whatsoever to the
+# actual name of the program... The -$VERSION was put there by me (I
+# renamed the file) to allow me to host multiple versions.
+TARNAME=xsc${BITS}setup-$VERSION.tar.gz
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $SRCNAM
+tar xvf $CWD/$TARNAME
+cd $SRCNAM
+
+sed "s,/usr/lib,/usr/lib$LIBDIRSUFFIX,g" \
+    < $CWD/$SRCNAM.sh \
+	 > $SRCNAM.sh
+
+mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/$SRCNAM \
+         $PKG/usr/doc/$PRGNAM-$VERSION \
+         $PKG/usr/bin \
+         $PKG/install \
+         $PKG/usr/share/applications \
+         $PKG/usr/share/pixmaps
+
+install -oroot -groot -m0755 $SRCNAM $PKG/usr/lib$LIBDIRSUFFIX/$SRCNAM/
+install -oroot -groot -m0644 xschelp.htb $PKG/usr/lib$LIBDIRSUFFIX/$SRCNAM/
+install -oroot -groot -m0644 readme_gtk.html $PKG/usr/doc/$PRGNAM-$VERSION/
+install -oroot -groot -m0755 $SRCNAM.sh $PKG/usr/bin/$SRCNAM
+
+for i in gtkicons/*.png; do
+  px="$( basename $i | cut -dx -f3 | cut -d. -f1 )"
+  size=${px}x${px}
+  dir=$PKG/usr/share/icons/hicolor/$size/apps
+  mkdir -p $dir
+  cat $i > $dir/$SRCNAM.png
+done
+
+ln -s ../icons/hicolor/48x48/apps/$SRCNAM.png $PKG/usr/share/pixmaps/$SRCNAM.png
+
+# Starting with v8.70, a gstreamer plugin is included.
+if [ -e libgstvideosection.so ]; then
+  mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/gstreamer-1.0
+  install -m0755 libgstvideosection.so $PKG/usr/lib$LIBDIRSUFFIX/gstreamer-1.0
+fi
+
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cat $CWD/$SRCNAM.desktop > $PKG/usr/share/applications/$SRCNAM.desktop
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

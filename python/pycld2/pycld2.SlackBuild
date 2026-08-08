@@ -40,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -60,6 +57,9 @@ cd $TMP
 rm -rf $SRCNAM-$SRCREV
 tar xvf $CWD/$SRCNAM-$SRCREV.tar.gz
 cd $SRCNAM-$SRCREV
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # Fix location of header files
 sed -i "s/^CLD2_PATH.*$/CLD2_PATH = \'\/usr\/include\/cld2\'/" setup.py setup_full.py

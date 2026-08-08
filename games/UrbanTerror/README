@@ -11,4 +11,14 @@ Please note:
 
 If you have a previous version of UrbanTerror installed please don't
 use upgradekg with this package. Use removepkg to remove the previous
-version first since the paths may differ. 
+version first since the paths may differ.
+
+NVCHECKER
+---------
+An nvchecker configuration file is installed alongside this README at:
+
+  /usr/doc/UrbanTerror-VERSION/UrbanTerror.nvchecker
+
+nvchecker (https://github.com/lilydjwg/nvchecker) is a tool for checking
+new versions of software. Copy or include this file in your nvchecker
+configuration to be notified when a new UrbanTerror release is out. 

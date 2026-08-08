@@ -1,0 +1,9 @@
+cudaroot=@CUDA_ROOT@
+libdir=${cudaroot}/targets/x86_64-linux/lib
+includedir=${cudaroot}/targets/x86_64-linux/include
+
+Name: @PROJECT_NAME@
+Description: CUDA 64-bit Injection Library
+Version: @PROJECT_VERSION@
+Libs: -L${libdir} -lcuinj64
+Cflags: -I${includedir}

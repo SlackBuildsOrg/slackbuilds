@@ -1,0 +1,15 @@
+Author: Andreas Tille <tille@debian.org>
+Last-Update: Mon, 12 Aug 2024 14:57:50 +0200
+Description: Fix bashism in shell script
+
+--- a/tests/run_tests.sh
++++ b/tests/run_tests.sh
+@@ -6,7 +6,7 @@ failed=0
+ for i in *_unittest; do
+   echo -n "$i... "
+   `./$i > /dev/null 2>&1`
+-  if [ $? == 0 ]; then
++  if [ $? = 0 ]; then
+     echo "PASS"
+   else
+     echo "FAILED"

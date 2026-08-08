@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+passt: passt (Plug A Simple Socket Transport)
+passt:
+passt: passt implements a translation layer between a Layer-2 network
+passt: network interface and native Layer-4 sockets (TCP, UDP, ICMP/ICMPv6
+passt: echo)on a host. It doesn't require  any capabilities or privileges,
+passt: and it can be used as a simple replacement for Slirp.
+passt:
+passt:
+passt:
+passt: Homepage:https://passt.top/passt/
+passt:

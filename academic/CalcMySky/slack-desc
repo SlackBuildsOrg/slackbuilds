@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+CalcMySky: CalcMySky (simulator of light scattering by planetary atmospheres)
+CalcMySky:
+CalcMySky: CalcMySky is a software package that simulates scattering of light by
+CalcMySky: the atmosphere to render daytime and twilight skies (without stars).
+CalcMySky: Its primary purpose is to enable realistic view of the sky in
+CalcMySky: applications such as planetaria. Secondary objective is to make it
+CalcMySky: possible to explore atmospheric effects such as glories, fogbows etc.,
+CalcMySky: as well as simulate unusual environments such as on Mars or an
+CalcMySky: exoplanet orbiting a star with a non-solar spectrum of radiation.
+CalcMySky: Homepage:
+CalcMySky: https://github.com/10110111/CalcMySky

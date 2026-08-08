@@ -9,6 +9,7 @@
 # See README_SBo.txt for more info on this script (I wrote too many
 # comments, moved them to a separate file).
 
+# 20260104 bkw: updated for v1.3.4.
 # 20240912 bkw: updated for v1.3.1 (add sound/ to wrapper script).
 # 20230820 bkw: updated for v1.2.9.
 # 20230109 bkw: updated for v1.2.7.
@@ -22,7 +23,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=domination
-VERSION=${VERSION:-1.3.1}
+VERSION=${VERSION:-1.3.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -48,8 +49,9 @@ rm -rf $SRCNAM
 unzip $CWD/${SRCNAM}_$VERSION.zip
 cd $SRCNAM
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # We don't need Windows exes or OSX app bundles. Or the source. Or
 # in fact upstream's wrapper scripts (we include our own).

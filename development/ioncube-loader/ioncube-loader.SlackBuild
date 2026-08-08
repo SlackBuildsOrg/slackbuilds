@@ -2,7 +2,7 @@
 
 # Slackware build script for "ioncube-loader".
 
-# Copyright 2015-2018 Eugene Wissner, Germany, Dachau
+# Copyright 2015-2026  Eugene Wissner, Mannheim, Germany
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ioncube-loader
 SRCNAM=ioncube
-VERSION=${VERSION:-11.0.1}
+VERSION=${VERSION:-15.5.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

@@ -3,6 +3,7 @@
 # Slackware build script for wine-staging.
 #
 # Copyright 2023-2025 Steven Voges <Oregon, USA>
+# Copyright 2026 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # Copyright 2016-2019 Edinaldo P. Silva, Rio de Janeiro, Brazil.
 # Copyright 2015 Gethyn ThomasQuail <gethyn@bloodbathsoftworks.com>
 #
@@ -33,7 +34,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=wine-staging
-VERSION=${VERSION:-10.0}
+VERSION=${VERSION:-11.0}
 WINEVERSION=$VERSION
 STAGINGVERSION=$WINEVERSION
 ARCHS="i386,x86_64"
@@ -181,7 +182,7 @@ if [ "$WINE32" = "yes" ]; then
   ../configure \
     $wine64 \
     --prefix=/usr \
-    --libdir=/usr/lib \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
     --localstatedir=/var \
     --sysconfdir=/etc \
     --mandir=/usr/man \
@@ -217,7 +218,7 @@ cp $CWD/wine.menu $PKG/etc/xdg/menus/applications-merged
 # Add a desktop menu for winecfg, wine-uninstaller and wine-browsedrive:
 mkdir -p $PKG/usr/share/{applications,icons/hicolor/scalable/apps,pixmaps}
 
-convert $CWD/wine.svg -scale 64 $PKG/usr/share/pixmaps/wine.png
+rsvg-convert --width=64px --height=64px $CWD/wine.svg > $PKG/usr/share/pixmaps/wine.png
 cp $CWD/wine.svg $PKG/usr/share/icons/hicolor/scalable/apps/
 
 convert $CWD/winecfg.png -scale 64 $PKG/usr/share/pixmaps/winecfg.png

@@ -1,0 +1,11 @@
+--- gr-osmosdr-20250902_a8d5bcc/CMakeLists.txt.orig	2025-09-02 22:22:36.000000000 +0200
++++ gr-osmosdr-20250902_a8d5bcc/CMakeLists.txt	2025-12-15 12:23:35.700429957 +0100
+@@ -119,7 +119,7 @@
+ ########################################################################
+ # Find boost
+ ########################################################################
+-find_package(Boost "1.65" REQUIRED chrono thread system)
++find_package(Boost "1.65" REQUIRED chrono thread)
+ 
+ if(NOT Boost_FOUND)
+     message(FATAL_ERROR "Boost required to compile osmosdr")

@@ -9,6 +9,11 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20251216 bkw: update for v2.2.3.
+# - upstream now bundles their own SFML source, which is always built.
+# - document some hidden optional deps.
+
+# 20250914 bkw: update for v2.2.2.
 # 20240925 bkw:
 # - update for v2.1.11.
 # - disable x86 asm optimizations (broken for now).
@@ -67,7 +72,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vbam
-VERSION=${VERSION:-2.1.11}
+VERSION=${VERSION:-2.2.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -121,14 +126,19 @@ rm -rf $SRCNAM-$SRCVER
 tar xvf $CWD/$SRCNAM-$SRCVER.tar.gz
 cd $SRCNAM-$SRCVER
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
+
+# 20250914 bkw: our SDL 2.0 doesn't have this hint. not needed
+# anyway, SDL knows to use X.
+sed -i '/SDL_HINT_VIDEODRIVER/d' src/wx/panel.cpp
 
 # 20230107 bkw: doubleplusungood:
 # sbrun: WARNING: files altered outside the sandbox:
 # u /root/.gnupg/trustdb.gpg
 # I don't know why it's doing this, but this will prevent it.
-export CCACHE_DIR=${CCACHE_DIR:-$HOME/.ccache}
+export CCACHE_DIR=$( ccache -k cache_dir )
 mkdir -p fakehome
 export HOME=$( pwd )/fakehome
 
@@ -138,7 +148,8 @@ export HOME=$( pwd )/fakehome
 # 20211117 bkw: willysr's wxGTK3 has switched from gtk2 to gtk3, so
 # this line had to be adjusted slightly. With gtk2 this was failing
 # to build on -current anyway...
-WXCONF=${WXCONF:-/usr/lib$LIBDIRSUFFIX/wx/config/gtk3-unicode-3.0}
+# 20250914 bkw: wxGTK3 no longer works, we need wxWidgets.
+WXCONF=${WXCONF:-/usr/lib$LIBDIRSUFFIX/wx/config/gtk3-unicode-3.2}
 
 # 20211117 bkw: upstream doesn't autodetect wx, we have to explicitly
 # set it to ON or OFF.
@@ -156,12 +167,6 @@ fi
 LIRCOPT=OFF
 [ "${LIRC:-yes}" = "yes" ] && pkg-config --exists lirc && LIRCOPT=ON
 
-# 20211117 bkw: no handy -Dwhatever to disable this, surgery required.
-# At first glance it looks like -DENABLE_LINK=OFF would work, but it
-# doesn't: it disables the GBA Link emulation, but the vbam binaries
-# still get linked with the SFML shared libs. Derp.
-[ "${SFML:-yes}" = "no" ] && sed -i '/^find_package(SFML/d' CMakeLists.txt
-
 # upstream cleverly parses their own ChangeLog to get the version number
 # that gets compiled into the binary. They un-cleverly failed to follow
 # their own formatting rules for v2.0.2, meaning the 2.0.2 executable
@@ -172,13 +177,19 @@ sed -i '/\[2\.0\.2\]/s,Bug fix release,-,' CHANGELOG.md
 sed -i 's,KMOD_META,KMOD_ALT,g' src/sdl/SDL.cpp
 
 # 20211117 bkw: -fuse-ld=gold works, but doesn't speed things up much.
+# 20250914 bkw: 2.2.2 adds support for transparently decompressing
+# ROMs compressed with LZMA... but Slackware 15.0's liblzma (from
+# the xz package) is too old, so I had to disable it. I doubt anyone
+# misses it, anyway. Slackware -current's xz is new enough, so I'll
+# remove -DENABLE_LZMA=OFF when 15.1 is released.
 
 mkdir -p build
 cd build
   cmake \
     -DENABLE_SDL=ON \
     "$WXDEF" \
-    -DENABLE_LINK=$LINKOPT \
+    -DENABLE_LZMA=OFF \
+    -DENABLE_LINK=ON \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -227,12 +238,21 @@ cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 # 20211117 bkw: actually look at what we just built, to see what's
 # enabled (instead of trusting that everything got included correctly).
 # It's better to use objdump than ldd here IMO.
-SFYN=no; LIRCYN=no; WXYN=no
-objdump -p $PKG/usr/games/$PRGNAM | grep -q 'NEEDED *libsfml' && SFYN=yes
+X264=no; X265=no; LIRCYN=no; WXYN=no; FAU=no; FMT=no
 strings $PKG/usr/games/$PRGNAM | grep -q lircrc && LIRCYN=yes
-[ -x $PKG/usr/games/$SRCNAM ] && WXYN=yes
+if [ -x $PKG/usr/games/$SRCNAM ]; then
+  WXYN=yes
+  objdump -p $PKG/usr/games/$SRCNAM > objtmp
+  grep -q 'NEEDED *libx264'   objtmp && X264=yes
+  grep -q 'NEEDED *libx265'   objtmp && X265=yes
+  grep -q 'NEEDED *libFAudio' objtmp && FAU=yes
+  grep -q 'NEEDED *libfmt'    objtmp && FMT=yes
+fi
 
-sed -e "s,@SFYN@,$SFYN," \
+sed -e "s,@X264@,$X264," \
+    -e "s,@X265@,$X265," \
+    -e "s,@FAU@,$FAU," \
+    -e "s,@FMT@,$FMT," \
     -e "s,@LIRCYN@,$LIRCYN," \
     -e "s,@WXYN@,$WXYN," \
     $CWD/slack-desc > $PKG/install/slack-desc

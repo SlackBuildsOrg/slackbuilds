@@ -8,3 +8,7 @@ way to share set-up and tear-down code in tests.
 
 Catch2 builds the v3 branch of Catch2.
 This package conflicts with Catch.
+
+For x86_64 systems supporting 32bit libraries, 32bit libraries can be
+included by setting COMPAT32=yes in the environment i.e.
+    COMPAT32=yes bash Catch2.SlackBuild

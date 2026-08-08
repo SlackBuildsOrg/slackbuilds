@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260102 bkw: BUILD=2, update man page and README-SBo.txt.
 # 20250612 bkw: update for v1.4.3.
 # 20250122 bkw: update for v1.4.2.
 # 20240807 bkw: update for v1.4.
@@ -33,7 +34,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xu4
 VERSION=${VERSION:-1.4.3}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -174,7 +175,7 @@ sed -i 's/\r//' *.txt
 cd -
 
 # I also hate binaries that take options but have no man pages, so here's
-# the one I made. Enjoy. I wish I'd used rst or pod for it...
+# the one I made. Enjoy.
 mkdir -p $PKG/usr/man/man6
 sed "s/@VERSION@/$VERSION/" $CWD/xu4.6 | gzip -9c - > $PKG/usr/man/man6/xu4.6.gz
 

@@ -1,9 +1,23 @@
 Bear is a tool that generates a compilation database for clang tooling.
 
 The JSON compilation database is used in the clang project to provide
-information on how a single compilation unit is processed. With this, it
-is easy to re-run the compilation with alternate programs.
+information on how a single compilation unit is processed. With this,
+it is easy to re-run the compilation with alternate programs.
 
 Some build system natively supports the generation of JSON compilation
 database. For projects which does not use such build tool, Bear
 generates the JSON file during the build process.
+
+NOTE: if you intend to create a tarball with the vendored sources
+of the rust dependencies, unpack the Bear source tarball, enter its
+directory and execute these commands (use lib i.s.o lib64 on 32bit
+systems)
+
+  export LD_LIBRARY_PATH="/opt/rust/lib64:$LD_LIBRARY_PATH"
+  export PATH="/opt/rust/bin:$PATH"
+  mkdir .cargo
+  cargo vendor | tee .cargo/config.toml
+
+Then, create a tarball with
+
+  tar cJf ../Bear-$VERSION-vendor.tar.xz vendor .cargo

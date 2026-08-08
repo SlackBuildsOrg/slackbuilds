@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/usr/bin/spettro %F
+Name=Spettro
+Icon=spettro
+Categories=Audio;AudioVideo;

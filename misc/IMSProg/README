@@ -1,0 +1,21 @@
+IMSProg - software for CH341A-based programmers to work with I2C, SPI
+and MicroWire EEPROM/Flash chips
+
+License: GPL-3.0-or-later
+Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a
+devices
+
+Description: 
+IMSProg - Linux IMSProg - I2C, SPI and MicroWire EEPROM/Flash chip
+programmer for CH341a devices. The IMSProm is a free I2C EEPROM
+programmer tool for CH341A device based on QhexEdit2 and modify SNANDer
+programmer.
+
+This is a GUI program used widget QhexEditor. For setting the SPI chip
+parameters you can use the Detect button for reading chip parameters
+(JEDEC information reading) or manually setting it. The I2C and
+MicroWire EEPROM only manually selected.
+
+The chip database format is clone with EZP2019, EZP2020, EZP2023,
+Minpro I, XP866+ programmers. You can edit the database use the EZP
+Chip data Editor.

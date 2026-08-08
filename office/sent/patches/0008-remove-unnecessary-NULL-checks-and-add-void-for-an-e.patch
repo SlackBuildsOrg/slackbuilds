@@ -1,0 +1,110 @@
+From 882d54c225b83c762acf5bb3967f4890c3ecef86 Mon Sep 17 00:00:00 2001
+From: Tom Schwindl <schwindl@posteo.de>
+Date: Tue, 10 Jan 2023 17:39:33 +0000
+Subject: [PATCH 8/8] remove unnecessary NULL checks and add `void` for an
+ empty parameter list
+
+---
+ sent.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
+
+diff --git a/sent.c b/sent.c
+index d949d71..dfadd3a 100644
+--- a/sent.c
++++ b/sent.c
+@@ -99,12 +99,12 @@ static void load(FILE *fp);
+ static void advance(const Arg *arg);
+ static void quit(const Arg *arg);
+ static void resize(int width, int height);
+-static void run();
+-static void usage();
+-static void xdraw();
+-static void xhints();
+-static void xinit();
+-static void xloadfonts();
++static void run(void);
++static void usage(void);
++static void xdraw(void);
++static void xhints(void);
++static void xinit(void);
++static void xloadfonts(void);
+ 
+ static void bpress(XEvent *);
+ static void cmessage(XEvent *);
+@@ -216,8 +216,7 @@ ffload(Slide *s)
+ 	s->img->bufwidth = ntohl(*(uint32_t *)&hdr[8]);
+ 	s->img->bufheight = ntohl(*(uint32_t *)&hdr[12]);
+ 
+-	if (s->img->buf)
+-		free(s->img->buf);
++	free(s->img->buf);
+ 	/* internally the image is stored in 888 format */
+ 	s->img->buf = ecalloc(s->img->bufwidth * s->img->bufheight, strlen("888"));
+ 
+@@ -499,7 +498,7 @@ resize(int width, int height)
+ }
+ 
+ void
+-run()
++run(void)
+ {
+ 	XEvent ev;
+ 
+@@ -521,7 +520,7 @@ run()
+ }
+ 
+ void
+-xdraw()
++xdraw(void)
+ {
+ 	unsigned int height, width, i;
+ 	Image *im = slides[idx].img;
+@@ -549,7 +548,7 @@ xdraw()
+ }
+ 
+ void
+-xhints()
++xhints(void)
+ {
+ 	XClassHint class = {.res_name = "sent", .res_class = "presenter"};
+ 	XWMHints wm = {.flags = InputHint, .input = True};
+@@ -567,7 +566,7 @@ xhints()
+ }
+ 
+ void
+-xinit()
++xinit(void)
+ {
+ 	XTextProperty prop;
+ 	unsigned int i;
+@@ -611,7 +610,7 @@ xinit()
+ }
+ 
+ void
+-xloadfonts()
++xloadfonts(void)
+ {
+ 	int i, j;
+ 	char *fstrs[LEN(fontfallbacks)];
+@@ -630,8 +629,7 @@ xloadfonts()
+ 	}
+ 
+ 	for (j = 0; j < LEN(fontfallbacks); j++)
+-		if (fstrs[j])
+-			free(fstrs[j]);
++		free(fstrs[j]);
+ }
+ 
+ void
+@@ -680,7 +678,7 @@ configure(XEvent *e)
+ }
+ 
+ void
+-usage()
++usage(void)
+ {
+ 	die("usage: %s [file]", argv0);
+ }
+-- 
+2.54.0
+

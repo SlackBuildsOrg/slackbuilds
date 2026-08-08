@@ -1,8 +1,10 @@
 PRGNAM="retroshare"
 VERSION="20220216_3dfcb58"
 HOMEPAGE="http://retroshare.cc"
-DOWNLOAD="https://ponce.cc/slackware/sources/repo/retroshare-20220216_3dfcb58.tar.xz"
-MD5SUM="9e71721b705df11ff3f3c0a0a31493f2"
+DOWNLOAD="https://ponce.cc/slackware/sources/repo/retroshare-20220216_3dfcb58.tar.xz \
+          https://github.com/RetroShare/libretroshare/commit/f1b89c4f87d77714571b4135c301bf0429096a20.patch"
+MD5SUM="9e71721b705df11ff3f3c0a0a31493f2 \
+        87b38285c62f5abdd9bfa02743722f4a"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="libmicrohttpd miniupnpc protobuf3 sqlcipher"

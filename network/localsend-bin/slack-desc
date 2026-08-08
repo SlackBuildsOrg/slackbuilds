@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+localsend-bin: localsend-bin (Local network communication)
+localsend-bin:
+localsend-bin: A cross-platform app that enables secure communication between devices
+localsend-bin: using a REST API and HTTPS encryption. Unlike other messaging apps
+localsend-bin: that rely on external servers, LocalSend doesn't require an internet
+localsend-bin: connection or third-party servers, making it a fast and reliable
+localsend-bin: solution for local communication.
+localsend-bin:
+localsend-bin: This script installs the precompiled binary package of LocalSend.
+localsend-bin:
+localsend-bin: https://localsend.org/

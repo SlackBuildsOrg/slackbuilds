@@ -13,4 +13,3 @@ The generated timezones are installed at
 and their absolute path is defined as a pkg-config variable:
 
    $ pkg-config --variable=zoneinfo_dir cyrus-timezones
-

@@ -1,0 +1,46 @@
+feroxbuster is a fast, simple, recursive content discovery tool written
+in Rust. It performs forced browsing, brute forcing URLs with a wordlist
+to enumerate unlinked content (directories, files, backups, and similar
+resources) that a web application does not reference but still serves.
+
+This package is x86_64 only.
+
+It builds against rust-opt so it works on Slackware -stable, whose
+system cargo is too old to read the version 4 Cargo.lock. On -current
+the system rust is new enough; rust-opt is still listed as a dependency
+for a uniform build but its /opt/rust/bin directory is simply absent
+there.
+
+Because SlackBuilds.org build hosts have no network access at build
+time, this script does not let cargo fetch crates from the network.
+Instead, a prebuilt vendored-crates tarball
+(feroxbuster-$VERSION-vendor.tar.gz) is downloaded as a second source
+and extracted alongside the upstream source. The build then runs cargo
+in fully offline mode against those vendored crates. The vendored
+tarball is generated from the upstream Cargo.lock at the matching
+release tag, so the dependency set is reproducible.
+
+The vendored tarball is regenerated per version with
+cargo-vendor-filterer. SOURCE_DATE_EPOCH is pinned to the release tag's
+commit date so the archive is byte-for-byte reproducible:
+
+  tar xf feroxbuster-2.13.1.tar.gz && cd feroxbuster-2.13.1
+  export SOURCE_DATE_EPOCH="$(date -u -d 2025-12-13T14:09:44Z +%s)"
+  cargo vendor-filterer \
+    --platform=x86_64-unknown-linux-gnu \
+    --prefix=vendor \
+    --format=tar.gz \
+    feroxbuster-2.13.1-vendor.tar.gz
+
+The tag commit date comes from the GitHub API, field
+.commit.committer.date of:
+  api.github.com/repos/epi052/feroxbuster/commits/v2.13.1
+Then update MD5SUM_x86_64 for the new tarball in feroxbuster.info.
+
+The sample configuration is installed to:
+  /etc/feroxbuster/ferox-config.toml.new
+Rename it to ferox-config.toml to use it (it is shipped as .new so your
+edits are never overwritten on upgrade).
+
+Shell completions for bash, fish, and zsh are installed if present in
+the upstream release tree.

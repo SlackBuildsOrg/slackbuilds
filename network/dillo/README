@@ -5,7 +5,8 @@ and even Atari.
 Written in C and C++ with few dependencies.
 Implements its own real-time rendering engine.
 Low memory usage and fast rendering, even with large pages.
-Uses the fast and bloat-free FLTK GUI library.
+Uses the fast and bloat-free FLTK GUI library (read
+the release page! https://dillo-browser.org/release/3.3.0/ ).
 Support for HTTP, HTTPS, FTP and local files.
 Extensible with plugins written in any language (see the list of
 plugins).

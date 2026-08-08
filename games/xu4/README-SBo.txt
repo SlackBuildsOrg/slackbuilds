@@ -51,3 +51,8 @@ option for ALSA or SDL audio. To get sound without PulseAudio, install
 apulse, then run xu4 as "apulse xu4" from a terminal. If you like,
 you can edit the .desktop file to make it launch this way from the
 GUI, too.
+
+Depending on your setup, you may have to the environment variable
+APULSE_PLAYBACK_DEVICE. Try:
+
+APULSE_PLAYBACK_DEVICE="plughw:0,0" apulse xu4

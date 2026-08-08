@@ -1,12 +1,12 @@
 PRGNAM="paraview"
-VERSION="5.13.3"
+VERSION="6.1.1"
 HOMEPAGE="https://www.paraview.org"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://www.paraview.org/files/v5.13/ParaView-v5.13.3.tar.xz \
-                 https://www.paraview.org/files/v5.13/ParaViewGettingStarted-5.13.3.pdf"
-MD5SUM_x86_64="d6285629137d4bc21ac1f4507f90a20e \
-               392a29c111c5867b51e78bcb83e64198"
+DOWNLOAD_x86_64="https://www.paraview.org/files/v6.1/ParaView-v6.1.1.tar.xz \
+                 https://www.paraview.org/files/v6.1/ParaViewGettingStarted-6.1.1.pdf"
+MD5SUM_x86_64="8dd6919a9afbb5859367f84900d360a3 \
+               1c253809afd8d824a2ce484ea921fc25"
 REQUIRES="gdal hdf5 python3-matplotlib Sphinx"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

@@ -24,7 +24,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fcitx5
 VERSION=${VERSION:-5.1.12}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -67,6 +67,11 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-${VERSION}_dict.tar.*
 cd $PRGNAM-$VERSION
+
+# fix log.cpp for fmt 12.1.0
+sed -i '1i #include <ctime>' src/lib/fcitx-utils/log.cpp
+sed -i 's|auto t = fmt::localtime(std::chrono::system_clock::to_time_t(now));|time_t _t = std::chrono::system_clock::to_time_t(now); auto t = *localtime(\&_t);|' src/lib/fcitx-utils/log.cpp
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

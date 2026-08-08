@@ -7,6 +7,6 @@ MD5SUM="428bc4ea8ef33cb88b9b7c721fa92bb4 \
 	b624b995ec9c439cbc2e9e6ee940d3a2"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-numpy scikit-build"
+REQUIRES="python3-numpy-legacy scikit-build"
 MAINTAINER="Christoph Willing"
 EMAIL="chris.willing@linux.com"

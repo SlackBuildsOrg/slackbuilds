@@ -1,0 +1,8 @@
+0001-update-license.patch
+0002-Correctly-handle-files-that-contain-no-slides.patch
+0003-update-license.patch
+0004-Avoid-out-of-bounds-access-when-a-slide-input-line-b.patch
+0005-free-XImage-before-creating-a-new-one.patch
+0006-Makefile-be-verbose.patch
+0007-sent.1-fix-some-mandoc-warnings.patch
+0008-remove-unnecessary-NULL-checks-and-add-void-for-an-e.patch

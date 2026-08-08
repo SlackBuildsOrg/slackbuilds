@@ -22,3 +22,6 @@ set up. To do this, edit your PowerShell profile (usually
 
 This is a repack of the official binary, which only exists for
 x86_64. There are no 32-bit or aarch64 binaries, sorry.
+
+Note: This is the newest binary release that will run on Slackware
+15.0, since newer versions require a newer glibc.

@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
        |-----handy-ruler------------------------------------------------------|
-marsond: marsond (fix Enter key for Marson/USBLink PS/2=>USB adaptor)
+marsond: marsond (fix Shift/Enter key for Marson/USBLink PS/2=>USB adaptor)
 marsond:
 marsond: marsond is a daemon for Linux that fixes an issue with a particular
 marsond: model of PS/2 => USB keyboard adaptor, the MT606-1 (aka "Marson
-marsond: Keyboard and Mouse Link", aka USBLink. The symptom: in games and
-marsond: emulators, the Enter key only works sometimes.
+marsond: Keyboard and Mouse Link", aka USBLink). The symptoms: in games and
+marsond: emulators, the Enter key only works sometimes, and pressing Shift
+marsond: and Enter simultaneously makes the Shift key "stick".
 marsond:
-marsond: marsond uses a udev rule to start automatically when the adaptor is
-marsond: plugged in. If the vendor and product IDs of your broken adaptor don't
-marsond: match the ones in /etc/udev/rules.d/99-marsond.rules, you can edit the
-marsond: IDs in that file and run "udevadm control --reload".
+marsond:
+marsond:
+marsond:

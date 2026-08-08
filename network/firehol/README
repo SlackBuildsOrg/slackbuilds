@@ -66,4 +66,3 @@ sophisticated version of this file see /usr/doc/firehol)
 >
 >router home2internet inface eth0 outface ppp+
 >      route all accept
-

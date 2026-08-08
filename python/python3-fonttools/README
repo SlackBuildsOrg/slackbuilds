@@ -1,11 +1,18 @@
-python-fonttools - A library to manipulate font files from Python.
+python-fonttools
+
+A library to manipulate font files from Python.
 
 Optional dependencies:
 
-python3-reportlab – to drawing glyphs as PNG images
+python3-reportlab: To drawing glyphs as PNG images
 
-python3-sympy – for symbolic font statistics analysis
+python3-sympy: For symbolic font statistics analysis
 
+python-scipy: For finding wrong contour/component order
+between different masters
 
-Sphinx,sphinx-rtd-theme,freetype-py are optional 
+python-uharfbuzz: To use the Harfbuzz Repacker
+for packing GSUB/GPOS tables
+
+Sphinx,sphinx-rtd-theme,freetype-py are optional
 dependencies only needed for document generation.

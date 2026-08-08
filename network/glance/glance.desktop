@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Glance
+GenericName=Dashboard
+Comment=Self-hosted dashboard for monitoring and services
+Exec=glance --config /etc/glance/glance.yml
+Icon=glance
+Terminal=false
+Categories=Utility;System;Monitor;
+StartupNotify=true

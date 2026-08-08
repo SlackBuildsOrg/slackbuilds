@@ -2,7 +2,7 @@
 
 # Slackware build script for canfigger
 
-# Copyright 2024 Andy Alt / United States
+# Copyright 2026 Andy Alt / United States
 # All rights reserved.
 
 # Redistribution and use of this script, with or without modification, is
@@ -22,7 +22,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=canfigger
-VERSION=${VERSION:-0.3.0}
+VERSION=${VERSION:-0.3.2}
+SOURCEARCHIVE=$PRGNAM-$VERSION.tar.xz
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -65,6 +66,13 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
+
+# Read the .info and make sure the md5sum matches.
+if ! echo "$(grep '^MD5SUM=' $CWD/$PRGNAM.info | cut -d'"' -f2)  $CWD/$SOURCEARCHIVE" | md5sum -c - ; then
+  echo "ERROR: MD5 checksum mismatch for $SOURCEARCHIVE" >&2
+  exit 1
+fi
+
 tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
 chown -R root:root .
@@ -83,17 +91,17 @@ meson .. \
   --strip \
   --libdir="/usr/lib$LIBDIRSUFFIX" \
   --prefix=/usr \
-  -Ddocdir=/usr/doc/$PRGNAM-$VERSION \
-  -Ddefault_library=both
+  -Ddocdir=/usr/doc/$PRGNAM-$VERSION
 
-ninja -v
-DESTDIR=$PKG ninja install
+ninja
+meson install --destdir $PKG
 cd ..
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

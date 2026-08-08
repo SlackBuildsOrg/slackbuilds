@@ -2,7 +2,7 @@
 
 # Slackware build script for eccodes
 
-# Copyright 2023-2025 Gregory J. L. Tourte <artourter@gmail.com>
+# Copyright 2023-2026 Gregory J. L. Tourte <artourter@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,10 +25,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=eccodes
-VERSION=${VERSION:-2.41.0}
+VERSION=${VERSION:-2.48.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+ECBUILDVER=3.12.0
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -70,13 +72,16 @@ fi
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION-Source
-tar xvf $CWD/$PRGNAM-$VERSION-Source.tar.gz
-cd $PRGNAM-$VERSION-Source
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
   -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
   \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
+
+mkdir ecbuild
+tar xvf $CWD/ecbuild-$ECBUILDVER.tar.gz --strip-components 1 -C ecbuild
 
 mkdir -p build
 cd build
@@ -89,7 +94,7 @@ cd build
     -Deccodes_FULL_INSTALL_LIB_DIR=/usr/lib${LIBDIRSUFFIX} \
     -DENABLE_AEC=ON \
     -DENABLE_PNG=ON  \
-    -DENABLE_ECCODES_THREADS=ON \
+    -DENABLE_ECCODES_OMP_THREADS=ON \
     $TESTBUILDFLAGS \
     -DCMAKE_BUILD_TYPE=Release \
     ..

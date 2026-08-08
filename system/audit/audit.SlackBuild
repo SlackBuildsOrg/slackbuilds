@@ -24,12 +24,13 @@
 
 # 20220211 bkw: Modified by SlackBuilds.org: update for v3.0.7 as
 # the previous version won't build on 15.0.
+# 20260401 pyllyukko: Updated for version v4.1.4
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=audit
-VERSION=${VERSION:-3.0.7}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-4.1.4}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -57,7 +58,7 @@ elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
+  SLKCFLAGS="-O2 -fPIC -fPIE -pie -Wl,-z,relro,-z,now -fstack-protector-all -fstack-clash-protection -fcf-protection=full -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS"
   LIBDIRSUFFIX="64"
 fi
 
@@ -67,8 +68,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-userspace-$VERSION.tar.gz
+cd $PRGNAM-userspace-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -76,9 +77,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-# Init should check /etc/rc.d/rc.auditd.conf instead of /etc/sysconfig/auditd
-patch -p1 < $CWD/audit-2.3.6-sysconfig.diff
-
+autoreconf -f --install
 CXXFLAGS="$SLKCFLAGS" \
 CFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -104,18 +103,19 @@ gzip -9 $PKG/usr/man/man*/*
 # actually useful anyway.
 if [ -n "$LIBDIRSUFFIX" ]; then
   mv $PKG/usr/lib/golang $PKG/usr/lib$LIBDIRSUFFIX
+  rm -rf ${PKG}/usr/lib/{systemd,tmpfiles.d}
   rmdir $PKG/usr/lib
 fi
 
 mkdir -p $PKG/etc/rc.d
-mv $PKG/etc/sysconfig/auditd $PKG/etc/rc.d/rc.auditd.conf.new
-mv $PKG/etc/rc.d/init.d/auditd $PKG/etc/rc.d/rc.auditd.new
+cp -v ${CWD}/auditd.sysconfig ${PKG}/etc/rc.d/rc.auditd.conf.new
+cp -v ${CWD}/auditd.init ${PKG}/etc/rc.d/rc.auditd.new
 rm -rf $PKG/etc/rc.d/init.d $PKG/etc/sysconfig
 
 mkdir -p $PKG/var/log/audit $PKG/var/lock/subsys
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING ChangeLog INSTALL NEWS README contrib \
+cp -a AUTHORS COPYING COPYING.LIB ChangeLog NEWS README.md SECURITY.md THANKS TODO contrib \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 cat $CWD/README.SLACKWARE > $PKG/usr/doc/$PRGNAM-$VERSION/README.SLACKWARE

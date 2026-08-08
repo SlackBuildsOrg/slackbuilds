@@ -2,7 +2,8 @@
 
 # Slackware build script for abdownloadmanager-bin
 
-# 2025 Ioannis Anagnostakis GR
+# Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2025 Ioannis Anagnostakis GR
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -24,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM="abdownloadmanager-bin"
-VERSION=${VERSION:-1.6.4}
+VERSION=${VERSION:-1.8.7}
 SRCNAM=ABDownloadManager_"$VERSION"_linux_x64
 PKGNAM=ABDownloadManager
 BUILD=${BUILD:-1}

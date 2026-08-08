@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+           |-----handy-ruler------------------------------------------------------|
+libosmocore: libosmocore (set of Osmocom core libraries)
+libosmocore:
+libosmocore: libosmocore is a library with various utility functions that were
+libosmocore: originally developed as part of the OpenBSC project, but which are of
+libosmocore: a more generic nature and thus useful to (at least) other programs
+libosmocore: that we develop in the sphere of Free Software / Open Source mobile
+libosmocore: communications.
+libosmocore:
+libosmocore:
+libosmocore:
+libosmocore:

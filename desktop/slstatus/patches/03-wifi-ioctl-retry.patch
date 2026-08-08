@@ -1,0 +1,34 @@
+commit 4f61bbbd8e9278c75f29e7853ae8922717261d2d
+Author: drkhsh <me@drkhsh.at>
+Date:   Thu Feb 12 22:46:02 2026 +0100
+
+    wifi: always retry ioctl for ifindex
+    
+    ifindex() caches the result of ioctl(SIOCGIFINDEX) and never
+    retries it, since the interface name strcmp succeeds after the
+    first call. if the interface does not exist when slstatus starts
+    (e.g. iwd with default config destroys/recreates interfaces
+    depending on service state), the ioctl fails and the stale
+    result is returned on all subsequent calls.
+    
+    based on a patch by ryhpez, with input from Taha Medhous
+
+diff --git a/components/wifi.c b/components/wifi.c
+index 23af201..8b33baa 100644
+--- a/components/wifi.c
++++ b/components/wifi.c
+@@ -110,10 +110,10 @@
+ 		}
+ 		if (strcmp(ifr.ifr_name, interface) != 0) {
+ 			strcpy(ifr.ifr_name, interface);
+-			if (ioctl(ifsock, SIOCGIFINDEX, &ifr) != 0) {
+-				warn("ioctl 'SIOCGIFINDEX':");
+-				return -1;
+-			}
++		}
++		if (ioctl(ifsock, SIOCGIFINDEX, &ifr) != 0) {
++			warn("ioctl 'SIOCGIFINDEX':");
++			return -1;
+ 		}
+ 		return ifr.ifr_ifindex;
+ 	}

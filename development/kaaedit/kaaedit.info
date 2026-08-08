@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/ed/a8/d5e2185aa6f2267dadbfffe2
 MD5SUM="314d78142c66b7f734232f6451f3d446"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="curses_ex pyjf3 setproctitle kaadbg GitPython"
+REQUIRES="curses_ex pyjf3 python3-setproctitle kaadbg GitPython"
 MAINTAINER="Dimitris Zlatanidis"
 EMAIL="dslackw@gmail.com"

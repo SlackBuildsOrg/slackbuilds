@@ -16,8 +16,13 @@
 # that it worked). Now that there's a new release, I'll keep this
 # updated.
 
-# 20230902 bkw: switch to semi-maintained fork, v0.7.8.
+# 20251222 bkw: Note to self: Do not update to v0.7.9. There are no
+# changes to the code, the *only* difference is that the autoconf
+# stuff has been updated for autoconf-2.71 (and we only have 2.69 on
+# 15.0). 0.7.9 can be coerced to build with 2.69, but I see no point
+# in doing so.
 
+# 20230902 bkw: switch to semi-maintained fork, v0.7.8.
 # 20230108 bkw: BUILD=2, work around imlib2-0.10.0 breakage.
 
 cd $(dirname $0) ; CWD=$(pwd)

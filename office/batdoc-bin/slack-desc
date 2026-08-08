@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+          |-----handy-ruler------------------------------------------------------|
+batdoc-bin: batdoc-bin (Dumps doc,docx,xls,xlsx,pptx,pdf to terminal as markdown)
+batdoc-bin:
+batdoc-bin: Dumps .doc, .docx, .xls, .xlsx, .pptx, and .pdf files to your
+batdoc-bin: terminal as markdown. To a tty it syntax-highlights and pages
+batdoc-bin: (using bat); piped, it gives you plain text.
+batdoc-bin: Format is detected by file signature, not extension. OLE2 files
+batdoc-bin: (.doc/.xls) are distinguished by peeking at internal streams;
+batdoc-bin: ZIP files (.docx/.xlsx/.pptx) by checking for word/document.xml vs
+batdoc-bin: xl/workbook.xml vs ppt/presentation.xml; PDFs by the %PDF- header.
+batdoc-bin:
+batdoc-bin:   https://github.com/daemonp/batdoc

@@ -1,0 +1,7 @@
+HeidiSQL (database management tool)
+
+HeidiSQL is free software for people who work with databases, and aims
+to be intuitive to use. "Heidi" lets you connect to a variety of
+databases, like MariaDB, MySQL, Microsoft SQL, PostgreSQL, SQLite,
+Interbase and Firebird. Once you are connected, you can edit data and
+structures in these databases.

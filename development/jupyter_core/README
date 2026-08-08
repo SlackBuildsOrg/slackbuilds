@@ -3,3 +3,6 @@ configuration used by other Jupyter projects.
 
 This SlackBuild also installs shell completions.
 Bash completion in particular additionally requires python3-argcomplete.
+
+jupyter_core 5.8.1 is the last available version on Slackware 15.0.
+Later versions require Python >= 3.10.

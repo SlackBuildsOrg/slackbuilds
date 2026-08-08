@@ -1,7 +1,8 @@
 #!/bin/bash
 # Slackware build script for rtl8188eu
 #
-# Copyright (c) 2015 m.budiman <mbembi@operamail.com>
+# Copyright (c) 2015 m.budiman
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>
 # All rights reserved.
 #
 #   Permission to use, copy, modify, and distribute this software for
@@ -22,6 +23,13 @@
 #   OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 #   SUCH DAMAGE.
 # -----------------------------------------------------------------------------
+
+# 20260716 bkw:
+# - take over maintenance.
+# I'm keeping this in the 15.0 repo because people do own & use this
+# hardware. I make no guarantees about it other than that it compiles.
+# The 6.x series kernels in -current ship with this driver, so we will
+# no longer need this build when 15.1/16.0 hits.
 
 cd $(dirname $0) ; CWD=$(pwd)
 

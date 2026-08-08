@@ -1,11 +1,11 @@
 qiv (Quick Image Viewer)
 
-Quick Image Viewer (qiv) is a very small and pretty fast GDK/Imlib
-image viewer. Features include zoom, maxpect, scale down, fullscreen,
-brightness/contrast/gamma correction, slideshow, pan with keyboard
-and mouse, rotate left/right, flip, delete (move to .qiv-trash/),
-jump to image x, jump forward/backward x images, filename filter, and
-you can use qiv to set your X11-Desktop background.
+Quick Image Viewer (qiv) is a very small and pretty fast GDK3 image
+viewer. Features include zoom, maxpect, scale down, fullscreen,
+brightness/contrast/gamma correction, slideshow, pan with keyboard and
+mouse, rotate left/right, flip, delete (move to .qiv-trash/), jump to
+image x, jump forward/backward x images, filename filter, and you can
+use qiv to set your X11 desktop background.
 
 These formats are supported by default:
 
@@ -42,6 +42,14 @@ without rebuilding qiv.
 
 To easily build all the optional dependencies, use sbopkg with the
 qiv-allfmt.sqf in the SlackBuild directory.
+
+Build option: By default, qiv uses the filename extensions to
+decide which files are images, and only attempts to display files
+with recognized extensions such as .png, .jpg, etc. This can be
+disabled with qiv's -n option. If you'd prefer to have qiv ignore the
+extensions and try to display all files as images, export FILTER=no in
+the script's environment. You will be able to re-enable it at runtime
+with the -n option.
 
 Upgrade note: Starting with version 3.0.0, qiv no longer uses
 imlib2. If you have images that would display in qiv-2.3.x, but not in

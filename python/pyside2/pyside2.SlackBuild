@@ -2,7 +2,7 @@
 
 # Slackware build script for pyside2
 
-# Copyright 2021-2025 Christoph Willing,   Sydney Australia
+# Copyright 2021-2026 Christoph Willing,   Sydney Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,10 +26,10 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=pyside2
 SRCNAM=pyside-setup-opensource-src
-VERSION=${VERSION:-5.15.17}
+VERSION=${VERSION:-5.15.18}
 SRCNAM_PATCHES=pyside2
-SRCNAM_PATCHES_VERSION=5.15.16-3.1
-BUILD=${BUILD:-1}
+SRCNAM_PATCHES_VERSION=5.15.18-1
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -91,6 +91,10 @@ find -L . \
   -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+if [ -x /usr/bin/numpy-config ]; then
+  SLKCFLAGS="$SLKCFLAGS $(/usr/bin/numpy-config --cflags)"
+fi
 
 mkdir -p build
 cd build

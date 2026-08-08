@@ -1,0 +1,20 @@
+diff -Naur gnome-boxes-41.3/data/meson.build gnome-boxes-41.3.patched/data/meson.build
+--- gnome-boxes-41.3/data/meson.build	2022-01-07 09:21:33.078792600 -0500
++++ gnome-boxes-41.3.patched/data/meson.build	2026-06-13 23:02:20.663518485 -0400
+@@ -20,7 +20,6 @@
+ desktop_conf = configuration_data ()
+ desktop_conf.set ('icon', application_id)
+ desktop = i18n.merge_file (
+-  'desktop',
+   input: configure_file (
+     input: files ('org.gnome.Boxes.desktop.in'),
+     output: 'org.gnome.Boxes.desktop.in',
+@@ -65,7 +64,7 @@
+ 
+ appdata_conf = configuration_data()
+ appdata_conf.set('appid', application_id)
+-appdata_file = i18n.merge_file ('appdata-file',
++appdata_file = i18n.merge_file (
+   input: configure_file (
+     input: files ('org.gnome.Boxes.appdata.xml.in'),
+     output: 'org.gnome.Boxes.appdata.xml.in',

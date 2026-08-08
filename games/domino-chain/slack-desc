@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+            |-----handy-ruler------------------------------------------------------|
+domino-chain: domino-chain (puzzle game)
+domino-chain:
+domino-chain: Domino-Chain is a puzzle game where you have to rearrange dominoes on
+domino-chain: different platforms to start a chain reaction that makes all dominoes
+domino-chain: topple over. There are many strange types of dominoes, such as the
+domino-chain: Ascender which will rise to the ceiling when pushed, or the Exploder
+domino-chain: which will blast a hole into the platform it stands on.
+domino-chain:
+domino-chain: Domino-Chain is a faithful reincarnation of the game Pushover,
+domino-chain: originally published by Ocean in 1992.
+domino-chain:

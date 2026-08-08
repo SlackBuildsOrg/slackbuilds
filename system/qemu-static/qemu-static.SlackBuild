@@ -191,10 +191,6 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} + || true
 
 
-# Use newer meson from python3-meson-opt
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-
 sed -i "/subdir('tests/d" meson.build
 
 LIBRARY_PATH="$TMP/static-glibc/lib/" \

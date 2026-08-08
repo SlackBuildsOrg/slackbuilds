@@ -23,10 +23,29 @@ Features:
 
 The package includes the ROM images required for emulation.
 
+Note: As of 86box-6.0, 32-bit platforms are no longer supported. This
+means only x86_64 and (possibly) aarch64 are supported.
+
 Full documentation is available at:
 https://86box.readthedocs.io/en/latest/index.html
+
+Dynamic recompilation: On x86_64 and aarch64, 86box's CPU
+emulation can make use of dynamic recompilation, for a speed boost.
+On x86_64, the the "old" dynamic recompilation is used, but you
+can export NEW_DYNAREC=yes in the environment to try the "new" code
+(possibly faster but less well-tested). On aarch64, the "new" dynamic
+recompilation is always enabled.
 
 Optional dependency: rtmidi (autodetected). If rtmidi is installed
 at build time, 86box will be built with support for it. If you have
 rtmidi installed but want to build without it, export RTMIDI=no in the
 environment. MIDI will still work without rtmidi.
+
+Optional dependency: gamemode. This is a runtime dependency, so it can
+be installed at any time without having to rebuild 86box.
+
+Note: Starting with version 5.0, 86box requires SSE2 extensions to run
+on 32-bit x86. Unless your CPU is over 20 years old, this shouldn't
+cause a problem. It's still possible to *build* 86box on a system
+that lacks SSE2, but not *run* it (you could install the package on a
+different machine that has SSE2 and it would work).

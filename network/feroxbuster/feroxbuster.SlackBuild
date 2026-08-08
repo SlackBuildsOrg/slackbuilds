@@ -1,0 +1,150 @@
+#!/bin/bash
+
+# Slackware build script for feroxbuster
+
+# Copyright 2026 danix <danix@danix.xyz>
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=feroxbuster
+VERSION=${VERSION:-2.13.1}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+# Name of the vendored crates tarball (hosted by the maintainer).
+VENDOR=${PRGNAM}-${VERSION}-vendor
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+# feroxbuster is only meaningfully supported on x86_64. Bail out clearly
+# on other arches rather than failing deep in the Rust build.
+if [ "$ARCH" != "x86_64" ]; then
+  echo "$PRGNAM is only supported on x86_64."
+  exit 1
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+# Rust honors RUSTFLAGS; we don't pass the usual SLKCFLAGS to a C compiler
+# here since cargo drives the build. Release profile handles optimization.
+SLKCFLAGS=""
+LIBDIRSUFFIX="64"
+
+PKGNAM=$PRGNAM # PRINT_PACKAGE_NAME
+if [ "$PRINT_PACKAGE_NAME" ]; then
+  echo "$PKGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
+
+# Unpack the vendored crates alongside the source. The tarball extracts to
+# a top-level vendor/ directory.
+rm -rf vendor
+tar xvf $CWD/$VENDOR.tar.gz
+
+chown -R root:root .
+find -L . \
+  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+   -o -perm 511 \) -exec chmod 755 {} \+ -o \
+  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+
+# Point cargo at the vendored sources and forbid any network access.
+# The directory is relative to the parent of .cargo/, i.e. the source
+# root, so this is portable across build hosts (no absolute /tmp paths).
+mkdir -p .cargo
+cat > .cargo/config.toml <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+
+[net]
+offline = true
+EOF
+
+# On Slackware -stable the system cargo is too old to read the v4
+# Cargo.lock, so we build against rust-opt, which installs its toolchain
+# under /opt/rust/bin (it ships no profile.d script). Put it first on
+# PATH when present. On -current the system rust is new enough and this
+# directory simply won't exist.
+if [ -x /opt/rust/bin/cargo ]; then
+  export PATH="/opt/rust/bin:$PATH"
+fi
+
+# Build release binary fully offline against the vendored crates.
+# --locked guarantees Cargo.lock is honored and never rewritten.
+export CARGO_HOME="$TMP/$PRGNAM-$VERSION/.cargo"
+cargo build --release --offline --locked
+
+# Install the binary.
+install -D -m 0755 target/release/$PRGNAM $PKG/usr/bin/$PRGNAM
+
+# Shell completions. feroxbuster can emit its own at runtime, but upstream
+# also ships generated ones under shell_completions/ in the release tree.
+if [ -d shell_completions ]; then
+  install -D -m 0644 shell_completions/${PRGNAM}.bash \
+    $PKG/usr/share/bash-completion/completions/$PRGNAM 2>/dev/null || true
+  install -D -m 0644 shell_completions/${PRGNAM}.fish \
+    $PKG/usr/share/fish/vendor_completions.d/${PRGNAM}.fish 2>/dev/null || true
+  install -D -m 0644 shell_completions/_${PRGNAM} \
+    $PKG/usr/share/zsh/site-functions/_${PRGNAM} 2>/dev/null || true
+fi
+
+# Sample configuration, shipped as .new so it never clobbers user edits.
+if [ -f ferox-config.toml.example ]; then
+  install -D -m 0644 ferox-config.toml.example \
+    $PKG/etc/$PRGNAM/ferox-config.toml.new
+fi
+
+# Strip the binary.
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" \
+  | grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a CHANGELOG.md LICENSE README.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION 2>/dev/null || true
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

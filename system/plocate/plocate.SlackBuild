@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260119 bkw: update for v1.1.24.
 # 20241203 bkw: update for v1.1.23.
 # 20240217 bkw: update for v1.1.22.
 # 20230706 bkw: update for v1.1.19.
@@ -15,7 +16,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=plocate
-VERSION=${VERSION:-1.1.23}
+VERSION=${VERSION:-1.1.24}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -60,11 +61,12 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # doubleplusungood ref systemd.
-sed -i.bak '/systemd\.timer/s,.*,.BR crond (8)\njob,' updatedb.8.in
+sed -i '/systemd\.timer/s,.*,.BR crond (8)\njob,' updatedb.8.in
 
 mkdir build
 cd build
@@ -104,9 +106,10 @@ install -oroot -groot -m0755 $CWD/cron.sh $PKG/etc/cron.daily/$PRGNAM
 # this updatedb.conf is identical to the one in Slackware's mlocate.
 install -oroot -groot -m0755 $CWD/updatedb.conf $PKG/etc/updatedb.conf.new
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING NEWS README $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a COPYING NEWS README $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

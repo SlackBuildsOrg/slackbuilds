@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+       |-----handy-ruler------------------------------------------------------|
+progman: progman (a simple window manager)
+progman:
+progman: progman is a lightweight, simple window manager with a focus on
+progman: simplicity. It provides tiling window management, customizable
+progman: keybindings, and support for multiple monitors.
+progman:
+progman: It is ideal for users who prefer a minimalistic and efficient
+progman: environment with easy configuration and extension.
+progman:
+progman: Homepage: https://github.com/jcs/progman
+progman:

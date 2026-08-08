@@ -4,7 +4,6 @@
 
 # Copyright 2008,2009,2010. Andrew Strong  (http://www.andrews-corner.org)
 # All rights reserved.
-# Maintained by Ozan Türkyılmaz ozan.turkyilmaz@gmail.com
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -23,6 +22,9 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Previously mantained by Ozan Türkyılmaz ozan.turkyilmaz@gmail.com
+# Maintained by Matteo Bernardini <ponce@slackbuilds.org>
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libmatroska
@@ -39,9 +41,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -88,8 +87,7 @@ cd build
 cmake -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
 	  -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
 	  -DCMAKE_INSTALL_PREFIX=/usr \
-	  -DLIB_SUFFIX=${LIBDIRSUFFIX} \
-          -DBUILD_SHARED_LIBS=ON \
+	  -DBUILD_SHARED_LIBS=ON \
 	  -DCMAKE_BUILD_TYPE=Release ..
 
 make

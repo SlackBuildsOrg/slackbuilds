@@ -6,12 +6,12 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
        |-----handy-ruler------------------------------------------------------|
-dejagnu: dejagnu (program tester)
+dejagnu: dejagnu (Framework for testing other programs)
 dejagnu:
 dejagnu: DejaGnu is a framework for testing other programs. Its purpose is to
 dejagnu: provide a single front end for all tests.
 dejagnu:
-dejagnu: Homepage: http://www.gnu.org/software/dejagnu/
+dejagnu: Homepage: https://www.gnu.org/software/dejagnu/
 dejagnu:
 dejagnu:
 dejagnu:

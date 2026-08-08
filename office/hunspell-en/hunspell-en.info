@@ -1,16 +1,16 @@
 PRGNAM="hunspell-en"
-VERSION="2020.12.07"
-HOMEPAGE="http://wordlist.aspell.net/dicts/"
-DOWNLOAD="http://downloads.sourceforge.net/wordlist/hunspell-en_AU-2020.12.07.zip \
-          http://downloads.sourceforge.net/wordlist/hunspell-en_CA-2020.12.07.zip \
-          http://sourceforge.net/projects/wordlist/files/speller/2020.12.07/hunspell-en_GB-ise-2020.12.07.zip \
-          http://sourceforge.net/projects/wordlist/files/speller/2020.12.07/hunspell-en_GB-ize-2020.12.07.zip \
-	  http://downloads.sourceforge.net/wordlist/hunspell-en_US-2020.12.07.zip"
-MD5SUM="da1c2bfb35010f7345925acd29596d13 \
-	f28b8cb3e6dad9d4f53e849b5df80184 \
-	1c0d38766cd35c41e80b50f42ceecfba \
-	a42fdc0df347800f2db26566a30ab3e5 \
-	38bfa805038da266c37d3a2d2db23972"
+VERSION="2026.02.25"
+HOMEPAGE="https://wordlist.aspell.net/dicts/"
+DOWNLOAD="https://github.com/en-wl/wordlist/releases/download/rel-2026.02.25/hunspell-en_AU-2026.02.25.zip \
+          https://github.com/en-wl/wordlist/releases/download/rel-2026.02.25/hunspell-en_CA-2026.02.25.zip \
+          https://github.com/en-wl/wordlist/releases/download/rel-2026.02.25/hunspell-en_GB-ise-2026.02.25.zip \
+          https://github.com/en-wl/wordlist/releases/download/rel-2026.02.25/hunspell-en_GB-ize-2026.02.25.zip \
+          https://github.com/en-wl/wordlist/releases/download/rel-2026.02.25/hunspell-en_US-2026.02.25.zip"
+MD5SUM="fedf94e9f3244940db844ca50d1179e6 \
+        0f9a3823fb32d06e5bde1b975eda133c \
+        fe6e367c42ae07cbbe065458d65bbab5 \
+        7c4b771885c5c726c9ddd09246cd53ba \
+        0d7619d9a18bcbb8113e408f7014fdc2"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES=""

@@ -4,7 +4,7 @@ everything happening on the system it runs, using modern interactive
 web dashboards.
 
 Optional dependencies:
-- nodejs (monitoring named and SNMP devices)
+- nodejs22 (monitoring named and SNMP devices)
 - psycopg2 (monitoring postgres databases)
 - MySQL-python (monitoring MySQL databases)
 
@@ -28,4 +28,4 @@ To get the running config file at any time, visit
 http://IP-ADDRESS:19999/netdata.conf
 
 NOTE: this script will download some modules from Internet
-to build abseil-cpp and protobuf
+to build multiple sub projects components

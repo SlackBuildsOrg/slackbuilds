@@ -1,14 +1,10 @@
 lxqt-panel is the panel for the LXQt Desktop environment.
 
-libstatgrab and libsysstat are optional dependencies.
+If libstatgrab is installed, then lxqt-panel will also build the
+CPU Load and Network Monitor plugins.
 
-libstatgrab provides the CPU Load and Network Monitor plugins.
-libsysstat provides the System Stats plugin.
-
-To add support for the CPU Load and Network Monitor plugins, pass
-LIBSTATGRAB=yes to the SlackBuild.
-To add support for the System Stats plugin, pass
-LIBSYSSTAT=yes to the SlackBuild.
+If libsysstat is installed, then lxqt-panel will also build the
+System Stats plugin.
 
 For a default panel configuration, copy the example file provided by
 LXQt to the user $HOME config:

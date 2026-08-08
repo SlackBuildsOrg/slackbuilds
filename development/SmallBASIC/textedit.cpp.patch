@@ -1,0 +1,20 @@
+--- textedit.cpp	2026-03-05 21:55:00.768394475 +0000
++++ textedit.cpp.new	2026-03-05 21:55:37.520658968 +0000
+@@ -2197,7 +2197,7 @@
+   reset(kHelpKeyword);
+ 
+   if (keyword != nullptr) {
+-    keywordIterator([=,this](int index, int packageIndex, bool) {
++    keywordIterator([=](int index, int packageIndex, bool) {
+       bool result = true;
+       if (strcasecmp(keyword, keyword_help[index].keyword) == 0) {
+         // found keyword at cursor
+@@ -2373,7 +2373,7 @@
+   int packageIndex = _packageIndex;
+   bool packageOpen = _packageOpen;
+ 
+-  keywordIterator([=,this](int index, int packageIndex, bool nextPackage) {
++  keywordIterator([=](int index, int packageIndex, bool nextPackage) {
+     bool result = true;
+     if (nextPackage) {
+       const char *package = keyword_help[index].package;

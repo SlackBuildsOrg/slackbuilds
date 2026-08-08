@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
    |-----handy-ruler------------------------------------------------------|
-awf: awf (A Widget Factory)
+awf: awf (a widget factory)
 awf:
-awf: A widget factory is a theme preview application for GTK. It displays
-awf: the various widget types provided by GTK in a single window allowing
-awf: to see the visual effect of the applied theme.
-awf:
-awf: For GTK 2.24, 3.x, 4.x.
+awf: A widget factory is a theme preview application for GTK and Qt. It
+awf: displays the various widget types in a single window allowing to see
+awf: the visual effect of the applied theme.
 awf:
 awf:
+awf:
+awf: For: GTK 2.24, 3.x, 4.x & Qt 5.x, 6.x
 awf: Homepage: https://github.com/luigifab/awf-extended
 awf:

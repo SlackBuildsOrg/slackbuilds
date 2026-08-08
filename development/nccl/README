@@ -1,0 +1,17 @@
+NCCL (pronounced "Nickel") is a stand-alone library of standard
+communication routines for GPUs, implementing all-reduce, all-gather,
+reduce, broadcast, reduce-scatter, as well as any send/receive based
+communication pattern. It has been optimized to achieve high bandwidth
+on platforms using PCIe, NVLink, NVswitch, as well as networking using
+InfiniBand Verbs or TCP/IP sockets. NCCL supports an arbitrary number
+of GPUs installed in a single node or across multiple nodes, and can
+be used in either single- or multi-process (e.g., MPI) applications.
+
+Although this SlackBuild REQUIRES="cudatoolkit_13", cudatoolkit_12 has
+also been successfully tested and may be substituted if neccessary.
+Other CUDA toolkit versions may also be suitable but have not been
+tested and are not supported.
+
+Building nccl requires one of the cudatoolkits to be installed. Since
+none of the cudatoolkits support anything other than x86_64 systems,
+only x86_64 system architecture is supported by this SlackBuild.

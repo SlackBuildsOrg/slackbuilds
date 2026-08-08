@@ -1,0 +1,28 @@
+From c59f4ca394fd3c1d0f35a7977b2d715782927b1c Mon Sep 17 00:00:00 2001
+From: falkTX <falktx@falktx.com>
+Date: Sat, 25 Oct 2025 21:05:05 +0200
+Subject: [PATCH] Fix wrong param order for _XEMBED_INFO
+
+Signed-off-by: falkTX <falktx@falktx.com>
+---
+ src/Fl_x.cxx | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Fl_x.cxx b/src/Fl_x.cxx
+index 3f91a0c..b7fecbf 100644
+--- a/src/Fl_x.cxx
++++ b/src/Fl_x.cxx
+@@ -933,8 +933,8 @@ void fl_embed ( Fl_Window *w, Window parent )
+     /* mark this window as wanting to be embedded */
+     unsigned long buffer[2];
+ 
+-    buffer[0] = 1;                                              /* protocol version */
+-    buffer[1] = 0;
++    buffer[0] = 0;
++    buffer[1] = 1;                                              /* protocol version */
+ /* XEMBED_MAPPED; */
+     
+     XChangeProperty (fl_display,
+-- 
+2.35.1
+

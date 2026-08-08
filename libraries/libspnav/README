@@ -1,0 +1,11 @@
+libspnav is a free (BSD-licensed) alternative to the proprietary
+3Dconnexion libraries for accessing 3D input devices such as the
+SpaceNavigator, SpaceMouse and similar 6-degrees-of-freedom (6dof)
+devices. It provides a simple C API (spnav.h) for receiving motion and
+button events.
+
+At runtime the library communicates with the spacenavd daemon (its
+native protocol) or, when built with X11 support (the default here),
+with the proprietary 3Dconnexion daemon (3dxsrv). To actually use a
+device you will need the spacenavd daemon installed and running, which
+is packaged separately.

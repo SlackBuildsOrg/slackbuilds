@@ -21,4 +21,3 @@ it installs the service files into /etc/rc.d/init.d/
 If you need to enable any of them, you can add symlinks to them
 in /etc/rc.d/rc$i.d, where $i is the runlevel, or you can call them
 directly from rc.local.
-

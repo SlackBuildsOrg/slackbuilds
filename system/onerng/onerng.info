@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/OneRNG/onerng.github.io/raw/master/sw/onerng_3.7.or
 MD5SUM="7abe6589491788b881e82528f5c80a20"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python-gnupg rng-tools"
+REQUIRES="python3-gnupg rng-tools"
 MAINTAINER="pyllyukko"
 EMAIL="pyllyukko AT maimed dot org"

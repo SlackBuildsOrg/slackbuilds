@@ -8,3 +8,9 @@ bandwidth, aliasing, and rejection level parameters are all
 configurable; alternatively, simple `preset' configurations may be
 selected. An experimental, variable-rate resampling mode of operation
 is also included.
+
+NOTE:
+
+Development for soxr seems to have ceased (latest commit was 2018),
+but there are several projects keeping it patched and functional.
+This SlackBuild uses a maintenance fork by dofuuz.

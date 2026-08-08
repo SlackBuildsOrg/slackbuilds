@@ -2,7 +2,7 @@
 #
 # Slackware build script for dealers-choice
 #
-# Copyright 2025 / Andy Alt / United States
+# Copyright 2026 / Andy Alt / United States
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,10 +25,12 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dealers-choice
-VERSION=${VERSION:-0.0.6}
+VERSION=${VERSION:-0.0.15}
+SOURCEARCHIVE=$PRGNAM-$VERSION.tar.xz
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+TEST=${TEST:-no}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -63,7 +65,14 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+
+# Read the .info and make sure the md5sum matches.
+if ! echo "$(grep '^MD5SUM=' $CWD/$PRGNAM.info | cut -d'"' -f2)  $CWD/$SOURCEARCHIVE" | md5sum -c - ; then
+  echo "ERROR: MD5 checksum mismatch for $SOURCEARCHIVE" >&2
+  exit 1
+fi
+
+tar xvf $CWD/$SOURCEARCHIVE
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -72,12 +81,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# To find the newer version of meson, which is required to build
-# (python3-meson-opt from the SBo repository)
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
-
-patch -p1 < "$CWD"/meson-add-miniaudio-deps.patch
 mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \
@@ -85,13 +88,18 @@ cd build
   meson setup .. \
     --buildtype=release \
     -Dstrip=true \
-    -Db_sanitize=none \
     -Db_lto=true \
     --prefix=/usr \
     --localedir=/usr/share/locale \
     -Ddocdir=/usr/doc/$PRGNAM-$VERSION
-  ninja
-  DESTDIR=$PKG ninja install
+  meson compile
+  meson install --destdir $PKG
+  # Opt-in test run (TEST=yes). --setup One_pass runs each looping test a
+  # single time; results are saved into the package's doc dir.
+  if [ "$TEST" = "yes" ]; then
+    meson test --setup One_pass | tee \
+      $PKG/usr/doc/$PRGNAM-$VERSION/test_results.txt
+  fi
 cd ..
 
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

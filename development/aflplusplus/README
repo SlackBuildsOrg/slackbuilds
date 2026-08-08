@@ -18,9 +18,9 @@ work.
 Build option: If you need to fuzz binary-only software, aflplusplus can
 be built with QEMU support. To do this, download the qemu source from:
 
-https://slackware.uk/~urchlay/src/qemuafl-ff9de4fbeb.tar.xz
+https://slackware.uk/~urchlay/src/qemuafl-ef1cd9a8cb.tar.xz
 
-Its md5sum is 58547e2ea53b639c17a585be376b5bb7. Place it in the
+Its md5sum is e821dce0fb82dfab0011ef58ab244a1f. Place it in the
 SlackBuild's directory before running the script. The resulting
 package will support the -Q option to afl-fuzz. An existing
 installation of qemu is not required.

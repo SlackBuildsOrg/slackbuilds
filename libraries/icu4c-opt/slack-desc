@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description. Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in. You must
+# make exactly 11 lines for the formatting to be correct. It's also
+# customary to leave one space after the ':'.
+
+         |-----handy-ruler------------------------------------------------------|
+icu4c-opt: icu4c-opt (International Components for Unicode)
+icu4c-opt:
+icu4c-opt: The International Components for Unicode (ICU) libraries provide
+icu4c-opt: robust and full-featured Unicode services on a wide variety of
+icu4c-opt: platforms.  This version is installed to /opt/ to provide newer
+icu4c-opt: ICU libraries on Slackware stable.
+icu4c-opt:
+icu4c-opt: Homepage: http://www.icu-project.org/
+icu4c-opt:
+icu4c-opt:
+icu4c-opt:

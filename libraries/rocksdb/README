@@ -19,13 +19,3 @@ Features:
   storage -- flash devices or in-memory
 - Scales linearly with number of CPUs so that it works well on
   processors with many cores
-
-Build Options:
-- BUILD_TYPE=(all|lite|UNSET): if unset the default librocksdb will
-  build; set it to lite to build only librocksdb_lite; if it is set to
-  all, it will build both librocksdb and librocksdb_lite.
-  Default is unset.
-- ENABLE_STATIC=(yes|no): Deploy static library besides shared.
-  Default is no.
-- INSTALL_TOOLS=(yes|no): Deploy administration tools.
-  Default is yes.

@@ -3,7 +3,7 @@
 # Slackware build script for acetoneiso
 
 # Copyright 2016-2020  Edinaldo P. Silva, Rio de Janeiro, Brazil.
-# Copyright 2022 Vijay Marcel
+# Copyright 2022-2026 Vijay Marcel
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -11,6 +11,10 @@
 #
 # 1. Redistributions of this script must retain the above copyright
 #    notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in
+#    the documentation and/or other materials provided with the distribution.
 #
 #  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
 #  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -26,50 +30,20 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=acetoneiso
-VERSION=${VERSION:-2.4.3}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-2.4.7}
+SRCNAM=${SRCNAM:-$PRGNAM-debian-2.4-7}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+sys_arch=${sys_arch:-$(uname -m)}
 
-if [ -z "$ARCH" ]; then
-  case "$( uname -m )" in
-    i?86)
-      DEBARCH=i386
-      ARCH=i586
-      LIBDIRSUFFIX=""
-      ;;
-    x86_64)
-      DEBARCH=amd64
-      ARCH=x86_64
-      LIBDIRSUFFIX="64"
-      ;;
-      # unsupported
-      *)
-      echo "ARCH $( uname -m ) is unsupported"
-      exit 1
-      ;;
-  esac
-else
-  case "$ARCH" in
-    i?86)
-      DEBARCH=i386
-      LIBDIRSUFFIX=""
-      ;;
-    x86_64)
-      DEBARCH=amd64
-      LIBDIRSUFFIX="64"
-      ;;
-      # unsupported
-      *)
-      echo "$ARCH is unsupported"
-      exit 1
-      ;;
-  esac
-fi
+case "$sys_arch" in
+      x86_64) export ARCH=x86_64 ;;
+      i586) export ARCH=i586 ;;
+      i686) export ARCH=i686 ;;
+	     *) echo "This SlackBuild will not run on $sys_arch platform" && exit 1 ;;
+esac
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}"  ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -78,56 +52,108 @@ fi
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+DOCDIR=$PKG/usr/doc/$PRGNAM-$VERSION
+MANDIR=$PKG/usr/man/man1
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-march=i586 -mtune=i686 -pipe -ffunction-sections -fdata-sections -fstack-protector-strong -fstack-clash-protection -fPIE"
+  LIBDIRSUFFIX=""
+  SLDFLAGS="-pie -Wl,-z,relro -Wl,-z,now -Wl,-z,separate-code -Wl,-z,noexecstack -Wl,--sort-section=alignment -Wl,--gc-sections"
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-march=i686 -mtune=i686 -pipe -ffunction-sections -fdata-sections -fstack-protector-strong -fstack-clash-protection -fPIE"
+  LIBDIRSUFFIX=""
+  SLDFLAGS="-pie -Wl,-z,relro -Wl,-z,now -Wl,-z,separate-code -Wl,-z,noexecstack -Wl,--sort-section=alignment -Wl,--gc-sections"
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-march=x86-64 -mtune=generic -pipe -ffunction-sections -fdata-sections -fstack-protector-strong -fstack-clash-protection -fPIE"
+  LIBDIRSUFFIX="64"
+  SLDFLAGS="-pie -Wl,-z,relro -Wl,-z,now -Wl,-z,separate-code -Wl,-z,noexecstack -Wl,--sort-section=alignment -Wl,--gc-sections"
+else
+ echo "This SlackBuild will not run on $ARCH" && exit 1
+fi
 
 set -e
 trap 'echo "$0 FAILED at line $LINENO!" | tee -a  $OUTPUT/error-${PRGNAM}.log' ERR
 
 rm -rf $PKG
-mkdir -p $TMP $PKG $OUTPUT
+mkdir -pv $TMP $PKG $OUTPUT
+mkdir -pv $DOCDIR
+mkdir -pv $MANDIR
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-mkdir -pv $PRGNAM
-cd $PRGNAM
-
-if [ "$DEBARCH" = "i386" ]; then
-	mv -v $CWD/acetoneiso_2.4-3+b1_i386.deb $CWD/$PRGNAM-$VERSION.deb
-	ar -x $CWD/$PRGNAM-$VERSION.deb
-	tar xvf data.tar.xz -C $PKG
-elif [ "$DEBARCH" = "amd64" ]; then
-	mv -v $CWD/acetoneiso_2.4-3+b1_amd64.deb $CWD/$PRGNAM-$VERSION.deb
-	ar -x  $CWD/$PRGNAM-$VERSION.deb
-	tar xvf data.tar.xz -C $PKG
-else
-	echo "This program is not supported for your System Architecture"
-fi
-
-cd $PKG
+rm -rf $SRCNAM
+tar xvf $CWD/$SRCNAM.tar.gz
+cd $SRCNAM
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-cd ..
+echo "First patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/add_manpage.patch
+echo "II patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/add_desktop_entries.patch
+echo "III patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/remove_defunct_homepage.patch
+echo "IV patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/qt5_port.patch
+echo "V patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/youtube_dl_system.patch
+echo "VI patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/replace_poweriso.patch
+echo "VII patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/update_forms.patch
+echo "VIII patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/correct-spelling-errors.patch
+echo "IX patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/translate.patch
+echo "X patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/metacafe_dl_system.patch
+echo "XI patch"
+patch -p1 < $TMP/$SRCNAM/debian/patches/drop-webkit-references.patch
+
+cd $PRGNAM
+# From Arch linux: Remove malware from loading in the Updates tab, due to an expired domain being captured.
+sed -i 's|http://www.acetoneteam.org/clients.html||g' ui/acetoneiso.ui
+# From Arch linux:
+sed -i 's|<Phonon/|<phonon/|g' sources/*
+# we do not even know if this email works or not as the original authors no longer maintain it.
+# Remove this uncetain email and point it to debian acetoneiso page
+# were it is being currently maintained.
+sed -i 's|You can contact me by email at|AcetoneISO is currently maintained by Debian at|g' ui/about.ui
+sed -i 's|mailto:||g' ui/about.ui
+sed -i 's|acetoneiso@gmail.com|https://tracker.debian.org/pkg/acetoneiso|g' ui/about.ui
+
+/usr/lib${LIBDIRSUFFIX}/qt5/bin/lrelease-pro acetoneiso.pro
+
+/usr/bin/qmake-qt5 "QT += x11extras" QMAKE_CFLAGS\ +=\ "$SLKCFLAGS" QMAKE_CXXFLAGS\ +=\ "$SLKCFLAGS" QMAKE_LFLAGS\ +=\ "$SLDFLAGS"
+
+make
+make INSTALL_ROOT=$PKG install
+
+rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.la
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+  | cut -f 1 -d : | xargs strip --strip-unneeded --remove-section=.comment --remove-section=.note 2> /dev/null || true
 
-mv -v $PKG/usr/share/man   $PKG/usr/
-rm -rvf $PKG/usr/share/man
+chown -v -R root:root $PKG/usr/share/applications/AcetoneISO.desktop
+chmod -v 0644 $PKG/usr/share/applications/AcetoneISO.desktop
+
+install -Dvm 0644 $TMP/$SRCNAM/$PRGNAM/manual/acetoneiso.1 -t $MANDIR
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-mv -v $PKG/usr/share/doc/acetoneiso/*   $PKG/usr/doc/$PRGNAM-$VERSION
-rm -rvf  $PKG/usr/share/doc/
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+cd $TMP/$SRCNAM
+cp -av $PRGNAM/manual/*.html $DOCDIR
+cp -av $PRGNAM/manual/acetino2.png $DOCDIR
+cp -av AUTHORS FEATURES LICENSE README $DOCDIR
+cat $CWD/$PRGNAM.SlackBuild > $DOCDIR/$PRGNAM.SlackBuild
+find $DOCDIR -type f -exec chmod 0644 {} \+
 
-mkdir -p $PKG/install
+mkdir -pv $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+/sbin/makepkg -l y -c n --remove-rpaths --remove-tmp-rpaths $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -27,18 +27,16 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "TNFS-FUSE" 1 "2022-08-24" "20130127_fd46ff" "SlackBuilds.org"
+.TH "TNFS-FUSE" 1 "2026-01-17" "20240707_3b99907" "SlackBuilds.org"
 .SH NAME
 tnfs-fuse \- trivial network filesystem client
 .\" RST source for tnfs-fuse(1) man page. Convert with:
 .
 .\" rst2man.py tnfs-fuse.rst > tnfs-fuse.1
 .
-.\" rst2man.py comes from the SBo development/docutils package.
-.
 .SH SYNOPSIS
 .sp
-tnfs\-fuse \fBdirectory\fP \fB\-o address=host\fP[:\fIport\fP]
+tnfs\-fuse \fB\-o address=host\fP[:\fIport\fP] [\fIfuse\-options\fP] \fIdirectory\fP
 .SH DESCRIPTION
 .sp
 TNFS is a simplified Internet file transfer protocol, designed for
@@ -46,8 +44,10 @@ simplicity and ease of implementation on small systems, such as 8\-bit
 computers. It\(aqs simpler than NFS, SMB, or FTP. It\(aqs similar to TFTP,
 but has features TFTP lacks.
 .sp
-\fBtnfs\-fuse\fP is a client for the TNFS protocol. It uses UDP port
-16384 by default (standard for TNFS).
+\fBtnfs\-fuse\fP is a client for the TNFS protocol. It mounts TNFS
+servers with \fBfuse\fP(8) so they appear as though they were local
+filesystems. It attempts to use TCP port 16384 by default (standard
+for TNFS), and falls back to UDP if it can\(aqt connect via TCP.
 .sp
 When working with mounted TNFS directories, some error messages will
 be wrong, e.g. instead of "Permission denied", you may get "Bad file
@@ -74,7 +74,7 @@ To mount the TNFS server at \fBfujinet.online\fP:
 .nf
 .ft C
 mkdir fujinet
-tnfs\-fuse fujinet \-o address=fujinet.online
+tnfs\-fuse \-o address=fujinet.online fujinet
 .ft P
 .fi
 .UNINDENT
@@ -85,7 +85,7 @@ whatever name you chose). You might also want to add \fB\-o ro\fP to mount
 read\-only.
 .SH COPYRIGHT
 .sp
-See the file /usr/doc/tnfs\-fuse\-20130127_fd46ff/COPYING for license information.
+See the file /usr/doc/tnfs\-fuse\-20240707_3b99907/COPYING for license information.
 .SH AUTHORS
 .sp
 tnfs\-fuse was written by Radu Cristescu.

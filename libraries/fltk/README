@@ -1,3 +1,5 @@
+fltk (Fast Light Tool Kit 1.3.x series)
+
 The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a
 a cross-platform C++ GUI toolkit for UNIX(r)/Linux(r) (X11),
 Microsoft(r) Windows(r), and MacOS(r) X. FLTK provides modern GUI
@@ -8,3 +10,7 @@ developers across the world with a central repository in the US.
 
 If you want to disable cairo support, you need to pass CAIRO=0 to the
 build script.
+
+Note: this is not the latest release of fltk, nor even the latest
+of the 1.3.x series. It's kept at version 1.3.8 to match the version
+that's in Slackware 15.0's /extra.

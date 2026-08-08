@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+cieid: cieid (Middleware for Italian electronic identity card)
+cieid:
+cieid: Software for the Italian electronic identity card. It is required to
+cieid: access government website services with level 3 authentication from a
+cieid: smart card reader contactless connected to a personal computer.
+cieid: It is also required to allows digital signature of documents using
+cieid: your digital identity.
+cieid:
+cieid: Home page: https://www.cartaidentita.interno.gov.it
+cieid:
+cieid:

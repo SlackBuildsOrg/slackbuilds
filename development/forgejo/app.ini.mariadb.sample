@@ -1,0 +1,72 @@
+APP_NAME = Forgejo
+RUN_USER = git
+WORK_PATH = /var/lib/forgejo
+
+[repository]
+ROOT = /var/lib/forgejo/repositories
+
+[server]
+; For LAN usage, replace localhost with the server IP or local DNS name.
+; Example:
+; DOMAIN = 192.168.1.50
+; ROOT_URL = http://192.168.1.50:3000/
+DOMAIN = localhost
+HTTP_ADDR = 0.0.0.0
+HTTP_PORT = 3000
+ROOT_URL = http://localhost:3000/
+DISABLE_SSH = false
+SSH_PORT = 22
+START_SSH_SERVER = false
+LFS_START_SERVER = true
+
+[database]
+; MariaDB/MySQL configuration example for a production Forgejo instance.
+; MariaDB is shipped in the official Slackware tree.
+; Create the database and user before using this configuration.
+DB_TYPE = mysql
+HOST = 127.0.0.1:3306
+NAME = forgejo
+USER = forgejo
+PASSWD = change_this_password
+CHARSET = utf8mb4
+CHARSET_COLLATION = utf8mb4_bin
+SSL_MODE = disable
+
+[indexer]
+ISSUE_INDEXER_PATH = /var/lib/forgejo/indexers/issues.bleve
+
+[session]
+PROVIDER = file
+PROVIDER_CONFIG = /var/lib/forgejo/sessions
+
+[picture]
+AVATAR_UPLOAD_PATH = /var/lib/forgejo/avatars
+REPOSITORY_AVATAR_UPLOAD_PATH = /var/lib/forgejo/repo-avatars
+
+[attachment]
+PATH = /var/lib/forgejo/attachments
+
+[lfs]
+PATH = /var/lib/forgejo/lfs
+
+[log]
+MODE = file
+LEVEL = Info
+ROOT_PATH = /var/log/forgejo
+
+[security]
+; Keep INSTALL_LOCK=false only for the first web setup. Set it to true
+; after installation is complete.
+INSTALL_LOCK = false
+; Generate with: forgejo generate secret SECRET_KEY
+SECRET_KEY =
+; Generate with: forgejo generate secret INTERNAL_TOKEN
+INTERNAL_TOKEN =
+
+[service]
+DISABLE_REGISTRATION = true
+REQUIRE_SIGNIN_VIEW = false
+
+; Uncomment to disable Actions if you do not use Forgejo Runner.
+; [actions]
+; ENABLED = false

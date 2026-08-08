@@ -2,6 +2,7 @@
 
 # Slackware build script for miniupnpc
 
+# Copyright 2025-2026 Ruoh-Shoei LIN
 # Copyright 2023 Steven Voges <Oregon, USA>
 # Copyright 2012-2018 Larry Hajali <larryhaja[at]gmail[dot]com>
 # All rights reserved.
@@ -26,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=miniupnpc
-VERSION=${VERSION:-2.2.5}
+VERSION=${VERSION:-2.3.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -97,6 +98,7 @@ cd build
     -DUPNPC_NO_INSTALL=FALSE \
     -DCMAKE_BUILD_TYPE=Release ..
   make
+  make test
   make install DESTDIR=$PKG
 cd ..
 

@@ -4,21 +4,31 @@ on:
     tags:
       - '15.0**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: {}
+
 jobs:
   create-build-check-issue:
+    name: Create build check issue
     timeout-minutes: 10
-    runs-on: ubuntu-24.04
-    permissions: write-all
-    if: contains('["SlackBuildsOrg/slackbuilds"]', github.repository)
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read # for actions/checkout
+      issues: write # for peter-evans/create-issue-from-file
+    if: contains(fromJSON('["SlackBuildsOrg/slackbuilds"]'), github.repository)
     steps:
       - name: Check out repo
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           show-progress: false
+          persist-credentials: false
 
-      - name: Create or update release issue
-        id: create-or-update-issue
-        uses: peter-evans/create-issue-from-file@e8ef132d6df98ed982188e460ebb3b5d4ef3a9cd # v5.0.1
+      - name: Create build check issue
+        id: create-issue
+        uses: peter-evans/create-issue-from-file@fca9117c27cdc29c6c4db3b86c48e4115a786710 # v6.0.0
         with:
           title: '${{ github.ref_name }}: Build check'
           content-filepath: .github/BUILD_CHECK_ISSUE.md

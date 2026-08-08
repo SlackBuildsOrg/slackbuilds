@@ -6,9 +6,9 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
         |-----handy-ruler------------------------------------------------------|
-wmuptime: wmuptime (LED display of your uptime)
+wmuptime: wmuptime (dockapp that displays your uptime)
 wmuptime:
-wmuptime: An LED display of your uptime.
+wmuptime: An LED display of your uptime, for WindowMaker and related WMs.
 wmuptime:
 wmuptime: http://www.cs.mun.ca/~gstarkes/wmaker/dockapps/sys.html#wmcpu
 wmuptime:

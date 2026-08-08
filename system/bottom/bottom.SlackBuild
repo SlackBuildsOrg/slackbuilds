@@ -2,7 +2,7 @@
 
 # Slackware build script for bottom
 
-# Copyright 2022-2024 K. Eugene Carlson  Tsukuba, Japan
+# Copyright 2022-2026 K. Eugene Carlson  Tsukuba, Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,8 +26,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bottom
 BINNAM=btm
-VERSION=${VERSION:-0.10.2}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-0.14.7}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -60,19 +60,15 @@ OUTPUT=${OUTPUT:-/tmp}
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   CARGOTARGET="--target i586-unknown-linux-gnu"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
   CARGOTARGET="--target i686-unknown-linux-gnu"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   CARGOTARGET="--target x86_64-unknown-linux-gnu"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   CARGOTARGET=""
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -87,7 +83,9 @@ cd $PRGNAM-$VERSION
 # build offline
 # configuration tells cargo to use the configured directory
 # for dependencies instead of downloading from crates.io
-cat << EOF > .cargo/config
+rm -rf $TMP/$PRGNAM-$VERSION/.cargo
+mkdir .cargo
+cat << EOF > .cargo/config.toml
 [source.crates-io]
 registry = 'https://github.com/rust-lang/crates.io-index'
 replace-with = 'vendored-sources'
@@ -141,13 +139,6 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 export PATH="/opt/rust/bin:$PATH"
-if [ -z "$LD_LIBRARY_PATH" ]; then
-  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX"
-else
-  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
-fi
-
-rm -f .cargo/config.toml
 
 CARGO_HOME=.cargo \
 CFLAGS="$SLKCFLAGS" \
@@ -164,6 +155,12 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 tar xf $CWD/manpage.tar.gz
 mkdir -p $PKG/usr/man/man1
 install -m 0644 btm.1.gz $PKG/usr/man/man1/
+
+mkdir -p $PKG/usr/share/icons/hicolor/scalable/apps
+cp -a assets/icons/bottom-system-monitor.svg $PKG/usr/share/icons/hicolor/scalable/apps
+
+mkdir -p $PKG/usr/share/applications
+cp -a desktop/bottom.desktop $PKG/usr/share/applications
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -ar docs/content/* $PKG/usr/doc/$PRGNAM-$VERSION
@@ -193,6 +190,7 @@ find . -name $BINNAM.elv -exec install -m 644 {} $PKG/usr/doc/$PRGNAM-$VERSION \
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

@@ -1,0 +1,153 @@
+#!/bin/bash
+
+# Slackware build script for swt
+
+# Copyright 2026 Pablo Romano, Seville, Spain
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=swt
+VERSION=${VERSION:-4.37}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+case "$ARCH" in
+  i586)
+    LIBDIRSUFFIX=""
+    ;;
+  x86_64)
+    LIBDIRSUFFIX="64"
+    ;;
+  *)
+    LIBDIRSUFFIX=""
+    ;;
+esac
+
+set -eu
+
+rm -rf "$PKG"
+mkdir -p "$TMP" "$PKG" "$OUTPUT"
+
+cd "$TMP"
+rm -rf "$PRGNAM-$VERSION"
+mkdir -p "$PRGNAM-$VERSION"
+
+# --------------------------------------------------
+# Automatically search for the downloaded ZIP file
+# --------------------------------------------------
+
+SRC=$(find "$CWD" -maxdepth 1 -type f -name "*.zip" | head -n 1)
+
+if [ -z "$SRC" ]; then
+  echo "ERROR: No .zip archive found in:"
+  echo "  $CWD"
+  exit 1
+fi
+
+echo "Using source archive: $SRC"
+
+# --------------------------------------------------
+# Extract the ZIP archive
+# --------------------------------------------------
+
+cd "$PRGNAM-$VERSION"
+
+unzip "$SRC"
+
+# --------------------------------------------------
+# Search for the actual SWT jar
+# --------------------------------------------------
+
+SWTJAR=$(find . -type f -name "*.jar" | head -n 1)
+
+if [ -z "$SWTJAR" ]; then
+  echo "ERROR: SWT jar file not found"
+  exit 1
+fi
+
+echo "Using SWT JAR: $SWTJAR"
+
+# --------------------------------------------------
+# Installation process (Fixed for 15.0 and -current alignment)
+# --------------------------------------------------
+
+# Standard location for architecture-independent Java libraries
+mkdir -p "$PKG/usr/share/java"
+install -m 644 "$SWTJAR" "$PKG/usr/share/java/swt-$VERSION.jar"
+
+# Create versionless symlink in /usr/share/java (Expected by -current)
+ln -s "swt-$VERSION.jar" "$PKG/usr/share/java/swt.jar"
+
+# Create symlink in /usr/lib(64)/java (Expected by legacy 15.0 packages)
+mkdir -p "$PKG/usr/lib${LIBDIRSUFFIX}/java"
+ln -s "/usr/share/java/swt.jar" "$PKG/usr/lib${LIBDIRSUFFIX}/java/swt.jar"
+
+# --------------------------------------------------
+# Documentation and Licenses (SBo Compliance)
+# --------------------------------------------------
+
+mkdir -p "$PKG/usr/doc/$PRGNAM-$VERSION"
+
+# Find and copy licenses, readmes, and standard Eclipse about.html files
+find . \
+  \( -iname "license*" -o -iname "readme*" -o -name "about.html" \) \
+  -type f \
+  -exec cp -a {} "$PKG/usr/doc/$PRGNAM-$VERSION/" \; \
+  2>/dev/null || true
+
+# SBo requirement: Save a copy of the build script in the documentation directory
+cat "$CWD/$PRGNAM.SlackBuild" > "$PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild"
+
+# Ensure correct file permissions for documentation
+find "$PKG/usr/doc/$PRGNAM-$VERSION" \
+  -type f \
+  -exec chmod 644 {} \;
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+# --------------------------------------------------
+# Final file permissions and packaging
+# --------------------------------------------------
+
+chown -R root:root "$PKG"
+
+cd "$PKG"
+
+/sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

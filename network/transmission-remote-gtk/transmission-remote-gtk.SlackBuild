@@ -3,7 +3,7 @@
 # Slackware build script for transmission-remote-gtk
 
 # Copyright 2012-2016  Chris Walker Copperas Cove, TX
-# Copyright 2020-2023 B. Watson <urchlay@slackware.uk>
+# Copyright 2020-2026 B. Watson <urchlay@slackware.uk>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,14 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260720 bkw: update for v1.7.1.
+# - someone edited this and removed the python3-meson-opt dep (no longer
+#   needed, since 15.0's patches/ has a new meson).
+
+# 20260110 bkw: update for v1.7.0.
+# - new build dep python3-meson-opt.
+# - no more GeoIP support (dropped upstream).
+
 # 20230713 bkw: update for v1.6.0.
 # - new hard dep libsoup3.
 # - no more optional mrss dep (upstream dropped the RSS reader).
@@ -52,7 +60,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=transmission-remote-gtk
-VERSION=${VERSION:-1.6.0}
+VERSION=${VERSION:-1.7.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -97,18 +105,13 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z
 cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
-        \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} \+
-
-# 20230713 bkw: mangle the meson.build so it works with Slackware
-# 15.0's meson-0.59.x. Eventually this will become difficult or
-# impossible, hopefully by then we have a new Slackware release with a
-# new enough meson.
-sed -i -e '/meson_version:/s,0.60.0,0.59.0,' \
-       -e "s/'ayatana-appindicator3-0.1', //" \
-       meson.build
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 [ "${NOTIFY:-yes}" = "no" ] && NOTIFYOPT="-Dlibappindicator=disabled"
+
+sed -i '/-Werror/d' meson.build
 
 mkdir build
 cd build
@@ -124,22 +127,24 @@ cd build
     --prefix=/usr \
     --sysconfdir=/etc \
     -Dstrip=true
-  "${NINJA:=ninja}"
+  "${NINJA:=ninja}" -v
   DESTDIR=$PKG $NINJA install
 cd ..
 
 gzip -9 $PKG/usr/man/man1/$PRGNAM.1
 
 # 20200526 bkw: lots of optional deps, let the slack-desc keep track of them
+# 20260720 bkw: down to one optional dep, keep the for loop just in case...
 objdump -p $PKG/usr/bin/$PRGNAM | grep NEEDED > ldd.tmp
-for i in libappindicator GeoIP; do
+for i in libappindicator; do
   opts+="$i:"
   grep -q $i ldd.tmp && opts+="yes " || opts+="no "
 done
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING ChangeLog README.md $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a AUTHORS COPYING ChangeLog README.md $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 sed "s,@opts@,$opts," $CWD/slack-desc > $PKG/install/slack-desc

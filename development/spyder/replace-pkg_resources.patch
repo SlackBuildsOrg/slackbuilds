@@ -100,7 +100,19 @@
  # Loosen constraints to ensure dev versions still work
 --- a/spyder/app/find_plugins.py
 +++ b/spyder/app/find_plugins.py
-@@ -17,6 +17,13 @@
+@@ -7,17 +7,23 @@
+ Plugin dependency solver.
+ """
+ 
++import sys
+ import importlib
+ import logging
+ import traceback
+ 
+-import pkg_resources
+-
+ from spyder.api.exceptions import SpyderAPIError
+ from spyder.api.plugins import Plugins
  from spyder.api.utils import get_class_values
  from spyder.config.base import STDERR
  
@@ -114,7 +126,7 @@
  
  logger = logging.getLogger(__name__)
  
-@@ -27,16 +34,15 @@
+@@ -28,16 +34,15 @@
      """
      internal_plugins = {}
  
@@ -134,7 +146,7 @@
          plugin_class = getattr(mod, class_name, None)
          internal_plugins[name] = plugin_class
  
-@@ -55,21 +61,19 @@
+@@ -56,21 +61,19 @@
      Find available external plugins based on setuptools entry points.
      """
      internal_names = get_class_values(Plugins)

@@ -1,0 +1,12 @@
+PRGNAM="canto-next"
+VERSION="0.9.8"
+HOMEPAGE="https://github.com/themoken/canto-next/"
+DOWNLOAD="https://github.com/themoken/canto-next/archive/v0.9.8/canto-next-0.9.8.tar.gz \
+          https://github.com/themoken/canto-curses/archive/v0.9.9/canto-curses-0.9.9.tar.gz"
+MD5SUM="7ae248b0e0b5c3a72c33b75da740049e \
+        3f3e13e0ee60e264102b850ebc179c77"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="feedparser"
+MAINTAINER="B. Watson"
+EMAIL="urchlay@slackware.uk"

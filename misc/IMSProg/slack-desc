@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+IMSProg: IMSProg (I2C, SPI and MicroWire EEPROM/Flash chip programmer)
+IMSProg:
+IMSProg: for CH341a devices. The IMSProm is a free I2C EEPROM programmer 
+IMSProg: tool for CH341A device based on QhexEdit2 and modify SNANDer 
+IMSProg: programmer.
+IMSProg:
+IMSProg: This is a GUI program used widget QhexEditor. For setting the SPI 
+IMSProg: chip parameters you can use the Detect button for reading chip 
+IMSProg: parameters (JEDEC information reading) or manually setting it. 
+IMSProg: The I2C and MicroWire EEPROM only manually selected.
+IMSProg:

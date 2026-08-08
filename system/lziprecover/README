@@ -1,5 +1,14 @@
-Lziprecover is a data recovery tool and decompressor for files in
-the lzip compressed data format (.lz) able to repair slightly
-damaged files, recover badly damaged files from two or more
-copies, extract data from damaged files, decompress files and
-test integrity of files.
+lziprecover (Data recovery tool for lzipped files)
+
+lziprecover is a data recovery tool and decompressor for files in
+the lzip compressed data format (.lz). It's able to repair slightly
+damaged files, recover badly damaged files from two or more copies,
+extract data from damaged files, decompress files and test integrity
+of files.
+
+lziprecover Lziprecover also provides Forward Error Correction files
+(.fec) that can be used to repair any kind of file, not only lzip
+files. A fec file can be used as recovery record for a tar.lz archive.
+
+Lziprecover can remove the damaged members from multimember files, for
+example multimember tar.lz archives.

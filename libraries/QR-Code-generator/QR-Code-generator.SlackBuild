@@ -3,6 +3,7 @@
 # Slackware build script for QR-Code-generator
 
 # Copyright 2020 Hunter Sezen California, USA
+# Copyright 2026 Christoph Willing	Sydney, Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=QR-Code-generator
-VERSION=${VERSION:-1.6.0}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-1.8.0}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -38,9 +39,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -81,7 +79,7 @@ find -L . \
 
 # Fix makefiles (Modified from Fedora)
 # https://src.fedoraproject.org/rpms/qr-code-generator
-patch -p1 < $CWD/qr-code-generator-build-fixes.patch
+patch -p0 < $CWD/qr-code-generator-build-fixes-${VERSION}.patch
 
 (
   cd c
@@ -107,6 +105,11 @@ if python3 -c 'import sys' 2>/dev/null; then
     python3 setup.py install --root=$PKG
   )
 fi
+
+# Some app (obs-studio) still expect previous QrCode.hpp
+( cd $PKG/usr/include/qrcodegen && \
+  ln -s qrcodegen.hpp QrCode.hpp
+)
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" |
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

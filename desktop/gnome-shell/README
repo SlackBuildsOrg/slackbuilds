@@ -9,4 +9,3 @@ gsettings-desktop-schemas-41.0, which allows gnome-shell-41 to run on
 Slackware 15.0. These schema files are kept separate from Slackware's 
 copy, which are at version 40.0. gnome-shell is made aware of these 
 custom built schemas using a wrapper script.
-

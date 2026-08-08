@@ -4,7 +4,7 @@
 
 # Copyright 2013-2017 Heiko Rosemann, Germany
 # Copyright 2019-2022 Andrew Clemons, Wellington, New Zealand
-# Copyright 2022-2025 Andrew Clemons, Tokyo, Japan
+# Copyright 2022-2026 Andrew Clemons, Tokyo, Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,9 +27,9 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=vuescan
-VERSION=${VERSION:-9.8.46}
+VERSION=${VERSION:-9.8.53}
 SRCVER=${SRCVER:-$(echo "$VERSION" | cut -d. -f-2 | sed 's/\.//g')}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

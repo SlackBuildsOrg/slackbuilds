@@ -3,7 +3,6 @@
 
 # Copyright 2008,2009,2010. Andrew Strong (http://www.andrews-corner.org)
 # All rights reserved.
-# Maintained by Ozan Türkyılmaz ozan.turkyilmaz@gmail.com
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -21,6 +20,9 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# Previously maintained by Ozan Türkyılmaz ozan.turkyilmaz@gmail.com
+# Maintained by Matteo Bernardini <ponce@slackbuilds.org>
 
 cd $(dirname $0) ; CWD=$(pwd)
 
@@ -78,6 +80,10 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# fmt in SBo is too new for 80.0, force using the internal version
+cp -a $CWD/fmt.m4 ac/
+autoreconf -fi
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -90,6 +96,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-gui="$GUI" \
   --disable-static \
   --disable-update-check \
+  --disable-qt6 \
   --docdir=/usr/$PRGNAM-$VERSION \
   --htmldir=/usr/$PRGNAM-$VERSION \
   --with-boost

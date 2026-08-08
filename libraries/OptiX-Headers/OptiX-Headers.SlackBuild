@@ -3,6 +3,7 @@
 # Slackware build script for OptiX-Headers
 
 # Copyright 2023, Tobias M. Monckton, Fairhope, Alabama.
+# Copyright 2026, Christoph Willing,	Sydney Australia
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=OptiX-Headers
-VERSION=${VERSION:-7.6}
+SRCNAM=optix-dev
+VERSION=${VERSION:-9.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -46,40 +48,33 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-# Yes, the "if" part of the following conditional winds up being quite fugly,
-# but due to the nature of how OptiX headers are used (installed under /opt)
-# there's no need for either a SRCARCH or a LIBDIRSUFFIX, hence the empty
-# conditional statement.
-if [ "$ARCH" = "x86_64" ]; then
-  :
-else
-  echo "This architecture is unsupported by OptiX.  Aborting."
+[ "$ARCH" = "x86_64" ] || {
+  echo "This architecture is unsupported by OptiX. Exiting now ...."
   exit 1
-fi
+}
 
 set -e
 
-rm -rf $PKG
+rm -rf $PKG 
 mkdir -p $TMP $PKG $OUTPUT
 
-cd $PKG
-unzip $CWD/OptiX-7.6-Include.zip
+cd $TMP
+rm -rf $SRCNAM-$VERSION
+tar xf $CWD/$SRCNAM-$VERSION.tar.gz
+cd $SRCNAM-$VERSION
 chown -R root:root .
-# Make sure all include file directories have only the proper permissions.
-find . -type d -exec chmod 0755 {} \;
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
+  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
-mkdir -p $PKG/opt/OptiX-Headers-7.6
-mkdir -p $PKG/opt/OptiX-Headers-7.6/internal
 
-install -m0644 -t "$PKG/opt/OptiX-Headers-7.6/" *.h
-install -m0644 -t "$PKG/opt/OptiX-Headers-7.6/internal/" internal/*.h
-
-# prevent duplicate copies of headers
-
-rm -f *.h
-rm -r -f internal/
+mkdir -p $PKG/usr/include/optix
+cp -a include/* "$PKG/usr/include/optix"
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mv LICENSE.txt README.md license_info.txt $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

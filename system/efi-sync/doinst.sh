@@ -22,4 +22,5 @@ preserve_perms() {
   config $NEW
 }
 
+config etc/efi-sync.conf.new
 preserve_perms etc/rc.d/rc.efi-sync.new

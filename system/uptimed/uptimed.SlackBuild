@@ -2,6 +2,7 @@
 # Graham Orange v0.18 2015-11-02
 
 # Copyright 2015 Graham Orange, USA
+# Copyright 2026 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,8 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=uptimed
-VERSION=${VERSION:-0.4.0}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-0.4.7}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -37,7 +38,7 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-DOCS="AUTHORS COPYING CREDITS ChangeLog INSTALL* NEWS README* TODO"
+DOCS="AUTHORS COPYING CREDITS ChangeLog NEWS README* TODO"
 
 # If the variable PRINT_PACKAGE_NAME is set, then this script will report what
 # the name of the created package would be, and then exit. This information
@@ -93,8 +94,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man \
   --build=$ARCH-slackware-linux
 
-gmake
-gmake install DESTDIR=$PKG
+make
+make install DESTDIR=$PKG
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -108,8 +109,6 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/etc/rc.d
 install -m 644 $CWD/rc.uptimed $PKG/etc/rc.d/rc.uptimed
-
-mv $PKG/etc/uptimed.conf-dist $PKG/etc/uptimed.conf-dist.new
 
 rm -f $PKG/usr/lib*/*.la
 

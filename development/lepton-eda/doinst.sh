@@ -13,7 +13,6 @@ if [ -e usr/share/icons/hicolor/icon-theme.cache ]; then
 fi
 
 if [ -x /usr/bin/install-info ]; then
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/lepton-manual.info.gz 2> /dev/null
-  chroot . /usr/bin/install-info --info-dir=/usr/info /usr/info/lepton-scheme.info.gz 2> /dev/null
+  /usr/bin/install-info --info-dir=usr/info usr/info/lepton-manual.info.gz 1> /dev/null 2>&1
+  /usr/bin/install-info --info-dir=usr/info usr/info/lepton-scheme.info.gz 1> /dev/null 2>&1
 fi
-

@@ -3,3 +3,5 @@ python3-pydantic (Data validation using Python type hints)
 Fast and extensible, pydantic plays nicely with your
 linters/IDE/brain. Define how data should be in pure, canonical Python
 3.7+; validate it with pydantic.
+
+#NOTE: 2.13.x is last python3.9 version

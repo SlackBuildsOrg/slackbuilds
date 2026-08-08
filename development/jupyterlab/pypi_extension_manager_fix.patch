@@ -1,0 +1,46 @@
+This patch does the following:
+1. Add the InvalidName class (otherwise, jupyterlab >= 4.5.7 crashes on Slackware 15.0)
+2. Replace the canonicalize_name definition (I am using the code from packaging 26.2)
+
+--- a/jupyterlab/extensions/pypi.py
++++ b/jupyterlab/extensions/pypi.py
+@@ -19,14 +19,13 @@
+ from pathlib import Path
+ from subprocess import CalledProcessError, run
+ from tarfile import TarFile
+-from typing import Any, Callable, Optional, Union
++from typing import Any, Callable, NewType, Optional, Union
+ from urllib.parse import urlparse
+ from zipfile import ZipFile
+ 
+ import httpx
+ import tornado
+ from async_lru import alru_cache
+-from packaging.utils import InvalidName, canonicalize_name
+ from packaging.version import InvalidVersion, Version
+ from packaging.version import parse as parse_version
+ from traitlets import CFloat, CInt, Unicode, config, observe
+@@ -44,6 +43,23 @@
+     ExtensionPackage,
+ )
+ 
++NormalizedName = NewType("NormalizedName", str)
++
++
++class InvalidName(ValueError):
++    """
++    An invalid distribution name; users should refer to the packaging user guide.
++    """
++
++
++def canonicalize_name(name: str, *, validate: bool = False) -> NormalizedName:
++    if validate and not _validate_regex.fullmatch(name):
++        raise InvalidName(f"name is invalid: {name!r}")
++    value = name.lower().replace("_", "-").replace(".", "-")
++    while "--" in value:
++        value = value.replace("--", "-")
++    return cast("NormalizedName", value)
++
+ 
+ class ProxiedTransport(xmlrpc.client.Transport):
+     def set_proxy(self, host, port=None, headers=None):

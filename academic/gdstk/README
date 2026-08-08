@@ -9,4 +9,3 @@ offset (inward and outward rescaling of polygons), Efficient
 point-in-polygon solutions for large array sets.
 Typical applications of Gdstk are in the fields of electronic chip
 design, planar lightwave circuit design, and mechanical engineering.
-

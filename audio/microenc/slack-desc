@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+microenc: microenc (audio transcoder script)
+microenc:
+microenc: A script to encode media to MP3, AAC, Vorbis, Opus, AC-3, E-AC-3,
+microenc: DTS, FLAC, ALAC, WavPack, AIFF, and WAV audio.
+microenc:
+microenc: Replaces the deprecated audenc script.
+microenc:
+microenc: https://sourceforge.net/projects/microenc/
+microenc:
+microenc:
+microenc:

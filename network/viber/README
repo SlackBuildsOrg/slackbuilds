@@ -3,6 +3,15 @@ Viber: Free and secure calls and messages to anyone, anywhere.
 With Viber on your desktop, you can send and receive messages, enjoy
 group calls, create stickers, and more, as your devices seamlessly sync.
 
-NOTE!
-Viber for Desktop is synced to your mobile account. To activate Viber
-for Desktop, you will need an active Viber account on your mobile phone.
+NOTE 1: Viber for Desktop is synced to your mobile account. To activate
+Viber for Desktop, you will need an active Viber account on your mobile
+phone.
+
+NOTE 2: As the upstream developers upload new packages without changing
+their names, the following discrepancies may occur:
+
+- MD5 sums mismatches
+- actual version being higher than the one in the .info file
+
+Nonetheless, the application will most likely still work,
+if not -- please drop the maintainer an email.

@@ -1,0 +1,4 @@
+mtm-1.2.1-man-nuke.patch
+mtm-1.2.1-nuke.patch
+0001-fix-empty-commandkey-arg.patch
+0002-fix-sgr-truecolor-param-consumption.patch

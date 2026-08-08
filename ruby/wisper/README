@@ -10,4 +10,3 @@ capabilities
 
 Note: Wisper was originally extracted from a Rails codebase but is not
 dependant on Rails.
-

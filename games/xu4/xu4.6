@@ -1,137 +1,167 @@
-.TH xu4 6 "January 13 2023" "Version 1.2.1" "SlackBuilds.org"
-
+.\" Man page generated from reStructuredText.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "XU4" 6 "2026-01-02" "1.4.3" "SlackBuilds.org"
 .SH NAME
-\fBxu4\fR \- A modern reimplementation of the classic Ultima IV role\-playing game.
-
+xu4 \- A modern reimplementation of the classic Ultima IV role-playing game.
+.\" RST source for xu4(6) man page. Convert with:
+.
+.\" rst2man.py xu4.rst > xu4.6
+.
 .SH SYNOPSIS
-.B xu4
-.RI [ options ]
-
+.sp
+xu4 [\fIoptions\fP]
 .SH DESCRIPTION
-.B XU4
-is a remake of the computer game Ultima IV.  The goal is to make
-it easy and convenient to play this classic on modern operating
-systems. 
-.PP
-This man page only describes the command\-line options and keyboard commands
-supported by \fBxu4\fR.
-For full documentation, see the files in \fI/usr/doc/xu4\-@VERSION@/\fR. The
-README is a good place to start. Also the "History of Britannia" and the "Book
-of Mystic Wisdom" are found there (you should read them before playing).
+.sp
+XU4 is a remake of the computer game Ultima IV.  The goal is to make it
+easy and convenient to play this classic on modern operating systems.
+.sp
+This man page only describes the command\-line options and keyboard
+commands supported by xu4. For  full  documentation,  see  the
+files  in /usr/doc/xu4\-1.4.3/. The README is a good place to
+start. Also the "History of Britannia" and the "Book of Mystic Wisdom"
+are found  there (you should read them before playing).
 .SH OPTIONS
-\fBxu4\fR accepts the following options:
+.sp
+xu4 accepts the following options:
+.INDENT 0.0
 .TP
-.B "\-f, \-\-fullscreen"
+.B \fB\-f\fP, \fB\-\-fullscreen\fP
 Run in fullscreen mode.
 .TP
-.B \-filter <filt>
-Apply a filter on the scaled images. The <filt>
-parameter must be set to one of the following
-case\-sensitive options:
-.I point
-.I HQX
-.I xBR-lv2
+.B \fB\-\-filter\fP \fI<filt>\fP
+Apply  a  filter on the scaled images. The \fI<filt>\fP parameter must
+be set to one of the following case\-sensitive options:
+\fIpoint\fP, \fIHQX\fP, \fIxBR\-lv2\fP, \fIxBRZ\fP, \fIpoint\-43\fP, \fIxBRZ\-43\fP\&.
 .TP
-.B "\-i, \-skipintro"
-Skip the intro, and go directly into the game.
-This option requires the existence of a valid saved game.
+.B \fB\-i\fP, \fB\-\-skip\-intro\fP
+Skip  the intro, and go directly into the game.  This option
+requires the existence of a valid saved game.
 .TP
-.B "\-m, \-module <file>"
-Specify game module (default is Ultima-IV).
+.B \fB\-m\fP, \fB\-\-module\fP \fI<file>\fP
+Specify game module (default is Ultima\-IV).
 .TP
-.B "\-p <profname>, \-profile <profname>"
-Activate a specific save game profile.  Using this
-option, you may have multiple saved games at the
-same time. Also, the game's config is stored on
-a per\-profile basis, so different profiles could
-have e.g. different screen resolutions.
-Use quotation marks around profile names that
-include spaces.
-All profiles are stored in the
-.I ~/.config/xu4/profiles
-sub\-directory.
-The active profile name is shown on the
-introduction map view off the main menu.
+.B \fB\-p\fP \fI<profname>\fP, \fB\-\-profile\fP \fI<profname>\fP
+Activate a specific save game profile.  Using this  option,
+you may have multiple saved games at the same time. Also, the
+game\(aqs config is stored on a per\-profile basis, so  different
+profiles could  have  e.g.  different  screen resolutions.
+Use quotation marks around profile names that include  spaces.
+All  profiles are stored in the \fB~/.config/xu4/profiles\fP
+sub\-directory.  The active profile name is shown on the
+introduction map view off  the main menu.
 .TP
-.B "\-q, \-quiet"
+.B \fB\-q\fP, \fB\-\-quiet\fP
 Disable audio.
 .TP
-.B \-scale <n>
-Scale the original graphics by a factor of <n>.
-Factor <n> must be 1, 2, 3, 4, or 5.
+.B \fB\-s\fP, \fB\-\-scale\fP \fI<n>\fP
+Scale the original graphics by a factor of <n>.  Factor <n> must
+be \fI1\fP, \fI2\fP, \fI3\fP, \fI4\fP, or \fI5\fP\&.
 .TP
-.B "\-v, \-verbose"
-Verbose output; prints out information useful for
-trouble\-shooting.
+.B \fB\-v\fP, \fB\-\-verbose\fP
+Verbose output; prints out information useful for trouble\-shooting.
+.UNINDENT
 .SH KEYBOARD CONTROLS
-XU4 is played mainly with the keyboard (though mouse input is supported). To make choices from menus,
-press the first letter of the menu choice (e.g. \fBJ\fR for "Journey Onward"
-at the main menu). The Config menu also supports navigation with the arrow
-keys and Enter.
-.PP
-During gameplay, the following keystrokes are supported (information taken
-from Keyboard.txt and README):
+.sp
+XU4  is  played  mainly  with  the keyboard (though mouse input is supported).
+To make choices from menus, press the first letter of the menu
+choice  (e.g. J for "Journey Onward" at the main menu). The Config menu
+also supports navigation with the arrow keys and Enter.
+.sp
+At the main menu, press \fBEscape\fP for the game module browser.
+.sp
+During gameplay, the following keystrokes  are  supported  (information
+taken from Keyboard.txt and README):
+.INDENT 0.0
 .TP
 .B A (Attack)
-Attempt to engage thy foe with the weapon thou hast
-readied (Ready Weapon command); must be followed by the
-direction of thy foe.
+Attempt  to  engage  thy  foe  with the weapon thou hast readied
+(Ready Weapon command); must be followed by the direction of thy
+foe.
 .TP
 .B B (Board)
 Board a vessel or mount a horse.
 .TP
 .B C (Cast)
-Cast a magical spell; must be followed by the number
-of the player who wishes to cast it (not needed in combat or
-in dungeon rooms), and then the first letter of the desired
-spell.  Note: All spells must have reagents mixed in advance
-of casting.
+Cast  a  magical  spell;  must  be followed by the number of the
+player who wishes to cast it (not needed in combat or in dungeon
+rooms),  and  then the first letter of the desired spell.  Note:
+All spells must have reagents mixed in advance of casting.
 .TP
 .B D (Descend)
-Climb down ladder to next level of dungeon or
-building.
+Climb down ladder to next level of dungeon or building.
 .TP
 .B E (Enter)
-Go into such places as villages, townes, castles,
-dungeons and shrines.
+Go into such places as villages, townes, castles,  dungeons  and
+shrines.
 .TP
 .B F (Fire)
-Fire a ship's cannons (once thou hast Boarded); must
-be followed by a direction.  Note: Broadsides only!
+Fire a ship\(aqs cannons (once thou hast Boarded); must be followed
+by a direction.  Note: Broadsides only!
 .TP
 .B G (Get Chest)
-Attempt to open (and disarm, if trapped) chest;
-must be followed by the number of the player who wishes to
-open the chest, except during combat and in dungeon rooms.
-Note: 'Tis wisest to use the player with the highest
-Dexterity when examining potentially dangerous chests as
-this lessens the chances of setting off any traps.
+Attempt to open (and disarm, if trapped) chest; must be followed
+by the number of the player who wishes to open the chest, except
+during combat and in dungeon rooms.  Note: \(aqTis  wisest  to  use
+the player with the highest Dexterity when examining potentially
+dangerous chests as this lessens the chances of setting off  any
+traps.
 .TP
 .B H (Hole up and camp)
-Set up camp to rest and recover from thy wounds.
-Note: This command may only be used successfully with limited frequency.
+Set  up  camp  to  rest and recover from thy wounds.  Note: This
+command may only be used successfully with limited frequency.
 .TP
 .B 1 (Ignite a torch)
-Light a torch for illumination in dungeons. Requires a special item.
+Light a torch for illumination in dungeons. Requires  a  special
+item.
 .TP
 .B J (Jimmy lock)
-Use a magical key to unlock a sealed door. Must be followed by the direction of the door that thou dost wish to unlock.
+Use  a  magical key to unlock a sealed door. Must be followed by
+the direction of the door that thou dost wish to unlock.
 .TP
 .B K (Klimb)
-Climb up a ladder to the next level of a building or dungeon, or to reach the surface from the topmost level of a dungeon.
+Climb up a ladder to the next level of a building or dungeon, or
+to reach the surface from the topmost level of a dungeon.
 .TP
 .B L (Locate Position)
 Requires a special item.
 .TP
 .B M (Mix Reagents)
-Prepare material components of spells for later use.
-Note: Thou must have reagents mixed ahead of time in
-order to cast any spells.  When asked "Reagent:", type the
-letter corresponding to the reagents desired and then type
-[Return] when thou wishes to mix them.
+Prepare material components of spells for later use.  Note: Thou
+must have reagents mixed ahead of time  in  order  to  cast  any
+spells.  When asked "Reagent:", type the letter corresponding to
+the reagents desired and then type [Return] when thou wishes  to
+mix them.
 .TP
 .B N (New order)
-Exchanges the position of two players indicated within thy party, except for player #1, for thou must lead the party.
+Exchanges  the  position  of  two  players  indicated within thy
+party, except for player #1, for thou must lead the party.
 .TP
 .B O (Open door)
 Open a door in the direction indicated.
@@ -140,103 +170,107 @@ Open a door in the direction indicated.
 Requires a special item.
 .TP
 .B Q (Quit & Save)
-Saves the current game status to disk; thou may continue after this command or power down thy computer.
+Saves the current game status to disk; thou may  continue  after
+this command or power down thy computer.
 .TP
 .B R (Ready a weapon)
-Equip a player with the weapon of thy choice (if owned) for use in combat.
+Equip  a player with the weapon of thy choice (if owned) for use
+in combat.
 .TP
 .B S (Search)
 Search thy exact current location for unusual items.
 .TP
 .B T (Talk)
-Allows a player to converse with merchants or townesfolk in the direction indicated.
+Allows a player to converse with merchants or townesfolk in  the
+direction indicated.
 .TP
 .B U (Use)
-Use an item thou hast found during play by means of the "Search" command.
+Use an item thou hast found during play by means of the "Search"
+command.
 .TP
 .B V (Volume)
 Toggles sound effects on or off.
 .TP
 .B W (Wear armour)
-Outfits a player with the armour of thy choice if owned for defense in combat.
+Outfits a player with the armour of thy choice if owned for  defense in combat.
 .TP
 .B X (Xit)
-That's (e)xit thy current form of transportation and continue on foot.
+That\(aqs (e)xit thy current form of transportation and continue on
+foot.
 .TP
 .B Y (Yell)
 Yell "giddyup" or "whoa" to speed up or slow down thy horse.
 .TP
 .B Z (Ztats)
-Displays the status and attributes of a
-selected player; if 0 is pressed instead of a player number,
-this command will display the lists of weapons, armour,
-items, reagents and mixtures.  The left and right arrow
-keys will scroll through these lists, while pressing any
-other key will return thee to game play.
+Displays the status and attributes of a selected player; if 0 is
+pressed  instead  of  a player number, this command will display
+the lists of weapons, armour, items, reagents and mixtures.  The
+left and right arrow keys will scroll through these lists, while
+pressing any other key will return thee to game play.
 .TP
-.B
-ARROW KEYS
-Control movement. North/South/East/West
+.B ARROW KEYS
+Control movement. North/South/East/West.
+.UNINDENT
 .SH FILES
+.INDENT 0.0
 .TP
 .B ~/.config/xu4/
-Configuration and saved games are stored here, when \fB\-p\fR is not in use. The config file is
-\fBxu4rc\fR. It is human\-readable and editable, but normally is
-created and updated by the in\-game configuration menu. The savegames
-are in a binary format.
+Configuration and saved games are stored here, when \fB\-p\fP
+is not in use.  The  config  file  is  \fBxu4rc\fP\&. It is
+human\-readable and editable, but normally is created and updated
+by the in\-game  configuration menu. The savegames are in a
+binary format.
 .TP
 .B ~/.config/xu4/profiles/<profname>/
-When using the \fB\-p <profname>\fR option, config and savegame data are
-stored here instead.
+When  using  the  \fB\-p\fP \fI<profname>\fP option, config and savegame data
+are stored here instead.
+.UNINDENT
+.SH COPYRIGHT
+.sp
+See the file /usr/doc/xu4\-1.4.3/COPYING for license information.
 .SH AUTHORS
+.sp
 Ultima IV was created by Richard Garriott, aka Lord British.
-.PP
-.B XU4
-authors:
-.br
-Andrew Taylor <andrewtaylor@users.sourceforge.net>
-.br
-        Main developer
-.PP
-Marc Winterrowd <nodling at yahoo dot com>
-.br
-        LZW decoder, tile animations, title screen fixes, and lots more
-.PP
-Daniel Browning\-Weber <dan_ultima@users.sourceforge.net>
-.br
-        Developer
-.PP
-Darren Janeczek <darren_janeczek@users.sourceforge.net>
-.br
-        Developer
-.PP
-Doug Day <dougday@users.sourceforge.net>
-.br
-        Developer
-.PP
-Travis Howell <kirben@users.sourceforge.net>
-.br
-        Windows port
-.PP
-Frank Wolter <FrankWolter@gmx.net>
-.br
-        Ultima IV icon used in xu4
-.PP
-Dennis De Marco <dennis@demarco.com>
-.br
-        Sound code
-.PP
-Steve Saunders <s_j_nevets@yahoo.com.au>
-.br
-        MacOSX port
-.PP
-Michael Ryan <solus@users.sourceforge.net>
-.br
-        Text colorization, profiles, enhanced LOS algorithm, title/intro sequence, general fixes
-.PP
-Gregory Saunders <grerfy@users.sourceforge.net>
-.br
-        Amiga file formats, minor enhancements
-.PP
-Man page created (from README contents) by B. Watson, for the SlackBuilds.org
-project. Permission hereby granted to use this man page anywhere, for any purpose.
+.sp
+XU4 authors:
+.INDENT 0.0
+.TP
+.B Andrew Taylor <\fI\%andrewtaylor@users.sourceforge.net\fP>
+Main developer
+.TP
+.B Marc Winterrowd <nodling at yahoo dot com>
+LZW decoder, tile animations, title screen fixes, and lots more
+.TP
+.B Daniel Browning\-Weber <\fI\%dan_ultima@users.sourceforge.net\fP>
+Developer
+.TP
+.B Darren Janeczek <\fI\%darren_janeczek@users.sourceforge.net\fP>
+Developer
+.TP
+.B Doug Day <\fI\%dougday@users.sourceforge.net\fP>
+Developer
+.TP
+.B Travis Howell <\fI\%kirben@users.sourceforge.net\fP>
+Windows port
+.TP
+.B Frank Wolter <\fI\%FrankWolter@gmx.net\fP>
+Ultima IV icon used in xu4
+.TP
+.B Dennis De Marco <\fI\%dennis@demarco.com\fP>
+Sound code
+.TP
+.B Steve Saunders <\fI\%s_j_nevets@yahoo.com.au\fP>
+MacOSX port
+.TP
+.B Michael Ryan <\fI\%solus@users.sourceforge.net\fP>
+Text colorization, profiles, enhanced LOS algorithm,  title/intro sequence, general fixes
+.TP
+.B Gregory Saunders <\fI\%grerfy@users.sourceforge.net\fP>
+Amiga file formats, minor enhancements
+.UNINDENT
+.sp
+This man  page  created  (from README and Keyboard.txt contents) by
+B. Watson, for the SlackBuilds.org project. Permission hereby granted
+to use this man page anywhere, for any purpose.
+.\" Generated by docutils manpage writer.
+.

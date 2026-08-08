@@ -2,7 +2,7 @@
 
 # Slackware build script for Pale Moon
 
-# Copyright 2018,2019,2022,2023 Vasily Sora USA
+# Copyright 2018,2019,2022,2023,2025 Vasily Sora USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,9 +28,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=palemoon
-VERSION=${VERSION:-32.5.0}
-SRCNAM1=${SRCNAM1:-$PRGNAM-${VERSION}_Release}
-SRCNAM2=${SRCNAM2:-uxp-RB_20231030}
+VERSION=${VERSION:-34.3.2}
+SRCNAM1=${SRCNAM1:-pale-moon}
+TARBALL1A=${TARBALL1A:-Pale-Moon-${VERSION}_Release}
+TARBALL1B=${TARBALL1B:-${VERSION}_Release}
+SRCNAM2=${SRCNAM2:-uxp}
+TARBALL2A=${TARBALL2A:-UXP-RB_20260804}
+TARBALL2B=${TARBALL2B:-RB_20260804}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -146,10 +150,18 @@ PATH=$TMP/autoconf-tmp/usr/bin:$PATH
 
 # Build Pale Moon
 cd $TMP
-rm -rf $SRCNAM1
-tar -xvzf $CWD/$SRCNAM1.tar.gz # --transform s/pale-moon/${SRCNAM1}/
-cd $SRCNAM1
-tar -xvzf $CWD/$SRCNAM2.tar.gz --transform s/${SRCNAM2}/platform/
+rm -rf ${SRCNAM1}-${VERSION}
+if  [ -f "$CWD/${TARBALL1A}.tar.gz" ]; then
+	tar -xvzf $CWD/${TARBALL1A}.tar.gz --transform s/${SRCNAM1}/${SRCNAM1}-${VERSION}/
+else
+	tar -xzvf $CWD/${TARBALL1B}.tar.gz  --transform s/${SRCNAM1}/${SRCNAM1}-${VERSION}/
+fi
+cd ${SRCNAM1}-${VERSION}
+if [ -f "$CWD/${TARBALL2A}.tar.gz" ]; then
+	tar -xvzf $CWD/${TARBALL2A}.tar.gz --transform s/${SRCNAM2}/platform/
+else
+	tar -xvzf $CWD/${TARBALL2B}.tar.gz --transform s/${SRCNAM2}/platform/
+fi
 
 #patch -p1 < $CWD/basilisk-include-limits.patch
 GLIB_C_1PATCH=${GLIB_C_1PATCH:-0}
@@ -168,7 +180,7 @@ find -L . \
 # "UnicodeDecodeError: 'ascii' codec can't decode byte 0xe2 in position 36: ordinal not in range(128)"
 export LANG=C
 
-export MOZCONFIG="$TMP/$SRCNAM1/.mozconfig"
+export MOZCONFIG="$TMP/${SRCNAM1}-${VERSION}/.mozconfig"
 export MOZILLA_OFFICIAL=1
 export MOZ_MAKE_FLAGS=$MAKEFLAGS
 export CFLAGS="$SLKCFLAGS"
@@ -177,7 +189,7 @@ export BUILDING_RELEASE=1
 export MOZ_ADDON_SIGNING=
 export MOZ_REQUIRE_SIGNING=
 export MOZ_TELEMETRY_REPORTING=
-export PYTHON=/usr/bin/python2
+#export PYTHON=/usr/bin/python2
 
 # A stale DBUS_SESSION_BUS_ADDRESS var can cause build failures
 unset DBUS_SESSION_BUS_ADDRESS
@@ -218,10 +230,10 @@ echo "ac_add_options --enable-optimize=\"$OPTIMIZE\"" >> .mozconfig
 
 if ! pkg-config --exists libpulse; then
   echo "ac_add_options --disable-pulseaudio" >> .mozconfig
-  TAG=${TAG}_alsa
+  TAG+="_alsa"
 elif [ $ALSA = 1 ]; then
   echo "ac_add_options --disable-pulseaudio" >> .mozconfig
-TAG=${TAG}_alsa; fi
+TAG+="_alsa"; fi
 
 if pkg-config --exists jack && [ "${BLACKLIST_JACK:-no}" != "yes" ]; then
 echo "ac_add_options --enable-jack" >> .mozconfig; fi
@@ -242,6 +254,9 @@ rm -rf usr/lib${LIBDIRSUFFIX}/$PRGNAM-devel-$VERSION
 # Pale Moon package scripts appear to attempt this, on other 'distros'; those scripts,
 # however, appear to fail on Slackware.
 rm -f usr/lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION/$PRGNAM-bin
+
+# Avoid executables in /usr/include/...
+find usr/include/ -type f |xargs chmod 0644 
 
 # Use system provided Hunspell, if desired.
 if [ "${USE_SYSTEM_HUNSPELL}" = "yes" ]; then
@@ -265,8 +280,8 @@ cat $CWD/palemoon.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/UXP
 for docs in $DOCS; do
-  cp $TMP/${SRCNAM1}/$docs $PKG/usr/doc/$PRGNAM-$VERSION/ || true
-  cp $TMP/${SRCNAM1}/platform/$docs $PKG/usr/doc/$PRGNAM-$VERSION/UXP/ || true
+  cp $TMP/${SRCNAM1}-${VERSION}/$docs $PKG/usr/doc/$PRGNAM-$VERSION/ || true
+  cp $TMP/${SRCNAM1}-${VERSION}/platform/$docs $PKG/usr/doc/$PRGNAM-$VERSION/UXP/ || true
 done
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

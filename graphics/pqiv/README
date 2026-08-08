@@ -1,7 +1,9 @@
 pqiv (powerful image viewer with minimal UI)
 
-pqiv is a powerful GTK 3 based command-line image viewer with a
-minimal UI. It is highly customizable, can be fully controlled from
-scripts, and has support for various file formats including PDF,
-Postscript, video files and archives. It is optimized to be quick and
-responsive.
+pqiv is a powerful GTK+ based command-line image viewer with a minimal
+UI. It is highly customizable, can be fully controlled from scripts,
+and has support for various file formats including PDF, Postscript,
+video files and archives. It is optimized to be quick and responsive.
+
+By default, pqiv is built with GTK+3. If you want to build with GTK+2,
+export GTK2=yes in the script's environment.

@@ -22,11 +22,11 @@ preserve_perms() {
 }
 
 preserve_perms etc/rc.d/rc.snort.new
-config etc/snort/snort.conf.new
-config etc/snort/reference.config.new
-config etc/snort/threshold.conf.new
-config etc/snort/attribute_table.dtd.new
-config etc/snort/classification.config.new
-config etc/snort/gen-msg.map.new
-config etc/snort/unicode.map.new
-
+config etc/snort/balanced.lua.new
+config etc/snort/connectivity.lua.new
+config etc/snort/inline.lua.new
+config etc/snort/max_detect.lua.new
+config etc/snort/security.lua.new
+config etc/snort/snort.lua.new
+config etc/snort/snort_defaults.lua.new
+config etc/snort/talos.lua.new

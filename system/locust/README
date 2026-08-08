@@ -1,2 +1,4 @@
 Locust is an easy to use, scriptable and scalable performance testing
 tool.
+
+NOTE: Locust 2.34.0 is the last version that support Python 3.9.

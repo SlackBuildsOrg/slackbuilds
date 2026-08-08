@@ -1,7 +1,19 @@
 #!/bin/bash
 #
 # Slackware build script for xchm
-# Written by Michael Gehring <mg@ebfe.org>
+# Written by Michael Gehring
+
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>.
+# Original version had no license. Modified version is licensed under
+# the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# 20260706 bkw: taking this over because we need a lightweight
+# viewer for CHM files in our repo.
+# - take over maintenance.
+# - update for v1.39.
+# - force use of correct wxWidgets version, since we have 3 or 4 of
+#   them that each overwrite /usr/bin/wx-config.
+# - actually use SLKCFLAGS.
 
 # 20220209 bkw: Modified by SlackBuilds.org, fix the build when wxGTK3
 # was installed after wxPython.
@@ -10,7 +22,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xchm
 SRCNAM=xCHM
-VERSION=${VERSION:-1.36}
+VERSION=${VERSION:-1.39}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -55,34 +67,30 @@ rm -rf $SRCNAM-$VERSION
 tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
 cd $SRCNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
- -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
- -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
+
+./bootstrap
 
 CFLAGS=$SLKCFLAGS \
 CXXFLAGS=$SLKCFLAGS \
-./bootstrap
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --mandir=/usr/man \
+  --with-wx-config=/usr/lib$LIBDIRSUFFIX/wx/config/gtk3-unicode-3.2 \
   --build=$ARCH-slackware-linux \
   --host=$ARCH-slackware-linux
 
 make
-make install DESTDIR=$PKG
-strip --strip-unneeded $PKG/usr/bin/$PRGNAM 2> /dev/null
+make install-strip DESTDIR=$PKG
+gzip -9 $PKG/usr/man/man*/*
 
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a \
-  ABOUT-NLS AUTHORS ChangeLog COPYING README README.xmlrpc \
-    $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a AUTHORS ChangeLog COPYING README* README.xmlrpc $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

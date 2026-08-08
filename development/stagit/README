@@ -1,0 +1,18 @@
+stagit - static git page generator
+
+stagit generates static HTML pages for git repositories. After
+generation, serving the files requires only a HTTP file server,
+making it very fast and lightweight.
+
+Features:
+  - Log of all commits from HEAD
+  - Log and diffstat per commit
+  - Show file tree with linkable line numbers
+  - Show references: local branches and tags
+  - Detect README and LICENSE file from HEAD
+  - Detect .gitmodules from HEAD
+  - Atom feed of commit log (atom.xml) and tags/refs (tags.xml)
+  - Make index page for multiple repositories with stagit-index
+  - Compatible with text browsers such as dillo, links, lynx, w3m
+
+Security: all pages are static, no CGI or dynamic code is executed.

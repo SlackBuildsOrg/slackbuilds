@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=heatshrink
 VERSION=${VERSION:-0.4.1}
-BUILD=${BUILD:-4}
+BUILD=${BUILD:-5}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -72,7 +72,11 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-make
+# Build with -fPIC so the static libraries can be linked into shared objects
+# (e.g. libbgcode is built as a shared library and links heatshrink statically).
+# heatshrink's Makefile does CFLAGS += ... ${OPTIMIZE}, so overriding OPTIMIZE
+# adds -fPIC while keeping the other required flags (-std=c99, warnings).
+make OPTIMIZE="-O2 -fPIC"
 
 mkdir -p $PKG/usr/bin
 mkdir -p $PKG/usr/lib${LIBDIRSUFFIX}
@@ -85,6 +89,43 @@ install -Dm644 heatshrink_common.h $PKG/usr/include/
 install -Dm644 heatshrink_config.h $PKG/usr/include/
 install -Dm644 heatshrink_encoder.h $PKG/usr/include/
 install -Dm644 heatshrink_decoder.h $PKG/usr/include/
+
+# Also install the headers under a heatshrink/ subdirectory, which is how some
+# consumers include them, e.g. <heatshrink/heatshrink_encoder.h> (libbgcode).
+mkdir -p $PKG/usr/include/heatshrink
+install -m644 heatshrink_common.h heatshrink_config.h \
+  heatshrink_encoder.h heatshrink_decoder.h $PKG/usr/include/heatshrink/
+
+# Install a CMake package config so consumers can locate heatshrink with
+# find_package(heatshrink CONFIG) and link the imported targets
+# heatshrink::heatshrink (static alloc) / heatshrink::heatshrink_dynalloc
+# (dynamic alloc), mapped onto the installed static libraries.
+mkdir -p $PKG/usr/lib${LIBDIRSUFFIX}/cmake/heatshrink
+cat > $PKG/usr/lib${LIBDIRSUFFIX}/cmake/heatshrink/heatshrinkConfig.cmake <<EOF
+if(NOT TARGET heatshrink::heatshrink_dynalloc)
+  add_library(heatshrink::heatshrink_dynalloc STATIC IMPORTED)
+  set_target_properties(heatshrink::heatshrink_dynalloc PROPERTIES
+    IMPORTED_LOCATION "/usr/lib${LIBDIRSUFFIX}/libheatshrink_dynamic.a"
+    INTERFACE_INCLUDE_DIRECTORIES "/usr/include")
+endif()
+if(NOT TARGET heatshrink::heatshrink)
+  add_library(heatshrink::heatshrink STATIC IMPORTED)
+  set_target_properties(heatshrink::heatshrink PROPERTIES
+    IMPORTED_LOCATION "/usr/lib${LIBDIRSUFFIX}/libheatshrink_static.a"
+    INTERFACE_INCLUDE_DIRECTORIES "/usr/include")
+endif()
+EOF
+cat > $PKG/usr/lib${LIBDIRSUFFIX}/cmake/heatshrink/heatshrinkConfigVersion.cmake <<'EOF'
+set(PACKAGE_VERSION "0.4.1")
+if(PACKAGE_VERSION VERSION_LESS PACKAGE_FIND_VERSION)
+  set(PACKAGE_VERSION_COMPATIBLE FALSE)
+else()
+  set(PACKAGE_VERSION_COMPATIBLE TRUE)
+  if(PACKAGE_VERSION VERSION_EQUAL PACKAGE_FIND_VERSION)
+    set(PACKAGE_VERSION_EXACT TRUE)
+  endif()
+endif()
+EOF
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

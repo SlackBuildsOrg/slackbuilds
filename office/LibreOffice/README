@@ -13,16 +13,16 @@ included by default, using internal versions of any external software
 components that may be needed.  This results in a very small number of
 directly required additional software packages.
 
-However most of this additional software is also available as SBo
-SlackBuilds.  During configuration, the LibreOffice SlackBuild will
-detect any such packages that are already installed and use them in
-preference to building its own internal versions. Packages from SBo
-that will be use in this way are:
-    CoinMP cppunit glm libabw libcdr libcmis libe-book libeot
-    libepubgen libexttextcat libfreehand  libmspub libmwaw
-    libnumbertext liborcus libpagemaker libqxp libnumbertext
+However since most of this additional software is also available as
+SBo SlackBuilds, some are included as mandatory requirements. During
+configuration, the LibreOffice SlackBuild will detect any such
+packages that are already installed and use them in preference to
+building its own internal versions. SlackBuilds from SBo that are not
+included in REQUIRES but are available from SBo are:
+    CoinMP cppunit glm libe-book libeot libepubgen libexttextcat
+    libmwaw libnumbertext liborcus libpagemaker libqxp libnumbertext
     libstaroffice libtommath libwps libzmf lpsolve mythes postgresql
-    qt5 valgrind ucpp unixODBC avahi libetonyek xmlsec
+    qt5 valgrind ucpp unixODBC avahi libetonyek
 
 Remember, these packages are not essential but entirely optional. If
 not found, LibreOffice will simply build its own internal versions.
@@ -58,8 +58,9 @@ as follows:
    MAKEFLAGS environment variable contains the -j option e.g.
        MAKEFLAGS=-j6
    then the SlackBuild will pass this to the LibreOffice build system
-   (via its --with-parallelism configure option). The number of parallel
-   jobs is further controlled by the PARALLEL environment variable e.g:
+   (via its --with-parallelism configure option). The number of
+   parallel jobs is further controlled by the PARALLEL environment
+   variable e.g:
        PARALLEL=1 sh LibreOffice.SlackBuild
    which would limit building to a single make process, overriding any
    value set with the -j option in MAKEFLAGS.
@@ -69,16 +70,16 @@ as follows:
    be reinstated by setting the USE_CCACHE environment to "yes" e.g.
        USE_CCACHE=yes sh LibreOffice.SlackBuild
 
-5. PyUNO is a Python interface to the LibreOffice API. It is disabled by
-   default due to interference with Openshot (therefore possibly other
-   packages). It may be enabled by setting the PYUNO environment
+5. PyUNO is a Python interface to the LibreOffice API. It is disabled
+   by default due to interference with Openshot (therefore possibly
+   other packages). It may be enabled by setting the PYUNO environment
    variable e.g.
        PYUNO=yes sh LibreOffice.SlackBuild
 
    Even without PyUNO enabled in this way, PyUNO scripts may still be
    executed by suitably extending the PYTHONPATH in the environment at
    runtime e.g.
-       PYTHONPATH=/usr/lib64/libreoffice/program my_python_uno_script.py
+     PYTHONPATH=/usr/lib64/libreoffice/program my_python_uno_script.py
 
 
 Spell checking of documents at runtime requires installation of a

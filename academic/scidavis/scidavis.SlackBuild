@@ -23,6 +23,10 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260523 bkw: Modified by SlackBuilds.org:
+# - resolve conflict with qt6.
+# - add missing "set -e".
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=scidavis
@@ -39,9 +43,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -65,6 +66,8 @@ else
   LIBDIRSUFFIX=""
 fi
 
+set -e
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
@@ -83,12 +86,17 @@ mv 3rdparty/qwtplot3d-b2655743d30ed3185f3c0e2626b33a1d29655216 3rdparty/qwtplot3
 tar xvf $CWD/liborigin-a92f26f28e531f64684b66a2731dd617bea3cb45.tar.gz -C 3rdparty/
 mv 3rdparty/liborigin-a92f26f28e531f64684b66a2731dd617bea3cb45 3rdparty/liborigin
 
+# 20260523 bkw: build was failing on a system with qt6 installed. scidavis
+# itself is qt5-only, but qwtplot3d autodetects 6 if present (breaks the
+# whole build).
+patch -p1 < $CWD/disable_qt6.diff
+
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
+  -o -perm 511 \) -exec chmod 755 {} \+ -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 

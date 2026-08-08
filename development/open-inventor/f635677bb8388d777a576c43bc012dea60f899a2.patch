@@ -1,0 +1,170 @@
+From acd312bdb91e6b0f13f2e222c42a1871d257951f Mon Sep 17 00:00:00 2001
+From: Christoph Willing <chris.willing@linux.com>
+Date: Wed, 13 May 2026 14:58:24 +1000
+Subject: [PATCH] Fix paths to models directory
+
+Signed-off-by: Christoph Willing <chris.willing@linux.com>
+---
+ doc/man/man1/SceneViewer.1 | 3 ++-
+ doc/man/man1/gview.1       | 4 +++-
+ doc/man/man1/inventor.1    | 4 ++--
+ doc/man/man1/iv2toiv1.1    | 2 +-
+ doc/man/man1/ivcat.1       | 3 ++-
+ doc/man/man1/ivdowngrade.1 | 2 +-
+ doc/man/man1/ivfix.1       | 3 ++-
+ doc/man/man1/ivinfo.1      | 3 ++-
+ doc/man/man1/ivview.1      | 7 ++++---
+ doc/man/man1/qmorf.1       | 2 +-
+ 10 files changed, 20 insertions(+), 13 deletions(-)
+
+diff --git a/doc/man/man1/SceneViewer.1 b/doc/man/man1/SceneViewer.1
+index 78efa94..4b04d6c 100644
+--- a/doc/man/man1/SceneViewer.1
++++ b/doc/man/man1/SceneViewer.1
+@@ -87,7 +87,8 @@ The following command line options are allowed:
+ Read the passed environment file, and use the lights,
+ camera, and environment settings found there.
+ .SH FILES
+-/usr/share/data/models/* - Sample 3D data files
++/usr/share/inventor/data/models/* - Sample 3D data files
++.br
+ /usr/share/src/Inventor/demos/SceneViewer/* - Source to SceneViewer
+ .SH SEE ALSO
+ drop, gview, inventor, ivcat, ivview, 
+diff --git a/doc/man/man1/gview.1 b/doc/man/man1/gview.1
+index 33eb979..a520b5f 100644
+--- a/doc/man/man1/gview.1
++++ b/doc/man/man1/gview.1
+@@ -143,8 +143,10 @@ Note that the source code to
+ comes with the
+ .I Open Inventor 3d Toolkit.
+ .SH FILES
+-/usr/share/data/models/* - Sample 3D data files
++/usr/share/inventor/data/models/* - Sample 3D data files
++.br
+ /usr/share/src/Inventor/demos/gview/* - Source to gview
++.br
+ /usr/demos/data/Inventor/gviewIcons.iv - Default icon file
+ .SH SEE ALSO
+ SceneViewer, drop, inventor, ivcat, ivview,
+diff --git a/doc/man/man1/inventor.1 b/doc/man/man1/inventor.1
+index 3b71bb3..58af9f1 100644
+--- a/doc/man/man1/inventor.1
++++ b/doc/man/man1/inventor.1
+@@ -64,8 +64,8 @@ web site provided at the end of this man page.
+ .SH SOURCE CODE
+ The Inventor Toolkit includes source code to NUMEROUS programs and 
+ examples.
+-.\" .SH FILES
+-.\" /usr/share/data/models/* - Sample 3D data files
++.SH FILES
++/usr/share/inventor/data/models/* - Sample 3D data files
+ .\" .br
+ .\" /usr/share/src/Inventor/* - Source to Inventor samples and examples
+ .SH SEE ALSO
+diff --git a/doc/man/man1/iv2toiv1.1 b/doc/man/man1/iv2toiv1.1
+index ed809f7..e3f13ef 100644
+--- a/doc/man/man1/iv2toiv1.1
++++ b/doc/man/man1/iv2toiv1.1
+@@ -22,6 +22,6 @@ contains fields for caching and culling, but the 1.0 format for
+ .I SoSeparator
+ has no fields. This information is lost during the conversion process.
+ .SH FILES
+-/usr/share/data/models/* - Sample Inventor 2.0 data files
++/usr/share/inventor/data/models/* - Sample Inventor 2.0 data files
+ .SH SEE ALSO
+ inventor, ivdowngrade, ivcat
+diff --git a/doc/man/man1/ivcat.1 b/doc/man/man1/ivcat.1
+index 9a5ae51..f61d0f5 100644
+--- a/doc/man/man1/ivcat.1
++++ b/doc/man/man1/ivcat.1
+@@ -53,7 +53,8 @@ Note that the source code to
+ comes with the
+ .I Open Inventor 3d Toolkit.
+ .SH FILES
+-/usr/share/data/models/* - Sample Inventor data files
++/usr/share/inventor/data/models/* - Sample Inventor data files
++.br
+ /usr/share/src/Inventor/tools/ivcat/* - Source to ivcat
+ .SH SEE ALSO
+ inventor, ivview, noodle, SceneViewer, gview
+diff --git a/doc/man/man1/ivdowngrade.1 b/doc/man/man1/ivdowngrade.1
+index de57889..0e66546 100644
+--- a/doc/man/man1/ivdowngrade.1
++++ b/doc/man/man1/ivdowngrade.1
+@@ -43,7 +43,7 @@ has no fields. This information is lost during the conversion process.
+ No data is lost going from the 2.1 to the 2.0 format.
+ 
+ .SH FILES
+-/usr/share/data/models/* - Sample Inventor data files
++/usr/share/inventor/data/models/* - Sample Inventor data files
+ 
+ .SH SEE ALSO
+ inventor, ivcat, ivview, SceneViewer, gview, webspace
+diff --git a/doc/man/man1/ivfix.1 b/doc/man/man1/ivfix.1
+index 2a469ee..760b346 100644
+--- a/doc/man/man1/ivfix.1
++++ b/doc/man/man1/ivfix.1
+@@ -79,7 +79,8 @@ Note that the source code to
+ comes with the
+ .I Open Inventor 3d Toolkit.
+ .SH FILES
+-/usr/share/data/models/* - Sample 3D data files
++/usr/share/inventor/data/models/* - Sample 3D data files
++.br
+ /usr/share/src/Inventor/tools/ivfix/* - Source to ivfix
+ .SH EXAMPLES
+ .IP
+diff --git a/doc/man/man1/ivinfo.1 b/doc/man/man1/ivinfo.1
+index 3dd51ed..de90bc8 100644
+--- a/doc/man/man1/ivinfo.1
++++ b/doc/man/man1/ivinfo.1
+@@ -28,7 +28,8 @@ Note that the source code to
+ comes with the
+ .I Open Inventor 3d Toolkit.
+ .SH FILES
+-/usr/share/data/models/* - Sample 3D data files
++/usr/share/inventor/data/models/* - Sample 3D data files
++.br
+ /usr/share/src/Inventor/tools/ivinfo/* - Source to ivinfo
+ .SH SEE ALSO
+ gview, inventor, ivcat, ivview, drop, 
+diff --git a/doc/man/man1/ivview.1 b/doc/man/man1/ivview.1
+index e3161e4..acf1c37 100644
+--- a/doc/man/man1/ivview.1
++++ b/doc/man/man1/ivview.1
+@@ -77,9 +77,9 @@ instead of the default
+ Off by default.  This option is incompatible with the -p option.
+ .SH EXAMPLES
+ .IP
+-.B ivview < /usr/share/data/models/toys/jackInTheBox.iv
++.B ivview < /usr/share/inventor/data/models/toys/jackInTheBox.iv
+ .IP
+-.B ivview -w /usr/share/data/models/buildings/Barcelona.iv
++.B ivview -w /usr/share/inventor/data/models/buildings/Barcelona.iv
+ .IP
+ .B ivview myCameraAndLights.iv myObject.iv
+ 
+@@ -89,7 +89,8 @@ Note that the source code to
+ comes with the
+ .I Open Inventor 3D Toolkit.
+ .SH FILES
+-/usr/share/data/models/* - Sample Inventor data files
++/usr/share/inventor/data/models/* - Sample Inventor data files
++.br
+ /usr/share/src/Inventor/tools/ivview/* - Source to ivview
+ .SH SEE ALSO
+ inventor, ivfix, ivcat, ivinfo,
+diff --git a/doc/man/man1/qmorf.1 b/doc/man/man1/qmorf.1
+index b978f99..db4429b 100644
+--- a/doc/man/man1/qmorf.1
++++ b/doc/man/man1/qmorf.1
+@@ -57,7 +57,7 @@ Note that the source code to
+ comes with the
+ .I Open Inventor 3d Toolkit.
+ .SH FILES
+-/usr/share/data/models/CyberHeads/* - Sample qmorf files
++/usr/share/inventor/data/models/CyberHeads/* - Sample qmorf files
+ .br
+ /usr/share/src/Inventor/demos/qmorf/* - Source to qmorf
+ .SH CREDITS

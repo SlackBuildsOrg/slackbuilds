@@ -1,0 +1,153 @@
+#!/bin/bash
+
+# Slackware build script for psi-plus-plugins
+
+# Copyright 2026 Jaroslaw Rauza, Ilowa, Poland
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd "$(dirname "$0")" ; CWD=$(pwd)
+
+PRGNAM=psi-plus-plugins
+VERSION=${VERSION:-1.5.1600}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+SRCNAM=psi-plus-snapshots-${VERSION}
+PKGTYPE=${PKGTYPE:-tgz}
+
+ARCH=${ARCH:-$(uname -m)}
+if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+else
+  SLKCFLAGS="-O2"
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-${PRGNAM}
+OUTPUT=${OUTPUT:-/tmp}
+JOBS=${JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 1)}
+
+# Optional plugins need extra libraries. The default is the complete set that
+# builds against Psi+ and the Qt5 stack already required by the SBo package.
+WITH_OMEMO=${WITH_OMEMO:-NO}
+WITH_OTR=${WITH_OTR:-NO}
+WITH_SCREENSHOT=${WITH_SCREENSHOT:-NO}
+WITH_PSIMEDIA=${WITH_PSIMEDIA:-NO}
+WITH_VIDEOSTATUS=${WITH_VIDEOSTATUS:-NO}
+FULL=${FULL:-NO}
+
+CORE_PLUGINS="attentionplugin;autoreplyplugin;birthdayreminderplugin;chessplugin;cleanerplugin;clientswitcherplugin;conferenceloggerplugin;contentdownloaderplugin;enummessagesplugin;extendedmenuplugin;extendedoptionsplugin;gomokugameplugin;historykeeperplugin;imageplugin;imagepreviewplugin;jabberdiskplugin;juickplugin;messagefilterplugin;openpgpplugin;pepchangenotifyplugin;qipxstatusesplugin;skinsplugin;stopspamplugin;storagenotesplugin;translateplugin;watcherplugin"
+
+case "$WITH_OMEMO" in YES|NO) ;; *) echo "WITH_OMEMO must be YES or NO"; exit 1 ;; esac
+case "$WITH_OTR" in YES|NO) ;; *) echo "WITH_OTR must be YES or NO"; exit 1 ;; esac
+case "$WITH_SCREENSHOT" in YES|NO) ;; *) echo "WITH_SCREENSHOT must be YES or NO"; exit 1 ;; esac
+case "$WITH_PSIMEDIA" in YES|NO) ;; *) echo "WITH_PSIMEDIA must be YES or NO"; exit 1 ;; esac
+case "$WITH_VIDEOSTATUS" in YES|NO) ;; *) echo "WITH_VIDEOSTATUS must be YES or NO"; exit 1 ;; esac
+case "$FULL" in YES|NO) ;; *) echo "FULL must be YES or NO"; exit 1 ;; esac
+
+if ! ls /var/log/packages/psi-plus-${VERSION}-* >/dev/null 2>&1; then
+  cat <<EOF
+${PRGNAM}: Psi+ ${VERSION} is not installed.
+${PRGNAM}: Plugins are ABI-sensitive. Build this package with the same VERSION
+${PRGNAM}: as the installed psi-plus package, or rebuild both from one snapshot.
+EOF
+  exit 1
+fi
+
+if [ ! -r "$PWD/${SRCNAM}.tar.gz" ]; then
+  cat <<EOF
+${PRGNAM}: Missing source archive: ${SRCNAM}.tar.gz
+${PRGNAM}: Download the matching Psi+ snapshot and place it beside this script:
+${PRGNAM}: https://github.com/psi-plus/psi-plus-snapshots/archive/${VERSION}/${SRCNAM}.tar.gz
+EOF
+  exit 1
+fi
+
+rm -rf "$PKG" "$TMP/$SRCNAM"
+mkdir -p "$TMP" "$PKG" "$OUTPUT"
+cd "$TMP" || exit 1
+tar xvf "$CWD/${SRCNAM}.tar.gz" || exit 1
+cd "$SRCNAM/plugins" || exit 1
+
+PLUGINS=$CORE_PLUGINS
+
+if [ "$FULL" = "YES" ]; then
+  PLUGINS=ALL
+  WITH_PSIMEDIA=YES
+else
+  [ "$WITH_OMEMO" = "YES" ] && PLUGINS="${PLUGINS};omemoplugin"
+  [ "$WITH_OTR" = "YES" ] && PLUGINS="${PLUGINS};otrplugin"
+  [ "$WITH_SCREENSHOT" = "YES" ] && PLUGINS="${PLUGINS};screenshotplugin"
+  [ "$WITH_PSIMEDIA" = "YES" ] && PLUGINS="${PLUGINS};psimedia"
+  [ "$WITH_VIDEOSTATUS" = "YES" ] && PLUGINS="${PLUGINS};videostatusplugin"
+fi
+
+mkdir build
+cd build || exit 1
+
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+cmake .. \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DMAIN_PROGRAM_NAME=psi-plus \
+  -DPLUGINS_ROOT_DIR="$TMP/$SRCNAM/plugins" \
+  -DPLUGINS_PATH=share/psi-plus/plugins \
+  -DBUILD_PLUGINS="$PLUGINS" \
+  -DBUILD_PSIMEDIA="$WITH_PSIMEDIA" \
+  -DBUILD_DEV_PLUGINS=OFF || exit 1
+
+cmake --build . --parallel "$JOBS" || exit 1
+DESTDIR="$PKG" cmake --install . || exit 1
+
+if [ ! -d "$PKG/usr/share/psi-plus/plugins" ]; then
+  echo "${PRGNAM}: Plugin installation path was not created."
+  exit 1
+fi
+
+find "$PKG/usr/share/psi-plus/plugins" -type f -name '*.so' -exec strip --strip-unneeded {} \; 2>/dev/null || true
+
+mkdir -p "$PKG/usr/doc/$PRGNAM-$VERSION"
+for DOC in "$TMP/$SRCNAM"/README* "$TMP/$SRCNAM"/COPYING* "$TMP/$SRCNAM"/LICENSE*; do
+  [ -f "$DOC" ] && install -m 0644 "$DOC" "$PKG/usr/doc/$PRGNAM-$VERSION/"
+done
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+cat > "$PKG/usr/doc/$PRGNAM-$VERSION/build-options.txt" <<EOF
+Psi+ source snapshot: ${VERSION}
+Built plugins: ${PLUGINS}
+WITH_OMEMO=${WITH_OMEMO}
+WITH_OTR=${WITH_OTR}
+WITH_SCREENSHOT=${WITH_SCREENSHOT}
+WITH_PSIMEDIA=${WITH_PSIMEDIA}
+WITH_VIDEOSTATUS=${WITH_VIDEOSTATUS}
+FULL=${FULL}
+EOF
+
+mkdir -p "$PKG/install"
+cat "$CWD/slack-desc" > "$PKG/install/slack-desc"
+
+cd "$PKG" || exit 1
+/sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

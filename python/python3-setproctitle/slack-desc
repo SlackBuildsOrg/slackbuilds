@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                    |-----handy-ruler------------------------------------------------------|
+python3-setproctitle: python3-setproctitle (library to customize process title)
+python3-setproctitle:
+python3-setproctitle: The library allows a process to change its title (as displayed by
+python3-setproctitle: system tools such as ps and top).
+python3-setproctitle:
+python3-setproctitle:
+python3-setproctitle:
+python3-setproctitle: Homepage: https://github.com/dvarrazzo/py-setproctitle
+python3-setproctitle:
+python3-setproctitle:
+python3-setproctitle:

@@ -1,0 +1,158 @@
+commit 8723e8b8c69c08bae8abe02ea1f4a49758b8bdfc
+Author: drkhsh <me@drkhsh.at>
+Date:   Thu Jul 24 22:41:25 2025 +0200
+
+    more concise memory calculation on Linux
+    
+    more flexible parsing for /proc/meminfo to take shared and reclaimable
+    memory into account. this matches the output with free(1).
+    
+    additionally this could fix some corner cases, as the order of fields in
+    /proc/meminfo is not strictly defined.
+    
+    slstatus:
+    percent 81% free 2.5 Gi total 23.4 Gi used 19.0 Gi
+    
+    free(1):
+                   total        used        free      shared  buff/cache   available
+    Mem:            23Gi        19Gi       2.5Gi       1.3Gi       3.2Gi       3.6Gi
+
+diff --git a/components/ram.c b/components/ram.c
+index 15c4b74..bf71dcf 100644
+--- a/components/ram.c
++++ b/components/ram.c
+@@ -11,36 +11,45 @@
+ 	ram_free(const char *unused)
+ 	{
+ 		uintmax_t free;
++		FILE *fp;
+ 
+-		if (pscanf("/proc/meminfo",
+-		           "MemTotal: %ju kB\n"
+-		           "MemFree: %ju kB\n"
+-		           "MemAvailable: %ju kB\n",
+-		           &free, &free, &free) != 3)
++		if (!(fp = fopen("/proc/meminfo", "r")))
+ 			return NULL;
+ 
++		if (lscanf(fp, "MemFree:", "%ju kB", &free) != 1) {
++			fclose(fp);
++			return NULL;
++		}
++
++		fclose(fp);
+ 		return fmt_human(free * 1024, 1024);
+ 	}
+ 
+ 	const char *
+ 	ram_perc(const char *unused)
+ 	{
+-		uintmax_t total, free, buffers, cached;
++		uintmax_t total, free, buffers, cached, shmem, sreclaimable;
+ 		int percent;
++		FILE *fp;
++
++		if (!(fp = fopen("/proc/meminfo", "r")))
++			return NULL;
+ 
+-		if (pscanf("/proc/meminfo",
+-		           "MemTotal: %ju kB\n"
+-		           "MemFree: %ju kB\n"
+-		           "MemAvailable: %ju kB\n"
+-		           "Buffers: %ju kB\n"
+-		           "Cached: %ju kB\n",
+-		           &total, &free, &buffers, &buffers, &cached) != 5)
++		if (lscanf(fp, "MemTotal:", "%ju kB", &total)  != 1 ||
++		    lscanf(fp, "MemFree:", "%ju kB", &free)    != 1 ||
++		    lscanf(fp, "Buffers:", "%ju kB", &buffers) != 1 ||
++		    lscanf(fp, "Cached:", "%ju kB", &cached)   != 1 ||
++		    lscanf(fp, "Shmem:", "%ju kB", &shmem)     != 1 ||
++		    lscanf(fp, "SReclaimable:", "%ju kB", &sreclaimable) != 1) {
++			fclose(fp);
+ 			return NULL;
++		}
++		fclose(fp);
+ 
+ 		if (total == 0)
+ 			return NULL;
+ 
+-		percent = 100 * ((total - free) - (buffers + cached)) / total;
++		percent = 100 * (total - free - buffers - cached - sreclaimable + shmem) / total;
+ 		return bprintf("%d", percent);
+ 	}
+ 
+@@ -59,18 +68,24 @@
+ 	const char *
+ 	ram_used(const char *unused)
+ 	{
+-		uintmax_t total, free, buffers, cached, used;
++		uintmax_t total, free, buffers, cached, used, shmem, sreclaimable;
++		FILE *fp;
++
++		if (!(fp = fopen("/proc/meminfo", "r")))
++			return NULL;
+ 
+-		if (pscanf("/proc/meminfo",
+-		           "MemTotal: %ju kB\n"
+-		           "MemFree: %ju kB\n"
+-		           "MemAvailable: %ju kB\n"
+-		           "Buffers: %ju kB\n"
+-		           "Cached: %ju kB\n",
+-		           &total, &free, &buffers, &buffers, &cached) != 5)
++		if (lscanf(fp, "MemTotal:", "%ju kB", &total)  != 1 ||
++		    lscanf(fp, "MemFree:", "%ju kB", &free)    != 1 ||
++		    lscanf(fp, "Buffers:", "%ju kB", &buffers) != 1 ||
++		    lscanf(fp, "Cached:", "%ju kB", &cached)   != 1 ||
++		    lscanf(fp, "Shmem:", "%ju kB", &shmem)     != 1 ||
++		    lscanf(fp, "SReclaimable:", "%ju kB", &sreclaimable) != 1) {
++			fclose(fp);
+ 			return NULL;
++		}
++		fclose(fp);
+ 
+-		used = (total - free - buffers - cached);
++		used = total - free - buffers - cached - sreclaimable + shmem;
+ 		return fmt_human(used * 1024, 1024);
+ 	}
+ #elif defined(__OpenBSD__)
+diff --git a/util.c b/util.c
+index bca9b2e..d33cf9d 100644
+--- a/util.c
++++ b/util.c
+@@ -139,3 +139,20 @@ pscanf(const char *path, const char *fmt, ...)
+ 
+ 	return (n == EOF) ? -1 : n;
+ }
++
++int
++lscanf(FILE *fp, const char *key, const char *fmt, void *res)
++{
++		int n;
++		char line[256];
++
++		n = -1;
++		while (fgets(line, sizeof(line), fp))
++			if (strncmp(line, key, strlen(key)) == 0) {
++				n = sscanf(line + strlen(key), fmt, res);
++				break;
++			}
++
++		rewind(fp);
++		return (n == 1) ? 1 : -1;
++}
+diff --git a/util.h b/util.h
+index cf4b027..7a960aa 100644
+--- a/util.h
++++ b/util.h
+@@ -1,5 +1,6 @@
+ /* See LICENSE file for copyright and license details. */
+ #include <stdint.h>
++#include <stdio.h>
+ 
+ extern char buf[1024];
+ 
+@@ -14,3 +15,4 @@ int esnprintf(char *str, size_t size, const char *fmt, ...);
+ const char *bprintf(const char *fmt, ...);
+ const char *fmt_human(uintmax_t num, int base);
+ int pscanf(const char *path, const char *fmt, ...);
++int lscanf(FILE *fp, const char *key, const char *fmt, void *res);

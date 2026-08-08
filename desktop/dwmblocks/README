@@ -6,7 +6,3 @@ mouse clicks.
 
 If a config.h is found in the SlackBuild directory it will be copied to
 the source directory and used in the build, allowing easy customisation.
-
-For better window manager stability, replace pulseaudio by installing a
-newer version of pipewire (>= 0.3.52; for context, Slackware 15.0
-provides pipewire 0.3.44) and wireplumber (>= 0.4.11, at SBo).

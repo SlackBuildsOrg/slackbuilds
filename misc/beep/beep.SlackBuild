@@ -2,15 +2,27 @@
 
 # Slackware build script for beep
 
-# Written by gnubien  contact: memo gnubien at freenode.net
-# This submission is considered to be in the public domain
+# Written by gnubien.
+# This submission is considered to be in the public domain.
+
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>.
+
+# In case you live in a country where public domain isn't valid,
+# you can take this as being licensed under the WTFPL. See
+# http://www.wtfpl.net/txt/copying/ for details.
 
 # Modified by Robby Workman of the SlackBuilds.org project
+
+# 20260704 bkw:
+# - take over maintenance.
+# - switch to maintained fork on github.
+# - install setuid by default (but only for audio group).
+# - add instructions on pcspkr module and alsamixer to README.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=beep
-VERSION=${VERSION:-1.3}
+VERSION=${VERSION:-1.4.12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -23,9 +35,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -43,23 +52,18 @@ elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
 fi
 
-# See the manpage for more information on why, but you will need to install
-# beep with the suid bit set in order to have full functionality  in all
-# instances.  The default is NO, but it *should* be safe to change it to YES
-SET_SUID=NO
+set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
-cd $TMP || exit 1
+cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar -xzvf $CWD/$PRGNAM-$VERSION.tar.gz || exit 1
-cd $PRGNAM-$VERSION || exit 1
+tar -xzvf $CWD/$PRGNAM-$VERSION.tar.gz
+cd $PRGNAM-$VERSION
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
- -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
 # NO configure file for beep
 
@@ -68,22 +72,34 @@ find -L . \
 # with some troubleshooting tones.  Thanks to Erik van Tromp (alphageek) for
 # the suggestion.
 
-mkdir -p $PKG/bin $PKG/usr/man/man1 || exit 1
-
-make || exit
-strip --strip-unneeded beep
-
-if [ "$SET_SUID" = "YES" ]; then
-  install -m 4755 beep $PKG/bin
+# See the manpage for more information on why, but you will need
+# to install beep with the suid bit set in order to have full
+# functionality  in all instances.
+# 20260704 bkw: install setuid by default, but only runnable by the 'audio'
+# group. the "correct" way to do it would be udev rules for the pcspkr module,
+# but I'm not faffing with that.
+if [ "${SETUID:-yes}" = "yes" ]; then
+  PERMS=4750
+  GROUP=audio
 else
-   install -m 0755 beep $PKG/bin
+  PERMS=0755
+  GROUP=root
 fi
 
-install -m 0644 beep.1.gz $PKG/usr/man/man1
+# 20260704 bkw: not needed on 15.0, but 86 -Werror on general principles.
+sed -i '/-Werror/d' GNUmakefile
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CHANGELOG COPYING CREDITS INSTALL README $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+mkdir -p $PKG/bin $PKG/usr/man/man1
+
+make CFLAGS="$SLKCFLAGS"
+install -s -m $PERMS -o root -g $GROUP beep $PKG/bin
+gzip -9 < beep.1 > $PKG/usr/man/man1/beep.1.gz
+
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+rm -f INSTALL.md PACKAGING.md # binary package won't need these
+cp -a COPYING *.md $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Slackware build script for untldr
+# Slackware build script for tinytldr
 
+# Copyright 2025 Antonio Leal <antonioleal@yahoo.com>
 # Copyright 2022-2023 Ivan Kovmir <i@kovmir.eu>
 # All rights reserved.
 #
@@ -26,7 +27,7 @@ cd "$(dirname "$0")" ; CWD=$(pwd)
 
 PRGNAM=tinytldr
 BINNAM=tldr
-VERSION=${VERSION:-1.1.3}
+VERSION=${VERSION:-2.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -63,6 +64,9 @@ chmod -R u+w,go+r-w,a-s .
 make
 DESTDIR="$PKG" PREFIX="/usr" make install
 strip -s "$PKG/usr/bin/$BINNAM"
+
+mv "$PKG/usr/share/man" "$PKG/usr"
+gzip "$PKG/usr/man/man1/tldr.1"
 
 mkdir -p "$PKG/install"
 mkdir -p "$PKG/usr/doc/$PRGNAM-$VERSION"

@@ -1,12 +1,9 @@
 Linux port of FAR v2
 
-For python plugins support, use PYTHON=yes
-
 Optional dependencies:
-wxGTK3 - GUI version, use WX=yes
-xerces-c - Syntax highlight, use COLORER=yes
-libuchardet - Detecting encoding, use UCD=yes
-libnfs - NetRocks plugin
+  wxGTK3 - GUI version, use WX=yes
+  libnfs - NetRocks plugin
+  aws-sdk-cpp (not available on SlackBuilds.org) - AWS S3 support
 
 Example:
-WX=no COLORER=yes UCD=yes ./far2l.SlackBuild
+  WX=yes ./far2l.SlackBuild

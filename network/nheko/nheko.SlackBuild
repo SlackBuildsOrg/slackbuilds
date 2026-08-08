@@ -26,7 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nheko
 VERSION=${VERSION:-0.11.3}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -38,9 +38,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -88,6 +85,8 @@ find -L . \
 patch -p1 < $CWD/nheko-0.11.3-fix-for-fmt-10.patch
 patch -p1 < $CWD/871e403f6799df48cfbbe08eba56d473a0c34216.patch
 
+sed -i -e '/class RegisterPage/i #include <fmt\/ranges.h>\n' src/RegisterPage.h
+
 mkdir -p build
 cd build
 cmake \
@@ -108,7 +107,7 @@ cmake \
   -DUSE_BUNDLED_CPPHTTPLIB=ON \
   -DUSE_BUNDLED_BLURHASH=ON \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-  -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
+  -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -fpermissive" \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DLIB_SUFFIX=${LIBDIRSUFFIX} \
   -DMAN_INSTALL_DIR=/usr/man \

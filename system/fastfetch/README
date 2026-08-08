@@ -5,10 +5,18 @@ displaying them in a pretty way. It is written mainly in C, with
 performance and customizability in mind.
 
 This SlackBuild disables runtime detection for package managers that
-would not be expected to be present on a Slackware system (like dpkg,
-rpm, pacman, etc). If you would like to enable runtime detection for
+would not be expected to be present on a Slackware system (like winget,
+hpkg, pacman, etc). If you would like to enable runtime detection for
 any disabled package manager, you can run fastfetch with
   --packages-disabled ""
 to re-enable detection.
 
-ddcutil and chafa are optional dependencies.
+Optional dependencies include:
+
+  ddcutil (get more information about external screens)
+  chafa (render non-ascii images with libchafa)
+
+Version 2.66 is the last one to build with the versions of GCC or LLVM
+on Slackware 15.0. Building either one of these for a slightly newer
+screen fetch program would be overkill, so updates are suspended for
+now.

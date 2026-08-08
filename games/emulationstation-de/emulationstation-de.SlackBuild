@@ -2,9 +2,9 @@
 
 # Slackware build script for emulationstation-de
 
-# Copyright 2022 Damian Perticone, Berisso, Argentina
+# Copyright 2026 Pablo Romano, Seville, Spain
 # All rights reserved.
-
+#
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
 #
@@ -22,19 +22,25 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# NOTE: This script targets ES-DE 2.2.1, the last release of the 2.x branch.
+# It is designed for Slackware 15.0, which ships ffmpeg 4.4.x. The 3.x branch
+# requires ffmpeg 5.x or newer and is therefore NOT compatible with Slack 15.0.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=emulationstation-de
-VERSION=${VERSION:-v1.2.6}
+VERSION=${VERSION:-2.2.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+
+# GitLab archives the source with a "v" prefix in the tag name
+SRCVER="v$VERSION"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
-
        *) ARCH=$( uname -m ) ;;
   esac
 fi
@@ -62,14 +68,14 @@ else
   LIBDIRSUFFIX=""
 fi
 
-set -e 
+set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $PRGNAM-$SRCVER
+tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz
+cd $PRGNAM-$SRCVER
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -77,28 +83,49 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Patch for libgit2 >= 1.0 API changes (Slackware 15.0 ships libgit2 1.x)
+sed -i \
+  -e 's/git_transfer_progress\b/git_indexer_progress/g' \
+  -e 's/git_transfer_progress_cb\b/git_indexer_progress_cb/g' \
+  -e 's/git_error_clear();//g' \
+  es-app/src/guis/GuiThemeDownloader.cpp
+
+# Build using cmake in a dedicated build subdirectory.
+# APPLICATION_UPDATER=off is recommended for packaged/distro builds.
+# ES-DE 2.2.1 uses the ffmpeg 4.x API, compatible with Slackware 15.0's
+# system ffmpeg (4.4.x). No additional ffmpeg package is required.
 mkdir -p build
 cd build
-   cmake \
+  cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release .. 
-   make
-   make install/strip DESTDIR=$PKG
+    -DCMAKE_INSTALL_LIBDIR=lib${LIBDIRSUFFIX} \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DAPPLICATION_UPDATER=off \
+    ..
+  make
+  make install/strip DESTDIR=$PKG
 cd ..
-mkdir -p $PKG/usr/man
-cp -a $PKG/usr/share/man $PKG/usr/
-rm -r $PKG/usr/share/man
 
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+# Compress man pages if installed under /usr/man or /usr/share/man
+if [ -d $PKG/usr/man ]; then
+  find $PKG/usr/man -type f -exec gzip -9 {} \;
+  for i in $( find $PKG/usr/man -type l ) ; do
+    ln -s $( readlink $i ).gz $i.gz ; rm $i
+  done
+elif [ -d $PKG/usr/share/man ]; then
+  mv $PKG/usr/share/man $PKG/usr/
+  find $PKG/usr/man -type f -exec gzip -9 {} \;
+  for i in $( find $PKG/usr/man -type l ) ; do
+    ln -s $( readlink $i ).gz $i.gz ; rm $i
+  done
+fi
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a LICENSE README.md USERGUIDE.md THEMES.md  $PKG/usr/doc/$PRGNAM-$VERSION
+for f in CHANGELOG.md CONTRIBUTING.md LICENSE README.md; do
+  [ -f "$f" ] && cp -a "$f" $PKG/usr/doc/$PRGNAM-$VERSION/
+done
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

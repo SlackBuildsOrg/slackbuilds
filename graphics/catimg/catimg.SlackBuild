@@ -2,6 +2,7 @@
 
 # Slackware build script for catimg
 
+# Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2023 Samuel Young, MO, USA
 # All rights reserved.
 #
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=catimg
-VERSION=${VERSION:-2.7.0}
+VERSION=${VERSION:-2.8.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

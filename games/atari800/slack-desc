@@ -13,7 +13,7 @@ atari800: emulator, originally written by David Firth and now developed by the
 atari800: Atari800 Development Team. This program is copyrighted and released
 atari800: under the GPL.
 atari800:
-atari800: This package built @WITH@ OpenGL support.
+atari800: This package built @WITH@ OpenGL, for SDL @SDLVER@.
 atari800:
 atari800:
 atari800:

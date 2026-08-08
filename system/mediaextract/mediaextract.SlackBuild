@@ -6,12 +6,13 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260712 bkw: updated for v1.2.1.
 # 20240813 bkw: updated for v1.2.0.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=mediaextract
-VERSION=${VERSION:-1.2.0}
+VERSION=${VERSION:-1.2.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -63,7 +64,10 @@ find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} \+ -o \
 # macro calls. This should be revisited when/if there's a new
 # version of mediaextract.
 # 20240813 bkw: still 9, in v1.2.0.
-patch -p1 < $CWD/compilefix.diff
+# 20260712 bkw: upstream hardcoded 9 for 1.2.1, don't need this diff.
+if [ "$VERSION" = "1.1.1" -o "$VERSION" = "1.2.0" ]; then
+  patch -p1 < $CWD/compilefix.diff
+fi
 
 cd source
 

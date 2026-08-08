@@ -6,7 +6,7 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
                |-----handy-ruler------------------------------------------------------|
-human-gtk-theme: human-gtk-theme (the old Ubuntu Human theme)
+human-gtk-theme: human-gtk-theme (the old ubuntu human theme)
 human-gtk-theme:
 human-gtk-theme: This theme is mainly intended for MATE and Xfce desktop environments.
 human-gtk-theme:

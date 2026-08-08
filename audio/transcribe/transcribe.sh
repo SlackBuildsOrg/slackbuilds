@@ -11,5 +11,5 @@ if [ -n "$1" ]; then
 	arg="`readlink -f "$1"`"
 fi
 
-cd /usr/lib/transcribe
+cd /usr/lib64/transcribe
 exec ./transcribe "$arg"

@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
           |-----handy-ruler------------------------------------------------------|
-wmcpuwatch: wmcpuwatch (form of wmmon)
+wmcpuwatch: wmcpuwatch (dockapp that shows CPU load)
 wmcpuwatch:
-wmcpuwatch: It is a fork of wmmon. wmmon shows the load of up to 10 CPUs. With a
-wmcpuwatch: little tweaking it is possible to show 12 with wmmon, but when in 2017
-wmcpuwatch: Intel announced a 18 core CPU (and AMD was with their Ryzen even
-wmcpuwatch: earlier), there was time for a new dockapp.
+wmcpuwatch: wmcpuwatch is a WindowMaker dockapp which aims to show the load of
+wmcpuwatch: every logical CPU on the system.
 wmcpuwatch:
-wmcpuwatch: wmcpuwatch now shows the load of all CPUs in the lower frame which
-wmcpuwatch: allows 40 CPUs at max.
+wmcpuwatch: It is a fork of wmmon. wmmon shows the load of up to 10 CPUs. With
+wmcpuwatch: a little tweaking it is possible to show 12 with wmmon, but when in
+wmcpuwatch: 2017 Intel announced an 18 core CPU (and AMD was with their Ryzen even
+wmcpuwatch: earlier), then it was time for a new dockapp.
 wmcpuwatch:
-wmcpuwatch: https://bitbucket.org/StarFire/wmcpuwatch
+wmcpuwatch:

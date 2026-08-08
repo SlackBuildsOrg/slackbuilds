@@ -1,0 +1,43 @@
+README.Slackware
+================
+
+This file contains some specific instructions to complete the
+installation of caddy on Slackware.
+
+Before running the caddy.SlackBuild script, you will need to create
+the 'caddy' user and group. The script won't run if these do not exist.
+
+The suggested UID and GID is , but you can change this as needed:
+
+  # groupadd -g 398 caddy
+  # useradd -u 398 -g caddy -d /dev/null -s /bin/false caddy
+
+If you want to start caddy on system bootup, include these lines in
+your /etc/rc.d/rc.local:
+
+  # Start caddy
+  if [ -x /etc/rc.d/rc.caddy ]; then
+    /etc/rc.d/rc.caddy start
+  fi
+
+To guarantee a clean shutdown of caddy, include this in
+/etc/rc.d/rc.local_shutdown:
+
+  # Stop caddy
+  if [ -x /etc/rc.d/rc.caddy ]; then
+    /etc/rc.d/rc.caddy stop
+  fi
+
+Make /etc/rc.d/rc.caddy executable
+
+  # chmod +x /etc/rc.d/rc.caddy
+
+Starting caddy
+
+  # /etc/rc.d/rc.caddy start
+
+When you run Caddy, it may try to bind to low ports unless otherwise 
+specified in your config. Elevated privileges for this, you will 
+need to give your new binary permission to do so. 
+
+  # setcap cap_net_bind_service=+ep /usr/sbin/caddy

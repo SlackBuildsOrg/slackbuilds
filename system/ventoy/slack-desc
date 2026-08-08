@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+      |-----handy-ruler------------------------------------------------------|
+ventoy: ventoy (Bootable USB Solution)
+ventoy:
+ventoy: Ventoy is an open source tool to create bootable USB drives
+ventoy: for ISO/WIM/IMG/VHD(x)/EFI files.
+ventoy:
+ventoy: With Ventoy, you do not need to format the disk repeatedly.
+ventoy: Just copy the image files to the USB drive and boot them.
+ventoy: You can copy many files at a time and Ventoy will provide
+ventoy: a boot menu. It also supports browsing local disk files.
+ventoy:
+ventoy:

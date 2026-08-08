@@ -25,8 +25,14 @@
 
 cd $(dirname $0) ; CWD=$(pwd)
 
+# x2goserver-20201227_08aa5e6.tar.xz
+# x2goserver-20230525_a166907.tar.xz
 PRGNAM=x2goserver
+#VERSION=${VERSION:-20230525_a166907}
+#VERSION=${VERSION:-20220808_1a6c81b}
 VERSION=${VERSION:-20201227_08aa5e6}
+#VERSION=${VERSION:-4.1.0.6}
+
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -71,7 +77,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.?z
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -89,7 +95,19 @@ make install PREFIX=/usr LIBDIR=/usr/lib${LIBDIRSUFFIX}/x2go SHAREDIR=/usr/share
 # Move man pages in the proper place and compress them
 mv $PKG/usr/share/man $PKG/usr
 find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+for i in $( find $PKG/usr/man -type l ) 
+do 
+	ln -s $( readlink $i ).gz $i.gz 
+	rm $i 
+done
+
+for i in $PKG/usr/share/applications/*.desktop
+do
+	echo $i
+	chmod 644 $i
+done
+# xpm image corrupted in the original distribution
+cp $CWD/x2goagent.xpm  $PKG/usr/share/pixmaps/
 
 # Install init script
 install -D -m 0755 $CWD/rc.x2goserver $PKG/etc/rc.d/rc.x2goserver

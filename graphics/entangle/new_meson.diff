@@ -1,0 +1,19 @@
+diff -Naur entangle-3.0/src/meson.build entangle-3.0.patched/src/meson.build
+--- entangle-3.0/src/meson.build	2020-06-14 17:17:25.654595900 -0400
++++ entangle-3.0.patched/src/meson.build	2026-06-13 23:58:54.124505540 -0400
+@@ -40,7 +40,6 @@
+ desktop = appname + '.desktop'
+ 
+ i18n.merge_file (
+-  desktop,
+   type: 'desktop',
+   input: desktop,
+   output: desktop,
+@@ -60,7 +59,6 @@
+ 		 '@INPUT@', '@OUTPUT@'])
+ 
+ i18n.merge_file(
+-  metainfo,
+   input: metainfotmp,
+   output: metainfo,
+   install: true,

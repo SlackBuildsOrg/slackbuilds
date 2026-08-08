@@ -15,7 +15,20 @@ privilege separation - something like this should suffice:
   groupadd -g 271 smtpq
   useradd -u 271 -g 271 -r -s /bin/false -d /var/empty smtpq
 
-You will want to modify rc.local so that OpenSMTPD
+With OpenSMTPD 7.8.0 and newer versions with the default "mbox" in the
+/etc/opensmtpd/smtpd.conf then the permissions of /var/spool/mail 
+may not be the Slackware default of 1777 and must be changed to 755
+ instead:
+
+  chmod 755 /var/spool/mail
+
+As an alternative to "mbox" one can use "maildir" as this stores the
+ messages in each users home directory instead of /var/spool/mail.
+D. J. Bernstein answers the question, "Why should I use maildir?" here:
+
+  https://cr.yp.to/proto/maildir.html
+
+You may want to modify rc.local so that OpenSMTPD
 will start on boot something like this:
 
   # start opensmtpd a replacement for sendmail and postfix

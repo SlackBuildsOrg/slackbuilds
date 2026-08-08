@@ -1,3 +1,5 @@
+jbigkit (highly effective lossless compression algorithm)
+
 JBIG is a highly effective lossless compression algorithm for 
 high-resolution bi-level images (one bit per pixel), which is 
 particularly suitable for scanned documents or fax pages.

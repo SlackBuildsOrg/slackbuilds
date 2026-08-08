@@ -44,4 +44,3 @@ Them can start add rc.darkhttpd into rc.local
     if [ -x /etc/rc.d/rc.darkhttpd ]; then
         /etc/rc.d/rc.darkhttpd start
     fi
-

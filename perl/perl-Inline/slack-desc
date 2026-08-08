@@ -13,7 +13,7 @@ perl-Inline: programming languages directly "inline" in a Perl script or module.
 perl-Inline: The code is automatically compiled as needed, and then loaded for
 perl-Inline: immediate access from Perl.
 perl-Inline:
-perl-Inline: This also installs the sub-module perl-Inline-C.
 perl-Inline:
 perl-Inline:
-perl-Inline: https://metacpan.org/release/SISYPHUS/Inline-0.53
+perl-Inline:
+perl-Inline:

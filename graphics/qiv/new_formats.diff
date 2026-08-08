@@ -1,25 +1,22 @@
 diff -Naur qiv/Makefile qiv.patched/Makefile
---- qiv/Makefile	2025-04-03 02:54:29.000000000 -0400
-+++ qiv.patched/Makefile	2025-06-16 22:57:44.205086413 -0400
+--- qiv/Makefile	2026-04-19 15:17:56.000000000 -0400
++++ qiv.patched/Makefile	2026-06-08 18:43:29.962486700 -0400
 @@ -23,7 +23,7 @@
-
+ 
  # This sets the file extentions to filter on (other file types will be
  # skipped.) It should reflect whatever can be loaded via gdk-pixbuf-loader.
--EXTNS = GIF TIFF XPM PNG PPM PNM PGM PCX BMP EIM JPEG SVG WMF ICO WEBP HEIF
-+EXTNS = GIF TIFF XPM PNG PPM PNM PGM PCX BMP EIM JPEG SVG WMF ICO WEBP HEIF XCF PSD ICNS TGA RAW JP2
+-EXTNS = GIF TIFF XPM TGA PNG PPM PNM PGM PCX BMP EIM JPEG SVG WMF ICO ICNS WEBP HEIF
++EXTNS = GIF TIFF XPM TGA PNG PPM PNM PGM PCX BMP EIM JPEG SVG WMF ICO ICNS WEBP HEIF XCF PSD ICNS TGA RAW JP2
  
  # Comment this line out if your system doesn't have getopt_long().
  GETOPT_LONG = -DHAVE_GETOPT_LONG
 diff -Naur qiv/main.h qiv.patched/main.h
---- qiv/main.h	2025-04-03 02:54:29.000000000 -0400
-+++ qiv.patched/main.h	2025-06-16 23:00:45.234069377 -0400
-@@ -206,7 +206,22 @@
-     ".webp",
- #endif
+--- qiv/main.h	2026-04-19 15:17:56.000000000 -0400
++++ qiv.patched/main.h	2026-06-08 18:46:37.637485985 -0400
+@@ -219,6 +219,21 @@
  #ifdef EXTN_HEIF
--    ".heic", ".heif",
-+    ".heic", ".heif", ".avif",
-+#endif
+     ".heic", ".heif", ".avif",
+ #endif
 +#ifdef EXTN_XCF
 +    ".xcf",
 +#endif
@@ -34,15 +31,14 @@ diff -Naur qiv/main.h qiv.patched/main.h
 +#endif
 +#ifdef EXTN_RAW
 +   ".dng", ".cr2", ".crw", ".nef", ".orf", ".pef", ".arw", ".erf", ".mrw", ".raf",
- #endif
++#endif
      NULL
  };
-@@ -252,6 +267,28 @@
- #endif
- #ifdef EXTN_HEIF
+ 
+@@ -268,6 +283,27 @@
    "ISO Media, HEIF Image",
-+  "ISO Media, AVIF Image",
-+#endif
+   "ISO Media, AVIF Image",
+ #endif
 +#ifdef EXTN_XCF
 +  "GIMP XCF image data",
 +#endif
@@ -63,6 +59,7 @@ diff -Naur qiv/main.h qiv.patched/main.h
 +  "Canon CR2",
 +  "Olympus ORF",
 +  "Minolta Dimage",
- #endif
++#endif
   NULL
  };
+ #endif

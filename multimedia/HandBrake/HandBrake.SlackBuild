@@ -34,17 +34,17 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=HandBrake
-VERSION=${VERSION:-1.11.0}
+VERSION=${VERSION:-1.11.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 # A lot of versions to define...
 amfVER=${amfVER:-1.5.0}
-svtVER=${svtVER:-4.0.1}
+svtVER=${svtVER:-4.1.0}
 dav1dVER=${dav1dVER:-1.5.3}
 fdkVER=${fdkVER:-2.0.3}
-ffmpegVER=${ffmpegVER:-8.0.1}
+ffmpegVER=${ffmpegVER:-8.0.2}
 blurayVER=${blurayVER:-1.4.0}
 dvdnavVER=${dvdnavVER:-7.0.0}
 dvdreadVER=${dvdreadVER:-7.0.1}
@@ -185,9 +185,12 @@ else
   patch -Rp1 < $CWD/revert-gtk-4.6-switch.patch
 fi
 
-# Requires newer meson than included with 15.0. Hopefully this works:
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
+# Upstream's libtheora requires autoconf 2.71.0, so HandBrake devs also
+# made that a requirement for HandBrake itself. However, Slackware
+# includes libtheora, so we don't need to build it during compilation,
+# so autoconf's 2.71.0 requirement can be reverted back to 2.69.0 (at
+# least until things start breaking...
+sed -i 's|2,71,0|2,69,0|' make/configure.py
 
 # libdovi and nvdec/nvenc currently don't compile successfully on my
 # machine. Feel free to send any suggestions/fixes.

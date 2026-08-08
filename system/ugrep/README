@@ -1,0 +1,11 @@
+ugrep is a drop-in replacement for BSD and GNU grep, but much faster and
+with a ton of new features.
+
+This is unlike other popular grep claiming to be "grep alternatives" or
+"replacements" when those actually implement incompatible command-line
+options and use an incompatible regex matcher, i.e., Perl regex only
+versus POSIX BRE (grep) and ERE (egrep) when ugrep supports all regex
+modes.
+
+ugrep has full Unicode extended regex pattern syntax with multi-line
+pattern matching without any special command-line options.

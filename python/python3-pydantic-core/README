@@ -2,3 +2,5 @@ python3-pydantic-core (provides the core functionality for pydantic)
 
 This package provides the core functionality for pydantic validation
 and serialization.
+
+#NOTE: 2.46.x is last python3.9 version

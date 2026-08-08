@@ -6,10 +6,10 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
                               |-----handy-ruler------------------------------------------------------|
-perl-Pod-POM-View-Restructured: perl-Pod-POM-View-Restructured (Perl Pod::POM that outputs reStructuredText)
+perl-Pod-POM-View-Restructured: perl-Pod-POM-View-Restructured (Perl Pod::POM that outputs RST)
 perl-Pod-POM-View-Restructured:
 perl-Pod-POM-View-Restructured: This module outputs reStructuredText that is expected to be used with
-perl-Pod-POM-View-Restructured: Sphinx. Verbatim sections (indented paragraphs) in the POD will be output
+perl-Pod-POM-View-Restructured: Sphinx. Verbatim sections (indented paragraphs) in POD will be output
 perl-Pod-POM-View-Restructured: with syntax highlighting for Perl code by default.
 perl-Pod-POM-View-Restructured:
 perl-Pod-POM-View-Restructured:

@@ -1,3 +1,5 @@
+perl-Inline (Perl module)
+
 The Inline module allows you to put source code from other
 programming languages directly "inline" in a Perl script
 or module. The code is automatically compiled as needed,

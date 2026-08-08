@@ -4,7 +4,7 @@ everything happening on the system it runs, using modern interactive
 web dashboards.
 
 Optional dependencies:
-- nodejs (monitoring named and SNMP devices)
+- nodejs22 (monitoring named and SNMP devices)
 - psycopg2 (monitoring postgres databases)
 - MySQL-python (monitoring MySQL databases)
 

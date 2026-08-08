@@ -6,4 +6,3 @@ Urgent workspaces are marked with red labels. Different colors can be
 configured for the label in focused/non-focused states. Support for
 strip workspace numbers configuration. Clicking on a workspace button
 will navigate you to the respective workspace.
-

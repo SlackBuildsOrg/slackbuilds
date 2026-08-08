@@ -1,0 +1,70 @@
+libgourou is a free implementation of Adobe's ADEPT protocol used to
+add DRM on ePub/PDF files. It overcomes the lack of Adobe support for
+Linux platforms.
+
+Architecture
+------------
+
+Main functions to use from gourou::DRMProcessor are:
+  * Get an ePub from an ACSM file : _fulfill()_ and _download()_
+  * Create a new device : _createDRMProcessor()_
+  * Register a new device : _signIn()_ and _activateDevice()_
+  * Remove DRM : _removeDRM()_
+  * Return loaned book : _returnLoan()_
+
+You can import configuration from (at least):
+  * Kobo device: .adept/device.xml, .adept/devicesalt and
+    .adept/activation.xml
+  * Bookeen device: .adobe-digital-editions/device.xml, root/devkey.bin
+    and .adobe-digital-editions/activation.xml
+
+Or create a new one. Be careful: there is a limited number of devices
+that can be created by one account.
+
+ePub are encrypted using a shared key: one account / multiple devices,
+so you can create and register a device into your computer and read
+downloaded (and encrypted) ePub file with your eReader configured using
+the same AdobeID account.
+
+For those who want to remove DRM without adept_remove, you can export
+your private key and import it within Calibre an its DeDRM plugin.
+
+Utils
+-----
+
+You can optionaly specify your .adept directory
+    export ADEPT_DIR=/home/XXX
+
+Then, use utils as following:
+
+You can import configuration from your eReader or create a new one with
+adept_activate:
+    ./utils/adept_activate -u <AdobeID USERNAME>
+
+Then a /home/<user>/.config/adept directory is created with all
+configuration file
+
+To download an ePub/PDF:
+    acsmdownloader <ACSM_FILE>
+
+To export your private key (for DeDRM software):
+    acsmdownloader --export-private-key [-o adobekey_1.der]
+
+To remove ADEPT DRM:
+    adept_remove <encryptedFile>
+
+To list loaned books:
+    adept_loan_mgt [-l]
+
+To return a loaned book:
+    adept_loan_mgt -r <id>
+
+You can get utils full options description with -h or --help switch
+
+PLEASE NOTE
+
+This SlackBuild uses a maintainer generated tarball for libgourou's
+dependency on uPDFParser. The tarball can be regenerated locally by
+removing uPDFParser-*.tar.lz and running the inclued get-uPDFParser.sh
+script which will download the dependency and bundle it. Then the
+ligourou.SlackBuild can be run normally.

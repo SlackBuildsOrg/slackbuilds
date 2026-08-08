@@ -15,7 +15,7 @@ the fly. "info" can handle uncompressed files.
 END
 
 echo << END
-Note: lisp files were added to /usr/info because maxima needs them
+Note: lisp files were added to /usr/info because maxima needs them there
 END
 
 if [ -x /usr/bin/update-desktop-database ]; then

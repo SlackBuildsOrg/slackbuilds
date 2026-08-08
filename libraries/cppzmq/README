@@ -13,4 +13,3 @@ cppzmq is a C++ binding for libzmq. It has the following design goals:
 * zmq.hpp is meant to contain direct mappings of the abstractions
   provided by the libzmq C API, while zmq_addon.hpp provides additional
   higher-level abstractions.
-

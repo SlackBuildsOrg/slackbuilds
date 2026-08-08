@@ -1,17 +1,36 @@
 #!/bin/bash
-
-# slackbuild script for libressl
-# By D Woodfall <dave@slackbuilds.org>
-# Licensed under the WTFPL (http://www.wtfpl.net)
 #
-# 2023-04-18 12:11:51 +0100 Thanks to Naglfar: --with-openssldir=/etc/$PRGNAM
-# 2023-05-10 12:04:05 +0100 Remove ld.so.conf stuff.
+# Slackware build script for libressl
+#
+# Copyright 2026 r1w1s1
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# Originally by D Woodfall <dave@slackbuilds.org> (WTFPL)
+# 2023-04-18: --with-openssldir=/etc/$PRGNAM (thanks to Naglfar)
+# 2023-05-10: Remove ld.so.conf stuff.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libressl
-VERSION=${VERSION:-3.7.1}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-4.3.2}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -61,12 +80,6 @@ find . -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + \
 # Don't install man page symlinks
 sed -i '/ln -sf.*\.3"$/d' man/Makefile.in
 
-if [ "${MANPAGES:-no}" = no ]; then
-  sed -i '/man\/Makefile/d' configure.ac
-  autoreconf -f
-  sed -i "s, man , ,g; s, install-man , ,g" Makefile.in
-fi
-
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -86,6 +99,8 @@ make
 make install DESTDIR=$PKG
 
 rm -f $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM/*.la
+
+find $PKG/usr/lib${LIBDIRSUFFIX} -name "*.so.*" -exec chmod 755 {} \;
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 

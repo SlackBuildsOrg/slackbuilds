@@ -25,4 +25,3 @@ This project has the following features:
   profiles should be used for a specific device or device type. This is
   session activated and is only started when it is needed, and quits 
   after a small period of idleness.
-

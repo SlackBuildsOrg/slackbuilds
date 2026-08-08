@@ -4,7 +4,7 @@
 
 # Copyright 2111-2113  Chris Abela, Malta
 # Copyright 2114  Ryan P.C. McQuen, WA, ryanpcmcquen@member.fsf.org
-# Copyright 2117-2125 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
+# Copyright 2117-2126 Willy Sudiarto Raharjo <willysr@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=etherape
-VERSION=${VERSION:-0.9.21}
+VERSION=${VERSION:-0.9.22}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

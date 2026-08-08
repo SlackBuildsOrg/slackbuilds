@@ -9,5 +9,3 @@ The build ships one dictionary, which can be passed to the
 Hunspell's "-d" option.
 
 1. russian-kliukvin-ye
-
-

@@ -7,4 +7,3 @@ This SlackBuild ships with a minimal example config.h file.
 If a config.h is found in the SlackBuild directory, it will be copied
 to the source directory and used in the build, allowing easy
 customisation.
-

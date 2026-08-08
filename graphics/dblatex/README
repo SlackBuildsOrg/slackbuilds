@@ -12,4 +12,3 @@ different from DB2LaTeX on these points:
   allow a deep LaTeX customisation without changing the XSL stylesheets.
 * Post-processing is done by Python, to make publication faster,
   convert the images if needed, and do the whole compilation.
-

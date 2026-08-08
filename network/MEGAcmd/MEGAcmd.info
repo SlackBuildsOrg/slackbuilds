@@ -8,5 +8,5 @@ MD5SUM="9e9d2691cfc3b603e79675dfae5ca980 \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="FreeImage libmediainfo"
-MAINTAINER="JW(Shinichi Abe)"
-EMAIL="shin1.abe@nifty.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

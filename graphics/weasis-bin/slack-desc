@@ -6,7 +6,7 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
           |-----handy-ruler------------------------------------------------------|
-weasis-bin: weasis (DICOM image viewer for CT and MRI scans)
+weasis-bin: weasis-bin (DICOM image viewer for CT and MRI scans)
 weasis-bin:
 weasis-bin: Weasis is a multipurpose standalone and web-based DICOM viewer
 weasis-bin: designed with a highly modular architecture. It is a very popular

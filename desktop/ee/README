@@ -1,1 +1,9 @@
-This is the Unix/FreeBSD easyedit editor "ee"
+ee is the classic easy editor originally developed for Unix and
+later included in FreeBSD.
+
+This version is based on the newer FreeBSD contrib/ee codebase and
+includes upstream UTF-8/Unicode support together with minimal Linux
+portability fixes.
+
+The goal of this package is to keep the editor small, simple, and
+close to FreeBSD upstream behavior.

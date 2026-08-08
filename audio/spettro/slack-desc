@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+spettro: spettro (music player with logarithmic spectrum display)
+spettro:
+spettro: Most spectrographic music players use a linear frequency axis,
+spettro: which dedicates the top half of the display to the top octave
+spettro: (11025Hz-22050Hz at CD-quality), the next quarter of the screen to the
+spettro: penultimate octave and so on, leaving all the musically interesting
+spettro: information crushed into the bottom few rows of the graphic.
+spettro:
+spettro: Spettro has a logarithmic frequency axis, which allocates the same
+spettro: amount of space to each octave.
+spettro:

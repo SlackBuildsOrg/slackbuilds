@@ -4,4 +4,3 @@ Buildbot badges produces an image in SVG or PNG format with information
 about the last build for the given builder name.
 PNG generation is based on the CAIRO SVG engine, it requires a bit more
 CPU to generate.
-

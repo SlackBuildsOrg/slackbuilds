@@ -23,6 +23,7 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260712 bkw: updated for v1.22.
 # 20251216 bkw: updated for v1.16.
 # 20230828 bkw: BUILD=2
 # - take over maintenance.
@@ -31,7 +32,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=fuse-archive
-VERSION=${VERSION:-1.16}
+VERSION=${VERSION:-1.22}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

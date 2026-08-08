@@ -18,4 +18,3 @@ BCC makes BPF programs easier to write, with kernel instrumentation in
 C (and includes a C wrapper around LLVM), and front-ends in Python and
 lua. It is suited for many tasks, including performance analysis and
 network traffic control.
-

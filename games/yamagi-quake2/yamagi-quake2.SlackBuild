@@ -3,7 +3,7 @@
 # Slackware build script for yamagi-quake2
 
 # Copyright 2012 Dugan Chen Canada
-# Copyright 2020-2025 Ruoh-Shoei LIN
+# Copyright 2020-2026 Ruoh-Shoei LIN
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -28,14 +28,14 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=yamagi-quake2
-VERSION=${VERSION:-8.60}
+VERSION=${VERSION:-8.70}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-CTFVER=${CTFVER:-1.12}
-XATRIXVER=${XATRIXVER:-2.16}
-ROGUEVER=${ROGUEVER:-2.15}
+CTFVER=${CTFVER:-1.13}
+XATRIXVER=${XATRIXVER:-2.17}
+ROGUEVER=${ROGUEVER:-2.16}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -89,9 +89,16 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
+if [ "${CURRENT:-OFF}" = "ON" ]; then
+    OPTS="WITH_SDL3=yes PKG_CONFIG=pkgconf"
+else
+    OPTS="WITH_SDL3=no PKG_CONFIG=pkg-config"
+fi
+
 CFLAGS="$SLKCFLAGS" CXXFLAGS="$SLKCFLAGS" \
   make \
   WITH_RPATH=no \
+  "${OPTS}" \
   WITH_SYSTEMWIDE=yes
 
 mkdir -pv $PKG/usr/{bin,share/games/quake2/{ctf,xatrix,rogue}}

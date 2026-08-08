@@ -28,13 +28,3 @@
  #include "vtkRenderingCoreModule.h" // For export macro
  #include "vtkScalarsToColors.h"
  
---- ../Filters/HyperTree/vtkHyperTreeGridThreshold.h.orig	2024-11-25 18:01:28.000000000 +1100
-+++ ../Filters/HyperTree/vtkHyperTreeGridThreshold.h	2024-11-30 09:29:15.342954878 +1100
-@@ -27,6 +27,7 @@
- #ifndef vtkHyperTreeGridThreshold_h
- #define vtkHyperTreeGridThreshold_h
- 
-+#include <limits>
- #include "vtkDeprecation.h"            // For deprecation macros
- #include "vtkFiltersHyperTreeModule.h" // For export macro
- #include "vtkHyperTreeGridAlgorithm.h"

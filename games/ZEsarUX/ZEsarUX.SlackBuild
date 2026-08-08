@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ZEsarUX
-VERSION=${VERSION:-12.1}
+VERSION=${VERSION:-13.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -84,8 +84,7 @@ CXXFLAGS="$SLKCFLAGS" \
 ./configure --prefix=/opt/ZEsarUX
 
 ## Add support for DESTDIR ##
-patch Makefile $CWD/Makefile.patch
-patch generate_install_sh.sh $CWD/generate_install_sh.sh.patch
+patch Makefile $CWD/patches/Makefile.patch
 
 make
 make install DESTDIR=$PKG
@@ -97,9 +96,6 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
 
 find $PKG -name perllocal.pod -o -name ".packlist" -o -name "*.bs" | xargs rm -f || true
 
-mkdir -p $PKG/opt/ZEsarUX
-mv $PKG/bin $PKG/opt/ZEsarUX/bin
-mv $PKG/share $PKG/opt/ZEsarUX/share
 mkdir -p $PKG/usr/share/pixmaps
 cp $CWD/ZEsarUX.png $PKG/usr/share/pixmaps
 mkdir -p $PKG/usr/share/applications

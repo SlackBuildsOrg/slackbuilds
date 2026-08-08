@@ -1,0 +1,9 @@
+dav2d is an AV2 cross-platform decoder,
+open-source, and focused on speed and correctness.
+It is based on popular dav1d decoder.
+The goal of this project is to provide a decoder
+for most platforms, and achieve the highest speed
+possible to overcome the temporary lack of AV2
+hardware decoder.It will support all features from
+AV2, including all subsampling and bit-depth
+parameters.

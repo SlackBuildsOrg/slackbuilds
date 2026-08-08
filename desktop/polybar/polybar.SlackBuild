@@ -1,8 +1,9 @@
 #!/bin/bash
-
+#
 # Slackware build script for polybar
-
+#
 # Copyright 2017-2018 Azure Zanculmarktum <zanculmarktum@gmail.com>
+# Copyright 2026 r1w1s1
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=polybar
-VERSION=${VERSION:-3.5.7}
+VERSION=${VERSION:-3.7.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,9 +39,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -52,16 +50,12 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -73,11 +67,11 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 # Extract the Git modules to lib
-for mod in i3ipcpp-0.7.0 xpp-20210303_7a9960b; do
-  rm -rf lib/${mod%-*}
-  tar xvf $CWD/$mod.tar.?z
-  mv $mod lib/${mod%-*}
-done
+rm -rf lib/i3ipcpp lib/xpp
+tar xvf $CWD/i3ipcpp-0.7.0.tar.gz
+mv i3ipcpp-0.7.0 lib/i3ipcpp
+tar xvf $CWD/xpp-a8b9e682ba65ca4a6d805c8be97c5232bae3c0c1.tar.gz
+mv xpp-a8b9e682ba65ca4a6d805c8be97c5232bae3c0c1 lib/xpp
 chown -R root:root .
 find -L . \
   \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -85,18 +79,17 @@ find -L . \
   \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
    -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Fixes version
-sed -i -e "/execute_process(COMMAND git describe --tags --dirty=-git/s/git.*/echo $VERSION/" include/CMakeLists.txt || exit 1
-
 export PYTHON=python3
 
 mkdir -p build
 cd build
   cmake \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -Wno-error=implicit-fallthrough -Wno-error=stringop-truncation -Wno-error=deprecated-copy" \
+    -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -include cstdint -Wno-error=implicit-fallthrough -Wno-error=stringop-truncation -Wno-error=deprecated-copy" \
+    -DCMAKE_EXE_LINKER_FLAGS:STRING="-lfreetype" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DPYTHON_EXECUTABLE=/usr/bin/python3 \
+    -DBUILD_DOC=OFF \
     -DCMAKE_INSTALL_MANDIR=/usr/man \
     -DCMAKE_INSTALL_DOCDIR=/usr/doc/$PRGNAM-$VERSION \
     -DCMAKE_BUILD_TYPE=Release ..

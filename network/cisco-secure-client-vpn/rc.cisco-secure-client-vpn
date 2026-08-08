@@ -1,0 +1,89 @@
+#!/bin/sh
+
+# rc script for Cisco Secure Client VPN agent on Slackware
+
+AGENT=/opt/cisco/secureclient/bin/vpnagentd
+LOAD_TUN=/opt/cisco/secureclient/bin/load_tun.sh
+PIDFILE=/var/run/vpnagentd.pid
+
+start() {
+  if pgrep -x vpnagentd >/dev/null 2>&1; then
+    echo "vpnagentd is already running."
+    return 0
+  fi
+
+  if [ ! -x "$AGENT" ]; then
+    echo "Missing executable: $AGENT"
+    return 1
+  fi
+
+  if [ -x "$LOAD_TUN" ]; then
+    "$LOAD_TUN" || return 1
+  fi
+
+  echo "Starting vpnagentd..."
+  "$AGENT" -execv_instance >/dev/null 2>&1 &
+  sleep 2
+
+  if pgrep -x vpnagentd >/dev/null 2>&1; then
+    echo "vpnagentd started."
+    return 0
+  fi
+
+  echo "vpnagentd failed to start."
+  return 1
+}
+
+stop() {
+  if ! pgrep -x vpnagentd >/dev/null 2>&1; then
+    echo "vpnagentd is not running."
+    rm -f "$PIDFILE"
+    return 0
+  fi
+
+  echo "Stopping vpnagentd..."
+  killall vpnagentd >/dev/null 2>&1
+  sleep 2
+  rm -f "$PIDFILE"
+
+  if pgrep -x vpnagentd >/dev/null 2>&1; then
+    echo "vpnagentd did not stop cleanly."
+    return 1
+  fi
+
+  echo "vpnagentd stopped."
+}
+
+restart() {
+  stop || return 1
+  start
+}
+
+status() {
+  if pgrep -x vpnagentd >/dev/null 2>&1; then
+    echo "vpnagentd is running."
+    return 0
+  fi
+
+  echo "vpnagentd is not running."
+  return 1
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    restart
+    ;;
+  status)
+    status
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+    ;;
+esac

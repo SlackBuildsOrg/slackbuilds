@@ -2,11 +2,12 @@
 
 # Slackware build script for parcellite
 # Written by Phillip Warner <pc_warner@yahoo.com>
+# Updated by Emmanuel N. Millan 2026
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=parcellite
-VERSION=${VERSION:-1.1.9}
+VERSION=${VERSION:-1.2.5}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -66,16 +67,15 @@ if [ "$NOICON" = "YES" ]; then
   sed -i "s/#define GTK_STOCK_PASTE \"parcellite\"//" src/main.c
 fi
 
-CFLAGS="$SLKCFLAGS" \
-CPPFLAGS="$SLKCFLAGS" \
-./configure \
-  --prefix=/usr \
-  --sysconfdir=/etc \
-  --mandir=/usr/man \
-  --build=$ARCH-slackware-linux
+patch -Np1 -i $CWD/port-to-gtk-3.patch
 
-CFLAGS="$SLKCFLAGS" make
-make install DESTDIR=$PKG
+CFLAGS="$SLKCFLAGS" make VERSION=$VERSION
+make DESTDIR=$PKG prefix=/usr install
+
+
+mv $PKG/usr/share/man $PKG/usr/
+mv $PKG/usr/man/man1/parcellite.gz $PKG/usr/man/man1/parcellite.1.gz
+sed -i '/^Categories=/s/Application;//' $PKG/usr/share/applications/parcellite.desktop
 
 if [ "$NOICON" = "YES" ]; then
   sed -i "s/Icon=parcellite/Icon=gtk-paste/" $PKG/usr/share/applications/parcellite.desktop
@@ -92,7 +92,7 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING ChangeLog README TODO INSTALL NEWS $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING ChangeLog README TODO NEWS $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

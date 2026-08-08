@@ -24,4 +24,3 @@ directory and the SlackBuild script will automatically install it.
 
 You can also install it manually later by copying the unzipped
 contents into $HOME/.local/share/singularity/music.
-

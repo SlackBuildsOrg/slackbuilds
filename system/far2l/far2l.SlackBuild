@@ -2,7 +2,7 @@
 
 # Slackware build script for far2l
 
-# Copyright 2023-2025 Dmitry Petrachkov, Smolensk, Russian Federation
+# Copyright 2023-2026 Dmitry Petrachkov, Smolensk, Russian Federation
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=far2l
-VERSION=${VERSION:-2.7.0}
+VERSION=${VERSION:-2.8.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -81,9 +81,6 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 CMAKE_WX="-DUSEWX=OFF"; [[ "${WX:-no}" == "yes" ]] && CMAKE_WX="-DUSEWX=ON"
-CMAKE_UCD="-DUSEUCD=OFF"; [[ "${UCD:-no}" == "yes" ]] && CMAKE_UCD="-DUSEUCD=ON"
-CMAKE_COLORER="-DCOLORER=OFF"; [[ "${COLORER:-no}" == "yes" ]] && CMAKE_COLORER="-DCOLORER=ON"
-CMAKE_PYTHON="-DPYTHON=OFF"; [[ "${PYTHON:-no}" == "yes" ]] && CMAKE_PYTHON="-DPYTHON=ON"
 
 # Avoid hardcoded /usr/lib path
 sed -i 's/lib\/far2l/lib'$LIBDIRSUFFIX'\/far2l/g' CMakeLists.txt
@@ -94,7 +91,10 @@ cmake -B build -G "Ninja" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
-  $CMAKE_WX $CMAKE_UCD $CMAKE_COLORER $CMAKE_PYTHON
+  -DUSEUCD=ON \
+  -DCOLORER=ON \
+  -DPYTHON=ON \
+  $CMAKE_WX
 cmake --build build
 DESTDIR=$PKG cmake --install build --strip
 
@@ -113,8 +113,6 @@ mv $PKG/usr/share/man $PKG/usr/man
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
-find $PKG -name perllocal.pod -o -name ".packlist" -o -name "*.bs" | xargs rm -f || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild

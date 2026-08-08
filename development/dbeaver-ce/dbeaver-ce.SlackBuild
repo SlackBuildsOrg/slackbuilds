@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=dbeaver-ce
 ORIGINAL_PRGNAM=dbeaver
 
-VERSION=${VERSION:-25.3.0}
+VERSION=${VERSION:-26.1.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -58,7 +58,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 
 SRCNAM=dbeaver-ce
-SRCVER=$VERSION-linux.gtk.$SRCARCH
+SRCVER=$VERSION-linux-$SRCARCH
 DESTDIR=$PKG/opt/$ORIGINAL_PRGNAM
 NEWDESTDIR=$PKG/opt/$PRGNAM
 
@@ -111,6 +111,8 @@ chmod 0755 $PKG/usr/bin/$PRGNAM
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod 0755  2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

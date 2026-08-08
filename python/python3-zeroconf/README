@@ -1,2 +1,5 @@
 This is an implementation of the multicast DNS Service Discover Library
 zeroconf in pure Python.
+
+python3-zeroconf 0.148.0 is the last available version on Slackware
+15.0. Later versions require Python >= 3.10.

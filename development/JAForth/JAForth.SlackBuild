@@ -2,7 +2,7 @@
 
 # Slackware build script for JAForth
 
-# Copyright 2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2025-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,11 +25,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=JAForth
-VERSION=${VERSION:-20250115_bfedbd4}
+VERSION=${VERSION:-20260407_82541e7}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-TARBALL=bfedbd4263e5df4e79bd8b897c00e235da3f3319
+TARBALL=82541e7ed12eca17fe1803a3c657cd9f36f1f2d8
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

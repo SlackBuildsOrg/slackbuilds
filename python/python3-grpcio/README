@@ -8,3 +8,6 @@ for gRPC).
 
 grpc (available at SlackBuilds.org) builds gRPC in C++ (rather than in
 Python 3).
+
+python3-grpcio 1.80.0 is the last available version on Slackware 15.0.
+Later versions require Python >= 3.10.

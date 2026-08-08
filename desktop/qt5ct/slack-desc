@@ -11,8 +11,8 @@ qt5ct:
 qt5ct: This program allows users to configure Qt5 settings (theme, font,
 qt5ct: icons, etc.) under DE/WM without Qt integration.
 qt5ct:
-qt5ct:         Homepage: http://qt5ct.sourceforge.net
-qt5ct:
+qt5ct: Author: Ilya Kotov
+qt5ct: Homepage: http://qt5ct.sourceforge.net
 qt5ct:
 qt5ct:
 qt5ct:

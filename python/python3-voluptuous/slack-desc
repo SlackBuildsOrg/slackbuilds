@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                  |-----handy-ruler------------------------------------------------------|
+python3-voluptuous: python3-voluptuous (Python data validation library)
+python3-voluptuous:
+python3-voluptuous: Voluptuous, despite the name, is a Python data validation library. It
+python3-voluptuous: is primarily intended for validating data coming into Python as JSON,
+python3-voluptuous: YAML, etc.
+python3-voluptuous:
+python3-voluptuous: It has three goals:
+python3-voluptuous:
+python3-voluptuous: Simplicity.  Support for complex data structures.  Provide useful
+python3-voluptuous: error messages.
+python3-voluptuous:

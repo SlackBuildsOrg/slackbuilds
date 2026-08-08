@@ -1,0 +1,28 @@
+From c271dfb848f2a84711c7c4b720e492f338f1327b Mon Sep 17 00:00:00 2001
+From: Augusto Castelo <alpheratz99@protonmail.com>
+Date: Mon, 9 Jan 2023 15:07:48 +0000
+Subject: [PATCH 5/8] free XImage before creating a new one
+
+ffprepare was allocating a new XImage but wasn't freeing the
+previously allocated one
+---
+ sent.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/sent.c b/sent.c
+index 9534fca..d949d71 100644
+--- a/sent.c
++++ b/sent.c
+@@ -270,6 +270,9 @@ ffprepare(Image *img)
+ 	if (depth < 24)
+ 		die("sent: Display color depths < 24 not supported");
+ 
++	if (img->ximg)
++		XDestroyImage(img->ximg);
++
+ 	if (!(img->ximg = XCreateImage(xw.dpy, CopyFromParent, depth, ZPixmap, 0,
+ 	                               NULL, width, height, 32, 0)))
+ 		die("sent: Unable to create XImage");
+-- 
+2.54.0
+

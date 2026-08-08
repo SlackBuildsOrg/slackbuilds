@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+    |-----handy-ruler------------------------------------------------------|
+nccl: nccl (Optimized primitives for inter-GPU communication)
+nccl:
+nccl: NCCL (pronounced "Nickel") is a stand-alone library of standard
+nccl: communication routines for GPUs, implementing all-reduce, all-gather,
+nccl: reduce, broadcast, reduce-scatter, as well as any send/receive based
+nccl: communication pattern. It has been optimized to achieve high bandwidth
+nccl: on platforms using PCIe, NVLink, NVswitch, as well as networking using
+nccl: InfiniBand Verbs or TCP/IP sockets. NCCL supports an arbitrary number
+nccl: of GPUs installed in a single node or across multiple nodes, and can
+nccl: be used in either single- or multi-process (e.g., MPI) applications.
+nccl:

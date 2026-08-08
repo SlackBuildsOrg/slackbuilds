@@ -1,5 +1,26 @@
 Sfeed is a simple RSS and Atom parser.
 
+This SlackBuild builds the sfeed_curses interactive viewer with a
+selectable color theme.
+
+Themes
+------
+The theme is chosen at build time via the SFEED_THEME variable.
+
+    mono            Monochrome, minimal highlighting (default)
+    mono_highlight  Monochrome with highlighting for selected/new items
+    newsboat        Colored, newsboat-like look
+    templeos        Multi-color TempleOS palette
+
+If SFEED_THEME is not set, "mono" is used. An invalid name aborts
+the build with an error.
+
+Building with a theme
+---------------------
+    SFEED_THEME=mono_highlight ./sfeed.SlackBuild
+    ./sfeed.SlackBuild                 # defaults to mono
+
+More
+----
 README.SLACKWARE contains starter tips.
-/usr/doc/sfeed-*/README contains detailed post-install
-instructions.
+/usr/doc/sfeed-*/README contains detailed post-install instructions.

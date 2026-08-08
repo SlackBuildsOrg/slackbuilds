@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+          |-----handy-ruler------------------------------------------------------|
+wxLauncher: wxLauncher (cross-platform launcher for the FreeSpace 2 Open engine)
+wxLauncher:
+wxLauncher: wxLauncher aims to give one unified answer to members of the
+wxLauncher: Freespace 2 Open community looking for an easy way to
+wxLauncher: control fs2_open on various platforms and to those looking
+wxLauncher: for an easy way to find and get updates to their Freespace 2
+wxLauncher: MODs and TCs.
+wxLauncher:
+wxLauncher:
+wxLauncher:
+wxLauncher:

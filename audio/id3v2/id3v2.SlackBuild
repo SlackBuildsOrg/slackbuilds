@@ -2,13 +2,21 @@
 
 # Slackware build script for id3v2
 
-# Written by paul wisehart wise@lupulin.net
+# Written by paul wisehart.
+# Modified and now maintained by B. Watson <urchlay@slackware.uk>
+# Originally this had no license. Modified version is licensed under
+# the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
+
+# 20260706 bkw:
+# - take over maintenance.
+# - update for v0.1.12_10 (latest Debian patches).
+# - expand README and slack-desc.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=id3v2
-VERSION=${VERSION:-0.1.11}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-0.1.12_10}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -20,9 +28,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -34,54 +39,62 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
+
+SRCVER=${VERSION%_*}  # 1.23_4 => 1.23
+DEBVER=${VERSION#*_}  # 1.23_4 => 4
 
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $PRGNAM-$SRCVER
+tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz
+cd $PRGNAM-$SRCVER
+tar xvf $CWD/${PRGNAM}_${SRCVER}+dfsg-$DEBVER.debian.tar.xz
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
- -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
- -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
 
-patch -p1 < $CWD/id3v2-0.1.11-fixup_Makefile.patch
-patch -p1 < $CWD/id3v2-0.1.11-track_no-segfault.patch
+# 20260706 bkw: tarball includes prebuilt binary and objects, yuck.
+make clean
 
-# The Makefile doesnt use DESTDIR, but the program is just an
-# executable and a man page (there's no apparent path-info compiled
-# into the binary).  So we can fake it be using PREFIX and manually
-# creating the direcories needed in $PKG
-mkdir -p $PKG/usr/{bin,man/man1}
-make OPT="$SLKCFLAGS"
-make install PREFIX=$PKG/usr
+# 20260706 bkw: apply all of Debian's patches.
+for i in $( cat debian/patches/series ); do
+  if [ -e debian/patches/$i ]; then
+    echo "===> applying $i"
+    patch -p1 < debian/patches/$i
+  fi
+done
 
-strip --strip-unneeded $PKG/usr/bin/id3v2
+# 20260706 bkw: use our flags and do not use -L/usr/lib (it's not
+# needed on 32-bit, useless on 64-bit, and would *break* on multilib).
+sed -i \
+  -e "s,-Wall,& $SLKCFLAGS," \
+  -e '/^LDFLAGS/d' \
+  Makefile
 
-( cd $PKG/usr/man
-  find . -type f -exec gzip -9 {} \;
-  for i in $( find . -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-)
+make
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a README $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+# 20260706 bkw: do not use 'make install', it installs a broken
+# (pre-rendered) version of the man page. It's just one binary
+# and a man page, so:
+install -D -m0755 -s $PRGNAM $PKG/usr/bin/$PRGNAM
+mkdir -p $PKG/usr/man/man1
+gzip -9 < $PRGNAM.1 > $PKG/usr/man/man1/$PRGNAM.1.gz
+
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a README $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

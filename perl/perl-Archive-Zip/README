@@ -14,4 +14,3 @@ existing directories, files, or strings.
 
 This module uses the Compress::Zlib library to read and write the
 compressed streams inside the files.
-

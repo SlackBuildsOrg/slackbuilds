@@ -6,6 +6,7 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260712 bkw: update for v1.3.4.
 # 20260105 bkw: update for v1.3.2.
 # 20250618 bkw: update for v1.2.16.
 # 20250128 bkw: update for v1.2.13. once again, datadir.diff changed.
@@ -30,7 +31,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bstone
-VERSION=${VERSION:-1.3.2}
+VERSION=${VERSION:-1.3.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

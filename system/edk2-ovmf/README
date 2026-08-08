@@ -10,5 +10,8 @@ is sufficient to run virtual machines, it does not provide the full
 protective capabilities of Secure Boot. See the whitepaper in the doc
 directory for details.
 
+Because 32-bit firmware is no longer provided upstream, it is packaged
+at the latest available version (202505).
+
 Qemu needs to connect to TPM v2 in order to run Windows 11; see swtpm
 on SBo.

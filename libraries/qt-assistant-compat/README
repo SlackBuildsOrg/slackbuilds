@@ -1,3 +1,5 @@
+qt-assistant-compat (Qt Assistant compatibility for Qt4)
+
 This package contains the Qt Assistant compatibility version, based 
 on Assistant Document Profile (.adp) files, and the associated 
 QtAssistantClient library, for compatibility with applications 

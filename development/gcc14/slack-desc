@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description. Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in. You must make
+# exactly 11 lines for the formatting to be correct. It's also customary to
+# leave one space after the ':'.
+
+     |-----handy-ruler------------------------------------------------------|
+gcc14: gcc14 (GNU Compiler Collection - GCC)
+gcc14:
+gcc14: GCC is the GNU Compiler Collection.
+gcc14:
+gcc14: This package contains version 14 of the compiler collection
+gcc14: including C, Ada, C++, D, Fortran, Go and Objective-C.
+gcc14:
+gcc14:
+gcc14:
+gcc14:
+gcc14:

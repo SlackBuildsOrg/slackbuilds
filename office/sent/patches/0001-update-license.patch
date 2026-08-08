@@ -1,0 +1,29 @@
+From 53541ee1bd0f6490ad62a1a8d7de3d154558a7ea Mon Sep 17 00:00:00 2001
+From: Markus Teich <teichm@fs.tum.de>
+Date: Mon, 4 Sep 2017 00:23:09 +0200
+Subject: [PATCH 1/8] update license
+
+---
+ LICENSE | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/LICENSE b/LICENSE
+index 699b2fd..b3fab4d 100644
+--- a/LICENSE
++++ b/LICENSE
+@@ -1,6 +1,6 @@
+ ISC-License
+ 
+-(c) 2014-2016 Markus Teich <markus.teich@stusta.mhn.de>
++(c) 2014-2017 Markus Teich <markus.teich@stusta.mhn.de>
+ 
+ Permission to use, copy, modify, and/or distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+@@ -26,3 +26,4 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ (c) 2015 David Phillips <dbphillipsnz@gmail.com>
+ (c) 2016 Laslo Hunhold <dev@frign.de>
+ (c) 2016 Hiltjo Posthuma <hiltjo@codemadness.org>
++(c) 2016 ssd <ssd@mailless.org>
+-- 
+2.54.0
+

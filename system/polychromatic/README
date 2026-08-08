@@ -6,4 +6,3 @@ lighting effects that work across all compatible hardware, even if
 you switch to another brand also supported by Polychromatic.
 
 Currently the only supported backend for polychromatic is openrazer.
-

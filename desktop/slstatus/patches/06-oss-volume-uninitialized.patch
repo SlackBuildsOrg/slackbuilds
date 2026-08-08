@@ -1,0 +1,29 @@
+commit 60b28d8a78b14ecc43f1c7d177cfa5f8597e2071
+Author: drkhsh <me@drkhsh.at>
+Date:   Tue Jun 23 19:27:55 2026 +0200
+
+    fix use of uninitialized volume in OSS mixer
+    
+    if no "vol" device exists in the mixer, v was used uninitialized.
+    return early on match and return NULL with a warning otherwise.
+
+diff --git a/components/volume.c b/components/volume.c
+index 5a2bfb7..70c9516 100644
+--- a/components/volume.c
++++ b/components/volume.c
+@@ -211,11 +211,14 @@ vol_perc(const char *card)
+ 					close(afd);
+ 					return NULL;
+ 				}
++				close(afd);
++				return bprintf("%d", v & 0xff);
+ 			}
+ 		}
+ 
+ 		close(afd);
++		warn("vol_perc: no 'vol' mixer device");
+ 
+-		return bprintf("%d", v & 0xff);
++		return NULL;
+ 	}
+ #endif

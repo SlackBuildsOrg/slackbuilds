@@ -1,0 +1,21 @@
+Ventoy is an open source tool to create bootable USB drives
+for ISO/WIM/IMG/VHD(x)/EFI files.
+
+With Ventoy, you don't need to format the disk over and over,
+just copy the image files to the USB drive and boot them.
+You can copy many image files at a time and Ventoy will give
+you a boot menu to select them.
+
+You can also browse ISO/WIM/IMG/VHD(x)/EFI files in local
+disk and boot them:
+
+- Supported BIOS/UEFI: x86 Legacy, IA32, x86_64, ARM64,
+  and MIPS64EL UEFI are supported in the same way.
+
+- Partition Styles: Both MBR and GPT are supported.
+
+- Compatibility: Supports most OS types (Windows, WinPE,
+  Linux, Unix, ChromeOS, Vmware, Xen, etc.).
+
+Extensive Testing: 1300+ ISO files tested, and over 90%
+of distros on distrowatch.com are supported.

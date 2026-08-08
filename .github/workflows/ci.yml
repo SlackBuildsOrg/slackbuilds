@@ -1,8 +1,8 @@
 ---
 name: PR checks
 
-"on":
-  pull_request_target:
+on:
+  pull_request:
     types:
       - opened
       - synchronize
@@ -10,171 +10,120 @@ name: PR checks
 
 concurrency:
   group: ci-${{ github.event.number }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   # renovate: datasource=docker depName=aclemons/sbo-maintainer-tools versioning=loose
-  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.3-15.0@sha256:e617db2c7de01f7a5778b7139439fc99a69715ba5ea573a7b0e2add34155f455
+  SBO_MAINTAINER_TOOLS_IMAGE: aclemons/sbo-maintainer-tools:0.9.5@sha256:19eb6905e6ae0942eb35f9befc53a0d1f4945cc9447e202efba79c9d744326df
+
+permissions: {}
 
 jobs:
-  changes:
+  pr-checks:
+    name: PR checks
     runs-on: ubuntu-24.04
     permissions:
       contents: read
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Calculate clone depth.
-        run: printf "CHECKOUT_FETCH_DEPTH=%s\n" "$(( ${{ github.event.pull_request.commits }} + 1 ))" >> "${GITHUB_ENV}"
-
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          show-progress: false
-          fetch-depth: ${{ env.CHECKOUT_FETCH_DEPTH }}
-          ref: ${{ github.head_ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-
-      - name: Get slackbuild directories which have changes.
-        run: |
-          CHANGED_FILES="$(git diff-tree --name-only --diff-filter=d --no-commit-id -r ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -I xx dirname xx | sort -u | sed '/.github/d' | sed 's/^/"/;s/$/"/g' | paste -d, -s | sed 's/^/[/;s/$/]/')"
-
-          delimiter="$(openssl rand -hex 8)"
-          printf "CHANGED_FILES<<%s\n" "$delimiter" >> "$GITHUB_ENV"
-
-          printf "%s\n" "$CHANGED_FILES" | tee -a "$GITHUB_ENV"
-
-          printf "%s\n" "$delimiter" >> "$GITHUB_ENV"
-
-      - name: Get matrix output
-        id: set-matrix
-        run: |
-          {
-            printf 'matrix<<SLACKBUILDS\n'
-            jq -r -c 'map({dir: .})' <<< "$CHANGED_FILES"
-            printf 'SLACKBUILDS\n'
-          } >> "$GITHUB_OUTPUT"
-
-  sbolint:
-    name: Checks with sbolint
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      pull-requests: write
-    needs: [changes]
-    strategy:
-      matrix:
-        include: ${{ fromJSON(needs.changes.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          show-progress: false
-          ref: ${{ github.head_ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-
-      - name: Run sbolint
+        id: clone-depth
         env:
-          MATRIX_DIR: ${{ matrix.dir }}
+          PR_COMMITS: ${{ github.event.pull_request.commits }}
+        run: printf "fetch_depth=%s\n" "$(( PR_COMMITS + 1 ))" >> "${GITHUB_OUTPUT}"
+
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          show-progress: false
+          fetch-depth: ${{ steps.clone-depth.outputs.fetch_depth }}
+          persist-credentials: false
+
+      - name: Run checks
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          docker pull ${{ env.SBO_MAINTAINER_TOOLS_IMAGE }}
-
-          mkfifo pipe
-          tee sbolint-output < pipe &
-          set +e
-
-          docker run --rm -v "$(pwd):/work" -w /work ${{ env.SBO_MAINTAINER_TOOLS_IMAGE }} sbolint "$MATRIX_DIR" > pipe 2>&1
-
-          sbolint_status="$?"
           set -e
+          set -o pipefail
 
-          {
-            if [[ "$sbolint_status" -eq 0 ]] ; then
-              printf '#### ✅ sbolint - %s ✅\n\n' "$MATRIX_DIR"
-            else
-              printf '#### ⛔️ sbolint - %s ⛔️\n\n' "$MATRIX_DIR"
+          mkdir -p comments
+
+          printf '%s\n' "$PR_NUMBER" > comments/pr-number.txt
+
+          changed_projects="$(git diff-tree --name-only --diff-filter=d --no-commit-id -r "$BASE_SHA" "$HEAD_SHA" | sed '/^\./d' | sed -n '/[^\/][^\/]*\/[^\/][^\/]*\//p' | xargs -r -I xx dirname xx | awk -F/ 'NF==2' | sort -u)"
+
+          if [[ -z "$changed_projects" ]] ; then
+            printf 'No changed SlackBuild directories detected\n'
+            exit 0
+          fi
+
+          changed_count="$(printf '%s\n' "$changed_projects" | grep -c .)"
+          if [[ "$changed_count" -gt 10 ]] ; then
+            {
+              printf '<!-- ci:too-many-changes -->\n'
+              printf 'This PR contains too many changed packages (more than 10). Skipping normal PR checks.\n'
+            } > comments/too-many-changes.md
+            printf 'Too many changed packages (%s); skipping checks\n' "$changed_count"
+            exit 0
+          fi
+
+          docker pull "$SBO_MAINTAINER_TOOLS_IMAGE"
+
+          while IFS= read -r project ; do
+            if [[ -z "$project" ]] ; then
+              continue
             fi
 
-            printf '```\n'
-            cat sbolint-output
-            rm sbolint-output
-            printf '```\n'
-          } > comment-output
-        shell:
-          bash
+            set +e
+            docker run --rm -v "$(pwd):/work" -w /work "$SBO_MAINTAINER_TOOLS_IMAGE" sbolint "$project" 2>&1 | tee sbolint-output
+            sbolint_status="${PIPESTATUS[0]}"
+            set -e
 
-      - name: Find Comment
-        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
-        id: fc
-        with:
-          issue-number: ${{ github.event.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: "sbolint - ${{ matrix.dir }}"
+            slug="${project//\//:}"
+            file_slug="${project//\//--}"
+            {
+              printf '<!-- ci:sbolint:%s -->\n' "$slug"
+              if [[ "$sbolint_status" -eq 0 ]] ; then
+                printf '#### ✅ sbolint - %s ✅\n\n' "$project"
+              else
+                printf '#### ⛔️ sbolint - %s ⛔️\n\n' "$project"
+              fi
 
-      - name: Comment with sbolint results
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4.0.0
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.number }}
-          body-path: comment-output
-          edit-mode: replace
+              printf '```\n'
+              cat sbolint-output
+              printf '```\n'
+            } > "comments/sbolint-${file_slug}.md"
 
-  dependencies:
-    name: Compute reverse dependencies
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      pull-requests: write
-    needs: [changes]
-    strategy:
-      matrix:
-        include: ${{ fromJSON(needs.changes.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          show-progress: false
-          ref: ${{ github.head_ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
+            rm -f sbolint-output
+          done <<< "$changed_projects"
 
-      - name: Get short package name
-        run: printf '%s\n' "$MATRIX_DIR" | cut -d/ -f2 | sed 's/^/PACKAGE_NAME=/' >> "$GITHUB_ENV"
-        env:
-          MATRIX_DIR: ${{ matrix.dir }}
-
-      - name: Look up dependencies
-        id: get_deps
-        uses: fjogeleit/http-request-action@23ad54bcd1178fcff6a0d17538fa09de3a7f0a4d # v1.16.4
-        with:
-          url: 'https://slackbuilds.org/revdeps.php?q=${{ env.PACKAGE_NAME }}'
-          method: 'GET'
-          preventFailureOnNoResponse: "true"
-
-      - name: Build comment
-        env:
-          MATRIX_DIR: ${{ matrix.dir }}
-          DEP_RESPONSE: ${{ steps.get_deps.outputs.response }}
-        run: |
-          {
-            printf '#### reverse dependencies - %s\n\n' "$MATRIX_DIR"
-            if [[ "$DEP_RESPONSE" == '""' ]] ; then
-              printf 'None\n'
-            else
-              printf '%s' "$DEP_RESPONSE" | sed 's/\\n/\n/g' | sed 's/^"//' | sort | sed 's/^/- [ ] /'
+          while IFS= read -r project ; do
+            if [[ -z "$project" ]] ; then
+              continue
             fi
-          } > comment-output
-        shell:
-          bash
 
-      - name: Find Comment
-        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
-        id: fc
-        with:
-          issue-number: ${{ github.event.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: "reverse dependencies - ${{ matrix.dir }}"
+            short_project="$(printf '%s\n' "$project" | cut -d/ -f2)"
+            response="$(wget -q -O - "https://slackbuilds.org/revdeps.php?q=$short_project" | sort || true)"
 
-      - name: Comment with dependency results
-        uses: peter-evans/create-or-update-comment@71345be0265236311c031f5c7866368bd1eff043 # v4.0.0
+            slug="${project//\//:}"
+            file_slug="${project//\//--}"
+            {
+              printf '<!-- ci:reverse-deps:%s -->\n' "$slug"
+              printf '#### reverse dependencies - %s\n\n' "$project"
+              if [[ -z "$response" ]] ; then
+                printf 'None\n'
+              else
+                printf '%s\n' "$response" | sort | sed 's/^/- [ ] /'
+              fi
+            } > "comments/reverse-deps-${file_slug}.md"
+          done <<< "$changed_projects"
+
+      - name: Upload comment bodies
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.number }}
-          body-path: comment-output
-          edit-mode: replace
+          name: pr-comments
+          path: comments/
+          if-no-files-found: ignore
+          retention-days: 1

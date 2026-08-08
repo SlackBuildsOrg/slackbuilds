@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+         |-----handy-ruler------------------------------------------------------|
+libgourou: libgourou (free implementation of Adobe's ADEPT protocol)
+libgourou:
+libgourou: libgourou is a free implementation of Adobe's ADEPT protocol used to
+libgourou: add DRM on ePub/PDF files. It overcomes the lack of Adobe support for
+libgourou: Linux platforms.
+libgourou:
+libgourou: Utilities to download ePub/PDF files, remove DRM and manage loans are
+libgourou: included in this package.
+libgourou:
+libgourou: https://forge.soutade.fr/soutade/libgourou/
+libgourou:

@@ -9,8 +9,8 @@
 pwman: pwman (An NCurses password management program)
 pwman:
 pwman: PWman is a text-based application based on the ui design of abook 
-pwman: (http://abook.sourceforge.net). PWman works on Linux, and should also
-pwman: run on most other UNIXes(untested).
+pwman: (http://abook.sourceforge.net).
+pwman:
 pwman:
 pwman:
 pwman:

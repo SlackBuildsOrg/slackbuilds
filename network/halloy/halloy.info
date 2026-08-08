@@ -1,0 +1,12 @@
+PRGNAM="halloy"
+VERSION="2026.8"
+HOMEPAGE="https://github.com/squidowl/halloy"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://github.com/squidowl/halloy/archive/2026.8/halloy-2026.8.tar.gz \
+https://f003.backblazeb2.com/file/sbo-src/2026.8-vendor.tar.gz"
+MD5SUM_x86_64="7d841497252ee5b400c4cfe15dc512c3 \
+c8684763ac9a44061d53c25748d2a061"
+REQUIRES="rust-opt cargo-auditable"
+MAINTAINER="Ioannis Anagnostakis"
+EMAIL="rizitis@gmail.com"

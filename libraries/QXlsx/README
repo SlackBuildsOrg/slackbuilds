@@ -1,0 +1,8 @@
+Excel file(*.xlsx) reader/writer library using Qt 5 or 6. Descendant of
+QtXlsxWriter.
+
+Optional dependencies: qt6
+
+To enable building for qt6, set the QT6 variable before building:
+
+  QT6=yes sh QXlsx.SlackBuild

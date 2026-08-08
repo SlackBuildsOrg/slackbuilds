@@ -82,13 +82,6 @@ sed -i "s|subdir('tests')||g" meson.build
 patch -p1 < $CWD/Fix-build-without-pch.patch
 cp $CWD/git_version.h .
 
-# Support for newer meson in stable and current
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-# for Stable 15.0
-if [ $PYVER == 3.9 ]; then
-  export PYTHONPATH=/opt/python$PYVER/site-packages
-fi
-
 # Don't depend on boost's system and regex modules
 # https://github.com/TypesettingTools/Aegisub/commit/86e8c45d91eae9ca9cd0bb9e384e8540788516f5.patch
 patch -p1 < $CWD/86e8c45d91eae9ca9cd0bb9e384e8540788516f5.patch

@@ -1,0 +1,5 @@
+AVM (AOM Video Model) is the reference
+software for AV2 codec from Alliance
+for Open Media
+
+vmaf,tensorflow are optional dependencies

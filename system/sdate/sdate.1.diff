@@ -1,0 +1,11 @@
+--- sdate-0.7/doc/sdate.1~
++++ sdate-0.7/doc/sdate.1
+@@ -13,7 +13,7 @@
+ .sp
+ ..
+ .\"
+-.TH sdate 1 "4620 September 1993" "Debian Project" "Debian manual"
++.TH sdate 1 "4620 September 1993" "Debian Project" "User Commands"
+ .\" Manpage by Christoph Berg <cb@df7cb.de>
+ .SH NAME
+ sdate \- never ending September date

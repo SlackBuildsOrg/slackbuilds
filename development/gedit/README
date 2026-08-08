@@ -6,6 +6,3 @@ gspell is an optional (autodetected) dependency. If it's already
 installed, but you don't want to build gedit with spell-checking
 support, set the environment variable WITH_GSPELL to "no", e.g.
   WITH_GSPELL="no" ./gedit.SlackBuild
-
-
-

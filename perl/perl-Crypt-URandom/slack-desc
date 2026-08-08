@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                  |-----handy-ruler------------------------------------------------------|
+perl-Crypt-URandom: perl-Crypt-URandom (Provide non blocking randomness)
+perl-Crypt-URandom:
+perl-Crypt-URandom: This Module is intended to provide an interface to the strongest
+perl-Crypt-URandom: available source of non-blocking randomness on the current platform.
+perl-Crypt-URandom: Platforms currently supported are anything supporting getrandom(2),
+perl-Crypt-URandom: /dev/urandom and versions of Windows greater than or equal to Windows
+perl-Crypt-URandom: 2000.
+perl-Crypt-URandom:
+perl-Crypt-URandom:
+perl-Crypt-URandom:
+perl-Crypt-URandom:

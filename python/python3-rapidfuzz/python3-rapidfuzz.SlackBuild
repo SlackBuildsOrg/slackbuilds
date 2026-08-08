@@ -2,7 +2,7 @@
 
 # Slackware build script for python3-rapidfuzz
 
-# Copyright 2024-2025 Jeremy Hansen <jebrhansen+SBo@gmail.com>
+# Copyright 2024-2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,8 +24,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-rapidfuzz
-VERSION=${VERSION:-3.14.1}
-RAPIDCPPVER=${RAPIDCPPVER:-2440ffa}
+VERSION=${VERSION:-3.14.5}
+RAPIDCPPVER=${RAPIDCPPVER:-6c10b68}
 TASKVER=${TASKVER:-130f795}
 SRCNAM=${SRCNAM:-RapidFuzz}
 BUILD=${BUILD:-1}

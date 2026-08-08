@@ -1,9 +1,0 @@
-diff -Naur AssaultCube_v1.2.0.1.orig/source/src/Makefile AssaultCube_v1.2.0.1/source/src/Makefile
---- AssaultCube_v1.2.0.1.orig/source/src/Makefile	2013-10-29 09:20:58.000000000 +0000
-+++ AssaultCube_v1.2.0.1/source/src/Makefile	2013-11-07 06:01:04.715696077 +0000
-@@ -1,4 +1,4 @@
--CXXFLAGS= -O3 -fomit-frame-pointer
-+CXXFLAGS= $(EXTRA_CXXFLAGS) -fomit-frame-pointer
- CXX=clang++	# Use clang++, as g++ optimizations cause crashes...
- override CXXFLAGS+= -Wall -fsigned-char
- 

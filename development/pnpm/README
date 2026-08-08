@@ -1,5 +1,5 @@
 pnpm - Fast, disk space efficient package manager
 
-NOTE: The info file declares a dependency on nodejs - some version
+NOTE: The info file declares a dependency on nodejs22 - some version
 of node is needed at runtime and you can replace this with another
-version if required (as long as it is at least version 18.12).
+version if required (as long as it is at least version 22.x).

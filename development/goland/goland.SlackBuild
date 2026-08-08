@@ -7,7 +7,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=goland
-VERSION=${VERSION:-2025.3.3}
+VERSION=${VERSION:-2026.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -40,6 +40,9 @@ find -L . \
 
 mv * $PRGNAM
 
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod 0755 2> /dev/null || true
+
 mkdir -p $PKG/usr/share/applications
 cat << EOF > $PKG/usr/share/applications/$PRGNAM.desktop
 [Desktop Entry]
@@ -47,9 +50,9 @@ Version=1.0
 Type=Application
 Path=/opt/$PRGNAM
 Exec=/opt/$PRGNAM/bin/$PRGNAM %f
-Name=GoLand: A Clever IDE to Go by JetBrains
+Name=GoLand
 GenericName=GoLand
-Comment=
+Comment=GoLand: A Clever IDE to Go by JetBrains
 Icon=$PRGNAM
 StartupNotify=true
 Categories=Development;IDE;

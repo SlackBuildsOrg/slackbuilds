@@ -1,10 +1,11 @@
 #!/bin/bash
-
+#
 # Slackware build script for nedit
-
+#
 # Copyright 2017 Alessandro Pittaluga <agp@pittux.com>
+# Copyright 2026 r1w1s1
 # All rights reserved.
-
+#
 # Author and Previous Mantainer Tomasz Konojacki <me@xenu.tk>
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,9 +28,9 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nedit
-VERSION=${VERSION:-5.6a}
+VERSION=${VERSION:-5.8}
 NUMVER=$(echo $VERSION | tr -d '[:alpha:]')
-BUILD=${BUILD:-3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -55,16 +56,12 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
@@ -82,10 +79,33 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-# Apply patch to make compilation possible
-patch -p1 < $CWD/nedit.patch
+sed -i \
+  -e 's|"shell", "Shell", PREF_STRING, "DEFAULT"|"shell", "Shell", PREF_STRING, "/bin/sh"|' \
+  -e 's|/bin/csh|/bin/sh|g' \
+  source/preferences.c
 
-make CFLAGS="${SLKCFLAGS} -DBUILD_UNTESTED_NEDIT" linux
+# check if Slackare -current
+if grep -qi current /etc/os-release ; then
+  sed -i \
+    -e 's/XmStringGetLtoR(call_data->value, XmSTRING_DEFAULT_CHARSET, &filename);/filename = XmStringUnparse(call_data->value, NULL, XmCHARSET_TEXT, XmCHARSET_TEXT, NULL, 0, XmOUTPUT_ALL);/' \
+    -e 's/XmStringGetLtoR(cFileString, XmSTRING_DEFAULT_CHARSET, &fileString);/fileString = XmStringUnparse(cFileString, NULL, XmCHARSET_TEXT, XmCHARSET_TEXT, NULL, 0, XmOUTPUT_ALL);/' \
+    util/getfiles.c
+fi
+
+make CFLAGS="${SLKCFLAGS} -std=gnu89 -DBUILD_UNTESTED_NEDIT" linux
+make -C doc VERSION="NEdit $VERSION" nedit.man
+
+# Rename nc manpage references to match the packaged ncl binary.
+cp doc/nc.pod doc/ncl.pod
+sed -i \
+  -e 's/B<nc>/B<ncl>/g' \
+  -e 's/L<nc(1)>/L<ncl(1)>/g' \
+  -e 's/^nc /ncl /' \
+  -e 's/^  nc /  ncl /' \
+  -e 's/, nc returns/, ncl returns/' \
+  doc/ncl.pod
+
+make -C doc VERSION="NEdit $VERSION" ncl.man
 
 mkdir -p $PKG/usr/bin $PKG/usr/man/man1
 install -m 755 source/nedit $PKG/usr/bin/nedit

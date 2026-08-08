@@ -1,3 +1,5 @@
+beep (make beeps via the PC speaker)
+
 beep does exactly what you would expect: it beeps.
 
 Unlike printf("\a"), beep allows you to control pitch, duration, and
@@ -7,8 +9,16 @@ completely through command line options. It's not supposed to be
 complex, and it isn't - but it makes system monitoring (or whatever
 else it gets hacked onto) that much more informative.
 
-You may need to set beep executable suid; thre are potential security
-issues with doing so, but the beep source code is very small and
-easily auditable, and you won't get a lot of use of it unless it's
-suid, but that's your call. See the SlackBuild script for the proper
-variable to change if you want to install it suid.
+By default, the binary is installed setuid root, but only runnable
+by root or users in the 'audio' group. You can disable this with
+SETUID=no in the script's environment, but then beep will only work
+for root.
+
+To get beep to actually make sound, first add "modprobe pcspkr" to
+/etc/rc.d/rc.modules.local (and also run "modprobe pcspkr" in the
+shell, to avoid having to reboot), then run alsamixer and look for an
+audio channel called "Beep" or "PC Speaker". Make sure it's turned up
+and not muted, then run "alsactl store" as root. On some systems, for
+some reason, even this won't work: beep runs successfully but doesn't
+make any sound. Still investigating this; if you have problems, please
+email the SlackBuild maintainer.

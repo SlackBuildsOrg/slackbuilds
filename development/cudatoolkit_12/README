@@ -14,12 +14,5 @@ environment variable to yes when building the package e.g.
     NSIGHT=yes bash cudatoolkit_12.SlackBuild
 
 This is version 12, which should be installable together with
-the default version 10.
-You can activate it by sourcing /etc/profile.d/cuda-12.9.sh
-
-NOTE:
-This build is beta. CUDA is large and complicated,
-suggestions welcome. If unsure, I suggest using the default
-CUDA 10.
-However, mpv and ffmpeg compile fine with this CUDA, and hardware
-accelerated video decoding works.
+other cudatoolkits. This one may be activated by sourcing
+/etc/profile.d/cuda-12.9.sh

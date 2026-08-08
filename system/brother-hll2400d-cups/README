@@ -1,4 +1,3 @@
-
 brother-hll2400d-cups - Brother printer driver for HL-L2400D
 
 This is a repackaging of the Brother driver, set up for use with CUPS.
@@ -14,4 +13,3 @@ CLI.  Select "Brother HL-L2400D for CUPS" for the driver.
 
 See LICENSE_ENG.TXT, LICENSE_JPN.TXT and Copying.txt in the docs
 directory.
-

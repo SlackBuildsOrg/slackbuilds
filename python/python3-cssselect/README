@@ -10,3 +10,6 @@ Note: This can coexist with python2-cssselect without issue.
 
 Also note: This has a circular optional dependency with lxml. If
 desired, rebuild this after installing lxml.
+
+NOTE: Unable to support newer versions due to requiring newer version
+of python than is available in Slackware 15.0 (python 3.10).

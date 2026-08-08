@@ -1,0 +1,18 @@
+Metasploit Framework
+
+The world’s most used penetration testing framework
+
+Knowledge is power, especially when it’s shared. A collaboration
+between the open source community and Rapid7, Metasploit helps
+security teams do more than just verify vulnerabilities, manage
+security assessments, and improve security awareness; 
+
+it empowers and arms defenders to always stay one step (or two)
+ahead of the game. 
+
+This is a repackage of the official nightly build of the debian
+package by Rapid7
+
+Security note: the bundled payload and exploit binaries are shipped
+executable, as Metasploit requires. They are delivery artifacts used
+against remote targets, not programs meant to be run on the host.

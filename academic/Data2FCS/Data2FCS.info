@@ -8,5 +8,5 @@ MD5SUM="59b89861defa64a34ede2ea97e1194b5 \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="zulu-openjdk11"
-MAINTAINER="Petar Petrov"
-EMAIL="slackalaxy@gmail.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

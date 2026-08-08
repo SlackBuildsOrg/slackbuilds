@@ -14,6 +14,6 @@ stfl: Ruby. The public STFL API is only 14 simple function calls big and and
 stfl: there are already generic SWIG bindings. Thus it is very easy to port
 stfl: to additional scripting languages.
 stfl:
-stfl: Homepage: http://www.clifford.at/stfl/
+stfl: Homepage: https://clifford.at/stfl
 stfl:
 stfl:

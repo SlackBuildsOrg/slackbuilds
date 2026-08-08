@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+    |-----handy-ruler------------------------------------------------------|
+edit: edit (text editor)
+edit:
+edit: A simple editor for simple needs.
+edit:
+edit: This editor pays homage to the classic MS-DOS Editor, but with a
+edit: modern interface and input controls similar to VS Code. The goal is to
+edit: provide an accessible editor that even users largely unfamiliar with
+edit: terminals can easily use.
+edit:
+edit:
+edit:

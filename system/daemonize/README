@@ -14,4 +14,3 @@ Change the directory name from daemonize to daemonize-x.y.z
 and create a daemonize-x.y.z.tar.gz file from that folder.
 
 You may then build with: VERSION=x.y.z ./daemonize.SlackBuild
-

@@ -22,6 +22,11 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260523 bkw: Modified by SlackBuilds.org, BUILD=3:
+# - fix '#include "amd.h"' in /usr/include/umfpack. system headers
+#   should never use "" for other headers (always <>). needed by
+#   scikit-umfpack.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=umfpack
@@ -29,7 +34,7 @@ SRCNAM=SuiteSparse
 SUBDIR=UMFPACK
 VERSION=${VERSION:-5.7.9}
 SRCVER=${SRCVER:-5.8.1}
-BUILD=${BUILD:-2}
+BUILD=${BUILD:-3}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -110,6 +115,9 @@ touch Doc/UMFPACK_UserGuide.pdf
 make
 make check
 make install-strip DESTDIR=$PKG
+
+sed -i '/#include/s,"amd\.h",<amd/amd.h>,' \
+    $PKG/usr/include/umfpack/umfpack.h
 
 find $PKG/usr/lib${LIBDIRSUFFIX} -name '*.la' -delete
 

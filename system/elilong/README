@@ -1,0 +1,11 @@
+elilong (UEFI Boot Manager)
+
+elilong is a simple, lightweight UEFI bootloader for Linux,
+specifically designed to handle Slackware and other distributions
+with a focus on simplicity and transparency.
+
+After installing the package, you must run the setup script as root
+to deploy the bootloader to your EFI System Partition, eg:
+
+# /usr/sbin/elilongsetup
+note: only tested on x86_64 but should support 32bit and other arch's

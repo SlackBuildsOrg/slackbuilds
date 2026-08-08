@@ -9,4 +9,4 @@ Keywords=nvvp;cuda;gpu;nsight;
 X-AppInstall-Keywords=nvvp;cuda;gpu;nsight;
 X-GNOME-Keywords=nvvp;cuda;gpu;nsight;
 Terminal=false
-Categories=Development;Profiling;ParallelComputing;
+Categories=Development;

@@ -34,7 +34,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nx-libs
-VERSION=${VERSION:-3.5.99.26}
+VERSION=${VERSION:-3.5.99.27}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -81,7 +81,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$SRCVERSION
-tar xvf $CWD/$PRGNAM-$SRCVERSION.tar.gz
+# tar xvf $CWD/$PRGNAM-${SRCVERSION}-full.tar.gz
+tar xvf $CWD/$PRGNAM-${SRCVERSION}.tar.gz
 cd $PRGNAM-$SRCVERSION
 chown -R root:root .
 find -L . \

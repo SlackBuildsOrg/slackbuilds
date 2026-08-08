@@ -1,7 +1,0 @@
-intelmas (Intel Memory And Storage Tool) is a proprietary command-line
-tool to manage Optane SSDs and memory devices. It provides firmware
-update capability as well as reading and setting many configuration
-settings.
-
-Before version 2.0 intelmas supported also Intel NAND SSDs. Now these
-devices supported by sst (available on SBo).

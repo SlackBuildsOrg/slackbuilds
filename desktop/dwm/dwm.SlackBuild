@@ -1,8 +1,9 @@
 #!/bin/bash
 # Slackware build script for dwm
 #
+# Now maintained by r1w1s1
 # Now maintained by Dave Woodfall <dave@slackbuilds.org>
-
+#
 # Ryan P.C. McQuen | Everett, WA | ryanpcmcquen@member.fsf.org
 # Erik Falor <ewfalor@gmail.com>
 #
@@ -38,7 +39,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=dwm
-VERSION=${VERSION:-6.4}
+VERSION=${VERSION:-6.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -149,6 +150,7 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a LICENSE README $CWD/README.CONFIG \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+chown -R root:root $PKG/usr/doc/$PRGNAM-$VERSION
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

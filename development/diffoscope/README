@@ -1,6 +1,6 @@
-diffoscope will try to get to the bottom of what makes files or 
-directories different. It will recursively unpack archives of many 
-kinds and transform various binary formats into more human readable 
+diffoscope will try to get to the bottom of what makes files or
+directories different. It will recursively unpack archives of many
+kinds and transform various binary formats into more human readable
 form to compare them.
 
 Optional Dependencies

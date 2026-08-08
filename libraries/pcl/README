@@ -9,16 +9,23 @@ to recognize objects in the world based on their geometric appearance,
 and create surfaces from point clouds and visualize them -- to name
 a few.
 
-Note on QT: Qt4 is used by default. If you only have Qt5, edit the
-option -DPCL_QT_VERSION and set it to 5.
+An optional dependency is one of the several cudatoolkits available
+at SBo, namely:
+- cudatoolkit (version 10.2.89)
+  This version is not detected (therefore not used) when building pcl
 
-Optional dependencies:
+- cudatoolkit_12 (version 12.9.1)
+  This version is detected and used when building pcl.
+  This version requires gcc14 (in order to provide CUDA support when
+  building Blender). It's worth considering pros/cons of having two
+  GCCs installed at the same time.
 
-Available on SlackBuilds: - qhull, cudatoolkit
-========
+- cudatoolkit_13 (version 13.2.0)
+  This version is detected and used when building pcl.
 
-Not yet available on SlackBuilds:
-========
+
+Optional dependencies - not yet available on SBo:
+
 OpenNI - enables OpenNI grabber support
 https://github.com/OpenNI/OpenNI ; http://structure.io/openni
 

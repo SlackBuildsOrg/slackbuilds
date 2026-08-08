@@ -1,0 +1,25 @@
+From 3739d9f9c34119e77c2c7f4b80a45525279684e5 Mon Sep 17 00:00:00 2001
+From: r1w1s1 <r1w1s1@fastmail.com>
+Date: Thu, 14 May 2026 21:48:11 -0300
+Subject: [PATCH] slstatus: remove space from fmt_human()
+
+---
+ util.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util.c b/util.c
+index d33cf9d..82cd404 100644
+--- a/util.c
++++ b/util.c
+@@ -118,7 +118,7 @@ fmt_human(uintmax_t num, int base)
+ 	for (i = 0; i < prefixlen && scaled >= base; i++)
+ 		scaled /= base;
+ 
+-	return bprintf("%.1f %s", scaled, prefix[i]);
++	return bprintf("%.1f%s", scaled, prefix[i]);
+ }
+ 
+ int
+-- 
+2.54.0
+

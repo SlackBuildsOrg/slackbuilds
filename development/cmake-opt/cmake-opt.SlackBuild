@@ -2,7 +2,7 @@
 
 # Slackware build script for cmake-opt
 
-# Copyright 2024, Lockywolf
+# Copyright 2026, Lockywolf
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -22,12 +22,15 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260627 bkw: Modified by SlackBuilds.org, BUILD=2:
+# - include a csh version of the profile.d script.
+# - explicitly set the perms of the profile.d scripts to 644.
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cmake-opt
-VERSION=${VERSION:-3.30.5}
-BUILD=${BUILD:-1}
+VERSION=${VERSION:-3.31.12}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -107,8 +110,7 @@ cp -a \
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/etc/profile.d/
-cp $CWD/$PRGNAM.sh $PKG/etc/profile.d/
-chmod +x $PKG/etc/profile.d/$PRGNAM.sh
+install -m0644 $CWD/$PRGNAM.{sh,csh} $PKG/etc/profile.d/
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

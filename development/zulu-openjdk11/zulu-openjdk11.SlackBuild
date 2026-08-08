@@ -3,7 +3,7 @@
 # Slackware build script for zulu-openjdk11
 
 # Copyright (c) 2018, Sébastien Ballet <slacker6896 at gmail.com>
-# Copyright (c) 2022-2025, Andrew Clemons, Tokyo Japan
+# Copyright (c) 2022-2026, Andrew Clemons, Tokyo Japan
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=zulu-openjdk11
-VERSION=${VERSION:-11.0.29}
-ZULUVERSION=${ZULUVERSION:-11.84.17}
+VERSION=${VERSION:-11.0.31}
+ZULUVERSION=${ZULUVERSION:-11.88.17}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -58,6 +58,9 @@ elif [ "$ARCH" = "x86_64" ]; then
 elif  [ "$ARCH" = "arm" ]; then
   ZULU_ARCH=aarch32hf
   LIBDIRSUFFIX=""
+  # arm32 hf latest version not yet published to the community
+  VERSION=11.0.30
+  ZULUVERSION=11.86.21
 elif  [ "$ARCH" = "aarch64" ]; then
   ZULU_ARCH=aarch64
   LIBDIRSUFFIX="64"

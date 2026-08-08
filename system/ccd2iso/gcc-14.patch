@@ -1,0 +1,15 @@
+Author: Andreas Tille <tille@debian.org>
+Last-Update: 2025-07-29
+Bug-Debian: https://bugs.debian.org/1066265
+Description: Fix build with gcc-14
+
+--- a/src/ccd2iso.c
++++ b/src/ccd2iso.c
+@@ -27,6 +27,7 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
+ 
+ #include "clonecd.h"
+ 

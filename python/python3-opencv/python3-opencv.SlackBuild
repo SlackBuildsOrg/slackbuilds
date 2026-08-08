@@ -50,6 +50,8 @@ PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 PYVER=${PYVER:-$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')}
+# Use python3-numpy-legacy
+export PYTHONPATH=/opt/python$PYVER/site-packages
 
 set -e
 
@@ -77,7 +79,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-
 [ "${CONTRIB:-1}" = "1" ] && export ENABLE_CONTRIB=1
 export CMAKE_ARGS="-DWITH_IPP=OFF -DOPENCV_ENABLE_NONFREE=ON"
 pip3 wheel . --no-build-isolation --verbose
@@ -87,6 +88,7 @@ unset ENABLE_CONTRIB
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+find $PKG -name "__pycache__" | xargs /usr/bin/rm -rf
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \

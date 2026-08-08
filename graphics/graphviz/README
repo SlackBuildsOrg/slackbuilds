@@ -9,3 +9,6 @@ design, networking, and in visual interfaces for many other domains.
 
 gts and DevIL are autodetected optional dependencies.
 ocaml is an optional dependency, if you want OCaml bindings.
+
+R breaks building Graphviz, hence its support is disabled.
+It can be reenabled using: GRAPHVIZ_ENABLE_R=yes

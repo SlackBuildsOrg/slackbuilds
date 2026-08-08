@@ -10,5 +10,5 @@ MD5SUM="d824ef742a548a5613caadbad78475f2 \
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="uget"
-MAINTAINER="Macius Kuzmin"
-EMAIL="szczecinska.duma@gmail.com"
+MAINTAINER="orphaned - no maintainer"
+EMAIL="NOEMAIL"

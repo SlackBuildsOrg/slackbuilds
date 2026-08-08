@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/source/h/html2text/html2text-2
 MD5SUM="d4fb2b23350c6fff96dd1f47e35acb56"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="python3-setuptools-opt"
+REQUIRES="python3-setuptools-scm-opt"
 MAINTAINER="B. Watson"
 EMAIL="urchlay@slackware.uk"

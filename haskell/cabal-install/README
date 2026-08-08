@@ -17,4 +17,3 @@ Cabal is intended to remediate this issue. Each cabal-based
 SlackBuild would have to carry a large number of source files, but,
 in turn, would avoid having to micro-manage dependencies, and
 pollute the file system with single-use static libraries.
-

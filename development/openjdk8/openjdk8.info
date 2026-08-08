@@ -4,10 +4,9 @@ HOMEPAGE="https://openjdk.java.net"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
 DOWNLOAD_x86_64="https://icedtea.classpath.org/download/source/icedtea-3.34.0.tar.xz \
-          https://icedtea.classpath.org/download/drops/icedtea8/3.34.0/openjdk-git.tar.xz"
+                 https://icedtea.classpath.org/download/drops/icedtea8/3.34.0/openjdk-git.tar.xz"
 MD5SUM_x86_64="bc57f174ada4c707fd569902a3f1ef42 \
-        a58ea101f40b58737cc25de0d38b14e2"
-
+               a58ea101f40b58737cc25de0d38b14e2"
 REQUIRES="openjdk7"
 MAINTAINER="Strahil Yordanov"
 EMAIL="strahilski@yahoo.com"

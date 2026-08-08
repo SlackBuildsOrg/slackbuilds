@@ -6,10 +6,10 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
                |-----handy-ruler------------------------------------------------------|
-perl-File-Which: perl-File-Which (Portable implementation of the `which' utility)
+perl-File-Which: perl-File-Which (portable implementation of the 'which' utility)
 perl-File-Which:
 perl-File-Which: File::Which was created to be able to get the paths to executable
-perl-File-Which: programs on systems under which the `which' program wasn't
+perl-File-Which: programs on systems under which the 'which' program wasn't
 perl-File-Which: implemented in the shell.
 perl-File-Which:
 perl-File-Which:

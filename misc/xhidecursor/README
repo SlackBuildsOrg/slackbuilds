@@ -11,4 +11,3 @@ xhidecursor is intended to be started from .xinitrc or a window manager
 startup script, for example:
 
   xhidecursor &
-

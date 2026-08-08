@@ -1,0 +1,30 @@
+XnConvert is a powerful, free, and cross-platform batch image converter
+and resizer. It supports more than 500 image formats including RAW
+camera files (DNG, CR2, NEF, ARW, ORF, PEF, RAF, RW2, SR2, etc.),
+and can read and write to over 70 formats.
+
+Key features:
+  - Batch processing of large image sets
+  - Over 80 configurable actions (resize, crop, rotate, adjust colours,
+    apply filters, add watermarks, rename files, etc.)
+  - Scripting support and command-line interface
+  - EXIF/IPTC/XMP metadata handling
+  - Multi-page and animated image support (GIF, TIFF, etc.)
+
+IMPORTANT: XnConvert is pre-compiled, closed-source freeware. It is
+free for personal, educational, and non-profit use. For commercial
+use, please refer to the licence at:
+https://www.xnview.com/en/xnconvert/#downloads
+
+This package is only available for x86_64 architecture; there is no
+32-bit Linux build provided by the upstream author.
+
+This SlackBuild repackages the official pre-compiled binary tarball.
+No compilation takes place.
+
+After installation the application is available as:
+  /usr/bin/xnconvert          (wrapper script in PATH)
+  /opt/XnConvert/XnConvert    (actual binary)
+
+A .desktop entry is installed to:
+  /usr/share/applications/xnconvert.desktop

@@ -2,6 +2,7 @@
 
 # Slackware build script for Zelda: Mystery of Solarus DX
 
+# Copyright 2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # Copyright 2015-2016, 2018-2019 Hunter Sezen California, USA
 # All rights reserved.
 #
@@ -28,8 +29,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=zsdx
-VERSION=${VERSION:-1.12.2}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.12.3}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -74,7 +75,7 @@ cd build
 cd ..
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a changelog.txt license.txt readme.md work/*.txt \
+cp -a changelog.md license.txt readme.md work/*.txt \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

@@ -1,8 +1,9 @@
 #!/bin/bash
-
+#
 # Slackware build script for i3lock
-
+#
 # Copyright 2016 mid-kid
+# Copyright 2026 r1w1s1
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=i3lock
-VERSION=${VERSION:-2.13}
+VERSION=${VERSION:-2.16}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -70,7 +71,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
+tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -79,14 +80,19 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-autoreconf --force --install
-./configure \
- --prefix=/usr \
- --sysconfdir=/etc \
- --disable-sanitizers \
- --mandir=/usr/man
-
-make install DESTDIR=$PKG
+mkdir -p build
+( cd build
+  CFLAGS="$SLKCFLAGS" \
+  meson \
+    --prefix /usr \
+    --libdir /usr/lib$LIBDIRSUFFIX \
+    --mandir /usr/man \
+    --sysconfdir /etc \
+    --localstatedir /var \
+    ..
+  CFLAGS="$SLKCFLAGS" ninja
+  DESTDIR=$PKG ninja install
+)
 
 # i3lock needs setuid to make sure it isn't killed by the kernel and to read shadow.
 # Don't worry, the privileges are dropped really soon after starting

@@ -6,6 +6,8 @@
 
 # Licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260720 bkw: add README note about Slackware 15.0.
+
 # 20251222 bkw: update for v9.2.1.
 # 20250817 bkw:
 # - update for v9.1.0 (libtsm v4.1.0).
@@ -93,13 +95,6 @@ chown -R root:root .
 find . ! -type l    -a \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
-
-# 20250817 bkw: I could probably patch meson.build to work with 15.0's
-# old meson, but I don't love meson enough to spend time learning how
-# just at the moment. Thanks to fourtysixandtwo for providing a newer
-# meson.
-PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
-export PYTHONPATH=/opt/python$PYVER/site-packages
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 LIBDOC=$PKGDOC/$LIBNAM-$LIBVER

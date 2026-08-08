@@ -25,5 +25,5 @@ preserve_perms() {
 preserve_perms etc/rc.d/rc.zfs.new
 
 if [ -x /sbin/depmod ]; then
-  chroot . /sbin/depmod -a >/dev/null 2>&1
+  chroot . /sbin/depmod -a "${KERNEL}" >/dev/null 2>&1
 fi

@@ -103,6 +103,9 @@ cat $CWD/README > $PKG/usr/doc/$PRGNAM-$VERSION/README
 
 rm -f $PKG/usr/lib*/*.la
 
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 

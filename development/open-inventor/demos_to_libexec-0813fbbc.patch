@@ -1,0 +1,38 @@
+From 0813fbbc2e778d31c66325c8561404d26c659c52 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Martin=20Aum=C3=BCller?= <aumuell@reserv.at>
+Date: Sun, 31 May 2026 20:21:31 +0200
+Subject: [PATCH] install demos to libexec instead of lib
+
+The demos are executables and should go to libexec, as suggested in #9.
+---
+ CMakeLists.txt    | 3 +--
+ make/ivcommondefs | 2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 0c42ab4..8a7c6e9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -120,8 +120,7 @@ add_dirvar(IVDATADIR "${IVDATAROOT}/models")
+ add_dirvar(IVMATERIALSDIR "${IVDATAROOT}/materials")
+ add_dirvar(IVTEXTURESDIR "${IVDATAROOT}/textures")
+ add_dirvar(IVDEMODATADIR "${IVDATAROOT}/demos")
+-#add_dirvar(IVDEMOBINDIR "libexec/inventor")
+-add_dirvar(IVDEMOBINDIR "${CMAKE_INSTALL_LIBDIR}/inventor")
++add_dirvar(IVDEMOBINDIR "${CMAKE_INSTALL_LIBEXECDIR}/inventor")
+ 
+ set(IVHDRTOP Inventor)
+ 
+diff --git a/make/ivcommondefs b/make/ivcommondefs
+index 7131d56..b3acc42 100644
+--- a/make/ivcommondefs
++++ b/make/ivcommondefs
+@@ -219,7 +219,7 @@ _HELPDIR = $(IVPREFIX)/share/inventor/help
+ _DATADIR = $(IVPREFIX)/share/inventor/data/models
+ _MATERIALSDIR = $(IVPREFIX)/share/inventor/data/materials
+ _TEXTURESDIR = $(IVPREFIX)/share/inventor/data/textures
+-_DEMOBINDIR = $(IVPREFIX)/lib/inventor
++_DEMOBINDIR = $(IVPREFIX)/libexec/inventor
+ _DEMODATADIR = $(IVPREFIX)/share/inventor/data/demos
+ ifeq ($(usingDarwin), 1)
+ _PDFVIEWER = open

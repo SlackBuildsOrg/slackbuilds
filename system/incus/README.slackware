@@ -1,0 +1,51 @@
+This README.slackware describes one method of converting a minimal
+incus image into a fully loaded slackware image suitable, for
+instance, of providing a clean environment for package building.
+
+Throughout this description, the minimal images decribed in
+README.docker will be used as the subject images to update to the
+full Slackware software installation i.e image example-1 (x86_64)
+and example-2 (i686).
+
+The general strategy is to run an update script from within a running
+image instance. The incus-update_image.sh script is used to prepare
+the image and set various options before installing and running a
+second script, named incus-install_all.sh, from within the image.
+
+The incus-update_image.sh script takes at least one parameter, the
+image name. A second parameter is optional, to provide an alternative
+URL to a mirror from which to download Slackware packages. If no
+alternative mirror is provided, the location already set in the
+minimal image's /etc/slackpkg/mirrors file is used.
+
+Invocation is therefore:
+    bash incus-update_image.sh <image_name> [mirror]
+
+e.g.
+    bash incus-update_image.sh example-1
+e.g.
+    bash incus-update_image.sh example-1 http://192.168.1.16/slackware/slackware64-15.0/
+
+The image will be configured with the same timezone as the host
+system. If an alternative timezone is desired, replace the existing
+setting of NEW_LOCAL_TIME near the beginning of the script e.g.
+    NEW_LOCAL_TIME=/usr/share/zoneinfo/Atlantic/Reykjavik
+Alternatively set the desired setting of NEW_LOCAL_TIME in the
+environment before running the script:
+e.g.
+    NEW_LOCAL_TIME=/usr/share/zoneinfo/Atlantic/Reykjavik bash incus-update_image.sh example-1
+e.g.
+    export NEW_LOCAL_TIME=/usr/share/zoneinfo/Atlantic/Reykjavik
+    bash incus-update_image.sh example-1
+
+Some very basic checking of the mirror site URL is performed. It
+assumes the URL string will contain 'ware64' (as in slackware64-15.0
+for instance) for x86_64 images; it will not contain 'ware64' for
+i686 images. If it looks OK, a downloaded version of the mirrors file
+is amended and pushed back to the image.
+
+The installation script itself (incus-install_all.sh) is then pushed
+to the image and executed.
+
+A full update of the image may take some time, depending on speed
+of the download site and connectivity to it.

@@ -1,0 +1,92 @@
+# yaml.lang -- GNU Source-highlight language definition for YAML
+# @title YAML
+# @matchext yaml
+# @matchext yml
+#
+# Author: Ricardson <r1w1s1@fastmail.com>
+# Tested with GNU Source-highlight 3.1.9
+#
+# Usage:
+#   source-highlight -s yaml -f esc    < file.yaml
+#   source-highlight -s yaml -f esc256 < file.yaml
+#
+# Colour mapping (using default.style):
+#   keyword  -> keys, document markers, booleans
+#   string   -> quoted and block scalar values
+#   comment  -> comments
+#   number   -> numeric values
+#   type     -> anchors (&) and aliases (*)
+#   symbol   -> colons, dashes, brackets
+#   preproc  -> tags (!tag)
+
+# -----------------------------------------------------------------
+# Comments  # comment
+# -----------------------------------------------------------------
+include "script_comment.lang"
+
+# -----------------------------------------------------------------
+# Document markers  ---  ...
+# -----------------------------------------------------------------
+keyword = '^---[[:blank:]]*$'
+keyword = '^[.]{3}[[:blank:]]*$'
+
+# -----------------------------------------------------------------
+# Block scalars  |  and  >  (literal and folded)
+# -----------------------------------------------------------------
+environment string delim '^[[:blank:]]*[^#:]+:[[:blank:]]*[|>][^\n]*' '^[^[:blank:]\n]' begin
+  normal = '.'
+end
+
+# -----------------------------------------------------------------
+# Double-quoted strings
+# -----------------------------------------------------------------
+environment string delim '"' '"' escape '\\' begin
+  normal = '.'
+end
+
+# -----------------------------------------------------------------
+# Single-quoted strings
+# -----------------------------------------------------------------
+environment string delim "'" "'" begin
+  normal = '.'
+end
+
+# -----------------------------------------------------------------
+# Anchors  &name  and aliases  *name
+# -----------------------------------------------------------------
+type = '&[[:alnum:]_-]+'
+type = '\*[[:alnum:]_-]+'
+
+# -----------------------------------------------------------------
+# Tags  !!str  !!int  !python/object  etc.
+# -----------------------------------------------------------------
+preproc = '!![[:alnum:]]+'
+preproc = '![[:alnum:]/]+'
+
+# -----------------------------------------------------------------
+# Booleans and null
+# -----------------------------------------------------------------
+keyword = '\<true\>|\<false\>|\<yes\>|\<no\>|\<null\>|\<~\>'
+keyword = '\<True\>|\<False\>|\<Yes\>|\<No\>|\<Null\>'
+keyword = '\<TRUE\>|\<FALSE\>|\<YES\>|\<NO\>|\<NULL\>'
+
+# -----------------------------------------------------------------
+# Numbers (int, float, hex, octal, scientific, infinity)
+# -----------------------------------------------------------------
+include "number.lang"
+
+# -----------------------------------------------------------------
+# Keys  (indented or not, followed by colon)
+# -----------------------------------------------------------------
+(keyword,symbol) = `([[:blank:]]*[[:alnum:]_. -]+)(:(?:[[:blank:]]|$))`
+
+# -----------------------------------------------------------------
+# List markers  - item
+# -----------------------------------------------------------------
+symbol = '^[[:blank:]]*-[[:blank:]]'
+
+# -----------------------------------------------------------------
+# Merge key  <<:
+# -----------------------------------------------------------------
+symbol = '<<:'
+

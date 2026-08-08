@@ -74,4 +74,3 @@ try to give the WM some time to start up before wbar does.
 
 Example (in your startup script): (sleep 5s && wbar) &
 Note that the parenthesis surrounding the command are important.
-

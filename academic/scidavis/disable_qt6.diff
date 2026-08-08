@@ -1,0 +1,19 @@
+diff -Naur a/3rdparty/qwtplot3d/CMakeLists.txt b/3rdparty/qwtplot3d/CMakeLists.txt
+--- a/3rdparty/qwtplot3d/CMakeLists.txt	2021-08-28 17:44:11.000000000 -0400
++++ b/3rdparty/qwtplot3d/CMakeLists.txt	2026-05-23 17:02:31.235163815 -0400
+@@ -31,13 +31,8 @@
+   add_compile_definitions( GL_SILENCE_DEPRECATION )
+ endif()
+ 
+-find_package(Qt6 COMPONENTS Core Gui OpenGLWidgets QUIET )
+-if( Qt6_FOUND )
+-  set( QT_VERSION_MAJOR 6 )
+-else()
+-  find_package(Qt5 COMPONENTS Core Gui OpenGL REQUIRED )
+-  set( QT_VERSION_MAJOR 5 )
+-endif()
++find_package(Qt5 COMPONENTS Core Gui OpenGL REQUIRED )
++set( QT_VERSION_MAJOR 5 )
+ 
+ find_package( OpenGL COMPONENTS OpenGL REQUIRED )
+ 

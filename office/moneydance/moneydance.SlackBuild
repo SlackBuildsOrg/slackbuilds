@@ -22,10 +22,18 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260609 bkw: Modified by SlackBuilds.org:
+# - update for v2024.5253, since the 2024.5117 download file is no
+#   longer available. 2024.5253 was what the "current" URL pointed
+#   to, so it was already the version being packaged.
+# - use a URL with the version number in it, rather than /current/,
+#   so the file will hopefully not change on the server.
+# - install .so libs +x (sbopkglint).
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=moneydance
-VERSION=${VERSION:-2024.5117}
+VERSION=${VERSION:-2024.5253}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -36,9 +44,6 @@ case "$( uname -m )" in
      *) ARCH=$( uname -m ) ;;
 esac
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -61,6 +66,8 @@ mkdir -p $TMP/$PRGNAM $PKG
 cd $TMP/$PRGNAM
 ar -x $CWD/${PRGNAM}_linux_amd64.deb
 tar xvf data.tar.bz2 -C $PKG
+
+chmod 755 $PKG/opt/Moneydance/jre/lib/{,server}/lib*.so
 
 rm -f $PKG/opt/Moneydance/create_desktop_file.sh
 

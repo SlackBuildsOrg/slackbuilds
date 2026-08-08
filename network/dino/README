@@ -15,4 +15,3 @@ instead of the default VP8, but be aware that many Intel
 GPUs do not support hardware acceleration of VP9, and
 without hardware acceleration video may stutter or
 freeze.
-

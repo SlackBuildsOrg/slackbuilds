@@ -1,0 +1,17 @@
+bfs (breadth-first version of the UNIX find command)
+
+bfs is a variant of the UNIX find command that operates breadth-first
+rather than depth-first, typically locating files faster by listing
+shallower paths before descending into deeper subtrees. It is mostly
+compatible with POSIX, GNU, FreeBSD, OpenBSD, NetBSD, and macOS find,
+and adds quality-of-life improvements like colored output, helpful
+error messages, and operators such as -exclude and -hidden.
+
+Example: searching for a config file near the top of a tree with a
+huge subdirectory like node_modules:
+
+  $ find ~/project -name 'config.json'
+  (slow: descends into node_modules first)
+
+  $ bfs ~/project -name 'config.json'
+  (fast: finds shallow matches before diving deeper)

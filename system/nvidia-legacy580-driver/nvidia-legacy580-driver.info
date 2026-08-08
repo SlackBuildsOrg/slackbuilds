@@ -1,20 +1,20 @@
 PRGNAM="nvidia-legacy580-driver"
-VERSION="580.142"
+VERSION="580.173.02"
 HOMEPAGE="https://www.nvidia.com"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/580.142/NVIDIA-Linux-x86_64-580.142.run \
-                 https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-580.142.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-modprobe/nvidia-modprobe-580.142.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-persistenced/nvidia-persistenced-580.142.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-580.142.tar.bz2 \
-                 https://download.nvidia.com/XFree86/nvidia-xconfig/nvidia-xconfig-580.142.tar.bz2"
-MD5SUM_x86_64="30a8bebe011ab3d9ff5d42a1279d4f61 \
-               f5938b360e229d5f0337a7703af20820 \
-               1df90f089558215ce3abafeb810cc22b \
-               dfc7810cff5b5f3f8b497e1fc0bf43b6 \
-               1333cc6d6612593db6140372884cfb16 \
-               1ae14dce09f16a33eb88cbdfd7aa0696"
+DOWNLOAD_x86_64="https://download.nvidia.com/XFree86/Linux-x86_64/580.173.02/NVIDIA-Linux-x86_64-580.173.02.run \
+                 https://download.nvidia.com/XFree86/nvidia-installer/nvidia-installer-580.173.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-modprobe/nvidia-modprobe-580.173.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-persistenced/nvidia-persistenced-580.173.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-580.173.02.tar.bz2 \
+                 https://download.nvidia.com/XFree86/nvidia-xconfig/nvidia-xconfig-580.173.02.tar.bz2"
+MD5SUM_x86_64="662a04653807c90f284ae4e1a9a0d799 \
+               423810c7e88d7dd0dc796dfbac73d0ba \
+               c1c7b2b4f46331976921e46b19eede58 \
+               d38bbb9f7a2caab2e4999f19571ae3f1 \
+               3569011330c35467e8b3bf25249fe62c \
+               7bf74ea1d07730bb560e390351dc0fdf"
 REQUIRES="nvidia-legacy580-kernel"
 MAINTAINER="Lenard Spencer"
 EMAIL="lenardrspencer@gmail.com"

@@ -8,3 +8,9 @@ Wayland protocol a perfect candidate for a C++ binding.
 The goal of this library is to create such a C++ binding for Wayland
 using the most modern C++ technology currently available, providing
 an easy to use C++ API to Wayland.
+
+NOTE: Building documentation (including manpages) requires installing
+graphics/graphviz as a dependency. This SlackBuild will build all the
+documentation automatically if it detects graphviz. If you do not want
+this to occur (adds about 45MB to the otherwise 4.4MB package size),
+pass DOCS=no to the script.

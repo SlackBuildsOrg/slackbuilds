@@ -22,10 +22,10 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-cd $(dirname $0) ; CWD=$(pwd)
+cd "$(dirname "$0")"; CWD=$(pwd)
 
 PRGNAM=cardinal
-VERSION=${VERSION:-24.05}
+VERSION=${VERSION:-26.02}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -47,59 +47,67 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   exit 0
 fi
 
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
 set -e
 
-rm -rf $PKG
-LIBDIR=lib
-if [ $ARCH == "x86_64" ]; then
-    LIBDIR="$LIBDIR"64
-fi
-mkdir -p $TMP $PKG $OUTPUT $PKG/$LIBDIR
-cd $TMP
-if [ "$ARCH" = "i586" ] || [ "$ARCH" = "i686" ]; then
-  rm -rf Cardinal-linux-i686-$VERSION
-  mkdir Cardinal-linux-i686-$VERSION
-  cd Cardinal-linux-i686-$VERSION
-  tar xvf $CWD/Cardinal-linux-i686-$VERSION.tar.gz
-elif [ "$ARCH" = "x86_64" ]; then
-  rm -rf Cardinal-linux-x86_64-$VERSION
-  mkdir Cardinal-linux-x86_64-$VERSION
-  cd Cardinal-linux-x86_64-$VERSION
-  tar xvf $CWD/Cardinal-linux-x86_64-$VERSION.tar.gz
-else
-  echo "Unknown ARCH"
-  exit 1
-fi
+rm -rf "$PKG"
+mkdir -p "$TMP" "$PKG" "$OUTPUT"
+cd "$TMP"
+rm -rf "$PRGNAM-$VERSION"
+tar xvf "$CWD/$PRGNAM-$VERSION.tar.xz"
+cd "$PRGNAM-$VERSION"
 chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p $PKG/usr/$LIBDIR/clap
-mkdir -p $PKG/usr/$LIBDIR/lv2
-mkdir -p $PKG/usr/$LIBDIR/vst
-mkdir -p $PKG/usr/$LIBDIR/vst3
-mkdir -p $PKG/usr/bin
-mv Cardinal.clap $PKG/usr/$LIBDIR/clap/
-mv Cardinal.lv2 $PKG/usr/$LIBDIR/lv2/
-mv Cardinal.vst $PKG/usr/$LIBDIR/vst/
-mv Cardinal.vst3 $PKG/usr/$LIBDIR/vst3/
-mv CardinalFX.lv2/ $PKG/usr/$LIBDIR/lv2/
-mv CardinalFX.vst3/ $PKG/usr/$LIBDIR/vst3/
-mv CardinalJACK $PKG/usr/bin/
-mv CardinalMini.lv2/ $PKG/usr/$LIBDIR/lv2/
-mv CardinalNative $PKG/usr/bin/
-mv CardinalSynth.lv2/ $PKG/usr/$LIBDIR/lv2/
-mv CardinalSynth.vst3/ $PKG/usr/$LIBDIR/vst3/
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-chown root:root LICENSE
-cp -a \
-  LICENSE \
-  README.md \
-  docs/* \
-  $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+mkdir -p "$TMP/$PRGNAM-$VERSION/mold-ld"
+ln -sf /usr/bin/mold "$TMP/$PRGNAM-$VERSION/mold-ld/ld"
 
-rm -rf $PKG/$LIBDIR
-mkdir -p $PKG/install
-cat $CWD/slack-desc > $PKG/install/slack-desc
+# two dependencies use malloc_usable_size, which is incompatible with fortification level 3
+# https://github.com/DISTRHO/Cardinal/issues/576
+# bfd need to be replaced with mold globally to build
+export CFLAGS+=" -B${TMP}/$PRGNAM-$VERSION/mold-ld -Wno-format-security -D_FORTIFY_SOURCE=2 $SLKCFLAGS "
+export CXXFLAGS+=" -B${TMP}/$PRGNAM-$VERSION/mold-ld -Wno-format-security -D_FORTIFY_SOURCE=2 $SLKCFLAGS "
 
-cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+make \
+  PREFIX=/usr \
+  SYSDEPS=true \
+  WITH_LTO=false
+
+make PREFIX=/usr SYSDEPS=true DESTDIR="$PKG" install
+(
+  cd "$PKG"
+  [ "$ARCH" = "x86_64" ] && mv "$PKG/usr/lib" "$PKG/usr/lib${LIBDIRSUFFIX}"
+  mkdir -p "$PKG/usr/doc/$PRGNAM-$VERSION"
+  mv "$PKG/usr/share/doc/$PRGNAM"/* "$PKG/usr/doc/$PRGNAM-$VERSION"
+  rm -rf "$PKG/usr/share/doc"
+  find usr/lib${LIBDIRSUFFIX} -type f \( -iname "*.clap" -or -iname "*.so" \) -exec chmod +x {} \;
+)
+
+install -vDm 644 "$CWD/studio.kx.distrho.Cardinal.desktop" -t "$PKG/usr/share/applications"
+install -vDm 644 "$CWD/cardinal.svg" "$PKG/usr/share/icons/hicolor/scalable/apps/cardinal.svg"
+  
+cat "$CWD/$PRGNAM.SlackBuild" > "$PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild"
+
+mkdir -p "$PKG/install"
+cat "$CWD/slack-desc" > "$PKG/install/slack-desc"
+cat "$CWD/doinst.sh" > "$PKG/install/doinst.sh"
+
+cd "$PKG"
+/sbin/makepkg -l y -c n "$OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"

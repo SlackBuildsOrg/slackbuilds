@@ -16,6 +16,10 @@ config etc/zm.conf.new
 config etc/logrotate.d/zm.new
 config etc/rc.d/rc.zm.new
 
+if [ -x /usr/bin/update-desktop-database ]; then
+  /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
+fi
+
 echo ""
 echo "   If this is a new installation, you will need to create a MySQL database"
 echo "   for ZoneMinder to use. See /usr/doc/ZoneMinder-<version>/README.SLACKWARE"

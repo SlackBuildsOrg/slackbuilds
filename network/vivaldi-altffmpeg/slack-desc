@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                 |-----handy-ruler------------------------------------------------------|
+vivaldi-altffmpeg: vivaldi-altffmpeg (Support for H.264 and AAC in the Vivaldi browser)
+vivaldi-altffmpeg:
+vivaldi-altffmpeg: Prebuilt, Chromium patched, FFMpeg binary supporting proprietary
+vivaldi-altffmpeg: Codecs, using a file provided by the Electron project.
+vivaldi-altffmpeg:
+vivaldi-altffmpeg: Home Page: https://github.com/electron/electron/releases
+vivaldi-altffmpeg:
+vivaldi-altffmpeg:
+vivaldi-altffmpeg:
+vivaldi-altffmpeg:
+vivaldi-altffmpeg:

@@ -22,10 +22,15 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260704 bkw:
+# - take over maintenance.
+# - add patches from Debian to prevent 'make test' failure with
+#   the newer libcurl from Slackware 15.0's patches/.
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=trurl
-VERSION=${VERSION:-0.16.1}
+VERSION=${VERSION:-0.16.1_4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -49,53 +54,56 @@ OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
 fi
 
 set -e
 
+SRCVER=${VERSION%_*}  # 1.23_4 => 1.23
+DEBVER=${VERSION#*_}  # 1.23_4 => 4
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-cd $PRGNAM-$VERSION
+rm -rf $PRGNAM-$SRCVER
+tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz
+cd $PRGNAM-$SRCVER
+tar xvf $CWD/${PRGNAM}_$SRCVER-$DEBVER.debian.tar.xz
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
+
+# 20260704 bkw: we don't need this patch yet...
+rm -f debian/patches/mark-additional-tests-case-sensitive.patch
+
+# 20260704 bkw: apply patches from Debian (fixes self-test)
+for i in $( cat debian/patches/series ); do
+  if [ -e debian/patches/$i ]; then
+    echo "===> applying $i"
+    patch -p1 < debian/patches/$i
+  fi
+done
 
 make \
   CFLAGS="$SLKCFLAGS"
+strip $PRGNAM
 make test
 make install \
   DESTDIR=$PKG \
   PREFIX=/usr \
   MANDIR=/usr/man/man1
+gzip $PKG/usr/man/man*/*
 
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
-
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a \
-  CONTRIBUTING.md COPYING README.md RELEASE-NOTES RELEASE-PROCEDURE.md THANKS \
-  URL-QUIRKS.md \
-  $PKG/usr/doc/$PRGNAM-$VERSION
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a *.md COPYING* RELEASE-NOTES* THANKS* $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

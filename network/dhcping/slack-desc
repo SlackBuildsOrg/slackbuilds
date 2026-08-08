@@ -8,12 +8,12 @@
        |-----handy-ruler------------------------------------------------------|
 dhcping: dhcping (checks if a remote DHCP server is alive)
 dhcping:
-dhcping: dhcping allows the system administrator to check if a remote DHCP
-dhcping: server is still functioning
+dhcping: dhcping sends a DHCP request to a DHCP server to see if it's up and
+dhcping: running. It allows the system administrator to check if a remote DHCP
+dhcping: server is still functioning.
 dhcping:
 dhcping:
 dhcping:
 dhcping:
 dhcping:
-dhcping: It can be obtained from http://www.mavetju.org
 dhcping:

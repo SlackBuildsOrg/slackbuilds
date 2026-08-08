@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+python3-gnupg: python3-gnupg (A wrapper for the GnuPG)
+python3-gnupg:
+python3-gnupg: This module allows easy access to GnuPG's key management,
+python3-gnupg: encryption and signature functionality from Python programs. It is
+python3-gnupg: intended for use with Python versions >= 3.6.
+python3-gnupg:
+python3-gnupg: Homepage: https://docs.red-dove.com/python-gnupg/
+python3-gnupg:
+python3-gnupg:
+python3-gnupg:
+python3-gnupg:

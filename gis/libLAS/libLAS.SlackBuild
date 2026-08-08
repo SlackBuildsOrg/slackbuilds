@@ -4,6 +4,8 @@
 
 # Copyright 2016 David Spencer, Baildon, West Yorkshire, U.K.
 # All rights reserved.
+# Copyright 2026 Christoph Willing	Sydney, Australia
+# All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -26,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=libLAS
 VERSION=${VERSION:-1.8.1}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -38,9 +40,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -79,7 +78,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-patch -p1 < $CWD/Use_LIBLAS_BIG_ENDIAN.patch
+zcat $CWD/Use_LIBLAS_BIG_ENDIAN.patch | patch -p1
 patch -p1 < $CWD/boost-1.73.patch
 
 mkdir -p build
@@ -103,7 +102,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS COPYING INSTALL LICENSE.txt README.txt $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a AUTHORS COPYING LICENSE.txt README.txt $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

@@ -3,7 +3,7 @@
 # Slackware build script for audacity
 
 # Copyright 2006-2010 Chess Griffin <chess@chessgriffin.com>
-# Copyright 2011-2025 Matteo Bernardini <ponce@slackbuilds.org>
+# Copyright 2011-2026 Matteo Bernardini <ponce@slackbuilds.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -34,8 +34,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=audacity
-VERSION=${VERSION:-3.7.5}
-MANVER=${MANVER:-3.7.5}
+VERSION=${VERSION:-3.7.8}
+MANVER=${MANVER:-3.7.8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -100,7 +100,9 @@ sed -i 's|^#include "allegro.h"|#include "portsmf/allegro.h"|' libraries/lib-not
 
 mkdir -p build
 cd build
+  # 20260801 bkw: force use of wxWidgets 3.2, regardless of /usr/bin/wx-config.
   cmake \
+    -DwxWidgets_CONFIG_OPTIONS="--version=3.2" \
     -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS -DNDEBUG -std=gnu17" \
     -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS -DNDEBUG -std=gnu17" \
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS -DNDEBUG" \

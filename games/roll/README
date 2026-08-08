@@ -1,6 +1,12 @@
-roll is a program to roll dices specified in a simple and intuitive way.
+roll (program to roll dice specified in a simple and intuitive way)
 
-Rolls a user-defined dice sequence. The dices to roll are defined using
-dN where N is the number of sides. Dices can be rolled multiple times by
-prepending the number of repetitions (e.g., 3d6) and used in simple
-mathematical expressions (e.g., 2d8+4).
+Rolls a user-defined dice sequence. The dice to roll are defined
+using dN where N is the number of sides. Dice can be rolled multiple
+times by prepending the number of repetitions (e.g., 3d6) and used in
+simple mathematical expressions (e.g., 2d8+4).
+
+D&D players rolling up character stats can say "6{3d6}", or if you
+want to cheat a bit, "6{3d6>2}" (rejects rolls of 1 or 2). See the
+EXAMPLES section in the man page.
+
+See also: games/rolldice

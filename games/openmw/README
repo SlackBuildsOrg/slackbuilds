@@ -4,3 +4,9 @@ editor (OpenCS) which will allow the user to edit or create their own
 games. Both OpenCS and OpenMW are written from scratch and aren't made
 to support any third party programs the original Morrowind engine uses
 to improve its functionality.
+
+CURRENT=OFF: when CURRENT=OFF, build with development/gcc14. Users of
+slackware-current or binutils-gcc-glibc need CURRENT=ON
+
+QT6=OFF: when QT6=OFF, build without launcher, opencs, wizard,
+opencs_tests.

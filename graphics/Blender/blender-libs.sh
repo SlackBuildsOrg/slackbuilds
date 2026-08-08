@@ -30,8 +30,8 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=blender-libs
 SRCNAM=blender
-VERSION=${VERSION:-5.0.1}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-5.1.1}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -70,14 +70,15 @@ echo "PATH = $PATH"
 # Ensure updated versions of some system packages are installed
 # Slackware 15.0 stock cmake version is 3.21.4 (NOT usable)
 # Slackware 15.0 also has version 3.31.8 in testing (usable)
-# SBo has cmake-opt with version 3.30.5 (usable)
+# SBo has cmake-opt with version 3.30.5 (not usable for 5.1.1 onward)
 # Slackware -current has 4.x.x
-#REQUIRED_CMAKE_VERSION=3.31.8
-REQUIRED_CMAKE_VERSION=3.30.5
+#REQUIRED_CMAKE_VERSION=3.30.5
+REQUIRED_CMAKE_VERSION=3.31.8
 
 # If cmake-opt is installed, ensure its newer cmake is found first
-[ -x /opt/cmake-opt/bin/cmake ] && \
-  export PATH="/opt/cmake-opt/bin:${PATH}"
+# (no longer usable for blender version 5.1.1 onward)
+#[ -x /opt/cmake-opt/bin/cmake ] && \
+#  export PATH="/opt/cmake-opt/bin:${PATH}"
 
 installed_cmake_version=$(cmake --version | head -1 |cut -d' ' -f3)
 if [ ! "$REQUIRED_CMAKE_VERSION" = "$installed_cmake_version" ]; then
@@ -85,6 +86,9 @@ if [ ! "$REQUIRED_CMAKE_VERSION" = "$installed_cmake_version" ]; then
   echo "For Slackware 15.0, install the cmake-opt SlackBuild from SBo."
   exit 2
 fi
+
+# gcc14 is required for blender 5.1.0 onward
+. /etc/profile.d/gcc14.sh
 
 
 # Obtain sources
@@ -103,10 +107,10 @@ done
 # rename some source files (those listed in .defs file):
 RENAMED_SOURCES=""
 cp  pthreads4w-code-v3.0.0.zip pthreads4w-code-3.0.0.zip && RENAMED_SOURCES="pthreads4w-code-3.0.0.zip $RENAMED_SOURCES"
-cp  c4298933fe046e3f915977b5a69537a59aac8f47.tar.gz hiprt-c4298933fe046e3f915977b5a69537a59aac8f47.tar.gz && RENAMED_SOURCES="hiprt-c4298933fe046e3f915977b5a69537a59aac8f47.tar.gz $RENAMED_SOURCES"
-cp  efd24d75bcbc55620e759f6bf42c45a32abac5f8.tar.gz glslang-efd24d75bcbc55620e759f6bf42c45a32abac5f8.tar.gz && RENAMED_SOURCES="glslang-efd24d75bcbc55620e759f6bf42c45a32abac5f8.tar.gz $RENAMED_SOURCES"
-cp  2a611a970fdbc41ac2e3e328802aed9985352dca.tar.gz SPIRV-Headers-2a611a970fdbc41ac2e3e328802aed9985352dca.tar.gz && RENAMED_SOURCES="SPIRV-Headers-2a611a970fdbc41ac2e3e328802aed9985352dca.tar.gz $RENAMED_SOURCES"
-cp  33e02568181e3312f49a3cf33df470bf96ef293a.tar.gz SPIRV-Tools-33e02568181e3312f49a3cf33df470bf96ef293a.tar.gz && RENAMED_SOURCES="SPIRV-Tools-33e02568181e3312f49a3cf33df470bf96ef293a.tar.gz $RENAMED_SOURCES"
+cp  606b4886efabce918dd0634ef71c06615a47c83b.tar.gz hiprt-606b4886efabce918dd0634ef71c06615a47c83b.tar.gz && RENAMED_SOURCES="hiprt-606b4886efabce918dd0634ef71c06615a47c83b.tar.gz $RENAMED_SOURCES"
+cp  d213562e35573012b6348b2d584457c3704ac09b.tar.gz glslang-d213562e35573012b6348b2d584457c3704ac09b.tar.gz && RENAMED_SOURCES="glslang-d213562e35573012b6348b2d584457c3704ac09b.tar.gz $RENAMED_SOURCES"
+cp  01e0577914a75a2569c846778c2f93aa8e6feddd.tar.gz SPIRV-Headers-01e0577914a75a2569c846778c2f93aa8e6feddd.tar.gz && RENAMED_SOURCES="SPIRV-Headers-01e0577914a75a2569c846778c2f93aa8e6feddd.tar.gz $RENAMED_SOURCES"
+cp  19042c8921f35f7bec56b9e5c96c5f5691588ca8.tar.gz SPIRV-Tools-19042c8921f35f7bec56b9e5c96c5f5691588ca8.tar.gz && RENAMED_SOURCES="SPIRV-Tools-19042c8921f35f7bec56b9e5c96c5f5691588ca8.tar.gz $RENAMED_SOURCES"
 cp  8a889d3699b3c09ade435641fb034427f3fd12b6.tar.gz parallel-hashmap-8a889d3699b3c09ade435641fb034427f3fd12b6.tar.gz && RENAMED_SOURCES="parallel-hashmap-8a889d3699b3c09ade435641fb034427f3fd12b6.tar.gz $RENAMED_SOURCES"
 cp  d03f19a88e42cb98be9604ff24b61190d1e48727.tar.gz unified-runtime-d03f19a88e42cb98be9604ff24b61190d1e48727.tar.gz && RENAMED_SOURCES="unified-runtime-d03f19a88e42cb98be9604ff24b61190d1e48727.tar.gz $RENAMED_SOURCES"
 cp  2b2e05e088841c63c0b6fd4c9fb380d8688738d3.tar.gz DPCPP-SPIR-V-Headers-2b2e05e088841c63c0b6fd4c9fb380d8688738d3.tar.gz && RENAMED_SOURCES="DPCPP-SPIR-V-Headers-2b2e05e088841c63c0b6fd4c9fb380d8688738d3.tar.gz $RENAMED_SOURCES"
@@ -117,6 +121,7 @@ cp  4e51b2467104a257c22788e343dafbdde72e28bb.tar.gz vc-intrinsics-4e51b2467104a2
 cp  05e047c0932d5043ddff5e4058a3afca8e0943aa.tar.gz DPCPP-05e047c0932d5043ddff5e4058a3afca8e0943aa.tar.gz && RENAMED_SOURCES="DPCPP-05e047c0932d5043ddff5e4058a3afca8e0943aa.tar.gz $RENAMED_SOURCES"
 cp  227cc413fb2d50b2a10073087be96b59d5364aea.tar.gz sse2neon-227cc413fb2d50b2a10073087be96b59d5364aea.tar.gz && RENAMED_SOURCES="sse2neon-227cc413fb2d50b2a10073087be96b59d5364aea.tar.gz $RENAMED_SOURCES"
 cp  3cf6c1e53037eb9e198860365712e1bafb22f7c6.tar.gz x265-3cf6c1e53037eb9e198860365712e1bafb22f7c6.tar.gz && RENAMED_SOURCES="x265-3cf6c1e53037eb9e198860365712e1bafb22f7c6.tar.gz $RENAMED_SOURCES"
+cp  thorvg.tar.gz thorvg-v1.0-pre31.tar.gz && RENAMED_SOURCES="thorvg-v1.0-pre31.tar.gz $RENAMED_SOURCES"
 
 set -e
 
@@ -139,7 +144,6 @@ find -L . \
 [ -x "$ROCM_PATH"/bin/hipcc ] || \
   sed -i -e 's/DOIDN_DEVICE_HIP=ON/DOIDN_DEVICE_HIP=OFF/' \
   build_files/build_environment/cmake/openimagedenoise.cmake
-
 
 # Copy source files to where blender expects them
 # (where make deps would download them to)

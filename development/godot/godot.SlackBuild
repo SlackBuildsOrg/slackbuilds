@@ -4,7 +4,7 @@
 
 # Copyright 2023-2024 Steven Voges <Oregon, USA>
 # All rights reserved.
-# Copyright 2025 Christoph Willing <Sydney, Australia>
+# Copyright 2025-2026 Christoph Willing <Sydney, Australia>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=godot
-VERSION=${VERSION:-4.5}
+VERSION=${VERSION:-4.5.2}
 SRCVER=${SRCVERSION:-$VERSION-stable}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}

@@ -15,14 +15,16 @@ The program consists of:
 for information
 3. ocpasswd, a tool to administer simple password files
 
+TCP wrappers support is disabled since ocserv 1.4.2+ can no longer build
+against tcp_wrappers' libwrap.
+
 A user and group "ocserv" must exist prior to running this script.
 To create them, run as root:
   groupadd -g 382 ocserv
   useradd -u 382 -g 382 -s /sbin/nologin -M ocserv
 
 Optional dependencies (autodetected):
-- llhttp, protobuf-c - if not present, then bundled versions will be
-  used
+- llhttp - if not present, then a bundled version will be used
 - rubygem-ronn - if present at build time, man pages will be
   re-generated
 - GeoIP

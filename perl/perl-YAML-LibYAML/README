@@ -1,3 +1,5 @@
+perl-YAML-LibYAML (Perl YAML Serialization using XS and libyaml)
+
 Kirill Siminov's libyaml is arguably the best YAML implementation. The
 C library is written precisely to the YAML 1.1 specification. It was
 originally bound to Python and was later bound to Ruby.
@@ -8,3 +10,7 @@ YAML support to date.
 This module exports the functions Dump, Load, DumpFile and
 LoadFile. These functions are intended to work exactly like YAML.pm's
 corresponding functions.
+
+Optional dependency (build-time only): perl-Test-Warnings. If this
+is installed, perl-YAML-LibYAML's "make test" will be run as part of
+the build.

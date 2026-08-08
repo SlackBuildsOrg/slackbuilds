@@ -6,5 +6,4 @@ Comment=The NordVPN app for Linux now offers a visual interface for effortless o
 Exec=/opt/nordvpn-gui/nordvpn-gui
 Icon=nordvpn-gui
 Terminal=false
-Type=Application
-Categories=Network;Security;
+Categories=Network;

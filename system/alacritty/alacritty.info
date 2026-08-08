@@ -1,7 +1,7 @@
 PRGNAM="alacritty"
-VERSION="0.16.1"
+VERSION="0.17.0"
 HOMEPAGE="https://github.com/alacritty/alacritty"
-DOWNLOAD="https://github.com/alacritty/alacritty/archive/v0.16.1/alacritty-0.16.1.tar.gz \
+DOWNLOAD="https://github.com/alacritty/alacritty/archive/v0.17.0/alacritty-0.17.0.tar.gz \
           https://static.crates.io/crates/adler2/adler2-2.0.1.crate \
           https://static.crates.io/crates/ahash/ahash-0.8.12.crate \
           https://static.crates.io/crates/aho-corasick/aho-corasick-1.1.3.crate \
@@ -178,11 +178,11 @@ DOWNLOAD="https://github.com/alacritty/alacritty/archive/v0.16.1/alacritty-0.16.
           https://static.crates.io/crates/serde_core/serde_core-1.0.228.crate \
           https://static.crates.io/crates/serde_derive/serde_derive-1.0.228.crate \
           https://static.crates.io/crates/serde_json/serde_json-1.0.145.crate \
-          https://static.crates.io/crates/serde_spanned/serde_spanned-1.0.2.crate \
+          https://static.crates.io/crates/serde_spanned/serde_spanned-1.0.4.crate \
           https://static.crates.io/crates/serde_yaml/serde_yaml-0.9.34%2Bdeprecated.crate \
           https://static.crates.io/crates/shlex/shlex-1.3.0.crate \
           https://static.crates.io/crates/signal-hook-registry/signal-hook-registry-1.4.6.crate \
-          https://static.crates.io/crates/signal-hook/signal-hook-0.3.18.crate \
+          https://static.crates.io/crates/signal-hook/signal-hook-0.4.3.crate \
           https://static.crates.io/crates/simd-adler32/simd-adler32-0.3.7.crate \
           https://static.crates.io/crates/slab/slab-0.4.11.crate \
           https://static.crates.io/crates/smallvec/smallvec-1.15.1.crate \
@@ -199,11 +199,12 @@ DOWNLOAD="https://github.com/alacritty/alacritty/archive/v0.16.1/alacritty-0.16.
           https://static.crates.io/crates/thiserror/thiserror-2.0.17.crate \
           https://static.crates.io/crates/tiny-skia-path/tiny-skia-path-0.11.4.crate \
           https://static.crates.io/crates/tiny-skia/tiny-skia-0.11.4.crate \
-          https://static.crates.io/crates/toml/toml-0.9.7.crate \
-          https://static.crates.io/crates/toml_datetime/toml_datetime-0.7.2.crate \
-          https://static.crates.io/crates/toml_edit/toml_edit-0.23.6.crate \
-          https://static.crates.io/crates/toml_parser/toml_parser-1.0.3.crate \
-          https://static.crates.io/crates/toml_writer/toml_writer-1.0.3.crate \
+          https://static.crates.io/crates/toml/toml-0.9.11%2Bspec-1.1.0.crate \
+          https://static.crates.io/crates/toml_datetime/toml_datetime-0.7.5%2Bspec-1.1.0.crate \
+          https://static.crates.io/crates/toml_edit/toml_edit-0.23.10%2Bspec-1.0.0.crate \
+          https://static.crates.io/crates/toml_edit/toml_edit-0.24.0%2Bspec-1.1.0.crate \
+          https://static.crates.io/crates/toml_parser/toml_parser-1.0.6%2Bspec-1.1.0.crate \
+          https://static.crates.io/crates/toml_writer/toml_writer-1.0.6%2Bspec-1.1.0.crate \
           https://static.crates.io/crates/tracing-core/tracing-core-0.1.34.crate \
           https://static.crates.io/crates/tracing/tracing-0.1.41.crate \
           https://static.crates.io/crates/unicode-ident/unicode-ident-1.0.19.crate \
@@ -272,7 +273,7 @@ DOWNLOAD="https://github.com/alacritty/alacritty/archive/v0.16.1/alacritty-0.16.
           https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.42.2.crate \
           https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.52.6.crate \
           https://static.crates.io/crates/windows_x86_64_msvc/windows_x86_64_msvc-0.53.1.crate \
-          https://static.crates.io/crates/winit/winit-0.30.12.crate \
+          https://static.crates.io/crates/winit/winit-0.30.13.crate \
           https://static.crates.io/crates/winnow/winnow-0.7.13.crate \
           https://static.crates.io/crates/winreg/winreg-0.55.0.crate \
           https://static.crates.io/crates/wio/wio-0.2.2.crate \
@@ -289,7 +290,7 @@ DOWNLOAD="https://github.com/alacritty/alacritty/archive/v0.16.1/alacritty-0.16.
           https://static.crates.io/crates/yeslogic-fontconfig-sys/yeslogic-fontconfig-sys-5.0.0.crate \
           https://static.crates.io/crates/zerocopy-derive/zerocopy-derive-0.8.27.crate \
           https://static.crates.io/crates/zerocopy/zerocopy-0.8.27.crate"
-MD5SUM="90b352df7af4b3e2f3306900fa6a252c \
+MD5SUM="ceca6953829dd3ad535348506fadfeea \
         873036bd52f5fd829bd41b3c2ca0bc08 \
         2d72538f5e173edbd18d17e347f409bc \
         03b2d126766ed746706241b4c7487654 \
@@ -466,11 +467,11 @@ MD5SUM="90b352df7af4b3e2f3306900fa6a252c \
         60d4c4f575afc314d644677feb1289c1 \
         45ca53c87e6fb9748e740a9298e2c14c \
         1aa4772ebdc965df9afde4eb75825b2b \
-        57dd62b9e1db6ec4c1eea5a374a974b1 \
+        15603a17a0d683c7c50d4b7db22ddf58 \
         39e3168b0ff2d77bcca05882310b2a06 \
         6c623a8eed8450399ec323a72e96855c \
         5ba884eb137d4976ed3d197f7fdda87d \
-        e72f6e543b456bb82d72a5a89b445157 \
+        8a568cbc041ce45f83e3b1c348b018ea \
         d0116882bd495f2b993495a8cf01f6fe \
         4ae196685156596c4a543b7cc629a005 \
         bff9f5bd01b620680a98b1c59d92df7c \
@@ -487,11 +488,12 @@ MD5SUM="90b352df7af4b3e2f3306900fa6a252c \
         6e01ab006629a393105a1d90effffe64 \
         b3c2227ede0550f603a0b4be15a7e96e \
         5e3168bac027527c809f8dfec53dcf2f \
-        48ae5489497d4c3f265e06a68a2c5196 \
-        27552fda32c3dab685bf0ee2b68a97a4 \
-        408ed5814c4366d1b3760c69a20d22ea \
-        03da580be0a22c0379ac289384bfd47c \
-        abbe59ac0cd7bbeeaa156cdbd61034f1 \
+        afa8d78174de7ca152bdd5ead7350734 \
+        9bf537e7d26a16e35156d3a4b5c9338b \
+        f0e3a73919cd3604abddc700049ac765 \
+        935e04d6e3dc1e2094ec551f92c0386f \
+        d68794323cd4f09c15e561fff26ac5cd \
+        3aace232a48239015af2b93472c71e3e \
         b7adabe6cc4fd5e1cb443f2ec0f9c98b \
         7017e24adcde4f4411e9d9585a71e409 \
         7b5a6f9a0c0de33f26338c3d529e0514 \
@@ -560,7 +562,7 @@ MD5SUM="90b352df7af4b3e2f3306900fa6a252c \
         8cec8a187df7a7b971009a7693f60140 \
         b95760e9133ba1bb456d0f0cef74c9a4 \
         ae65c2e2e666c0e6183014d48b278604 \
-        93219426b9bd408266d1c00735698859 \
+        175eaad2a7b54e6cb9ee7acf38947b6d \
         688b19c20a0dba9815e95d05d68e69a8 \
         e08ed9e8d7c1f9092463c74c39d83cdb \
         4396bc1704f7337718352f0e6ec2d391 \

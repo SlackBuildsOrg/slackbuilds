@@ -15,3 +15,6 @@ NOTES
   building.
 
 - Openzfs requires i686 on Slackware-x86. i586 will fail to build.
+
+- setting TEST_JOBS=1 may prevent high CPU temps on older hardware
+  during compile.

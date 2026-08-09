@@ -112,7 +112,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc \
   --disable-static \
   --disable-tests \
-  --with-greeter-user=lightdm  \
+  --with-greeter-user=lightdm \
   --with-greeter-session=lightdm-gtk-greeter \
   --disable-liblightdm-qt5 \
   --mandir=/usr/man \

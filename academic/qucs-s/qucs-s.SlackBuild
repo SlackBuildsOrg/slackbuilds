@@ -3,6 +3,7 @@
 # Slackware build script for qucs-s
 
 # Copyright 2023-2024  Johannes Schoepfer, Germany
+# updated to 26.1.1 by Caterino Tommaso, T.O.P.  USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=qucs-s
-VERSION=${VERSION:-24.4.1}
+VERSION=${VERSION:-26.1.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

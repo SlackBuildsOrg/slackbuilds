@@ -1,10 +1,10 @@
 PRGNAM="amneziawg-go"
-VERSION="3.0.20260805"
+VERSION="3.1.20260812"
 HOMEPAGE="https://github.com/amnezia-vpn/amneziawg-go"
-DOWNLOAD="https://github.com/amnezia-vpn/amneziawg-go/archive/v3.0.20260805/amneziawg-go-3.0.20260805.tar.gz \
-          https://sbo.t-rg.ws/amneziawg-go-3.0.20260805-vendored-sources.tar.xz"
-MD5SUM="8784d3322e63fee3ffa86dfd826bd729 \
-        f25b36c903765ccbffee0f72249ad239"
+DOWNLOAD="https://github.com/amnezia-vpn/amneziawg-go/archive/v3.1.20260812/amneziawg-go-3.1.20260812.tar.gz \
+          https://sbo.t-rg.ws/amneziawg-go-3.1.20260812-vendored-sources.tar.xz"
+MD5SUM="a66a892d1a6fc6c11d46d5349adf6ef1 \
+        d1d80618630513d50d4d3f09e3bcf5a0"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="google-go-lang"

@@ -80,6 +80,8 @@ cd $PRGNAM-$VERSION
 
 chown -R root:root .
 
+patch -p1 < $CWD/motif-api-modernization.patch
+
 make PROG=catclock CFLAGS="$SLKCFLAGS"
 
 mkdir -p $PKG/usr/bin

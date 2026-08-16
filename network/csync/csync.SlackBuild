@@ -26,6 +26,11 @@
 # - fix download URL.
 # - i486 => i586.
 # - no useless INSTALL in doc dir.
+# 20260816 jbl: Modified by me
+# - add cmake policy for current (is ignored on 15.0 cmake)
+# - add aarch64
+# - remove 'iniparser' depend (now in slackware-15.0)
+
 
 cd $(dirname $0) ; CWD=$(pwd)
 
@@ -61,6 +66,9 @@ elif [ "$ARCH" = "i686" ]; then
 elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  SLKCFLAGS="-O2 -fPIC"
+  LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
@@ -90,6 +98,7 @@ sed -i -e 's/ -pedantic -pedantic-errors//' \
 mkdir build
 cd build
   cmake .. \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DCMAKE_BUILD_TYPE=MinSizeRel \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DLIB_INSTALL_DIR=/usr/lib${LIBDIRSUFFIX} \

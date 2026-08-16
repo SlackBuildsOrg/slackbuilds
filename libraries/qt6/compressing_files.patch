@@ -1,0 +1,25 @@
+Author: Patrick Franz <deltaone@debian.org>
+Description: Building on 32-bit architectures fails when trying to compress
+    files in the devtools-frontend.
+Forwarded: not-needed
+
+--- a/src/3rdparty/chromium/third_party/devtools-frontend/src/scripts/build/compress_files.js
++++ b/src/3rdparty/chromium/third_party/devtools-frontend/src/scripts/build/compress_files.js
+@@ -75,7 +75,16 @@ async function main(argv) {
+   const fileList = argv[fileListPosition + 1];
+   const fileListContents = await readTextFile(fileList);
+   const files = fileListContents.split(' ');
+-  await Promise.all(files.map(filename => filename.trim()).map(compressFile));
++  for (let i = 0; i < files.length; i++) {
++    const fileName = files[i].trim();
++    try {
++      await compressFile(fileName);
++    } catch (e) {
++      console.log('Failing compressing',  fileName);
++      console.log(e);
++      process.exit(1);
++    }
++  }
+ }
+
+ main(process.argv).catch(err => {

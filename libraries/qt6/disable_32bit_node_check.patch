@@ -1,0 +1,39 @@
+Author: Patrick Franz <deltaone@debian.org>
+Description: Disable the check for a 32bit architecture
+    See https://code.qt.io/cgit/qt/qtwebengine.git/commit/?id=2c80ff478bcc3290cafd970c5fd3412f2887fc91
+Forwarded: not-needed
+
+diff --git a/cmake/FindNodejs.cmake b/cmake/FindNodejs.cmake
+index 00ce5696c..0aeef5ab3 100644
+--- a/cmake/FindNodejs.cmake
++++ b/cmake/FindNodejs.cmake
+@@ -9,11 +9,6 @@ if(Nodejs_EXECUTABLE)
+         OUTPUT_VARIABLE Nodejs_VERSION
+         ERROR_QUIET
+         OUTPUT_STRIP_TRAILING_WHITESPACE)
+-
+-    execute_process(
+-        COMMAND ${Nodejs_EXECUTABLE} -p "process.arch"
+-        OUTPUT_VARIABLE Nodejs_ARCH
+-        OUTPUT_STRIP_TRAILING_WHITESPACE)
+ endif()
+
+ string (REGEX MATCHALL "([1-9][0-9])\..*" Nodejs_VERSION "${Nodejs_VERSION}")
+diff --git a/configure.cmake b/configure.cmake
+index a6c76b4f7..89b6d7179 100644
+--- a/configure.cmake
++++ b/configure.cmake
+@@ -491,13 +491,6 @@ add_check_for_support(
+    CONDITION TARGET Nodejs::Nodejs
+    MESSAGE "node.js version 14 or later is required."
+ )
+-add_check_for_support(
+-    MODULES QtWebEngine
+-    CONDITION NOT (Nodejs_ARCH STREQUAL "ia32") AND
+-              NOT (Nodejs_ARCH STREQUAL "x86") AND
+-              NOT (Nodejs_ARCH STREQUAL "arm")
+-    MESSAGE "32bit version of Nodejs is not supported."
+-)
+ add_check_for_support(
+    MODULES QtWebEngine QtPdf
+    CONDITION Python3_EXECUTABLE

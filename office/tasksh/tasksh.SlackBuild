@@ -4,6 +4,8 @@
 
 # Copyright 2015 Robert Allen
 # All rights reserved, including Creator Endowed Unalienable Rights
+
+# Update 2026 Glenn Becker
 #
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
@@ -81,6 +83,7 @@ find -L . \
 
 # Build
 cmake \
+  -DTASKSH_DOCDIR=doc/$PRGNAM-$VERSION \
   -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_INSTALL_PREFIX=/usr

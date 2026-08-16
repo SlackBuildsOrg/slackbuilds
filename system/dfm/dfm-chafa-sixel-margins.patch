@@ -1,0 +1,5 @@
+--- config.h.in
++++ config.h.in
+@@ -50,1 +50,1 @@
+-#define DFM_IMG_CHAFA_CMD "chafa", "--format=sixel", "-s"
++#define DFM_IMG_CHAFA_CMD "chafa", "--format=sixel", "--margin-bottom=1", "--margin-right=1", "-s"

@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=perl-CryptX
-VERSION=${VERSION:-0.090}
+VERSION=${VERSION:-0.091}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -59,7 +59,7 @@ elif [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
 elif [ "$ARCH" = "aarch64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
+  SLKCFLAGS="-O2 -fPIC -fPIE -pie -Wl,-z,relro,-z,now -fstack-protector-all -fstack-clash-protection -fcf-protection=full -D_FORTIFY_SOURCE=2 -D_GLIBCXX_ASSERTIONS"
   LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
@@ -81,7 +81,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-perl Makefile.PL \
+CFLAGS="${SLKCFLAGS}" perl Makefile.PL \
   PREFIX=/usr \
   INSTALLDIRS=vendor \
   INSTALLVENDORMAN1DIR=/usr/man/man1 \

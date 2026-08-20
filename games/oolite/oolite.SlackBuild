@@ -79,7 +79,7 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # Make sure only system libs will be used
-rm deps/Linux-deps/x86*/lib/*
+rm -rf deps/Linux-deps/x86*/lib/*
 rm -rf deps/Linux-deps/include/*
 
 source /usr/share/GNUstep/Makefiles/GNUstep.sh

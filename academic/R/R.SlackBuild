@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=R
-VERSION=${VERSION:-4.6.0}
+VERSION=${VERSION:-4.6.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -97,6 +97,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc \
   --localstatedir=/var \
   --mandir=/usr/man \
+  --enable-R-shlib \
   rdocdir=/usr/doc/$PRGNAM-$VERSION \
   $r_shlib \
   $blas_shlib \

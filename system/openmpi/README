@@ -8,8 +8,11 @@ package is also available in SBo.
 Optional dependency:
 PMI=yes|no (default: no), requires slurm
 
+WARNING: OpenMPI 5 no longer supports 32 bit builds, use the
+openmpi4 package instead.
+
 Note: openmpi conflicts with the openmpi4 package, they should
 not be installed simultaneously.
 
-Note: openmpi conflicts with mpich . If you install both on the same
+Note: openmpi conflicts with mpich. If you install both on the same
 system, unexpected results may occur.

@@ -16,7 +16,6 @@ if [ -x /usr/bin/update-desktop-database ]; then
 fi
 
 config etc/pmix-mca-params.conf.new
-config etc/openmpi-default-hostfile.new
 config etc/openmpi-mca-params.conf.new
 config etc/openmpi-totalview.tcl.new
 config etc/prte-default-hostfile.new

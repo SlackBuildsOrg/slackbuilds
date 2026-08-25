@@ -71,7 +71,7 @@ rm -rf "${PKG:?}" "${TMP:?}/$PRGNAM"
 mkdir -p "$TMP" "$PKG" "$OUTPUT"
 
 cd "$TMP"
-tar xvf "$CWD/v$VERSION.tar.gz"
+tar xvf "$CWD/v$VERSION.tar.gz" || tar xvf "$CWD/$PRGNAM-v$VERSION.tar.gz"
 cd eh
 
 chown -R root:root .

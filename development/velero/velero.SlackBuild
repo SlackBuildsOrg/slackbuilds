@@ -80,7 +80,7 @@ rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 
-export GOFLAGS="-mod=vendor -trimpath -modcacherw -buildvcs=false"
+export GOFLAGS="-mod=vendor -trimpath -modcacherw"
 if [ -r "$CWD"/"$PRGNAM"-"${VERSION}"-vendor.tar.xz ]; then
   echo -n "Unpacking vendor tarball ..."
   tar xf "$CWD"/"$PRGNAM"-"$VERSION"-vendor.tar.xz
@@ -94,7 +94,7 @@ else
 fi
 
 mkdir -p $PKG/usr/bin
-CGO_ENABLED=0 go build -mod=readonly -trimpath -o $PKG/usr/bin/$PRGNAM ./cmd/velero
+CGO_ENABLED=0 go build -trimpath -o $PKG/usr/bin/$PRGNAM ./cmd/velero
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

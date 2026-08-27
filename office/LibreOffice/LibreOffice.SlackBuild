@@ -90,6 +90,12 @@ then
   # Since 26.8.0.3, neither default gcc or clang in 15.0 is sufficient
   source /etc/profile.d/gcc14.sh
 
+  # temporary test
+  if [ -n "$JENKINS_URL" ] ; then
+    # run ldconfig in chroot
+    /sbin/ldconfig
+  fi
+
   # for 28.5.0.4
   sed -i -e '/errEncrypted/c printf("#ERROR:%d\\n", err);' sdext/source/pdfimport/xpdfwrapper/wrapper_gpl.cxx
   PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')

@@ -94,10 +94,10 @@ then
   sed -i -e '/errEncrypted/c printf("#ERROR:%d\\n", err);' sdext/source/pdfimport/xpdfwrapper/wrapper_gpl.cxx
   PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
   export PYTHONPATH=/opt/python$PYVER/site-packages
-#else
-#  echo Slackware-15.0++
-#  export CC=/usr/bin/gcc
-#  export CXX=/usr/bin/g++
+else
+  echo Slackware-15.0++
+  export CC=/usr/bin/gcc
+  export CXX=/usr/bin/g++
 fi
 
 if [ -r "$CWD"/"$SRCNAM"-"${VERSION}"-srcs.tar.xz ]; then

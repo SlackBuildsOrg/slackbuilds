@@ -78,8 +78,8 @@ tar xvf "$CWD"/"$SRCNAM"-"$VERSION".tar.xz
 cd "$SRCNAM"-"$VERSION"
 
 #if [ -x /usr/bin/gcc-11.* ];
-if [[ "$(gcc --version |head -1 |cut -d' ' -f3)" == "11."* ]];
-then
+#if [[ "$(gcc --version |head -1 |cut -d' ' -f3)" == "11."* ]];
+#then
   echo Slackware-15.0
   # Since 26.8.0.3, neither default gcc or clang in 15.0 is sufficient
   #source /etc/profile.d/gcc14.sh
@@ -95,11 +95,11 @@ then
   sed -i -e '/errEncrypted/c printf("#ERROR:%d\\n", err);' sdext/source/pdfimport/xpdfwrapper/wrapper_gpl.cxx
   PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
   export PYTHONPATH=/opt/python$PYVER/site-packages
-else
-  echo Slackware-15.0++
-  export CC=/usr/bin/gcc
-  export CXX=/usr/bin/g++
-fi
+#else
+#  echo Slackware-15.0++
+#  export CC=/usr/bin/gcc
+#  export CXX=/usr/bin/g++
+#fi
 
 if [ -r "$CWD"/"$SRCNAM"-"${VERSION}"-srcs.tar.xz ]; then
   tar xvf "$CWD"/"$SRCNAM"-"${VERSION}"-srcs.tar.xz

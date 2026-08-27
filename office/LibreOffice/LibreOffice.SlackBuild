@@ -82,7 +82,14 @@ if [[ "$(gcc --version |head -1 |cut -d' ' -f3)" == "11."* ]];
 then
   echo Slackware-15.0
   # Since 26.8.0.3, neither default gcc or clang in 15.0 is sufficient
-  source /etc/profile.d/gcc14.sh
+  #source /etc/profile.d/gcc14.sh
+  export CC=gcc-14.2.0
+  export CPP=cpp-14.2.0
+  export CXX=g++-gcc-14.2.0
+  export AR=gcc-ar-14.2.0
+  export NM=gcc-nm-14.2.0
+  export RANLIB=gcc-ranlib-14.2.0
+  export PATH="/opt/gcc14-14.2.0/bin:$PATH"
 
   # for 28.5.0.4
   sed -i -e '/errEncrypted/c printf("#ERROR:%d\\n", err);' sdext/source/pdfimport/xpdfwrapper/wrapper_gpl.cxx

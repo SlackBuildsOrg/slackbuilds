@@ -240,9 +240,10 @@ if pkg-config --atleast-version 12.2.0 harfbuzz ; then harfbuzz="--with-system-h
     "$parallel" \
     --with-tls="nss" \
     --with-x \
-    --without-krb5 \
+    --without-dotnet \
     --without-gssapi \
     --without-junit \
+    --without-krb5 \
     --without-system-libxml \
     --with-help \
     --with-system-bluez \
@@ -303,7 +304,6 @@ if pkg-config --atleast-version 12.2.0 harfbuzz ; then harfbuzz="--with-system-h
     $valgrind \
     $ucpp \
     $odbc \
-
 
 
 #Create a srcs tarball if we don't already have one

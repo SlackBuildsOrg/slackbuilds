@@ -77,19 +77,18 @@ rm -rf "$SRCNAM"-"$VERSION"
 tar xvf "$CWD"/"$SRCNAM"-"$VERSION".tar.xz
 cd "$SRCNAM"-"$VERSION"
 
-#if [ -x /usr/bin/gcc-11.* ];
 #if [[ "$(gcc --version |head -1 |cut -d' ' -f3)" == "11."* ]];
-#then
+# However if CI has already set gcc to gcc14
+# gcc --version will return 14.2.0 (not 11.2.0)
+# so we're pushed back to using /usr/bin/gcc
+# exactly what we don't want on 15.0
+#
+# For normal use we still need to ensure gcc14 is used.
+if [ -x /usr/bin/gcc-11.* ];
+then
   echo Slackware-15.0
   # Since 26.8.0.3, neither default gcc or clang in 15.0 is sufficient
-  #source /etc/profile.d/gcc14.sh
-  export CC=gcc-14.2.0
-  export CPP=cpp-14.2.0
-  export CXX=g++-gcc-14.2.0
-  export AR=gcc-ar-14.2.0
-  export NM=gcc-nm-14.2.0
-  export RANLIB=gcc-ranlib-14.2.0
-  export PATH="/opt/gcc14-14.2.0/bin:$PATH"
+  source /etc/profile.d/gcc14.sh
 
   # for 28.5.0.4
   sed -i -e '/errEncrypted/c printf("#ERROR:%d\\n", err);' sdext/source/pdfimport/xpdfwrapper/wrapper_gpl.cxx
@@ -99,7 +98,7 @@ cd "$SRCNAM"-"$VERSION"
 #  echo Slackware-15.0++
 #  export CC=/usr/bin/gcc
 #  export CXX=/usr/bin/g++
-#fi
+fi
 
 if [ -r "$CWD"/"$SRCNAM"-"${VERSION}"-srcs.tar.xz ]; then
   tar xvf "$CWD"/"$SRCNAM"-"${VERSION}"-srcs.tar.xz

@@ -91,10 +91,10 @@ then
   source /etc/profile.d/gcc14.sh
 
   # temporary test
-  if [ -n "$JENKINS_URL" ] ; then
+  #if [ -n "$JENKINS_URL" ] ; then
     # run ldconfig in chroot
     /sbin/ldconfig
-  fi
+  #fi
 
   # for 28.5.0.4
   sed -i -e '/errEncrypted/c printf("#ERROR:%d\\n", err);' sdext/source/pdfimport/xpdfwrapper/wrapper_gpl.cxx

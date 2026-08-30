@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/scafacos/scafacos/releases/download/v1.0.1/scafacos
 MD5SUM="bd46d74e3296bd8a444d731bb10c1738"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="openmpi"
+REQUIRES="openmpi4"
 MAINTAINER="Giancarlo Dessi"
 EMAIL="slack@giand.it"

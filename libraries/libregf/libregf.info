@@ -1,7 +1,7 @@
 PRGNAM="libregf"
 VERSION="20240421"
 HOMEPAGE="https://github.com/libyal/libregf"
-DOWNLOAD="https://linuxleo.com/Source/libregf-alpha-20240421.tar.gz"
+DOWNLOAD="https://github.com/libyal/libregf/releases/download/20240421/libregf-alpha-20240421.tar.gz"
 MD5SUM="4167955fbd4377ab14e678e93eee13e6"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

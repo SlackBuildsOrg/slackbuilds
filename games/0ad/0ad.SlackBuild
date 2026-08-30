@@ -95,9 +95,9 @@ libraries/source/premake-core/build.sh
 #so set up environment for that
 export PATH="/opt/rust16/bin:$PATH"
 if [ -z "$LD_LIBRARY_PATH" ]; then
-  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX"
+  export LD_LIBRARY_PATH="/opt/rust16/lib$LIBDIRSUFFIX"
 else
-  export LD_LIBRARY_PATH="/opt/rust/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
+  export LD_LIBRARY_PATH="/opt/rust16/lib$LIBDIRSUFFIX:$LD_LIBRARY_PATH"
 fi
 #we need to overwrite a patch for 32bit building of spidermonkey
 cp -a $CWD/FixFpNormIssue.diff libraries/source/spidermonkey/patches/

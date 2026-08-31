@@ -91,6 +91,9 @@ CXXFLAGS="$SLKCFLAGS" \
 
 make
 make doc
+sed -i -r \
+  -e "s:-L/usr/lib${LIBDIRSUFFIX}/gcc/(i586|x86_64)-slackware-linux/11.2.0.*::g" \
+  package/scafacos.pc
 make install DESTDIR=$PKG
 
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

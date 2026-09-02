@@ -47,16 +47,12 @@ PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
-  SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
 fi
 
@@ -113,12 +109,19 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 ## to facilitate dynamic linking with R,
 ## libR.so and libRblas.so still need to be found
 ## https://github.com/rpy2/rpy2/issues/675
-mkdir -p $PKG/etc/ld.so.conf.d/
-cat $CWD/Rlibs.conf > $PKG/etc/ld.so.conf.d/Rlibs.conf
+cat > doinst.sh <<EOF
+echo "/usr/lib${LIBDIRSUFFIX}/R/lib" > etc/ld.so.conf.d/Rlibs.conf
+sbin/ldconfig
+EOF
+cat > douninst.sh <<EOF
+rm etc/ld.so.conf.d/Rlibs.conf
+sbin/ldconfig
+EOF
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat $CWD/douninst.sh > $PKG/install/douninst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

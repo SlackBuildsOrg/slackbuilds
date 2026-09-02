@@ -2,6 +2,6 @@ Git GUI Client
 
 Open Source, Free Software (GPL v2)
 Written in C++
-Powered by Qt 5
+Powered by Qt 6
 guitar:
 https://github.com/soramimi/Guitar

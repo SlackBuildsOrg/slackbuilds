@@ -12,7 +12,7 @@ guitar: Git GUI Client
 guitar:
 guitar: Open Source, Free Software (GPL v2)
 guitar: Written in C++
-guitar: Powered by Qt 5
+guitar: Powered by Qt 6
 guitar:
 guitar: https://github.com/soramimi/Guitar
 guitar:

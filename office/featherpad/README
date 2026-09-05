@@ -24,7 +24,7 @@ environment.  Some of the features include:
   Appropriate but non-interrupting prompts.
 
 FeatherPad was written in GTK+ at first,  then ported to Qt with more
-features.
+features. 1.4.1 is the last version that will work with Qt5.
 
 Note:
 

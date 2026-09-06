@@ -1,0 +1,2 @@
+Tkrzw is a C++ library implementing DBM with various algorithms.  It
+features high degrees of performance, concurrency, and durability.

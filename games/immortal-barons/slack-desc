@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+               |-----handy-ruler------------------------------------------------------|
+immortal-barons: immortal-barons (turn-based strategy game for the terminal)
+immortal-barons:
+immortal-barons: You rule a barony in a ruined, post-apocalyptic world. You buy land,
+immortal-barons: feed your people, build an army, and fight rival empires. The goal
+immortal-barons: is to have the highest net worth when the turns run out, or to
+immortal-barons: conquer everyone else. Play it as a door on a BBS, over SSH on a
+immortal-barons: server that offers it, or on your own machine.
+immortal-barons:
+immortal-barons: An independent remake, inspired by the 1990s BBS door game Barren
+immortal-barons: Realms Elite.
+immortal-barons: Homepage: https://andy5995.github.io/immortal-barons/

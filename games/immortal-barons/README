@@ -1,0 +1,33 @@
+Immortal Barons is a turn-based strategy game for the terminal. You rule
+a barony in a ruined, post-apocalyptic world. You buy land, feed your
+people, build an army, and fight rival empires. The goal is to have the
+highest net worth when the turns run out, or to conquer everyone else.
+Play it as a door on a BBS, over SSH on a server that offers it, or on
+your own machine.
+
+The game is written in Go. It is an independent remake, inspired by the
+1990s BBS door game Barren Realms Elite, and is not affiliated with or
+endorsed by its authors.
+
+Two programs are installed in /usr/games: immortal-barons, the game
+itself, and barons-ftn, an optional helper that moves inter-BBS packets
+over FidoNet transport. A board that does not join a league needs only
+the game.
+
+Requires google-go-lang from SlackBuilds.org. Stock Slackware's
+/usr/bin/go is gccgo, which builds the Go 1.16 language and cannot
+compile this; the build script uses google-go-lang's toolchain instead,
+whether or not the shell has read /etc/profile.d/go.sh.
+
+The source archive is upstream's vendored release tarball, so the build
+downloads nothing.
+
+Sysops: the game keeps its world in a data directory of its own choosing
+(-data, default ./data), and the BBS points it at a dropfile. See
+docs/door-setup.md in the package's doc directory for the door
+configuration, and docs/inter-bbs.md for joining a league.
+
+Build options:
+  TEST=yes   Run the Go test suite during the build and save the results
+             into the package's doc directory as test_results.txt.
+             Default: no.

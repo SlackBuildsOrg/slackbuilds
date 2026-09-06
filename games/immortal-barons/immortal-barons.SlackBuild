@@ -1,0 +1,144 @@
+#!/bin/bash
+#
+# Slackware build script for immortal-barons
+#
+# Copyright 2026 / Andy Alt / United States
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#  THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+#  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+#  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO
+#  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=immortal-barons
+VERSION=${VERSION:-0.0.10}
+SOURCEARCHIVE=$PRGNAM-v$VERSION-vendored-source.tar.gz
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+TEST=${TEST:-no}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+# Stock Slackware's /usr/bin/go is gccgo, which is far too old to build this
+# and gives a confusing error rather than saying so. google-go-lang installs
+# the real toolchain under /usr/lib{,64}/go<version>/go/bin and puts it ahead
+# of /usr/bin through /etc/profile.d/go.sh -- which a build shell that never
+# read /etc/profile has not seen. Find it here so the script works either way.
+for GODIR in /usr/lib64 /usr/lib ; do
+  if ls $GODIR/go*/go/bin/go >/dev/null 2>&1 ; then
+    export PATH="$(dirname "$(ls -1d $GODIR/go*/go/bin/go | sort -V | tail -n1)"):$PATH"
+    break
+  fi
+done
+
+if ! command -v go >/dev/null 2>&1 ; then
+  echo "ERROR: no go found. Install google-go-lang from SlackBuilds.org." >&2
+  exit 1
+fi
+
+GO_FULL_VERSION="$(go version)"
+if echo "$GO_FULL_VERSION" | grep -qi gccgo ; then
+  echo "ERROR: $PRGNAM needs the Google Go toolchain, not gccgo." >&2
+  echo "Found: $GO_FULL_VERSION" >&2
+  echo "Install google-go-lang and put its bin directory before /usr/bin." >&2
+  exit 1
+fi
+
+# The minimum the module itself declares; below it the build fails on syntax.
+MIN_GO_VERSION=1.26.4
+GO_VERSION="$(echo "$GO_FULL_VERSION" | awk '{print $3}' | sed 's/^go//')"
+if [ "$(printf '%s\n%s\n' "$MIN_GO_VERSION" "$GO_VERSION" | sort -V | head -n1)" != "$MIN_GO_VERSION" ] ; then
+  echo "ERROR: $PRGNAM needs Go >= $MIN_GO_VERSION. Found: $GO_VERSION" >&2
+  exit 1
+fi
+echo "Using $GO_FULL_VERSION"
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
+rm -rf $PRGNAM-v$VERSION
+
+# Read the .info and make sure the md5sum matches.
+if ! echo "$(grep '^MD5SUM=' $CWD/$PRGNAM.info | cut -d'"' -f2)  $CWD/$SOURCEARCHIVE" | md5sum -c - ; then
+  echo "ERROR: MD5 checksum mismatch for $SOURCEARCHIVE" >&2
+  exit 1
+fi
+
+tar xvf $CWD/$SOURCEARCHIVE
+cd $PRGNAM-v$VERSION
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# The upstream release ships its dependencies in vendor/, so the build needs
+# no network. GOFLAGS pins that; GOPATH and GOCACHE are kept inside $TMP so the
+# build never writes to the building user's home.
+export GOFLAGS="-mod=vendor"
+export GOPROXY=off
+export GOPATH=$TMP/gopath-$PRGNAM
+export GOCACHE=$TMP/gocache-$PRGNAM
+export CGO_ENABLED=0
+
+# -trimpath keeps the build reproducible; -s -w drop the symbol table and DWARF,
+# which is what the strip pass below would do to a cgo binary anyway.
+go build -trimpath -ldflags "-s -w" -o $PRGNAM ./cmd/$PRGNAM
+go build -trimpath -ldflags "-s -w" -o barons-ftn ./cmd/barons-ftn
+
+if [ "$TEST" = "yes" ]; then
+  mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+  go test ./... | tee $PKG/usr/doc/$PRGNAM-$VERSION/test_results.txt
+fi
+
+install -D -m 0755 $PRGNAM $PKG/usr/games/$PRGNAM
+install -D -m 0755 barons-ftn $PKG/usr/games/barons-ftn
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/docs
+cp -a LICENSE README.md ChangeLog install-xtrn.ini \
+  $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a docs/faq.md docs/playing.md docs/command-reference.md \
+  docs/door-setup.md docs/bulletins.md docs/inter-bbs.md \
+  docs/inter-bbs-troubleshooting.md docs/charset.md docs/translating.md \
+  docs/ftn-transport.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION/docs
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

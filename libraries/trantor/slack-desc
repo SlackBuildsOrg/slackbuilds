@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+trantor: trantor (non-blocking I/O TCP network library in C++14/17)
+trantor:
+trantor: Trantor is a non-blocking I/O, event-loop based TCP network library
+trantor: written in modern C++. It provides TcpServer/TcpClient classes,
+trantor: timers, an EventLoop/EventLoopThreadPool, DNS resolution (with
+trantor: optional c-ares), and optional TLS via OpenSSL or Botan.
+trantor:
+trantor: It is developed by the author of the Drogon web framework and is
+trantor: used by Drogon as its underlying networking layer.
+trantor:
+trantor: Homepage: https://github.com/an-tao/trantor

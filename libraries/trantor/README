@@ -1,0 +1,7 @@
+Trantor is a non-blocking I/O, event-loop based TCP network library
+written in modern C++ (C++14/17), by the author of the Drogon web
+framework. It provides TcpServer/TcpClient, timers,
+EventLoop/EventLoopThreadPool, DNS resolution (via c-ares when
+present), and optional TLS via OpenSSL or Botan.
+
+License: BSD-3-Clause

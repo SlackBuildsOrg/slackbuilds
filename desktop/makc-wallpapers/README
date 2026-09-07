@@ -1,0 +1,12 @@
+This contains a collection of wallpapers by Mackenzie Criswell.
+
+The images are placed in /usr/share/wallpapers and will be shown in
+the KDE wallpaper chooser. Also, xscreensaver will automatically find
+them there and use the images for screensavers like "Carousel".
+
+There are three options:
+The SlackBuild can create symlinks for the background choosers of XFCE
+or MATE or both, and also optionally add background images for LiLo.
+
+MATE=yes Add symlinks for the MATE Desktop
+XFCE=yes Add symlinks for the XFCE Desktop

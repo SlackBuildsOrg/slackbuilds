@@ -25,13 +25,13 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=openjdk8
-VERSION=${VERSION:-8u442}
+VERSION=${VERSION:-8u512}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 DVER=1.8.0_$(printf $VERSION | cut -du -f2)
-ICEDTEA=icedtea-3.34.0
+ICEDTEA=icedtea-3.40.1
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

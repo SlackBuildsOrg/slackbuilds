@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Radar
+Comment=Kubernetes visibility — topology, traffic, and Helm management
+Exec=kubectl-radar
+Icon=radar
+Type=Application
+Categories=Development;
+Keywords=kubernetes;k8s;cluster;devops;
+Terminal=false

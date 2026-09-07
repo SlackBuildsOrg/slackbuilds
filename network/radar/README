@@ -1,0 +1,8 @@
+radar is the open-source Kubernetes visibility tool
+
+By default this app use port 9280 on your local machine
+
+To run:
+kubectl radar (as kubectl plugin)
+or
+radar (standalone)

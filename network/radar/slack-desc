@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+     |-----handy-ruler------------------------------------------------------|
+radar: radar (Kubernetes UI)
+radar:
+radar: radar is the open-source Kubernetes visibility tool
+radar:
+radar: By default this app use port 9280 on your local machine
+radar:
+radar:
+radar:
+radar: Project URL: https://radarhq.io/
+radar:
+radar:

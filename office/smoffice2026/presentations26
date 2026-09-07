@@ -1,0 +1,10 @@
+#!/bin/sh
+# A script to run Presentations.
+ext="${@##*.}"
+shopt -s nocasematch
+case "$ext" in
+    "prs" ) /opt/smoffice2026/presentations -S\""$@"\";;
+    "pps" ) /opt/smoffice2026/presentations -S\""$@"\";;
+    "ppsx" ) /opt/smoffice2026/presentations -S\""$@"\";;
+    * ) /opt/smoffice2026/presentations "$@";;
+esac

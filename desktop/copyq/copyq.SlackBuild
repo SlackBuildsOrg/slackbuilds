@@ -2,12 +2,14 @@
 
 # Slackware build script for copyq
 
-# Written by  Andrey Maraev <andrew.maraev60@yandex.ru>
+# Written by Andrey Maraev <andrew.maraev60@yandex.ru>
+# taken 09/2026 by Fernando Lopez Jr <fernando.lopezjr@gmail.com>
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=copyq
-VERSION=${VERSION:-2.2.0}
+ALTNAM=CopyQ
+VERSION=${VERSION:-16.0.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -20,9 +22,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -52,7 +51,8 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+tar xvf $CWD/$ALTNAM-$VERSION.tar.gz
+mv $ALTNAM-$VERSION $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -68,6 +68,9 @@ cd build
     -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DPLUGIN_INSTALL_PREFIX="/usr/lib${LIBDIRSUFFIX}" \
+    -DWITH_NATIVE_NOTIFICATIONS=OFF \
+    -DWITH_AUDIO=OFF \
+    -DWITH_QCA_ENCRYPTION=OFF \
     -DCMAKE_BUILD_TYPE=Release ..
   make
   make install DESTDIR=$PKG
@@ -76,8 +79,11 @@ cd ..
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+mv $PKG/usr/share/man $PKG/usr/
+gzip $PKG/usr/man/man1/copyq.1
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a AUTHORS CHANGES HACKING INSTALL LICENSE README.md gpl.txt \
+cp -a AGENTS.md AUTHORS CHANGES.md HACKING LICENSE README.md RELEASE.md gpl.txt \
   $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 

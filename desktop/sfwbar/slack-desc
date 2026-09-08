@@ -6,14 +6,14 @@
 # customary to leave one space after the ':'.
 
       |-----handy-ruler------------------------------------------------------|
-sfwbar: sfwbar (Sway Floating Window Bar)
+sfwbar: sfwbar (S* Floating Window Bar)
 sfwbar:
 sfwbar: Sfwbar is a flexible taskbar application for wayland compositors,
-sfwbar: Originally developed for Sway, SFWBar will work with other wayland
-sfwbar: compositors supporting layer shell protocol.
+sfwbar: designed with a stacking layout in mind.
+sfwbar:
+sfwbar: Homepage: https://github.com/LBCrion/sfwbar
 sfwbar:
 sfwbar:
 sfwbar:
 sfwbar:
-sfwbar: Home: https://github.com/LBCrion/sfwbar
 sfwbar:

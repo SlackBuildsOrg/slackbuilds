@@ -1,28 +1,42 @@
-SFWBar (Sway Floating Window Bar) is a flexible taskbar application for
-wayland compositors, designed with a stacking layout in mind. Originally
-developed for Sway, SFWBar will work with other wayland compositors
-supporting layer shell protocol, and the taskbar functionality shall 
-work with any compositor supportinig foreign toplevel protocol, but the
-pager, switcher and placement functionality requires sway
-(or at least i3 IPC support).
+SFWBar (S* Floating Window Bar) is a flexible taskbar application for
+wayland compositors, designed with a stacking layout in mind. It
+supports the following features:
 
-SFWBar implements the following features:
-• Taskbar - to control floating windows
-• Task Switcher - to allow switching active window with a keyboard 
-  (Alt-Tab)
-• Pager - to allow switching between workspaces
-• Tray - a systm tray using status notification item protocol
-• Window placement engine - to open new windows in more logical 
-  locations
-• A simple widget set to display information from system files
+  -Taskbar (including windows style or tint2 style groupings).
+  -Pager
+  -Window switcher (i.e. alt-tab support).
+  -Window placement engine.
+  -Tray (using system notification protocol).
+  -Volume control (using PulseAudio or ALSA).
+  -Keyboard layout notification and control.
+  -Start menu implementation.
+  -Network status monitoring (using netlink / AF_ROUTE).
+  -Wifi configuration (using NetworkManager or IWD).
+  -Bluetooth management (using bluez).
+  -Desktop notifications.
+  -MPD control (playback and playlist management).*
+  -Privacy notification (using Pipewire).
+  -Clock / calendar.
+  -Session management control panel.
+  -Power management control (using UPower interface).
+  -Idle inhibitor.
+  -Idle monitoring support.
+
+In addition SFWBar implements a flexible control language for
+construction of complex user defined widgets.
+
+* Requires optional depend 'libmpdclient' installed.
 
 CONFIGURATION:
-Copy sfwbar.config from /usr/share/sfwbar/ to ~/.config/sfwbar/
-For more information on the format of configuration file, please see the
-man page
 
-you may want to add the following lines to your sway config file to open
+Copy sfwbar.config from /usr/share/sfwbar/ to ~/.config/sfwbar/
+
+For more information on the format of configuration file, please see the
+man page.
+
+You may want to add the following lines to your sway config file to open
 windows as floating by default:
+
 # open new windows as floating by default
 for_window [app_id="[.]*"] floating enable
 # set Alt-tab as a task switcher combo

@@ -1,27 +1,31 @@
 #!/bin/sh
- 
-VPNS=$(ls /etc/tinc)
- 
+
+source /etc/default/tinc
+
+# find all vpn configs stored in subdirs
+VPNS=$(find /etc/tinc -mindepth 1 -maxdepth 1 -type d)
+
 start () {
 	for VPN in $VPNS; do
-		echo "Starting tinc daemon for $VPN..."
-		/usr/sbin/tincd -n "$VPN" -d1 --logfile=/var/log/tinc."$VPN"
+		VPN_NAME=$(basename $VPN)
+		echo "Starting tinc daemon for $VPN_NAME..."
+		/usr/sbin/tincd -n "$VPN_NAME" -U "$TINC_USER" -d1 --logfile=/var/log/tinc."$VPN_NAME"
 	done
 }
- 
+
 stop () {
 	for VPN in $VPNS; do
 		echo "Stopping tinc daemon for $VPN..."
-		/usr/sbin/tincd -n "$VPN"  -k
+		/usr/sbin/tincd -n "$VPN" -k
 	done
 }
- 
+
 restart () {
 	stop
 	sleep 1
 	start
 }
- 
+
 case "$1" in
 	("start")
 		start
@@ -36,5 +40,5 @@ case "$1" in
 		echo "Usage: $0 <start|stop|restart>"
 		exit 1
 esac
- 
+
 exit 0

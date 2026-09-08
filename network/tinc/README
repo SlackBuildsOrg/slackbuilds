@@ -8,3 +8,8 @@ network code as a normal network device, there is no need to adapt
 any existing software. This allows VPN sites to share information
 with each other over the Internet without exposing any information
 to others.
+
+You must have a tinc user and group to run this script
+
+groupadd -g 403 tinc
+useradd -u 403 -M -s /bin/false -g tinc tinc

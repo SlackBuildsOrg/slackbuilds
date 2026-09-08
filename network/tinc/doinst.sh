@@ -24,3 +24,8 @@ preserve_perms() {
 
 preserve_perms etc/rc.d/rc.tinc.new
 config etc/logrotate.d/tinc.new
+config etc/default/tinc.new
+
+if [ -x /usr/bin/install-info ]; then
+  /usr/bin/install-info --info-dir=usr/info usr/info/tinc.info.gz 1> /dev/null 2>&1
+fi

@@ -60,6 +60,27 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+# https://slackbuilds.org/uid_gid.txt
+TINC_GID=${TINC_GID:-403}
+TINC_UID=${TINC_UID:-403}
+
+if ! getent passwd tinc 1>/dev/null 2>/dev/null; then
+cat << EOF
+  You must have a tinc user to run this script
+
+  # groupadd -g $TINC_GID tinc
+  # useradd -u $TINC_UID -M -s /bin/false -g tinc tinc
+EOF
+  exit
+elif ! getent group tinc 1>/dev/null 2>/dev/null; then
+cat << EOF
+  You must have a tinc group to run this script
+
+  # groupadd -g $TINC_GID tinc
+EOF
+  exit
+fi
+
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
@@ -116,6 +137,10 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mkdir -p $PKG/etc/rc.d
 cat $CWD/rc.$PRGNAM > $PKG/etc/rc.d/rc.$PRGNAM.new
 chmod 0755 $PKG/etc/rc.d/rc.$PRGNAM.new
+
+# Add defaults
+mkdir -p $PKG/etc/tinc $PKG/etc/default
+cat $CWD/default > $PKG/etc/default/tinc.new
 
 mkdir -p $PKG/etc/logrotate.d
 cat $CWD/$PRGNAM.logrotate > $PKG/etc/logrotate.d/$PRGNAM.new

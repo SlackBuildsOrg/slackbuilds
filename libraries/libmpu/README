@@ -1,0 +1,17 @@
+libmpu (multiple precision arithmetic library)
+
+LibMPU is a multiple precision arithmetic library implementing a
+software mathematical processor with integer, real, and complex
+arithmetic. It provides processor-like arithmetic and logical
+operations, shifts, rotations, comparisons, status flags, and high
+precision mathematical and transcendental functions.
+
+LibMPU supports configurable operand sizes ranging from native machine
+widths to very large integer, real, and complex numbers. Each thread
+has its own MPU execution context and processor state.
+
+LibMPU is written in C and is designed for numerical applications,
+emulators, virtual machines, calculators, and scientific software.
+
+This SlackBuild enables real mathematical functions for operand sizes
+up to 16384 bits and builds shared libraries only.

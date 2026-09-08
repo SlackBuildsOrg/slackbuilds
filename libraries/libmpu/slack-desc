@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+      |-----handy-ruler------------------------------------------------------|
+libmpu: libmpu (multiple precision arithmetic library)
+libmpu:
+libmpu: LibMPU is a multiple precision arithmetic library implementing
+libmpu: a software mathematical processor with integer, real, and complex
+libmpu: arithmetic. It provides processor-like arithmetic and logical
+libmpu: operations, shifts, rotations, comparisons, status flags, and
+libmpu: high precision mathematical and transcendental functions.
+libmpu:
+libmpu: Homepage: https://git.radix-linux.su/libs/libmpu.git/
+libmpu:
+libmpu:

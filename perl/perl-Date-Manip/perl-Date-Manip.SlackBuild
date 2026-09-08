@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=perl-Date-Manip
-VERSION=${VERSION:-6.99}
+VERSION=${VERSION:-7.00}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -64,6 +64,10 @@ find -L . \
  -o -perm 511 \) -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# Fix for CVE-2026-60074 and CVE-2026-60075
+patch -p1 < $CWD/54.patch
+patch -p1 < $CWD/55.patch
 
 perl Makefile.PL \
   PREFIX=/usr \

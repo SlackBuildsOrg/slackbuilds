@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
         |-----handy-ruler------------------------------------------------------|
-opustags: opustags (View and edit Ogg Opus comments.)
+opustags: opustags (view and edit Ogg Opus comments)
 opustags:
 opustags: opustags can read and edit the comment header of an Ogg Opus file.
 opustags: Multiple options are available to completely delete all tags,
 opustags: selectively delete and add tags and even to edit tags interactively
 opustags: in Vim.
 opustags:
-opustags:
 opustags: https://github.com/fmang/opustags
+opustags:
 opustags:
 opustags:

@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=OpenSubdiv
 VERSION=${VERSION:-3.7.0}
 SRCVER=$(echo $VERSION | tr . _)
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -70,22 +70,28 @@ cd $TMP
 rm -rf $PRGNAM-$SRCVER
 tar xvf $CWD/$PRGNAM-$SRCVER.tar.gz
 cd $PRGNAM-$SRCVER
+sed -i -e 's/cudaThreadSynchronize/cudaDeviceSynchronize/' opensubdiv/osd/cudaEvaluator.cpp
 sed -i -e '/${OPENGL_gl_LIBRARY}/a${OPENGL_glx_LIBRARY}' CMakeLists.txt
-patch -p0 < $CWD/CUDA-compatibility.patch
-#if test -e /usr/include/tbb ; then cp $CWD/FindTBB.cmake cmake/ ; fi
 
 # Silence CL_TARGET_OPENCL_VERSION pragmas
 sed -i -e '/opencl.h/i#define CL_TARGET_OPENCL_VERSION 300' opensubdiv/osd/opencl.h
 
 chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \+ -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \+
+find . ! -type l    -a \( \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
 cuda="-DNO_CUDA=ON";
-[ "${ENABLE_CUDA:-no}" = "yes" ] && cuda=""
+[ "${ENABLE_CUDA:-no}" = "yes" ] && {
+  # Find highest CUDA architecture supported by the installed cudatookit
+
+  # First find location of nvcc
+  source /etc/profile.d/cuda-*.sh
+
+  support_cuda_architecture="$(nvcc --list-gpu-arch |tail -1)"
+  sed --i -e "/compute_20/cset( OSD_CUDA_NVCC_FLAGS --gpu-architecture ${support_cuda_architecture} )" CMakeLists.txt
+  echo "Highest gpu architecture supported will be ${support_cuda_architecture}"
+}
 
 mkdir -p build
 cd build
@@ -95,9 +101,11 @@ cd build
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_LIBDIR_BASE=lib${LIBDIRSUFFIX} \
     -DCMAKE_DOCDIR_BASE=doc/$PRGNAM-$VERSION \
-	-DNO_CLEW=ON \
-	-DNO_EXAMPLES=ON \
-	$cuda \
+    -DCMAKE_SKIP_RPATH=ON \
+    -DNO_CLEW=ON \
+    -DNO_DX=ON \
+    -DNO_EXAMPLES=ON \
+    $cuda \
     -DCMAKE_BUILD_TYPE=Release ..
 
   make

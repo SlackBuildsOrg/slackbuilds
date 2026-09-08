@@ -4,9 +4,21 @@ parallel CPU and GPU architectures. This code path is optimized
 for drawing deforming surfaces with static topology at interactive
 framerates.
 
+OpenSubdiv is a potential requirement of Blender.
+
 Some graphics cards are not supported with the existing version of
 the cudatoolkit at SBo. Therefore CUDA backend support is not enabled
 by default in this SlackBuild. It must be explicitly enabled (as well
 as cudatoolkit being installed) to use it in the build e.g.
     ENABLE_CUDA=yes bash OpenSubdiv.SlackBuild
-N.B. Building with CUDA is currently unsupported (broken) - don't use!
+
+CUDA support currently requires prior installation of  one of:
+    cudatoolkit_12
+    cudatoolkit_13
+
+The toolkit installed limits which particular graphics cards can be
+supported. The lowest cuda architecture supported by cudatoolkit_12
+is compute_50 while the lowest for cudatoolkit_13 is compute_75.
+The highest for both _12 and _13 is compute_121.
+
+For more information, see graphics/Blender/README.cuda

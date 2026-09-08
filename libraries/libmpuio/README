@@ -1,0 +1,15 @@
+libmpuio (formatted I/O library for LibMPU)
+
+LibMPUIO is a stdio-like input/output library designed for LibMPU. It
+provides files, streams, formatted input/output, memory streams, cookie
+streams, buffering, positioning, locking, and pipe support. Text is
+represented internally as UCS-2 and externally as UTF-8. printf and
+scanf functions support standard C objects as well as arbitrary
+precision integer, real, and complex LibMPU objects.
+
+The library also provides 8-bit, UCS-2, and UTF-8 string functions
+together with strict UTF-8/UCS-2 conversion routines.
+
+LibMPUIO is written in C for numerical and scientific software.
+
+libmpu >= 1.0.20 is required.

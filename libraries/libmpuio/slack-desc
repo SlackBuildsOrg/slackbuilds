@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+libmpuio: libmpuio (formatted I/O library for LibMPU)
+libmpuio:
+libmpuio: LibMPUIO is a stdio-like input/output library designed for LibMPU.
+libmpuio: It provides files, streams, formatted input/output, memory streams,
+libmpuio: cookie streams, buffering, positioning, locking, and pipe support.
+libmpuio: Text is represented internally as UCS-2 and externally as UTF-8.
+libmpuio: printf and scanf functions support standard C objects as well as
+libmpuio: arbitrary precision integer, real, and complex LibMPU objects.
+libmpuio:
+libmpuio: Homepage: https://git.radix-linux.su/libs/libmpuio.git/
+libmpuio:

@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-cinemagoer
-VERSION=${VERSION:-2026.06.27}
+VERSION=${VERSION:-2026.08.20}
 SRCNAM=${SRCNAM:-cinemagoer}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
@@ -63,8 +63,8 @@ find -L . \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
 # Remove hard coded versions
-sed -i 's|lxml.*|lxml",|' pyproject.toml
-sed -i 's|sqlalchemy.*|sqlalchemy",|' pyproject.toml
+sed -i 's|"lxml.*|"lxml",|' pyproject.toml
+sed -i 's|"sqlalchemy.*|"sqlalchemy",|' pyproject.toml
 
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH=/opt/python$PYVER/site-packages

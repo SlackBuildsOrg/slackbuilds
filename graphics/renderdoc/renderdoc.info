@@ -1,11 +1,11 @@
 PRGNAM="renderdoc"
-VERSION="1.15"
+VERSION="1.16"
 HOMEPAGE="https://renderdoc.org/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/baldurk/renderdoc/archive/v1.15/renderdoc-1.15.tar.gz \
+DOWNLOAD_x86_64="https://github.com/baldurk/renderdoc/archive/v1.16/renderdoc-1.16.tar.gz \
                  https://github.com/baldurk/swig/archive/renderdoc-modified-7/swig-renderdoc-modified-7.tar.gz"
-MD5SUM_x86_64="7679b610ba95ecf6c41bd2843a56d311 \
+MD5SUM_x86_64="07cda4c875cd96cd1bdb5290107e52f7 \
                5558ee4e2fcf33b8dceb191ed4795a23"
 REQUIRES=""
 MAINTAINER="Antonio Leal"

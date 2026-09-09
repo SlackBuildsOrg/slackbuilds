@@ -14,6 +14,7 @@
 # Original version had no license; modified version is
 # licensed under the WTFPL. See http://www.wtfpl.net/txt/copying/ for details.
 
+# 20260908 bkw: updated for v0.16.22, merged with libtorrent.
 # 20260727 bkw: updated for v0.16.18 (d'oh!)
 # 20260719 bkw: updated for v0.16.8.
 # 20260111 bkw: updated for v0.16.6.
@@ -28,7 +29,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rtorrent
-VERSION=${VERSION:-0.16.18}
+VERSION=${VERSION:-0.16.22}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -72,23 +73,69 @@ fi
 
 set -e
 
+LIBNAM=libtorrent
+TOPDIR=$TMP/$PRGNAM-build
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+PKGLIBDOC=$PKGDOC/$LIBNAM
+ULIB=/usr/lib$LIBDIRSUFFIX
+PKGULIB=$PKG$ULIB
+
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
-rm -rf $TMP/$PRGNAM-$VERSION
-cd $TMP
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
+rm -rf $TOPDIR
+mkdir -p $TOPDIR
+cd $TOPDIR
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz --no-same-owner
+tar xvf $CWD/$LIBNAM-$VERSION.tar.gz --no-same-owner
 cd $PRGNAM-$VERSION
-chown -R root:root .
-find . ! -type l    -a \
+find . ! -type l    -a \( \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
-  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \)
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
-LDFLAGS="-lpthread" \
+# 20260908 bkw: libtorrent used to be a separate build. Nothing but
+# rtorrent ever used it, and we also have two versions of the
+# similarly-named (but utterly different) libtorrent-rasterbar
+# (one of which is called "libtorrent2"). De-confused the issue
+# by merging libtorrent and rtorrent.
+# The libtorrent installed with this package does NOT conflict
+# with libtorrent-rasterbar (or libtorrent2).
+
+# First, the library. Doesn't ship a configure script, generate it.
+cd $TOPDIR/$LIBNAM-$VERSION
+autoreconf -if
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
+  --libdir=$ULIB \
+  --sysconfdir=/etc \
+  --localstatedir=/var \
+  --with-posix-fallocate \
+  --disable-debug \
+  --build=$ARCH-slackware-linux
+
+make
+make install-strip DESTDIR=$PKG
+rm -f $PKG/usr/lib*/*.la
+
+mkdir -p $PKGLIBDOC
+install -m 0644 AUTHORS COPYING README* $PKGLIBDOC
+
+# Now, the application.
+cd $TOPDIR/$PRGNAM-$VERSION
+
+SLKCFLAGS+=" -I$PKG/usr/include"
+
+# Fugly options to make it link with the lib while it's still
+# in $PKG.
+PKG_CONFIG_PATH="$PKGULIB/pkgconfig:$PKG_CONFIG_PATH" \
+LDFLAGS="-lpthread -L$PKGULIB" \
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+./configure \
+  --prefix=/usr \
+  --libdir=$ULIB \
   --sysconfdir=/etc \
   --localstatedir=/var \
   --mandir=/usr/man \
@@ -100,6 +147,8 @@ make
 make install-strip DESTDIR=$PKG
 
 # 20250124 bkw: man page from debian.
+# 20260909 bkw: updated man page for 0.16.22 and sent it to the
+# debian maintainers for rtorrent.
 mkdir -p $PKG/usr/man/man1
 gzip -9c < $CWD/$PRGNAM.1 > $PKG/usr/man/man1/$PRGNAM.1.gz
 

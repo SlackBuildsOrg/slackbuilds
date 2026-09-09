@@ -1,10 +1,12 @@
 PRGNAM="rtorrent"
-VERSION="0.16.18"
+VERSION="0.16.22"
 HOMEPAGE="https://github.com/rakshasa/rtorrent"
-DOWNLOAD="https://github.com/rakshasa/rtorrent/releases/download/v0.16.18/rtorrent-0.16.18.tar.gz"
-MD5SUM="38b372bca05c928c6e46b2dd59ada868"
+DOWNLOAD="https://github.com/rakshasa/rtorrent/releases/download/v0.16.22/rtorrent-0.16.22.tar.gz \
+          https://github.com/rakshasa/libtorrent/archive/v0.16.22/libtorrent-0.16.22.tar.gz"
+MD5SUM="69f02fb53b1ce7d5514adb1e87c2124f \
+        53f35dd5650586beb3cc295d9728094e"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="libtorrent"
+REQUIRES=""
 MAINTAINER="B. Watson"
 EMAIL="urchlay@slackware.uk"

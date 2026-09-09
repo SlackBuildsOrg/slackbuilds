@@ -1,0 +1,24 @@
+From d8bfd64c3445178d9b33248c9ae1f128ecf859f0 Mon Sep 17 00:00:00 2001
+From: Jeremy Hansen <jebrhansen+github@gmail.com>
+Date: Tue, 8 Sep 2026 18:36:38 -0700
+Subject: [PATCH] Skip GH#197 test on Perl built with 32-bit IVs
+
+---
+ t/117_numbers.t | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/t/117_numbers.t b/t/117_numbers.t
+index 0c60b2b..08fa2fe 100644
+--- a/t/117_numbers.t
++++ b/t/117_numbers.t
+@@ -149,6 +149,7 @@ is encode_json([3.14]), '[3.14]', 'GH#112 fractional float unchanged';
+ # scalar to PVNV and sets pNOK, but not NOK (NV lost precision).
+ # We must encode the accurate integer, not the imprecise float.
+ {
++    skip "GH#197 requires a 64-bit IV", 1 if $Config{ivsize} < 8;
+     my $l = 412345678901234567;
+     my $g = $l + 1.2;  # upgrades $l: sets pNOK, keeps IOK, does NOT set NOK
+     is encode_json([$l]), '[412345678901234567]',
+-- 
+2.46.4
+

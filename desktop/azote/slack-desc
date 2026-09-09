@@ -8,12 +8,12 @@
      |-----handy-ruler------------------------------------------------------|
 azote: azote (wallpaper manager)
 azote:
-azote: Azote is a Wallpaper and colour manager for Sway, i3 and some 
-azote: other WMs 
+azote: Azote is a GTK+3 - based picture browser and background setter, as
+azote: the frontend to the swaybg (sway/Wayland) and feh (X windows)
+azote: commands. The user interface is being developed with multi-headed
+azote: setups in mind. Azote also includes several colour management tools.
+azote:
+azote: Homepage: https://github.com/nwg-piotr/azote
 azote:
 azote:
-azote:
-azote:
-azote:
-azote: Home: https://github.com/nwg-piotr/azote
 azote:

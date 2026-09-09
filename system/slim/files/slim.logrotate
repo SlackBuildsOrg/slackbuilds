@@ -1,7 +1,7 @@
 /var/log/slim.log {
    compress
    rotate 4
-   size=1M
+   size 1M
    notifempty
    missingok
    copytruncate

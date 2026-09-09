@@ -9,3 +9,6 @@ cross-platform, open-source (LGPL) library for reading and writing
 many different sampled sound file formats that runs on many platforms
 including Windows, OS X, and Unix. It is accessed through CFFI,
 which is a foreign function interface for Python calling C code.
+
+NOTE: Unable to support newer versions due to requiring newer version
+of python than is available in Slackware 15.0 (python 3.10).

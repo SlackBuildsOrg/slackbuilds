@@ -4,6 +4,10 @@ Genesis Plus GX is an emulator for multiple Sega game systems:
 SG-1000, Sega Master System/Mark III, Sega Game Gear, Sega Mega
 Drive/Genesis, Mega-CD/Sega CD.
 
+NOTE: You MAY NOT distribute binary builds of this package as it
+statically links LGPL code with non-commercial code, which violates
+the terms of the LGPL.
+
 Filenames supported: .md .smd .sra
 To run files with other extensions: jollygood -c genplus <filename>
 

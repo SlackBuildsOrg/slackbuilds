@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=ClamAV-GUI
-VERSION=${VERSION:-1.4.6}
+VERSION=${VERSION:-1.4.6_1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -66,9 +66,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf ${PRGNAM,,}-${VERSION}
-tar xvfz $CWD/${PRGNAM,,}-${VERSION}.tar.gz
-cd  ${PRGNAM,,}-${VERSION}
+rm -rf ${PRGNAM,,}-${VERSION/_/-}
+tar xvfz $CWD/${PRGNAM,,}-${VERSION/_/-}.tar.gz
+cd  ${PRGNAM,,}-${VERSION/_/-}
 
 
 chown -R root:root .

@@ -6,3 +6,6 @@ are going well with Pipenv or Poetry and don't want to introduce
 another package manager, just stick to it. But if you are missing
 something that is not present in those tools, you can probably find
 some goodness in pdm.
+
+NOTE: Unable to support newer versions due to requiring newer version
+of python than is available in Slackware 15.0 (python 3.10).

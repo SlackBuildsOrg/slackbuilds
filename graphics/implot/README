@@ -5,3 +5,13 @@ creating interactive plots, and requires minimal code to integrate.
 Just like ImGui, it does not burden the end user with GUI state
 management, avoids STL containers and C++ headers, and has no external
 dependencies except for ImGui itself.
+
+EXAMPLE PROGRAM/OPTIONAL DEPENDENCY:
+
+If you would like to build the optional example program, set the
+environment variable of BUILD_EXAMPLE to a truthy value as recognized by
+CMake. Eg, `BUILD_EXAMPLE=1`.
+
+This will install an executable which will be named `implot-example`.
+
+This adds the optional dependency of `libraries/glfw3`.

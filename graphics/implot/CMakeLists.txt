@@ -1,9 +1,18 @@
 cmake_minimum_required(VERSION 3.8)
 project(implot CXX)
+option(BUILD_EXAMPLE "Build the example executable" OFF)
 
-find_package(imgui CONFIG REQUIRED)
-get_target_property(IMGUI_INCLUDE_DIRS imgui::imgui
-    INTERFACE_INCLUDE_DIRECTORIES
+set(IMGUI_DIR "${CMAKE_BINARY_DIR}/imgui")
+
+set(IMGUI_SOURCES
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+)
+
+set(IMGUI_HEADERS
+	${IMGUI_DIR}
 )
 
 set(CMAKE_DEBUG_POSTFIX d)
@@ -17,12 +26,45 @@ target_include_directories(
 	   	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 		$<INSTALL_INTERFACE:include>
 	PRIVATE
-		${IMGUI_INCLUDE_DIRS}
+		${IMGUI_HEADERS}
 )
+
+target_link_libraries(${PROJECT_NAME}
+	PUBLIC ${CMAKE_DL_LIBS}
+)
+
+# Build the 'example' executable and name it 'implot-example' if BUILD_EXAMPLE
+# env var is truthy
+
+if(BUILD_EXAMPLE)
+	find_package(OpenGL REQUIRED)
+
+	list(APPEND IMGUI_SOURCES
+		${IMGUI_DIR}/imgui_demo.cpp
+		${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+		${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
+	)
+	list(APPEND IMGUI_HEADERS ${IMGUI_DIR}/backends)
+
+	target_link_libraries(${PROJECT_NAME}
+		PUBLIC glfw OpenGL::GL)
+
+	add_executable(implot-example
+		${CMAKE_CURRENT_SOURCE_DIR}/example/main.cpp)
+
+	target_include_directories(implot-example
+		PRIVATE ${IMGUI_HEADERS})
+
+	target_link_libraries(implot-example
+		PRIVATE ${PROJECT_NAME})
+
+	install(TARGETS implot-example)
+endif()
 
 target_sources(
 	${PROJECT_NAME}
 	PRIVATE
+		${IMGUI_SOURCES}
 		${CMAKE_CURRENT_SOURCE_DIR}/implot.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/implot_items.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/implot_demo.cpp
@@ -31,18 +73,13 @@ target_sources(
 install(
 	TARGETS ${PROJECT_NAME}
 	EXPORT ${PROJECT_NAME}_target
-	ARCHIVE DESTINATION lib
-	LIBRARY DESTINATION lib
-	RUNTIME DESTINATION bin
 )
 
-if(NOT IMPLOT_SKIP_HEADERS)
-    install(FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/implot.h
-		${CMAKE_CURRENT_SOURCE_DIR}/implot_internal.h
-        DESTINATION include
-    )
-endif()
+install(FILES
+	${CMAKE_CURRENT_SOURCE_DIR}/implot.h
+	${CMAKE_CURRENT_SOURCE_DIR}/implot_internal.h
+	DESTINATION include
+)
 
 install(
 	EXPORT ${PROJECT_NAME}_target

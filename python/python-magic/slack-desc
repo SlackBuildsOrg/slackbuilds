@@ -12,7 +12,7 @@ python-magic: This module uses ctypes to access the libmagic file type
 python-magic: identification library. It makes use of the local magic database and
 python-magic: supports both textual and MIME-type output.
 python-magic:
-python-magic: Homepage: https://github.com/ahupp/python-magic
+python-magic:
 python-magic:
 python-magic:
 python-magic:

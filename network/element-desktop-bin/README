@@ -8,3 +8,6 @@ End-to-end encrypted by default
 Element is only available as a 64bit program. 32bit is unsupported.
 
 This script repackages a Debian binary.
+
+1.12.27 is the last version supported by stock Slackware 15.0. Newer
+versions require glibc-2.35.

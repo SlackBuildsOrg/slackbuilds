@@ -26,8 +26,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=bottles
 SRCNAM=${PRGNAM^b}
-VERSION=${VERSION:-2022.5.28.trento.3}
-SRCVER=${VERSION/\.trento\./-trento-}
+VERSION=${VERSION:-67.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -68,9 +67,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$SRCVER
-tar xvf $CWD/$SRCNAM-$SRCVER.tar.?z
-cd $SRCNAM-$SRCVER
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.?z
+cd $SRCNAM-$VERSION
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -78,12 +77,15 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+# Remove .flatpak-info check
+patch -p1 < $CWD/267c33d88a8b2e66311be86edbd695705b0edadc.patch
+
 mkdir build
 cd build
   CFLAGS="$SLKCFLAGS" \
   CXXFLAGS="$SLKCFLAGS" \
   LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
-  meson .. \
+  meson setup .. \
     --buildtype=release \
     --infodir=/usr/info \
     --libdir=/usr/lib${LIBDIRSUFFIX} \

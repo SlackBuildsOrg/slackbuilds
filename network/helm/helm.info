@@ -1,0 +1,12 @@
+PRGNAM="helm"
+VERSION="4.2.4"
+HOMEPAGE="https://helm.sh/"
+DOWNLOAD="UNSUPPORTED"
+MD5SUM=""
+DOWNLOAD_x86_64="https://github.com/helm/helm/archive/v4.2.4/helm-4.2.4.tar.gz \
+                 https://github.com/r1w1s1/slackbuilds-tarballs/raw/refs/heads/master/helm-4.2.4-vendor.tar.gz"
+MD5SUM_x86_64="18a3f4f4975f5ea71ee1bcb9e4f29ffd \
+               46a20225f793ceca2b2c5c8ca0b8ff28"
+REQUIRES="google-go-lang"
+MAINTAINER="r1w1s1"
+EMAIL="ricardsonwilliams+slackbuild@gmail.com"

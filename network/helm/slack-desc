@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct. It's also
+# customary to leave one space after the ':'.
+
+    |-----handy-ruler------------------------------------------------------|
+helm: helm (The Kubernetes Package Manager)
+helm:
+helm: Helm is a tool for managing Kubernetes packages called charts.
+helm: Charts describe, install, and upgrade applications running on
+helm: Kubernetes. Helm manages releases, dependencies, and rollbacks.
+helm:
+helm: This package builds Helm from source and includes shell completions
+helm: for Bash, Zsh, and Fish.
+helm:
+helm: Homepage: https://helm.sh/
+helm:

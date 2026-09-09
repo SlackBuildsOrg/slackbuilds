@@ -1,0 +1,10 @@
+helm (The Kubernetes Package Manager)
+
+Helm is a tool for managing Kubernetes packages called charts.
+Charts describe, install, and upgrade applications running on
+Kubernetes. Helm manages releases, dependencies, and rollbacks.
+
+This package builds Helm from source and includes shell completions
+for Bash, Zsh, and Fish.
+
+Homepage: https://helm.sh/

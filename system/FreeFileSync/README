@@ -6,9 +6,9 @@ the minimum amount of data needed. FreeFileSync is Open Source
 software,available for Windows, Linux and macOS.
 
 Notes:
-I)  This package installs to /opt/FreeFileSync
+1. This package installs to /opt/FreeFileSync
 
-II) The original binaries are hosted on the package maintainer
-    github due to the the fact that the FreeFileSync web server is
-    causing problems with SlackBuilds CI/CD environment.
-    If in doubt please compare the md5sums.
+2. The original binaries are hosted Sourceforge due to the the
+   fact that the FreeFileSync web server is causing problems
+   with SlackBuilds CI/CD environment.
+   If in doubt please compare the md5sums.

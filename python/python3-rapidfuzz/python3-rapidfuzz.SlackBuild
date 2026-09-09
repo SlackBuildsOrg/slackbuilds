@@ -24,8 +24,9 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=python3-rapidfuzz
-VERSION=${VERSION:-3.14.5}
-RAPIDCPPVER=${RAPIDCPPVER:-6c10b68}
+VERSION=${VERSION:-3.14.6_1}
+SRCVER=${SRCVER:-3.14.6-1}
+RAPIDCPPVER=${RAPIDCPPVER:-82662f3}
 TASKVER=${TASKVER:-130f795}
 SRCNAM=${SRCNAM:-RapidFuzz}
 BUILD=${BUILD:-1}
@@ -54,14 +55,14 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.gz
+rm -rf $SRCNAM-$SRCVER
+tar xvf $CWD/$SRCNAM-$SRCVER.tar.gz
 tar xvf $CWD/rapidfuzz-cpp-$RAPIDCPPVER*.tar.gz
 tar xvf $CWD/taskflow-$TASKVER*.tar.gz
-rmdir $SRCNAM-$VERSION/extern/{rapidfuzz-cpp,taskflow}
-mv rapidfuzz-cpp-$RAPIDCPPVER* $SRCNAM-$VERSION/extern/rapidfuzz-cpp
-mv taskflow-$TASKVER* $SRCNAM-$VERSION/extern/taskflow
-cd $SRCNAM-$VERSION
+rmdir $SRCNAM-$SRCVER/extern/{rapidfuzz-cpp,taskflow}
+mv rapidfuzz-cpp-$RAPIDCPPVER* $SRCNAM-$SRCVER/extern/rapidfuzz-cpp
+mv taskflow-$TASKVER* $SRCNAM-$SRCVER/extern/taskflow
+cd $SRCNAM-$SRCVER
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \

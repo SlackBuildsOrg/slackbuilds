@@ -1,0 +1,11 @@
+perl-GooCanvas2-CairoTypes (Bridge between GooCanvas2 and Cairo types)
+
+There is an issue in the interaction between GooCanvas, GObject
+Introspection, Cairo, and their Perl bindings, which causes some
+functionality to be unusable from Perl side. Until it's fixed,
+this can serve as a workaround for it.
+
+Currently this module only "fixes"
+Cairo::Pattern/GooCanvas2::CairoPattern interop. For certain calls
+it just works if this module was included; for some other calls you
+need to explicitly convert the type.

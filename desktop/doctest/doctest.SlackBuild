@@ -3,6 +3,7 @@
 # Slackware build script for doctest
 
 # Copyright 2022 Damian Perticone, Berisso, Argentina
+# Copyright 2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 
 
@@ -26,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=doctest
-VERSION=${VERSION:-2.4.12}
+VERSION=${VERSION:-2.5.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

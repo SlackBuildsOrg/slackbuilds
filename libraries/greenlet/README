@@ -8,3 +8,5 @@ unmodified Python interpreter.
 
 Greenlets are lightweight coroutines for in-process concurrent
 programming.
+
+The last working greenlet for 15.0 is 3.2.5.

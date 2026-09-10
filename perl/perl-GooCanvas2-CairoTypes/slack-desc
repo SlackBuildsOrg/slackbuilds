@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                          |-----handy-ruler------------------------------------------------------|
+perl-GooCanvas2-CairoTypes: perl-GooCanvas2-CairoTypes (Bridge between GooCanvas2 and Cairo types)
+perl-GooCanvas2-CairoTypes:
+perl-GooCanvas2-CairoTypes: There is an issue in the interaction between GooCanvas, GObject
+perl-GooCanvas2-CairoTypes: Introspection, Cairo, and their Perl bindings, which causes some
+perl-GooCanvas2-CairoTypes: functionality to be unusable from Perl side. Until it's fixed,
+perl-GooCanvas2-CairoTypes: this can serve as a workaround for it.
+perl-GooCanvas2-CairoTypes:
+perl-GooCanvas2-CairoTypes: Currently this module only "fixes"
+perl-GooCanvas2-CairoTypes: Cairo::Pattern/GooCanvas2::CairoPattern interop. For certain calls
+perl-GooCanvas2-CairoTypes: it just works if this module was included; for some other calls you
+perl-GooCanvas2-CairoTypes: need to explicitly convert the type.

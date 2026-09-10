@@ -10,3 +10,5 @@ Features include:
  - DNS queries performed through threadpool or c-ares.
  - Monkey patching utility to get 3rd party modules to become
    cooperative
+
+The last working version of gevent for 15.0 is 25.9.1

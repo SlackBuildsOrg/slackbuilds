@@ -1,0 +1,10 @@
+Python module to validate VAT numbers
+
+Optional dependency: suds (e.g. suds-jurko on SBo), for VIES SOAP
+lookups on top of the built-in per-country checksum validation.
+
+Ported from the SBo python2-vatnumber template: same upstream version
+(1.2), same source. Upstream's setup.py still passes the removed
+distutils/setuptools option use_2to3=True; the SlackBuild strips it
+with a one-line sed patch since the code is already py2/py3-compatible
+as-is.

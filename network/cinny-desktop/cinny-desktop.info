@@ -7,6 +7,6 @@ DOWNLOAD_x86_64="https://github.com/cinnyapp/cinny-desktop/releases/download/v4.
                  https://slackware.lngn.net/pub/source/cinny-desktop/cinny_4.6.0_arm64.deb"
 MD5SUM_x86_64="d4d577d0ad70d3cca1cbf9021ba81dd5 \
                30771e6a4a6d82804be6e00026cbe72d"
-REQUIRES="libayatana-appindicator webkit2gtk"
+REQUIRES="libayatana-appindicator webkit2gtk4.1"
 MAINTAINER="Jay Lanagan"
 EMAIL="j@lngn.net"

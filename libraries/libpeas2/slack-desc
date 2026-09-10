@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+        |-----handy-ruler------------------------------------------------------|
+libpeas2: libpeas2 (GObject Plugin System)
+libpeas2:
+libpeas2: Libpeas is a gobject-based plugins engine, and is targetted at giving
+libpeas2: every application the chance to assume its own extensibility.
+libpeas2: It also has a set of features including, but not limited to:
+libpeas2: - multiple extension points
+libpeas2: - on demand (lazy) programming language support for C, Python and JS
+libpeas2: - simplicity of the API
+libpeas2:
+libpeas2: homepage: https://gitlab.gnome.org/GNOME/libpeas
+libpeas2:

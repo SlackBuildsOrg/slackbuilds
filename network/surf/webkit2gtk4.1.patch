@@ -1,0 +1,29 @@
+commit 7f1156f9b0977a72e523e031cf67a4946cfee9b2
+parent b3ba9f59919c33d6a47aaa759f99aef61ee768a9
+Author: Quentin Rameau <quinq@fifth.space>
+Date:   Sat, 18 Nov 2023 12:38:09 +0100
+
+Build against Webkit 4.1
+
+Seems that this is needed for libsoup3.
+
+Diffstat:
+M	config.mk	| 	8	++++----
+
+1 file changed, 4 insertions(+), 4 deletions(-)
+diff --git a/config.mk b/config.mk
+@@ -12,10 +12,10 @@ LIBDIR = $(LIBPREFIX)/surf
+ X11INC = `pkg-config --cflags x11`
+ X11LIB = `pkg-config --libs x11`
+ 
+-GTKINC = `pkg-config --cflags gtk+-3.0 gcr-3 webkit2gtk-4.0`
+-GTKLIB = `pkg-config --libs gtk+-3.0 gcr-3 webkit2gtk-4.0`
+-WEBEXTINC = `pkg-config --cflags webkit2gtk-4.0 webkit2gtk-web-extension-4.0 gio-2.0`
+-WEBEXTLIBS = `pkg-config --libs webkit2gtk-4.0 webkit2gtk-web-extension-4.0 gio-2.0`
++GTKINC = `pkg-config --cflags gtk+-3.0 gcr-3 webkit2gtk-4.1`
++GTKLIB = `pkg-config --libs gtk+-3.0 gcr-3 webkit2gtk-4.1`
++WEBEXTINC = `pkg-config --cflags webkit2gtk-4.1 webkit2gtk-web-extension-4.1 gio-2.0`
++WEBEXTLIBS = `pkg-config --libs webkit2gtk-4.1 webkit2gtk-web-extension-4.1 gio-2.0`
+ 
+ # includes and libs
+ INCS = $(X11INC) $(GTKINC)

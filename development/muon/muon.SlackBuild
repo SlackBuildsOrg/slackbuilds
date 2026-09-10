@@ -1,9 +1,10 @@
 #!/bin/bash
-
+#
 # Slackware build script for muon
-
+#
 # Copyright 2023 Charadon US
 # Copyright 2023 B. Watson
+# Copyright 2026 r1w1s1
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -30,7 +31,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=muon
-VERSION=${VERSION:-0.2.0}
+VERSION=${VERSION:-0.6.0}
 BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -82,31 +83,31 @@ chown -R root:root .
 find -L .  -perm /111 -a \! -perm 755 -a -exec chmod 755 {} + -o \
         \! -perm /111 -a \! -perm 644 -a -exec chmod 644 {} +
 
-mkdir build
-cd build
-  CFLAGS="$SLKCFLAGS" \
-  CXXFLAGS="$SLKCFLAGS" \
-  meson .. \
-  --buildtype=release \
-  --infodir=/usr/info \
-  --libdir=/usr/lib${LIBDIRSUFFIX} \
-  --localstatedir=/var \
-  --mandir=/usr/man \
-  --prefix=/usr \
-  --sysconfdir=/etc \
-  -Dstrip=true \
+# Bootstrap muon, since Slackware 15.0's meson is too old
+CFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
+./bootstrap.sh build
+
+build/muon-bootstrap setup \
+  -Dprefix=/usr \
+  -Dmandir=/usr/man \
+  -Dlibdir=/usr/lib${LIBDIRSUFFIX} \
+  -Dbuildtype=release \
   -Dlibcurl=enabled \
   -Dlibarchive=enabled \
-  -Dlibpkgconf=enabled \
+  -Dlibpkgconf=disabled \
   -Dsamurai=disabled \
-  -Dbestline=disabled \
   -Dstatic=false \
-  -Ddocs=enabled \
-  -Dwebsite=false \
-  -Dtracy=disabled
-  "${NINJA:=ninja}"
-  DESTDIR=$PKG $NINJA install
-cd ..
+  -Dwebsite=disabled \
+  -Dtracy=disabled \
+  build
+
+build/muon-bootstrap -C build samu
+
+DESTDIR=$PKG build/muon -C build install
+
+find $PKG -type f -exec file {} \; | grep -e "executable" -e "shared object" | \
+  grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 gzip -9 $PKG/usr/man/man*/*
 

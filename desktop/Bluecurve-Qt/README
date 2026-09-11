@@ -1,0 +1,13 @@
+Bluecurve theme ported to Qt 5/6
+
+Requirements:
+- Qt 5/6 qtbase development files.
+- KDE Extra CMake Modules package.
+
+You can choose if you also want to build for QT5 besides QT6:
+
+  QT5=yes  build for QT5 (default)
+  QT5=no   do not build for QT5
+
+Pass the script the parameter you prefer, like
+  QT5=no ./Bluecurve-Qt.SlackBuild

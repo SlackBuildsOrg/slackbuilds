@@ -1,0 +1,5 @@
+rkdeveloptool is a development and debugging tool for Rockchip SoCs.
+
+After installing, a udev rule is placed in
+/lib/udev/rules.d/99-rk-rockusb.rules so unprivileged users can
+access Rockchip devices over USB.

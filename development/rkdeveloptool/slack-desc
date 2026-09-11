@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+rkdeveloptool: rkdeveloptool (Rockchip development tool)
+rkdeveloptool:
+rkdeveloptool: rkdeveloptool is a development and debugging tool for Rockchip
+rkdeveloptool: SoCs. It can read/write the flash, download images, reset the
+rkdeveloptool: device into maskrom/loader mode, and perform a variety of other
+rkdeveloptool: low-level operations over USB.
+rkdeveloptool:
+rkdeveloptool: Homepage: https://github.com/rockchip-linux/rkdeveloptool
+rkdeveloptool:
+rkdeveloptool:
+rkdeveloptool:

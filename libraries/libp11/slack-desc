@@ -8,12 +8,12 @@
       |-----handy-ruler------------------------------------------------------|
 libp11: libp11 (PKCS#11 wrapper library)
 libp11:
-libp11: libp11 is a library implementing a thin layer on top of PKCS#11 API
-libp11: to make using PKCS#11 implementations easier.
+libp11: The PKCS#11 API is an abstract API to perform operations on
+libp11: cryptographic objects such as private keys, without requiring access
+libp11: to the objects themselves.
+libp11:
+libp11: Homepage https://github.com/opensc/libp11
 libp11:
 libp11:
 libp11:
-libp11:
-libp11:
-libp11: Home-Page: https://github.com/OpenSC/libp11/wiki
 libp11:

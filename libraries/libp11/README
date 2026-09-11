@@ -1,4 +1,9 @@
-libp11 - PKCS#11 wrapper library
+libp11
 
-libp11 is a library implementing a thin layer on top of PKCS#11 API to
-make using PKCS#11 implementations easier.
+The PKCS#11 API is an abstract API to perform operations on
+cryptographic objects such as private keys, without requiring
+access to the objects themselves. That is, it provides a logical
+separation of the keys from the operations. The PKCS#11 API is
+mainly used to access objects in smart cards and hardware or
+software security modules (HSMs). In these modules, cryptographic
+keys are isolated and not made available to applications.

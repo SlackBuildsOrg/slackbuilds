@@ -1,7 +1,7 @@
 PRGNAM="prek"
-VERSION="0.4.14"
+VERSION="0.5.2"
 HOMEPAGE="https://github.com/j178/prek"
-DOWNLOAD="https://github.com/j178/prek/archive/v0.4.14/prek-0.4.14.tar.gz \
+DOWNLOAD="https://github.com/j178/prek/archive/v0.5.2/prek-0.5.2.tar.gz \
           https://static.crates.io/crates/addr2line/addr2line-0.25.1.crate \
           https://static.crates.io/crates/adler2/adler2-2.0.1.crate \
           https://static.crates.io/crates/ahash/ahash-0.8.12.crate \
@@ -31,7 +31,7 @@ DOWNLOAD="https://github.com/j178/prek/archive/v0.4.14/prek-0.4.14.tar.gz \
           https://static.crates.io/crates/axoasset/axoasset-2.0.1.crate \
           https://static.crates.io/crates/axoprocess/axoprocess-0.2.1.crate \
           https://static.crates.io/crates/axotag/axotag-0.3.0.crate \
-          https://static.crates.io/crates/axoupdater/axoupdater-0.10.0.crate \
+          https://static.crates.io/crates/axoupdater/axoupdater-0.10.2.crate \
           https://static.crates.io/crates/backtrace/backtrace-0.3.76.crate \
           https://static.crates.io/crates/base64/base64-0.22.1.crate \
           https://static.crates.io/crates/bit-set/bit-set-0.8.0.crate \
@@ -39,7 +39,7 @@ DOWNLOAD="https://github.com/j178/prek/archive/v0.4.14/prek-0.4.14.tar.gz \
           https://static.crates.io/crates/bitflags/bitflags-1.3.2.crate \
           https://static.crates.io/crates/bitflags/bitflags-2.13.0.crate \
           https://static.crates.io/crates/block2/block2-0.6.2.crate \
-          https://static.crates.io/crates/bstr/bstr-1.13.0.crate \
+          https://static.crates.io/crates/bstr/bstr-1.13.1.crate \
           https://static.crates.io/crates/bumpalo/bumpalo-3.20.3.crate \
           https://static.crates.io/crates/bytemuck/bytemuck-1.25.0.crate \
           https://static.crates.io/crates/byteorder-lite/byteorder-lite-0.1.0.crate \
@@ -94,27 +94,25 @@ DOWNLOAD="https://github.com/j178/prek/archive/v0.4.14/prek-0.4.14.tar.gz \
           https://static.crates.io/crates/findshlibs/findshlibs-0.10.2.crate \
           https://static.crates.io/crates/flate2/flate2-1.1.9.crate \
           https://static.crates.io/crates/float-cmp/float-cmp-0.10.0.crate \
-          https://static.crates.io/crates/fnv/fnv-1.0.7.crate \
           https://static.crates.io/crates/foldhash/foldhash-0.2.0.crate \
           https://static.crates.io/crates/form_urlencoded/form_urlencoded-1.2.2.crate \
           https://static.crates.io/crates/fs-err/fs-err-3.3.1.crate \
           https://static.crates.io/crates/fs_extra/fs_extra-1.3.0.crate \
           https://static.crates.io/crates/futures-channel/futures-channel-0.3.32.crate \
-          https://static.crates.io/crates/futures-core/futures-core-0.3.33.crate \
-          https://static.crates.io/crates/futures-io/futures-io-0.3.33.crate \
+          https://static.crates.io/crates/futures-core/futures-core-0.3.34.crate \
+          https://static.crates.io/crates/futures-io/futures-io-0.3.34.crate \
           https://static.crates.io/crates/futures-lite/futures-lite-2.6.1.crate \
-          https://static.crates.io/crates/futures-macro/futures-macro-0.3.33.crate \
-          https://static.crates.io/crates/futures-sink/futures-sink-0.3.33.crate \
-          https://static.crates.io/crates/futures-task/futures-task-0.3.33.crate \
-          https://static.crates.io/crates/futures-util/futures-util-0.3.33.crate \
+          https://static.crates.io/crates/futures-macro/futures-macro-0.3.34.crate \
+          https://static.crates.io/crates/futures-sink/futures-sink-0.3.34.crate \
+          https://static.crates.io/crates/futures-task/futures-task-0.3.34.crate \
+          https://static.crates.io/crates/futures-util/futures-util-0.3.34.crate \
           https://static.crates.io/crates/getrandom/getrandom-0.2.17.crate \
           https://static.crates.io/crates/getrandom/getrandom-0.3.4.crate \
           https://static.crates.io/crates/getrandom/getrandom-0.4.3.crate \
           https://static.crates.io/crates/gimli/gimli-0.32.3.crate \
           https://static.crates.io/crates/globset/globset-0.4.20.crate \
           https://static.crates.io/crates/globwalk/globwalk-0.9.1.crate \
-          https://static.crates.io/crates/granit-parser/granit-parser-1.1.0.crate \
-          https://static.crates.io/crates/h2/h2-0.4.15.crate \
+          https://static.crates.io/crates/granit-parser/granit-parser-1.2.0.crate \
           https://static.crates.io/crates/hashbrown/hashbrown-0.17.1.crate \
           https://static.crates.io/crates/heck/heck-0.5.0.crate \
           https://static.crates.io/crates/hermit-abi/hermit-abi-0.5.2.crate \
@@ -252,7 +250,7 @@ DOWNLOAD="https://github.com/j178/prek/archive/v0.4.14/prek-0.4.14.tar.gz \
           https://static.crates.io/crates/security-framework/security-framework-3.7.0.crate \
           https://static.crates.io/crates/self-replace/self-replace-1.5.0.crate \
           https://static.crates.io/crates/semver/semver-1.0.28.crate \
-          https://static.crates.io/crates/serde-saphyr/serde-saphyr-1.1.0.crate \
+          https://static.crates.io/crates/serde-saphyr/serde-saphyr-1.2.0.crate \
           https://static.crates.io/crates/serde/serde-1.0.229.crate \
           https://static.crates.io/crates/serde_core/serde_core-1.0.229.crate \
           https://static.crates.io/crates/serde_derive/serde_derive-1.0.229.crate \
@@ -267,7 +265,7 @@ DOWNLOAD="https://github.com/j178/prek/archive/v0.4.14/prek-0.4.14.tar.gz \
           https://static.crates.io/crates/simd_cesu8/simd_cesu8-1.1.1.crate \
           https://static.crates.io/crates/simdutf8/simdutf8-0.1.5.crate \
           https://static.crates.io/crates/similar/similar-2.7.0.crate \
-          https://static.crates.io/crates/similar/similar-3.1.2.crate \
+          https://static.crates.io/crates/similar/similar-3.2.0.crate \
           https://static.crates.io/crates/siphasher/siphasher-1.0.3.crate \
           https://static.crates.io/crates/slab/slab-0.4.12.crate \
           https://static.crates.io/crates/smallvec/smallvec-1.15.2.crate \
@@ -400,7 +398,7 @@ DOWNLOAD="https://github.com/j178/prek/archive/v0.4.14/prek-0.4.14.tar.gz \
           https://static.crates.io/crates/zerovec-derive/zerovec-derive-0.11.3.crate \
           https://static.crates.io/crates/zerovec/zerovec-0.11.6.crate \
           https://static.crates.io/crates/zmij/zmij-1.0.21.crate"
-MD5SUM="2322f8afd1981f5d4dfb91e5e0337d80 \
+MD5SUM="05656dab1da4cfa456928763b6b5b813 \
         6185be920ab1302a8b29a5ed44875324 \
         873036bd52f5fd829bd41b3c2ca0bc08 \
         2d72538f5e173edbd18d17e347f409bc \
@@ -430,7 +428,7 @@ MD5SUM="2322f8afd1981f5d4dfb91e5e0337d80 \
         0e492600fe665397d4858ba75ced1a0a \
         a2b0f375107269c0438c0fa892fd5391 \
         bd99930fd143e48cc4c6c5628b13e0c4 \
-        84a37d79f6898bcfc39a152921bf29d7 \
+        422ca3ed9a9ac3adabb0076ade12944e \
         0234fbff6a32192b355625a61e32bcfe \
         20084c4c04bcc06fd3d7ff662deca706 \
         fa4e40913159dd05959a52a5dff270fc \
@@ -438,7 +436,7 @@ MD5SUM="2322f8afd1981f5d4dfb91e5e0337d80 \
         a295edb6953237ebbdfa8e731229f9a3 \
         11de2ea4653d2208bc9a65c1b9939971 \
         4dd4175ec3e2840e7a0f49141b8d59dd \
-        5bd7cffcaa33768f9c3027b128f4989d \
+        80471257be2d8c7dda201f3536854608 \
         b49bef030b7807d2e09679bd1ca726fb \
         ec9087f462624c5d819e1361538dbf05 \
         d8b6232e66c7e07e8a626ef21d3b8725 \
@@ -493,27 +491,25 @@ MD5SUM="2322f8afd1981f5d4dfb91e5e0337d80 \
         a4ce72dbf8935420cdbeedd055673e5a \
         c9206a31d6f150dbb558bf9da78ec0e2 \
         489c3eacc30807ba11bfd7ddf4b1d277 \
-        8dab3b3ec00dc56cffde0b0c410d47b5 \
         e36ee995fbd928f67773e5dbca035c5e \
         50f998a859c3e57218745ba77c370e2b \
         85ac14dc74ab3967e7d438a7e73dbe89 \
         ac9acb45412c8c2e1437db4e50fb834f \
         f89d6019e0235b8a2fa0192439ab1d20 \
-        f7e2f58d124ad00b39b1cc0bebff6795 \
-        81a3a2f34650dfe99ea2ca53bc2c84d9 \
+        02c0b21e8fea045a9d7b638d8f549d51 \
+        221ab95f6fe18f8d0f10f27e792c19ca \
         29262ad47afbf8db117fd581e958b96b \
-        4d183be01875e59039205f1922b7a752 \
-        3c2f4815cd95df8cb325abefa090ada7 \
-        58e9276b13d1a612626d4acf0fe34448 \
-        0a93cfa4f4580a8ea23d053b5183076a \
+        78d8fa5c350662eecf78b4cb1af5a6ba \
+        fa58ca0f52a0310ac397546ddde25e47 \
+        883a4865f68422bf8f02a24ed5c9e20a \
+        c52d94fb02e25bd6321fb178a9cfbe0b \
         e9a474ff4fa06cae9de697c1a96a6181 \
         9a421286bfaf7199053b6fa7a3e690cb \
         6258f4262468849e8d79856671f27cda \
         014715a2e2ea6ec30fc15bb52cbf4ca6 \
         c8ecc353fdba5df8b49ee2dc31218c0d \
         7b8257e056ddd1633f8526e8492fb831 \
-        3c0b3047734dcd2fb1c8b8078bfac482 \
-        7e082a169a4c441b54be86d9363cd860 \
+        6ee6f2b0a40d9622342016fa3d41bde1 \
         0eb0705fa0086caab7c05b627bf907e0 \
         ce5935e8063a452913a61e5405b33cb9 \
         b0dd13f7bb7833b8d10e78cb331f4464 \
@@ -651,7 +647,7 @@ MD5SUM="2322f8afd1981f5d4dfb91e5e0337d80 \
         f2dfc93b8c3eb0ccefb7fbaa9b4defc4 \
         a6025f31bdf7d0b98b90e3f423cb219e \
         3ebea10c3ebf440e9b09663ff3130602 \
-        9c80d6ecdd1d187f5815045a5acd7373 \
+        45c79a908f62d0f1cb7b6fa59c937784 \
         fc7440a3b755967e1786b6ac75ed537c \
         986bef3f348dbaeeb2f730f42026d43f \
         391ca997062ecf1d14d23b23519bc1b8 \
@@ -666,7 +662,7 @@ MD5SUM="2322f8afd1981f5d4dfb91e5e0337d80 \
         665d1d2bd563d8323882bf470ae42720 \
         789440cccc83854c8e317313ed19a4d1 \
         5589880087d08bb34ca9f492de374efb \
-        499aae530388260dfe808287362dd83e \
+        16899593e08a2cd5edec1fd0193b2378 \
         6af3de88de83dd8f141851c2b3108c20 \
         e6122636524bff66e5ac90cf7ce0d17c \
         35375c89cf8e713d754dcb23b87f72e5 \

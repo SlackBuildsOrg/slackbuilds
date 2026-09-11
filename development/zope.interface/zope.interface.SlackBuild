@@ -28,7 +28,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=zope.interface
 SRCNAM=$(tr \. _ <<<$PRGNAM)
 VERSION=${VERSION:-8.5}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -48,6 +48,14 @@ fi
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "x86_64" ]; then
+  LIBDIRSUFFIX="64"
+elif [ "$ARCH" = "aarch64" ]; then
+  LIBDIRSUFFIX="64"
+else
+  LIBDIRSUFFIX=""
+fi
 
 set -e
 
@@ -69,6 +77,9 @@ export PYTHONPATH=/opt/python$PYVER/site-packages
 
 python3 -m build --no-isolation --skip-dependency-check
 python3 -m installer -d "$PKG" dist/*.whl
+
+# Backward compatibility after name changed from zope.interface to zope_interface
+ln -s zope_interface-$VERSION.dist-info $PKG/usr/lib$LIBDIRSUFFIX/python$PYVER/site-packages/zope.interface-$VERSION.dist-info
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

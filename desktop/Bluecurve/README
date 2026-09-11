@@ -1,0 +1,19 @@
+Bluecurve GTK 3/4
+
+Red Hat Bluecurve theme ported over to GTK 3/4. Designed for the MATE, 
+Xfce and KDE desktop environments.
+
+
+- GTK 3/4 theme, with support for dynamic color theming.
+- GTK 2 engine and theme.
+- Original Bluecurve Metacity themes, updated to resolve issues arising 
+  from using old metacity themes on newer versions of MATE.
+- Original Bluecurve XFWM4 theme, updated to support additional color 
+  schemes.
+- Bluecurve icons in scalable SVG format, taken from the original 
+  Adobe Illustrator source.
+- Bluecurve cursors.
+- Luxi font family (fonts used originally in Red Hat 8-9 and early 
+  versions of Fedora and RHEL).
+- Wallpapers that shipped with Red Hat 8-9 and early versions of Fedora
+  some of which were updated to widescreen by myself.

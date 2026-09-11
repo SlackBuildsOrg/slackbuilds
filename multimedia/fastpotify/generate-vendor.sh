@@ -40,8 +40,8 @@ case "$(basename "$SOURCE_DIR")" in
     ;;
 esac
 
-command -v cargo >/dev/null 2>&1 || {
-  printf 'cargo not found\n' >&2
+command -v cargo-vendor-filterer >/dev/null 2>&1 || {
+  printf 'cargo-vendor-filterer not found\n' >&2
   exit 1
 }
 
@@ -50,7 +50,10 @@ trap 'rm -rf "$TMPDIR"' EXIT
 
 cd "$SOURCE_DIR"
 mkdir -p "$TMPDIR/.cargo"
-cargo vendor --locked "$TMPDIR/vendor" > "$TMPDIR/.cargo/config.toml"
+cargo-vendor-filterer \
+  --platform '*-unknown-linux-gnu' \
+  --manifest-path "$SOURCE_DIR/Cargo.toml" \
+  "$TMPDIR/vendor" > "$TMPDIR/.cargo/config.toml"
 sed -i "s|$TMPDIR/vendor|vendor|g" "$TMPDIR/.cargo/config.toml"
 
 # projectm-sys otherwise installs libprojectM into lib64 while looking in lib.

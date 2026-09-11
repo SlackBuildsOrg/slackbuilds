@@ -92,14 +92,10 @@ cd build
   make install/strip DESTDIR=$PKG
 cd ..
 
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
+find $PKG/usr/share/icons -name icon-theme.cache -delete
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-rm -f $PKG/usr/info/dir
-
-find $PKG -name perllocal.pod -o -name ".packlist" -o -name "*.bs" | xargs rm -f || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp $CWD/README $PKG/usr/doc/$PRGNAM-$VERSION

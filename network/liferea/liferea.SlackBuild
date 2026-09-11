@@ -23,11 +23,15 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# 20260911 bkw: Modified by SlackBuilds.org:
+# - updated for v1.15.9c. This is the last version that will work
+#   with our libpeas-1.x and also works with webkit2gtk-4.1 (not 4.0).
+
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=liferea
-VERSION=${VERSION:-1.12.7}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-1.15.9c}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -68,14 +72,11 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
+tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2 --no-same-owner
 cd $PRGNAM-$VERSION
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \( \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
 # https://github.com/lwindolf/liferea/issues/767
 export WEBKIT_DISABLE_COMPOSITING_MODE=1
@@ -92,13 +93,10 @@ CFLAGS="$SLKCFLAGS" \
   --disable-schemas-compile
 
 make V=1
-make install DESTDIR=$PKG
-
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+make install-strip DESTDIR=$PKG
 
 gzip -9 $PKG/usr/man/man?/*.?
-gzip -9 $PKG/usr/man/pl/man?/*.?
+gzip -9 $PKG/usr/man/??/man?/*.?
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a AUTHORS COPYING ChangeLog $PKG/usr/doc/$PRGNAM-$VERSION

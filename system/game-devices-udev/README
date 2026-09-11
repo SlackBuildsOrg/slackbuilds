@@ -5,21 +5,22 @@ controllers available with user-grade permissions. A full list of the
 recognized brands and devices (with vendor and product IDs) are
 available in the README.devices file.
 
-All controller rules are installed by default. The following variables
-can be passed with VARIABLE=NO to the SlackBuild script to not install
-that rule.
+All udev rules are installed by default. The following variables can be
+passed with VARIABLE=NO to the SlackBuild script to not install that
+rule.
 
 _8BITDO # Bash doesn't allow variables to start with a number
 ALPHA
 ASTRO
 BETOP
-CYPRUS
+BIGSCREEN
+CYPRESS
 GOOGLE
 HORI
-HTCVR
+HTC
 LOGITECH
 MADCATZ
-MIRCOSOFT
+MICROSOFT
 NACON
 NINTENDO
 NVIDIA
@@ -27,12 +28,11 @@ PDP
 PERSONALCOMM
 PIDCODES
 POWERA
-RAZER
 RASPBERRYPI
+RAZER
 SONY
-SONYVR
-UNINPUT
+THRUSTMASTER
+UINPUT
 VALVE
-VALVEVR
 VKBSIM
 ZEROPLUS

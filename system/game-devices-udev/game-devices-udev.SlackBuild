@@ -2,7 +2,7 @@
 
 # Slackware build script for game-devices-udev
 
-# Copyright 2024-2025 Jeremy Hansen <jebrhansen+SBo@gmail.com>
+# Copyright 2024-2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,7 +24,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=game-devices-udev
-VERSION=${VERSION:-0.25}
+VERSION=${VERSION:-1.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -55,48 +55,83 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-RULESFOLDER=$PKG/lib/udev/rules.d
-mkdir -p $RULESFOLDER
+# Allow disabling individual rules, but default to enabled
+if [ "${_8BITDO:-YES}" == "NO" ]; then _8BITDO='-D8bitdo=false'; else _8BITDO=""; fi
+if [ "${ALPHA:-YES}" == "NO" ]; then ALPHA='-Dalpha_imaging_technology=false'; else ALPHA=""; fi
+if [ "${ASTRO:-YES}" == "NO" ]; then ASTRO='-Dastro_gaming=false'; else ASTRO=""; fi
+if [ "${BETOP:-YES}" == "NO" ]; then BETOP='-Dbetop=false'; else BETOP=""; fi
+if [ "${BIGSCREEN:-YES}" == "NO" ]; then BIGSCREEN='-Dbigscreen=false'; else BIGSCREEN=""; fi
+if [ "${CYPRESS:-YES}" == "NO" ]; then CYPRESS='-Dcypress_semiconductor_corp=false'; else CYPRESS=""; fi
+if [ "${GOOGLE:-YES}" == "NO" ]; then GOOGLE='-Dgoogle=false'; else GOOGLE=""; fi
+if [ "${HORI:-YES}" == "NO" ]; then HORI='-Dhori=false'; else HORI=""; fi
+if [ "${HTC:-YES}" == "NO" ]; then HTC='-Dhtc=false'; else HTC=""; fi
+if [ "${LOGITECH:-YES}" == "NO" ]; then LOGITECH='-Dlogitech=false'; else LOGITECH=""; fi
+if [ "${MADCATZ:-YES}" == "NO" ]; then MADCATZ='-Dmad_catz=false'; else MADCATZ=""; fi
+if [ "${MICROSOFT:-YES}" == "NO" ]; then MICROSOFT='-Dmicrosoft=false'; else MICROSOFT=""; fi
+if [ "${NACON:-YES}" == "NO" ]; then NACON='-Dnacon=false'; else NACON=""; fi
+if [ "${NINTENDO:-YES}" == "NO" ]; then NINTENDO='-Dnintendo=false'; else NINTENDO=""; fi
+if [ "${NVIDIA:-YES}" == "NO" ]; then NVIDIA='-Dnvidia=false'; else NVIDIA=""; fi
+if [ "${PDP:-YES}" == "NO" ]; then PDP='-Dpdp=false'; else PDP=""; fi
+if [ "${PERSONALCOMM:-YES}" == "NO" ]; then PERSONALCOMM='-Dpersonal_communication_systems_inc=false'; else PERSONALCOMM=""; fi
+if [ "${PIDCODES:-YES}" == "NO" ]; then PIDCODES='-Dpid_codes=false'; else PIDCODES=""; fi
+if [ "${POWERA:-YES}" == "NO" ]; then POWERA='-Dpowera=false'; else POWERA=""; fi
+if [ "${RASPBERRYPI:-YES}" == "NO" ]; then RASPBERRYPI='-Draspberry_pi_ltd=false'; else RASPBERRYPI=""; fi
+if [ "${RAZER:-YES}" == "NO" ]; then RAZER='-Drazer=false'; else RAZER=""; fi
+if [ "${SONY:-YES}" == "NO" ]; then SONY='-Dsony=false'; else SONY=""; fi
+if [ "${THRUSTMASTER:-YES}" == "NO" ]; then THRUSTMASTER='-Dthrustmaster=false'; else THRUSTMASTER=""; fi
+if [ "${UINPUT:-YES}" == "NO" ]; then UINPUT='-Duinput_dev_early_creation=false'; else UINPUT=""; fi
+if [ "${VALVE:-YES}" == "NO" ]; then VALVE='-Dvalve=false'; else VALVE=""; fi
+if [ "${VKBSIM:-YES}" == "NO" ]; then VKBSIM='-Dvkb_sim=false'; else VKBSIM=""; fi
+if [ "${ZEROPLUS:-YES}" == "NO" ]; then ZEROPLUS='-Dzeroplus_technology_corporation=false'; else ZEROPLUS=""; fi
 
-install_rules()
-{
-  install -m 644 $1 $RULESFOLDER
-}
-
-if [ "${_8BITDO:-YES}" == "YES" ]; then install_rules 71-8bitdo-controllers.rules; fi
-if [ "${ALPHA:-YES}" == "YES" ]; then install_rules 71-alpha_imaging_technology_co-vr.rules; fi
-if [ "${ASTRO:-YES}" == "YES" ]; then install_rules 71-astro_gaming-controllers.rules; fi
-if [ "${BETOP:-YES}" == "YES" ]; then install_rules 71-betop-controllers.rules; fi
-if [ "${CYPRUS:-YES}" == "YES" ]; then install_rules 71-cypress_semiconductor_corp.rules; fi
-if [ "${GOOGLE:-YES}" == "YES" ]; then install_rules 71-google-controllers.rules; fi
-if [ "${HORI:-YES}" == "YES" ]; then install_rules 71-hori-controllers.rules; fi
-if [ "${HTCVR:-YES}" == "YES" ]; then install_rules 71-htc-vr.rules; fi
-if [ "${LOGITECH:-YES}" == "YES" ]; then install_rules 71-logitech-controllers.rules; fi
-if [ "${MADCATZ:-YES}" == "YES" ]; then install_rules 71-mad_catz-controllers.rules; fi
-if [ "${MIRCOSOFT:-YES}" == "YES" ]; then install_rules 71-microsoft-controllers.rules; fi
-if [ "${NACON:-YES}" == "YES" ]; then install_rules 71-nacon-controllers.rules; fi
-if [ "${NINTENDO:-YES}" == "YES" ]; then install_rules 71-nintendo-controllers.rules; fi
-if [ "${NVIDIA:-YES}" == "YES" ]; then install_rules 71-nvidia-controllers.rules; fi
-if [ "${PDP:-YES}" == "YES" ]; then install_rules 71-pdp-controllers.rules; fi
-if [ "${PERSONALCOMM:-YES}" == "YES" ]; then install_rules 71-personal_communication_systems_inc-controllers.rules; fi
-if [ "${PIDCODES:-YES}" == "YES" ]; then install_rules 71-pid_codes-controllers.rules; fi
-if [ "${POWERA:-YES}" == "YES" ]; then install_rules 71-powera-controllers.rules; fi
-if [ "${RAZER:-YES}" == "YES" ]; then install_rules 71-razer-controllers.rules; fi
-if [ "${RASPBERRYPI:-YES}" == "YES" ]; then install_rules 71-raspberry-pi-ltd.rules; fi
-if [ "${SONY:-YES}" == "YES" ]; then install_rules 71-sony-controllers.rules; fi
-if [ "${SONYVR:-YES}" == "YES" ]; then install_rules 71-sony-vr.rules; fi
-if [ "${UNINPUT:-YES}" == "YES" ]; then install_rules 71-uinput-dev-early-creation.rules; fi
-if [ "${VALVE:-YES}" == "YES" ]; then install_rules 71-valve-controllers.rules; fi
-if [ "${VALVEVR:-YES}" == "YES" ]; then install_rules 71-valve-vr.rules; fi
-if [ "${VKBSIM:-YES}" == "YES" ]; then install_rules 71-vkb_sim-controllers.rules; fi
-if [ "${ZEROPLUS:-YES}" == "YES" ]; then install_rules 71-zeroplus_technology_corporation-controllers.rules; fi
+mkdir build
+cd build
+  CFLAGS="$SLKCFLAGS" \
+  CXXFLAGS="$SLKCFLAGS" \
+  meson setup .. \
+    --buildtype=release \
+    --infodir=/usr/info \
+    --libdir=/usr/lib${LIBDIRSUFFIX} \
+    --localstatedir=/var \
+    --mandir=/usr/man \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    -Dstrip=true \
+    $_8BITDO \
+    $ALPHA \
+    $ASTRO \
+    $BETOP \
+    $BIGSCREEN \
+    $CYPRESS \
+    $GOOGLE \
+    $HORI \
+    $HTC \
+    $LOGITECH \
+    $MADCATZ \
+    $MICROSOFT \
+    $NACON \
+    $NINTENDO \
+    $NVIDIA \
+    $PDP \
+    $PERSONALCOMM \
+    $PIDCODES \
+    $POWERA \
+    $RASPBERRYPI \
+    $RAZER \
+    $SONY \
+    $THRUSTMASTER \
+    $UINPUT \
+    $VALVE \
+    $VKBSIM \
+    $ZEROPLUS
+  "${NINJA:=ninja}"
+  DESTDIR=$PKG $NINJA install
+cd ..
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
   LICENSE README.md \
   $PKG/usr/doc/$PRGNAM-$VERSION
-# Only copy this README over if the rule is installed
-if [ "${_8BITDO:-YES}" == "YES" ]; then cp 8BitDo.md $PKG/usr/doc/$PRGNAM-$VERSION; fi
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 cat $CWD/README.devices > $PKG/usr/doc/$PRGNAM-$VERSION/README.devices
 

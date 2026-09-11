@@ -1,0 +1,28 @@
+jg-cen64 (Nintendo 64 emulation core for Jolly Good Emulation)
+
+CEN64 JG is a cycle accurate Nintendo 64 emulator with support for
+the 64DD.
+
+Filenames supported: .n64 .ndd .z64
+To run files with other extensions: jollygood -c jollycv <filename>
+
+By default, no controls are mapped. The first time you run a game,
+press Shift-1 to configure the first controller.
+
+You'll need the appropriate N64 BIOS ROM image(s) for the game
+you're trying to emulate. For regular cartridge games, you'll
+want:
+
+- pifdata.bin (md5sum either 5c124e7948ada85da603a522782940d0 or
+               4921d5f2165dee6e2496f4388c4c81da)
+- pifdata-pal.bin (md5sum d4232dc935cad0650ac2664d52281f3a)
+
+For 64DD (removable drive) emulation, you'll also want:
+
+- 64ddipl.bin (md5sum 8d3d9f294b6e174bc7b1d2fd1c727530)
+
+These are the same files that MAME/MESS uses, typically found in zip
+archives called n64.zip and n64dd.zip. js-cen64 requires the unzipped
+files (*.bin).
+
+Copy the BIOS files to: ~/.local/share/jollygood/bios/

@@ -1,7 +1,7 @@
 PRGNAM="zizmor"
-VERSION="1.30.0"
+VERSION="1.30.1"
 HOMEPAGE="https://github.com/zizmorcore/zizmor"
-DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar.gz \
+DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.1/zizmor-1.30.1.tar.gz \
           https://static.crates.io/crates/addr2line/addr2line-0.25.1.crate \
           https://static.crates.io/crates/adler2/adler2-2.0.1.crate \
           https://static.crates.io/crates/ahash/ahash-0.8.12.crate \
@@ -97,7 +97,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar
           https://static.crates.io/crates/foldhash/foldhash-0.1.5.crate \
           https://static.crates.io/crates/foldhash/foldhash-0.2.0.crate \
           https://static.crates.io/crates/form_urlencoded/form_urlencoded-1.2.2.crate \
-          https://static.crates.io/crates/fraction/fraction-0.15.3.crate \
+          https://static.crates.io/crates/fraction/fraction-0.16.0.crate \
           https://static.crates.io/crates/fs_extra/fs_extra-1.3.0.crate \
           https://static.crates.io/crates/fst/fst-0.4.7.crate \
           https://static.crates.io/crates/futures-channel/futures-channel-0.3.34.crate \
@@ -123,7 +123,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar
           https://static.crates.io/crates/hex/hex-0.4.3.crate \
           https://static.crates.io/crates/http-body-util/http-body-util-0.1.3.crate \
           https://static.crates.io/crates/http-body/http-body-1.0.1.crate \
-          https://static.crates.io/crates/http-cache-reqwest/http-cache-reqwest-1.0.0-alpha.7.crate \
+          https://static.crates.io/crates/http-cache-reqwest/http-cache-reqwest-1.0.0-alpha.8.crate \
           https://static.crates.io/crates/http-cache-semantics/http-cache-semantics-3.0.0.crate \
           https://static.crates.io/crates/http-cache/http-cache-1.0.0-alpha.7.crate \
           https://static.crates.io/crates/http-serde/http-serde-2.1.1.crate \
@@ -158,9 +158,9 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar
           https://static.crates.io/crates/jni/jni-0.21.1.crate \
           https://static.crates.io/crates/jobserver/jobserver-0.1.34.crate \
           https://static.crates.io/crates/js-sys/js-sys-0.3.85.crate \
-          https://static.crates.io/crates/jsonschema-regex/jsonschema-regex-0.49.9.crate \
-          https://static.crates.io/crates/jsonschema-value/jsonschema-value-0.49.9.crate \
-          https://static.crates.io/crates/jsonschema/jsonschema-0.49.9.crate \
+          https://static.crates.io/crates/jsonschema-regex/jsonschema-regex-0.51.0.crate \
+          https://static.crates.io/crates/jsonschema-value/jsonschema-value-0.51.0.crate \
+          https://static.crates.io/crates/jsonschema/jsonschema-0.51.0.crate \
           https://static.crates.io/crates/lazy_static/lazy_static-1.5.0.crate \
           https://static.crates.io/crates/leb128fmt/leb128fmt-0.1.0.crate \
           https://static.crates.io/crates/libc/libc-0.2.185.crate \
@@ -186,7 +186,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar
           https://static.crates.io/crates/nohash-hasher/nohash-hasher-0.2.0.crate \
           https://static.crates.io/crates/ntapi/ntapi-0.4.2.crate \
           https://static.crates.io/crates/nu-ansi-term/nu-ansi-term-0.50.3.crate \
-          https://static.crates.io/crates/num-bigint/num-bigint-0.4.6.crate \
+          https://static.crates.io/crates/num-bigint/num-bigint-0.4.8.crate \
           https://static.crates.io/crates/num-cmp/num-cmp-0.1.0.crate \
           https://static.crates.io/crates/num-complex/num-complex-0.4.6.crate \
           https://static.crates.io/crates/num-conv/num-conv-0.2.0.crate \
@@ -230,7 +230,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar
           https://static.crates.io/crates/redox_syscall/redox_syscall-0.5.18.crate \
           https://static.crates.io/crates/ref-cast-impl/ref-cast-impl-1.0.25.crate \
           https://static.crates.io/crates/ref-cast/ref-cast-1.0.25.crate \
-          https://static.crates.io/crates/referencing/referencing-0.49.9.crate \
+          https://static.crates.io/crates/referencing/referencing-0.51.0.crate \
           https://static.crates.io/crates/reflink-copy/reflink-copy-0.1.30.crate \
           https://static.crates.io/crates/regex-automata/regex-automata-0.4.18.crate \
           https://static.crates.io/crates/regex-syntax/regex-syntax-0.8.11.crate \
@@ -332,7 +332,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar
           https://static.crates.io/crates/tree-sitter-language/tree-sitter-language-0.1.5.crate \
           https://static.crates.io/crates/tree-sitter-powershell/tree-sitter-powershell-0.26.4.crate \
           https://static.crates.io/crates/tree-sitter-yaml/tree-sitter-yaml-0.7.2.crate \
-          https://static.crates.io/crates/tree-sitter/tree-sitter-0.26.12.crate \
+          https://static.crates.io/crates/tree-sitter/tree-sitter-0.26.13.crate \
           https://static.crates.io/crates/try-lock/try-lock-0.2.5.crate \
           https://static.crates.io/crates/typenum/typenum-1.20.1.crate \
           https://static.crates.io/crates/typomania/typomania-0.2.0.crate \
@@ -443,7 +443,7 @@ DOWNLOAD="https://github.com/zizmorcore/zizmor/archive/v1.30.0/zizmor-1.30.0.tar
           https://static.crates.io/crates/zerovec-derive/zerovec-derive-0.11.1.crate \
           https://static.crates.io/crates/zerovec/zerovec-0.11.4.crate \
           https://static.crates.io/crates/zmij/zmij-1.0.2.crate"
-MD5SUM="ed09fba90c7ff90ddcc7e83d3ab9c94f \
+MD5SUM="3a7f8d8808f961496aa96f9fd9453a66 \
         6185be920ab1302a8b29a5ed44875324 \
         873036bd52f5fd829bd41b3c2ca0bc08 \
         2d72538f5e173edbd18d17e347f409bc \
@@ -539,7 +539,7 @@ MD5SUM="ed09fba90c7ff90ddcc7e83d3ab9c94f \
         fc53a85c912427e1af1278d8f9ef2aa4 \
         e36ee995fbd928f67773e5dbca035c5e \
         50f998a859c3e57218745ba77c370e2b \
-        d474a6184e06dea44f9c0d3007c6ec27 \
+        cc3ebb54162051c89c8574a171b14388 \
         ac9acb45412c8c2e1437db4e50fb834f \
         5259cf708a270d8811edbe62dd17c579 \
         a59e444abd0a1837569e0c9a4ffb2169 \
@@ -565,7 +565,7 @@ MD5SUM="ed09fba90c7ff90ddcc7e83d3ab9c94f \
         1d3e530a3410fc95a6987d70f84a6332 \
         c059b75a48188c6b09d6a877caecc556 \
         9f891783a0726303d8827598b7f4dcbe \
-        26a4482847a4b8f107e327e8ad0116d6 \
+        580126757149f1dac0049792291ef324 \
         af7c8c758aee8a99551f622010db24b4 \
         8367bb09f7de8b04a5f0d1d385583a55 \
         9f5129ac0b53584510005a298da2d7ed \
@@ -600,9 +600,9 @@ MD5SUM="ed09fba90c7ff90ddcc7e83d3ab9c94f \
         be01525e51d79736e7af74fe93d19f93 \
         b20f8542fa832b16de4b865c2a16b158 \
         3b557599337fd56e75dae86365fc1340 \
-        774868eaeb3a9c8c1cb34417e726227a \
-        f71c3ac9d1e4cf25b7782aa548a53c1e \
-        dbf09163279825913f7ccbeead65a27a \
+        49e77436d4d94700679617f22e7a9acf \
+        09f90d1172bf96bb65936467bc5d0b3f \
+        1067991e9dc4d23778383a2234f572a8 \
         bb0c20f6e3faaa647d9c463c5501a8e0 \
         1abb8c15c927019465ab14988633c201 \
         2c67965ecddbbccceb1d55706b05f4b5 \
@@ -628,7 +628,7 @@ MD5SUM="ed09fba90c7ff90ddcc7e83d3ab9c94f \
         457f61eb83d6e3f64be73190c309385a \
         ac48290bdb9ceb8c29443dbf99580988 \
         0f3c49558a5f7e9a6bc42c7e99a6d071 \
-        9ad9785decbdb61128f4d05833d5e959 \
+        1af7c2bf5dde0f350596ef1770b48fb0 \
         5d7b42844d2dbaf9096eed11c72bc4b8 \
         f66a5e0697395109481ae9afd83db471 \
         5b58e4f18091c0fa3579419f24cfaef9 \
@@ -672,7 +672,7 @@ MD5SUM="ed09fba90c7ff90ddcc7e83d3ab9c94f \
         56eeea4cebc8f0fe1d09207656f78ece \
         ccb8cb53529c5fabd9da41cdc017c732 \
         ada590bae67a4207745223aab78e32e4 \
-        d5acd4f57977b18122edcbb8ec1abd3a \
+        7b79f141b76fd5367e256f3882d1f598 \
         b60e62302dc8df0f04800aeb00026e06 \
         1d228fa736ac70e37c883b5767b217d7 \
         9c879955f306f1e8db44835646b5c5b3 \
@@ -774,7 +774,7 @@ MD5SUM="ed09fba90c7ff90ddcc7e83d3ab9c94f \
         a5d9088c50249458e1ac5ab3d77dff0b \
         5623a4d5a269b6f4dfb701c19f5e1f20 \
         69d4132cd15cad27178a018b4a9be7f1 \
-        29a26d05bae2c4d20ef25a939cdd001b \
+        49107dfe2beadea503a146ace81978cc \
         6f09120aa341d58ea072539176058a00 \
         e368dfaf680f2f433b90ceca5a137f92 \
         abaa0840d779030c5ee6bbe6eff0dee9 \

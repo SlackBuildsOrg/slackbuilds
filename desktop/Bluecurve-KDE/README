@@ -1,0 +1,9 @@
+Red Hat Bluecurve theme ported to KDE Plasma 6.
+
+Requirements:
+- Bluecurve GTK theme 
+- Bluecurve Qt theme 
+- KDE Plasma 6.3 or newer.
+- Qt 6, KF6, KDecoration 3, and GTK 3.0 development libraries.
+
+Dependecies: Bluecurve, Bluecurve-Qt

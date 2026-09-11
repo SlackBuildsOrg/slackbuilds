@@ -1,3 +1,8 @@
-Cpulimit is a tool which limits the CPU usage of a process (expressed
-in percentage, not in CPU time). It is useful to control batch jobs,
-when you don't want them to eat too many CPU cycles.
+cpulimit - Limit CPU Usage
+
+cpulimit limits the CPU usage of a process (expressed in percentage,
+not in CPU time).  It is useful to control batch jobs that can
+otherwise eat too many CPU cycles.  The CPU usage limit is enforced
+by sending SIGSTOP and SIGCONT POSIX signals to processes.  All
+child processes and threads of the specified process will share the
+same CPU usage limit.

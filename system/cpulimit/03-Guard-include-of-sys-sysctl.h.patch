@@ -1,0 +1,27 @@
+From eb6d9b723e79a4d1b750e7094948fe3565dfb325 Mon Sep 17 00:00:00 2001
+From: xaizek <xaizek@posteo.net>
+Date: Fri, 11 Sep 2026 23:46:07 +0300
+Subject: [PATCH 3/3] Guard include of <sys/sysctl.h>
+
+It's not available in glibc since v2.32.
+---
+ src/cpulimit.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/cpulimit.c b/src/cpulimit.c
+index 42d7ca2..eba4615 100644
+--- a/src/cpulimit.c
++++ b/src/cpulimit.c
+@@ -38,7 +38,9 @@
+ #include <string.h>
+ #include <sys/stat.h>
+ #include <sys/time.h>
++#ifdef __APPLE__
+ #include <sys/sysctl.h>
++#endif
+ #include <sys/resource.h>
+ #include <sys/types.h>
+ #include <sys/wait.h>
+-- 
+2.55.0
+

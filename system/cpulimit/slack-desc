@@ -8,12 +8,12 @@
         |-----handy-ruler------------------------------------------------------|
 cpulimit: cpulimit (Limit CPU Usage)
 cpulimit:
-cpulimit: Cpulimit tool which limits the CPU usage of a process (expressed in
-cpulimit: percentage, not in CPU time)
-cpulimit: It is useful to control batch jobs when you don't want
-cpulimit: them to eat too many CPU cycles.
-cpulimit: The goal is prevent a process from running
-cpulimit: for more than a specified time ratio
+cpulimit: cpulimit limits the CPU usage of a process (expressed in percentage,
+cpulimit: not in CPU time).  It is useful to control batch jobs that can
+cpulimit: otherwise eat too many CPU cycles.  The CPU usage limit is enforced
+cpulimit: by sending SIGSTOP and SIGCONT POSIX signals to processes.  All
+cpulimit: child processes and threads of the specified process will share the
+cpulimit: same CPU usage limit.
 cpulimit:
-cpulimit: Home page - https://github.com/opsengine/cpulimit
+cpulimit:
 cpulimit:

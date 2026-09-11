@@ -1,0 +1,39 @@
+From 64f09195793d807389fef1c3fb1d3e5a64c018e2 Mon Sep 17 00:00:00 2001
+From: xaizek <xaizek@posteo.net>
+Date: Fri, 11 Sep 2026 23:45:48 +0300
+Subject: [PATCH 2/3] Fix incorrect #ifdef syntax
+
+---
+ src/cpulimit.c                | 2 +-
+ tests/process_iterator_test.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/cpulimit.c b/src/cpulimit.c
+index 50eabea..42d7ca2 100644
+--- a/src/cpulimit.c
++++ b/src/cpulimit.c
+@@ -43,7 +43,7 @@
+ #include <sys/types.h>
+ #include <sys/wait.h>
+ 
+-#ifdef __APPLE__ || __FREEBSD__
++#if defined(__APPLE__) || defined(__FREEBSD__)
+ #include <libgen.h>
+ #endif
+ 
+diff --git a/tests/process_iterator_test.c b/tests/process_iterator_test.c
+index 1615196..1bfc167 100644
+--- a/tests/process_iterator_test.c
++++ b/tests/process_iterator_test.c
+@@ -28,7 +28,7 @@
+ #include <signal.h>
+ #include <string.h>
+ 
+-#ifdef __APPLE__ || __FREEBSD__
++#if defined(__APPLE__) || defined(__FREEBSD__)
+ #include <libgen.h>
+ #endif
+ 
+-- 
+2.55.0
+

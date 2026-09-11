@@ -6,4 +6,8 @@ This utility is a replacement for the old deathaddercfg tool.
 The tool architecture is based on "razerd", which is a background
 daemon doing all of the lowlevel privileged hardware accesses. The user
 interface tools are "razercfg", a commandline tool; and "qrazercfg",
-a QT4 based graphical device configuration tool.
+a QT5 based graphical device configuration tool.
+
+NOTE: Newer versions require QT6 and I don't want to impose that
+requirement unless the newer version is actually worth it. Let me know
+if you'd like it updated.

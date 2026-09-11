@@ -3,6 +3,7 @@
 # Slackware build script for razercfg
 
 # Copyright 2013 J Pipkin
+# Copyright 2026 Jeremy Hansen <jebrhansen+SBo@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=razercfg
-VERSION=${VERSION:-0.21}
+VERSION=${VERSION:-0.43}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -38,9 +39,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -70,7 +68,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.bz2
+tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -82,15 +80,25 @@ find -L . \
 # Fix some paths and such in the init script
 patch -p1 < $CWD/rc.razerd.diff
 
-cmake \
-	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DCMAKE_SKIP_BUILD_RPATH=1 \
-	.
-make 
-make install DESTDIR=$PKG
+# Fix lib path for 64bit systems
+sed -i "s|DESTINATION lib|DESTINATION lib${LIBDIRSUFFIX}|" librazer/CMakeLists.txt
 
-# This could be fixed in librazer/cmake_install.cmake, but meh. --rworkman
-[ ! -z $LIBDIRSUFFIX ] && mv $PKG/usr/lib $PKG/usr/lib${LIBDIRSUFFIX}
+# Fix udev rules location
+sed -i 's|DESTINATION /etc/udev|DESTINATION /lib/udev|' CMakeLists.txt
+
+# Fix deprecated option in .desktop
+sed -i 's|Application;||' ui/razercfg.desktop.template
+
+mkdir -p build
+cd build
+  RAZERCFG_PKG_BUILD=1 \
+  cmake \
+    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release ..
+  make
+  make install/strip DESTDIR=$PKG
+cd ..
 
 # install the example configuration file.
 install -vDm 644 razer.conf $PKG/etc/razer.conf.new
@@ -98,16 +106,13 @@ install -vDm 644 razer.conf $PKG/etc/razer.conf.new
 install -vD razerd.initscript $PKG/etc/rc.d/rc.razerd.new
 chmod 0755 $PKG/etc/rc.d/rc.razerd.new
 
-# Move the udev rules to /lib/udev instead of /etc/udev
-# See CHANGES_AND_HINTS.TXT
-mkdir -p $PKG/lib
-mv $PKG/etc/udev $PKG/lib
-
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING README $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  COPYING README.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

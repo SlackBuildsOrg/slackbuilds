@@ -4,8 +4,8 @@
 
 # Copyright 2023 Charadon US
 # All rights reserved.
-# 
-# Enabled libportal build targets, simplified build option list to use 
+#
+# Enabled libportal build targets, simplified build option list to use
 # defaults where possible, and took over SlackBuild maintenance. Bumped
 # build number. Bob Funk, Aug 29, 2023.
 #
@@ -29,8 +29,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=gnome-builder
-VERSION=${VERSION:-42.1}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-43.7}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -112,7 +112,7 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a COPYING AUTHORS NEWS $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a COPYING AUTHORS NEWS README.md $PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION/html
 mv $PKG/usr/share/doc/* $PKG/usr/doc/$PRGNAM-$VERSION/html
 rm -rf $PKG/usr/share/doc

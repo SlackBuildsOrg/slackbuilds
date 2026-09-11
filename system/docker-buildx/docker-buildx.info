@@ -1,24 +1,23 @@
 PRGNAM="docker-buildx"
-VERSION="0.36.1"
+VERSION="0.37.0"
 HOMEPAGE="https://github.com/docker/buildx"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/docker/buildx/archive/v0.36.1/buildx-0.36.1.tar.gz \
+DOWNLOAD_x86_64="https://github.com/docker/buildx/archive/v0.37.0/buildx-0.37.0.tar.gz \
                  https://github.com/Masterminds/semver/archive/v3.4.0/semver-3.4.0.tar.gz \
                  https://github.com/Microsoft/go-winio/archive/ad3df93bed29459e88baf3ece3e167e2f5d922dd/go-winio-ad3df93bed29459e88baf3ece3e167e2f5d922dd.tar.gz \
                  https://github.com/ProtonMail/go-crypto/archive/v1.4.1/go-crypto-1.4.1.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/config/v1.32.31/aws-sdk-go-v2-config-v1.32.31.tar.gz \
-                 https://github.com/compose-spec/compose-go/archive/v2.13.0/compose-go-2.13.0.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/config/v1.32.39/aws-sdk-go-v2-config-v1.32.39.tar.gz \
+                 https://github.com/compose-spec/compose-go/archive/v2.14.0/compose-go-2.14.0.tar.gz \
                  https://github.com/containerd/console/archive/v1.0.5/console-1.0.5.tar.gz \
-                 https://github.com/containerd/containerd/archive/v2.3.3/containerd-2.3.3.tar.gz \
+                 https://github.com/containerd/containerd/archive/v2.3.4/containerd-2.3.4.tar.gz \
                  https://github.com/containerd/continuity/archive/v0.5.0/continuity-0.5.0.tar.gz \
                  https://github.com/containerd/errdefs/archive/v1.0.0/errdefs-1.0.0.tar.gz \
                  https://github.com/containerd/log/archive/v0.1.0/log-0.1.0.tar.gz \
-                 https://github.com/containerd/platforms/archive/v1.0.0-rc.4/platforms-1.0.0-rc.4.tar.gz \
+                 https://github.com/containerd/platforms/archive/v1.0.0-rc.5/platforms-1.0.0-rc.5.tar.gz \
                  https://github.com/creack/pty/archive/v1.1.24/pty-1.1.24.tar.gz \
-                 https://github.com/davecgh/go-spew/archive/d8f796af33cc/go-spew-d8f796af33cc11cb798c1aaeb27a4ebc5099927d.tar.gz \
                  https://github.com/distribution/reference/archive/v0.6.0/reference-0.6.0.tar.gz \
-                 https://github.com/docker/cli/archive/v29.6.2/cli-29.6.2.tar.gz \
+                 https://github.com/docker/cli/archive/v29.7.2/cli-29.7.2.tar.gz \
                  https://github.com/docker/cli-docs-tool/archive/v0.11.0/cli-docs-tool-0.11.0.tar.gz \
                  https://github.com/moby/moby/archive/v28.5.2/moby-28.5.2.tar.gz \
                  https://github.com/docker/go-units/archive/v0.5.0/go-units-0.5.0.tar.gz \
@@ -31,70 +30,69 @@ DOWNLOAD_x86_64="https://github.com/docker/buildx/archive/v0.36.1/buildx-0.36.1.
                  https://github.com/hashicorp/hcl/archive/v2.24.0/hcl-2.24.0.tar.gz \
                  https://github.com/in-toto/in-toto-golang/archive/v0.11.0/in-toto-golang-0.11.0.tar.gz \
                  https://github.com/mitchellh/hashstructure/archive/v2.0.2/hashstructure-2.0.2.tar.gz \
-                 https://github.com/moby/buildkit/archive/v0.32.2/buildkit-0.32.2.tar.gz \
-                 https://github.com/moby/go-archive/archive/v0.2.1/go-archive-0.2.1.tar.gz \
+                 https://github.com/moby/buildkit/archive/v0.33.0/buildkit-0.33.0.tar.gz \
                  https://github.com/moby/moby/archive/api/v1.55.0/moby-api-v1.55.0.tar.gz \
                  https://github.com/moby/moby/archive/client/v0.5.0/moby-client-v0.5.0.tar.gz \
-                 https://github.com/moby/policy-helpers/archive/856be88baec46ecaa01f4d30676e48d14ccffa0b/policy-helpers-856be88baec46ecaa01f4d30676e48d14ccffa0b.tar.gz \
+                 https://github.com/moby/policy-helpers/archive/dd6c5499c491cfc998171f368028505e588de1e5/policy-helpers-dd6c5499c491cfc998171f368028505e588de1e5.tar.gz \
                  https://github.com/moby/sys/archive/atomicwriter/v0.1.0/sys-atomicwriter-v0.1.0.tar.gz \
                  https://github.com/moby/sys/archive/mountinfo/v0.7.2/sys-mountinfo-v0.7.2.tar.gz \
                  https://github.com/morikuni/aec/archive/v1.1.0/aec-1.1.0.tar.gz \
                  https://github.com/open-policy-agent/opa/archive/v1.14.1/opa-1.14.1.tar.gz \
                  https://github.com/opencontainers/go-digest/archive/v1.0.0/go-digest-1.0.0.tar.gz \
                  https://github.com/opencontainers/image-spec/archive/v1.1.1/image-spec-1.1.1.tar.gz \
-                 https://github.com/pelletier/go-toml/archive/v2.3.1/go-toml-2.3.1.tar.gz \
+                 https://github.com/pelletier/go-toml/archive/v2.4.3/go-toml-2.4.3.tar.gz \
                  https://github.com/pkg/browser/archive/5ac0b6a4141c771a0d3a081c36b87c977cf9c7db/browser-5ac0b6a4141c771a0d3a081c36b87c977cf9c7db.tar.gz \
                  https://github.com/pkg/errors/archive/v0.9.1/errors-0.9.1.tar.gz \
                  https://github.com/planetscale/vtprotobuf/archive/0393e58bdf106fe0347e554d272a8f2c84d12461/vtprotobuf-0393e58bdf106fe0347e554d272a8f2c84d12461.tar.gz \
                  https://github.com/serialx/hashring/archive/22c0c7ab6b1b/hashring-22c0c7ab6b1be4be7b950bae8b117767da7b18b6.tar.gz \
                  https://github.com/sigstore/sigstore-go/archive/v1.2.2/sigstore-go-1.2.2.tar.gz \
-                 https://github.com/sirupsen/logrus/archive/v1.9.4/logrus-1.9.4.tar.gz \
+                 https://github.com/sirupsen/logrus/archive/v1.10.2/logrus-1.10.2.tar.gz \
                  https://github.com/spf13/cobra/archive/v1.10.2/cobra-1.10.2.tar.gz \
                  https://github.com/spf13/pflag/archive/v1.0.10/pflag-1.0.10.tar.gz \
-                 https://github.com/stretchr/testify/archive/v1.11.1/testify-1.11.1.tar.gz \
-                 https://github.com/tonistiigi/fsutil/archive/6d9dc2ebad626eb645fb587f14225b3aa96ec010/fsutil-6d9dc2ebad626eb645fb587f14225b3aa96ec010.tar.gz \
+                 https://github.com/stretchr/testify/archive/v1.12.1/testify-1.12.1.tar.gz \
+                 https://github.com/tonistiigi/fsutil/archive/83cac42c1c5296d6bbc4017ec1ee3c6701f49938/fsutil-83cac42c1c5296d6bbc4017ec1ee3c6701f49938.tar.gz \
                  https://github.com/tonistiigi/go-csvvalue/archive/030d3b2625d0ae73babf789e079c07ae2c9940b4/go-csvvalue-030d3b2625d0ae73babf789e079c07ae2c9940b4.tar.gz \
                  https://github.com/tonistiigi/jaeger-ui-rest/archive/3dd17559e117449543489dfacd6ae22014604045/jaeger-ui-rest-3dd17559e117449543489dfacd6ae22014604045.tar.gz \
                  https://github.com/zclconf/go-cty/archive/v1.17.0/go-cty-1.17.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go-contrib/archive/instrumentation/net/http/otelhttp/v0.69.0/opentelemetry-go-contrib-instrumentation-net-http-otelhttp-v0.69.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/v1.44.0/opentelemetry-go-1.44.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go-contrib/archive/instrumentation/net/http/otelhttp/v0.70.0/opentelemetry-go-contrib-instrumentation-net-http-otelhttp-v0.70.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/v1.45.0/opentelemetry-go-1.45.0.tar.gz \
                  https://github.com/open-telemetry/opentelemetry-go/archive/exporters/stdout/stdouttrace/v1.44.0/opentelemetry-go-exporters-stdout-stdouttrace-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/metric/v1.44.0/opentelemetry-go-metric-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/sdk/v1.44.0/opentelemetry-go-sdk-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/trace/v1.44.0/opentelemetry-go-trace-v1.44.0.tar.gz \
-                 https://github.com/yaml/go-yaml/archive/v3.0.4/go-yaml-3.0.4.tar.gz \
-                 https://github.com/golang/crypto/archive/v0.54.0/crypto-0.54.0.tar.gz \
-                 https://github.com/golang/mod/archive/v0.38.0/mod-0.38.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/metric/v1.45.0/opentelemetry-go-metric-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/sdk/v1.45.0/opentelemetry-go-sdk-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/trace/v1.45.0/opentelemetry-go-trace-v1.45.0.tar.gz \
+                 https://github.com/yaml/go-yaml/archive/v3.0.5/go-yaml-3.0.5.tar.gz \
+                 https://github.com/golang/crypto/archive/v0.55.0/crypto-0.55.0.tar.gz \
+                 https://github.com/golang/mod/archive/v0.40.0/mod-0.40.0.tar.gz \
                  https://github.com/golang/sync/archive/v0.22.0/sync-0.22.0.tar.gz \
                  https://github.com/golang/sys/archive/v0.47.0/sys-0.47.0.tar.gz \
                  https://github.com/golang/term/archive/v0.45.0/term-0.45.0.tar.gz \
-                 https://github.com/golang/text/archive/v0.40.0/text-0.40.0.tar.gz \
-                 https://github.com/googleapis/go-genproto/archive/3dc84a4a5aaa87331e10f51e22e90d961f986894/go-genproto-3dc84a4a5aaa87331e10f51e22e90d961f986894.tar.gz \
-                 https://github.com/grpc/grpc-go/archive/v1.82.1/grpc-go-1.82.1.tar.gz \
-                 https://github.com/grpc/grpc-go/archive/cmd/protoc-gen-go-grpc/v1.6.1/grpc-go-cmd-protoc-gen-go-grpc-v1.6.1.tar.gz \
-                 https://github.com/protocolbuffers/protobuf-go/archive/f2248ac996afc39b3df0777cdcc269f6ade50b07/protobuf-go-f2248ac996afc39b3df0777cdcc269f6ade50b07.tar.gz \
-                 https://github.com/kubernetes/api/archive/v0.36.0/api-0.36.0.tar.gz \
-                 https://github.com/kubernetes/apimachinery/archive/v0.36.0/apimachinery-0.36.0.tar.gz \
-                 https://github.com/kubernetes/client-go/archive/v0.36.0/client-go-0.36.0.tar.gz \
+                 https://github.com/golang/text/archive/v0.41.0/text-0.41.0.tar.gz \
+                 https://github.com/googleapis/go-genproto/archive/6ac0973c030de548f6a485902facf1e906a58fbf/go-genproto-6ac0973c030de548f6a485902facf1e906a58fbf.tar.gz \
+                 https://github.com/grpc/grpc-go/archive/v1.83.2/grpc-go-1.83.2.tar.gz \
+                 https://github.com/grpc/grpc-go/archive/cmd/protoc-gen-go-grpc/v1.6.2/grpc-go-cmd-protoc-gen-go-grpc-v1.6.2.tar.gz \
+                 https://github.com/protocolbuffers/protobuf-go/archive/v1.36.12/protobuf-go-1.36.12.tar.gz \
+                 https://github.com/kubernetes/api/archive/v0.36.3/api-0.36.3.tar.gz \
+                 https://github.com/kubernetes/apimachinery/archive/v0.36.3/apimachinery-0.36.3.tar.gz \
+                 https://github.com/kubernetes/client-go/archive/v0.36.3/client-go-0.36.3.tar.gz \
                  https://github.com/Azure/go-ansiterm/archive/faa5f7b0171c46bb398a91b4a0c906324d3664cf/go-ansiterm-faa5f7b0171c46bb398a91b4a0c906324d3664cf.tar.gz \
                  https://github.com/agext/levenshtein/archive/v1.2.3/levenshtein-1.2.3.tar.gz \
                  https://github.com/agnivade/levenshtein/archive/v1.2.1/levenshtein-1.2.1.tar.gz \
                  https://github.com/apparentlymart/go-cidr/archive/v1.0.1/go-cidr-1.0.1.tar.gz \
                  https://github.com/apparentlymart/go-textseg/archive/v15.0.0/go-textseg-15.0.0.tar.gz \
                  https://github.com/asaskevich/govalidator/archive/a9d515a09cc289c60d55064edec5ef189859f172/govalidator-a9d515a09cc289c60d55064edec5ef189859f172.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/v1.43.0/aws-sdk-go-v2-1.43.0.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/credentials/v1.19.30/aws-sdk-go-v2-credentials-v1.19.30.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/feature/ec2/imds/v1.18.31/aws-sdk-go-v2-feature-ec2-imds-v1.18.31.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/internal/configsources/v1.4.31/aws-sdk-go-v2-internal-configsources-v1.4.31.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/internal/endpoints/v2.7.31/aws-sdk-go-v2-internal-endpoints-v2.7.31.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/internal/v4a/v1.4.32/aws-sdk-go-v2-internal-v4a-v1.4.32.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/service/internal/accept-encoding/v1.13.13/aws-sdk-go-v2-service-internal-accept-encoding-v1.13.13.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/service/internal/presigned-url/v1.13.31/aws-sdk-go-v2-service-internal-presigned-url-v1.13.31.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/service/signin/v1.5.0/aws-sdk-go-v2-service-signin-v1.5.0.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/service/sso/v1.33.0/aws-sdk-go-v2-service-sso-v1.33.0.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/service/ssooidc/v1.38.0/aws-sdk-go-v2-service-ssooidc-v1.38.0.tar.gz \
-                 https://github.com/aws/aws-sdk-go-v2/archive/service/sts/v1.45.0/aws-sdk-go-v2-service-sts-v1.45.0.tar.gz \
-                 https://github.com/aws/smithy-go/archive/v1.27.4/smithy-go-1.27.4.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/v1.43.8/aws-sdk-go-v2-1.43.8.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/credentials/v1.19.38/aws-sdk-go-v2-credentials-v1.19.38.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/feature/ec2/imds/v1.18.39/aws-sdk-go-v2-feature-ec2-imds-v1.18.39.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/internal/configsources/v1.4.39/aws-sdk-go-v2-internal-configsources-v1.4.39.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/internal/endpoints/v2.7.39/aws-sdk-go-v2-internal-endpoints-v2.7.39.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/internal/v4a/v1.4.40/aws-sdk-go-v2-internal-v4a-v1.4.40.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/service/internal/accept-encoding/v1.13.18/aws-sdk-go-v2-service-internal-accept-encoding-v1.13.18.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/service/internal/presigned-url/v1.13.39/aws-sdk-go-v2-service-internal-presigned-url-v1.13.39.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/service/signin/v1.5.8/aws-sdk-go-v2-service-signin-v1.5.8.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/service/sso/v1.33.8/aws-sdk-go-v2-service-sso-v1.33.8.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/service/ssooidc/v1.38.8/aws-sdk-go-v2-service-ssooidc-v1.38.8.tar.gz \
+                 https://github.com/aws/aws-sdk-go-v2/archive/service/sts/v1.45.8/aws-sdk-go-v2-service-sts-v1.45.8.tar.gz \
+                 https://github.com/aws/smithy-go/archive/v1.27.10/smithy-go-1.27.10.tar.gz \
                  https://github.com/blang/semver/archive/v3.5.1/semver-3.5.1.tar.gz \
                  https://github.com/cenkalti/backoff/archive/v5.0.3/backoff-5.0.3.tar.gz \
                  https://github.com/cespare/xxhash/archive/v2.3.0/xxhash-2.3.0.tar.gz \
@@ -106,16 +104,17 @@ DOWNLOAD_x86_64="https://github.com/docker/buildx/archive/v0.36.1/buildx-0.36.1.
                  https://github.com/containerd/typeurl/archive/v2.3.0/typeurl-2.3.0.tar.gz \
                  https://github.com/cpuguy83/go-md2man/archive/v2.0.7/go-md2man-2.0.7.tar.gz \
                  https://github.com/cyberphone/json-canonicalization/archive/19d51d7fe467d4706a3ff08adf8a748f29fc21e0/json-canonicalization-19d51d7fe467d4706a3ff08adf8a748f29fc21e0.tar.gz \
+                 https://github.com/davecgh/go-spew/archive/d8f796af33cc/go-spew-d8f796af33cc11cb798c1aaeb27a4ebc5099927d.tar.gz \
                  https://github.com/decred/dcrd/archive/dcrec/secp256k1/v4.4.0/dcrd-dcrec-secp256k1-v4.4.0.tar.gz \
                  https://github.com/digitorus/pkcs7/archive/3a137a8743524b3683ca4e11608d0dde37caee99/pkcs7-3a137a8743524b3683ca4e11608d0dde37caee99.tar.gz \
                  https://github.com/digitorus/timestamp/archive/220c5c2851b7435eea999de3daa773601a7ca126/timestamp-220c5c2851b7435eea999de3daa773601a7ca126.tar.gz \
                  https://github.com/docker/distribution/archive/v2.8.3/distribution-2.8.3.tar.gz \
                  https://github.com/docker/docker-credential-helpers/archive/v0.9.8/docker-credential-helpers-0.9.8.tar.gz \
                  https://github.com/docker/go-connections/archive/v0.7.0/go-connections-0.7.0.tar.gz \
-                 https://github.com/felixge/httpsnoop/archive/v1.0.4/httpsnoop-1.0.4.tar.gz \
+                 https://github.com/felixge/httpsnoop/archive/v1.1.0/httpsnoop-1.1.0.tar.gz \
                  https://github.com/fvbommel/sortorder/archive/v1.1.0/sortorder-1.1.0.tar.gz \
                  https://github.com/fxamacker/cbor/archive/v2.9.0/cbor-2.9.0.tar.gz \
-                 https://github.com/go-logr/logr/archive/v1.4.3/logr-1.4.3.tar.gz \
+                 https://github.com/go-logr/logr/archive/v1.4.4/logr-1.4.4.tar.gz \
                  https://github.com/go-logr/stdr/archive/v1.2.2/stdr-1.2.2.tar.gz \
                  https://github.com/go-openapi/analysis/archive/v0.25.2/analysis-0.25.2.tar.gz \
                  https://github.com/go-openapi/errors/archive/v0.22.8/errors-0.22.8.tar.gz \
@@ -153,7 +152,7 @@ DOWNLOAD_x86_64="https://github.com/docker/buildx/archive/v0.36.1/buildx-0.36.1.
                  https://github.com/in-toto/attestation/archive/v1.2.0/attestation-1.2.0.tar.gz \
                  https://github.com/inconshreveable/mousetrap/archive/v1.1.0/mousetrap-1.1.0.tar.gz \
                  https://github.com/json-iterator/go/archive/v1.1.12/go-1.1.12.tar.gz \
-                 https://github.com/klauspost/compress/archive/v1.19.1/compress-1.19.1.tar.gz \
+                 https://github.com/klauspost/compress/archive/v1.19.2/compress-1.19.2.tar.gz \
                  https://github.com/lestrrat-go/blackmagic/archive/v1.0.4/blackmagic-1.0.4.tar.gz \
                  https://github.com/lestrrat-go/dsig/archive/v1.0.0/dsig-1.0.0.tar.gz \
                  https://github.com/lestrrat-go/dsig-secp256k1/archive/v1.0.0/dsig-secp256k1-1.0.0.tar.gz \
@@ -165,20 +164,18 @@ DOWNLOAD_x86_64="https://github.com/docker/buildx/archive/v0.36.1/buildx-0.36.1.
                  https://github.com/mattn/go-shellwords/archive/v1.0.12/go-shellwords-1.0.12.tar.gz \
                  https://github.com/mitchellh/go-wordwrap/archive/v1.0.1/go-wordwrap-1.0.1.tar.gz \
                  https://github.com/moby/docker-image-spec/archive/v1.3.1/docker-image-spec-1.3.1.tar.gz \
+                 https://github.com/moby/go-archive/archive/v0.2.0/go-archive-0.2.0.tar.gz \
                  https://github.com/moby/locker/archive/v1.0.1/locker-1.0.1.tar.gz \
                  https://github.com/moby/patternmatcher/archive/v0.6.1/patternmatcher-0.6.1.tar.gz \
                  https://github.com/moby/spdystream/archive/v0.5.1/spdystream-0.5.1.tar.gz \
                  https://github.com/moby/sys/archive/sequential/v0.7.0/sys-sequential-v0.7.0.tar.gz \
                  https://github.com/moby/sys/archive/signal/v0.7.1/sys-signal-v0.7.1.tar.gz \
-                 https://github.com/moby/sys/archive/user/v0.4.1/sys-user-v0.4.1.tar.gz \
-                 https://github.com/moby/sys/archive/userns/v0.1.0/sys-userns-v0.1.0.tar.gz \
                  https://github.com/moby/term/archive/v0.5.2/term-0.5.2.tar.gz \
                  https://github.com/modern-go/concurrent/archive/bacd9c7ef1dd/concurrent-bacd9c7ef1dd9b15be4a9909b8ac7a4e313eec94.tar.gz \
                  https://github.com/modern-go/reflect2/archive/35a7c28c31ee079903db043180532306a621943a/reflect2-35a7c28c31ee079903db043180532306a621943a.tar.gz \
                  https://github.com/munnerz/goautoneg/archive/a7dc8b61c822/goautoneg-a7dc8b61c822528f973a5e4e7b272055c6fdb43e.tar.gz \
                  https://github.com/oklog/ulid/archive/v2.1.1/ulid-2.1.1.tar.gz \
                  https://github.com/package-url/packageurl-go/archive/v0.1.1/packageurl-go-0.1.1.tar.gz \
-                 https://github.com/pmezard/go-difflib/archive/5d4384ee4fb2/go-difflib-5d4384ee4fb2527b0a1256a821ebfc92f91efefc.tar.gz \
                  https://github.com/rcrowley/go-metrics/archive/65e299d6c5c92718e672a9d2bc7f96e5b687eef8/go-metrics-65e299d6c5c92718e672a9d2bc7f96e5b687eef8.tar.gz \
                  https://github.com/russross/blackfriday/archive/v2.1.0/blackfriday-2.1.0.tar.gz \
                  https://github.com/santhosh-tekuri/jsonschema/archive/v6.0.1/jsonschema-6.0.1.tar.gz \
@@ -206,48 +203,46 @@ DOWNLOAD_x86_64="https://github.com/docker/buildx/archive/v0.36.1/buildx-0.36.1.
                  https://github.com/yashtewari/glob-intersection/archive/v0.2.0/glob-intersection-0.2.0.tar.gz \
                  https://github.com/youmark/pkcs8/archive/a2c0da244d782506f23dd28c916a6efc2b33f9d6/pkcs8-a2c0da244d782506f23dd28c916a6efc2b33f9d6.tar.gz \
                  https://github.com/open-telemetry/opentelemetry-go-instrumentation/archive/sdk/v1.2.1/opentelemetry-go-instrumentation-sdk-v1.2.1.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go-contrib/archive/instrumentation/google.golang.org/grpc/otelgrpc/v0.69.0/opentelemetry-go-contrib-instrumentation-google.golang.org-grpc-otelgrpc-v0.69.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go-contrib/archive/instrumentation/net/http/httptrace/otelhttptrace/v0.69.0/opentelemetry-go-contrib-instrumentation-net-http-httptrace-otelhttptrace-v0.69.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlpmetric/otlpmetricgrpc/v1.44.0/opentelemetry-go-exporters-otlp-otlpmetric-otlpmetricgrpc-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlpmetric/otlpmetrichttp/v1.44.0/opentelemetry-go-exporters-otlp-otlpmetric-otlpmetrichttp-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlptrace/v1.44.0/opentelemetry-go-exporters-otlp-otlptrace-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlptrace/otlptracegrpc/v1.44.0/opentelemetry-go-exporters-otlp-otlptrace-otlptracegrpc-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlptrace/otlptracehttp/v1.44.0/opentelemetry-go-exporters-otlp-otlptrace-otlptracehttp-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-go/archive/sdk/metric/v1.44.0/opentelemetry-go-sdk-metric-v1.44.0.tar.gz \
-                 https://github.com/open-telemetry/opentelemetry-proto-go/archive/otlp/v1.10.0/opentelemetry-proto-go-otlp-v1.10.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go-contrib/archive/instrumentation/google.golang.org/grpc/otelgrpc/v0.70.0/opentelemetry-go-contrib-instrumentation-google.golang.org-grpc-otelgrpc-v0.70.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go-contrib/archive/instrumentation/net/http/httptrace/otelhttptrace/v0.70.0/opentelemetry-go-contrib-instrumentation-net-http-httptrace-otelhttptrace-v0.70.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlpmetric/otlpmetricgrpc/v1.45.0/opentelemetry-go-exporters-otlp-otlpmetric-otlpmetricgrpc-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlpmetric/otlpmetrichttp/v1.45.0/opentelemetry-go-exporters-otlp-otlpmetric-otlpmetrichttp-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlptrace/v1.45.0/opentelemetry-go-exporters-otlp-otlptrace-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlptrace/otlptracegrpc/v1.45.0/opentelemetry-go-exporters-otlp-otlptrace-otlptracegrpc-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/exporters/otlp/otlptrace/otlptracehttp/v1.45.0/opentelemetry-go-exporters-otlp-otlptrace-otlptracehttp-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-go/archive/sdk/metric/v1.45.0/opentelemetry-go-sdk-metric-v1.45.0.tar.gz \
+                 https://github.com/open-telemetry/opentelemetry-proto-go/archive/otlp/v1.11.0/opentelemetry-proto-go-otlp-v1.11.0.tar.gz \
                  https://github.com/yaml/go-yaml/archive/v2.4.4/go-yaml-2.4.4.tar.gz \
                  https://github.com/yaml/go-yaml/archive/v4.0.0-rc.4/go-yaml-4.0.0-rc.4.tar.gz \
-                 https://github.com/golang/net/archive/v0.57.0/net-0.57.0.tar.gz \
+                 https://github.com/golang/net/archive/v0.58.0/net-0.58.0.tar.gz \
                  https://github.com/golang/oauth2/archive/v0.36.0/oauth2-0.36.0.tar.gz \
                  https://github.com/golang/time/archive/v0.15.0/time-0.15.0.tar.gz \
-                 https://github.com/golang/tools/archive/v0.47.0/tools-0.47.0.tar.gz \
-                 https://github.com/googleapis/go-genproto/archive/3dc84a4a5aaa87331e10f51e22e90d961f986894/go-genproto-3dc84a4a5aaa87331e10f51e22e90d961f986894.tar.gz \
+                 https://github.com/golang/tools/archive/v0.49.0/tools-0.49.0.tar.gz \
+                 https://github.com/googleapis/go-genproto/archive/6ac0973c030de548f6a485902facf1e906a58fbf/go-genproto-6ac0973c030de548f6a485902facf1e906a58fbf.tar.gz \
                  https://github.com/go-inf/inf/archive/v0.9.1/inf-0.9.1.tar.gz \
-                 https://github.com/go-yaml/yaml/archive/v3.0.1/yaml-3.0.1.tar.gz \
                  https://github.com/kubernetes/klog/archive/v2.140.0/klog-2.140.0.tar.gz \
                  https://github.com/kubernetes/kube-openapi/archive/5883c5ee87b9354a0709c759cf1952f089453c91/kube-openapi-5883c5ee87b9354a0709c759cf1952f089453c91.tar.gz \
-                 https://github.com/kubernetes/streaming/archive/v0.36.0/streaming-0.36.0.tar.gz \
+                 https://github.com/kubernetes/streaming/archive/v0.36.3/streaming-0.36.3.tar.gz \
                  https://github.com/kubernetes/utils/archive/28399d86e0b55e612b83ad94dc6bac8e5de2a5ac/utils-28399d86e0b55e612b83ad94dc6bac8e5de2a5ac.tar.gz \
                  https://github.com/kubernetes-sigs/json/archive/2d320260d730f3842fef7b08d9a807bdbc617824/json-2d320260d730f3842fef7b08d9a807bdbc617824.tar.gz \
                  https://github.com/kubernetes-sigs/randfill/archive/v1.0.0/randfill-1.0.0.tar.gz \
-                 https://github.com/kubernetes-sigs/structured-merge-diff/archive/v6.3.2/structured-merge-diff-6.3.2.tar.gz \
+                 https://github.com/kubernetes-sigs/structured-merge-diff/archive/v6.3.3/structured-merge-diff-6.3.3.tar.gz \
                  https://github.com/kubernetes-sigs/yaml/archive/v1.6.0/yaml-1.6.0.tar.gz"
-MD5SUM_x86_64="3a854412d648263dc574d3c08d9f2376 \
+MD5SUM_x86_64="286e3d1d6faed6c381183278570a0ebb \
                ca61d9f8d58e0b4f098421ac30c61af1 \
                8be357a7b176cda8ea75addb67f9a722 \
                4664e626b7c888c72380b8e9dcf741a7 \
-               757e2b322fcc6d9a647b26de36317815 \
-               4adb055957d83bf21ebbea9cf9338b47 \
+               8af9642fe616c5839e5216d3f599f248 \
+               ef41df06ac5642723a7d047e45d77d06 \
                26fcf9e9bf46f997c39135c85a5be854 \
-               1bc8ba20827ad39e0091047febab2a4c \
+               5ed60a28fa31f3cf732dd921f1d0a9e5 \
                b0162cae5f701acf4bc4609707f42528 \
                8e7acac2a4e85041669b9167e8b62aff \
                48858c9a41af61187e619482aec8a8d9 \
-               ae7515a8aff3187f13ff9f9d07a6565d \
+               bcd65933eedfd7bd976a84d76f1404da \
                67a3a2d83def4df0a7a6bbb8db674120 \
-               8dec4bc686592321dfabc84a17b295f7 \
                2b777034850f2e33c06adf89c11dd3ce \
-               b0ac0a046d4abd8dfeabc468250fa083 \
+               b76d5f367458a9850ce3a43e32f5ca9c \
                aa8b17683364f08e3c33051063169ee4 \
                c6a76b4675c20c29abe4a0147106cb4c \
                4f768cd1ff318d355703b3834d5ee871 \
@@ -260,70 +255,69 @@ MD5SUM_x86_64="3a854412d648263dc574d3c08d9f2376 \
                b47861c5986c0c1d7766596c90d54b6f \
                4bd817751ec26d2576384252c5c93908 \
                5dfe724113857d71c0147a1931f57aa4 \
-               f4709a5baf24485ecd0edf5f82a4f591 \
-               dfc03e9d07d2b2f34357ac7b2b35daf6 \
+               be47d04bfc70d3e22ba0706a51032c1a \
                cdf7b1357e0e201fc15ff628e5cfa73a \
                9951a9471bff04cfee9600cc9ff37f2a \
-               cf25133ed481a5cacfab8033db3d158c \
+               09c6732946ce19ce671d5310c72bc222 \
                f8102eecb45f13d014d19d59a1f8cd4f \
                a6d9ea669235bfe95b0813ce10b81501 \
                286b27c9291ec104fba4b981dfa30f8b \
                6c32f6c8371c24ee32d714bc4ffdc349 \
                85e66d338aae62b92ef7f32fcff08263 \
                563ea176d6eca219e6a595055590e4c2 \
-               8111b94f21a2584fd80c3a19b8e66966 \
+               c8f9911c7f78575969e47324e3bf042f \
                26bdbab6dcfa671afa52510ec39502e5 \
                0951216925c98fda75a484a528b06af6 \
                cdba1b0d1351fcf6bdc04eafb0a1b5f8 \
                eb4099c21e77f043e36c4b67b1feb5b7 \
                5fe40d35b28a3e278a30961be910d484 \
-               6cf1d1c7d7c161356750599c86ddf495 \
+               e9f5642840cf42b6cd95b55e5aa770a6 \
                fdbb55e8e54cdf1ac7d5f36f4c1b3d3b \
                60c70cf821861bc43ab413f39c40ece1 \
-               5ee7adde0ac460aae7e80bccaaa70e3e \
-               1b4093c6228de8a6ad46c86c29be7dbf \
+               de8a8d8179a1b1c4155d9b5f3f6456d1 \
+               dc35c6a571430f32416c5659c42a6cc0 \
                33db27494f58f909cedb84a5ca1e916f \
                b8cd44c6145681a73e60dc34226ddb17 \
                5397c3e8c2a44345bdbd9f4734833178 \
-               9f5dca92542d2aa5c7116c4a4554d0e0 \
-               dd9b5c52e4499029dc9645d64ee5c4fe \
+               26b940ac980ca9d7e311feb8f658561c \
+               df576a103f5c9229cadc452a9ee73832 \
                d3aa6281dd784edd16b304a8df3ac147 \
-               18da316f7d2dab8e80603b82c29e85c0 \
-               64ad90b8d41abffe20cca6a6e66380b5 \
-               c4fcd86f68a553361eebaa13a3c75772 \
-               e1172a22558cfa4c25ca9955eb54088d \
-               49b1067ffe50047932693774a51412fe \
-               7042512af09c3760e779e7717d8d45ce \
+               713cf00febe769e460e4fe73d496b92d \
+               2dd5109a0c70fd836e1446911536ac25 \
+               5ce5b39c4e6e068f0e11827ee94ae07a \
+               1cf14080813b308636ca3f75eef171e8 \
+               683af7c99bbd1b5eda375b66e5b6da60 \
+               0d092ccc9b518497ea0154cd82310cf5 \
                24db497b68520aa8dc290a271fda68ed \
                9f8a5c983baae602473095c9712d12c9 \
                6775df6330a7cc7e11d487b37d9e27e4 \
-               4f5c1e9db335a18b24881d3970001217 \
-               4165b46125b813363ab9c5b9bac206c0 \
-               51b1a586a6da72564c36d492471629b9 \
-               3339dc3adfad07b77e84ee4e19d6d4ce \
-               109df047c5d2d13722633bdbd5cfc6f0 \
-               bd6938ff6f8d0550d0888cc72baaf231 \
-               d5ec41e9831850048dae773f1807379c \
-               813a6be0f05b1e99a123cec9a3568767 \
+               80c4c196cd1fe2067d76958bc90d0961 \
+               2fcb8cb82de378a5132eb7a293f38afa \
+               2493a7dabe04f902914774cb784f8ae9 \
+               d76e17d07b839e2d8d6aa12a94e75327 \
+               58ce9ccb1ea15e55b3d8dcd3f3438aac \
+               5108f63cc93cd008b6404516b5bc375f \
+               e2a5cd1d971442fd537a999566c1e528 \
+               1e8199a30955d8740ff106c4374a9174 \
                764d6ab319b5a8e08032a7413b43933f \
                683bed2ba908e143d89de525b9b770c6 \
                ba66d76b3668f812b7e5346f416f289b \
                b2df27fa937f71d26c459d38287a4f2e \
                70671d47db70263a9498d01b198f5950 \
                d739e181d7ac1e29fd8136860e2d8648 \
-               ef10149dad3f5409be89ef9c752b0187 \
-               6364850c958e54ee02af654ad425f1e4 \
-               b452160af99162715c885cf85ec442ce \
-               e2217f749fed528bc7c343947e57d240 \
-               39eaef1d0611c893e19ee6ffa542cbeb \
-               2a623ca383751d6cfa924ce30771f2f5 \
-               dcfff94068450ec27bdfe68ea8d8d833 \
-               1c97b2fadfb12d6e8b6d2b3006063ced \
-               b1e65aa24441322d0c5c888da35f5f25 \
-               3e1f1c0ab2af3477f6d55500c5c641d8 \
-               e3a376ee0d2c2115afc4ec148f20bee1 \
-               5e231a97889f9f43f33f78edaea9ab2c \
-               2054304acbaa02d80077787c5c6012d3 \
+               5af8283c5a3542df6eb18d52019a32ec \
+               8b0b345457c4e186d68365623b1e0572 \
+               b4c9d41a1526dc351b87094cd6fdb479 \
+               811d899226c177f1dde0e522da64072a \
+               a7943d4e1ca5987a6a7b98f692e531cb \
+               0a055160d2015e444b66940a22268056 \
+               ae145b1e53aef255e51c3b5006132204 \
+               ca3ddcb62e5b8f27066fb68b0db93be6 \
+               50c53e95bd4d7bc803b2c2f9f61a83fa \
+               40f6c5d8a3c7ab844378e4596e14c1f4 \
+               2cf6a0c5452e7dae05371f3203ecfa89 \
+               0828488f31663284b73fbd805bd416aa \
+               1f4ec49270385ee8d01b9a8406797490 \
                a059cdfae3a151e2cdf806c9c0e58306 \
                d24a3b80373a1ea6228fc7bfdf034db5 \
                63d8ecd122bbcf7ae903fb29f4f6e6c3 \
@@ -335,16 +329,17 @@ MD5SUM_x86_64="3a854412d648263dc574d3c08d9f2376 \
                c159ad728fb336bcc090e375c9270977 \
                62c26841be8216afe8ebe50bb200d805 \
                5bb01884ab81a30ad28272bd25ba4994 \
+               8dec4bc686592321dfabc84a17b295f7 \
                7c40346cb7d8f36aac9ca9e0d98a2171 \
                fdc4005b0e14139e75150ce877996ffa \
                f956f75cc8fb78289b233a6a3d52071c \
                a9871b590d4dd50333078f4ea048a4a0 \
                d71963b0c6a18eecb7fb70b5ec3873e4 \
                92b6189d0b53fddbc032e9e391c8c2fa \
-               071139858641815990695f38b38701ab \
+               4ce1956deca2d1f4404feee9223a9c02 \
                83f8d05b5f7f0e8f5d599717d8659878 \
                20d8c71e732d9587eb6d12ac044f95f0 \
-               e0a170d0cdbc6a7ebba7960231a6c7b0 \
+               d2ce349a861c6ea487dfb1a2e3d0a5b9 \
                633641e6f80a3c4367984d3e7b506e23 \
                c648fc6b2ff0f441531949eae9db6f6e \
                0a26e5e15cfb80cd42ce75918b1ed89a \
@@ -382,7 +377,7 @@ MD5SUM_x86_64="3a854412d648263dc574d3c08d9f2376 \
                10550b4f469219486db06ec78a14eb75 \
                5b66d485fec8898f337ac84ec028d3c6 \
                78dbec5200c79e22a57cd2f4c89166ad \
-               cfc283a2bcf1264fe39841eeced55e89 \
+               03d5b4202c56b37bf1ce82bc7d4f9a9d \
                b36105baa8388bf52fcf1b484d911fa4 \
                7b941cbfd9b1ab8a874dd1db34dcdffa \
                0e22edbc057ac27bf5ccbbc3b972818d \
@@ -394,20 +389,18 @@ MD5SUM_x86_64="3a854412d648263dc574d3c08d9f2376 \
                71a4ecaadfb90ffccb392799a2f00743 \
                592b122ba34e8375af7b4a1975204e04 \
                4e251e1caae84084d12326bcd3b36f56 \
+               11614b0dbab139c99d0464a45fb1c5dd \
                1313b821a6dd2d5dc06a5a4d16bfb4a3 \
                7fe6b2e51a5b40969f508bdfff9f8c96 \
                706c3fb568439cacc7f6997677ccce4b \
                5fe7e52c486e787fe14042821aca4369 \
                b9444ba454328b476e1a0dee1321192a \
-               ac72bb5e3fcd900a77814a65b20048ba \
-               983a88d3e5cd3f1cc063978d899b1d47 \
                c9342aee857c0d7030ee89f387748e3c \
                afd9c0870327ffcb865e126b4adaaae7 \
                873709f28f226262e5610dcab674e39b \
                55d7a84dae00a4c375289025b40f76e6 \
                ed070bb39750808f5d88b919bc0720c3 \
                008a21d4a442a383d5dbd7db772e079d \
-               f157ebfd92ce94ce82817aacaf4bfc77 \
                7d764968ea049ae63fec33997f156f93 \
                59acda02d26209540970ad339d071f6a \
                8e5f0ec74790757cb941a3595e85552b \
@@ -435,31 +428,30 @@ MD5SUM_x86_64="3a854412d648263dc574d3c08d9f2376 \
                deadcfa3344f3210dddf437cbcbd2b87 \
                e71b56576af631eab63fdf0c78904f70 \
                e2e49a2cd49af77742f62684084ad384 \
-               d2ecca14fb2a0daaf99ed835b04664ff \
-               8ae21a1796988af834243d7ed8e5e28a \
-               6ad8e1e2761d631435a48fe35be4a667 \
-               1d60062e6e10d07abc994662736c2d10 \
-               6b5f26d8b2ffeba0a79c8ad57b9f234c \
-               cfdac2a7515d70c1aa6615bf6ba017c5 \
-               ff139885b521a43f4974ecaad9d001c1 \
-               c06b01e9bed8f02612b2ed4ed37d844d \
-               83fa3dd20cfebb5e5974b31ce9fa9000 \
+               25e4baa101bc88b8859e4ed044eb40df \
+               89566f6487ed055111dab2717a243214 \
+               03166e7dd1d907c4f4bb7399ca8420fa \
+               bccb90ea8001e83e3bbf90e5bde8b064 \
+               19dc7f70e0c51938e6e34b86d0f7e6a3 \
+               9bffa15099738d3382bdc337aa1491c8 \
+               31678d57253ac5a67b5bf81f01f3e093 \
+               a6c75135907899659d043452436a337b \
+               02da891d43c836b8712c173876c47fab \
                17cbc01bda4a9461b9b8de336a36a516 \
                e8996505305ca47e3c562e67f81b1265 \
-               8d6122c676af0039107d9e01d7eb3079 \
+               571a1c1224b108818bfa4ac9f861a235 \
                090715cffcdd3ec1e5cad4b5228cc828 \
                912e857eb111b68bc97b6d6995c58e2b \
-               58ba57c0b33a72a04eea61b5fef4a00e \
-               4165b46125b813363ab9c5b9bac206c0 \
+               cafc6a30493aa4f41136817c1aeb91ab \
+               2fcb8cb82de378a5132eb7a293f38afa \
                29612706170a026066512a6265b10e9a \
-               3653fca1491a8b432d590ed3dab3aa77 \
                4fbaf28d88a95c5849a359ded357455d \
                02f0272520dafc52d01203c63373f5ad \
-               2cf398363dc0e616851a659078d67863 \
+               dbac22150fe968ead7a5ba5f84e895c0 \
                45d692c46057c47bcaac68f81f5585ac \
                6d9c834e9cb7d60d78a5b785c0dc98cd \
                f71344c259be3fc1d8ef3c85dec8e3d3 \
-               d125f7f1ab2e52ce147e49ed13234377 \
+               69d669fa62d1205465a10137bc524621 \
                d72bcd3617f4c36ada27b7cb0608702c"
 REQUIRES="google-go-lang"
 MAINTAINER="Andrew Clemons"

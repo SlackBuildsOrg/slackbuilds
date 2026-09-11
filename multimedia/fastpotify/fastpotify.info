@@ -1,10 +1,10 @@
 PRGNAM="fastpotify"
-VERSION="0.5.0"
+VERSION="0.7.1"
 HOMEPAGE="https://github.com/crmne/fastpotify"
-DOWNLOAD="https://github.com/crmne/fastpotify/archive/v0.5.0/fastpotify-0.5.0.tar.gz \
-          https://github.com/r1w1s1/slackbuilds-tarballs/raw/refs/heads/master/fastpotify-0.5.0-vendor.tar.xz"
-MD5SUM="c66098336f102b54b61265ccab26251e \
-        0479d376ffe1e3cace874a2be24a8f27"
+DOWNLOAD="https://github.com/crmne/fastpotify/archive/v0.7.1/fastpotify-0.7.1.tar.gz \
+          https://github.com/r1w1s1/slackbuilds-tarballs/raw/refs/heads/master/fastpotify-0.7.1-vendor.tar.xz"
+MD5SUM="14aab049a1f91e1d6e859d382b72a167 \
+        708a16e6c32612265882f1d3db28f943"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
 REQUIRES="rust-opt cmake-opt"

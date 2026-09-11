@@ -2,7 +2,7 @@
 
 # Slackware build script for xapp
 
-# Copyright 2024-2025 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2024-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=xapp
-VERSION=${VERSION:-3.2.2}
+VERSION=${VERSION:-3.2.3}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -89,6 +89,8 @@ meson configure . \
     --buildtype=release
 meson compile
 DESTDIR=$PKG meson install
+
+mv $PKG/usr/etc $PKG/etc
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

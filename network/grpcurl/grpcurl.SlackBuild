@@ -2,7 +2,7 @@
 
 # Slackware build script for grpcurl
 
-# Copyright 2023 Ebben Aries <slackbuilds@dscp.org>
+# Copyright 2023-2026 Ebben Aries <slackbuilds@dscp.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,10 +25,11 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=grpcurl
-VERSION=${VERSION:-1.9.3}
+VERSION=${VERSION:-1.9.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
+GOOS=linux
 
 if [ -z "$ARCH" ]; then
 case "$( uname -m )" in
@@ -37,6 +38,13 @@ case "$( uname -m )" in
     *) ARCH=$( uname -m ) ;;
 esac
 fi
+
+case "$ARCH" in
+  x86_64) GOARCH=amd64 ;;
+    i?86) GOARCH=386 ;;
+     arm) GOARCH=arm ;;
+       *) GOARCH=$ARCH ;;
+esac
 
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
@@ -47,32 +55,14 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
-  LIBDIRSUFFIX=""
-  PKG_ARCH=x86_32
-elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
-  PKG_ARCH=x86_32
-elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
-  PKG_ARCH=x86_64
-else
-  echo "$ARCH is not supported."
-  exit 1
-fi
-
 set -e
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-mkdir -p $PRGNAM-$VERSION
+tar xvf $CWD/${PRGNAM}-${VERSION}.tar.gz
 cd $PRGNAM-$VERSION
-tar xvf $CWD/${PRGNAM}_${VERSION}_linux_${PKG_ARCH}.tar.gz
 chown -R root:root .
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
@@ -80,13 +70,31 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-mkdir -p $PKG/usr/bin
-install -D -m755 $PRGNAM $PKG/usr/bin
+GOPATH=$TMP/go
+mkdir -p $GOPATH
+
+GOPATH=$GOPATH \
+GOOS=$GOOS \
+GOARCH=$GOARCH \
+CGO_ENABLED=0 \
+GOWORK=off \
+go build \
+  -mod=readonly \
+  -trimpath \
+  -buildvcs=false \
+  -ldflags "-s -w -X main.version=v${VERSION}" \
+  -o $PRGNAM \
+  ./cmd/grpcurl
+
+install -D -m 0755 $PRGNAM $PKG/usr/bin/$PRGNAM
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+cp -a \
+  LICENSE README.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

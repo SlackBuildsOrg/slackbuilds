@@ -1,3 +1,378 @@
+Sat Sep 12 01:51:15 UTC 2026
+academic/Kst/Kst.SlackBuild: Remove SLKCFLAGS assignments but add LIBDIRSUFFIX instead
+academic/bcftools: Updated for version 1.24
+academic/mathics: Removed (broken, needs new Python).
+academic/ngspice: Updated for version 47.
+academic/python2-kiwisolver: Removed (no dependees).
+academic/suitesparse: Updated for version 7.14.0
+audio/exhale: Orphaned (unmaintained).
+audio/fdk-aac: Removed (duplicate of libfdk-aac).
+audio/id3: Updated for version 0.82 + new maintainer
+audio/ocp: Updated for version 3.5.0.
+audio/opustags: Updated for version 1.10.1, new maintainer.
+audio/qtractor: Updated for version 1.6.4.
+desktop/Bluecurve: Added (GTK Theme).
+desktop/Bluecurve: Remove icon-theme.cache.
+desktop/ClamAV-GUI: Updated for version 1.4.6_1
+desktop/azote: Updated for version 1.16.0.
+desktop/bottles: migrated to webkit2gtk4.1
+desktop/copyq: Updated for version 16.0.0.
+desktop/doctest: Version bump to 2.5.3
+desktop/gnome-boxes: Updated for version 43.5.
+desktop/hhg-gui: Update dep.
+desktop/makc-wallpapers: Added (New wallpapers).
+desktop/razercfg: Version bump to 0.43
+desktop/sfwbar: Updated for version 1.0_beta11.
+desktop/sushi: Update dep.
+desktop/wmCalClock: Updated for version 1.26, changed maintainer.
+desktop/wmMoonClock: Updated for version 1.30, changed maintainer.
+desktop/wmSun: Changed maintainer, homepage, added a license.
+desktop/wmSunMoon: Changed maintainer, homepage, added a license.
+desktop/wmalauncher: Update for version 2021.1227, changed maint.
+desktop/wmbackground: Changed maintainer, added a license.
+desktop/wmcube: Updated for version 1.0.2.
+development/Catch2: Updated for version 3.16.0
+development/antigravity-cli: Updated for version 1.1.27
+development/antigravity: Updated for version 2.12.2
+development/aws-cdk: Updated for version 2.1140.0.
+development/aws-cdk: Updated for version 2.1141.0.
+development/buf: Updated for version 1.73.0.
+development/crosstool-ng: Updated for version 1.29.0
+development/devhelp: Update dep.
+development/dkms: Updated for version 3.4.3
+development/eh: update to 1.8.1
+development/electron-bin: Updated for version 44.3.0
+development/electron: Removed (orphaned >180 days).
+development/gcc14: Updated for version 14.4.0
+development/github-cli: Updated for version 2.100.0
+development/golangci-lint: Updated for version 2.13.2.
+development/google-go-lang: Updated for version 1.26.8.
+development/got: Updated for version 0.128
+development/guitar: Updated for version 1.4.1.
+development/kotlin: Updated for version 2.4.20.
+development/mold: Updated for version 2.42.1.
+development/muon: update to 0.6.0
+development/numpy-legacy: Removed (no dependees).
+development/openjdk8: Updated for version 8u512.
+development/prek: Updated for version 0.5.2.
+development/pycharm: Updated for version 2026.2.2
+development/pylint: Removed (unmaintained, EOLed).
+development/python2-cycler: Removed (no dependees).
+development/rkdeveloptool: Added (Development tool).
+development/samurai: update to 1.3
+development/slibtool: update to 0.7.4
+development/src-vcs: update to 1.45
+development/typos-lsp: Updated for version 0.1.56.
+development/typos: Updated for version 1.50.1.
+development/vscode-bin: Updated for version 1.137.0.
+development/vscodium: Updated for version 1.135.06055.
+development/vstudio: Updated for version 18.1.1
+development/wxHexEditor: Update dep.
+development/zizmor: Updated for version 1.30.1.
+development/zope.interface: Backward compatibility
+games/VASSAL: Updated for version 3.7.27
+games/immortal-barons: Added (Turn-based strategy game for terminal)
+games/jg-cen64: Added (Nintendo 64 emulator).
+games/jg-genplus: Add license warning to README (per upstream).
+games/lutris: Update dep.
+games/minigalaxy: Update dep.
+games/shattered-pixel-dungeon: Updated for version 4.0.0.
+games/solarus: Updated for version 2.1.4
+gis/opencpn: Update dep.
+gis/pytrainer: Update dep.
+git/ci: Update CI dependencies.
+graphics/Blender: Updated for version 5.2.1
+graphics/FreeCAD: Updated script
+graphics/OpenCASCADE: Updated for version 7.9.3
+graphics/OpenSubdiv: Enable CUDA support.
+graphics/converseen: Updated for version 0.15.2.8.
+graphics/implot: Upgraded for 1.0 + new maintainer
+graphics/rawtherapee: Updated for version 5.13 + new maintainer
+graphics/renderdoc: Updated for version 1.16
+graphics/resynthesizer: New maintainer.
+graphics/screencloud: Removed (unmaintained).
+ham/gridtracker2: Updated for version 2.260909.0.
+libraries/ConfigParser: Removed (no dependees).
+libraries/VulkanSceneGraph: Updated for version 1.1.16
+libraries/flatbuffers: New maintainer.
+libraries/fstrcmp: New maintainer.
+libraries/gevent: Updated for version 25.9.1.
+libraries/gfbgraph: Update dep.
+libraries/glfw3: Updated for version 3.5.1
+libraries/go-uniseg: Added (Unicode Text Segmentation for Go).
+libraries/greenlet: Updated for version 3.2.5.
+libraries/gtksourceview5: Update README; modernize meson; new maintainer
+libraries/imgui: New maintainer.
+libraries/imlib2: Updated for version 1.12.7.
+libraries/irrlicht: New maintainer.
+libraries/jsoncpp: Updated for version 1.9.8 + new maintainer
+libraries/levmar: New maintainer.
+libraries/libdca: New maintainer
+libraries/libdisplay-info: Version bump to 0.4.0
+libraries/libmpu: Added (Increased digit capacity arithmetic).
+libraries/libmpuio: Added (Formatted IO for libMPU).
+libraries/libopenshot-audio: Updated for version 1.0.0
+libraries/libopenshot: Updated for version 1.0.0
+libraries/libp11: Updated for version 0.4.21.
+libraries/libshout: New maintainer
+libraries/libtomcrypt: New maintainer.
+libraries/libtorrent2: Removed (no dependees).
+libraries/libtorrent: Removed (merged with rtorrent).
+libraries/libzim: Updated for version 9.8.2.
+libraries/live555: New maintainer
+libraries/nv-codec-headers: New maintainer.
+libraries/openvino: Orphaned (at maintainer's request).
+libraries/python2-matplotlib: Removed (no dependees).
+libraries/tkrzw: Added (C++ DBM library).
+libraries/trantor: Added (Web framework).
+libraries/tslib: Updated for version 1.24.
+libraries/xapp: Updated for version 3.2.3
+libraries/xbyak: Orphaned (unmaintained, no dependees).
+misc/dex: Updated for version 0.10.1.
+misc/es40: Updated for version 0.84
+misc/exploitdb: Updated for version 2026_09_04.
+misc/ollama: Updated for version 0.34.0.
+misc/par2cmdline: Updated for version 1.4.0.
+misc/pokemon-colorscripts: New maintainer.
+misc/rmlint: Updated for version 2.10.3.
+misc/xhidecursor: Updated for version 1.1.1
+multimedia/devedeng: Updated for version 4.21.1
+multimedia/fastpotify: update to 0.7.1
+multimedia/openshot: Updated for version 4.0.0
+multimedia/shotcut: Updated for version 22.01.30
+multimedia/transcode: Fix download.
+multimedia/vvdec: Orphaned (unmaintained).
+multimedia/vvenc: Orphaned (unmaintained).
+multimedia/zvbi: New maintainer
+network/amneziawg-kernel: Updated for version 3.1.20260906.
+network/badwolf: Update deps to webkit2gtk4.1.
+network/brave-browser: update to 1.94.121
+network/brave-origin: update to 1.94.121
+network/cinny-desktop: Migrated to webkit2gtk4.1
+network/cloudflared-bin: Updated for version 2026.8.3.
+network/cloudflared-bin: Updated for version 2026.9.0.
+network/discord: Version bump to 1.0.156
+network/element-desktop-bin: Updated README.
+network/gallery-dl: Updated for version 1.32.11
+network/helium-browser: Updated for version 0.16.5.1
+network/helm: Added (Kubernetes package manager).
+network/librewolf: Updated for version 155.0.1_1
+network/liferea: Updated for version 1.15.9c, new maintainer.
+network/mew: Script fixes
+network/mrtg: New maintainer
+network/nyxt: Update dep.
+network/openresty: New maintainer
+network/qbittorrent: Updated REQUIRES.
+network/radar: Added (Kubernetes UI).
+network/rclone-src: Updated for version 1.75.1
+network/rclone: Updated for version 1.75.1
+network/rtorrent: Updated for version 0.16.22, merge libtorrent.
+network/sqlninja: Fix bad ownership.
+network/surf: Patched to build against webkit2gtk4.1.
+network/surf: Update dep.
+network/teams-for-linux: Updated for version 2.20.0.
+network/telegram: Updated for version 7.2.8.
+network/tinc: Fix logrotate script
+network/tinc: Updated for version 1.0.37.
+network/tor-browser: Updated for version 15.0.22.
+network/tornado: New maintainer.
+network/vesktop: Change dep: electron => electron-bin.
+network/vivaldi: Updated for version 8.2.4133.52.
+network/waterfox: Updated for version 6.7.2
+network/zen-browser: Updated for version 1.22b
+office/Joplin: Updated for version 3.7.18.
+office/OpenAudible-bin: Switch to webkit2gtk4.1
+office/crow-translate: Removed (broken, unmaintained upstream).
+office/featherpad: Updated for version 1.4.1.
+office/gnucash: Update dep.
+office/ledger-live: Updated for version 4.19.0
+office/libreoffice-helppack: Updated for version 25.8.7.
+office/libreoffice-langpack: Updated for version 25.8.7.
+office/libreoffice: Updated for version 25.8.7.
+office/lyx: Updated for version 2.5.2.
+office/qownnotes: Updated for version 26.9.3.
+office/smoffice2026: Added (Office Suite).
+office/xpad: Updated for version 5.1.0
+perl/perl-Carp-Always: Added (Perl Module).
+perl/perl-Cpanel-JSON-XS: Fix building on 32bit systems
+perl/perl-Cpanel-JSON-XS: Version bump to 4.50
+perl/perl-Date-Manip: Updated for version 7.00.
+perl/perl-GooCanvas2-CairoTypes: Added (Perl Module).
+perl/perl-Gtk2-Unique: Version bump to 0.07
+perl/perl-Math-Base85: Updated for version 0.05
+perl/perl-Net-Libdnet: Orphaned (unmaintained).
+perl/perl-Params-Classify: New maintainer
+perl/perl-Regexp-Common: Version bump to 2024080801
+perl/perl-event: Version bump to 1.28
+perl/perl-gnome2-canvas: Version bump to 1.006
+perl/perl-gnome2-vfs: Version bump to 1.084
+perl/perl-gnome2-wnck: Version bump to 0.18
+perl/perl-gnome2: Version bump to 1.048
+perl/perl-html-form: Version bump to 6.13
+python/CANard: Removed (unmaintained, outdated).
+python/PyDispatcher: Removed (unmaintained, outdated).
+python/PyGreSQL: Removed (unmaintained).
+python/PyRIC: Removed (unmaintained, outdated).
+python/PythonQt: Removed (unmaintained).
+python/asciimatics: Removed (unmaintained, outdated).
+python/astroid: Removed (no dependees).
+python/audible-cli: New maintainer.
+python/audible: New maintainer.
+python/backports-abc: New maintainer.
+python/backports.lzma: Removed (unmaintained, outdated).
+python/bencode: Removed (unmaintained, outdated).
+python/biplist: Removed (unmaintained, outdated).
+python/bottle-mysql: Removed (unmaintained, outdated).
+python/buildbot-badges: Removed (no dependees).
+python/certbot-dns-cloudflare: Removed (no dependees).
+python/cloudscraper: Removed (unmaintained, no dependees).
+python/construct: Removed (unmaintained, no dependees).
+python/crcmod: Removed (unmaintained, no dependees).
+python/dhcpy6d: Removed (maintainer request).
+python/django-debug-toolbar: Removed (no dependees).
+python/dotty: Removed (unmaintained, no dependees).
+python/elasticsearch5: Removed (unmaintained, no dependees).
+python/enzyme: Removed (unmaintained, no dependees).
+python/euca2ools: Orphaned - no maintainer
+python/freetype-py: Removed (unmaintained, no dependees).
+python/functools32: Removed (unmaintained, no dependees).
+python/gi-docgen: New maintainer.
+python/githubpy: Removed (unmaintained, no dependees).
+python/gnome-python: Orphaned (unmaintained).
+python/holidays: Removed (no dependees).
+python/isort: Removed (no dependees).
+python/mibuild: Removed (no dependees).
+python/migen: Removed (unmaintained, no dependees).
+python/mini-amf: Removed (unmaintained, no dependees).
+python/numexpr: Removed (no dependees).
+python/objgraph: Removed (no dependees).
+python/odoo: Update dep suds-jurko => python3-suds-jurko.
+python/pathlib: Removed (no dependees).
+python/progressive: Removed (no dependees).
+python/py3sensors: Removed (oudated, no dependees).
+python/pySmartDL: Removed (no dependees).
+python/pyamf: Removed (oudated, no dependees).
+python/pyglet: Removed (no dependees).
+python/pygrametl: Removed (oudated, no dependees).
+python/pyorbit: Orphaned (outdated, no dependees).
+python/python-PySnooper: Removed (no dependees).
+python/python-faulthandler: Removed (oudated, no dependees).
+python/python-gssapi: Removed (no dependees).
+python/python-krb5: Removed (no dependees).
+python/python-magic: New maintainer
+python/python-mysqlclient: Removed (no dependees).
+python/python-parse: Removed (no dependees).
+python/python-smartypants: New maintainer.
+python/python-stdnum: Removed (no dependees).
+python/python2-Safe: Removed (oudated, no dependees).
+python/python2-authres: Removed (no dependees).
+python/python2-daemon: Orphaned (unmaintained).
+python/python2-dateutil: New maintainer.
+python/python2-django-tagging: Removed (no dependees).
+python/python2-editor: Removed (oudated, no dependees).
+python/python2-gattlib: Orphaned (no dependees).
+python/python2-keyutils: Removed (no dependees).
+python/python2-lockfile: Orphaned (unmaintained).
+python/python2-magick: Removed (no dependees).
+python/python2-mccabe: Removed (no dependees).
+python/python2-memcached: Orphaned (unmaintained).
+python/python2-networkx: Removed (oudated, no dependees).
+python/python2-nuitka: Updated for version 4.2.1
+python/python2-pillow: Removed (no dependees).
+python/python2-pybluez: Orphaned (unmaintained).
+python/python2-pycryptodomex: Removed (no dependees).
+python/python2-pyicu: Removed (no dependees).
+python/python2-pytest-runner: Removed (unmaintained).
+python/python2-pythondialog: Removed (no dependees).
+python/python2-requestbuilder: Orphaned - no maintainer
+python/python2-requests-kerberos: Removed (no dependees).
+python/python2-tvrage: Removed (no dependees).
+python/python2-xcffib: Removed (no dependees).
+python/python2-yenc: Orphaned (unmaintained).
+python/python3-PyGithub: Note on why we can't update
+python/python3-aiofiles: New maintainer.
+python/python3-bitarray: Updated for version 3.11.0.
+python/python3-caldav: Version bump to 3.3.0
+python/python3-cinemagoer: Version bump to 2026.08.20
+python/python3-configargparse: Updated for version 1.7.7.
+python/python3-dep-logic: Version bump to 0.7.2
+python/python3-discovery: Version bump to 1.6.0
+python/python3-findpython: Version bump to 0.8.0
+python/python3-gitdb2: New maintainer.
+python/python3-h2: New maintainer.
+python/python3-joblib: Version bump to 1.6.0
+python/python3-kiwisolver: Version bump to 1.5.1
+python/python3-msal: Version bump to 1.38.0
+python/python3-nuitka: Updated for version 4.2.1
+python/python3-pdm-backend: Version bump to 2.4.9
+python/python3-pdm: Version bump to 2.26.9
+python/python3-pypdf: Updated for version 6.18.0
+python/python3-pysubs2: Note on why we can't update
+python/python3-pyzmq: Updated for version 27.2.0
+python/python3-qbittorrent-api: Version bump to 2026.5.2
+python/python3-questionary: New maintainer.
+python/python3-rapidfuzz: Version bump to 3.14.6_1
+python/python3-smmap2: New maintainer.
+python/python3-socks: Updated for version 3.1.1.
+python/python3-soundfile: Note on why we can't update
+python/python3-suds-jurko: Added (Replaces suds-jurko).
+python/python3-tmdbsimple: Version bump to 2.9.8
+python/python3-tornado: Version bump to 6.5.8
+python/python3-typogrify: New maintainer.
+python/python3-vatnumber: Added (Python Module).
+python/python3-virtualenv: Version bump to 21.7.9
+python/python3-xlwt: Added (Python Module).
+python/pytz-deprecation-shim: Removed (no dependees).
+python/pytzdata: Removed (no dependees).
+python/queuelib: Removed (no dependees).
+python/requests-futures: Removed (no dependees).
+python/responder: Removed (no dependees).
+python/selenium: Removed (no dependees).
+python/setuptools-scm-git-archive: Removed (no dependees).
+python/soundcloud: Removed (unmaintained, outdated).
+python/sphinxcontrib-programoutput: Removed (no dependees).
+python/sql: Removed (unmaintained, outdated).
+python/sqlparse: New maintainer.
+python/statsmodels: Removed (no dependees).
+python/stevedore: Removed (no dependees, outdated).
+python/suds-jurko: Removed (use python3-suds-jurko).
+python/terminaltables: Removed (no dependees).
+python/threadpool: Removed (no dependees).
+python/tornado_systemd: Removed (no dependees).
+python/trollius: Removed (no dependees).
+python/typed_ast: Removed (no dependees).
+python/uv-bin: Updated for version 0.12.10.
+python/uv-bin: Updated for version 0.12.13.
+python/wsgiref: Removed (no dependees).
+python/zeep: Removed (no dependees).
+system/B-em: Updated for version 20260907_ccddf9f
+system/FreeFileSync: Updated for version 14.12
+system/Lmod: Updated for version 9.4.
+system/ProFont: New maintainer
+system/bochs: New maintainer
+system/bubblewrap: Updated for version 0.12.0.
+system/cpulimit: New maintainer.
+system/docker-buildx: Updated for version 0.37.0.
+system/fish: Updated for version 4.9.2
+system/game-devices-udev: Version bump to 1.0
+system/gdu: Updated for version 5.37.0
+system/geckodriver: Updated for version 0.37.1 + new maintainer
+system/gnome-online-accounts: Updated for version 3.46.0.
+system/i2c-tools: Updated for version 4.4.
+system/jstest-gtk: Updated for version 20260729 + new maintainer
+system/limine: Updated for version 12.8.0
+system/luckybackup: Added back README.
+system/modules: Updated for version 5.6.2
+system/mpich: Updated for version 5.0.1
+system/nvidia-driver: Fix 10-nvidia.conf.
+system/partclone: Updated for version 0.3.49
+system/slim: Fix slim.logrotate.
+system/thermald: Updated for version 2.5.13.
+system/twapake: Updated for version 1.0.
+system/yelp: Switch to webkit2gtk4.1.
+system/zim-tools: Updated for version 3.8.0.
+system/zramen: Orphaned (unmaintained).
++--------------------------+
 Sat Sep  5 02:40:12 UTC 2026
 academic/Isabelle: Unify email addresses.
 academic/RepeatMasker: Removed (missing dependee).

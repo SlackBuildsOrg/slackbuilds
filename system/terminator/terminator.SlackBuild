@@ -33,12 +33,13 @@
 # 20230507 - Updated for version 2.1.3
 # 20240629 - Updated for version 2.1.4
 # 20250526 - Updated for version 2.1.5
+# 20260914 - Updated for version 2.1.6
 
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=terminator
-VERSION=${VERSION:-2.1.5}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-2.1.6}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 

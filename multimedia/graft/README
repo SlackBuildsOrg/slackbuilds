@@ -1,0 +1,5 @@
+graft is a local-first composition workspace. The incremental compiler
+is the build engine. Runtime: ffmpeg and ffprobe on PATH. graft shells
+out; it does not link x264.
+
+https://github.com/eonik-ai/graft

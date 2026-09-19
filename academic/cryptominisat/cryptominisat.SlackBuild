@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=cryptominisat
-VERSION=${VERSION:-5.14.7}
+VERSION=${VERSION:-5.15.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -77,8 +77,8 @@ cd $PRGNAM-release-v$VERSION
 # Extract external dependencies so that cmake doesn't need to download them
 mkdir -p build/_deps
 cd build/_deps
-tar xvf $CWD/cadiback-3b6a84062b1304433eb8960a4bff6b9a80de9c54.tar.gz
-tar xvf $CWD/cadical-394c3f72858c2fe8cd35321f74f11f0f61c91123.tar.gz
+tar xvf $CWD/cadiback-47a6d821085ef8cb033241659824beafeb798cff.tar.gz
+tar xvf $CWD/cadical-818c9562f114b315a9246ced943b66b60b38e8fb.tar.gz
 mv cadiback* cadiback-src
 mv cadical* cadical-src
 cd ../..

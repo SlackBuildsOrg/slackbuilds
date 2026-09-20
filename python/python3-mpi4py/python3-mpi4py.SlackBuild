@@ -65,7 +65,7 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-
+export OMPI_MCA_rmaps_base_oversubscribe=yes
 PYVER=$(python3 -c 'import sys; print("%d.%d" % sys.version_info[:2])')
 export PYTHONPATH="/opt/python$PYVER/site-packages:/opt/cython/python$PYVER/site-packages"
 export PATH="/opt/cython/bin:$PATH"
@@ -73,13 +73,14 @@ export PATH="/opt/cython/bin:$PATH"
 # this is failling even with mpich
 rm test/test_util_dtlib.py
 
-python3 setup.py build
+python3 -m build --wheel --no-isolation
 # dont use with openmpi
 if [ $(which mpichversion 2> /dev/null ) ]; then
-  python3 test/runtests.py 
+  python3 test/runtests.py -v
+  python3 test/runtests.py -v -e spawn
 fi
-python3 setup.py install --root=$PKG
 
+python3 -m installer --destdir "$PKG" dist/*.whl
 
 # Don't ship .la files:
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la

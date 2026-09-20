@@ -5,6 +5,6 @@ DOWNLOAD="https://files.pythonhosted.org/packages/source/m/mpi4py/mpi4py-4.1.2.t
 MD5SUM="5110fc88531ffc90a6651806ecf25a55"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="mpich"
+REQUIRES="mpich python3-cython-opt"
 MAINTAINER="orphaned - no maintainer"
 EMAIL="NOEMAIL"

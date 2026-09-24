@@ -23,7 +23,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=endless-sky
-VERSION=${VERSION:-0.11.0}
+VERSION=${VERSION:-0.11.2}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -88,13 +88,18 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
-source /etc/profile.d/flac-opt-dev.sh
+[ -x /etc/profile.d/flac-opt-dev.sh ] && source /etc/profile.d/flac-opt-dev.sh
+
+# Hack for undefined HINT in too old SDL2 version.
+# Won't break on -current as SDL_hints.hstates:
+#define SDL_HINT_VIDEODRIVER "SDL_VIDEODRIVER"
+sed -i 's#SDL_HINT_VIDEODRIVER#"SDL_VIDEODRIVER"#' source/GameWindow.cpp
 
 cmake \
   -DCMAKE_CXX_FLAGS:STRING="$SLKCFLAGS" \
   -DCMAKE_INSTALL_PREFIX=/usr \
   --preset ${PRESET}
-cmake --build --preset ${PRESET}-release --target EndlessSky 
+cmake --build --preset ${PRESET}-release --target EndlessSky
 DESTDIR=$PKG cmake --install build/${PRESET}/ --prefix /usr
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \

@@ -1,8 +1,8 @@
 PRGNAM="gitlab-cli"
-VERSION="1.115.0"
+VERSION="1.119.0"
 HOMEPAGE="https://gitlab.com/gitlab-org/cli"
-DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.115.0/cli-v1.115.0.tar.gz \
-          https://github.com/charmbracelet/bubbletea/archive/v2.0.8/bubbletea-2.0.8.tar.gz \
+DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.119.0/cli-v1.119.0.tar.gz \
+          https://github.com/charmbracelet/bubbletea/archive/v2.0.9/bubbletea-2.0.9.tar.gz \
           https://github.com/charmbracelet/fang/archive/v2.0.1/fang-2.0.1.tar.gz \
           https://github.com/charmbracelet/glamour/archive/v2.0.1/glamour-2.0.1.tar.gz \
           https://github.com/charmbracelet/huh/archive/v2.0.3/huh-2.0.3.tar.gz \
@@ -14,8 +14,9 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.115.0/cli-v1.115.0.tar.
           https://github.com/avast/retry-go/archive/v5.0.0/retry-go-5.0.0.tar.gz \
           https://github.com/briandowns/spinner/archive/v1.23.2/spinner-1.23.2.tar.gz \
           https://github.com/coder/websocket/archive/v1.8.15/websocket-1.8.15.tar.gz \
-          https://github.com/docker/cli/archive/v29.7.1/cli-29.7.1.tar.gz \
-          https://github.com/docker/docker-credential-helpers/archive/v0.9.8/docker-credential-helpers-0.9.8.tar.gz \
+          https://github.com/denisbrodbeck/machineid/archive/v1.0.1/machineid-1.0.1.tar.gz \
+          https://github.com/docker/cli/archive/v29.8.1/cli-29.8.1.tar.gz \
+          https://github.com/docker/docker-credential-helpers/archive/v0.9.9/docker-credential-helpers-0.9.9.tar.gz \
           https://github.com/dustin/go-humanize/archive/v1.0.1/go-humanize-1.0.1.tar.gz \
           https://github.com/gdamore/tcell/archive/v2.13.10/tcell-2.13.10.tar.gz \
           https://github.com/golang-jwt/jwt/archive/v5.3.1/jwt-5.3.1.tar.gz \
@@ -30,12 +31,12 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.115.0/cli-v1.115.0.tar.
           https://github.com/lunixbochs/vtclean/archive/v1.0.0/vtclean-1.0.0.tar.gz \
           https://github.com/mattn/go-colorable/archive/v0.1.15/go-colorable-0.1.15.tar.gz \
           https://github.com/mattn/go-isatty/archive/v0.0.24/go-isatty-0.0.24.tar.gz \
-          https://github.com/mattn/go-runewidth/archive/v0.0.28/go-runewidth-0.0.28.tar.gz \
+          https://github.com/mattn/go-runewidth/archive/v0.0.30/go-runewidth-0.0.30.tar.gz \
           https://github.com/mgutz/ansi/archive/d51e80ef957d/ansi-d51e80ef957dba7f19388ca64afefbd5a096af30.tar.gz \
-          https://github.com/modelcontextprotocol/go-sdk/archive/v1.7.0/go-sdk-1.7.0.tar.gz \
+          https://github.com/modelcontextprotocol/go-sdk/archive/v1.8.0/go-sdk-1.8.0.tar.gz \
           https://github.com/muesli/termenv/archive/v0.16.0/termenv-0.16.0.tar.gz \
           https://github.com/otiai10/copy/archive/v1.14.1/copy-1.14.1.tar.gz \
-          https://github.com/package-url/packageurl-go/archive/v0.1.6/packageurl-go-0.1.6.tar.gz \
+          https://github.com/package-url/packageurl-go/archive/v0.1.7/packageurl-go-0.1.7.tar.gz \
           https://github.com/pkg/browser/archive/5ac0b6a4141c771a0d3a081c36b87c977cf9c7db/browser-5ac0b6a4141c771a0d3a081c36b87c977cf9c7db.tar.gz \
           https://github.com/rivo/tview/archive/6cc0565babafab419ac44bbce283aa5afcac8938/tview-6cc0565babafab419ac44bbce283aa5afcac8938.tar.gz \
           https://github.com/spf13/cobra/archive/v1.10.2/cobra-1.10.2.tar.gz \
@@ -44,18 +45,18 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.115.0/cli-v1.115.0.tar.
           https://github.com/stretchr/testify/archive/v1.12.1/testify-1.12.1.tar.gz \
           https://github.com/tidwall/pretty/archive/v1.2.1/pretty-1.2.1.tar.gz \
           https://github.com/zalando/go-keyring/archive/v0.2.8/go-keyring-0.2.8.tar.gz \
-          https://gitlab.com/gitlab-org/api/client-go/-/archive/v2.53.0/client-go-v2.53.0.tar.gz \
+          https://gitlab.com/gitlab-org/api/client-go/-/archive/v3.13.0/client-go-v3.13.0.tar.gz \
           https://github.com/uber-go/goleak/archive/v1.3.0/goleak-1.3.0.tar.gz \
           https://github.com/uber/mock/archive/v0.6.0/mock-0.6.0.tar.gz \
           https://github.com/yaml/go-yaml/archive/v3.0.5/go-yaml-3.0.5.tar.gz \
-          https://github.com/golang/crypto/archive/v0.55.0/crypto-0.55.0.tar.gz \
-          https://github.com/golang/oauth2/archive/v0.36.0/oauth2-0.36.0.tar.gz \
-          https://github.com/golang/sync/archive/v0.22.0/sync-0.22.0.tar.gz \
-          https://github.com/golang/sys/archive/v0.47.0/sys-0.47.0.tar.gz \
-          https://github.com/golang/term/archive/v0.45.0/term-0.45.0.tar.gz \
-          https://github.com/golang/text/archive/v0.41.0/text-0.41.0.tar.gz \
-          https://github.com/kubernetes/apimachinery/archive/v0.36.3/apimachinery-0.36.3.tar.gz \
-          https://github.com/kubernetes/client-go/archive/v0.36.3/client-go-0.36.3.tar.gz \
+          https://github.com/golang/crypto/archive/v0.57.0/crypto-0.57.0.tar.gz \
+          https://github.com/golang/oauth2/archive/v0.37.0/oauth2-0.37.0.tar.gz \
+          https://github.com/golang/sync/archive/v0.23.0/sync-0.23.0.tar.gz \
+          https://github.com/golang/sys/archive/v0.48.0/sys-0.48.0.tar.gz \
+          https://github.com/golang/term/archive/v0.46.0/term-0.46.0.tar.gz \
+          https://github.com/golang/text/archive/v0.42.0/text-0.42.0.tar.gz \
+          https://github.com/kubernetes/apimachinery/archive/v0.37.0/apimachinery-0.37.0.tar.gz \
+          https://github.com/kubernetes/client-go/archive/v0.37.0/client-go-0.37.0.tar.gz \
           https://github.com/mvdan/xurls/archive/v2.6.0/xurls-2.6.0.tar.gz \
           https://github.com/d2lang/d2/archive/v0.7.2/d2-0.7.2.tar.gz \
           https://github.com/charmbracelet/bubbles/archive/v2.0.0/bubbles-2.0.0.tar.gz \
@@ -87,7 +88,7 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.115.0/cli-v1.115.0.tar.
           https://github.com/dop251/goja/archive/241b342198c2a0210a513b7ada0ccf9f96791033/goja-241b342198c2a0210a513b7ada0ccf9f96791033.tar.gz \
           https://github.com/fatih/color/archive/v1.16.0/color-1.16.0.tar.gz \
           https://github.com/fsnotify/fsnotify/archive/v1.9.0/fsnotify-1.9.0.tar.gz \
-          https://github.com/fxamacker/cbor/archive/v2.9.0/cbor-2.9.0.tar.gz \
+          https://github.com/fxamacker/cbor/archive/v2.9.1/cbor-2.9.1.tar.gz \
           https://github.com/gdamore/encoding/archive/v1.0.1/encoding-1.0.1.tar.gz \
           https://github.com/go-logr/logr/archive/v1.4.3/logr-1.4.3.tar.gz \
           https://github.com/go-sourcemap/sourcemap/archive/v2.1.4/sourcemap-2.1.4.tar.gz \
@@ -130,27 +131,26 @@ DOWNLOAD="https://gitlab.com/gitlab-org/cli/-/archive/v1.115.0/cli-v1.115.0.tar.
           https://github.com/x448/float16/archive/v0.8.4/float16-0.8.4.tar.gz \
           https://github.com/xo/terminfo/archive/abceb7e1c41eed2857facd9bbdaaa5ff8137d901/terminfo-abceb7e1c41eed2857facd9bbdaaa5ff8137d901.tar.gz \
           https://github.com/yosida95/uritemplate/archive/v3.0.2/uritemplate-3.0.2.tar.gz \
-          https://github.com/yuin/goldmark/archive/v1.7.13/goldmark-1.7.13.tar.gz \
+          https://github.com/yuin/goldmark/archive/v1.7.17/goldmark-1.7.17.tar.gz \
           https://github.com/yuin/goldmark-emoji/archive/v1.0.6/goldmark-emoji-1.0.6.tar.gz \
-          https://github.com/yaml/go-yaml/archive/v2.4.3/go-yaml-2.4.3.tar.gz \
+          https://github.com/yaml/go-yaml/archive/v2.4.4/go-yaml-2.4.4.tar.gz \
           https://github.com/golang/exp/archive/42675adae3e697041d19b22cb15349e9c361f430/exp-42675adae3e697041d19b22cb15349e9c361f430.tar.gz \
-          https://github.com/golang/image/archive/v0.20.0/image-0.20.0.tar.gz \
-          https://github.com/golang/net/archive/v0.57.0/net-0.57.0.tar.gz \
+          https://github.com/golang/image/archive/v0.45.0/image-0.45.0.tar.gz \
+          https://github.com/golang/net/archive/v0.58.0/net-0.58.0.tar.gz \
           https://github.com/golang/time/archive/v0.15.0/time-0.15.0.tar.gz \
           https://github.com/golang/xerrors/archive/7835f813f4da395c9a1f7c0fe732a63d1c79d331/xerrors-7835f813f4da395c9a1f7c0fe732a63d1c79d331.tar.gz \
-          https://github.com/go-check/check/archive/10cb98267c6c/check-10cb98267c6cb43ea9cd6793f29ff4089c306974.tar.gz \
           https://github.com/go-inf/inf/archive/v0.9.1/inf-0.9.1.tar.gz \
           https://github.com/gotestyourself/gotest.tools/archive/v3.5.2/gotest.tools-3.5.2.tar.gz \
           https://github.com/kubernetes/klog/archive/v2.140.0/klog-2.140.0.tar.gz \
-          https://github.com/kubernetes/kube-openapi/archive/43fb72c5454a03ed83388cf20c070499ee359af8/kube-openapi-43fb72c5454a03ed83388cf20c070499ee359af8.tar.gz \
-          https://github.com/kubernetes/utils/archive/b8788abfbbc27cab6c8732274b5c2ae213868854/utils-b8788abfbbc27cab6c8732274b5c2ae213868854.tar.gz \
+          https://github.com/kubernetes/kube-openapi/archive/d427ff9ee9ad05f5da435abbb7c5929cb713ac56/kube-openapi-d427ff9ee9ad05f5da435abbb7c5929cb713ac56.tar.gz \
+          https://github.com/kubernetes/utils/archive/be93311217bd4e42d0aa42a5987d08e8f5581ec0/utils-be93311217bd4e42d0aa42a5987d08e8f5581ec0.tar.gz \
           https://github.com/terrastruct/util-go/archive/243d8661088abfd1cc6d1722615fed0b4800b133/util-go-243d8661088abfd1cc6d1722615fed0b4800b133.tar.gz \
           https://github.com/kubernetes-sigs/json/archive/2d320260d730f3842fef7b08d9a807bdbc617824/json-2d320260d730f3842fef7b08d9a807bdbc617824.tar.gz \
           https://github.com/kubernetes-sigs/randfill/archive/v1.0.0/randfill-1.0.0.tar.gz \
-          https://github.com/kubernetes-sigs/structured-merge-diff/archive/v6.3.3/structured-merge-diff-6.3.3.tar.gz \
+          https://github.com/kubernetes-sigs/structured-merge-diff/archive/v6.4.2/structured-merge-diff-6.4.2.tar.gz \
           https://github.com/kubernetes-sigs/yaml/archive/v1.6.0/yaml-1.6.0.tar.gz"
-MD5SUM="fe33358d9fff08d02b961973732d9cf8 \
-        01ef397f04ae5ccd6cf8ea78b8dac2bf \
+MD5SUM="708e6a8533ef1fdac15a0840694fa1dc \
+        6844da4e0d485dfb624ac37c6c4f9c28 \
         35c77a2d318cac413ebaf90bd2657a74 \
         683d6789768a1201851bc9a9f5350fdf \
         ed0bcea24263a9825ec0871f9334393e \
@@ -162,8 +162,9 @@ MD5SUM="fe33358d9fff08d02b961973732d9cf8 \
         175e69151ec05933ad4241c4abc3c6c6 \
         216840087cfb086ebb38dde8536e68b7 \
         20dc6d58588ae4a7b905496f66db2429 \
-        2e0074cd0c858da127201f2daa2158c7 \
-        d71963b0c6a18eecb7fb70b5ec3873e4 \
+        a24f9299a4d9d11455a679752d77e873 \
+        986c9d67a26d6a90af455e54e73f42a0 \
+        182dd3749d6d06148feb24b09a69ce16 \
         c0eec1af43ed0dc804ac66f2a8cf5982 \
         454adce568a19009800275a7a398aabf \
         54e05fcea9c032a6504465817bbf4599 \
@@ -178,12 +179,12 @@ MD5SUM="fe33358d9fff08d02b961973732d9cf8 \
         02d6db1dd0877df8d766503040eb4ea1 \
         92819682e7eb1241260ca687474d9080 \
         48695be6914df37a69e69b928c96e408 \
-        6278480a60de8cbd09f22e4760826afd \
+        30a69391127f1ddff0fbd6f28999a85d \
         dac6dd481e69c106595fa92626893651 \
-        8692aa01b3453b7570784fb66ce2083a \
+        451a06a22ce38b8f4ce41d7be9ef4e57 \
         f78721ac3c024976ed34b64e69d63431 \
         d74a6523a7ec745a3f1d995a11385130 \
-        77aefea725369018aa43e4cc4fedfccb \
+        a2f3a3225240d9d5bb9be2f410165261 \
         26bdbab6dcfa671afa52510ec39502e5 \
         6203b087c31fa00e5306fd0c3591560c \
         fdbb55e8e54cdf1ac7d5f36f4c1b3d3b \
@@ -192,18 +193,18 @@ MD5SUM="fe33358d9fff08d02b961973732d9cf8 \
         de8a8d8179a1b1c4155d9b5f3f6456d1 \
         4fcca04e5cefb210ce57f7daf0112f46 \
         f5093d471d7f698ada2d07922d5b3896 \
-        e1ff75ec9026953325bacd1f7aa549cb \
+        a059e66938bfda7e8bc596159d017310 \
         da6248dcc8e46bc17ba5a7897c85db79 \
         425adaaf59eda075098a23796880a8bb \
         1cf14080813b308636ca3f75eef171e8 \
-        683af7c99bbd1b5eda375b66e5b6da60 \
-        090715cffcdd3ec1e5cad4b5228cc828 \
-        24db497b68520aa8dc290a271fda68ed \
-        9f8a5c983baae602473095c9712d12c9 \
-        6775df6330a7cc7e11d487b37d9e27e4 \
-        80c4c196cd1fe2067d76958bc90d0961 \
-        e2a5cd1d971442fd537a999566c1e528 \
-        1e8199a30955d8740ff106c4374a9174 \
+        3e8297cc3cf050db63b0da3b878881eb \
+        4ad115673359158e0e8b196150c355a4 \
+        07c5c582898a6358fd50a78c3cd52cf1 \
+        d8002a6aa13c876fcb6a9369b06fbf0d \
+        ab93f6b1f2b4aa18dec30cf3a4c0d136 \
+        822d37412140f86d064541f0847959b4 \
+        6d5e1e73b08353da561123370d26bfb7 \
+        bda9aca4320d2228f9d874f99a478b86 \
         238f2bda4e0a4af1752d76144fca5bb7 \
         aea85f4410181311ad1a1456f8045610 \
         2e46d6d48797ec16c7d42e84639ca25f \
@@ -235,7 +236,7 @@ MD5SUM="fe33358d9fff08d02b961973732d9cf8 \
         0556d78eb459c9810d5a39e9de5f75ee \
         3f3abb1b34a6f54dc26255395d425271 \
         5454c1d94d5cf135b2b636908fc78632 \
-        20d8c71e732d9587eb6d12ac044f95f0 \
+        e95aa1deace8b468b31d45b2922767ae \
         7230f9efe74e07a07b8dfbfaafbf9d0a \
         e0a170d0cdbc6a7ebba7960231a6c7b0 \
         b153d35df191009cdf83862c1fed6301 \
@@ -278,24 +279,23 @@ MD5SUM="fe33358d9fff08d02b961973732d9cf8 \
         03510a6655bfdec3db9476abe0adb209 \
         ed0edfc62f05bd8cdc8b820ae91be75f \
         15c38fb3dd372ca8aa1cc1bf792b0963 \
-        80bdcbd4fad329835ff1d5579c17a265 \
+        351eba6fa144bab7e9c7195f9a215fde \
         5a2f0cc2cf677dc64258683d30fe74ee \
-        a0dda9fc247bfb491399fcf6a5114fc8 \
+        17cbc01bda4a9461b9b8de336a36a516 \
         b02c607696534db3c8c21660c2ac9742 \
-        4c1a40611bd38b3ace70180b36ed7116 \
-        8d6122c676af0039107d9e01d7eb3079 \
+        aff56ea54b7be98d4a77a14231293feb \
+        571a1c1224b108818bfa4ac9f861a235 \
         912e857eb111b68bc97b6d6995c58e2b \
         67e4b3f0d6cf38c6bf65b03881b23d4e \
-        9d0c1589530244fd5670673cedf848de \
         29612706170a026066512a6265b10e9a \
         2907fd1081e6a3049043bae03facf3bd \
         4fbaf28d88a95c5849a359ded357455d \
-        ec272f3c095681e7c2b03b61f24bd184 \
-        36575ec9a567c879b145b5f4254d6f05 \
+        3cb9cd3a5d141efba76fa37ba3e1f010 \
+        655f5514dafd50e970278699717ab0db \
         e4679ef74db4f770c9e68ba8848387b1 \
         6d9c834e9cb7d60d78a5b785c0dc98cd \
         f71344c259be3fc1d8ef3c85dec8e3d3 \
-        69d669fa62d1205465a10137bc524621 \
+        a35fc1c1e4a80a10f1aa0f15866ef3a8 \
         d72bcd3617f4c36ada27b7cb0608702c"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

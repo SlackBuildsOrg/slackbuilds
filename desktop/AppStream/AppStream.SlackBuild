@@ -116,7 +116,7 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 
 # Add bash-completion support manually:
 mkdir -p $PKG/usr/share/bash-completion/completions
-cp -a contrib/contrib/appstreamcli.bash-completion $PKG/usr/share/bash-completion/completions/appstreamcli
+cp -a contrib/appstreamcli.bash-completion $PKG/usr/share/bash-completion/completions/appstreamcli
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

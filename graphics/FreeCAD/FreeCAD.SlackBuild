@@ -79,7 +79,7 @@ echo -n "Unpacking source tarball ... "
 tar xf $CWD/$PRGNAM-$VERSION.tar.gz
 echo
 cd $PRGNAM-$VERSION
-gzcat $CWD/patch-intrusive_ptr.diff.gz | patch -p0
+zcat $CWD/patch-intrusive_ptr.diff.gz | patch -p0
 
 echo "Adding GSL module ..."
 (cd src/3rdParty/GSL/ && tar xf $CWD/$GSL_tarball --strip-components=1)

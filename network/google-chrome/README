@@ -1,0 +1,12 @@
+Google Chrome (Web Browser)
+
+This script will repackage the original release from Google.
+Be advised that the upstream source may change unexpectedly
+invalidating this script MD5SUM.
+If in doubt, look at the *.info file and please download
+manually the upstream release from Google.
+
+Note 1: This package requires GConf
+
+Note 2: seamonkey and/or seamonkey-solibs from Slackware need
+to be installed before running this script

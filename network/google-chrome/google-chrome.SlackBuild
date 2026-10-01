@@ -1,0 +1,101 @@
+#!/bin/bash
+
+# Slackware build script for Google Chrome
+
+# Copyright 2025-2026 Antonio Leal, Porto Salvo, Oeiras, Portugal
+# Copyright 2009-2011 Erik Hanson, Minneapolis, MN, USA
+# All rights reserved.
+#
+# Redistribution and use of this script, with or without modification, is
+# permitted provided that the following conditions are met:
+#
+# 1. Redistributions of this script must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+cd $(dirname $0) ; CWD=$(pwd)
+
+PRGNAM=google-chrome
+VERSION=${VERSION:-154.0.8037.92}
+RELEASE=stable		# stable, beta, or unstable
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+case "$(uname -m)" in
+  i?86) DEBARCH="i586" ; LIBDIRSUFFIX="" ; ARCH=i586 ;;
+  x86_64) DEBARCH="amd64" ; LIBDIRSUFFIX="64" ; ARCH=x86_64 ;;
+  *) echo "Package for $(uname -m) architecture is not available." ; exit 1 ;;
+esac
+
+if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
+  echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
+  exit 0
+fi
+
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $PKG $OUTPUT
+cd $PKG
+ar p $CWD/google-chrome-${RELEASE}_current_${DEBARCH}.deb data.tar.xz | tar xJv || exit 1
+
+chown -R root:root .
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+# Make sure top-level perms are correct:
+chmod 0755 .
+
+# ..and "Elves" are executable :-)
+find . -type f -exec file {} + | grep ELF | cut -d":" -f1 | xargs -n2 chmod +x
+
+# The cron job is debian/ubuntu only.
+rm -rf $PKG/etc/
+
+# We need bits of Moz, do this as dynamically as possible:
+MISSING_LIBS=$(ldd opt/google/chrome/chrome | grep "not found" | cut -d\  -f1 | xargs)
+for MLIB in $MISSING_LIBS ; do
+  ln -s /usr/lib${LIBDIRSUFFIX}/seamonkey/${MLIB%.?d} opt/google/chrome/$MLIB
+done
+
+mv $PKG/usr/share/man $PKG/usr/man
+# gzip -9 $PKG/usr/man/man?/*.?
+
+mkdir -p $PKG/usr/share/applications
+sed -i -e "s#Icon=google-chrome#Icon=/opt/google/chrome/product_logo_256.png#" \
+  $PKG/usr/share/applications/google-chrome.desktop
+sed -i -e "s/NoDisplay=true//" \
+  $PKG/usr/share/applications/com.google.Chrome.desktop
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+mv $PKG/usr/share/doc/google-chrome-stable/* $PKG/usr/doc/$PRGNAM-$VERSION
+rm -rf $PKG/usr/share/doc
+cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+mkdir -p $PKG/install
+cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

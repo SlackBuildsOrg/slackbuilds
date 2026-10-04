@@ -28,8 +28,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=rabbitmq-server
-VERSION=${VERSION:-3.8.14}
-BUILD=${BUILD:-2}
+VERSION=${VERSION:-3.13.7}
+BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -64,9 +64,6 @@ elif ! grep -q "^$RABBITMQ_GROUP:" /etc/group; then
   bailout
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0

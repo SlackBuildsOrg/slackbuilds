@@ -98,12 +98,10 @@ rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 [ -d $PKG/usr/lib ] && find $PKG/usr/lib  -depth -type d -empty -delete
 [ -d $PKG/usr/lib64 ] && find $PKG/usr/lib64  -depth -type d -empty -delete
 
-
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
-mkdir -p $PKGDOC
 cp -a \
   AUTHORS README COPYING TODO ChangeLog.md \
   $PKGDOC

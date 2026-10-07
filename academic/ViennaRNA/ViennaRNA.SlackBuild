@@ -204,7 +204,6 @@ fi
 cp -a \
   NEWS README.md AUTHORS COPYING THANKS CHANGELOG.md license.txt \
   $PKGDOC
-
 cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

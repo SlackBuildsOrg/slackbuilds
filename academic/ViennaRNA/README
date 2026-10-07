@@ -45,5 +45,3 @@ scripting languages.
 The program RNA2fold can use gri (a language for scientific graphics 
 programming) to create a colored postscript plot. 
 (see https://viennarna.readthedocs.io/en/latest/tutorial/RNA2Dfold.html)
-
-

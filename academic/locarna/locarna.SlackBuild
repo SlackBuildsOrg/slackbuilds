@@ -88,9 +88,6 @@ install -d $PKG/usr/lib${LIBDIRSUFFIX}/perl5
 # seems to be 'private': https://github.com/s-will/LocARNA/issues/34
 mv $PKG/usr/lib/perl $PKG/usr/lib${LIBDIRSUFFIX}/perl5/vendor_perl
 
-echo "$(find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : )" #| xargs strip --strip-unneeded 2> /dev/null || true
-
 rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
 # there are no dependees of $PRGNAM that might need libLocARNA-*.a
 [ -e $PKG/usr/lib${LIBDIRSUFFIX}/libLocARNA-*.a ] && rm $PKG/usr/lib${LIBDIRSUFFIX}/libLocARNA-*.a 

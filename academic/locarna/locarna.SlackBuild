@@ -76,14 +76,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --prefix=/usr \
   --libdir=/usr/lib${LIBDIRSUFFIX} \
   --mandir=/usr/man \
-  --docdir=/usr/doc/$PRGNAM-$VERSION \
   --build=$ARCH-slackware-linux
 
 make V=1
 make install-strip DESTDIR=$PKG
 
 #from https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=locarna
-
 install -d $PKG/usr/lib${LIBDIRSUFFIX}/perl5
 # seems to be 'private': https://github.com/s-will/LocARNA/issues/34
 mv $PKG/usr/lib/perl $PKG/usr/lib${LIBDIRSUFFIX}/perl5/vendor_perl
@@ -99,6 +97,7 @@ find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir $PKGDOC
 cp -a \
   AUTHORS README COPYING TODO ChangeLog.md \
   $PKGDOC

@@ -8,12 +8,12 @@
          |-----handy-ruler------------------------------------------------------|
 pcsc-lite: pcsc-lite (Middleware to access a smart card using SCard API)
 pcsc-lite:
-pcsc-lite: Middleware to access a smart card using SCard API (PC/SC)
-pcsc-lite: Its purpose is to provide a Windows(R) SCard interface in a
-pcsc-lite: very small form factor for communicating to smart cards and
+pcsc-lite: pcsc-lite is a cross-platform middleware that provides a PC/SC
+pcsc-lite: interface for accessing smart cards and communicating with smart-card
 pcsc-lite: readers.
 pcsc-lite:
-pcsc-lite: Homepage: https://pcsclite.apdu.fr/
 pcsc-lite:
 pcsc-lite:
+pcsc-lite:
+pcsc-lite: https://pcsclite.apdu.fr/
 pcsc-lite:

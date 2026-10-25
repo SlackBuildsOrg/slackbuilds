@@ -5,4 +5,4 @@ Exec=fastqc
 Icon=fastqc
 StartupNotify=false
 Type=Application
-Categories=Education;
+Categories=Science;

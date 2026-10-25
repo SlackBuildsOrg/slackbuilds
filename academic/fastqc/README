@@ -15,3 +15,12 @@ The main functions of FastQC are
 - Export of results to an HTML based permanent report
 - Offline operation to allow automated generation of reports without
   running the interactive application
+
+
+FastQC is a java application for which your system needs to have a
+suitable Java Runtime Environment (JRE) installed like the one that
+has been tested upstream (the latest Oracle runtime environments). 
+If in a terminal `java -version` does not give output, you need to
+download and install a suitable 64-bit JRE and make sure that the
+java application is in your path (most installers will take care of
+this for you).

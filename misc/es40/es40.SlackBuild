@@ -93,7 +93,7 @@ cmake .. \
     -DES40_DISABLE_NETWORKING=ON
 
 #cmake --build . $NUMJOBS
-cmake --build
+cmake --build .
 
 mkdir -p "$PKG/usr/bin"
 install -m 0755 es40 es40-cfg "$PKG/usr/bin/"

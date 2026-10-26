@@ -97,7 +97,6 @@ rm -rf $PKG
 rm -rf $TMP/$SRCNAM
 mkdir -p $TMP $PKG $OUTPUT $PKG/install
 mkdir -p $PKG/usr/lib$LIBDIRSUFFIX/xorg/modules/{drivers,extensions} \
-  $PKG/usr/lib$LIBDIRSUFFIX/nvidia/xorg/extensions \
   $PKG/etc/OpenCL/vendors/ $PKG/usr/{bin,doc,man/man1} \
   $PKG/usr/share/{applications,nvidia,pixmaps,egl/egl_external_platform.d} \
   $PKG/etc/X11/glvnd/egl_vendor.d $PKG/var/log

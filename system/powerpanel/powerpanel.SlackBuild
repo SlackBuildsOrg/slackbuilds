@@ -104,12 +104,14 @@ sed -i  's/\/etc\/init.d\/pwrstatd/\/etc\/rc.d\/rc.pwrstatd/g' $PKG/etc/pwrstatd
 sed -i  's/\/etc\/pwrstatd-lowbatt.sh/\/etc\/powerpanel\/pwrstatd-lowbatt.sh/g' $PKG/etc/pwrstatd.conf
 sed -i  's/\/etc\/pwrstatd-powerfail.sh/\/etc\/powerpanel\/pwrstatd-powerfail.sh/g' $PKG/etc/pwrstatd.conf
 
-mkdir -p $PKG/$PKGLIB
-install -D -m 0644 lib/libjson-c.so.5.1.0 $PKG/$PKGLIB
-install -D -m 0644 lib/libpaho-mqtt3cs.so.1.3.1 $PKG/$PKGLIB
-install -D -m 0644 lib/libcrypto.so.1.1 $PKG/$PKGLIB
-install -D -m 0644 lib/libssl.so.1.1 $PKG/$PKGLIB
-ln -s $PKGLIB/libpaho-mqtt3cs.so.1.3.1 $PKG/$PKGLIB/libpaho-mqtt3cs.so.1
+# Don't install these - we can use built in system versions
+# except libpaho-mqtt3cs which is available from SBo (now added to REQUIRES)
+#mkdir -p $PKG/$PKGLIB
+#install -D -m 0644 lib/libjson-c.so.5.1.0 $PKG/$PKGLIB
+#install -D -m 0644 lib/libpaho-mqtt3cs.so.1.3.1 $PKG/$PKGLIB
+#install -D -m 0644 lib/libcrypto.so.1.1 $PKG/$PKGLIB
+#install -D -m 0644 lib/libssl.so.1.1 $PKG/$PKGLIB
+#ln -s $PKGLIB/libpaho-mqtt3cs.so.1.3.1 $PKG/$PKGLIB/libpaho-mqtt3cs.so.1
 
 # Install rc script
 mkdir -p $PKG/etc/rc.d
@@ -154,12 +156,10 @@ find $PKG/etc -type f -exec mv {} {}.new \;
 )
 
 cd $PKG
+/sbin/makepkg -l y -c n ${OUTPUT}/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}
 if [ "${PKGADDS}" = "yes" ]; then
-    makepkg --linkadd y --chown n $OUTPUT/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE} 2>&1 | tee $OUTPUT/makepkg-${PRGNAM}.log
     cd $OUTPUT
     md5sum ${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE} > ${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}.md5
     cd -
     cat $PKG/install/slack-desc | grep "^${PRGNAM}" > $OUTPUT/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.txt
-else
-    /sbin/makepkg -l y -c n ${OUTPUT}/${PRGNAM}-${VERSION}-${ARCH}-${BUILD}${TAG}.${PKGTYPE}
 fi

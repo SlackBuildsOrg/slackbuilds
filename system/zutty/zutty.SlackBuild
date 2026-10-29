@@ -26,8 +26,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=zutty
-VERSION=${VERSION:-0.17}
-COMMIT=4b6bfc1
+VERSION=${VERSION:-0.18}
+COMMIT=$(tar tvfz ${VERSION}.tar.gz | head -1 | awk '{print $NF}' | awk -F"-" '{print substr($3,0,length($3)-1)}')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

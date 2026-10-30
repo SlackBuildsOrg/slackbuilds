@@ -84,7 +84,7 @@ strip "$PKG/usr/bin/$PRGNAM"
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p "$PKGDOC"
-cp -a README.md CHANGELOG.md COPYING "$PKGDOC"
+cp README.md CHANGELOG.md COPYING "$PKGDOC"
 cat "$CWD/$PRGNAM.SlackBuild" > "$PKGDOC/$PRGNAM.SlackBuild"
 
 mkdir -p "$PKG/install"

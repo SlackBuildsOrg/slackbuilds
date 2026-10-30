@@ -26,4 +26,5 @@ RTL-SDR, Airspy, HackRF, BladeRF, LimeSDR, PlutoSDR, SoapySDR,
 FobosSDR, ...
 (not all available at slackbuilds.org)
 
-Optional features can be enabled installing: hdf5, luajit, armadillo
+Optional features can be enabled installing:
+hdf5, luajit, armadillo, rtaudio, ...

@@ -82,11 +82,6 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} +
 
-# Rename 'Files' app name to avoid having the same as nautilus
-# Concept taken from Arch Linux's PKGBUILD:
-# https://gitlab.archlinux.org/archlinux/packaging/packages/nemo/-/blob/main/PKGBUILD
-sed -i '/^\[Desktop Entry/,/^\[Desktop Action/ s/^Name\(.*\)=.*/Name\1=Nemo/' data/nemo.desktop.in
-
 mkdir -p build
 cd build
 meson setup \

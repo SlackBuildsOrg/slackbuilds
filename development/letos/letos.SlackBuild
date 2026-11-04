@@ -22,11 +22,6 @@
 #  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# 20230627 bkw: Modified by SlackBuilds.org, BUILD=2:
-# - get rid of libkrb5*.so symlinks; the app uses the ones in /usr/lib64.
-# - fix a few typos in the README.
-# - don't chown and chmod all of /tmp/SBo.
-
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=letos
@@ -34,8 +29,6 @@ VERSION=${VERSION:-4.0.4}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-
-SQLITE_PKG=sqlite-3.50.4-x86_64-2_slack15.0
 SQLITE_MIN_VERSION=3.50.4
 
 if [ -z "$ARCH" ]; then
@@ -63,7 +56,9 @@ LIBDIRSUFFIX="64"
 # Make sure sqlite from the official patches/packages is installed
 pkg-config --atleast-version ${SQLITE_MIN_VERSION} sqlite3
 [ $? -eq 0 ] || {
-  echo "This package requires at least version $SQLITE_MIN_VERSION of sqlite. Exiting now ..."
+  echo "This package requires at least version $SQLITE_MIN_VERSION of sqlite."
+  echo "If in doubt please upgrade sqlite from the official Slackware patches/packages."
+  echo "Exiting now ..."
   exit
 }
 

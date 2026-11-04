@@ -36,6 +36,7 @@ TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
 SQLITE_PKG=sqlite-3.50.4-x86_64-2_slack15.0
+SQLITE_MIN_VERSION=3.50.4
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -71,8 +72,9 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 
 # Make sure sqlite from the official patches/packages is installed
-if [ ! -e /var/lib/pkgtools/packages/$SQLITE_PKG ]; then
-  /sbin/upgradepkg --install-new $CWD/$SQLITE_PKG.txz
+if [ ! "$(pkg-config --atleast-version ${SQLITE_MIN_VERSION} sqlite3)" = "0" ]; then
+  echo "This package requires at least version $SQLITE_MIN_VERSION of sqlite. Exiting now ..."
+  exit
 fi
 
 tar xvf $CWD/$PRGNAM-$VERSION.tar.gz

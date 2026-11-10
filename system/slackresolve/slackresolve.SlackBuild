@@ -47,6 +47,10 @@ make install DESTDIR=$PKG PREFIX=/usr
 
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
+
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 

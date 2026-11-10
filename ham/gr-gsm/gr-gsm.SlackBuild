@@ -71,14 +71,11 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-${COMMITVER}
-tar xvf $CWD/$PRGNAM-${COMMITVER}.tar.gz
+tar xvf $CWD/$PRGNAM-${COMMITVER}.tar.gz --no-same-owner
 cd $PRGNAM-${COMMITVER}
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \( \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
 if [ ! -d "/usr/lib${LIBDIRSUFFIX}/cmake/gnuradio/gnuradio" ]
 then
@@ -95,7 +92,7 @@ cd build
     -DLIB_SUFFIX=${LIBDIRSUFFIX} \
     -DMAN_INSTALL_DIR=/usr/man \
     -DCMAKE_BUILD_TYPE=Release ..
-  make
+  make VERBOSE=1
   make install/strip DESTDIR=$PKG
 cd ..
 
@@ -108,10 +105,11 @@ mv -v ${PKG}/usr/share/man ${PKG}/usr/man
 find $PKG/usr/man -type f -exec gzip -9 {} \;
 for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
 cp -a \
   COPYING LICENSE MANIFEST.md README.md TESTING.md \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+  $PKGDOC
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

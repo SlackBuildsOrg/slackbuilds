@@ -25,7 +25,8 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=amneziawg-kernel
-VERSION=${VERSION:-3.1.20261113}
+VERSION=${VERSION:-3.1.20261113.02}
+TARVER=3.1.20261113-02
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -65,9 +66,9 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $TARNAM-$VERSION
-tar xvf $CWD/$TARNAM-$VERSION.tar.gz --no-same-owner
-cd $TARNAM-$VERSION
+rm -rf $TARNAM-$TARVER
+tar xvf $CWD/$TARNAM-$TARVER.tar.gz --no-same-owner
+cd $TARNAM-$TARVER
 find . ! -type l    -a \( \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)

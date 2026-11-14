@@ -58,7 +58,6 @@ OUTPUT=${OUTPUT:-/tmp}
 # hardcodes that path.
 if [ "$ARCH" = "x86_64" ]; then
   SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
 else
   echo "$PRGNAM: ARCH $ARCH is not supported, only x86_64." >&2
   exit 1

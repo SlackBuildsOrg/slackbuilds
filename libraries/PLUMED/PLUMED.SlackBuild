@@ -142,7 +142,7 @@ CXXFLAGS="$SLKCFLAGS" \
   $pmode \
   $python \
   --build=$ARCH-slackware-linux
-make $NUMJOBS
+make
 make -C vim
 make install DESTDIR=$PKG
 

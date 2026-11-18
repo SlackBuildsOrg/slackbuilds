@@ -59,7 +59,7 @@ else
   SLKCFLAGS="-O2"
 fi
 
-NUMJOBS=${NUMJOBS:-" -j$(nproc) "}
+#NUMJOBS=${NUMJOBS:-" -j$(nproc) "}
 export PATH="/opt/cmake-opt/bin:$PATH"
 
 set -e
@@ -90,9 +90,9 @@ cmake .. \
     -DES40_DISABLE_SLIRP=ON \
     -DES40_DISABLE_LSS_LSM=ON \
     -DES40_DISABLE_IDB=ON \
-    -DFETCHCONTENT_FULLY_DISCONNECTED=ON
+    -DES40_DISABLE_NETWORKING=ON
 
-cmake --build . $NUMJOBS
+cmake --build .
 
 mkdir -p "$PKG/usr/bin"
 install -m 0755 es40 es40-cfg "$PKG/usr/bin/"

@@ -2,7 +2,7 @@
 
 # Slackware build script for sdcc
 
-# Copyright 2014-2023 Kyle Guinn <elyk03@gmail.com>
+# Copyright 2014-2026 Kyle Guinn <elyk03@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=sdcc
-VERSION=${VERSION:-4.3.0}
+VERSION=${VERSION:-4.4.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -47,15 +47,13 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 DOCS="COPYING ChangeLog"
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
+if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -march=$ARCH -mtune=i686"
   LIBDIRSUFFIX=""
-elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" ]; then
+elif [ "$ARCH" = "x86_64" -o "$ARCH" = "aarch64" ]; then
   SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
@@ -119,10 +117,10 @@ find $PKG -exec file {} + | grep -e "executable" -e "shared object" | grep ELF \
 
 find $PKG/usr/man -type f -exec gzip -9 {} +
 
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a sdas/doc $PKG/usr/doc/$PRGNAM-$VERSION/sdas
-cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+mkdir -p $PKGDOC
+cp -a $DOCS $PKGDOC
+cp -a sdas/doc $PKGDOC/sdas
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc

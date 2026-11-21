@@ -1,0 +1,29 @@
+--- openntpd-7.9p1.orig/src/ntpd.c	2026-05-17 18:35:14.701633231 +0200
++++ openntpd-7.9p1/src/ntpd.c	2026-11-04 18:09:22.285647370 +0100
+@@ -110,7 +110,7 @@
+ {
+ 	extern char *__progname;
+ 
+-	if (strcmp(__progname, "ntpctl") == 0)
++	if (strcmp(__progname, "openntpctl") == 0)
+ 		fprintf(stderr,
+ 		    "usage: ntpctl -s all | peers | Sensors | status\n");
+ 	else
+@@ -168,7 +168,7 @@
+ 
+ 	__progname = get_progname(argv[0]);
+ 
+-	if (strcmp(__progname, "ntpctl") == 0) {
++	if (strcmp(__progname, "openntpctl") == 0) {
+ 		ctl_main(argc, argv);
+ 		/* NOTREACHED */
+ 	}
+@@ -721,7 +721,7 @@
+ 		/* NOTREACHED */
+ 
+ 	if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1)
+-		err(1, "ntpctl: socket");
++		err(1, "openntpctl: socket");
+ 
+ 	memset(&sa, 0, sizeof(sa));
+ 	sa.sun_family = AF_UNIX;

@@ -93,6 +93,18 @@ find -L . \
  \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
   -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
 
+for diff in $CWD/patches/*.diff;do
+	patch -p1 < "${diff}"
+done
+
+# Prepare the source for renamings, later in the build script
+sed -i -r -e 's,^(#define	CONFFILE	SYSCONFDIR "/)(ntpd)(\.conf")$,\1open\2\3,' ./src/ntpd.h
+sed -i -r -e 's,^(#define	DRIFTFILE	LOCALSTATEDIR "/db/)(ntpd)(\.drift")$,\1open\2\3,' ./src/ntpd.h
+sed -i -r -e 's,^(#define	CTLSOCKET	LOCALSTATEDIR "/run/)(ntpd)(\.sock")$,\1open\2\3,' ./src/ntpd.h
+sed -i -r -e 's,ntpd,openntpd,;s,NTPD,OPENNTPD,;s,ntpctl,openntpctl,' \
+	  ./src/ntpd.8.in ./src/ntpd.conf.5.in ./src/ntpctl.8.in ./ntpd.conf
+sed -i -r -e 's,adjfreq,adjtime,' ./src/ntpd.8.in
+
 CFLAGS="$SLKCFLAGS" \
 ./configure \
   --prefix=/usr \

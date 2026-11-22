@@ -1,0 +1,18 @@
+tvmount is a small command-line calculator for hanging a TV on a wall.
+From the screen diagonal and the seating position it works out the
+mount height, the vertical viewing angle, the screen size range for
+the seat (SMPTE 30 to THX 40 degrees), the downward tilt needed above
+a fireplace or mantel, and the anchor, drill bit and wiring method for
+a wall type (wood or steel studs, masonry, stucco, plaster). It also
+checks a TV's VESA pattern against the screen size and a mount's range
+and weight limit.
+
+Examples:
+  tvmount height --diagonal 65 --distance 132 --fireplace --mantel 52
+  tvmount wall brick
+  tvmount vesa 400x300 --diagonal 65 --mount-max 600x400
+
+Every command accepts --json; lengths can be given in cm with
+--units cm. See tvmount(1).
+
+The python module (import tvmount) is installed as well.

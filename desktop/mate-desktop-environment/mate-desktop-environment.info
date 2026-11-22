@@ -1,7 +1,7 @@
 PRGNAM="mate-desktop-environment"
 VERSION="1.28"
 HOMEPAGE="https://www.mate-desktop.org/"
-DOWNLOAD="https://mate-desktop.org/assets/img/mate/yerba.jpg"
+DOWNLOAD="https://mate-desktop.org/images/yerba.jpg"
 MD5SUM="7de8598303485009db26b3ca0efed98c"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""

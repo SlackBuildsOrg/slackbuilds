@@ -17,7 +17,7 @@ For a manual download, run in the SlackBuild directory:
   . ./pCloudDrive.info
   wget --content-disposition "$DOWNLOAD_x86_64"
 
-This saves pcloud-2.3.0.zip. The SlackBuild also accepts the filename
+This saves pcloud-2.3.1.zip. The SlackBuild also accepts the filename
 produced by wget without --content-disposition. The MD5 in the .info
 file applies to the ZIP, not to the AppImage inside it.
 

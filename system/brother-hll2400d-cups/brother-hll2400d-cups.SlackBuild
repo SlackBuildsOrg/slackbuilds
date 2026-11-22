@@ -31,7 +31,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=brother-hll2400d-cups
 VERSION=${VERSION:-4.1.0}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -45,6 +45,13 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
+
+case $ARCH in
+   i586) ARCHSUBDIR=i686;;
+   x86_64) ARCHSUBDIR=x86_64;;
+   *) echo "ARCH $ARCH not supported. Exiting."
+      exit 1 ;;
+esac
 
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
@@ -91,10 +98,13 @@ cp $PKG/opt/brother/Printers/${MODEL}/cupswrapper/Copying $DOCDIR
 cat $CWD/$PRGNAM.SlackBuild > $DOCDIR/$PRGNAM.SlackBuild
 
 cd $PKG/opt/brother/Printers/HLL2400D/lpd
-rm -rf brpintconflsr3
-ln -s x86_64/brprintconflsr3 .
-rm -rf rawtobr3
-ln -s x86_64/rawtobr3 .
+\rm -rf brprintconflsr3 rawtobr3
+ln -sf $ARCHSUBDIR/* .
+case $ARCHSUBDIR in
+  i686) rm -rf ./x86_64;;
+  x86_64) rm -rf ./i686;;
+esac
+
 
 d=$PKG/usr/lib64/cups/filter
 mkdir -p $d && cd $d
@@ -111,3 +121,4 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
+

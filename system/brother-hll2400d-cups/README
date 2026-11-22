@@ -2,10 +2,13 @@ brother-hll2400d-cups - Brother printer driver for HL-L2400D
 
 This is a repackaging of the Brother driver, set up for use with CUPS.
 
+Installs either the 32-bit or 64-bit versions of the binaries. Not
+both.
+
 After installation:
 
-- set up the printer using the CUPS web interface or
-CLI.  Select "Brother HL-L2400D for CUPS" for the driver.
+- set up the printer using the CUPS web interface or CLI.  Select
+"Brother HL-L2400D for CUPS" for the driver.
 
 - You may need to restart cups: /etc/rc.d/rc.cups restart
 

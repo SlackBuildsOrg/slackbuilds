@@ -27,7 +27,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 PRGNAM=libdraco
 SRCNAM=draco
 VERSION=${VERSION:-1.5.9}
-BUILD=${BUILD:-1}
+BUILD=${BUILD:-2}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -73,10 +73,12 @@ find . ! -type l    -a \( \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
 sed -i -e 's:FindPythonInterp:FindPython3:g' CMakeLists.txt
-zcat $CWD/patches/tinygltf.h.patch.gz | patch -p1
-zcat $CWD/patches/json.hpp.patch.gz | patch -p1
-zcat $CWD/patches/stb_image.h.patch.gz | patch -p1
-zcat $CWD/patches/stb_image_write.h.patch.gz | patch -p1
+xzcat $CWD/patches/tinygltf.h.patch.xz | patch -p1 
+xzcat $CWD/patches/json.hpp.patch.xz | patch -p1 
+xzcat $CWD/patches/stb_image.h.patch.xz | patch -p1 
+xzcat $CWD/patches/stb_image_write.h.patch.xz | patch -p1 
+
+
 
 mkdir -p build
 cd build
@@ -95,11 +97,6 @@ cd build
   make VERBOSE=1 $NUMJOBS
   make install/strip DESTDIR=$PKG
 cd ..
-
-rm -f $PKG/{,usr/}lib${LIBDIRSUFFIX}/*.la
-
-find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
-  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
 mkdir -p $PKGDOC

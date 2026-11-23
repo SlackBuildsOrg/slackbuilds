@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+             |-----handy-ruler------------------------------------------------------|
+crossing-horn: crossing-horn (grade-crossing train horn timing calculator)
+crossing-horn:
+crossing-horn: crossing-horn is a small command-line tool for the arithmetic around
+crossing-horn: a locomotive train horn at a US public grade crossing: when the horn
+crossing-horn: has to start under 49 CFR 222.21, GCOR 5.8.2 whistle patterns as
+crossing-horn: on/off millisecond intervals, and a free-field estimate of a horn's
+crossing-horn: dB(A) at a distance against the 96-110 dB(A) band of 49 CFR 229.129.
+crossing-horn:
+crossing-horn: Homepage: https://hornguns.com/
+crossing-horn:
+crossing-horn:

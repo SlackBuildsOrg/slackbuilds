@@ -1,0 +1,17 @@
+crossing-horn is a small command-line tool for the arithmetic around a
+locomotive train horn at a public grade crossing in the United States.
+
+  crossing-horn onset <mph>
+    When the horn has to start under 49 CFR 222.21(b): 15 to 20 seconds
+    before the crossing, capped at one quarter mile above 60 mph.
+  crossing-horn intervals <id|"- - o -"> [--csv]
+    Expands GCOR 5.8.2 whistle patterns into on/off millisecond
+    intervals.
+  crossing-horn level <dBA-at-100ft> <distance-ft>
+    Free-field inverse-square estimate of a horn's dB(A) at a distance,
+    checked against the 96-110 dB(A) band of 49 CFR 229.129.
+  crossing-horn list
+    Prints the bundled GCOR 5.8.2 signals.
+
+Only the executable is installed. Source code and the OCaml library
+are at https://github.com/bosshorncom-cmd/crossing-horn

@@ -1,0 +1,6 @@
+RDAP, Registration Data Access Protocol, is a replacement for WHOIS,
+which provides domain name & IP address registration information in
+JSON format over HTTP.
+
+OpenRDAP provides a command line client, rdap, written in Go for the
+Registration Data Access Protocol.

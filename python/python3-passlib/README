@@ -6,3 +6,6 @@ a hash found in /etc/shadow, to providing full-strength password
 hashing for multi-user applications.
 
 INFO: Switched to https://github.com/notypecheck/passlib fork
+
+1.9.4 is last version as "libpass" and can't be upgraded until
+dependees are updated to use "passlib".

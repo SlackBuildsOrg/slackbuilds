@@ -1,3 +1,4 @@
 alsacap (ALSA device capability lister)
 
-alsacap is utility for exploring the capabilities of ALSA sound devices.
+alsacap is a utility for exploring the capabilities of ALSA sound
+devices.

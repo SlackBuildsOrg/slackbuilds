@@ -8,7 +8,7 @@
        |-----handy-ruler------------------------------------------------------|
 alsacap: alsacap (ALSA device capability lister)
 alsacap:
-alsacap: alsacap is utility for exploring the capabilities of ALSA sound
+alsacap: alsacap is a utility for exploring the capabilities of ALSA sound
 alsacap: devices.
 alsacap:
 alsacap: For full documentation, see the homepage at

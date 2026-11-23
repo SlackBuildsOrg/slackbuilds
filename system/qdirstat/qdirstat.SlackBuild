@@ -5,6 +5,8 @@
 # Copyright 2026 Alan Aversa
 # All rights reserved.
 #
+# Updated by Emmanuel N. Millan 2026
+#
 # Redistribution and use of this script, with or without modification, is
 # permitted provided that the following conditions are met:
 #
@@ -25,7 +27,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=qdirstat
-VERSION=${VERSION:-2.0}
+VERSION=${VERSION:-2.0.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}

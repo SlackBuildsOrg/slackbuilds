@@ -1,0 +1,12 @@
+PRGNAM="openrdap"
+VERSION="0.10.2"
+HOMEPAGE="https://openrdap.org"
+DOWNLOAD="https://github.com/openrdap/rdap/archive/v0.10.2/rdap-0.10.2.tar.gz \
+        https://sourceforge.net/projects/slackbuildsdirectlinks/files/openrdap/rdap-0.10.2-vendor.tar.xz"
+MD5SUM="bd097ec8034b5453e7354a45834db1a6 \
+        c90a01747a4b68a83370c99d90278bcb"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="google-go-lang"
+MAINTAINER="Christoph Willing"
+EMAIL="chris.willing@linunx.com"

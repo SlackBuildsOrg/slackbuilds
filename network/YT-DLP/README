@@ -1,0 +1,20 @@
+YT-DLP (download videos from youtube and other video sites)
+
+yt-dlp is a feature-rich command-line audio/video downloader with
+support for thousands of sites. The project is a fork of youtube-dl,
+based on the now-inactive youtube-dlc.
+
+This is a repackaging of the official yt-dlp_linux binary from the
+yt-dlp developers. Only x86_64 are supported. There is no
+32-bit x86 support.
+
+
+This build conflicts with other yt-dlps: only install one or the other
+of yt-dlp, yt-dlp-bin and YT-DLP.
+
+The reason this build even exists is that, at some point, yt-dlp will
+drop support for python-3.9 and will stop working on Slackware 15.0.
+The binary release includes its own python interpreter, so it will be
+the only way to run yt-dlp on Slack 15.0. By the time you read this,
+it may have aleady happened: python-3.9 will be officially EOLed in
+October 2025.

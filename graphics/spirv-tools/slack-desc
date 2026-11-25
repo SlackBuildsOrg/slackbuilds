@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+           |-----handy-ruler------------------------------------------------------|
+spirv-tools: spirv-tools (SPIR-V module processing)
+spirv-tools:
+spirv-tools: The SPIR-V Tools project provides an API and commands for processing
+spirv-tools: SPIR-V modules.
+spirv-tools: The project includes an assembler, binary module parser,
+spirv-tools: disassembler, validator, and optimizer for SPIR-V. Except for the
+spirv-tools: optimizer, all are based on a common static library. The library
+spirv-tools: contains all of the implementation details, and is used in the
+spirv-tools: standalone tools whilst also enabling integration into other code
+spirv-tools: bases directly. The optimizer implementation resides in its own
+spirv-tools: library, which depends on the core library.

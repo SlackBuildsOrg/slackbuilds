@@ -26,7 +26,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=apple-fonts-SF
-VERSION=${VERSION:-2025}
+VERSION=${VERSION:-2026}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -51,32 +51,49 @@ rm -rf $PRGNAM-$VERSION
 mkdir -p $PRGNAM-$VERSION
 cd $PRGNAM-$VERSION
 
-7z x $CWD/SF-Compact.dmg
-7z x $CWD/SF-Mono.dmg
-7z x $CWD/SF-Pro.dmg
-	
 mkdir -p $PKG/usr/share/fonts/OTF
-	
-cd SFCompactFonts
-7z x SF\ Compact\ Fonts.pkg
-7z x Payload~
-cd Library/Fonts
-cp -a *.otf $PKG/usr/share/fonts/OTF
-cd ../../..
-	
-cd SFMonoFonts
-7z x SF\ Mono\ Fonts.pkg
-7z x Payload~
-cd Library/Fonts
-cp -a *.otf $PKG/usr/share/fonts/OTF
-cd ../../..
-	
-cd SFProFonts
-7z x SF\ Pro\ Fonts.pkg
-7z x Payload~
-cd Library/Fonts
-cp -a *.otf $PKG/usr/share/fonts/OTF
-	
+
+(
+  rm -rf tmp
+  mkdir tmp
+  cd tmp
+  7z -y x $CWD/SF-Compact.dmg
+  7z -y x SFCompactFonts.pkg
+  echo lwf:
+  cd ./SFCompactFontsPackage.pkg
+  7z -y x Payload
+  7z -y x Payload~
+  cd Library/Fonts
+  cp -a *.otf $PKG/usr/share/fonts/OTF
+)
+(
+  rm -rf tmp
+  mkdir -p tmp
+  cd tmp
+  7z -y x $CWD/SF-Mono.dmg
+  cd SFMonoFonts
+  7z x SF\ Mono\ Fonts.pkg
+  cd ./SFMonoFonts.pkg
+  7z x Payload
+  7z x Payload~
+  cd Library/Fonts
+  cp -a *.otf $PKG/usr/share/fonts/OTF
+)
+
+(
+  rm -rf tmp
+  mkdir -p tmp
+  cd tmp
+
+  7z -y x $CWD/SF-Pro.dmg
+  7z x SFProFonts.pkg
+  cd ./SFProFontsPackage.pkg
+  7z x Payload
+  7z x Payload~
+  cd Library/Fonts
+  cp -a *.otf $PKG/usr/share/fonts/OTF
+)
+
 # just in case...
 chmod 0644 $PKG/usr/share/fonts/OTF/*.otf
 

@@ -4,11 +4,11 @@ HOMEPAGE="https://developer.apple.com/fonts/"
 DOWNLOAD="https://devimages-cdn.apple.com/design/resources/download/SF-Pro.dmg \
 https://devimages-cdn.apple.com/design/resources/download/SF-Compact.dmg \
 https://devimages-cdn.apple.com/design/resources/download/SF-Mono.dmg"
-MD5SUM="1839248ec391463a3555ec97eae1f70d \
-3a789b8a660090be973e64a9345e5572 \
+MD5SUM="e27cb2e63177a5e9070f0ec5917eaceb \
+57f90096c90e4b2350e9d33309968694 \
 48f4f88060af434c0e4aa685c0a033ee"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="p7zip"
+REQUIRES="7zip"
 MAINTAINER="Lockywolf"
 EMAIL="rot13 <<< sbe_fob.znfgre_2@ybpxljbys.arg"

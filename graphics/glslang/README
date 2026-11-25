@@ -1,0 +1,8 @@
+Glslang is the official reference compiler front end for the OpenGL
+ES and OpenGL shading languages. It implements a strict
+interpretation of the specifications for these languages.
+
+It is open and free for anyone to use, either from a command line or
+programmatically. The OpenGL and OpenGL ES working groups are
+committed to maintaining consistency between the reference compiler
+and the corresponding shading language specifications.

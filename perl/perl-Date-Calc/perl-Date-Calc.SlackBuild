@@ -42,9 +42,6 @@ if [ -z "$ARCH" ]; then
   esac
 fi
 
-# If the variable PRINT_PACKAGE_NAME is set, then this script will report what
-# the name of the created package would be, and then exit. This information
-# could be useful to other scripts.
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
   exit 0
@@ -87,8 +84,10 @@ make
 make install DESTDIR=$PKG
 
 ### putting essential docs
-mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a CHANGES.txt CREDITS.txt README.txt license/*.txt $PKG/usr/doc/$PRGNAM-$VERSION
+PKGDOC=$PKG/usr/doc/$PRGNAM-$VERSION
+mkdir -p $PKGDOC
+cp -a CHANGES.txt CREDITS.txt README.txt license/*.txt $PKGDOC
+cat $CWD/$PRGNAM.SlackBuild > $PKGDOC/$PRGNAM.SlackBuild
 
 # move man pages
 mv $PKG/usr/share/man $PKG/usr

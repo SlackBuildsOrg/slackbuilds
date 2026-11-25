@@ -8,3 +8,6 @@ charts, and more.
 
 Plotly graphs can be viewed in Jupyter notebooks, standalone HTML files,
 or integrated into Dash applications.
+
+NOTE: Unable to update python3-plotly beyond v7.1.0 on Slackware 15.0
+(Later versions require Python >= 3.10.)

@@ -31,13 +31,7 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
-if [ -z "$ARCH" ]; then
-  case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
-    arm*) ARCH=arm ;;
-       *) ARCH=$( uname -m ) ;;
-  esac
-fi
+ARCH=noarch
 
 if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   echo "$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE"
@@ -47,18 +41,6 @@ fi
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-
-if [ "$ARCH" = "i586" -o "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -march=$ARCH -mtune=i686"
-  LIBDIRSUFFIX=""
-elif [ "$ARCH" = "x86_64" -o "$ARCH" = "aarch64" ]; then
-  SLKCFLAGS="-O2 -fPIC"
-  LIBDIRSUFFIX="64"
-else
-  SLKCFLAGS="-O2"
-  LIBDIRSUFFIX=""
-fi
-SLKCFLAGS+=" -DNDEBUG"
 
 set -e
 
@@ -75,11 +57,7 @@ find . ! -type l    -a \( \
 mkdir -p build
 cd build
   cmake \
-    -DCMAKE_C_FLAGS_RELEASE="$SLKCFLAGS" \
-    -DCMAKE_CXX_FLAGS_RELEASE="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=lib$LIBDIRSUFFIX \
-    -DCMAKE_INSTALL_MANDIR=man \
     -DCMAKE_INSTALL_DOCDIR=doc/$PRGNAM-$VERSION \
     -DCMAKE_BUILD_TYPE=Release ..
   make VERBOSE=1

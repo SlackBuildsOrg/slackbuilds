@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+       |-----handy-ruler------------------------------------------------------|
+glslang: glslang (OpenGL shader language compiler)
+glslang:
+glslang: Glslang is the official reference compiler front end for the OpenGL
+glslang: ES and OpenGL shading languages. It implements a strict
+glslang: interpretation of the specifications for these languages.
+glslang:
+glslang: It is open and free for anyone to use, either from a command line or
+glslang: programmatically. The OpenGL and OpenGL ES working groups are
+glslang: committed to maintaining consistency between the reference compiler
+glslang: and the corresponding shading language specifications.
+glslang:

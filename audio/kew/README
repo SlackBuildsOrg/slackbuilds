@@ -5,6 +5,10 @@ Optional: faad2 (https://sourceforge.net/projects/faac/) provides an
 alternative AAC decoder. Install it and build with FAAD=yes to enable
 it. The default build uses the bundled AAC decoder.
 
+Optional: pmstream (https://codeberg.org/ravachol/pmstream) provides
+Winamp-style projectm/milkdrop visualizations. It is detected on PATH
+and is not required.
+
 Run kew as your normal user. Set your music library with:
 
   kew path /path/to/music

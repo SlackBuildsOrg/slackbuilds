@@ -1,26 +1,18 @@
-podman - for running OCI-based containers in Pods
+Podman (run OCI-based containers in pods)
 
-libpod provides a library for applications looking to use the
-Container Pod concept popularized by Kubernetes. libpod also contains
-a tool called podman for managing Pods, Containers, and Container
-Images.
+Podman provides a command to manage containers.
 
-At a high level, the scope of libpod and podman is the following:
-* Support multiple image formats including the existing Docker/OCI
-  image formats.
-* Support for multiple means to download images including trust & image
-  verification.
-* Container image management (managing image layers, overlay
-  filesystems, etc).
+* Supports OCI and Docker image formats
+* Supports multiple means to download images and verify images
+* Container image management
 * Full management of container lifecycle
 * Support for pods to manage groups of containers together
-* Resource isolation of containers and pods.
+* Resource isolation of containers and pods
 
-These container runtimes can run as non-root, but require sub-uid/gid
-mappings.
+IMPORTANT: After installation, you MUST manually configure Slackware
+to use cgroups v2, and then add UID and GID space for your user!
 
-To run podman as a user:
+If you fail to do this, Podman will not run!
 
-    echo 'user.max_user_namespaces=30111' >> /etc/sysctl.conf
-    echo '<YOUR_USER>:100000:65536' >> /etc/subuid
-    echo '<YOUR_USER>:100000:65536' >> /etc/subgid
+Detailed instructions for configuration are in the
+`README.Slackware` document in `/usr/doc/podman-*`

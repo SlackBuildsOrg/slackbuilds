@@ -14,3 +14,4 @@ config() {
 config etc/containers/registries.conf.new
 config etc/containers/mounts.conf.new
 config etc/containers/policy.json.new
+config etc/containers/containers.conf.new

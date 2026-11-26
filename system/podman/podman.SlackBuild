@@ -4,6 +4,7 @@
 
 # Copyright 2019 Gabriel Diaz, Madrid, Spain
 # Copyright 2019 Vincent Batts, Raleigh, NC, USA
+# Copyright 2026 Klaatu <klaatu@member.fsf.org>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -26,17 +27,10 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=podman
-REPONAME=libpod
-VERSION=${VERSION:-4.7.2}
-GIT_COMMIT="750b4c3a7c31f6573350f0b3f1b787f26e0fe1e3"
+VERSION=${VERSION:-6.2.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-
-# The domain part of the go package name, usually the hosting platform
-DOMAIN=github.com
-# The name of the organization/owner of the package
-ORG=containers
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -51,40 +45,46 @@ if [ ! -z "${PRINT_PACKAGE_NAME}" ]; then
   exit 0
 fi
 
+set -e
+
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-if [ "$ARCH" = "x86_64" ]; then
-  LIBDIRSUFFIX="64"
-else
-  echo "This script is only available for x86_64"
-  exit 1
-fi
-
-set -e
-
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf $REPONAME-$VERSION
-mkdir -p $REPONAME-$VERSION/src/$DOMAIN/$ORG
-cd $REPONAME-$VERSION/src/$DOMAIN/$ORG
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
-mv $PRGNAM-$VERSION $REPONAME
-cd $REPONAME
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+rm -rf $PRGNAM-$VERSION
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz --no-same-owner
+cd $PRGNAM-$VERSION
+find . ! -type l    -a \( \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
-# Point go to the location of the source tree
-export GOPATH="$TMP/$REPONAME-$VERSION"
+export PATH="/usr/lib${LIBDIRSUFFIX}/go/bin:$PATH"
+export GOPATH="$TMP/go-$PRGNAM"
+export CGO_CFLAGS="$SLKCFLAGS"
+export CGO_LDFLAGS="$SLKCFLAGS"
 
-make GIT_COMMIT="$GIT_COMMIT"
-make install DESTDIR="$PKG" PREFIX="/usr/" MANDIR="/usr/man/" GIT_COMMIT="$GIT_COMMIT"
+BUILDTAGS="seccomp exclude_graphdriver_devicemapper containers_image_openpgp"
+
+make \
+  PREFIX=/usr \
+  LIBDIR=/usr/lib${LIBDIRSUFFIX} \
+  LIBEXECDIR=/usr/libexec \
+  MANDIR=/usr/man \
+  ETCDIR=/etc \
+  BUILDTAGS="$BUILDTAGS" \
+  binaries docs
+
+make \
+  PREFIX=/usr \
+  LIBDIR=/usr/lib${LIBDIRSUFFIX} \
+  LIBEXECDIR=/usr/libexec \
+  MANDIR=/usr/man \
+  ETCDIR=/etc \
+  DESTDIR=$PKG \
+  install.bin install.man install.completions
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -94,19 +94,25 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a \
-  LICENSE README.md \
-  $PKG/usr/doc/$PRGNAM-$VERSION
+  CONTRIBUTING.md LICENSE MAINTAINERS.md README.md RELEASE_NOTES.md \
+  $PKG/usr/doc/$PRGNAM-$VERSION 2>/dev/null || true
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+# Configuration helper documents
+cat $CWD/cgroups2.patch > $PKG/usr/doc/$PRGNAM-$VERSION/cgroups2.patch
+sed "s/@VERSION@/$VERSION/g" $CWD/set-cgroup-2.sh > $PKG/usr/doc/$PRGNAM-$VERSION/set-cgroup-2.sh
+sed "s/@VERSION@/$VERSION/g" $CWD/README.Slackware > $PKG/usr/doc/$PRGNAM-$VERSION/README.Slackware
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 mkdir -p $PKG/etc/containers/secrets
-
 cp $CWD/registries.conf $PKG/etc/containers/registries.conf.new
 cp $CWD/mounts.conf $PKG/etc/containers/mounts.conf.new
 cp $CWD/policy.json $PKG/etc/containers/policy.json.new
+printf "[engine]\nhelper_binaries_dir = [\"/usr/bin\", \"/usr/libexec/podman\", \"/usr/lib/podman\"]\n" > $PKG/etc/containers/containers.conf.new
+printf "unqualified-search-registries = [\"docker.io\"]\n" > $PKG/etc/containers/registries.conf.new
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE

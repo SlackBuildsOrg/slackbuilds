@@ -1,0 +1,129 @@
+# Configuring Slackware for Podman
+
+Slackware 15.0 uses cgroups v1 but Podman requires cgroups v2.
+Before you can use Podman, you must make changes to `/etc/rc.d/rc.S`,
+`/etc/rc.d/rc.local`, and your bootloader configuration.
+
+First, verify that your system uses cgroups v1:
+
+```
+$ stat -fc %T /sys/fs/cgroup/
+```
+
+* If this command returns `tmpfs` then you are using cgroups v1
+* If this command returns `cgroup2fs` then you are already using
+  cgroups v2 and you can skip down to User Configuration
+
+You can make the required configuration changes by running the
+`set-cgroup-v2.sh` script, included with this SlackBuild in the
+`/usr/doc/podman-@VERSION@` directory.
+
+If the script fails, or you'd rather make the changes manually, then
+here are the required steps:
+
+### Bootloader
+
+You must append `cgroup_no_v1=all` to your kernel arguments at boot time.
+
+If you use elilo, then add `cgroup_no_v1=all` to the end of the `append`
+line in `/boot/efi/EFI/Slackware/elilo.conf`.
+For example:
+
+```
+image=vmlinuz
+        label=vmlinuz
+        initrd=initrd.gz
+        read-only
+        append="root=/dev/nvme0n1p2 vga=normal ro cgroup_no_v1=all"
+```
+
+If you use lilo, then add `cgroup_no_v1=all` to the end of the `append`
+line (uncomment it, as necessary) in `/etc/lilo.conf`.
+For example:
+
+```
+append="cgroup_no_v1=all"
+```
+
+Then run `lilo`:
+
+```
+$ sudo lilo
+```
+
+If you use GRUB, then add `cgroup_no_v1=all` to the end of the
+`GRUB_CMDLINE_LINUX_DEFAULT` option in `/etc/default/grub`.
+For example:
+
+```
+GRUB_CMDLINE_LINUX_DEFAULT="cgroup_no_v1=all"
+```
+
+Then run `grub-mkconfig:
+
+```
+$ grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### rc.S 
+
+You must patch `rc.S` for cgroups.
+There's a diff included with this SlackBuild in `/usr/doc/podman-@VERSION@`.
+Review the diff to see the changes, then run `patch`:
+
+```
+$ patch -s -N --no-backup-if-mismatch \
+  -p0 /etc/rc.d/rc.S < /usr/doc/podman-@VERSION@/cgroups2.patch
+```
+
+### rc.local
+
+Podman requires the root (`/`) directory to be a shared mount.
+Add the directive `mount --make-rshared /` to `/etc/rc.d/rc.local`:
+
+```
+$ sudo sh -c \
+  "printf '\nmount --make-rshared /\n' >> /etc/rc.d/rc.local"
+```
+
+### Reboot
+
+A reboot is required so your new kernel arguments are used.
+Once you've rebooted, your Slackware system is ready to run Podman.
+
+However, your user still requires configuration.
+
+## User Configuration
+
+You must do this configuration manually, even if you used a script
+to configure your system.
+
+To run podman's rootless containers as a non-root user, you must assign
+your user a subuid and subgid range that doesn't overlap with any
+existing user ID.
+
+Usually a user ID starts at 1000 and goes up from there each time a new
+user is created.
+You can get your own user ID using the `id` command:
+
+$ id
+
+If your system has multiple users, then check `/etc/passwd` to learn all
+user IDs. If `/etc/subuid` and `/etc/subgid` exist, then they are likely
+to contain user ID ranges.
+
+To add a range of UIDs for Podman to use, run this command using `sudo`
+or as the root user:
+
+```
+$ sudo sh -c 'echo "$SUDO_USER:100000:65536" >> /etc/subuid'
+$ sudo sh -c 'echo "$SUDO_USER:100000:65536" >> /etc/subgid'
+```
+
+Increase `100000` by an order of magnitude if you have UIDs already in
+the 100000 range.
+
+After installation, reboot or just run:
+
+$ sudo mount --make-rshared /
+$ podman system migrate

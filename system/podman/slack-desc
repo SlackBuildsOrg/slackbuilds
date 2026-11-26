@@ -8,12 +8,12 @@
       |-----handy-ruler------------------------------------------------------|
 podman: podman (utility to run OCI-based containers)
 podman:
-podman: libpod provides a library for applications looking to use the
-podman: Container Pod concept popularized by Kubernetes. libpod also contains
-podman: a tool called podman for managing Pods, Containers, and Container
-podman: Images.
+podman: Podman is a daemonless, open source, Linux-native tool designed to
+podman: make it easy to find, run, build, share, and deploy applications
+podman: using Open Containers Initiative (OCI) containers and container
+podman: images. Podman can serve as a drop-in replacement for Docker.
 podman:
-podman: Site: https://github.com/containers/libpod
+podman: This SlackBuild provides the podman command, and does not include
+podman: Podman Desktop.
 podman:
-podman:
-podman:
+podman: https://github.com/podman-container-tools/podman

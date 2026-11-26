@@ -1,6 +1,6 @@
 --- a/Makefile
 +++ b/Makefile
-@@ -185,4 +185,5 @@
+@@ -187,4 +187,5 @@
  ifeq ($(UNAME_S), Linux)
 +  LIBS += -ldl
    CFLAGS += -fPIE -fstack-clash-protection

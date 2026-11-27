@@ -1,12 +1,12 @@
 PRGNAM="mullvadvpn-app"
-VERSION="2026.5"
+VERSION="2026.6"
 HOMEPAGE="https://mullvad.net/"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/mullvad/mullvadvpn-app/releases/download/2026.5/MullvadVPN-2026.5_amd64.deb \
-                 https://github.com/mullvad/mullvadvpn-app/releases/download/2026.5/MullvadVPN-2026.5_arm64.deb"
-MD5SUM_x86_64="e5ce65d7954e6e8abfd50240dbb9b686 \
-               cd1dad52e0587fc99f69829976fca767"
+DOWNLOAD_x86_64="https://github.com/mullvad/mullvadvpn-app/releases/download/2026.6/MullvadVPN-2026.6_amd64.deb \
+                 https://github.com/mullvad/mullvadvpn-app/releases/download/2026.6/MullvadVPN-2026.6_arm64.deb"
+MD5SUM_x86_64="6a15b2f06a54f5f81e8618af2e8a4aed \
+               169155890739bf3f7e7796898787c5af"
 REQUIRES=""
 MAINTAINER="Jay Lanagan"
 EMAIL="j@lngn.net"

@@ -67,22 +67,19 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.xz
+tar xvf $CWD/$PRGNAM-$VERSION.tar.xz --no-same-owner
 cd $PRGNAM-$VERSION
 sed -i -e 's:share/doc/libgta:doc/libgta-${GTA_VERSION}:' CMakeLists.txt
 sed -i -e 's:a4wide:a4:' doc/doxyfile.in
 doxygen -s -u doc/doxyfile.in 2>/dev/null 1>/dev/null
-chown -R root:root .
-find -L . \
- \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
-  -o -perm 511 \) -exec chmod 755 {} \; -o \
- \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
-  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+find . ! -type l    -a \( \
+  \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
+  \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
 
 mkdir -p build
 cd build
   cmake \
-    -DCMAKE_C_FLAGS:STRING="$SLKCFLAGS" \
+    -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DGTA_BUILD_DOCUMENTATION=ON \
     -DGTA_BUILD_SHARED_LIB=ON \

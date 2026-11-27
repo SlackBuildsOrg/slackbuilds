@@ -6,3 +6,6 @@ Why: Speed & correctness. Alternatives like argcomplete and
 pyzshcomplete are slow and have side-effects
 How: shtab processes an argparse.ArgumentParser object to generate a
 tab completion script for your shell
+
+python3-shtab is the last available version in Slackware 15.0. Later
+versions require Python >= 3.10.

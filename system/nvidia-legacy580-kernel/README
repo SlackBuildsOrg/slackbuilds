@@ -7,20 +7,14 @@ start the script setting the KERNEL variable as in
     KERNEL=4.6.3 ./nvidia-legacy580-kernel.SlackBuild
 
 This script now includes the option to build the open kernel module
-instead of the default proprietary module.  However, this version of
-the open modules will not build on the 5.15.x kernel, so the script
-forces the proprietary build.  To build the open module on -current,
+instead of the default proprietary module.  To build the open module,
 pass "OPEN=yes" to the script.  (See notes below.)
+BIG NOTE: The open kernel module now builds in 15.0.
 
-NOTE REGARDING PAHOLE: Starting with 580.159.03, the kernel build
-system now requires pahole, which is in -current but not in 15.0.
+NOTE REGARDING PAHOLE: Starting with 580.159.03, the kernel module
+build now requires pahole, which is in -current but not in 15.0.
 
-NOTE REGARDING CURRENT AND DRM: There have been reports of display
-issues with later kernels and DRM.  The kernel module now defaults to
-enabling nvidia-drm.  To disable building nvidia-drm.ko, pass DRM=no
-to the script.  See README.nvidia-drm for details.
-
-If DRM=yes, a default config file is placed at 
+A default config file is placed at
   /usr/share/X11/xorg.conf.d/10-nvidia.conf
 to make sure that X loads the nvidia module.  If you need to make
 changes, copy that file to /etc/X11/xorg.conf.d/ and edit the copy.
@@ -37,10 +31,10 @@ NOTES ON THE OPEN KERNEL MODULE (quoted from the Nvidia driver README)
 "The proprietary flavor supports the GPU architectures Maxwell, Pascal,
 Volta, Turing, and later GPUs.
 
-"The open flavor of kernel modules supports Turing and later GPUs. The
-open kernel modules cannot support GPUs before Turing, because the open
-kernel modules depend on the GPU System Processor (GSP) first
-introduced in Turing.
+"The open flavor of kernel modules supports Turing and later GPUs
+[up to and including Blackwell - LS].  The open kernel modules cannot
+support GPUs before Turing, because the open kernel modules depend on
+the GPU System Processor (GSP) first introduced in Turing.
 
 "The following features will only work with the open kernel modules
 flavor of the driver:

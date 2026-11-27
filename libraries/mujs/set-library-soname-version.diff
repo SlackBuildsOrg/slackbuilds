@@ -1,48 +1,61 @@
---- Makefile.orig	2022-11-08 02:24:56.000000000 +1100
-+++ Makefile	2024-12-29 20:22:02.927325224 +1100
-@@ -23,6 +23,8 @@
+--- Makefile.orig	2026-10-20 06:19:20.000000000 +1100
++++ Makefile	2026-11-27 18:50:25.553572978 +1100
+@@ -2,7 +2,16 @@
+ #
+ # Useful targets are: release, install, uninstall.
  
- # Compiler flags for various configurations:
- 
-+SO_VERSION=1
++ifeq ($(shell uname),Darwin)
++  SO = dylib
++else
++  SO = so
++endif
 +
- CFLAGS := -std=c99 -pedantic -Wall -Wextra -Wno-unused-parameter
+ default: build/debug/mujs build/debug/mujs-pp
++shared: build/release/libmujs.$(SO)
++
++SO_VERSION=1
  
- ifeq "$(CC)" "clang"
-@@ -40,7 +42,6 @@
-   LDFLAGS += -fsanitize=address
- else ifeq "$(build)" "release"
-   CFLAGS += -O2
--  LDFLAGS += -Wl,-s
+ CFLAGS = -std=c99 -pedantic -Wall -Wextra -Wno-unused-parameter
+ 
+@@ -19,12 +28,6 @@
+   VERSION = $(patsubst mujs-%,%,$(notdir $(CURDIR)))
  endif
  
- ifeq "$(HAVE_READLINE)" "yes"
-@@ -88,7 +89,8 @@
+-ifeq ($(shell uname),Darwin)
+-  SO = dylib
+-else
+-  SO = so
+-endif
+-
+ ifeq ($(shell uname),FreeBSD)
+   CFLAGS += -I/usr/local/include -L/usr/local/lib
+ endif
+@@ -103,7 +106,8 @@
  
- $(OUT)/libmujs.$(SO_EXT): one.c $(HDRS)
- 	@ mkdir -p $(@D)
--	$(CC) $(CFLAGS) $(CPPFLAGS) -fPIC -shared $(LDFLAGS) -o $@ $< -lm
-+	$(CC) $(CFLAGS) $(CPPFLAGS) -fPIC -shared -Wl,-soname,libmujs.$(SO_EXT).$(SO_VERSION) -o $@ $< -lm
-+	ln -sf libmujs.$(SO_EXT).$(SO_VERSION) $@
+ build/release/libmujs.$(SO): one.c $(SRCS) $(HDRS)
+ 	@mkdir -p $(@D)
+-	$(CC) $(CFLAGS) $(OPTIM) -fPIC -shared -o $@ one.c -lm
++	$(CC) $(CFLAGS) $(OPTIM) -fPIC -shared -Wl,-soname,libmujs.$(SO).$(SO_VERSION) -o $@.$(SO_VERSION) $< -lm
++	ln -sf libmujs.$(SO).$(SO_VERSION) $@
+ build/release/libmujs.o: one.c $(SRCS) $(HDRS)
+ 	@mkdir -p $(@D)
+ 	$(CC) $(CFLAGS) $(OPTIM) -c -o $@ one.c
+@@ -137,7 +141,9 @@
+ 	install -m 644 build/release/libmujs.a $(DESTDIR)$(libdir)
  
- libmujs ?= libmujs.a
- 
-@@ -127,7 +129,9 @@
- 	install -m 644 $(OUT)/libmujs.a $(DESTDIR)$(libdir)
- 
- install-shared: install-common $(OUT)/libmujs.$(SO_EXT)
--	install -m 755 $(OUT)/libmujs.$(SO_EXT) $(DESTDIR)$(libdir)
-+	install -m 755 $(OUT)/libmujs.$(SO_EXT).$(SO_VERSION) $(DESTDIR)$(libdir)
-+	cp -af build/release/libmujs.$(SO_EXT) $(DESTDIR)$(libdir)
+ install-shared: install-common build/release/libmujs.$(SO)
+-	install -m 755 build/release/libmujs.$(SO) $(DESTDIR)$(libdir)
++	install -m 755 build/release/libmujs.$(SO).$(SO_VERSION) $(DESTDIR)$(libdir)
++	cp -af build/release/libmujs.$(SO) $(DESTDIR)$(libdir)
 +	chmod 0755 $(DESTDIR)$(libdir)
  
  install: install-static
  
-@@ -137,6 +141,7 @@
+@@ -148,6 +154,7 @@
  	rm -f $(DESTDIR)$(libdir)/pkgconfig/mujs.pc
  	rm -f $(DESTDIR)$(libdir)/libmujs.a
- 	rm -f $(DESTDIR)$(libdir)/libmujs.$(SO_EXT)
-+	rm -f $(DESTDIR)$(libdir)/libmujs.$(SO_EXT).$(SO_VERSION)
+ 	rm -f $(DESTDIR)$(libdir)/libmujs.$(SO)
++	rm -f $(DESTDIR)$(libdir)/libmujs.$(SO).$(SO_VERSION)
  
  tarball:
  	git archive --format=zip --prefix=mujs-$(VERSION)/ HEAD > mujs-$(VERSION).zip

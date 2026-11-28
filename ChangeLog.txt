@@ -1,3 +1,136 @@
+Sat Nov 28 01:31:06 UTC 2026
+academic/R: Updated for version 4.6.2
+audio/alsacap: Fix README/slack-desc grammar.
+audio/audacity: Updated for version 3.7.9.
+audio/kew: Updated for version 4.4.2.
+audio/paprefs: Fixed .desktop entry
+desktop/lightdm-slick-greeter: Updated for version 2.2.12
+desktop/makc-wallpapers: Updated for version 8564f36_20261127
+desktop/mate-desktop-environment: Update DOWNLOAD link.
+development/Kiro: Updated for version 1.5.37.
+development/Kiro: Updated for version 1.5.49.
+development/android-studio: Updated for version 2026.2.2.10
+development/antigravity-cli: Updated for version 1.5.15
+development/antigravity-ide: Updated for version 2.8.0
+development/antigravity: Updated for version 2.34.0
+development/apache-maven: Updated for version 3.10.2.
+development/cargo-auditable: Updated for version 0.7.8
+development/composer: Updated for version 2.11.3
+development/dbmate: Updated for version 2.38.2.
+development/electron-bin: Updated for version 45.4.1
+development/ghidra: Updated for version 12.2
+development/goland: Updated for version 2026.2.5.1.
+development/qbs: Updated for version 3.4.0
+development/sdcc: Updated for version 4.4.0
+development/vscode-bin: Updated for version 1.148.0.
+games/VASSAL: Updated for version 3.8.2
+games/atari_8bit_utils: Updated for version 20261127_5623f06
+gis/pgsql-ogr-fdw: Removed (Unmaintained and broken).
+graphics/glslang: Added (OpenGL shader language compiler).
+graphics/renderdoc: Updated for version 1.27
+graphics/spirv-headers: Added (SPIR-V Registry files).
+graphics/spirv-tools: Added (SPIR-V module processing).
+graphics/vips: Updated for version 8.18.8.
+graphics/xviewer: Update for 3.4.20
+libraries/OpenSceneGraph: Aligned with template
+libraries/VulkanSceneGraph: Updated for version 1.1.17.
+libraries/gconfmm: Aligned with template
+libraries/libdraco: Same version with patches compressed.
+libraries/libgta: Aligned with template
+libraries/libmicrohttpd: Updated for version 1.0.11 + new maintainer
+libraries/mujs: Updated for version 1.3.11
+libraries/xapp: Updated for version 3.4.3
+misc/es40: Updated for version 0.95
+misc/goldencheetah: Updated for version 3.7.1
+misc/mediawall: Removed (Suspicious of Bot).
+network/3proxy: Updated for version 1.0.4.
+network/AdGuardHome: Updated for version 1.0.0.
+network/cloudflared-bin: Updated for version 2026.11.2.
+network/element-desktop: Updated for version 1.12.36.
+network/filen-desktop-bin: Updated for version 3.0.54
+network/gallery-dl: Updated for version 1.32.21
+network/helium-browser: Updated for version 0.22.2.1
+network/katana: Added (Crawling and spidering framework).
+network/librewolf: Updated for version 161.0_1
+network/mullvad-browser: Updated for version 16.0.3
+network/mullvadvpn-app: Updated for version 2026.6.
+network/nginx: Updated for version 1.30.8
+network/openntpd: avoid conflicts with stock ntp
+network/openresty: update version 1.31.8.1
+network/opera: Updated for version 141.0.6089.33
+network/pCloudDrive: Updated for version 2.3.1.
+network/protonmail-bridge: Updated for version 3.27.2.
+network/rspamd: Updated for version 4.3.0
+network/telegram: Updated for version 7.4.6.
+network/telegram: Updated for version 7.4.7.
+network/tor-browser: Updated for version 16.0.3.
+network/ufw: Revise default reverse-path filtering
+network/vivaldi: Updated for version 8.3.4191.47.
+network/warpinator: Updated for version 2.0.8
+network/waterfox: Updated for version 6.7.9
+office/ledger-live: Updated for version 4.30.0
+office/python3-xlsx2csv: Updated for version 0.8.7.
+office/qownnotes: Updated for version 26.11.16.
+office/texstudio: update version 4.9.10
+office/xed: Updated for version 3.9.3
+office/xreader: Updated for version 4.6.12
+office/xtrkcad: Updated for version 5.31HS1.
+perl/mod_perl: Updated for version 2.0.14.
+perl/perl-Bit-Vector: Updated for version 7.5.
+perl/perl-Date-Calc: Fix script.
+perl/perl-PDF-API2: Updated for version 2.049
+python/email-validator: Reverted to 2.3.0.
+python/pybind11-legacy: Align with template.
+python/pybind11: Align with template.
+python/python2-nuitka: Updated for version 4.4
+python/python3-bitarray: Updated for version 3.12.4.
+python/python3-feedgen: Added (ATOM & RSS Generator).
+python/python3-nuitka: Updated for version 4.4
+python/python3-passlib: Updated for version 1.9.4.
+python/python3-plotly: Updated README
+python/python3-sentry_sdk: Update for 2.77.0
+python/python3-shtab: Updated for version 1.13.0
+python/python3-slacklog: Updated for version 0.9.6.
+python/python3-socks: Updated for version 3.2.2.
+python/python3-xapp: Updated for version 3.0.6
+python/python3-xcffib: Updated for version 1.14.0
+python/uv-bin: Updated for version 0.13.10.
+system/aide: update version 0.19.5.
+system/apple-fonts-SF: update to 2026
+system/brother-hll2400d-cups: Updated script.
+system/bubblewrap: Updated for version 0.13.1
+system/chkrootkit: update version 0.60
+system/clamav: Updated for version 1.5.5.
+system/conmon: Updated for version 2.2.1
+system/depfinder: Updated for version 2.0
+system/distrobox: Updated for version 1.8.2.6.
+system/docker-compose: Updated for version 5.8.0
+system/jenkins: Updated for version 2.580.3.
+system/lightdm-settings: Update for 2.1.3
+system/limine: Updated for version 12.11.1
+system/mbpfan: Updated for version 2.5.0.
+system/modules: Updated for version 5.7.0
+system/nemo-fileroller: Updated for version 6.8.1
+system/nemo-share: Updated for version 6.8.1.
+system/netdata: Updated for version 2.13.0.
+system/nvidia-driver: Updated for version 620.73.04.
+system/nvidia-kernel: Updated for version 620.73.04.
+system/nvidia-legacy390-kernel: Update for newer kernel.
+system/nvidia-legacy470-kernel: Update for newer kernel.
+system/nvidia-legacy580-kernel: Updated script.
+system/openrdap: Added (Successor to WHOIS).
+system/ostree: Updated for version 2026.7
+system/partclone: Updated for version 0.3.55
+system/podman: Updated for version 6.2.0
+system/pueue: Updated for version 4.0.5.
+system/qdirstat: Updated for version 2.0.1
+system/restic: Updated for version 0.20.0
+system/setconf: Updated for version 0.7.8.
+system/slackresolve: Removed (Maintainer request)
+system/stress-ng: update version 0.22.02
+system/superfile: Updated for version 1.6.1.
+system/timeshift: Updated for version 26.11.2
++--------------------------+
 Sat Nov 21 02:02:23 UTC 2026
 desktop/vbox-runner: Updated for version git_20210826_49db8f7.
 development/acpica: Updated for version 20260930.

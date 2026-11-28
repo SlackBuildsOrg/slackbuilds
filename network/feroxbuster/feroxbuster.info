@@ -1,12 +1,12 @@
 PRGNAM="feroxbuster"
-VERSION="2.13.1"
+VERSION="2.14.0"
 HOMEPAGE="https://github.com/epi052/feroxbuster"
 DOWNLOAD="UNSUPPORTED"
 MD5SUM=""
-DOWNLOAD_x86_64="https://github.com/epi052/feroxbuster/archive/v2.13.1/feroxbuster-2.13.1.tar.gz \
-                 https://packages.danix.xyz/sbo/feroxbuster/feroxbuster-2.13.1-vendor.tar.gz"
-MD5SUM_x86_64="dc0bfa007f22815875b8094d954c4f60 \
-               1ecbe3e0b6737669548afd595381979d"
+DOWNLOAD_x86_64="https://github.com/epi052/feroxbuster/archive/v2.14.0/feroxbuster-2.14.0.tar.gz \
+                 https://packages.danix.xyz/sbo/feroxbuster/feroxbuster-2.14.0-vendor.tar.gz"
+MD5SUM_x86_64="dca643b1b2e6479033d62ae02a1c9918 \
+               5cbbe3279c6aa8d5c47c06157099cd8c"
 REQUIRES="rust-opt"
 MAINTAINER="danix"
 EMAIL="danix@danix.xyz"

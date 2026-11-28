@@ -24,17 +24,17 @@ The vendored tarball is regenerated per version with
 cargo-vendor-filterer. SOURCE_DATE_EPOCH is pinned to the release tag's
 commit date so the archive is byte-for-byte reproducible:
 
-  tar xf feroxbuster-2.13.1.tar.gz && cd feroxbuster-2.13.1
-  export SOURCE_DATE_EPOCH="$(date -u -d 2025-12-13T14:09:44Z +%s)"
+  tar xf feroxbuster-2.14.0.tar.gz && cd feroxbuster-2.14.0
+  export SOURCE_DATE_EPOCH="$(date -u -d 2026-11-12T17:55:18Z +%s)"
   cargo vendor-filterer \
     --platform=x86_64-unknown-linux-gnu \
     --prefix=vendor \
     --format=tar.gz \
-    feroxbuster-2.13.1-vendor.tar.gz
+    feroxbuster-2.14.0-vendor.tar.gz
 
 The tag commit date comes from the GitHub API, field
 .commit.committer.date of:
-  api.github.com/repos/epi052/feroxbuster/commits/v2.13.1
+  api.github.com/repos/epi052/feroxbuster/commits/v2.14.0
 Then update MD5SUM_x86_64 for the new tarball in feroxbuster.info.
 
 The sample configuration is installed to:

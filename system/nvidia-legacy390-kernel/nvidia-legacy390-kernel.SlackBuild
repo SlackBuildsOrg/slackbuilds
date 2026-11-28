@@ -29,7 +29,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-legacy390-kernel
 VERSION=${VERSION:-390.157}
-BUILD=${BUILD:-9}
+BUILD=${BUILD:-10}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -110,8 +110,10 @@ patch618(){
 }
 patch70(){
   patch618
-  echo "nvidia.o: private objtool := true" >> Kbuild
-  echo "nvidia-modeset.o: private objtool := true" >> Kbuild
+  if [ "$TARGET" = "x86_64" ]; then # No objtool in 32-bit
+    echo "nvidia.o: private objtool := true" >> Kbuild
+    echo "nvidia-modeset.o: private objtool := true" >> Kbuild
+  fi
   patch -p2 < $CWD/patches/kernel-6.19.patch
   patch -p2 < $CWD/patches/kernel-7.0.patch
 }
@@ -160,6 +162,24 @@ esac
 # then pass CC=clang to this script.
   CC=${CC:-gcc} make SYSSRC=$KERNELPATH module || exit 1
 )
+
+BASEVER=${BASEVER:-$(echo $KERNEL | cut -c 1-2)}
+if [ "$BASEVER" = "7." -a "$TARGET" = "x86_64" ]; then
+# BEGIN BUGFIX Suspend (Thanks to Thorvard for this fix)
+OBJTOOL="$KERNELPATH/tools/objtool/objtool"
+
+if [ ! -x "$OBJTOOL" ]; then
+  echo "ERROR: objtool not found: $OBJTOOL"
+  exit 1
+fi
+
+(
+  cd kernel
+  "$OBJTOOL" --hacks=jump_label --module --link nvidia.ko
+  "$OBJTOOL" --hacks=jump_label --module --link nvidia-modeset.ko
+)
+# END BUGFIX Suspend
+fi
 
 mkdir -p $PKG/lib/modules/$KERNEL/kernel/drivers/video
 install -m 0664 kernel/nvidia.ko $PKG/lib/modules/$KERNEL/kernel/drivers/video/

@@ -7,7 +7,7 @@
 cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=goland
-VERSION=${VERSION:-2026.2.3}
+VERSION=${VERSION:-2026.2.5.1}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -27,7 +27,7 @@ set -e
 rm -rf $PKG
 mkdir -p $TMP $PKG/opt/ $OUTPUT
 cd $PKG/opt/
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz --no-same-owner
+tar xvf $CWD/$PRGNAM-$VERSION.tar.*z --no-same-owner
 find . ! -type l    -a \( \
   \(     -perm /111 -a ! -perm 755 -a -exec chmod -f 755 {} + \) -o \
   \(   ! -perm /111 -a ! -perm 644 -a -exec chmod -f 644 {} + \) \)
@@ -55,6 +55,9 @@ install -D -m 0644 $PKG/opt/$PRGNAM/bin/$PRGNAM.png \
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs chmod 0755 2> /dev/null || true
 
 mkdir -p $PKG/usr/bin
 ln -sf /opt/$PRGNAM/bin/$PRGNAM $PKG/usr/bin/$PRGNAM

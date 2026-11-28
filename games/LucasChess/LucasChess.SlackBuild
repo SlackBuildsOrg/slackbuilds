@@ -34,7 +34,7 @@ VERSION=${VERSION:-R2.21}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
-ARCHIVE=${ARCHIVE:-LucasChessR2_21-FP18LINUX.7z}
+ARCHIVE=${ARCHIVE:-LucasChessR2_21-FP20LINUX.7z}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in

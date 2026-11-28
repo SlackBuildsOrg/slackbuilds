@@ -2,7 +2,7 @@ superfile is a terminal file manager with multiple panels, previews,
 themes, configurable hotkeys, and optional metadata and directory
 jumping integrations. The executable is named spf.
 
-Building requires google-go-lang (Go 1.25.7 or newer). A separate vendor
+Building requires google-go-lang (Go 1.26.0 or newer). A separate vendor
 archive provides dependencies for offline compilation. Go is not
 needed to run the built program.
 
@@ -32,8 +32,9 @@ Upstream enables update notifications by default. To disable network
 checks, set auto_check_update = false in config.toml.
 
 Optional cd-on-quit shell helpers are included under
-/usr/doc/superfile-1.6.0/cd_on_quit/. They are not activated
-automatically.
+/usr/doc/superfile-<version>/cd_on_quit/. They are not activated
+automatically. If you copied an older helper into your shell profile,
+replace it with the updated helper and reload your shell.
 
 On the maintainer's Kitty setup, image previews briefly appeared and
 disappeared. If this happens, try the ANSI block-image fallback:

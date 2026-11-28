@@ -9,6 +9,5 @@ The xf86-video-nouveau-blacklist package from /extra is required.
 
 The Nvidia 470.xx series is EOL as of September 2024.
 
-NOTE: The CURRENT= and all other KERNELxxx= flags have been removed;
-the script now figures out the kernel version automatically and
-patches accordingly.
+NOTE: The CURRENT= flag has been removed; the script now uses the
+KERNEL= flag to automagically apply the proper patches.

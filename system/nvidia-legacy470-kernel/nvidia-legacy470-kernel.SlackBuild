@@ -32,7 +32,7 @@ cd $(dirname $0) ; CWD=$(pwd)
 
 PRGNAM=nvidia-legacy470-kernel
 VERSION=${VERSION:-470.256.02}
-BUILD=${BUILD:-13}
+BUILD=${BUILD:-14}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
 
@@ -188,6 +188,24 @@ case $MAJVER in
 # then pass CC=clang to this script.
   CC=${CC:-gcc} make SYSSRC=$KERNELPATH module || exit 1
 )
+
+BASEVER=${BASEVER:-$(echo $KERNEL | cut -c 1-2)}
+if [ "$BASEVER" = "7." ]; then
+# BEGIN BUGFIX Suspend (Thanks to Thorvard for this fix)
+OBJTOOL="$KERNELPATH/tools/objtool/objtool"
+
+if [ ! -x "$OBJTOOL" ]; then
+  echo "ERROR: objtool not found: $OBJTOOL"
+  exit 1
+fi
+
+(
+  cd kernel
+  "$OBJTOOL" --hacks=jump_label --module --link nvidia.ko
+  "$OBJTOOL" --hacks=jump_label --module --link nvidia-modeset.ko
+)
+# END BUGFIX Suspend
+fi
 
 mkdir -p $PKG/lib/modules/$KERNEL/kernel/drivers/video
 install -m 0664 kernel/*.ko $PKG/lib/modules/$KERNEL/kernel/drivers/video/
